@@ -1,0 +1,3 @@
+[submodule "ProjectGen"]
+	path = ProjectGen
+	url = https://github.com/NumbatLogic/ProjectGen
