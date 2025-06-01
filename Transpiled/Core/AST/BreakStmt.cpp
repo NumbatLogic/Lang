@@ -1,0 +1,78 @@
+#include "BreakStmt.hpp"
+#include "../OffsetDatum.hpp"
+#include "../TokenContainer.hpp"
+#include "../Token.hpp"
+#include "../../../Shared/CPP/Console.hpp"
+#include "../../../Shared/CPP/Assert.hpp"
+#include "AST.hpp"
+#include "../Validator.hpp"
+#include "../Util.hpp"
+#include "../../../Shared/CPP/InternalString.hpp"
+
+namespace NumberDuck
+{
+	namespace Secret
+	{
+		class OffsetDatum;
+		class Token;
+		class BreakStmt;
+	}
+}
+namespace NumberDuck
+{
+	namespace Secret
+	{
+		BreakStmt::BreakStmt()
+		{
+			m_bStatement = true;
+		}
+
+		BreakStmt* BreakStmt::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
+		{
+			OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+			Token* pBreakToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_BREAK);
+			if (pBreakToken == 0)
+			{
+				if (pTempOffset) delete pTempOffset;
+				return 0;
+			}
+			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == 0)
+			{
+				Console::Log("expected semicolon");
+				nbAssert::Assert(false);
+				{
+					if (pTempOffset) delete pTempOffset;
+					return 0;
+				}
+			}
+			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+			BreakStmt* pBreakStmt = new BreakStmt();
+			pBreakStmt->m_eType = AST::Type::AST_BREAK_STMT;
+			pBreakStmt->m_pFirstToken = pBreakToken;
+			pOffsetDatum->Set(pTempOffset);
+			{
+				NumberDuck::Secret::BreakStmt* __4137675600 = pBreakStmt;
+				pBreakStmt = 0;
+				{
+					if (pTempOffset) delete pTempOffset;
+					return __4137675600;
+				}
+			}
+		}
+
+		void BreakStmt::Validate(Validator* pValidator, OperatorExpr* pParent)
+		{
+			AST::Validate(pValidator, pParent);
+			pValidator->InjectCleanup(this);
+		}
+
+		void BreakStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+		{
+			Util::Pad(nDepth, sOut);
+			sOut->Append("break;\n");
+		}
+
+	}
+}
+
