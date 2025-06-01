@@ -1,0 +1,209 @@
+namespace NumberDuck
+{
+	namespace Secret
+	{
+		class DisownExpr : AST
+		{
+			public AST m_pExpression;
+			public InternalString* m_sTempVarName;
+
+			public construct()
+			{
+				m_eType = AST::Type::AST_DISOWN_EXP;
+			}
+
+			public static DisownExpr** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+			{
+				OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
+
+				Token pDisownToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_DISOWN);
+				if (pDisownToken == null)
+					return null;
+				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+				AST* pExpression = own AST::TryCreateExpression(pTokenContainer, pTempOffset);
+				if (pExpression == null)
+				{
+					Console::Log("expected expresssion");
+					nbAssert::Assert(false);
+					return null;
+				}
+
+				DisownExpr* pDisownExpr = own new DisownExpr();
+
+				pDisownExpr.m_pFirstToken = pDisownToken;
+				pDisownExpr.m_pExpression = pExpression;
+				pDisownExpr.AddChild(disown pExpression);
+
+				pOffsetDatum.Set(pTempOffset);
+				return disown pDisownExpr;
+			}
+
+			public override void Validate(Validator pValidator, OperatorExpr pParent)
+			{
+				base.Validate(pValidator, pParent);
+
+				if (m_pExpression.m_pValueType == null)
+				{
+					pValidator.AddError("No valuetype for expression???", m_pExpression.m_pFirstToken.m_sFileName, m_pExpression.m_pFirstToken.m_nLine, m_pExpression.m_pFirstToken.m_nColumn);
+					return;
+				}
+
+				if (m_pExpression.m_pValueType.m_eType != ValueType::Type::CLASS_DECL_VALUE && m_pExpression.m_pValueType.m_eType != ValueType::Type::GENERIC_TYPE_DECL_VALUE)
+				{
+					pValidator.AddError("Expected right side of Disown to be a CLASS_DECL_VALUE or GENERIC_TYPE_DECL_VALUE", m_pExpression.m_pFirstToken.m_sFileName, m_pExpression.m_pFirstToken.m_nLine, m_pExpression.m_pFirstToken.m_nColumn);
+					return;
+				}
+
+				if (m_pExpression.m_pValueType.m_ePointerType != TypeRef::PointerType::OWNED)
+				{
+					pValidator.AddError("Expected right side of Disown to be a OWNED type", m_pExpression.m_pFirstToken.m_sFileName, m_pExpression.m_pFirstToken.m_nLine, m_pExpression.m_pFirstToken.m_nColumn);
+					return;
+				}
+
+				m_pValueType = own m_pExpression.m_pValueType.Clone();
+				m_pValueType.m_ePointerType = TypeRef::PointerType::TRANSITON;
+
+
+				if (m_pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE)
+				{
+					if (m_pValueType.m_pClassDecl == null)
+					{
+						pValidator.AddError("Can't disown unbeknownst thing (ClassDecl)", m_pExpression.m_pFirstToken.m_sFileName, m_pExpression.m_pFirstToken.m_nLine, m_pExpression.m_pFirstToken.m_nColumn);
+						return;
+					}
+				}
+				else if (m_pValueType.m_eType == ValueType::Type::GENERIC_TYPE_DECL_VALUE)
+				{
+					if (m_pValueType.m_pGenericTypeDecl == null)
+					{
+						pValidator.AddError("Can't disown unbeknownst thing (GenericTypeDecl)", m_pExpression.m_pFirstToken.m_sFileName, m_pExpression.m_pFirstToken.m_nLine, m_pExpression.m_pFirstToken.m_nColumn);
+						return;
+					}
+				}
+
+				AST pParentStatement = GetParentStatement();
+				if (pParentStatement == null)
+				{
+					pValidator.AddError("Can'd find disown parent???", m_pExpression.m_pFirstToken.m_sFileName, m_pExpression.m_pFirstToken.m_nLine, m_pExpression.m_pFirstToken.m_nColumn);
+					return;
+				}
+
+				InternalString* sTempName = own new InternalString("");
+				m_pExpression.Stringify(AST::Language::CPP, AST::OutputFile::SOURCE, 0, sTempName);
+				Uint32 nHash = Util::BadHash(sTempName);
+				sTempName.Set("__");
+				sTempName.AppendUint32(nHash);
+
+				// do we just walk the expression (dot) till we get an identifier?
+				// need to store parent value then nullify child? eg: thing.doThing().thingToNull
+
+				AST pParentParent = pParentStatement.m_pParent;
+
+				Scope* pScope = own new Scope();
+
+				AST* pOwnedParentStatement;
+				AST pDisownedScope;
+
+				if (pParentParent.m_pFirstChild == pParentStatement)
+				{
+					pOwnedParentStatement = own disown pParentParent.m_pFirstChild;
+					pParentParent.m_pFirstChild = own disown pScope;
+					pDisownedScope = pParentParent.m_pFirstChild;
+				}
+				else
+				{
+					pOwnedParentStatement = own disown pParentStatement.m_pPrevSibling.m_pNextSibling;
+					pParentStatement.m_pPrevSibling.m_pNextSibling = own disown pScope;
+					pDisownedScope = pParentStatement.m_pPrevSibling.m_pNextSibling;
+					pDisownedScope.m_pPrevSibling = pOwnedParentStatement.m_pPrevSibling;
+
+					pOwnedParentStatement.m_pPrevSibling = null;
+				}
+
+				pDisownedScope.m_pParent = pParentParent;
+
+				if (pParentParent.m_pLastChild == pParentStatement)
+				{
+					pParentParent.m_pLastChild = pDisownedScope;
+				}
+				else
+				{
+					pDisownedScope.m_pNextSibling = own disown pParentStatement.m_pNextSibling;
+					pDisownedScope.m_pNextSibling.m_pPrevSibling = pDisownedScope;
+
+					pParentStatement.m_pNextSibling = null;
+				}
+
+				{
+					TypeRef* pTypeRef = own m_pValueType.CreateTypeRef();
+					Token* pNameToken = own new Token();
+					pNameToken.m_eType = Token::Type::TOKEN_IDENTIFIER;
+					pNameToken.m_sValue = own new InternalString(sTempName.GetExternalString());
+
+					// todo: check that this is an identifier chain (can't disown function result)
+					// todo: MOVE the expression instead?
+					AST* pAssignment = own m_pExpression.BaseClone();
+
+					VarDecl* pTempVarDecl = own new VarDecl();
+					pTempVarDecl.m_pFirstToken = pTypeRef.m_pFirstToken;
+					pTempVarDecl.m_pTypeRef = pTypeRef;
+					pTempVarDecl.m_pNameToken = pNameToken;
+					pTempVarDecl.m_pOwnedNameToken = own disown pNameToken;
+					pTempVarDecl.m_pAssignment = pAssignment;
+					pTempVarDecl.AddChild(disown pTypeRef);
+					pTempVarDecl.AddChild(disown pAssignment);
+					
+					pDisownedScope.AddChild(disown pTempVarDecl);
+				}
+
+				{
+					AST* pLeft = own m_pExpression.BaseClone();
+
+					NullExpr* pRight = own new NullExpr();
+
+					Token* pOperatorToken = own new Token();
+					pOperatorToken.m_eType = Token::Type::TOKEN_EQUALS;
+
+					OperatorExpr* pOperatorExpr = own new OperatorExpr();
+					pOperatorExpr.m_eType = AST::Type::AST_OPERATOR_EXPR;
+					pOperatorExpr.m_pFirstToken = pLeft.m_pFirstToken;
+					pOperatorExpr.m_pOperatorToken = pOperatorToken;
+					pOperatorExpr.m_pOwnedOperatorToken = own disown pOperatorToken;
+					pOperatorExpr.m_pLeft = pLeft;
+					pOperatorExpr.m_pRight = pRight;
+
+					pOperatorExpr.AddChild(disown pLeft);
+					pOperatorExpr.AddChild(disown pRight);
+
+					ExpressionStmt* pExpressionStmt = own new ExpressionStmt();
+					pExpressionStmt.m_pFirstToken = pOperatorExpr.m_pFirstToken;
+					pExpressionStmt.m_pExpression = pOperatorExpr;
+					pExpressionStmt.AddChild(disown pOperatorExpr);
+
+					pDisownedScope.AddChild(disown pExpressionStmt);
+				}
+
+				m_sTempVarName = own disown sTempName;
+
+				pDisownedScope.AddChild(disown pOwnedParentStatement);
+			}
+
+			public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+			{
+				if (m_sTempVarName != null)
+				{
+					sOut.Append(m_sTempVarName.GetExternalString());
+					return;
+				}
+
+				if (eLanguage == AST::Language::NLL)
+				{
+					sOut.Append("disown ");
+				}
+
+				m_pExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
+			}
+		}
+	}
+}

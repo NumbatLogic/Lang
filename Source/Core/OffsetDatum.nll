@@ -1,0 +1,23 @@
+namespace NumberDuck
+{
+	namespace Secret
+	{
+		class OffsetDatum
+		{
+			public int m_nOffset;
+
+			public static OffsetDatum** Create(OffsetDatum pOther)
+			{
+				OffsetDatum* pThis = own new OffsetDatum();
+				if (pOther != null)
+					pThis.Set(pOther);
+				return disown pThis;
+			}
+
+			public void Set(OffsetDatum pOther)
+			{
+				m_nOffset = pOther.m_nOffset;
+			}
+		}
+	}
+}

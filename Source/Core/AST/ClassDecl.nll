@@ -1,0 +1,496 @@
+namespace NumberDuck
+{
+	namespace Secret
+	{
+		class ClassDecl : AST
+		{
+			public Token m_pNameToken;
+			public Token m_pBaseToken;
+			public OwnedVector<GenericTypeDecl>* m_pGenericTypeDeclVector;
+			public NamespaceNode m_pNamespaceNode;
+
+			private ClassDecl m_pBaseClassDecl;
+
+			private Token* m_pAccessLevelToken;
+			private Token* m_pTypeToken;
+
+			private Token* m_pConstructorAccessLevelToken;
+			private Token* m_pConstructorTypeToken;
+
+			public construct()
+			{
+				m_eType = AST::Type::AST_CLASS_DECL;
+				m_bCanDescend = true;
+				m_pGenericTypeDeclVector = own new OwnedVector<GenericTypeDecl>();
+				m_pNamespaceNode = null;
+				m_pBaseClassDecl = null;
+			}
+			
+			public static ClassDecl** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+			{
+				OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
+
+				Token pClassToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_CLASS);
+				if (pClassToken == null)
+					return null;
+				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+				ClassDecl* pClassDecl = own new ClassDecl();
+
+				Token pNameToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
+				if (pNameToken == null)
+				{
+					Console::Log("expected class name");
+					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+					nbAssert::Assert(false);
+					return null;
+				}	
+				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+
+				Token pAngleBracketLeft = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_ANGLE_BRACKET_LEFT);
+				if (pAngleBracketLeft != null)
+				{
+					pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+					while (true)
+					{
+						if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_ANGLE_BRACKET_RIGHT) != null)
+						{
+							pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+							break;
+						}
+
+						GenericTypeDecl* pGenericTypeDecl = own GenericTypeDecl::TryCreate(pTokenContainer, pTempOffset);
+						if (pGenericTypeDecl == null)
+						{
+							Console::Log("expected inner GenericTypeDecl");
+							nbAssert::Assert(false);
+						}
+
+						pClassDecl.m_pGenericTypeDeclVector.PushBack(disown pGenericTypeDecl);
+						//pClassDecl.AddChild(pGenericTypeDecl);
+
+						if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_ANGLE_BRACKET_RIGHT) != null)
+							continue;
+
+						if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_COMMA) == null)
+						{
+							Console::Log("expected comma");
+							Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+							nbAssert::Assert(false);
+						}
+						pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+					}
+				}
+
+				// base class
+				Token pBaseToken = null;
+				if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_COLON) != null)
+				{
+					pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+					pBaseToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
+					if (pNameToken == null)
+					{
+						Console::Log("expected base class name");
+						Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+						nbAssert::Assert(false);
+						return null;
+					}
+					pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+				}
+
+				if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_LEFT) == null)
+				{
+					Console::Log("expected opening curly brace");
+					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+					nbAssert::Assert(false);
+					return null;
+				}
+				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+
+				
+				pClassDecl.m_pFirstToken = pClassToken;
+				pClassDecl.m_pNameToken = pNameToken;
+				pClassDecl.m_pBaseToken = pBaseToken;
+
+
+				while (true)
+				{
+					if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_RIGHT) != null)
+					{
+						pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+						break;
+					}
+
+					AST* pAST;
+
+					pAST = own MemberVarDecl::TryCreate(pTokenContainer, pTempOffset);
+					if (pAST != null)
+					{
+						pClassDecl.AddChild(disown pAST);
+						continue;
+					}
+
+					pAST = own MemberFunctionDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
+					if (pAST != null)
+					{
+						pClassDecl.AddChild(disown pAST);
+						continue;
+					}
+
+					pAST = own MemberEnumDecl::TryCreate(pTokenContainer, pTempOffset);
+					if (pAST != null)
+					{
+						pClassDecl.AddChild(disown pAST);
+						continue;
+					}
+
+					pAST = own TorDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
+					if (pAST != null)
+					{
+						pClassDecl.AddChild(disown pAST);
+						continue;
+					}
+
+					pAST = own DelegateDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
+					if (pAST != null)
+					{
+						pClassDecl.AddChild(disown pAST);
+						continue;
+					}
+
+					Console::Log("expected to parse somethting within class...");
+					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+					nbAssert::Assert(false);
+				}
+
+
+				pOffsetDatum.Set(pTempOffset);
+				return disown pClassDecl;
+			}
+
+			public override void PreValidate(Validator pValidator, OperatorExpr pParent)
+			{
+				m_pNamespaceNode = pValidator.m_pCurrentNamespaceNode;
+			}
+
+			public override void Validate(Validator pValidator, OperatorExpr pParent)
+			{
+				AddClassDeclReference(this, AST::OutputFile::SOURCE, false);
+
+				if (m_pBaseToken != null)
+				{
+					string sClassName = m_pBaseToken.GetString();
+					AST pType = FindByName(sClassName, this);
+					if (pType == null)
+					{
+						InternalString* sTemp = own new InternalString("Unknown base class: ");
+						sTemp.Append(sClassName);
+						pValidator.AddError(sTemp.GetExternalString(), m_pBaseToken.m_sFileName, m_pBaseToken.m_nLine, m_pBaseToken.m_nColumn);
+					}
+					else if (pType.m_eType != AST::Type::AST_CLASS_DECL)
+					{
+						InternalString* sTemp = own new InternalString("Unknown base class is not a class: ");
+						sTemp.Append(sClassName);
+						pValidator.AddError(sTemp.GetExternalString(), m_pBaseToken.m_sFileName, m_pBaseToken.m_nLine, m_pBaseToken.m_nColumn);
+					}
+
+					ClassDecl pClassDecl = cast ClassDecl(pType);
+					AddClassDeclReference(pClassDecl, AST::OutputFile::HEADER, false);
+				}
+
+				// if we have owned member vars, make sure we have a destructor (inject if needed)
+				// todo: can skip for defs...
+				{
+					bool bHasOwnedPointer = false;
+					bool bHasDefaultableVariable = false;
+					bool bHasConstructor = false;
+					bool bHasDestructor = false;
+					AST pChild = m_pFirstChild;
+					while (pChild != null)
+					{
+						if (pChild.m_eType == AST::Type::AST_MEMBER_VAR_DECL)
+						{
+							MemberVarDecl pMemberVarDecl = cast MemberVarDecl(pChild);
+							TypeRef pTypeRef = pMemberVarDecl.m_pVarDecl.m_pTypeRef;
+							while (pTypeRef.m_pChildTypeRef != null)
+							{
+								pTypeRef = pTypeRef.m_pChildTypeRef;
+							}
+							if (pTypeRef.m_ePointerType == TypeRef::PointerType::OWNED)
+								bHasOwnedPointer = true;
+
+							// might need to be a little smarter here? strings?
+							bHasDefaultableVariable = true;
+						}
+
+						if (pChild.m_eType == AST::Type::AST_TOR_DECL)
+						{
+							TorDecl pTorDecl = cast TorDecl(pChild);
+							if (pTorDecl.m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_DESTRUCT)
+								bHasDestructor = true;
+							if (pTorDecl.m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_CONSTRUCT)
+							{
+								bHasConstructor = true;
+								if (pTorDecl.m_pScope != null) // def won't have scope
+									pTorDecl.m_pScope.AddChildFront(new MemberVarsSetDefaultStmt());
+							}
+						}
+
+						pChild = pChild.m_pNextSibling;
+					}
+
+					if (bHasDefaultableVariable && !bHasConstructor)
+					{
+						m_pConstructorAccessLevelToken = own new Token();
+						m_pConstructorAccessLevelToken.m_eType = Token::Type::TOKEN_KEYWORD_PUBLIC;
+
+						AccessLevel* pAccessLevel = own new AccessLevel();
+						pAccessLevel.m_eType = AST::Type::AST_ACCESS_LEVEL;
+						pAccessLevel.m_pFirstToken = m_pConstructorAccessLevelToken;
+
+						m_pConstructorTypeToken = own new Token();
+						m_pConstructorTypeToken.m_eType = Token::Type::TOKEN_KEYWORD_CONSTRUCT;
+
+						ParamDecl* pParamDecl = own new ParamDecl();
+						pParamDecl.m_pFirstToken = m_pFirstToken;
+
+						Scope* pScope = own new Scope();
+						pScope.AddChild(new MemberVarsSetDefaultStmt());
+						
+						TorDecl* pTorDecl = own new TorDecl();
+						pTorDecl.m_eType = AST::Type::AST_TOR_DECL;
+						pTorDecl.m_pParent = this; // addchild instead?
+						pTorDecl.m_pParentClassDecl = this;
+						pTorDecl.m_pFirstToken = m_pFirstToken;
+						pTorDecl.m_pAccessLevel = pAccessLevel;
+						pTorDecl.m_pTypeToken = m_pConstructorTypeToken;
+						pTorDecl.m_pParamDecl = pParamDecl;
+						pTorDecl.m_pScope = pScope;
+						pTorDecl.m_sDisambiguate = "";
+
+						pTorDecl.AddChild(disown pAccessLevel);
+						pTorDecl.AddChild(disown pParamDecl);
+						pTorDecl.AddChild(disown pScope);
+
+						AddChild(disown pTorDecl);
+					}
+
+					if (bHasOwnedPointer && !bHasDestructor)
+					{
+						m_pAccessLevelToken = own new Token();
+						m_pAccessLevelToken.m_eType = Token::Type::TOKEN_KEYWORD_PUBLIC;
+
+						AccessLevel* pAccessLevel = own new AccessLevel();
+						pAccessLevel.m_eType = AST::Type::AST_ACCESS_LEVEL;
+						pAccessLevel.m_pFirstToken = m_pAccessLevelToken;
+
+						m_pTypeToken = own new Token();
+						m_pTypeToken.m_eType = Token::Type::TOKEN_KEYWORD_DESTRUCT;
+
+						ParamDecl* pParamDecl = own new ParamDecl();
+						pParamDecl.m_pFirstToken = m_pFirstToken;
+
+						Scope* pScope = own new Scope();
+						
+						TorDecl* pTorDecl = own new TorDecl();
+						pTorDecl.m_eType = AST::Type::AST_TOR_DECL;
+						pTorDecl.m_pParent = this; // addchild instead?
+						pTorDecl.m_pParentClassDecl = this;
+						pTorDecl.m_pFirstToken = m_pFirstToken;
+						pTorDecl.m_pAccessLevel = pAccessLevel;
+						pTorDecl.m_pTypeToken = m_pTypeToken;
+						pTorDecl.m_pParamDecl = pParamDecl;
+						pTorDecl.m_pScope = pScope;
+						pTorDecl.m_sDisambiguate = "";
+
+						pTorDecl.AddChild(disown pAccessLevel);
+						pTorDecl.AddChild(disown pParamDecl);
+						pTorDecl.AddChild(disown pScope);
+
+						AddChild(disown pTorDecl);
+					}
+				}
+
+				base.Validate(pValidator, pParent);
+			}
+
+			public override ClassDecl FindClassDecl(string sTypeName, AST pCallingChild)
+			{
+				if (ExternalString::Equal(sTypeName, m_pNameToken.GetString()))
+					return this;
+				return null;
+			}
+
+			public override AST FindByName(string sxName, AST pCallingChild)
+			{
+				if (ExternalString::Equal(sxName, m_pNameToken.GetString()))
+					return this;
+
+				ClassDecl pBaseClassDecl = GetBaseClassDecl();
+				if (pBaseClassDecl != null)
+				{
+					AST pResult = pBaseClassDecl.FindByName(sxName, null);
+					if (pResult != null)
+						return pResult;
+				}
+
+				if (pCallingChild != null)
+				{
+					for (int i = 0; i < m_pGenericTypeDeclVector.GetSize(); i++)
+		   			{
+		   				GenericTypeDecl pGenericTypeDecl = m_pGenericTypeDeclVector.Get(i);
+		   				if (ExternalString::Equal(pGenericTypeDecl.m_pFirstToken.GetString(), sxName))
+		   				{
+		   					//Console::Log(pGenericTypeDecl.m_pFirstToken.GetString());
+		   					return pGenericTypeDecl;
+		   				}
+					}
+				}
+
+				return base.FindByName(sxName, pCallingChild);
+			}
+
+			/*public ClassDecl GetBaseClassDecl()
+			{
+				if (m_pBaseClassDecl != null)
+					return m_pBaseClassDecl;
+
+				if (m_pBaseToken != null && m_pParent != null)
+				{
+					string sBaseClassName = m_pBaseToken.GetString();
+					AST pAst = m_pParent.FindByName(sBaseClassName, this);
+					if (pAst != null && pAst.m_eType == AST::Type::AST_CLASS_DECL)
+					{
+						m_pBaseClassDecl = cast ClassDecl(pAst);
+						return m_pBaseClassDecl;
+					}
+				}
+				return null;
+			}*/
+
+			public ClassDecl GetBaseClassDecl()
+			{
+				if (m_pBaseClassDecl != null)
+					return m_pBaseClassDecl;
+
+				if (m_pBaseToken != null && m_pParent != null)
+				{
+					string sBaseClassName = m_pBaseToken.GetString();
+					ClassDecl pBaseClassDecl = m_pParent.FindClassDecl(sBaseClassName, this);
+					if (pBaseClassDecl != null)
+					{
+						m_pBaseClassDecl = pBaseClassDecl;
+						return pBaseClassDecl;
+					}
+				}
+				return null;
+			}
+
+			public void StringifyTemplateThing(Language eLanguage, OutputFile eOutputFile, InternalString sOut)
+			{
+				sOut.AppendString("template <class ");
+				for (int i = 0; i < m_pGenericTypeDeclVector.GetSize(); i++)
+				{
+					if (i > 0)
+						sOut.Append(", ");
+					GenericTypeDecl pGenericTypeDecl = m_pGenericTypeDeclVector.Get(i);
+					pGenericTypeDecl.Stringify(eLanguage, eOutputFile, 0, sOut);
+				}
+				sOut.AppendString(">");
+			}
+
+			public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+			{
+				if (!(eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE))
+				{
+					if (eLanguage == AST::Language::CPP)
+					{
+						if (m_pGenericTypeDeclVector.GetSize() > 0)
+						{
+							Util::Pad(nDepth, sOut);
+							StringifyTemplateThing(eLanguage, eOutputFile, sOut);
+							sOut.AppendString("\n");
+						}
+					}
+
+					Util::Pad(nDepth, sOut);
+					sOut.Append("class ");
+					m_pNameToken.Stringify(sOut);
+
+					if (eLanguage == AST::Language::CS || eLanguage == AST::Language::NLL_DEF)
+					{
+						if (m_pGenericTypeDeclVector.GetSize() > 0)
+						{
+							sOut.AppendChar('<');
+							for (int i = 0; i < m_pGenericTypeDeclVector.GetSize(); i++)
+							{
+								if (i > 0)
+									sOut.Append(", ");
+								GenericTypeDecl pGenericTypeDecl = m_pGenericTypeDeclVector.Get(i);
+								pGenericTypeDecl.Stringify(eLanguage, eOutputFile, 0, sOut);
+							}
+							sOut.AppendChar('>');
+						}
+					}
+
+					if (m_pBaseToken != null)
+					{
+						sOut.Append(" : ");
+						if (eLanguage == AST::Language::CPP)
+							sOut.Append("public ");
+						m_pBaseToken.Stringify(sOut);
+					}
+
+					if (eLanguage == AST::Language::CS && m_pGenericTypeDeclVector.GetSize() > 0)
+					{
+						for (int i = 0; i < m_pGenericTypeDeclVector.GetSize(); i++)
+						{
+							if (m_pGenericTypeDeclVector.GetSize() == 1)
+							{
+								sOut.AppendChar(' ');
+							}
+							else
+							{
+								sOut.Append("\n");
+								Util::Pad(nDepth+1, sOut);
+							}
+
+							sOut.Append("where ");
+							GenericTypeDecl pGenericTypeDecl = m_pGenericTypeDeclVector.Get(i);
+							pGenericTypeDecl.Stringify(eLanguage, eOutputFile, 0, sOut);
+							sOut.Append(" : class");
+						}
+					}
+				
+					sOut.Append("\n");
+					Util::Pad(nDepth, sOut);
+					sOut.Append("{\n");
+
+					nDepth++;
+				}
+
+				AST pMember = m_pFirstChild;
+				while (pMember != null)
+				{
+					pMember.Stringify(eLanguage, eOutputFile, nDepth, sOut);
+					pMember = pMember.m_pNextSibling;
+				}
+
+				if (!(eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE))
+				{
+					nDepth--;
+
+					Util::Pad(nDepth, sOut);
+					if (eLanguage == AST::Language::CPP)
+						sOut.Append("};\n");
+					else
+						sOut.Append("}\n");
+				}
+			}
+		}
+	}
+}

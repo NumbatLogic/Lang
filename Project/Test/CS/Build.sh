@@ -1,0 +1,2 @@
+#!/bin/bash
+csc -debug:full -reference:System.IO.Compression.dll *.cs ../../../Transpiled/Test/*.cs ../../../Transpiled/Core/*.cs ../../../Transpiled/Core/AST/*.cs ../../../Shared/CS/*.cs ../../../Transpiled/Shared/*.cs

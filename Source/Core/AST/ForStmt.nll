@@ -1,0 +1,138 @@
+namespace NumberDuck
+{
+	namespace Secret
+	{
+		class ForStmt : AST
+		{
+			public construct()
+			{
+				m_eType = AST::Type::AST_FOR_STMT;
+				m_bStatement = true; // might be wrong, probably not
+			}
+
+			public static ForStmt** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+			{
+				OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
+
+				Token pForToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_FOR);
+				if (pForToken == null)
+					return null;
+				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+				if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_LEFT) == null)
+				{
+					Console::Log("expected left paren");
+					nbAssert::Assert(false);
+					return null;
+				}
+				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+				AST* pBeforeStatement = own VarDecl::TryCreate(pTokenContainer, pTempOffset, true);
+				if (pBeforeStatement == null)
+				{
+					pBeforeStatement = own AST::TryCreateExpression(pTokenContainer, pTempOffset);
+					if (pBeforeStatement == null)
+					{
+						Console::Log("expected before statement");
+						Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+						nbAssert::Assert(false);
+						return null;
+						}
+				}
+
+				if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == null)
+				{
+					Console::Log("expected semicolon");
+					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+					nbAssert::Assert(false);
+					return null;
+				}
+				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+				AST* pConditionStatement = own AST::TryCreateExpression(pTokenContainer, pTempOffset);
+				if (pConditionStatement == null)
+				{
+					Console::Log("expected condition statement");
+					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+					nbAssert::Assert(false);
+					return null;
+				}
+
+				if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == null)
+				{
+					Console::Log("expected semicolon");
+					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+					nbAssert::Assert(false);
+					return null;
+				}
+				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+				AST* pLoopStatement = own AST::TryCreateExpression(pTokenContainer, pTempOffset);
+				/*if (pLoopStatement == null)
+				{
+					Console::Log("expected loop statement");
+					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+					nbAssert::Assert(false);
+					return null;
+				}*/
+
+				if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT) == null)
+				{
+					Console::Log("expected right paren");
+					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+					nbAssert::Assert(false);
+					return null;
+				}
+				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+				AST* pStatement = own AST::CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
+				if (pStatement == null)
+				{
+					Console::Log("expected statement");
+					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+					nbAssert::Assert(false);
+				}
+
+				ForStmt* pForStmt = own new ForStmt();
+				pForStmt.m_pFirstToken = pForToken;
+
+				pForStmt.AddChild(disown pBeforeStatement);
+				pForStmt.AddChild(disown pConditionStatement);
+				if (pLoopStatement != null)
+					pForStmt.AddChild(disown pLoopStatement);
+				pForStmt.AddChild(disown pStatement);
+				
+				pOffsetDatum.Set(pTempOffset);
+				return disown pForStmt;
+			}
+
+			public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+			{
+				AST pBeforeStatement = m_pFirstChild;
+				AST pConditionStatement = pBeforeStatement.m_pNextSibling;
+				AST pLoopStatement = pConditionStatement.m_pNextSibling;
+				AST pStatement = pLoopStatement.m_pNextSibling;
+
+				Util::Pad(nDepth, sOut);
+				sOut.Append("for (");
+				pBeforeStatement.Stringify(eLanguage, eOutputFile, 0, sOut);
+				sOut.Append("; ");
+				pConditionStatement.Stringify(eLanguage, eOutputFile, 0, sOut);
+				sOut.Append("; ");
+
+				if (pStatement != null)
+					pLoopStatement.Stringify(eLanguage, eOutputFile, 0, sOut);
+				
+				sOut.Append(")\n");
+
+				if (pStatement == null)
+					pStatement = pLoopStatement;
+				
+				if (pStatement.m_eType == AST::Type::AST_SCOPE)
+					pStatement.Stringify(eLanguage, eOutputFile, nDepth, sOut);
+				else
+					pStatement.Stringify(eLanguage, eOutputFile, nDepth + 1, sOut);
+			}
+		}
+	}
+}

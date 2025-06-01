@@ -1,0 +1,26 @@
+namespace NumberDuck
+{
+	namespace Secret
+	{
+		class Thing
+		{
+			public int m_ff;
+		}
+
+		class PointerTest
+		{
+			public static void Run()
+			{
+				Console::Log("Pointer test...");
+
+				Thing* pThing = own new Thing();
+				pThing.m_ff = 0;
+
+				//delete pThing;
+				
+			}
+
+
+		}
+	}
+}

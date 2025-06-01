@@ -1,0 +1,55 @@
+namespace NumberDuck
+{
+	namespace Secret
+	{
+		class MemberEnumDecl : AST
+		{
+			public AccessLevel m_pAccessLevel;
+			public EnumDecl m_pEnumDecl;
+
+			public construct()
+			{
+				m_bCanDescend = true;
+			}
+			
+			public static MemberEnumDecl** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+			{
+				OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
+				
+				AccessLevel* pAccessLevel = own AccessLevel::TryCreate(pTokenContainer, pTempOffset);
+				if (pAccessLevel == null)
+					return null;
+
+				EnumDecl* pEnumDecl = own EnumDecl::TryCreate(pTokenContainer, pTempOffset);
+				if (pEnumDecl == null)
+					return null;
+
+				MemberEnumDecl* pMemberEnumDecl = own new MemberEnumDecl();
+
+				pMemberEnumDecl.m_eType = AST::Type::AST_MEMBER_ENUM_DECL;
+				pMemberEnumDecl.m_pAccessLevel = pAccessLevel;
+				pMemberEnumDecl.m_pEnumDecl = pEnumDecl;
+
+				pMemberEnumDecl.AddChild(disown pAccessLevel);
+				pMemberEnumDecl.AddChild(disown pEnumDecl);
+
+				pOffsetDatum.Set(pTempOffset);
+				return disown pMemberEnumDecl;
+			}
+
+			public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+			{
+				if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
+					return;
+
+				Util::Pad(nDepth, sOut);
+				m_pAccessLevel.Stringify(eLanguage, eOutputFile, 0, sOut);
+				if (eLanguage == AST::Language::CPP)
+					sOut.AppendChar(':');
+				sOut.AppendChar(' ');
+				m_pEnumDecl.Stringify(eLanguage, eOutputFile, nDepth, sOut);
+				sOut.AppendChar('\n');
+			}
+		}
+	}
+}
