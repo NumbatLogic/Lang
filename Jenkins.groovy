@@ -26,7 +26,7 @@ pipeline{
 		stage("Log Parse"){
 			steps{
 				logParser ([
-					projectRulePath: 'LogParsingRules',
+					projectRulePath: 'Lang/LogParsingRules',
 					parsingRulesPath: '',
 					showGraphs: true, 
 					unstableOnWarning: true, 
