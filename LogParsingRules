@@ -1,0 +1,27 @@
+ok /not really/
+
+# match line starting with 'error ', case-insensitive
+error /(?i)^error/
+error /(?i)^Project : error/
+error /] Error /
+error /fatal error/
+error /MSBUILD : error/
+error /invalid value/
+error /No such file or directory/
+error /error:/
+error /Unknown return type:/
+error /^Assert:/
+
+error /\): error/
+error /MrTest error/
+
+# list of warnings here...
+warning /(?i)^warning/
+warning /(?i)^php warning/
+
+# create a quick access link to lines in the report containing 'INFO'
+info /INFO/
+
+# each line containing 'BUILD' represents the start of a section for grouping errors and warnings found after the line.
+# also creates a quick access link.
+start /BUILD/
