@@ -22,5 +22,15 @@ pipeline{
 				sh "cd Lang && ./CIRebuild.sh"
 			}
 		}
+
+		stage("Log Parse"){
+			logParser ([
+				projectRulePath: 'LogParsingRules',
+				parsingRulesPath: '',
+				showGraphs: true, 
+				unstableOnWarning: true, 
+				useProjectRule: true
+			])
+		}
 	}
 }
