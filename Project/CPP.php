@@ -5,7 +5,7 @@
 	error_reporting(E_ALL);
 	date_default_timezone_set("UTC");
 
-	include_once dirname(__FILE__) . "/../ProjectGen/ProjectGen.php";
+	include_once dirname(__FILE__) . "/../../ProjectGen/ProjectGen.php";
 
 	include_once dirname(__FILE__) . "/Core/CPP/Core.php";
 	include_once dirname(__FILE__) . "/CLI/CPP/CLI.php";
