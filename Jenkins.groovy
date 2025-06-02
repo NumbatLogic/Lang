@@ -24,13 +24,15 @@ pipeline{
 		}
 
 		stage("Log Parse"){
-			logParser ([
-				projectRulePath: 'LogParsingRules',
-				parsingRulesPath: '',
-				showGraphs: true, 
-				unstableOnWarning: true, 
-				useProjectRule: true
-			])
+			steps{
+				logParser ([
+					projectRulePath: 'LogParsingRules',
+					parsingRulesPath: '',
+					showGraphs: true, 
+					unstableOnWarning: true, 
+					useProjectRule: true
+				])
+			}
 		}
 	}
 }
