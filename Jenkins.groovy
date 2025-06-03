@@ -1,5 +1,8 @@
 pipeline{
 	agent { label "Linux" }
+	options {
+		skipDefaultCheckout(true)
+	}
 	stages{
 		stage("Checkout"){
 			steps{
