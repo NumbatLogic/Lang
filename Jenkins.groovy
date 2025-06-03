@@ -5,11 +5,6 @@ pipeline{
 			steps{
 				cleanWs()
 				dir("Lang"){
-					//git url: "https://github.com/NumbatLogic/Lang",
-					//	branch: "main",
-					//	credentialsId: 'c532651f-f9a2-48a8-8a37-8df46a9c5ee2'
-
-
 					checkout scm: [
 						$class: 'GitSCM',
 						branches: scm.branches,
@@ -25,7 +20,6 @@ pipeline{
 						submoduleCfg: [],
 						userRemoteConfigs: scm.userRemoteConfigs
 					]
-
 				}
 				dir("ProjectGen"){
 					git url: "https://github.com/NumbatLogic/ProjectGen",
