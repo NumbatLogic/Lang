@@ -6,7 +6,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "MemberVarDecl.hpp"
 #include "MemberFunctionDecl.hpp"
 #include "MemberEnumDecl.hpp"
@@ -80,7 +80,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected class name");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pClassDecl) delete pClassDecl;
@@ -103,7 +103,7 @@ namespace NumberDuck
 					if (pGenericTypeDecl == 0)
 					{
 						Console::Log("expected inner GenericTypeDecl");
-						nbAssert::Assert(false);
+						NumbatLogic::Assert::Plz(false);
 					}
 					{
 						NumberDuck::Secret::GenericTypeDecl* __3828846222 = pGenericTypeDecl;
@@ -119,7 +119,7 @@ namespace NumberDuck
 					{
 						Console::Log("expected comma");
 						Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-						nbAssert::Assert(false);
+						NumbatLogic::Assert::Plz(false);
 					}
 					pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 					if (pGenericTypeDecl) delete pGenericTypeDecl;
@@ -134,7 +134,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected base class name");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					{
 						if (pTempOffset) delete pTempOffset;
 						if (pClassDecl) delete pClassDecl;
@@ -147,7 +147,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected opening curly brace");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pClassDecl) delete pClassDecl;
@@ -233,7 +233,7 @@ namespace NumberDuck
 				}
 				Console::Log("expected to parse somethting within class...");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				if (pAST) delete pAST;
 			}
 			pOffsetDatum->Set(pTempOffset);

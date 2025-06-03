@@ -33,7 +33,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected ParamDecl");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -56,7 +56,7 @@ namespace NumberDuck
 					{
 						Console.Log("expected scope");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 					}
 				}
 				FunctionDecl pFunctionDecl = new FunctionDecl();

@@ -56,7 +56,7 @@ namespace NumberDuck
 								if (nChar == '\0')
 								{
 									Console::Log("End of #ifdef name not found");
-									nbAssert::Assert(false);
+									NumbatLogic::Assert::Plz(false);
 								}
 								if (nChar == ' ' || nChar == '\t' || nChar == '\n')
 									break;
@@ -92,7 +92,7 @@ namespace NumberDuck
 								if (nChar == '\0')
 								{
 									Console::Log("End of #ifdef not found");
-									nbAssert::Assert(false);
+									NumbatLogic::Assert::Plz(false);
 								}
 
 								if (nChar == '#')
@@ -119,7 +119,7 @@ namespace NumberDuck
 							{
 								Console::Log("#endif with no #ifdef???");
 								Console::Log(sFileName.GetExternalString());
-								nbAssert::Assert(false);
+								NumbatLogic::Assert::Plz(false);
 							}
 
 							nIfdefDepth--;

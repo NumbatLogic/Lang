@@ -23,7 +23,7 @@ namespace NumberDuck
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_LEFT) == null)
 				{
 					Console.Log("expected left paren");
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -33,7 +33,7 @@ namespace NumberDuck
 				if (pExpression == null)
 				{
 					Console.Log("expected expression");
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -42,7 +42,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected right paren");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -53,7 +53,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected scope");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 				}
 				WhileStmt pWhileStmt = new WhileStmt();
 				pWhileStmt.m_eType = AST.Type.AST_WHILE_STMT;

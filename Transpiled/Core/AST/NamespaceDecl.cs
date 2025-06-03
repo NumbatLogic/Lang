@@ -27,7 +27,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected namespace name");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -37,7 +37,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected opening curly brace");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -66,7 +66,7 @@ namespace NumberDuck
 					}
 					Console.Log("expected to parse somethting within namespace...");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 				}
 				pOffsetDatum.Set(pTempOffset);
 				{

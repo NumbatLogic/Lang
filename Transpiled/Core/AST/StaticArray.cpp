@@ -4,7 +4,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "../ValueType.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"
 
@@ -51,7 +51,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected element");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					{
 						if (pElement) delete pElement;
 						if (pTempOffset) delete pTempOffset;
@@ -73,7 +73,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected comma");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 				}
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 				if (pElement) delete pElement;

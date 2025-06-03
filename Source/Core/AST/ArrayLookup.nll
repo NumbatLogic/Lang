@@ -30,7 +30,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected index expression");
 					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					return null;
 				}
 
@@ -38,7 +38,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected right bracket");
 					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					return null;
 				}
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;

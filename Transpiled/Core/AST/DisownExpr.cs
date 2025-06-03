@@ -24,7 +24,7 @@ namespace NumberDuck
 				if (pExpression == null)
 				{
 					Console.Log("expected expresssion");
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}

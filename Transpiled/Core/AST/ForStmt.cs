@@ -22,7 +22,7 @@ namespace NumberDuck
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_LEFT) == null)
 				{
 					Console.Log("expected left paren");
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -36,7 +36,7 @@ namespace NumberDuck
 					{
 						Console.Log("expected before statement");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 						{
 							return null;
 						}
@@ -46,7 +46,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected semicolon");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -57,7 +57,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected condition statement");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -66,7 +66,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected semicolon");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -77,7 +77,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected right paren");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -88,7 +88,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected statement");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 				}
 				ForStmt pForStmt = new ForStmt();
 				pForStmt.m_pFirstToken = pForToken;

@@ -4,7 +4,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "../../../Shared/CPP/ExternalString.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"
 
@@ -47,7 +47,7 @@ namespace NumberDuck
 				if (pEnumDeclValue->m_pForceValue == 0)
 				{
 					Console::Log("expected to parse something...");
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					{
 						if (pTempOffset) delete pTempOffset;
 						if (pEnumDeclValue) delete pEnumDeclValue;

@@ -25,7 +25,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected TypeRef...");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -35,7 +35,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected ParamCall");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}

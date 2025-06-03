@@ -5,7 +5,7 @@
 #include "../Token.hpp"
 #include "ParamDecl.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "Scope.hpp"
 #include "AST.hpp"
 #include "../../../Shared/CPP/ExternalString.hpp"
@@ -61,7 +61,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected ParamDecl");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pTypeRef) delete pTypeRef;
@@ -87,7 +87,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected scope");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 				}
 			}
 			FunctionDecl* pFunctionDecl = new FunctionDecl();

@@ -3,7 +3,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "AST.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"
 #include "../Util.hpp"
@@ -41,7 +41,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected left paren");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					return 0;
@@ -53,7 +53,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected condition");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pCondition) delete pCondition;
@@ -64,7 +64,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected right paren");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pCondition) delete pCondition;
@@ -77,7 +77,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected statement");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pCondition) delete pCondition;
@@ -94,7 +94,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected else statement");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					{
 						if (pTempOffset) delete pTempOffset;
 						if (pCondition) delete pCondition;

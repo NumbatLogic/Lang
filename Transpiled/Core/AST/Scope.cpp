@@ -4,7 +4,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "../Validator.hpp"
 #include "TorDecl.hpp"
 #include "MemberVarDecl.hpp"
@@ -60,7 +60,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected to parse somethting within scope...");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					{
 						if (pChild) delete pChild;
 						if (pTempOffset) delete pTempOffset;

@@ -4,7 +4,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "../Validator.hpp"
 #include "../../../Shared/CPP/ExternalString.hpp"
 #include "../NamespaceNode.hpp"
@@ -53,7 +53,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected namespace name");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pNamespaceDecl) delete pNamespaceDecl;
@@ -65,7 +65,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected opening curly brace");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pNamespaceDecl) delete pNamespaceDecl;
@@ -97,7 +97,7 @@ namespace NumberDuck
 				}
 				Console::Log("expected to parse somethting within namespace...");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				if (pAST) delete pAST;
 			}
 			pOffsetDatum->Set(pTempOffset);

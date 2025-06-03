@@ -3,7 +3,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "AST.hpp"
 #include "../Validator.hpp"
 #include "../Util.hpp"
@@ -40,7 +40,7 @@ namespace NumberDuck
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == 0)
 			{
 				Console::Log("expected semicolon");
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					return 0;

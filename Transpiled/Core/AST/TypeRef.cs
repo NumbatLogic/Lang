@@ -67,7 +67,7 @@ namespace NumberDuck
 							if (pGenericTypeRef == null)
 							{
 								Console.Log("expected inner TypeRef");
-								nbAssert.Assert(false);
+								NumbatLogic.Assert.Plz(false);
 							}
 							pTypeRef.m_pGenericTypeRefVector.PushBack(pGenericTypeRef);
 							{
@@ -84,7 +84,7 @@ namespace NumberDuck
 								InternalString sTemp = new InternalString("expected comma ");
 								sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
 								Console.Log(sTemp.GetExternalString());
-								nbAssert.Assert(false);
+								NumbatLogic.Assert.Plz(false);
 							}
 							pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 						}
@@ -99,7 +99,7 @@ namespace NumberDuck
 						InternalString sTemp = new InternalString("expected child TypeRef... ");
 						sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
 						Console.Log(sTemp.GetExternalString());
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 						{
 							return null;
 						}

@@ -5,7 +5,7 @@
 #include "ParamCall.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "AST.hpp"
 #include "OperatorExpr.hpp"
 #include "../ValueType.hpp"
@@ -62,7 +62,7 @@ namespace NumberDuck
 				InternalString* sTemp = new InternalString("expected ParamCall ");
 				sTemp->Append(pTokenContainer->StringifyOffset(pTempOffset));
 				Console::Log(sTemp->GetExternalString());
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (sTemp) delete sTemp;
 					if (pTempOffset) delete pTempOffset;

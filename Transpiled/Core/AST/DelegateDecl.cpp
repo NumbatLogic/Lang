@@ -6,7 +6,7 @@
 #include "../Token.hpp"
 #include "FunctionDecl.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "../../../Shared/CPP/ExternalString.hpp"
 #include "../Util.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"
@@ -65,7 +65,7 @@ namespace NumberDuck
 			if (pFunctionDecl == 0)
 			{
 				Console::Log("expected function decl");
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pAccessLevel) delete pAccessLevel;
@@ -77,7 +77,7 @@ namespace NumberDuck
 			if (pFunctionDecl->m_pScope != 0)
 			{
 				Console::Log("function def can't have scope!");
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pAccessLevel) delete pAccessLevel;

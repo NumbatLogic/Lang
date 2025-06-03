@@ -30,7 +30,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected ParamDecl");
 					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					return null;
 				}
 
@@ -52,7 +52,7 @@ namespace NumberDuck
 						{
 							Console::Log("expected base!");
 							Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-							nbAssert::Assert(false);
+							NumbatLogic::Assert::Plz(false);
 							return null;
 						}
 						pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
@@ -63,7 +63,7 @@ namespace NumberDuck
 							InternalString* sTemp = own new InternalString("expected ParamCall ");
 							sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
 							Console::Log(sTemp.GetExternalString());
-							nbAssert::Assert(false);
+							NumbatLogic::Assert::Plz(false);
 							return null;
 						}
 
@@ -76,7 +76,7 @@ namespace NumberDuck
 					{
 						Console::Log("expected scope");
 						Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert::Assert(false);
+						NumbatLogic::Assert::Plz(false);
 					}
 				}
 

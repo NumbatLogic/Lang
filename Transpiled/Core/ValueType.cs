@@ -185,7 +185,7 @@ namespace NumberDuck
 					}
 
 				}
-				nbAssert.Assert(false);
+				NumbatLogic.Assert.Plz(false);
 				{
 					return null;
 				}

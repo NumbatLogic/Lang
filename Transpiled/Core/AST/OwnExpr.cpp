@@ -4,7 +4,7 @@
 #include "../Token.hpp"
 #include "AST.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"
@@ -39,7 +39,7 @@ namespace NumberDuck
 			if (pExpression == 0)
 			{
 				Console::Log("expected expresssion");
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pExpression) delete pExpression;

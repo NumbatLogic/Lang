@@ -5,7 +5,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
@@ -89,7 +89,7 @@ namespace NumberDuck
 						if (pGenericTypeRef == 0)
 						{
 							Console::Log("expected inner TypeRef");
-							nbAssert::Assert(false);
+							NumbatLogic::Assert::Plz(false);
 						}
 						pTypeRef->m_pGenericTypeRefVector->PushBack(pGenericTypeRef);
 						{
@@ -107,7 +107,7 @@ namespace NumberDuck
 							InternalString* sTemp = new InternalString("expected comma ");
 							sTemp->Append(pTokenContainer->StringifyOffset(pTempOffset));
 							Console::Log(sTemp->GetExternalString());
-							nbAssert::Assert(false);
+							NumbatLogic::Assert::Plz(false);
 							if (sTemp) delete sTemp;
 						}
 						pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
@@ -124,7 +124,7 @@ namespace NumberDuck
 					InternalString* sTemp = new InternalString("expected child TypeRef... ");
 					sTemp->Append(pTokenContainer->StringifyOffset(pTempOffset));
 					Console::Log(sTemp->GetExternalString());
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					{
 						if (sTemp) delete sTemp;
 						if (pChildTypeRef) delete pChildTypeRef;

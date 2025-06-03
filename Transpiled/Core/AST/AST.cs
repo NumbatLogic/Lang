@@ -623,7 +623,7 @@ namespace NumberDuck
 				InternalString sTemp = new InternalString("BaseClone() not setup for ");
 				StringifyType(sTemp);
 				Console.Log(sTemp.GetExternalString());
-				nbAssert.Assert(false);
+				NumbatLogic.Assert.Plz(false);
 				{
 					return null;
 				}

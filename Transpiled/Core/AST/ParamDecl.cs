@@ -35,7 +35,7 @@ namespace NumberDuck
 					{
 						Console.Log("expected param");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 					}
 					pParamDecl.m_pParamVector.PushBack(pParam);
 					{
@@ -51,7 +51,7 @@ namespace NumberDuck
 					{
 						Console.Log("expected comma");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 					}
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 				}

@@ -39,7 +39,7 @@
 #include "TrinaryExpr.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 
 namespace NumberDuck
 {
@@ -624,7 +624,7 @@ namespace NumberDuck
 			InternalString* sTemp = new InternalString("BaseClone() not setup for ");
 			StringifyType(sTemp);
 			Console::Log(sTemp->GetExternalString());
-			nbAssert::Assert(false);
+			NumbatLogic::Assert::Plz(false);
 			{
 				if (sTemp) delete sTemp;
 				return 0;

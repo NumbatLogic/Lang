@@ -5,7 +5,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "Scope.hpp"
 #include "../Util.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"
@@ -50,7 +50,7 @@ namespace NumberDuck
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_LEFT) == 0)
 			{
 				Console::Log("expected left paren");
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					return 0;
@@ -61,7 +61,7 @@ namespace NumberDuck
 			if (pExpression == 0)
 			{
 				Console::Log("expected expression");
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pExpression) delete pExpression;
@@ -72,7 +72,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected right paren");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pExpression) delete pExpression;
@@ -83,7 +83,7 @@ namespace NumberDuck
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_LEFT) == 0)
 			{
 				Console::Log("expected opening curly brace");
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pExpression) delete pExpression;
@@ -110,7 +110,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected default to be last thing in switch statement");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					{
 						if (pTempOffset) delete pTempOffset;
 						if (pExpression) delete pExpression;
@@ -124,7 +124,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected case or default");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					{
 						if (pTempOffset) delete pTempOffset;
 						if (pExpression) delete pExpression;
@@ -139,7 +139,7 @@ namespace NumberDuck
 					{
 						Console::Log("expected colon A");
 						Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-						nbAssert::Assert(false);
+						NumbatLogic::Assert::Plz(false);
 						{
 							if (pTempOffset) delete pTempOffset;
 							if (pExpression) delete pExpression;
@@ -153,7 +153,7 @@ namespace NumberDuck
 					{
 						Console::Log("expected case statement");
 						Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-						nbAssert::Assert(false);
+						NumbatLogic::Assert::Plz(false);
 						{
 							if (pDefaultStatement) delete pDefaultStatement;
 							if (pTempOffset) delete pTempOffset;
@@ -195,7 +195,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected case expression");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					{
 						if (pCaseExpression) delete pCaseExpression;
 						if (pTempOffset) delete pTempOffset;
@@ -214,7 +214,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected colon B");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					{
 						if (pCaseExpression) delete pCaseExpression;
 						if (pTempOffset) delete pTempOffset;
@@ -237,7 +237,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected case statement");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					{
 						if (pCaseExpression) delete pCaseExpression;
 						if (pCaseStatement) delete pCaseStatement;

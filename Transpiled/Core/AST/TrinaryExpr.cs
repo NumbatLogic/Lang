@@ -21,7 +21,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected second expresssion");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -37,7 +37,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected second expresssion");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}

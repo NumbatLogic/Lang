@@ -74,6 +74,7 @@ namespace NumberDuck
 				TOKEN_KEYWORD_UINT64,
 				TOKEN_KEYWORD_UINT8,
 				TOKEN_KEYWORD_UNICHAR,
+				TOKEN_KEYWORD_USING,
 				TOKEN_KEYWORD_VIRTUAL,
 				TOKEN_KEYWORD_VOID,
 				TOKEN_KEYWORD_VOIDPTR,
@@ -416,6 +417,11 @@ namespace NumberDuck
 					case Type.TOKEN_KEYWORD_UNICHAR:
 					{
 						return "UniChar";
+					}
+
+					case Type.TOKEN_KEYWORD_USING:
+					{
+						return "using";
 					}
 
 					case Type.TOKEN_KEYWORD_VIRTUAL:

@@ -8,7 +8,7 @@
 #include "../../Shared/CPP/Vector.hpp"
 #include "NamespaceNode.hpp"
 #include "AST/GenericTypeDecl.hpp"
-#include "../../Shared/CPP/Assert.hpp"
+#include "../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "AST/EnumDecl.hpp"
 #include "AST/EnumDeclValue.hpp"
 #include "AST/DelegateDecl.hpp"
@@ -188,7 +188,7 @@ namespace NumberDuck
 				}
 
 			}
-			nbAssert::Assert(false);
+			NumbatLogic::Assert::Plz(false);
 			{
 				if (pTypeRef) delete pTypeRef;
 				return 0;

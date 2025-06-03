@@ -25,7 +25,7 @@ namespace NumberDuck
 					InternalString sTemp = new InternalString("expected ParamCall ");
 					sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
 					Console.Log(sTemp.GetExternalString());
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}

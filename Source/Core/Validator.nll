@@ -126,7 +126,7 @@ namespace NumberDuck
 				if (pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE && pValueType.m_ePointerType == TypeRef::PointerType::OWNED)
 				{
 					int nIndex = m_pValidatorScopeVector.GetSize()-1;
-					nbAssert::Assert(nIndex >= 0);
+					NumbatLogic::Assert::Plz(nIndex >= 0);
 
 					ValidatorScope pValidatorScope = m_pValidatorScopeVector.Get(nIndex);
 					pValidatorScope.m_pVarDeclVector.PushBack(pVarDecl);
@@ -136,8 +136,8 @@ namespace NumberDuck
 			public void EndScope(Scope pScope)
 			{
 				ValidatorScope* pValidatorScope = own m_pValidatorScopeVector.PopBack();
-				nbAssert::Assert(pValidatorScope != null);
-				nbAssert::Assert(pValidatorScope.m_pScope == pScope);
+				NumbatLogic::Assert::Plz(pValidatorScope != null);
+				NumbatLogic::Assert::Plz(pValidatorScope.m_pScope == pScope);
 
 				AST pCheck = pScope;
 				while (pCheck != null && pCheck.m_eType == AST::Type::AST_SCOPE)
@@ -257,13 +257,13 @@ namespace NumberDuck
 			public void BeginNamespace(string sxName)
 			{
 				m_pCurrentNamespaceNode = m_pCurrentNamespaceNode.GetChild(sxName);
-				nbAssert::Assert(m_pCurrentNamespaceNode != null);
+				NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode != null);
 			}
 
 			public void EndNamespace(string sxName)
 			{
-				nbAssert::Assert(m_pCurrentNamespaceNode.m_sName.IsEqual(sxName));
-				nbAssert::Assert(m_pCurrentNamespaceNode.m_pParent != null);
+				NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode.m_sName.IsEqual(sxName));
+				NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode.m_pParent != null);
 				m_pCurrentNamespaceNode = m_pCurrentNamespaceNode.m_pParent;
 			}
 		}

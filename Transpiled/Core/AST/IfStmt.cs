@@ -22,7 +22,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected left paren");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -33,7 +33,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected condition");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -42,7 +42,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected right paren");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -53,7 +53,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected statement");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -67,7 +67,7 @@ namespace NumberDuck
 					{
 						Console.Log("expected else statement");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 						{
 							return null;
 						}

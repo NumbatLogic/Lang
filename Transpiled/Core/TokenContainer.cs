@@ -50,7 +50,7 @@ namespace NumberDuck
 								if (nChar == '\0')
 								{
 									Console.Log("End of #ifdef name not found");
-									nbAssert.Assert(false);
+									NumbatLogic.Assert.Plz(false);
 								}
 								if (nChar == ' ' || nChar == '\t' || nChar == '\n')
 									break;
@@ -81,7 +81,7 @@ namespace NumberDuck
 								if (nChar == '\0')
 								{
 									Console.Log("End of #ifdef not found");
-									nbAssert.Assert(false);
+									NumbatLogic.Assert.Plz(false);
 								}
 								if (nChar == '#')
 								{
@@ -107,7 +107,7 @@ namespace NumberDuck
 							{
 								Console.Log("#endif with no #ifdef???");
 								Console.Log(sFileName.GetExternalString());
-								nbAssert.Assert(false);
+								NumbatLogic.Assert.Plz(false);
 							}
 							nIfdefDepth--;
 							pParseDatum.m_sInput.SubStr(5, pParseDatum.m_sInput.GetLength() - 5);
@@ -654,6 +654,11 @@ namespace NumberDuck
 						if (pParseDatum.m_sCurrentRead.IsEqual("Uint8"))
 						{
 							PushToken(Token.Type.TOKEN_KEYWORD_UINT8, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
+							return;
+						}
+						if (pParseDatum.m_sCurrentRead.IsEqual("using"))
+						{
+							PushToken(Token.Type.TOKEN_KEYWORD_USING, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
 							return;
 						}
 						if (pParseDatum.m_sCurrentRead.IsEqual("while"))

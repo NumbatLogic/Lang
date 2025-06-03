@@ -37,7 +37,7 @@ namespace NumberDuck
 				if (pFunctionDecl == null)
 				{
 					Console.Log("expected function decl");
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -45,7 +45,7 @@ namespace NumberDuck
 				if (pFunctionDecl.m_pScope != null)
 				{
 					Console.Log("function def can't have scope!");
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}

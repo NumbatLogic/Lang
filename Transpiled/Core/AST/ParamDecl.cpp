@@ -6,7 +6,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "../Validator.hpp"
 #include "TypeRef.hpp"
 #include "ParamCall.hpp"
@@ -62,7 +62,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected param");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 				}
 				pParamDecl->m_pParamVector->PushBack(pParam);
 				{
@@ -79,7 +79,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected comma");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 				}
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 				if (pParam) delete pParam;

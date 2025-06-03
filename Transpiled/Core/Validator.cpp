@@ -11,7 +11,7 @@
 #include "../../Shared/CPP/Console.hpp"
 #include "AST/TypeRef.hpp"
 #include "ValueType.hpp"
-#include "../../Shared/CPP/Assert.hpp"
+#include "../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "AST/VarDeclDescope.hpp"
 #include "AST/ReturnStmt.hpp"
 #include "AST/DisownExpr.hpp"
@@ -176,7 +176,7 @@ namespace NumberDuck
 				if (pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE && pValueType->m_ePointerType == TypeRef::PointerType::OWNED)
 				{
 					int nIndex = m_pValidatorScopeVector->GetSize() - 1;
-					nbAssert::Assert(nIndex >= 0);
+					NumbatLogic::Assert::Plz(nIndex >= 0);
 					ValidatorScope* pValidatorScope = m_pValidatorScopeVector->Get(nIndex);
 					pValidatorScope->m_pVarDeclVector->PushBack(pVarDecl);
 				}
@@ -186,8 +186,8 @@ namespace NumberDuck
 		void Validator::EndScope(Scope* pScope)
 		{
 			ValidatorScope* pValidatorScope = m_pValidatorScopeVector->PopBack();
-			nbAssert::Assert(pValidatorScope != 0);
-			nbAssert::Assert(pValidatorScope->m_pScope == pScope);
+			NumbatLogic::Assert::Plz(pValidatorScope != 0);
+			NumbatLogic::Assert::Plz(pValidatorScope->m_pScope == pScope);
 			AST* pCheck = pScope;
 			while (pCheck != 0 && pCheck->m_eType == AST::Type::AST_SCOPE)
 			{
@@ -326,13 +326,13 @@ namespace NumberDuck
 		void Validator::BeginNamespace(const char* sxName)
 		{
 			m_pCurrentNamespaceNode = m_pCurrentNamespaceNode->GetChild(sxName);
-			nbAssert::Assert(m_pCurrentNamespaceNode != 0);
+			NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode != 0);
 		}
 
 		void Validator::EndNamespace(const char* sxName)
 		{
-			nbAssert::Assert(m_pCurrentNamespaceNode->m_sName->IsEqual(sxName));
-			nbAssert::Assert(m_pCurrentNamespaceNode->m_pParent != 0);
+			NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode->m_sName->IsEqual(sxName));
+			NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode->m_pParent != 0);
 			m_pCurrentNamespaceNode = m_pCurrentNamespaceNode->m_pParent;
 		}
 

@@ -3,7 +3,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "AST.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"
 
@@ -29,7 +29,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected '(' ");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					return 0;
@@ -51,7 +51,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected param");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 				}
 				{
 					NumberDuck::Secret::AST* __3343749822 = pParam;
@@ -67,7 +67,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected comma");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 				}
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 				if (pParam) delete pParam;

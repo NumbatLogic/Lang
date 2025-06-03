@@ -321,6 +321,11 @@ namespace NumberDuck
 					return "UniChar";
 				}
 
+				case Type::TOKEN_KEYWORD_USING:
+				{
+					return "using";
+				}
+
 				case Type::TOKEN_KEYWORD_VIRTUAL:
 				{
 					return "virtual";

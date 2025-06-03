@@ -5,7 +5,7 @@
 #include "../Token.hpp"
 #include "ParamDecl.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "ParamCall.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"
 #include "Scope.hpp"
@@ -58,7 +58,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected ParamDecl");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pAccessLevel) delete pAccessLevel;
@@ -82,7 +82,7 @@ namespace NumberDuck
 					{
 						Console::Log("expected base!");
 						Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-						nbAssert::Assert(false);
+						NumbatLogic::Assert::Plz(false);
 						{
 							if (pTempOffset) delete pTempOffset;
 							if (pAccessLevel) delete pAccessLevel;
@@ -99,7 +99,7 @@ namespace NumberDuck
 						InternalString* sTemp = new InternalString("expected ParamCall ");
 						sTemp->Append(pTokenContainer->StringifyOffset(pTempOffset));
 						Console::Log(sTemp->GetExternalString());
-						nbAssert::Assert(false);
+						NumbatLogic::Assert::Plz(false);
 						{
 							if (sTemp) delete sTemp;
 							if (pParamCall) delete pParamCall;
@@ -124,7 +124,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected scope");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 				}
 			}
 			pTorDecl->m_eType = AST::Type::AST_TOR_DECL;

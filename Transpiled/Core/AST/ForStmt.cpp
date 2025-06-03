@@ -4,7 +4,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "VarDecl.hpp"
 #include "../Util.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"
@@ -42,7 +42,7 @@ namespace NumberDuck
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_LEFT) == 0)
 			{
 				Console::Log("expected left paren");
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					return 0;
@@ -57,7 +57,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected before statement");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					{
 						if (pTempOffset) delete pTempOffset;
 						if (pBeforeStatement) delete pBeforeStatement;
@@ -69,7 +69,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected semicolon");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pBeforeStatement) delete pBeforeStatement;
@@ -82,7 +82,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected condition statement");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pBeforeStatement) delete pBeforeStatement;
@@ -94,7 +94,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected semicolon");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pBeforeStatement) delete pBeforeStatement;
@@ -108,7 +108,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected right paren");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pBeforeStatement) delete pBeforeStatement;
@@ -123,7 +123,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected statement");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 			}
 			ForStmt* pForStmt = new ForStmt();
 			pForStmt->m_pFirstToken = pForToken;

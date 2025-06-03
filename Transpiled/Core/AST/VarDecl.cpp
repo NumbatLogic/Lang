@@ -5,7 +5,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "../../../Shared/CPP/ExternalString.hpp"
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
@@ -70,7 +70,7 @@ namespace NumberDuck
 				{
 					Console::Log("unable to parse array size...");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					{
 						if (pArraySize) delete pArraySize;
 						if (pTempOffset) delete pTempOffset;
@@ -84,7 +84,7 @@ namespace NumberDuck
 				{
 					Console::Log("unable to parse closing square bracket");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					{
 						if (pArraySize) delete pArraySize;
 						if (pTempOffset) delete pTempOffset;
@@ -112,7 +112,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected to parse assignment...");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					{
 						if (pTempOffset) delete pTempOffset;
 						if (pTypeRef) delete pTypeRef;
@@ -275,7 +275,7 @@ namespace NumberDuck
 				AST* pParentParent = m_pParent->m_pParent;
 				if (pParentParent == 0 || pParentParent->m_eType != AST::Type::AST_CLASS_DECL)
 				{
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 				}
 				ClassDecl* pClassDecl = (ClassDecl*)(pParentParent);
 				sOut->AppendString(pClassDecl->m_pNameToken->GetString());

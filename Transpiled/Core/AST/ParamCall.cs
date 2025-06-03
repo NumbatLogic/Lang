@@ -12,7 +12,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected '(' ");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -33,7 +33,7 @@ namespace NumberDuck
 					{
 						Console.Log("expected param");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 					}
 					{
 						NumberDuck.Secret.AST __3343749822 = pParam;
@@ -48,7 +48,7 @@ namespace NumberDuck
 					{
 						Console.Log("expected comma");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 					}
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 				}

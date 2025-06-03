@@ -29,7 +29,7 @@ namespace NumberDuck
 					if (pEnumDeclValue.m_pForceValue == null)
 					{
 						Console.Log("expected to parse something...");
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 						{
 							return null;
 						}

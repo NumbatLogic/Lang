@@ -40,7 +40,7 @@ namespace NumberDuck
 					{
 						Console.Log("unable to parse array size...");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 						{
 							return null;
 						}
@@ -50,7 +50,7 @@ namespace NumberDuck
 					{
 						Console.Log("unable to parse closing square bracket");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 						{
 							return null;
 						}
@@ -73,7 +73,7 @@ namespace NumberDuck
 					{
 						Console.Log("expected to parse assignment...");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 						{
 							return null;
 						}
@@ -217,7 +217,7 @@ namespace NumberDuck
 					AST pParentParent = m_pParent.m_pParent;
 					if (pParentParent == null || pParentParent.m_eType != AST.Type.AST_CLASS_DECL)
 					{
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 					}
 					ClassDecl pClassDecl = (ClassDecl)(pParentParent);
 					sOut.AppendString(pClassDecl.m_pNameToken.GetString());

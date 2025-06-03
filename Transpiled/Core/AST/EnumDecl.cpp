@@ -6,7 +6,7 @@
 #include "../../../Shared/CPP/Vector.hpp"
 #include "EnumDeclValue.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "../../../Shared/CPP/ExternalString.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"
 #include "../Util.hpp"
@@ -50,7 +50,7 @@ namespace NumberDuck
 			if (pEnumDecl->m_pNameToken == 0)
 			{
 				Console::Log("expected enum name");
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pEnumDecl) delete pEnumDecl;
@@ -61,7 +61,7 @@ namespace NumberDuck
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_LEFT) == 0)
 			{
 				Console::Log("expected opening curly brace");
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pEnumDecl) delete pEnumDecl;
@@ -80,7 +80,7 @@ namespace NumberDuck
 				if (pEnumDeclValue == 0)
 				{
 					Console::Log("expected EnumDeclValue");
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 				}
 				pEnumDecl->m_pEnumDeclValueVector->PushBack(pEnumDeclValue);
 				{
@@ -97,7 +97,7 @@ namespace NumberDuck
 				{
 					Console::Log("expected comma");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 				}
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 				if (pEnumDeclValue) delete pEnumDeclValue;

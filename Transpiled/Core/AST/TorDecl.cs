@@ -30,7 +30,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected ParamDecl");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -51,7 +51,7 @@ namespace NumberDuck
 						{
 							Console.Log("expected base!");
 							Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-							nbAssert.Assert(false);
+							NumbatLogic.Assert.Plz(false);
 							{
 								return null;
 							}
@@ -63,7 +63,7 @@ namespace NumberDuck
 							InternalString sTemp = new InternalString("expected ParamCall ");
 							sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
 							Console.Log(sTemp.GetExternalString());
-							nbAssert.Assert(false);
+							NumbatLogic.Assert.Plz(false);
 							{
 								return null;
 							}
@@ -80,7 +80,7 @@ namespace NumberDuck
 					{
 						Console.Log("expected scope");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 					}
 				}
 				pTorDecl.m_eType = AST.Type.AST_TOR_DECL;

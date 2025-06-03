@@ -37,7 +37,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected class name");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -58,7 +58,7 @@ namespace NumberDuck
 						if (pGenericTypeDecl == null)
 						{
 							Console.Log("expected inner GenericTypeDecl");
-							nbAssert.Assert(false);
+							NumbatLogic.Assert.Plz(false);
 						}
 						{
 							NumberDuck.Secret.GenericTypeDecl __3828846222 = pGenericTypeDecl;
@@ -73,7 +73,7 @@ namespace NumberDuck
 						{
 							Console.Log("expected comma");
 							Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-							nbAssert.Assert(false);
+							NumbatLogic.Assert.Plz(false);
 						}
 						pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 					}
@@ -87,7 +87,7 @@ namespace NumberDuck
 					{
 						Console.Log("expected base class name");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 						{
 							return null;
 						}
@@ -98,7 +98,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected opening curly brace");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -177,7 +177,7 @@ namespace NumberDuck
 					}
 					Console.Log("expected to parse somethting within class...");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 				}
 				pOffsetDatum.Set(pTempOffset);
 				{

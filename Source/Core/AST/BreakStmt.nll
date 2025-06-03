@@ -21,7 +21,7 @@ namespace NumberDuck
 				if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == null)
 				{
 					Console::Log("expected semicolon");
-					nbAssert::Assert(false);
+					NumbatLogic::Assert::Plz(false);
 					return null;
 				}
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;

@@ -36,7 +36,7 @@ namespace NumberDuck
 					{
 						Console::Log("expected to parse somethting within scope...");
 						Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert::Assert(false);
+						NumbatLogic::Assert::Plz(false);
 						return null;
 					}
 

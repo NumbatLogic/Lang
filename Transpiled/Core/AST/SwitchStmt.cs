@@ -29,7 +29,7 @@ namespace NumberDuck
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_LEFT) == null)
 				{
 					Console.Log("expected left paren");
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -39,7 +39,7 @@ namespace NumberDuck
 				if (pExpression == null)
 				{
 					Console.Log("expected expression");
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -48,7 +48,7 @@ namespace NumberDuck
 				{
 					Console.Log("expected right paren");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -57,7 +57,7 @@ namespace NumberDuck
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_CURLY_BRACE_LEFT) == null)
 				{
 					Console.Log("expected opening curly brace");
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -82,7 +82,7 @@ namespace NumberDuck
 					{
 						Console.Log("expected default to be last thing in switch statement");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 						{
 							return null;
 						}
@@ -93,7 +93,7 @@ namespace NumberDuck
 					{
 						Console.Log("expected case or default");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 						{
 							return null;
 						}
@@ -105,7 +105,7 @@ namespace NumberDuck
 						{
 							Console.Log("expected colon A");
 							Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-							nbAssert.Assert(false);
+							NumbatLogic.Assert.Plz(false);
 							{
 								return null;
 							}
@@ -116,7 +116,7 @@ namespace NumberDuck
 						{
 							Console.Log("expected case statement");
 							Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-							nbAssert.Assert(false);
+							NumbatLogic.Assert.Plz(false);
 							{
 								return null;
 							}
@@ -152,7 +152,7 @@ namespace NumberDuck
 					{
 						Console.Log("expected case expression");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 						{
 							return null;
 						}
@@ -167,7 +167,7 @@ namespace NumberDuck
 					{
 						Console.Log("expected colon B");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 						{
 							return null;
 						}
@@ -185,7 +185,7 @@ namespace NumberDuck
 					{
 						Console.Log("expected case statement");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 						{
 							return null;
 						}

@@ -28,7 +28,7 @@ namespace NumberDuck
 				if (pEnumDecl.m_pNameToken == null)
 				{
 					Console.Log("expected enum name");
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -37,7 +37,7 @@ namespace NumberDuck
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_CURLY_BRACE_LEFT) == null)
 				{
 					Console.Log("expected opening curly brace");
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return null;
 					}
@@ -54,7 +54,7 @@ namespace NumberDuck
 					if (pEnumDeclValue == null)
 					{
 						Console.Log("expected EnumDeclValue");
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 					}
 					pEnumDecl.m_pEnumDeclValueVector.PushBack(pEnumDeclValue);
 					{
@@ -70,7 +70,7 @@ namespace NumberDuck
 					{
 						Console.Log("expected comma");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						nbAssert.Assert(false);
+						NumbatLogic.Assert.Plz(false);
 					}
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 				}

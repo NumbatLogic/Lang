@@ -4,7 +4,7 @@
 #include "../Token.hpp"
 #include "TypeRef.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Shared/CPP/Assert.hpp"
+#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "ParamCall.hpp"
 #include "AST.hpp"
 #include "../Validator.hpp"
@@ -48,7 +48,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected TypeRef...");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pTypeRef) delete pTypeRef;
@@ -60,7 +60,7 @@ namespace NumberDuck
 			{
 				Console::Log("expected ParamCall ");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTempOffset) delete pTempOffset;
 					if (pTypeRef) delete pTypeRef;
