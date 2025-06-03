@@ -5,21 +5,17 @@ pipeline{
 			steps{
 				cleanWs()
 				dir("Lang"){
-					checkout scm: [
-						$class: 'GitSCM',
-						branches: scm.branches,
-						extensions: [
-							[$class: 'SubmoduleOption',
-							disableSubmodules: false,
-							parentCredentials: false,
-							recursiveSubmodules: true,
-							reference: 'https://github.com/NumbatLogic/Lang',
-							shallow: true,
-							trackingSubmodules: false]
-						],
-						submoduleCfg: [],
-						userRemoteConfigs: scm.userRemoteConfigs
-					]
+					checkout([$class: 'GitSCM',
+					branches: [[name: '*/main']],
+					doGenerateSubmoduleConfigurations: false,
+					extensions: [[$class: 'SubmoduleOption',
+					disableSubmodules: false,
+					parentCredentials: false,
+					recursiveSubmodules: true,
+					reference: '',
+					trackingSubmodules: false]], 
+					submoduleCfg: [], 
+					userRemoteConfigs: [[url: 'https://github.com/NumbatLogic/Lang']]])
 				}
 				dir("ProjectGen"){
 					git url: "https://github.com/NumbatLogic/ProjectGen",
