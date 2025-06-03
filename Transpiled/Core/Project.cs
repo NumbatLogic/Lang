@@ -28,7 +28,7 @@ namespace NumberDuck
 				{
 					Console.Log("unable to parse file");
 					Console.Log(sFile);
-					nbAssert.Assert(false);
+					NumbatLogic.Assert.Plz(false);
 					{
 						return;
 					}
@@ -71,7 +71,7 @@ namespace NumberDuck
 			{
 				if (pInAst.m_eType == AST.Type.AST_TRANSLATION_UNIT)
 				{
-					nbAssert.Assert(pSecretNamespace == null);
+					NumbatLogic.Assert.Plz(pSecretNamespace == null);
 				}
 				AST pChild = pInAst.m_pFirstChild;
 				while (pChild != null)
@@ -85,7 +85,7 @@ namespace NumberDuck
 							pNextChild = pChild.m_pNextSibling;
 							AST pOwnedChild;
 							pOwnedChild = pInAst.RemoveChild(pChild);
-							nbAssert.Assert(pOwnedChild != null);
+							NumbatLogic.Assert.Plz(pOwnedChild != null);
 							if (pSecretNamespace == null)
 							{
 								{

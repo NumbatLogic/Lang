@@ -1,13 +1,13 @@
 <?php
-	class Core_Config extends Project_Config
+	class Package_Config extends Project_Config
 	{	
 		public function __construct($sAction)
 		{
 			parent::__construct($sAction);
-			$this->m_xFileArray = ProjectGen_ParseDirectory(dirname(__FILE__) . "/../../../Transpiled/Core", "/\.h|\.cpp/");
+			$this->m_xFileArray = ProjectGen_ParseDirectory(dirname(__FILE__) . "/../../../Source/Package", "/\.hpp|\.cpp/");
 		}
 
-		public function GetName() { return "Core"; }
+		public function GetName() { return "Package"; }
 		public function GetKind() { return KIND_STATIC_LIBRARY; }
 		public function GetBaseDirectory() { return dirname(__FILE__); }
 
@@ -23,8 +23,7 @@
 		public function GetDependancyArray()
 		{
 			$sArray = array(
-				"Shared",
-				"Package",
+				//"Shared",
 				//"ThirdParty",
 			);
 

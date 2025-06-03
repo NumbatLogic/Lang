@@ -10,6 +10,7 @@
 	include_once dirname(__FILE__) . "/Core/CPP/Core.php";
 	include_once dirname(__FILE__) . "/CLI/CPP/CLI.php";
 	include_once dirname(__FILE__) . "/Test/CPP/Test.php";
+	include_once dirname(__FILE__) . "/Package/CPP/Package.php";
 	include_once dirname(__FILE__) . "/../Shared/CPP/Shared.php";
 	//include_once dirname(__FILE__) . "/ThirdParty/ThirdParty.php";
 
@@ -47,6 +48,7 @@
 			//$this->m_pProjectArray[] = new CoreTest_Config($sAction);
 			$this->m_pProjectArray[] = new CLI_Config($sAction);
 			$this->m_pProjectArray[] = new Test_Config($sAction);
+			$this->m_pProjectArray[] = new Package_Config($sAction);
 			$this->m_pProjectArray[] = new Shared_Config($sAction);
 		}
 

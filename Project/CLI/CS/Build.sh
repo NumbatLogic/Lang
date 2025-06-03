@@ -1,2 +1,2 @@
 #!/bin/bash
-csc -debug:full -reference:System.IO.Compression.dll *.cs ../../../Transpiled/CLI/*.cs ../../../Transpiled/Core/*.cs ../../../Transpiled/Core/AST/*.cs ../../../Shared/CS/*.cs ../../../Transpiled/Shared/*.cs 
+csc -debug:full -reference:System.IO.Compression.dll *.cs ../../../Transpiled/CLI/*.cs ../../../Transpiled/Core/*.cs ../../../Transpiled/Core/AST/*.cs ../../../Shared/CS/*.cs ../../../Transpiled/Shared/*.cs ../../../Source/Package/nll-Assert/CS/*.cs

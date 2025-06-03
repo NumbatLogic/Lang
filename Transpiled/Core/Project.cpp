@@ -4,7 +4,7 @@
 #include "NamespaceNode.hpp"
 #include "../../Shared/CPP/InternalString.hpp"
 #include "../../Shared/CPP/Console.hpp"
-#include "../../Shared/CPP/Assert.hpp"
+#include "../../Source/Package/nll-Assert/CPP/Assert.hpp"
 #include "../Shared/OwnedVector.hpp"
 #include "../../Shared/CPP/File.hpp"
 #include "Validator.hpp"
@@ -53,7 +53,7 @@ namespace NumberDuck
 			{
 				Console::Log("unable to parse file");
 				Console::Log(sFile);
-				nbAssert::Assert(false);
+				NumbatLogic::Assert::Plz(false);
 				{
 					if (pTranslationUnit) delete pTranslationUnit;
 					return;
@@ -101,7 +101,7 @@ namespace NumberDuck
 		{
 			if (pInAst->m_eType == AST::Type::AST_TRANSLATION_UNIT)
 			{
-				nbAssert::Assert(pSecretNamespace == 0);
+				NumbatLogic::Assert::Plz(pSecretNamespace == 0);
 			}
 			AST* pChild = pInAst->m_pFirstChild;
 			while (pChild != 0)
@@ -115,7 +115,7 @@ namespace NumberDuck
 						pNextChild = pChild->m_pNextSibling;
 						AST* pOwnedChild = 0;
 						pOwnedChild = pInAst->RemoveChild(pChild);
-						nbAssert::Assert(pOwnedChild != 0);
+						NumbatLogic::Assert::Plz(pOwnedChild != 0);
 						if (pSecretNamespace == 0)
 						{
 							{
