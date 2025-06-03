@@ -558,6 +558,11 @@ namespace NumberDuck
 							PushToken(Token::Type::TOKEN_KEYWORD_UINT8, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
 							return;
 						}
+						if (pParseDatum.m_sCurrentRead.IsEqual("using"))
+						{
+							PushToken(Token::Type::TOKEN_KEYWORD_USING, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
+							return;
+						}
 						if (pParseDatum.m_sCurrentRead.IsEqual("while"))
 						{
 							PushToken(Token::Type::TOKEN_KEYWORD_WHILE, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);

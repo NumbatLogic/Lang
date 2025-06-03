@@ -73,6 +73,7 @@ namespace NumberDuck
 				TOKEN_KEYWORD_UINT64,
 				TOKEN_KEYWORD_UINT8,
 				TOKEN_KEYWORD_UNICHAR,
+				TOKEN_KEYWORD_USING,
 				TOKEN_KEYWORD_VIRTUAL,
 				TOKEN_KEYWORD_VOID,
 				TOKEN_KEYWORD_VOIDPTR,
@@ -178,6 +179,7 @@ namespace NumberDuck
 					case Type::TOKEN_KEYWORD_UINT8: return "Uint8";
 					case Type::TOKEN_KEYWORD_UINT: return "uint";
 					case Type::TOKEN_KEYWORD_UNICHAR: return "UniChar";
+					case Type::TOKEN_KEYWORD_USING: return "using";
 					case Type::TOKEN_KEYWORD_VIRTUAL: return "virtual";
 					case Type::TOKEN_KEYWORD_VOID: return "void";
 					case Type::TOKEN_KEYWORD_VOIDPTR: return "voidptr";
