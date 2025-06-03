@@ -1,0 +1,3 @@
+[submodule "Source/Package/nll-Assert"]
+	path = Source/Package/nll-Assert
+	url = https://github.com/NumbatLogic/nll-Assert
