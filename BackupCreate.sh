@@ -9,4 +9,5 @@ cp -r Source Backup
 cp -r Transpiled Backup
 cp -r Shared Backup
 
-#sed -i 's/include\_once dirname(\_\_FILE\_\_) \. \"\/..\/..\/ProjectGen\/ProjectGen\.php\"\;/include\_once dirname(\_\_FILE\_\_) \. \"\/..\/..\/..\/ProjectGen\/ProjectGen\.php\"\;/g' Backup/Project/CPP.php
+sed -i 's/LangShared/..\/LangShared/g' Backup/Project/CLI/CS/Build.sh
+sed -i 's/LangShared/..\/LangShared/g' Backup/Project/Test/CS/Build.sh
