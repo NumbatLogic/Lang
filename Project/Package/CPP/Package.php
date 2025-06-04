@@ -4,7 +4,7 @@
 		public function __construct($sAction)
 		{
 			parent::__construct($sAction);
-			$this->m_xFileArray = ProjectGen_ParseDirectory(dirname(__FILE__) . "/../../../Source/Package", "/\.hpp|\.cpp/");
+			$this->m_xFileArray = ProjectGen_ParseDirectory(dirname(__FILE__) . "/../../../../LangShared/Assert", "/\.hpp|\.cpp/");
 		}
 
 		public function GetName() { return "Package"; }

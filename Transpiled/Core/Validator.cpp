@@ -11,7 +11,7 @@
 #include "../../Shared/CPP/Console.hpp"
 #include "AST/TypeRef.hpp"
 #include "ValueType.hpp"
-#include "../../Source/Package/nll-Assert/CPP/Assert.hpp"
+#include "../../../LangShared/Assert/CPP/Assert.hpp"
 #include "AST/VarDeclDescope.hpp"
 #include "AST/ReturnStmt.hpp"
 #include "AST/DisownExpr.hpp"

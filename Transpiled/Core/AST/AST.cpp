@@ -39,7 +39,7 @@
 #include "TrinaryExpr.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
+#include "../../../../LangShared/Assert/CPP/Assert.hpp"
 
 namespace NumberDuck
 {

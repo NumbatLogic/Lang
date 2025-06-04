@@ -5,7 +5,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
+#include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "Scope.hpp"
 #include "../Util.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"

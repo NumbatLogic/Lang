@@ -4,7 +4,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
+#include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "../Validator.hpp"
 #include "../../../Shared/CPP/ExternalString.hpp"
 #include "../NamespaceNode.hpp"

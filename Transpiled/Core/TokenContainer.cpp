@@ -4,7 +4,7 @@
 #include "../../Shared/CPP/InternalString.hpp"
 #include "ParseDatum.hpp"
 #include "../../Shared/CPP/Console.hpp"
-#include "../../Source/Package/nll-Assert/CPP/Assert.hpp"
+#include "../../../LangShared/Assert/CPP/Assert.hpp"
 #include "OffsetDatum.hpp"
 
 namespace NumberDuck

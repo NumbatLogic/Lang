@@ -3,7 +3,7 @@
 #include "../OffsetDatum.hpp"
 #include "../../../Shared/CPP/Console.hpp"
 #include "../TokenContainer.hpp"
-#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
+#include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "../Token.hpp"
 #include "../Validator.hpp"
 #include "../ValueType.hpp"

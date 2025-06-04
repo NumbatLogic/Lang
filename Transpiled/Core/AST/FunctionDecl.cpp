@@ -5,7 +5,7 @@
 #include "../Token.hpp"
 #include "ParamDecl.hpp"
 #include "../../../Shared/CPP/Console.hpp"
-#include "../../../Source/Package/nll-Assert/CPP/Assert.hpp"
+#include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "Scope.hpp"
 #include "AST.hpp"
 #include "../../../Shared/CPP/ExternalString.hpp"

@@ -4,7 +4,7 @@
 #include "NamespaceNode.hpp"
 #include "../../Shared/CPP/InternalString.hpp"
 #include "../../Shared/CPP/Console.hpp"
-#include "../../Source/Package/nll-Assert/CPP/Assert.hpp"
+#include "../../../LangShared/Assert/CPP/Assert.hpp"
 #include "../Shared/OwnedVector.hpp"
 #include "../../Shared/CPP/File.hpp"
 #include "Validator.hpp"
@@ -88,6 +88,7 @@ namespace NumberDuck
 				if (pTranslationUnit->m_sInFile->EndsWith(".nll"))
 				{
 					pTranslationUnit->m_sInFile->Replace("Shared", "Source/Shared");
+					pTranslationUnit->m_sInFile->Replace("../LangPackage", "Source/LangShared");
 				}
 			}
 			Validator* pValidator = new Validator(this);
