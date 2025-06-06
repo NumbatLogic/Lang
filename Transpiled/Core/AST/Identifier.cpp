@@ -7,7 +7,7 @@
 #include "../ValueType.hpp"
 #include "ClassDecl.hpp"
 #include "EnumDecl.hpp"
-#include "../../../Shared/CPP/Vector.hpp"
+#include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "../NamespaceNode.hpp"
 #include "NamespaceDecl.hpp"
 #include "../Validator.hpp"
@@ -15,7 +15,7 @@
 #include "VarDecl.hpp"
 #include "MemberVarDecl.hpp"
 #include "TypeRef.hpp"
-#include "../../Shared/OwnedVector.hpp"
+#include "../../../../LangTranspiled/Shared/Vector/OwnedVector.hpp"
 
 namespace NumberDuck
 {

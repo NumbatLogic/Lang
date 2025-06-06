@@ -22,33 +22,15 @@
 			
 			$this->m_pProjectArray[] = new Core_Config($sAction);
 
-			
-			//$sAllowedDirectoryArray = array("utf8proc");
-			//$this->m_pProjectArray[] = new ThirdParty_Config($sAction, $sAllowedDirectoryArray);
-
-			/*$sAllowedDirectoryArray = array(
-				"nbAssert",
-				"nbBlob",
-				"nbEase",
-				"nbMutex",
-				"nbRand",
-				"nbType",
-				"nbMemoryManager",
-				//"nbPlatformDefine",
-				//"nbSocket",
-				"nbString",
-				"nbVector",
-				//"nbDatabase",
-				//"nbDatabaseUtils",
-				//"nbObject",
-				//"nbDatabaseObject"
+			$sAllowedDirectoryArray = array(
+				"Assert",
+				"Console",
 			);
-			$this->m_pProjectArray[] = new Package_Config($sAction, $sAllowedDirectoryArray);*/
+			$this->m_pProjectArray[] = new Package_Config($sAction, $sAllowedDirectoryArray);
 
-			//$this->m_pProjectArray[] = new CoreTest_Config($sAction);
+			
 			$this->m_pProjectArray[] = new CLI_Config($sAction);
 			$this->m_pProjectArray[] = new Test_Config($sAction);
-			$this->m_pProjectArray[] = new Package_Config($sAction);
 			$this->m_pProjectArray[] = new Shared_Config($sAction);
 		}
 

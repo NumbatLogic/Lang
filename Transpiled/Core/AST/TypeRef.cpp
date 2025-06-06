@@ -1,15 +1,15 @@
 #include "TypeRef.hpp"
 #include "AST.hpp"
-#include "../../../Shared/CPP/Vector.hpp"
+#include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "../OffsetDatum.hpp"
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
-#include "../../../Shared/CPP/Console.hpp"
+#include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
-#include "../../Shared/OwnedVector.hpp"
+#include "../../../../LangTranspiled/Shared/Vector/OwnedVector.hpp"
 
 namespace NumberDuck
 {

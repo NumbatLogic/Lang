@@ -1,5 +1,5 @@
 #include "OwnedVector.hpp"
-#include "../../Shared/CPP/Vector.hpp"
+#include "../../../LangShared/Vector/CPP/Vector.hpp"
 
 namespace NumberDuck
 {

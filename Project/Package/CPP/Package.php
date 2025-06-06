@@ -1,10 +1,16 @@
 <?php
 	class Package_Config extends Project_Config
 	{	
-		public function __construct($sAction)
+		public function __construct($sAction, $sAllowedDirectoryArray = array())
 		{
 			parent::__construct($sAction);
-			$this->m_xFileArray = ProjectGen_ParseDirectory(dirname(__FILE__) . "/../../../../LangShared/Assert", "/\.hpp|\.cpp/");
+
+			// $sRegex = "/\.h$|\.c$/";
+			// if ($this->m_sAction == ACTION_IOS_XCODE || $this->m_sAction == ACTION_WINDOWS_VS2008)
+			//	$sRegex = "/\.h$|\.c$|\.m$/";
+
+			$sRegex = "/\.hpp$|\.cpp$/";
+			$this->m_xFileArray = ProjectGen_ParseDirectory(dirname(__FILE__) . "/../../../../LangShared", $sRegex, $sAllowedDirectoryArray);
 		}
 
 		public function GetName() { return "Package"; }

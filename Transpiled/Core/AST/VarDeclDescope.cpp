@@ -1,6 +1,6 @@
 #include "VarDeclDescope.hpp"
 #include "AST.hpp"
-#include "../../../Shared/CPP/Vector.hpp"
+#include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "VarDecl.hpp"
 #include "../Util.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "AST/TypeRef.hpp"
-#include "../Shared/OwnedVector.hpp"
+#include "../../../LangTranspiled/Shared/Vector/OwnedVector.hpp"
 
 namespace NumberDuck
 {

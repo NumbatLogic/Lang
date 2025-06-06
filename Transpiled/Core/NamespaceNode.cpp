@@ -1,6 +1,6 @@
 #include "NamespaceNode.hpp"
-#include "../Shared/OwnedVector.hpp"
-#include "../../Shared/CPP/Vector.hpp"
+#include "../../../LangTranspiled/Shared/Vector/OwnedVector.hpp"
+#include "../../../LangShared/Vector/CPP/Vector.hpp"
 #include "AST/NamespaceDecl.hpp"
 #include "Token.hpp"
 #include "../../Shared/CPP/InternalString.hpp"

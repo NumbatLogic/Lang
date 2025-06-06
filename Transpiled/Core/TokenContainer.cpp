@@ -1,9 +1,9 @@
 #include "TokenContainer.hpp"
-#include "../Shared/OwnedVector.hpp"
+#include "../../../LangTranspiled/Shared/Vector/OwnedVector.hpp"
 #include "Token.hpp"
 #include "../../Shared/CPP/InternalString.hpp"
 #include "ParseDatum.hpp"
-#include "../../Shared/CPP/Console.hpp"
+#include "../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../LangShared/Assert/CPP/Assert.hpp"
 #include "OffsetDatum.hpp"
 

@@ -9,14 +9,11 @@ namespace NumberDuck
 		class InternalString;
 	}
 }
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class CLI
 	{
-		class CLI
-		{
-			public: static void Run(Vector<const char*>* sArgVector);
-		};
-	}
+		public: static void Run(Vector<const char*>* sArgVector);
+	};
 }
 

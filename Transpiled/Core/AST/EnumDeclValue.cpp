@@ -3,7 +3,7 @@
 #include "../OffsetDatum.hpp"
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
-#include "../../../Shared/CPP/Console.hpp"
+#include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "../../../Shared/CPP/ExternalString.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"

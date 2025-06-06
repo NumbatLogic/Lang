@@ -1,5 +1,5 @@
 #include "PointerTest.hpp"
-#include "../../Shared/CPP/Console.hpp"
+#include "../../../LangShared/Console/CPP/Console.hpp"
 
 namespace NumberDuck
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Shared/OwnedVector.hpp"
+#include "../../../LangTranspiled/Shared/Vector/OwnedVector.hpp"
 #include "Token.hpp"
 
 namespace NumberDuck

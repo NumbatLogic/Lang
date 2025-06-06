@@ -4,7 +4,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "ParamDecl.hpp"
-#include "../../../Shared/CPP/Console.hpp"
+#include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "Scope.hpp"
 #include "AST.hpp"
@@ -12,7 +12,7 @@
 #include "../Validator.hpp"
 #include "MemberFunctionDecl.hpp"
 #include "ClassDecl.hpp"
-#include "../../Shared/OwnedVector.hpp"
+#include "../../../../LangTranspiled/Shared/Vector/OwnedVector.hpp"
 #include "../../../Shared/CPP/InternalString.hpp"
 
 namespace NumberDuck

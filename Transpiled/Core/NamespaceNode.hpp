@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Shared/OwnedVector.hpp"
-#include "../../Shared/CPP/Vector.hpp"
+#include "../../../LangTranspiled/Shared/Vector/OwnedVector.hpp"
+#include "../../../LangShared/Vector/CPP/Vector.hpp"
 
 namespace NumberDuck
 {

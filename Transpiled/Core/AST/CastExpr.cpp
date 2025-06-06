@@ -4,7 +4,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "TypeRef.hpp"
-#include "../../../Shared/CPP/Console.hpp"
+#include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "ParamCall.hpp"
 #include "../Validator.hpp"

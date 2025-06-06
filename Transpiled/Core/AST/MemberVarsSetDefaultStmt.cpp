@@ -10,7 +10,7 @@
 #include "../../../Shared/CPP/InternalString.hpp"
 #include "../ValueType.hpp"
 #include "EnumDecl.hpp"
-#include "../../../Shared/CPP/Vector.hpp"
+#include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "EnumDeclValue.hpp"
 
 namespace NumberDuck

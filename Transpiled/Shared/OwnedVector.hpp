@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Shared/CPP/Vector.hpp"
+#include "../../../LangShared/Vector/CPP/Vector.hpp"
 
 namespace NumberDuck
 {
