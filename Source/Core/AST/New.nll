@@ -58,7 +58,7 @@ namespace NumberDuck
 					return;
 				}
 
-				AST pParam = m_pParamCall.m_pFirstChild;
+				//AST pParam = m_pParamCall.m_pFirstChild;
 				if (m_pParamCall.m_pFirstChild != null)
 				{
 					// find matching constructor

@@ -69,7 +69,6 @@ namespace NumberDuck
 					pValidator.AddError("Unable to compute value type from new", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 					return;
 				}
-				AST pParam = m_pParamCall.m_pFirstChild;
 				if (m_pParamCall.m_pFirstChild != null)
 				{
 					if (m_pValueType.m_eType != ValueType.Type.CLASS_DECL_VALUE)
