@@ -36,9 +36,10 @@ namespace NumberDuck
 				while (m_pVector.GetSize() > 0)
 				{
 					T pTemp = m_pVector.PopBack();
-					{
-						pTemp = null;
-					}
+					if (pTemp != null)
+						{
+							pTemp = null;
+						}
 				}
 			}
 

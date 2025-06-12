@@ -230,7 +230,6 @@ namespace NumberDuck
 					}
 					else if (pType.m_eType == AST.Type.NAMESPACE_DECL)
 					{
-						NamespaceDecl pNamespaceDecl = (NamespaceDecl)(pType);
 						if (m_pChildTypeRef == null)
 						{
 							pValidator.AddError("Namespace typeref musttt have a child???", m_pTypeToken.m_sFileName, m_pTypeToken.m_nLine, m_pTypeToken.m_nColumn);

@@ -129,7 +129,6 @@ namespace NumberDuck
 
 		void MemberFunctionDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
 		{
-			bool bGeneric = m_pParentClassDecl->m_pGenericTypeDeclVector->GetSize() > 0;
 			if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
 			{
 				if (m_pParentClassDecl->m_pGenericTypeDeclVector->GetSize() > 0)

@@ -4,3 +4,4 @@ Bin
 *.exe
 *.pdb
 Project/ProjectGen
+*.mdb

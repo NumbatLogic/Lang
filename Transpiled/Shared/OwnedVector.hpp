@@ -43,10 +43,11 @@ namespace NumberDuck
 				while (m_pVector->GetSize() > 0)
 				{
 					T pTemp = m_pVector->PopBack();
-					{
-						delete pTemp;
-						pTemp = 0;
-					}
+					if (pTemp != 0)
+						{
+							delete pTemp;
+							pTemp = 0;
+						}
 				}
 			}
 

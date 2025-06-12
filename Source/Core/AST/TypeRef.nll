@@ -283,7 +283,7 @@ namespace NumberDuck
 						// todo: this should be some recursive thing that works down and validates every m_pChildTypeRef
 						// while maintaining the first type ref for checking new/member/etc in ValidateClassDecl
 
-						NamespaceDecl pNamespaceDecl = cast NamespaceDecl(pType);
+						//NamespaceDecl pNamespaceDecl = cast NamespaceDecl(pType);
 						if (m_pChildTypeRef == null)
 						{
 							pValidator.AddError("Namespace typeref musttt have a child???", m_pTypeToken.m_sFileName, m_pTypeToken.m_nLine, m_pTypeToken.m_nColumn);
