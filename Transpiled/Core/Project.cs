@@ -58,8 +58,8 @@ namespace NumberDuck
 					TranslationUnit pTranslationUnit = m_pTranslationUnitVector.Get(i);
 					if (pTranslationUnit.m_sInFile.EndsWith(".nll"))
 					{
-						pTranslationUnit.m_sInFile.Replace("Shared", "Source/Shared");
-						pTranslationUnit.m_sInFile.Replace("../LangPackage", "Source/LangShared");
+						pTranslationUnit.m_sInFile.Replace("../LangShared", "Source/LangShared");
+						pTranslationUnit.m_sInFile.Replace("/Shared", "/Source/Shared");
 					}
 				}
 				Validator pValidator = new Validator(this);
