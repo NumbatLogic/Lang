@@ -153,7 +153,9 @@ namespace NumberDuck
 								AST pParentParentParent = pParentParent.m_pParent;
 								if (pParentParentParent != null)
 								{
-									if (pParentParentParent.m_eType == AST.Type.AST_MEMBER_VAR_DECL || pParentParentParent.m_eType == AST.Type.AST_MEMBER_FUNCTION_DECL)
+									if (pParentParentParent.m_eType == AST.Type.AST_MEMBER_VAR_DECL)
+										AddClassDeclReference(pClassDecl, AST.OutputFile.HEADER, false);
+									else if (pParentParentParent.m_eType == AST.Type.AST_MEMBER_FUNCTION_DECL)
 										AddClassDeclReference(pClassDecl, AST.OutputFile.HEADER, true);
 									else
 										AddClassDeclReference(pClassDecl, AST.OutputFile.SOURCE, true);

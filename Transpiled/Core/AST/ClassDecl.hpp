@@ -2,6 +2,7 @@
 
 #include "AST.hpp"
 #include "../../Shared/OwnedVector.hpp"
+#include "GenericTypeDecl.hpp"
 
 namespace NumberDuck
 {

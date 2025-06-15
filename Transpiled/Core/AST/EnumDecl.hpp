@@ -2,6 +2,7 @@
 
 #include "AST.hpp"
 #include "../../../Shared/CPP/Vector.hpp"
+#include "EnumDeclValue.hpp"
 
 namespace NumberDuck
 {
