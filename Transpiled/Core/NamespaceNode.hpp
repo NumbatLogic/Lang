@@ -1,7 +1,9 @@
 #pragma once
 
 #include "../Shared/OwnedVector.hpp"
+#include "NamespaceNode.hpp"
 #include "../../Shared/CPP/Vector.hpp"
+#include "AST/NamespaceDecl.hpp"
 
 namespace NumberDuck
 {

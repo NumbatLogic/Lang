@@ -2,6 +2,7 @@
 
 #include "AST/AST.hpp"
 #include "../../Shared/CPP/Vector.hpp"
+#include "AST/TranslationUnit.hpp"
 #include "../Shared/OwnedVector.hpp"
 
 namespace NumberDuck

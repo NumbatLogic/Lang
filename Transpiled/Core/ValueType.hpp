@@ -2,6 +2,7 @@
 
 #include "AST/TypeRef.hpp"
 #include "../Shared/OwnedVector.hpp"
+#include "ValueType.hpp"
 
 namespace NumberDuck
 {

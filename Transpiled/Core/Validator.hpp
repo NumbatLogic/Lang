@@ -1,7 +1,9 @@
 #pragma once
 
 #include "../../Shared/CPP/Vector.hpp"
+#include "AST/VarDecl.hpp"
 #include "../Shared/OwnedVector.hpp"
+#include "Validator.hpp"
 
 namespace NumberDuck
 {
