@@ -61,7 +61,10 @@ namespace NumberDuck
 					if (pTranslationUnit.m_sInFile.EndsWith(".nll"))
 					{
 						pTranslationUnit.m_sInFile.Replace("../LangShared", "Source/LangShared");
-						pTranslationUnit.m_sInFile.Replace("/Shared", "/Source/Shared");
+						if (pTranslationUnit.m_sInFile.StartsWith("Shared"))
+							pTranslationUnit.m_sInFile.Replace("Shared", "Source/Shared");
+						else
+							pTranslationUnit.m_sInFile.Replace("/Shared", "/Source/Shared");
 					}
 				}
 
