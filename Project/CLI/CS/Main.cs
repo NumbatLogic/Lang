@@ -1,4 +1,4 @@
-using NumberDuck.Secret;
+using NumbatLogic;
 
 class Application
 {

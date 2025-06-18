@@ -1,21 +1,15 @@
 #pragma once
 
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
-	{
-		class InternalString;
-	}
+	class InternalString;
 }
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class Util
 	{
-		class Util
-		{
-			public: static void Pad(int nDepth, InternalString* sOut);
-			public: static unsigned int BadHash(InternalString* sString);
-		};
-	}
+		public: static void Pad(int nDepth, InternalString* sOut);
+		public: static unsigned int BadHash(InternalString* sString);
+	};
 }
 

@@ -1,23 +1,17 @@
 #pragma once
 
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
-	{
-		class OffsetDatum;
-	}
+	class OffsetDatum;
 }
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class OffsetDatum
 	{
-		class OffsetDatum
-		{
-			public: int m_nOffset;
-			public: static OffsetDatum* Create(OffsetDatum* pOther);
-			public: void Set(OffsetDatum* pOther);
-			public: OffsetDatum();
-		};
-	}
+		public: int m_nOffset;
+		public: static OffsetDatum* Create(OffsetDatum* pOther);
+		public: void Set(OffsetDatum* pOther);
+		public: OffsetDatum();
+	};
 }
 

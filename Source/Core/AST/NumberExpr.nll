@@ -1,41 +1,38 @@
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class NumberExpr : AST
 	{
-		class NumberExpr : AST
+		public construct(Token pFirstToken)
 		{
-			public construct(Token pFirstToken)
-			{
-				m_eType = AST::Type::AST_NUMBER;
-				m_pFirstToken = pFirstToken;
-			}
+			m_eType = AST::Type::AST_NUMBER;
+			m_pFirstToken = pFirstToken;
+		}
 
-			public static NumberExpr** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
-			{
-				Token pToken = pTokenContainer.PeekExpect(pOffsetDatum, Token::Type::TOKEN_NUMBER);
-				if (pToken == null)
-					return null;
-				pOffsetDatum.m_nOffset = pOffsetDatum.m_nOffset+1;
-				NumberExpr* pNumberExpr = own new NumberExpr(pToken);
-				return disown pNumberExpr;
-			}
+		public static NumberExpr** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+		{
+			Token pToken = pTokenContainer.PeekExpect(pOffsetDatum, Token::Type::TOKEN_NUMBER);
+			if (pToken == null)
+				return null;
+			pOffsetDatum.m_nOffset = pOffsetDatum.m_nOffset+1;
+			NumberExpr* pNumberExpr = own new NumberExpr(pToken);
+			return disown pNumberExpr;
+		}
 
-			public override AST** BaseClone()
-			{
-				// todo: should clone token???
-				NumberExpr* pNumberExpr = own new NumberExpr(m_pFirstToken);
-				return disown pNumberExpr;
-			}
+		public override AST** BaseClone()
+		{
+			// todo: should clone token???
+			NumberExpr* pNumberExpr = own new NumberExpr(m_pFirstToken);
+			return disown pNumberExpr;
+		}
 
-			public override void Validate(Validator pValidator, OperatorExpr pParent)
-			{
-				m_pValueType = own new ValueType(ValueType::Type::INT);
-			}
+		public override void Validate(Validator pValidator, OperatorExpr pParent)
+		{
+			m_pValueType = own new ValueType(ValueType::Type::INT);
+		}
 
-			public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
-			{
-				m_pFirstToken.Stringify(sOut);
-			}
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		{
+			m_pFirstToken.Stringify(sOut);
 		}
 	}
 }

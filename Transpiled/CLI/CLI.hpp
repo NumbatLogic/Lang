@@ -1,22 +1,16 @@
 #pragma once
 
-#include "../../Shared/CPP/Vector.hpp"
+#include "../../../LangShared/Vector/CPP/Vector.hpp"
 
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
-	{
-		class InternalString;
-	}
+	class InternalString;
 }
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class CLI
 	{
-		class CLI
-		{
-			public: static void Run(Vector<const char*>* sArgVector);
-		};
-	}
+		public: static void Run(Vector<const char*>* sArgVector);
+	};
 }
 

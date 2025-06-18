@@ -1,25 +1,22 @@
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class Thing
 	{
-		class Thing
+		public int m_ff;
+		public Thing()
 		{
-			public int m_ff;
-			public Thing()
-			{
-			}
-
 		}
-		class PointerTest
+
+	}
+	class PointerTest
+	{
+		public static void Run()
 		{
-			public static void Run()
-			{
-				Console.Log("Pointer test...");
-				Thing pThing = new Thing();
-				pThing.m_ff = 0;
-			}
-
+			Console.Log("Pointer test...");
+			Thing pThing = new Thing();
+			pThing.m_ff = 0;
 		}
+
 	}
 }
 

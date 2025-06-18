@@ -1,23 +1,20 @@
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class OffsetDatum
 	{
-		class OffsetDatum
+		public int m_nOffset;
+
+		public static OffsetDatum** Create(OffsetDatum pOther)
 		{
-			public int m_nOffset;
+			OffsetDatum* pThis = own new OffsetDatum();
+			if (pOther != null)
+				pThis.Set(pOther);
+			return disown pThis;
+		}
 
-			public static OffsetDatum** Create(OffsetDatum pOther)
-			{
-				OffsetDatum* pThis = own new OffsetDatum();
-				if (pOther != null)
-					pThis.Set(pOther);
-				return disown pThis;
-			}
-
-			public void Set(OffsetDatum pOther)
-			{
-				m_nOffset = pOther.m_nOffset;
-			}
+		public void Set(OffsetDatum pOther)
+		{
+			m_nOffset = pOther.m_nOffset;
 		}
 	}
 }

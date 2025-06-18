@@ -1,26 +1,23 @@
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class Thing
 	{
-		class Thing
+		public int m_ff;
+	}
+
+	class PointerTest
+	{
+		public static void Run()
 		{
-			public int m_ff;
+			Console::Log("Pointer test...");
+
+			Thing* pThing = own new Thing();
+			pThing.m_ff = 0;
+
+			//delete pThing;
+			
 		}
 
-		class PointerTest
-		{
-			public static void Run()
-			{
-				Console::Log("Pointer test...");
 
-				Thing* pThing = own new Thing();
-				pThing.m_ff = 0;
-
-				//delete pThing;
-				
-			}
-
-
-		}
 	}
 }

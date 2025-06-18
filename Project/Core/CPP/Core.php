@@ -23,8 +23,9 @@
 		public function GetDependancyArray()
 		{
 			$sArray = array(
-				"Shared",
-				"Package",
+				//"Shared",
+				//"Package",
+				"LangShared",
 				//"ThirdParty",
 			);
 

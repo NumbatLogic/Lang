@@ -1,113 +1,110 @@
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class Scope : AST
 	{
-		class Scope : AST
+		public Scope()
 		{
-			public Scope()
-			{
-				m_eType = AST.Type.AST_SCOPE;
-			}
+			m_eType = AST.Type.AST_SCOPE;
+		}
 
-			public static Scope TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+		public static Scope TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+		{
+			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
+			Token pOpeningToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_CURLY_BRACE_LEFT);
+			if (pOpeningToken == null)
 			{
-				OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
-				Token pOpeningToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_CURLY_BRACE_LEFT);
-				if (pOpeningToken == null)
+				return null;
+			}
+			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+			Scope pScope = new Scope();
+			pScope.m_pFirstToken = pOpeningToken;
+			while (true)
+			{
+				Token pClosingToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_CURLY_BRACE_RIGHT);
+				if (pClosingToken != null)
 				{
-					return null;
+					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+					break;
 				}
-				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-				Scope pScope = new Scope();
-				pScope.m_pFirstToken = pOpeningToken;
-				while (true)
+				AST pChild = AST.CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
+				if (pChild == null)
 				{
-					Token pClosingToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_CURLY_BRACE_RIGHT);
-					if (pClosingToken != null)
+					Console.Log("expected to parse somethting within scope...");
+					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
+					NumbatLogic.Assert.Plz(false);
 					{
-						pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-						break;
-					}
-					AST pChild = AST.CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
-					if (pChild == null)
-					{
-						Console.Log("expected to parse somethting within scope...");
-						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						NumbatLogic.Assert.Plz(false);
-						{
-							return null;
-						}
-					}
-					{
-						NumberDuck.Secret.AST __4076228335 = pChild;
-						pChild = null;
-						pScope.AddChild(__4076228335);
+						return null;
 					}
 				}
-				pOffsetDatum.Set(pTempOffset);
 				{
-					NumberDuck.Secret.Scope __693694853 = pScope;
-					pScope = null;
-					{
-						return __693694853;
-					}
+					NumbatLogic.AST __4076228335 = pChild;
+					pChild = null;
+					pScope.AddChild(__4076228335);
 				}
 			}
-
-			public override void Validate(Validator pValidator, OperatorExpr pParent)
+			pOffsetDatum.Set(pTempOffset);
 			{
-				pValidator.BeginScope(this);
-				if (m_pParent.m_eType == AST.Type.AST_TOR_DECL)
+				NumbatLogic.Scope __693694853 = pScope;
+				pScope = null;
 				{
-					TorDecl pTorDecl = (TorDecl)(m_pParent);
-					if (pTorDecl.m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_DESTRUCT)
+					return __693694853;
+				}
+			}
+		}
+
+		public override void Validate(Validator pValidator, OperatorExpr pParent)
+		{
+			pValidator.BeginScope(this);
+			if (m_pParent.m_eType == AST.Type.AST_TOR_DECL)
+			{
+				TorDecl pTorDecl = (TorDecl)(m_pParent);
+				if (pTorDecl.m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_DESTRUCT)
+				{
+					if (pTorDecl.m_pParent.m_eType != AST.Type.AST_CLASS_DECL)
 					{
-						if (pTorDecl.m_pParent.m_eType != AST.Type.AST_CLASS_DECL)
+						pValidator.AddError("Expected parent TorDecl to be child of AST_CLASS_DECL", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+						return;
+					}
+					AST pChild = pTorDecl.m_pParent.m_pFirstChild;
+					while (pChild != null)
+					{
+						if (pChild.m_eType == AST.Type.AST_MEMBER_VAR_DECL)
 						{
-							pValidator.AddError("Expected parent TorDecl to be child of AST_CLASS_DECL", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-							return;
-						}
-						AST pChild = pTorDecl.m_pParent.m_pFirstChild;
-						while (pChild != null)
-						{
-							if (pChild.m_eType == AST.Type.AST_MEMBER_VAR_DECL)
+							MemberVarDecl pMemberVarDecl = (MemberVarDecl)(pChild);
+							pValidator.AddVarDecl(pMemberVarDecl.m_pVarDecl);
+							if (pMemberVarDecl.m_pVarDecl.m_pTypeRef.m_pTypeToken.m_eType == Token.Type.TOKEN_IDENTIFIER)
 							{
-								MemberVarDecl pMemberVarDecl = (MemberVarDecl)(pChild);
-								pValidator.AddVarDecl(pMemberVarDecl.m_pVarDecl);
-								if (pMemberVarDecl.m_pVarDecl.m_pTypeRef.m_pTypeToken.m_eType == Token.Type.TOKEN_IDENTIFIER)
+								string sTypeName = pMemberVarDecl.m_pVarDecl.m_pTypeRef.m_pTypeToken.GetString();
+								AST pType = FindByName(sTypeName, this);
+								if (pType != null && pType.m_eType == AST.Type.AST_CLASS_DECL)
 								{
-									string sTypeName = pMemberVarDecl.m_pVarDecl.m_pTypeRef.m_pTypeToken.GetString();
-									AST pType = FindByName(sTypeName, this);
-									if (pType != null && pType.m_eType == AST.Type.AST_CLASS_DECL)
-									{
-										ClassDecl pClassDecl = (ClassDecl)(pType);
-										AddClassDeclReference(pClassDecl, AST.OutputFile.SOURCE, false);
-									}
+									ClassDecl pClassDecl = (ClassDecl)(pType);
+									AddClassDeclReference(pClassDecl, AST.OutputFile.SOURCE, false);
 								}
 							}
-							pChild = pChild.m_pNextSibling;
 						}
+						pChild = pChild.m_pNextSibling;
 					}
 				}
-				base.Validate(pValidator, pParent);
-				pValidator.EndScope(this);
 			}
-
-			public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
-			{
-				Util.Pad(nDepth, sOut);
-				sOut.Append("{\n");
-				AST pChild = m_pFirstChild;
-				while (pChild != null)
-				{
-					pChild.Stringify(eLanguage, eOutputFile, nDepth + 1, sOut);
-					pChild = pChild.m_pNextSibling;
-				}
-				Util.Pad(nDepth, sOut);
-				sOut.Append("}\n");
-			}
-
+			base.Validate(pValidator, pParent);
+			pValidator.EndScope(this);
 		}
+
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		{
+			Util.Pad(nDepth, sOut);
+			sOut.Append("{\n");
+			AST pChild = m_pFirstChild;
+			while (pChild != null)
+			{
+				pChild.Stringify(eLanguage, eOutputFile, nDepth + 1, sOut);
+				pChild = pChild.m_pNextSibling;
+			}
+			Util.Pad(nDepth, sOut);
+			sOut.Append("}\n");
+		}
+
 	}
 }
 

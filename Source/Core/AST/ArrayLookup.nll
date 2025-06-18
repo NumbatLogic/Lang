@@ -1,94 +1,82 @@
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class ArrayLookup : AST
 	{
-		class ArrayLookup : AST
+		public AST m_pExpression;
+		public AST m_pIndexExpression;
+
+		public construct()
 		{
-			public AST m_pExpression;
-			public AST m_pIndexExpression;
+			m_eType = AST::Type::AST_ARRAY_LOOKUP;
+		}
 
-			public construct()
+		public static ArrayLookup** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+		{
+			OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
+
+			// infinite loop? AST pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
+			AST* pExpression = own Identifier::TryCreate(pTokenContainer, pTempOffset);
+			if (pExpression == null)
+				return null;
+
+			if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_LEFT) == null)
+				return null;
+			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+			AST* pIndexExpression = own AST::TryCreateExpression(pTokenContainer, pTempOffset);
+			if (pIndexExpression == null)
 			{
-				m_eType = AST::Type::AST_ARRAY_LOOKUP;
+				Console::Log("expected index expression");
+				Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+				NumbatLogic::Assert::Plz(false);
+				return null;
 			}
 
-			public static ArrayLookup** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+			if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_RIGHT) == null)
 			{
-				OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
-
-				// infinite loop? AST pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
-				AST* pExpression = own Identifier::TryCreate(pTokenContainer, pTempOffset);
-				if (pExpression == null)
-					return null;
-
-				if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_LEFT) == null)
-					return null;
-				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
-
-				AST* pIndexExpression = own AST::TryCreateExpression(pTokenContainer, pTempOffset);
-				if (pIndexExpression == null)
-				{
-					Console::Log("expected index expression");
-					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-					NumbatLogic::Assert::Plz(false);
-					return null;
-				}
-
-				if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_RIGHT) == null)
-				{
-					Console::Log("expected right bracket");
-					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-					NumbatLogic::Assert::Plz(false);
-					return null;
-				}
-				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
-
-				ArrayLookup* pArrayLookup = own new ArrayLookup();
-				pArrayLookup.m_pFirstToken = pExpression.m_pFirstToken;
-				pArrayLookup.m_pExpression = pExpression;
-				pArrayLookup.m_pIndexExpression = pIndexExpression;
-
-				pArrayLookup.AddChild(disown pExpression);
-				pArrayLookup.AddChild(disown pIndexExpression);
-
-				pOffsetDatum.Set(pTempOffset);
-				return disown pArrayLookup;
+				Console::Log("expected right bracket");
+				Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+				NumbatLogic::Assert::Plz(false);
+				return null;
 			}
+			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 
-			public override AST** BaseClone()
+			ArrayLookup* pArrayLookup = own new ArrayLookup();
+			pArrayLookup.m_pFirstToken = pExpression.m_pFirstToken;
+			pArrayLookup.m_pExpression = pExpression;
+			pArrayLookup.m_pIndexExpression = pIndexExpression;
+
+			pArrayLookup.AddChild(disown pExpression);
+			pArrayLookup.AddChild(disown pIndexExpression);
+
+			pOffsetDatum.Set(pTempOffset);
+			return disown pArrayLookup;
+		}
+
+		public override AST** BaseClone()
+		{
+			ArrayLookup* pArrayLookup = own new ArrayLookup();
+			// clone logic here
+			return disown pArrayLookup;
+		}
+
+		public override void Validate(Validator pValidator, OperatorExpr pParent)
+		{
+			base.Validate(pValidator, pParent);
+			if (m_pExpression.m_pValueType == null)
 			{
-				AST* pExpression = own m_pExpression.BaseClone();
-				AST* pIndexExpression = own m_pIndexExpression.BaseClone();
-
-				ArrayLookup* pArrayLookup = own new ArrayLookup();
-				pArrayLookup.m_pFirstToken = pExpression.m_pFirstToken;
-				pArrayLookup.m_pExpression = pExpression;
-				pArrayLookup.m_pIndexExpression = pIndexExpression;
-
-				pArrayLookup.AddChild(disown pExpression);
-				pArrayLookup.AddChild(disown pIndexExpression);
-
-				return disown pArrayLookup;
+				pValidator.AddError("Unknown ValueType of m_pExpression", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+				return;
 			}
+			m_pValueType = own m_pExpression.m_pValueType.Clone();
+		}
 
-			public override void Validate(Validator pValidator, OperatorExpr pParent)
-			{
-				base.Validate(pValidator, pParent);
-				if (m_pExpression.m_pValueType == null)
-				{
-					pValidator.AddError("Unknown ValueType of m_pExpression", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-					return;
-				}
-				m_pValueType = own m_pExpression.m_pValueType.Clone();
-			}
-
-			public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
-			{
-				m_pExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
-				sOut.AppendChar('[');
-				m_pIndexExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
-				sOut.AppendChar(']');
-			}
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		{
+			m_pExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
+			sOut.AppendChar('[');
+			m_pIndexExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
+			sOut.AppendChar(']');
 		}
 	}
 }

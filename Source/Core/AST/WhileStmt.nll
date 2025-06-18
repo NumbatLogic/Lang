@@ -1,81 +1,78 @@
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class WhileStmt : AST
 	{
-		class WhileStmt : AST
+		public AST m_pExpression;
+		public Scope m_pScope;
+
+		public construct()
 		{
-			public AST m_pExpression;
-			public Scope m_pScope;
+			m_bStatement = true;
+		}
+		
+		public static WhileStmt** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+		{
+			OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
 
-			public construct()
+			Token pWhileToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_WHILE);
+			if (pWhileToken == null)
+				return null;
+			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+			if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_LEFT) == null)
 			{
-				m_bStatement = true;
+				Console::Log("expected left paren");
+				NumbatLogic::Assert::Plz(false);
+				return null;
 			}
-			
-			public static WhileStmt** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+			AST* pExpression = own AST::TryCreateExpression(pTokenContainer, pTempOffset);
+			if (pExpression == null)
 			{
-				OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
-
-				Token pWhileToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_WHILE);
-				if (pWhileToken == null)
-					return null;
-				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
-
-				if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_LEFT) == null)
-				{
-					Console::Log("expected left paren");
-					NumbatLogic::Assert::Plz(false);
-					return null;
-				}
-				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
-
-				AST* pExpression = own AST::TryCreateExpression(pTokenContainer, pTempOffset);
-				if (pExpression == null)
-				{
-					Console::Log("expected expression");
-					NumbatLogic::Assert::Plz(false);
-					return null;
-				}
-
-				if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT) == null)
-				{
-					Console::Log("expected right paren");
-					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-					NumbatLogic::Assert::Plz(false);
-					return null;
-				}
-				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
-
-				Scope* pScope = own Scope::TryCreate(pTokenContainer, pTempOffset);
-				if (pScope == null)
-				{
-					Console::Log("expected scope");
-					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-					NumbatLogic::Assert::Plz(false);
-				}
-
-				WhileStmt* pWhileStmt = own new WhileStmt();
-
-				pWhileStmt.m_eType = AST::Type::AST_WHILE_STMT;
-				pWhileStmt.m_pFirstToken = pWhileToken;
-				pWhileStmt.m_pExpression = pExpression;
-				pWhileStmt.m_pScope = pScope;
-
-				pWhileStmt.AddChild(disown pExpression);
-				pWhileStmt.AddChild(disown pScope);
-
-				pOffsetDatum.Set(pTempOffset);
-				return disown pWhileStmt;
+				Console::Log("expected expression");
+				NumbatLogic::Assert::Plz(false);
+				return null;
 			}
 
-			public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+			if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT) == null)
 			{
-				Util::Pad(nDepth, sOut);
-				sOut.Append("while (");
-				m_pExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
-				sOut.Append(")\n");
-				m_pScope.Stringify(eLanguage, eOutputFile, nDepth, sOut);
+				Console::Log("expected right paren");
+				Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+				NumbatLogic::Assert::Plz(false);
+				return null;
 			}
+			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+			Scope* pScope = own Scope::TryCreate(pTokenContainer, pTempOffset);
+			if (pScope == null)
+			{
+				Console::Log("expected scope");
+				Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+				NumbatLogic::Assert::Plz(false);
+			}
+
+			WhileStmt* pWhileStmt = own new WhileStmt();
+
+			pWhileStmt.m_eType = AST::Type::AST_WHILE_STMT;
+			pWhileStmt.m_pFirstToken = pWhileToken;
+			pWhileStmt.m_pExpression = pExpression;
+			pWhileStmt.m_pScope = pScope;
+
+			pWhileStmt.AddChild(disown pExpression);
+			pWhileStmt.AddChild(disown pScope);
+
+			pOffsetDatum.Set(pTempOffset);
+			return disown pWhileStmt;
+		}
+
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		{
+			Util::Pad(nDepth, sOut);
+			sOut.Append("while (");
+			m_pExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
+			sOut.Append(")\n");
+			m_pScope.Stringify(eLanguage, eOutputFile, nDepth, sOut);
 		}
 	}
 }

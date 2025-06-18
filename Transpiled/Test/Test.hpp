@@ -2,22 +2,16 @@
 
 #include "../Core/AST/AST.hpp"
 
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
-	{
-		class InternalString;
-	}
+	class InternalString;
 }
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class Test
 	{
-		class Test
-		{
-			public: static void Run();
-			public: static void FullCheck(const char* sInput, AST::Type eAstType);
-		};
-	}
+		public: static void Run();
+		public: static void FullCheck(const char* sInput, AST::Type eAstType);
+	};
 }
 

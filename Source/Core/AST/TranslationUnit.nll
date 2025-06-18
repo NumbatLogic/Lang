@@ -1,227 +1,191 @@
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class ClassDeclReference
 	{
-		class ClassDeclReference
+		public ClassDecl m_pClassDecl;
+		public AST::OutputFile m_eOutputFile;
+		public bool m_bForwardReference;
+	}
+
+	class ReferenceNode
+	{
+		public InternalString* m_sName;
+		public OwnedVector<ReferenceNode>* m_pChildNodeVector;
+		public Vector<ClassDeclReference>* m_pChildClassVector;
+
+		public construct(string sxName)
 		{
-			public ClassDecl m_pClassDecl;
-			public AST::OutputFile m_eOutputFile;
-			public bool m_bForwardReference;
+			m_sName = own new InternalString(sxName);
+			m_pChildNodeVector = own new OwnedVector<ReferenceNode>();
+			m_pChildClassVector = own new Vector<ClassDeclReference>();
 		}
 
-		class ReferenceNode
+		public ReferenceNode GetOrCreateChildNode(string sxName)
 		{
-			public InternalString* m_sName;
-			public OwnedVector<ReferenceNode>* m_pChildNodeVector;
-			public Vector<ClassDeclReference>* m_pChildClassVector;
-
-			public construct(string sxName)
+			ReferenceNode pChild;
+			for (int i = 0; i < m_pChildNodeVector.GetSize(); i++)
 			{
-				m_sName = own new InternalString(sxName);
-				m_pChildNodeVector = own new OwnedVector<ReferenceNode>();
-				m_pChildClassVector = own new Vector<ClassDeclReference>();
+				pChild = m_pChildNodeVector.Get(i);
+				if (pChild.m_sName.IsEqual(sxName))
+					return pChild;
 			}
 
-			public ReferenceNode GetOrCreateChildNode(string sxName)
-			{
-				ReferenceNode pChild;
-				for (int i = 0; i < m_pChildNodeVector.GetSize(); i++)
-				{
-					pChild = m_pChildNodeVector.Get(i);
-					if (pChild.m_sName.IsEqual(sxName))
-						return pChild;
-				}
+			ReferenceNode* pCreatedChild = own new ReferenceNode(sxName);
+			pChild = pCreatedChild;
+			m_pChildNodeVector.PushBack(disown pCreatedChild);
+			return pChild;
+		}
 
-				ReferenceNode* pCreatedChild = own new ReferenceNode(sxName);
-				pChild = pCreatedChild;
-				m_pChildNodeVector.PushBack(disown pCreatedChild);
-				return pChild;
+		public void Stringify(AST::Language eLanguage, AST::OutputFile eOutputFile, int nDepth, InternalString sOut)
+		{
+			if (!m_sName.IsEqual(""))
+			{
+				Util::Pad(nDepth, sOut);
+				sOut.Append("namespace ");
+ 				sOut.Append(m_sName.GetExternalString());
+ 				sOut.Append("\n");
+ 				Util::Pad(nDepth, sOut);
+ 				sOut.Append("{\n");
+ 				nDepth++;
 			}
 
-			public void Stringify(AST::Language eLanguage, AST::OutputFile eOutputFile, int nDepth, InternalString sOut)
+			for (int i = 0; i < m_pChildNodeVector.GetSize(); i++)
 			{
-				if (!m_sName.IsEqual(""))
+				ReferenceNode pChild = m_pChildNodeVector.Get(i);
+				pChild.Stringify(eLanguage, eOutputFile, nDepth, sOut);
+			}
+
+			for (int i = 0; i < m_pChildClassVector.GetSize(); i++)
+			{
+				ClassDeclReference pChild = m_pChildClassVector.Get(i);
+				if (pChild.m_pClassDecl.m_pGenericTypeDeclVector.GetSize() > 0)
 				{
 					Util::Pad(nDepth, sOut);
-					sOut.Append("namespace ");
-	 				sOut.Append(m_sName.GetExternalString());
-	 				sOut.Append("\n");
-	 				Util::Pad(nDepth, sOut);
-	 				sOut.Append("{\n");
-	 				nDepth++;
+					pChild.m_pClassDecl.StringifyTemplateThing(eLanguage, eOutputFile, sOut);
+					sOut.Append("\n");
 				}
 
-				for (int i = 0; i < m_pChildNodeVector.GetSize(); i++)
-				{
-					ReferenceNode pChild = m_pChildNodeVector.Get(i);
-					pChild.Stringify(eLanguage, eOutputFile, nDepth, sOut);
-				}
+				Util::Pad(nDepth, sOut);
+				sOut.Append("class ");
+				pChild.m_pClassDecl.m_pNameToken.Stringify(sOut);
+				sOut.Append(";\n");
+			}
 
-				for (int i = 0; i < m_pChildClassVector.GetSize(); i++)
+			if (!m_sName.IsEqual(""))
+			{
+				nDepth--;
+				Util::Pad(nDepth, sOut);
+				sOut.Append("}\n");
+			}
+		}
+	}
+
+	class TranslationUnit : AST
+	{
+		public InternalString* m_sInFile;
+		public TokenContainer* m_pTokenContainer;
+		public OwnedVector<ClassDeclReference>* m_pClassDeclReferenceVector;
+
+		public construct(string sInFile)
+		{
+			m_sInFile = own new InternalString(sInFile);
+			m_eType = Type::AST_TRANSLATION_UNIT;
+			m_bCanDescend = true;
+
+			m_pTokenContainer = own new TokenContainer();
+			m_pClassDeclReferenceVector = own new OwnedVector<ClassDeclReference>();
+		}
+
+		public static TranslationUnit** Create(string sInFile, OwnedVector<InternalString> sDefineVector)
+		{
+			TranslationUnit* pThis = own new TranslationUnit(sInFile);
+
+			InternalString* sInput = own File::GetContents(pThis.m_sInFile.GetExternalString());
+
+			
+			pThis.m_pTokenContainer.Tokenize(sInput.GetExternalString(), pThis.m_sInFile, sDefineVector);
+			pThis.m_pTokenContainer.StripWhitespace();
+
+			OffsetDatum* pOffsetDatum = own OffsetDatum::Create(null);
+			
+
+			while (pOffsetDatum.m_nOffset < pThis.m_pTokenContainer.m_pTokenVector.GetSize())
+			{
+				AST* pAST = own AST::CreateFromTokenContainer(pThis.m_pTokenContainer, pOffsetDatum);
+				if (pAST == null)
+					break;
+
+				pThis.AddChild(disown pAST);
+			}
+			
+			return disown pThis;
+		}
+
+		public override void AddClassDeclReference(ClassDecl pClassDecl, OutputFile eOutputFile, bool bForwardReference)
+		{
+			for (int i = 0; i < m_pClassDeclReferenceVector.GetSize(); i++)
+			{
+				ClassDeclReference pTestClassDeclReference = m_pClassDeclReferenceVector.Get(i);
+				if (pTestClassDeclReference.m_pClassDecl == pClassDecl && pTestClassDeclReference.m_eOutputFile == eOutputFile)
 				{
-					ClassDeclReference pChild = m_pChildClassVector.Get(i);
-					if (pChild.m_pClassDecl.m_pGenericTypeDeclVector.GetSize() > 0)
+					// if file matches, we should nod disable forward reference?
+					
+					//if (!pTestClassDeclReference.m_bForwardReference || !bForwardReference)
+					//	pTestClassDeclReference.m_bForwardReference = false;
+
+					if (pTestClassDeclReference.m_bForwardReference == bForwardReference)
 					{
-						Util::Pad(nDepth, sOut);
-						pChild.m_pClassDecl.StringifyTemplateThing(eLanguage, eOutputFile, sOut);
-						sOut.Append("\n");
+						base.AddClassDeclReference(pClassDecl, eOutputFile, bForwardReference);
+						return;
 					}
-
-					Util::Pad(nDepth, sOut);
-					sOut.Append("class ");
-					pChild.m_pClassDecl.m_pNameToken.Stringify(sOut);
-					sOut.Append(";\n");
-				}
-
-				if (!m_sName.IsEqual(""))
-				{
-					nDepth--;
-					Util::Pad(nDepth, sOut);
-					sOut.Append("}\n");
 				}
 			}
+			
+			ClassDeclReference* pClassDeclReference = own new ClassDeclReference();
+			pClassDeclReference.m_pClassDecl = pClassDecl;
+			pClassDeclReference.m_eOutputFile = eOutputFile;
+			pClassDeclReference.m_bForwardReference = bForwardReference;
+
+			m_pClassDeclReferenceVector.PushBack(disown pClassDeclReference);
+			
+			base.AddClassDeclReference(pClassDecl, eOutputFile, bForwardReference);
 		}
 
-		class TranslationUnit : AST
+		public static void ConvertFilePath(Language eLanguage, OutputFile eOutputFile, InternalString sPath)
 		{
-			public InternalString* m_sInFile;
-			public TokenContainer* m_pTokenContainer;
-			public OwnedVector<ClassDeclReference>* m_pClassDeclReferenceVector;
-
-			public construct(string sInFile)
+			// need to path fix on .def files
+			if (sPath.EndsWith(".nll.def"))
 			{
-				m_sInFile = own new InternalString(sInFile);
-				m_eType = Type::AST_TRANSLATION_UNIT;
-				m_bCanDescend = true;
+				InternalString* sFolder = own new InternalString("");
+				InternalString* sFile = own sPath.CreateClone();
 
-				m_pTokenContainer = own new TokenContainer();
-				m_pClassDeclReferenceVector = own new OwnedVector<ClassDeclReference>();
-			}
-
-			public static TranslationUnit** Create(string sInFile, OwnedVector<InternalString> sDefineVector)
-			{
-				TranslationUnit* pThis = own new TranslationUnit(sInFile);
-
-				InternalString* sInput = own File::GetContents(pThis.m_sInFile.GetExternalString());
-
-				
-				pThis.m_pTokenContainer.Tokenize(sInput.GetExternalString(), pThis.m_sInFile, sDefineVector);
-				pThis.m_pTokenContainer.StripWhitespace();
-
-				OffsetDatum* pOffsetDatum = own OffsetDatum::Create(null);
-				
-
-				while (pOffsetDatum.m_nOffset < pThis.m_pTokenContainer.m_pTokenVector.GetSize())
+				while (true)
 				{
-					AST* pAST = own AST::CreateFromTokenContainer(pThis.m_pTokenContainer, pOffsetDatum);
-					if (pAST == null)
+					int nIndex = sFile.FindChar('/');
+					if (nIndex == -1)
 						break;
 
-					pThis.AddChild(disown pAST);
+					InternalString* sTemp = own sFile.CreateClone();
+					sTemp.SubStr(0, nIndex+1);
+					sFolder.Append(sTemp.GetExternalString());
+					sFile.CropFront(nIndex+1);
 				}
-				
-				return disown pThis;
-			}
-
-			public override void AddClassDeclReference(ClassDecl pClassDecl, OutputFile eOutputFile, bool bForwardReference)
-			{
-				for (int i = 0; i < m_pClassDeclReferenceVector.GetSize(); i++)
-				{
-					ClassDeclReference pTestClassDeclReference = m_pClassDeclReferenceVector.Get(i);
-					if (pTestClassDeclReference.m_pClassDecl == pClassDecl && pTestClassDeclReference.m_eOutputFile == eOutputFile)
-					{
-						// if file matches, we should nod disable forward reference?
-						
-						//if (!pTestClassDeclReference.m_bForwardReference || !bForwardReference)
-						//	pTestClassDeclReference.m_bForwardReference = false;
-
-						if (pTestClassDeclReference.m_bForwardReference == bForwardReference)
-						{
-							base.AddClassDeclReference(pClassDecl, eOutputFile, bForwardReference);
-							return;
-						}
-					}
-				}
-				
-				ClassDeclReference* pClassDeclReference = own new ClassDeclReference();
-				pClassDeclReference.m_pClassDecl = pClassDecl;
-				pClassDeclReference.m_eOutputFile = eOutputFile;
-				pClassDeclReference.m_bForwardReference = bForwardReference;
-
-				m_pClassDeclReferenceVector.PushBack(disown pClassDeclReference);
-				
-				base.AddClassDeclReference(pClassDecl, eOutputFile, bForwardReference);
-			}
-
-			public static void ConvertFilePath(Language eLanguage, OutputFile eOutputFile, InternalString sPath)
-			{
-				// need to path fix on .def files
-				if (sPath.EndsWith(".nll.def"))
-				{
-					InternalString* sFolder = own new InternalString("");
-					InternalString* sFile = own sPath.CreateClone();
-
-					while (true)
-					{
-						int nIndex = sFile.FindChar('/');
-						if (nIndex == -1)
-							break;
-
-						InternalString* sTemp = own sFile.CreateClone();
-						sTemp.SubStr(0, nIndex+1);
-						sFolder.Append(sTemp.GetExternalString());
-						sFile.CropFront(nIndex+1);
-					}
-
-					switch (eLanguage)
-					{
-						case AST::Language::CS:
-						{
-							sFolder.Append("CS/");
-							sFile.Replace(".nll.def", ".cs");
-							break;
-						}
-						case AST::Language::CPP:
-						{
-							sFolder.Append("CPP/");
-							if (eOutputFile == AST::OutputFile::SOURCE)
-								sFile.Replace(".nll.def", ".cpp");
-							else
-								sFile.Replace(".nll.def", ".hpp");
-							break;
-						}
-						case AST::Language::NLL:
-						{
-							break;
-						}
-						case AST::Language::NLL_DEF:
-						{
-							break;
-						}
-					}
-
-					sPath.Set(sFolder.GetExternalString());
-					sPath.Append(sFile.GetExternalString());
-					return;
-				}
-
-				// old logic
-				sPath.Replace("Source", "Transpiled");
-				//sPath.Replace("Shared", "Transpiled"); // for pure nll shared classes
 
 				switch (eLanguage)
 				{
 					case AST::Language::CS:
 					{
-						sPath.Replace(".nll", ".cs");
+						sFolder.Append("CS/");
+						sFile.Replace(".nll.def", ".cs");
 						break;
 					}
 					case AST::Language::CPP:
 					{
+						sFolder.Append("CPP/");
 						if (eOutputFile == AST::OutputFile::SOURCE)
-							sPath.Replace(".nll", ".cpp");
+							sFile.Replace(".nll.def", ".cpp");
 						else
-							sPath.Replace(".nll", ".hpp");
+							sFile.Replace(".nll.def", ".hpp");
 						break;
 					}
 					case AST::Language::NLL:
@@ -230,147 +194,180 @@ namespace NumberDuck
 					}
 					case AST::Language::NLL_DEF:
 					{
-						sPath.Replace(".nll", ".nll.def");
 						break;
 					}
 				}
+
+				sPath.Set(sFolder.GetExternalString());
+				sPath.Append(sFile.GetExternalString());
+				return;
 			}
 
-			public InternalString** RetargetRelativePath(Language eLanguage, OutputFile eOutputFile, string sxFrom, string sxTo)
+			// old logic
+			sPath.Replace("Source", "Transpiled");
+			//sPath.Replace("Shared", "Transpiled"); // for pure nll shared classes
+
+			switch (eLanguage)
 			{
-				InternalString* sFrom = own new InternalString(sxFrom);
-				InternalString* sTo = own new InternalString(sxTo);
-
-				ConvertFilePath(eLanguage, eOutputFile, sFrom);
-				ConvertFilePath(eLanguage, eOutputFile, sTo);
-
-				OwnedVector<InternalString>* sFromVector = own new OwnedVector<InternalString>();
-				OwnedVector<InternalString>* sToVector = own new OwnedVector<InternalString>();
-
-				while (true)
+				case AST::Language::CS:
 				{
-					int nIndex = sFrom.FindChar('/');
-					if (nIndex == -1)
-						break;
-
-					InternalString* sTemp = own sFrom.CreateClone();
-					sTemp.SubStr(0, nIndex+1);
-					sFrom.CropFront(nIndex+1);
-					sFromVector.PushBack(disown sTemp);
+					sPath.Replace(".nll", ".cs");
+					break;
 				}
-
-				while (true)
+				case AST::Language::CPP:
 				{
-					int nIndex = sTo.FindChar('/');
-					if (nIndex == -1)
-						break;
-
-					InternalString* sTemp = own sTo.CreateClone();
-					sTemp.SubStr(0, nIndex+1);
-					sTo.CropFront(nIndex+1);
-					sToVector.PushBack(disown sTemp);
+					if (eOutputFile == AST::OutputFile::SOURCE)
+						sPath.Replace(".nll", ".cpp");
+					else
+						sPath.Replace(".nll", ".hpp");
+					break;
 				}
-
-
-				while (true)
+				case AST::Language::NLL:
 				{
-					if (sFromVector.GetSize() == 0 || sToVector.GetSize() == 0)
-						break;
-
-					if (!sFromVector.Get(0).IsEqual(sToVector.Get(0).GetExternalString()))
-						break;
-					
-					sFromVector.Erase(0);
-					sToVector.Erase(0);
+					break;
 				}
+				case AST::Language::NLL_DEF:
+				{
+					sPath.Replace(".nll", ".nll.def");
+					break;
+				}
+			}
+		}
 
-				InternalString* sOut = own new InternalString("");
+		public InternalString** RetargetRelativePath(Language eLanguage, OutputFile eOutputFile, string sxFrom, string sxTo)
+		{
+			InternalString* sFrom = own new InternalString(sxFrom);
+			InternalString* sTo = own new InternalString(sxTo);
 
-				for (int i = 0; i < sFromVector.GetSize(); i++)
-					sOut.Append("../");
-				for (int i = 0; i < sToVector.GetSize(); i++)
-					sOut.Append(sToVector.Get(i).GetExternalString());
+			ConvertFilePath(eLanguage, eOutputFile, sFrom);
+			ConvertFilePath(eLanguage, eOutputFile, sTo);
 
-				sOut.Append(sTo.GetExternalString());
-				return disown sOut;
+			OwnedVector<InternalString>* sFromVector = own new OwnedVector<InternalString>();
+			OwnedVector<InternalString>* sToVector = own new OwnedVector<InternalString>();
+
+			while (true)
+			{
+				int nIndex = sFrom.FindChar('/');
+				if (nIndex == -1)
+					break;
+
+				InternalString* sTemp = own sFrom.CreateClone();
+				sTemp.SubStr(0, nIndex+1);
+				sFrom.CropFront(nIndex+1);
+				sFromVector.PushBack(disown sTemp);
 			}
 
-			public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+			while (true)
 			{
-				if (eLanguage == AST::Language::CPP)
+				int nIndex = sTo.FindChar('/');
+				if (nIndex == -1)
+					break;
+
+				InternalString* sTemp = own sTo.CreateClone();
+				sTemp.SubStr(0, nIndex+1);
+				sTo.CropFront(nIndex+1);
+				sToVector.PushBack(disown sTemp);
+			}
+
+
+			while (true)
+			{
+				if (sFromVector.GetSize() == 0 || sToVector.GetSize() == 0)
+					break;
+
+				if (!sFromVector.Get(0).IsEqual(sToVector.Get(0).GetExternalString()))
+					break;
+				
+				sFromVector.Erase(0);
+				sToVector.Erase(0);
+			}
+
+			InternalString* sOut = own new InternalString("");
+
+			for (int i = 0; i < sFromVector.GetSize(); i++)
+				sOut.Append("../");
+			for (int i = 0; i < sToVector.GetSize(); i++)
+				sOut.Append(sToVector.Get(i).GetExternalString());
+
+			sOut.Append(sTo.GetExternalString());
+			return disown sOut;
+		}
+
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		{
+			if (eLanguage == AST::Language::CPP)
+			{
+				if (eOutputFile == AST::OutputFile::HEADER)
 				{
-					if (eOutputFile == AST::OutputFile::HEADER)
-					{
-						sOut.Append("#pragma once\n\n");
-					}
+					sOut.Append("#pragma once\n\n");
+				}
 
-					OwnedVector<InternalString>* sPreviousIncludes = own new OwnedVector<InternalString>();
-					ReferenceNode* pRootReferenceNode = own new ReferenceNode("");
+				OwnedVector<InternalString>* sPreviousIncludes = own new OwnedVector<InternalString>();
+				ReferenceNode* pRootReferenceNode = own new ReferenceNode("");
 
-					for (int i = 0; i < m_pClassDeclReferenceVector.GetSize(); i++)
-					{
-						ClassDeclReference pClassDeclReference = m_pClassDeclReferenceVector.Get(i);
-		 				if (eOutputFile == pClassDeclReference.m_eOutputFile)
-		 				{
-		 					if (pClassDeclReference.m_bForwardReference)
-		 					{
-		 						Vector<InternalString>* sNamespaceVector = own new Vector<InternalString>();
-		 						NamespaceNode pNamespaceNode = pClassDeclReference.m_pClassDecl.m_pNamespaceNode;
-		 						while (pNamespaceNode != null && pNamespaceNode.m_sName != null)
-		 						{
-		 							sNamespaceVector.PushFront(pNamespaceNode.m_sName);
-		 							pNamespaceNode = pNamespaceNode.m_pParent;
-		 						}
+				for (int i = 0; i < m_pClassDeclReferenceVector.GetSize(); i++)
+				{
+					ClassDeclReference pClassDeclReference = m_pClassDeclReferenceVector.Get(i);
+	 				if (eOutputFile == pClassDeclReference.m_eOutputFile)
+	 				{
+	 					if (pClassDeclReference.m_bForwardReference)
+	 					{
+	 						Vector<InternalString>* sNamespaceVector = own new Vector<InternalString>();
+	 						NamespaceNode pNamespaceNode = pClassDeclReference.m_pClassDecl.m_pNamespaceNode;
+	 						while (pNamespaceNode != null && pNamespaceNode.m_sName != null)
+	 						{
+	 							sNamespaceVector.PushFront(pNamespaceNode.m_sName);
+	 							pNamespaceNode = pNamespaceNode.m_pParent;
+	 						}
 
 
-		 						ReferenceNode pCurrentNode = pRootReferenceNode;
-		 						for (int j = 0; j < sNamespaceVector.GetSize(); j++)
-		 						{
-		 							InternalString sNamespace = sNamespaceVector.Get(j);
-		 							pCurrentNode = pCurrentNode.GetOrCreateChildNode(sNamespace.GetExternalString());
-		 						}
+	 						ReferenceNode pCurrentNode = pRootReferenceNode;
+	 						for (int j = 0; j < sNamespaceVector.GetSize(); j++)
+	 						{
+	 							InternalString sNamespace = sNamespaceVector.Get(j);
+	 							pCurrentNode = pCurrentNode.GetOrCreateChildNode(sNamespace.GetExternalString());
+	 						}
 
-		 						pCurrentNode.m_pChildClassVector.PushBack(pClassDeclReference);
-		 					}
-		 					else
-		 					{
-		 						bool bFound = false;
-		 						for (int j = 0; j < sPreviousIncludes.GetSize(); j++)
-		 						{
-		 							InternalString sTemp = sPreviousIncludes.Get(j);
-		 							if (sTemp.IsEqual(pClassDeclReference.m_pClassDecl.m_pNameToken.m_sFileName.GetExternalString()))
-		 							{
-		 								bFound = true;
-		 								break;
-		 							}
-		 						}
-		 						if (bFound)
-		 							continue;
-		 						sPreviousIncludes.PushBack(new InternalString(pClassDeclReference.m_pClassDecl.m_pNameToken.m_sFileName.GetExternalString()));
+	 						pCurrentNode.m_pChildClassVector.PushBack(pClassDeclReference);
+	 					}
+	 					else
+	 					{
+	 						bool bFound = false;
+	 						for (int j = 0; j < sPreviousIncludes.GetSize(); j++)
+	 						{
+	 							InternalString sTemp = sPreviousIncludes.Get(j);
+	 							if (sTemp.IsEqual(pClassDeclReference.m_pClassDecl.m_pNameToken.m_sFileName.GetExternalString()))
+	 							{
+	 								bFound = true;
+	 								break;
+	 							}
+	 						}
+	 						if (bFound)
+	 							continue;
+	 						sPreviousIncludes.PushBack(new InternalString(pClassDeclReference.m_pClassDecl.m_pNameToken.m_sFileName.GetExternalString()));
 
-		 						InternalString* sFixedPath = own RetargetRelativePath(eLanguage, AST::OutputFile::HEADER, m_pFirstChild.m_pFirstToken.m_sFileName.GetExternalString(), pClassDeclReference.m_pClassDecl.m_pNameToken.m_sFileName.GetExternalString());
-								sOut.Append("#include \"");
-								sOut.Append(sFixedPath.GetExternalString());
-								sOut.Append("\"\n");
-							}
+	 						InternalString* sFixedPath = own RetargetRelativePath(eLanguage, AST::OutputFile::HEADER, m_pFirstChild.m_pFirstToken.m_sFileName.GetExternalString(), pClassDeclReference.m_pClassDecl.m_pNameToken.m_sFileName.GetExternalString());
+							sOut.Append("#include \"");
+							sOut.Append(sFixedPath.GetExternalString());
+							sOut.Append("\"\n");
 						}
 					}
-
-					if (sPreviousIncludes.GetSize() > 0)
-						sOut.Append("\n");
-					pRootReferenceNode.Stringify(eLanguage, eOutputFile, nDepth, sOut);
 				}
 
-				AST pChild = m_pFirstChild;
-				while (pChild != null)
+				if (sPreviousIncludes.GetSize() > 0)
+					sOut.Append("\n");
+				pRootReferenceNode.Stringify(eLanguage, eOutputFile, nDepth, sOut);
+			}
+
+			AST pChild = m_pFirstChild;
+			while (pChild != null)
+			{
+				if (!pChild.m_bSkipOutput)
 				{
-					if (!pChild.m_bSkipOutput)
-					{
-						pChild.Stringify(eLanguage, eOutputFile, nDepth, sOut);
-						sOut.AppendChar('\n');
-					}
-					pChild = pChild.m_pNextSibling;
+					pChild.Stringify(eLanguage, eOutputFile, nDepth, sOut);
+					sOut.AppendChar('\n');
 				}
+				pChild = pChild.m_pNextSibling;
 			}
 		}
 	}

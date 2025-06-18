@@ -2,25 +2,19 @@
 
 #include "AST.hpp"
 
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
-	{
-		class ParamCall;
-		class TokenContainer;
-		class OffsetDatum;
-		class InternalString;
-	}
+	class ParamCall;
+	class TokenContainer;
+	class OffsetDatum;
+	class InternalString;
 }
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class ParamCall : public AST
 	{
-		class ParamCall : public AST
-		{
-			public: static ParamCall* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-			public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
-		};
-	}
+		public: static ParamCall* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+	};
 }
 

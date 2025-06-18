@@ -2,31 +2,25 @@
 
 #include "AST.hpp"
 
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
-	{
-		class Identifier;
-		class TokenContainer;
-		class OffsetDatum;
-		class AST;
-		class Validator;
-		class OperatorExpr;
-		class NamespaceDecl;
-		class InternalString;
-	}
+	class Identifier;
+	class TokenContainer;
+	class OffsetDatum;
+	class AST;
+	class Validator;
+	class OperatorExpr;
+	class NamespaceDecl;
+	class InternalString;
 }
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class Identifier : public AST
 	{
-		class Identifier : public AST
-		{
-			public: static Identifier* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-			public: virtual AST* BaseClone();
-			public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-			public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
-		};
-	}
+		public: static Identifier* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
+		public: virtual AST* BaseClone();
+		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+	};
 }
 

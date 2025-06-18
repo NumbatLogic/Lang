@@ -1,113 +1,110 @@
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class DelegateDecl : AST
 	{
-		class DelegateDecl : AST
+		public AccessLevel m_pAccessLevel;
+		public FunctionDecl m_pFunctionDecl;
+		
+		public construct()
 		{
-			public AccessLevel m_pAccessLevel;
-			public FunctionDecl m_pFunctionDecl;
+			m_eType = AST::Type::DELEGATE_DECL;
+		}
+		
+		public static DelegateDecl** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum, ClassDecl pParentClassDecl)
+		{
+			OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
+
+			AccessLevel* pAccessLevel = own AccessLevel::TryCreate(pTokenContainer, pTempOffset);
+			if (pAccessLevel == null)
+				return null;
+
+			Token pToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_DELEGATE);
+			if (pToken == null)
+				return null;
+			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+			DelegateDecl* pDelegateDecl = own new DelegateDecl();
+			pDelegateDecl.m_pFirstToken = pToken;
+			pDelegateDecl.m_pAccessLevel = pAccessLevel;
+			pDelegateDecl.AddChild(disown pAccessLevel);
 			
-			public construct()
+			FunctionDecl* pFunctionDecl = own FunctionDecl::TryCreate(pTokenContainer, pTempOffset, null);
+			if (pFunctionDecl == null)
 			{
-				m_eType = AST::Type::DELEGATE_DECL;
+				Console::Log("expected function decl");
+				NumbatLogic::Assert::Plz(false);
+				return null;
 			}
-			
-			public static DelegateDecl** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum, ClassDecl pParentClassDecl)
+
+			if (pFunctionDecl.m_pScope != null)
 			{
-				OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
+				Console::Log("function def can't have scope!");
+				NumbatLogic::Assert::Plz(false);
+				return null;
+			}
 
-				AccessLevel* pAccessLevel = own AccessLevel::TryCreate(pTokenContainer, pTempOffset);
-				if (pAccessLevel == null)
-					return null;
+			pDelegateDecl.m_pFunctionDecl = pFunctionDecl;
+			pDelegateDecl.AddChild(disown pFunctionDecl);
 
-				Token pToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_DELEGATE);
-				if (pToken == null)
-					return null;
-				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+			pOffsetDatum.Set(pTempOffset);
+			return disown pDelegateDecl;
+		}
 
-				DelegateDecl* pDelegateDecl = own new DelegateDecl();
-				pDelegateDecl.m_pFirstToken = pToken;
-				pDelegateDecl.m_pAccessLevel = pAccessLevel;
-				pDelegateDecl.AddChild(disown pAccessLevel);
-				
-				FunctionDecl* pFunctionDecl = own FunctionDecl::TryCreate(pTokenContainer, pTempOffset, null);
-				if (pFunctionDecl == null)
+		public override AST FindByName(string sxName, AST pCallingChild)
+		{
+			if (ExternalString::Equal(sxName, m_pFunctionDecl.m_pNameToken.GetString()))
+				return this;
+
+			return base.FindByName(sxName, pCallingChild);
+		}
+
+		/*public override void Validate(Validator pValidator, OperatorExpr pParent)
+		{
+			base.Validate(pValidator, pParent);
+		}*/
+
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		{
+			// public delegate int ComparisonCallback(object param0, object param1);
+			// typedef int (ComparisonCallback)(const void* pObjectA, const void* pObjectB);
+
+			if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
+				return;
+
+			Util::Pad(nDepth, sOut);
+			m_pAccessLevel.Stringify(eLanguage, eOutputFile, 0, sOut);
+			if (eLanguage == AST::Language::CPP)
+				sOut.AppendChar(':');
+			sOut.AppendChar(' ');
+
+			switch (eLanguage)
+			{
+				case AST::Language::CPP:
 				{
-					Console::Log("expected function decl");
-					NumbatLogic::Assert::Plz(false);
-					return null;
+					sOut.Append("typedef ");
+					break;
 				}
-
-				if (pFunctionDecl.m_pScope != null)
+				case AST::Language::CS:
+				case AST::Language::NLL:
+				case AST::Language::NLL_DEF:
 				{
-					Console::Log("function def can't have scope!");
-					NumbatLogic::Assert::Plz(false);
-					return null;
+					sOut.Append("delegate ");
+					break;
 				}
-
-				pDelegateDecl.m_pFunctionDecl = pFunctionDecl;
-				pDelegateDecl.AddChild(disown pFunctionDecl);
-
-				pOffsetDatum.Set(pTempOffset);
-				return disown pDelegateDecl;
 			}
 
-			public override AST FindByName(string sxName, AST pCallingChild)
-			{
-				if (ExternalString::Equal(sxName, m_pFunctionDecl.m_pNameToken.GetString()))
-					return this;
+			m_pFunctionDecl.m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
+			sOut.AppendChar(' ');
 
-				return base.FindByName(sxName, pCallingChild);
-			}
+			if (eLanguage == AST::Language::CPP)
+				sOut.AppendChar('(');
+			sOut.Append(m_pFunctionDecl.m_pNameToken.GetString());
+			if (eLanguage == AST::Language::CPP)
+				sOut.AppendChar(')');
 
-			/*public override void Validate(Validator pValidator, OperatorExpr pParent)
-			{
-				base.Validate(pValidator, pParent);
-			}*/
+			m_pFunctionDecl.m_pParamDecl.Stringify(eLanguage, eOutputFile, 0, sOut);
 
-			public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
-			{
-				// public delegate int ComparisonCallback(object param0, object param1);
-				// typedef int (ComparisonCallback)(const void* pObjectA, const void* pObjectB);
-
-				if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
-					return;
-
-				Util::Pad(nDepth, sOut);
-				m_pAccessLevel.Stringify(eLanguage, eOutputFile, 0, sOut);
-				if (eLanguage == AST::Language::CPP)
-					sOut.AppendChar(':');
-				sOut.AppendChar(' ');
-
-				switch (eLanguage)
-				{
-					case AST::Language::CPP:
-					{
-						sOut.Append("typedef ");
-						break;
-					}
-					case AST::Language::CS:
-					case AST::Language::NLL:
-					case AST::Language::NLL_DEF:
-					{
-						sOut.Append("delegate ");
-						break;
-					}
-				}
-
-				m_pFunctionDecl.m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
-				sOut.AppendChar(' ');
-
-				if (eLanguage == AST::Language::CPP)
-					sOut.AppendChar('(');
-				sOut.Append(m_pFunctionDecl.m_pNameToken.GetString());
-				if (eLanguage == AST::Language::CPP)
-					sOut.AppendChar(')');
-
-				m_pFunctionDecl.m_pParamDecl.Stringify(eLanguage, eOutputFile, 0, sOut);
-
-				sOut.Append(";\n");
-			}
+			sOut.Append(";\n");
 		}
 	}
 }

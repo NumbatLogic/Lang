@@ -1,30 +1,24 @@
 #include "PointerTest.hpp"
-#include "../../Shared/CPP/Console.hpp"
+#include "../../../LangShared/Console/CPP/Console.hpp"
 
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
-	{
-		class Thing;
-	}
+	class Thing;
 }
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	Thing::Thing()
 	{
-		Thing::Thing()
-		{
-			m_ff = 0;
-		}
-
-		void PointerTest::Run()
-		{
-			Console::Log("Pointer test...");
-			Thing* pThing = new Thing();
-			pThing->m_ff = 0;
-			if (pThing) delete pThing;
-		}
-
+		m_ff = 0;
 	}
+
+	void PointerTest::Run()
+	{
+		Console::Log("Pointer test...");
+		Thing* pThing = new Thing();
+		pThing->m_ff = 0;
+		if (pThing) delete pThing;
+	}
+
 }
 

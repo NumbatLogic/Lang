@@ -1,208 +1,205 @@
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class FunctionCall : AST
 	{
-		class FunctionCall : AST
+		public string m_sMangledName;
+		public ParamCall m_pParamCall;
+
+		public static FunctionCall** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
 		{
-			public string m_sMangledName;
-			public ParamCall m_pParamCall;
+			OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
 
-			public static FunctionCall** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+			Token pNameToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
+			if (pNameToken == null)
+				return null;
+			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+			if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_LEFT) == null)
+				return null;
+			
+			ParamCall* pParamCall = own ParamCall::TryCreate(pTokenContainer, pTempOffset);
+			if (pParamCall == null)
 			{
-				OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
-
-				Token pNameToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
-				if (pNameToken == null)
-					return null;
-				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
-
-				if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_LEFT) == null)
-					return null;
-				
-				ParamCall* pParamCall = own ParamCall::TryCreate(pTokenContainer, pTempOffset);
-				if (pParamCall == null)
-				{
-					InternalString* sTemp = own new InternalString("expected ParamCall ");
-					sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
-					Console::Log(sTemp.GetExternalString());
-					NumbatLogic::Assert::Plz(false);
-					return null;
-				}
-
-				FunctionCall* pFunctionCall = own new FunctionCall();
-
-				pFunctionCall.m_eType = AST::Type::AST_FUNCTION_CALL;
-				pFunctionCall.m_pFirstToken = pNameToken;
-				pFunctionCall.m_sMangledName = pNameToken.GetString();
-				pFunctionCall.m_pParamCall = pParamCall;
-
-				pFunctionCall.AddChild(disown pParamCall);
-
-
-				pOffsetDatum.Set(pTempOffset);
-				return disown pFunctionCall;
+				InternalString* sTemp = own new InternalString("expected ParamCall ");
+				sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
+				Console::Log(sTemp.GetExternalString());
+				NumbatLogic::Assert::Plz(false);
+				return null;
 			}
 
-			public override void Validate(Validator pValidator, OperatorExpr pParent)
-			{
-				string sName = m_pFirstToken.GetString();
+			FunctionCall* pFunctionCall = own new FunctionCall();
 
-				AST pBase = this;
-				AST pChild = this;
-				if (pParent != null)
+			pFunctionCall.m_eType = AST::Type::AST_FUNCTION_CALL;
+			pFunctionCall.m_pFirstToken = pNameToken;
+			pFunctionCall.m_sMangledName = pNameToken.GetString();
+			pFunctionCall.m_pParamCall = pParamCall;
+
+			pFunctionCall.AddChild(disown pParamCall);
+
+
+			pOffsetDatum.Set(pTempOffset);
+			return disown pFunctionCall;
+		}
+
+		public override void Validate(Validator pValidator, OperatorExpr pParent)
+		{
+			string sName = m_pFirstToken.GetString();
+
+			AST pBase = this;
+			AST pChild = this;
+			if (pParent != null)
+			{
+				if (pParent.m_pOperatorToken.m_eType == Token::Type::TOKEN_DOT && pParent.m_pLeft.m_pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE)
 				{
-					if (pParent.m_pOperatorToken.m_eType == Token::Type::TOKEN_DOT && pParent.m_pLeft.m_pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE)
+					AddClassDeclReference(pParent.m_pLeft.m_pValueType.m_pClassDecl, AST::OutputFile::SOURCE, false);
+					pBase = pParent.m_pLeft.m_pValueType.m_pClassDecl;
+					pChild = null;
+				}
+				else if (pParent.m_pOperatorToken.m_eType == Token::Type::TOKEN_DOUBLE_COLON)
+				{
+					if (pParent.m_pLeft.m_pValueType.m_eType == ValueType::Type::CLASS_DECL)
 					{
 						AddClassDeclReference(pParent.m_pLeft.m_pValueType.m_pClassDecl, AST::OutputFile::SOURCE, false);
 						pBase = pParent.m_pLeft.m_pValueType.m_pClassDecl;
 						pChild = null;
 					}
-					else if (pParent.m_pOperatorToken.m_eType == Token::Type::TOKEN_DOUBLE_COLON)
+					else if (pParent.m_pLeft.m_pValueType.m_eType == ValueType::Type::ENUM_DECL)
 					{
-						if (pParent.m_pLeft.m_pValueType.m_eType == ValueType::Type::CLASS_DECL)
-						{
-							AddClassDeclReference(pParent.m_pLeft.m_pValueType.m_pClassDecl, AST::OutputFile::SOURCE, false);
-							pBase = pParent.m_pLeft.m_pValueType.m_pClassDecl;
-							pChild = null;
-						}
-						else if (pParent.m_pLeft.m_pValueType.m_eType == ValueType::Type::ENUM_DECL)
-						{
-							pBase = pParent.m_pLeft.m_pValueType.m_pEnumDecl;
-							pChild = null;
-						}
-						else
-						{
-							pValidator.AddError("Unexpected left of ::", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-							return;
-						}
+						pBase = pParent.m_pLeft.m_pValueType.m_pEnumDecl;
+						pChild = null;
 					}
-				}
-
-				AST pAST = pBase.FindByName(sName, pChild);
-				if (pAST == null)
-				{
-					InternalString* sTemp = own new InternalString("Func Unbeknownst! ");
-					sTemp.Append(sName);
-					pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-					return;
-				}
-
-				FunctionDecl pFunctionDecl = null;
-
-
-				if (pAST.m_eType == AST::Type::AST_VAR_DECL)
-				{
-					VarDecl pVarDecl = cast VarDecl(pAST);
-					ValueType* pValueType = own pVarDecl.m_pTypeRef.CreateValueType();
-					if (pValueType != null)
+					else
 					{
-						if (pValueType.m_eType == ValueType::Type::DELEGATE_DECL_VALUE)
-						{
-							if (pValueType.m_pDelegateDecl == null)
-							{
-								InternalString* sTemp = own new InternalString("DELEGATE_DECL_VALUE does not have m_pDelegateDecl set???");
-								pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-								return;
-							}
-							
-							pFunctionDecl = pValueType.m_pDelegateDecl.m_pFunctionDecl;
-						}
-					}
-				}
-
-				if (pAST.m_eType == AST::Type::AST_FUNCTION_DECL)
-				{
-					pFunctionDecl = cast FunctionDecl(pAST);
-				}
-
-				
-
-				if (pFunctionDecl == null)
-				{
-					InternalString* sTemp = own new InternalString("Is not a function? ");
-					sTemp.Append(sName);
-					sTemp.Append(" ");
-					pAST.StringifyType(sTemp);
-					pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-					return;
-				}
-
-				
-				if (pParent != null && pParent.m_pLeft != null)
-				{
-					ValueType pLeftValueType = pParent.m_pLeft.m_pValueType;
-					if (pLeftValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE && pLeftValueType.m_pGenericValueTypeVector != null && pLeftValueType.m_pGenericValueTypeVector.GetSize() > 0)
-					{
-						// try to do some generic magic
-						if (pLeftValueType.m_pGenericValueTypeVector.GetSize() != pLeftValueType.m_pClassDecl.m_pGenericTypeDeclVector.GetSize())
-						{
-							InternalString* sTemp2 = own new InternalString("Mismatched generics? ");
-							pLeftValueType.StringifyType(sTemp2);
-							sTemp2.Append(" ");
-							sTemp2.AppendInt(pLeftValueType.m_pGenericValueTypeVector.GetSize());
-							sTemp2.Append(" != ");
-							sTemp2.Append(pLeftValueType.m_pClassDecl.m_pNameToken.GetString());
-							sTemp2.Append(" ");
-							sTemp2.AppendInt(pLeftValueType.m_pClassDecl.m_pGenericTypeDeclVector.GetSize());
-							pValidator.AddError(sTemp2.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-							return;
-						}
-
-						for (int i = 0; i < pLeftValueType.m_pGenericValueTypeVector.GetSize(); i++)
-						{
-							ValueType* pGenericValueType = own pLeftValueType.m_pGenericValueTypeVector.Get(i).Clone();
-							GenericTypeDecl pGenericTypeDecl = pLeftValueType.m_pClassDecl.m_pGenericTypeDeclVector.Get(i);
-
-							if (ExternalString::Equal(pGenericTypeDecl.m_pFirstToken.GetString(), pFunctionDecl.m_pTypeRef.m_pTypeToken.GetString()))
-							{
-								m_pValueType = own disown pGenericValueType;
-								m_pValueType.m_ePointerType = pFunctionDecl.m_pTypeRef.m_ePointerType;
-							}
-						}
-					}
-				}
-
-				if (m_pValueType == null)
-				{
-					m_pValueType = own pFunctionDecl.m_pTypeRef.CreateValueType();
-				}
-
-
-
-				if (m_pValueType == null)
-				{
-					InternalString* sTemp = own new InternalString("could not get valuetype for some reason ");
-					sTemp.Append(pFunctionDecl.m_pTypeRef.m_pTypeToken.GetString());
-					//pValueType.StringifyType(sTemp);
-					//sTemp.Append(" ");
-					//sTemp.Append(pParent.m_pLeft.m_pValueType.m_eType);
-					pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-				}
-
-				base.Validate(pValidator, pParent);
-
-
-				// validate params
-				if (m_pParamCall.m_pFirstChild == null)
-				{
-					if (pFunctionDecl.m_pParamDecl.m_pFirstChild != null)
-					{
-						pValidator.AddError("Params needed for function call?", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+						pValidator.AddError("Unexpected left of ::", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 						return;
 					}
-				}
-				else
-				{
-					if (!pFunctionDecl.m_pParamDecl.ValidateParamCall(m_pParamCall, pValidator))
-						return;
 				}
 			}
 
-			public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+			AST pAST = pBase.FindByName(sName, pChild);
+			if (pAST == null)
 			{
-				sOut.Append(m_sMangledName);
-				m_pParamCall.Stringify(eLanguage, eOutputFile, 0, sOut);
+				InternalString* sTemp = own new InternalString("Func Unbeknownst! ");
+				sTemp.Append(sName);
+				pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+				return;
 			}
+
+			FunctionDecl pFunctionDecl = null;
+
+
+			if (pAST.m_eType == AST::Type::AST_VAR_DECL)
+			{
+				VarDecl pVarDecl = cast VarDecl(pAST);
+				ValueType* pValueType = own pVarDecl.m_pTypeRef.CreateValueType();
+				if (pValueType != null)
+				{
+					if (pValueType.m_eType == ValueType::Type::DELEGATE_DECL_VALUE)
+					{
+						if (pValueType.m_pDelegateDecl == null)
+						{
+							InternalString* sTemp = own new InternalString("DELEGATE_DECL_VALUE does not have m_pDelegateDecl set???");
+							pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+							return;
+						}
+						
+						pFunctionDecl = pValueType.m_pDelegateDecl.m_pFunctionDecl;
+					}
+				}
+			}
+
+			if (pAST.m_eType == AST::Type::AST_FUNCTION_DECL)
+			{
+				pFunctionDecl = cast FunctionDecl(pAST);
+			}
+
+			
+
+			if (pFunctionDecl == null)
+			{
+				InternalString* sTemp = own new InternalString("Is not a function? ");
+				sTemp.Append(sName);
+				sTemp.Append(" ");
+				pAST.StringifyType(sTemp);
+				pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+				return;
+			}
+
+			
+			if (pParent != null && pParent.m_pLeft != null)
+			{
+				ValueType pLeftValueType = pParent.m_pLeft.m_pValueType;
+				if (pLeftValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE && pLeftValueType.m_pGenericValueTypeVector != null && pLeftValueType.m_pGenericValueTypeVector.GetSize() > 0)
+				{
+					// try to do some generic magic
+					if (pLeftValueType.m_pGenericValueTypeVector.GetSize() != pLeftValueType.m_pClassDecl.m_pGenericTypeDeclVector.GetSize())
+					{
+						InternalString* sTemp2 = own new InternalString("Mismatched generics? ");
+						pLeftValueType.StringifyType(sTemp2);
+						sTemp2.Append(" ");
+						sTemp2.AppendInt(pLeftValueType.m_pGenericValueTypeVector.GetSize());
+						sTemp2.Append(" != ");
+						sTemp2.Append(pLeftValueType.m_pClassDecl.m_pNameToken.GetString());
+						sTemp2.Append(" ");
+						sTemp2.AppendInt(pLeftValueType.m_pClassDecl.m_pGenericTypeDeclVector.GetSize());
+						pValidator.AddError(sTemp2.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+						return;
+					}
+
+					for (int i = 0; i < pLeftValueType.m_pGenericValueTypeVector.GetSize(); i++)
+					{
+						ValueType* pGenericValueType = own pLeftValueType.m_pGenericValueTypeVector.Get(i).Clone();
+						GenericTypeDecl pGenericTypeDecl = pLeftValueType.m_pClassDecl.m_pGenericTypeDeclVector.Get(i);
+
+						if (ExternalString::Equal(pGenericTypeDecl.m_pFirstToken.GetString(), pFunctionDecl.m_pTypeRef.m_pTypeToken.GetString()))
+						{
+							m_pValueType = own disown pGenericValueType;
+							m_pValueType.m_ePointerType = pFunctionDecl.m_pTypeRef.m_ePointerType;
+						}
+					}
+				}
+			}
+
+			if (m_pValueType == null)
+			{
+				m_pValueType = own pFunctionDecl.m_pTypeRef.CreateValueType();
+			}
+
+
+
+			if (m_pValueType == null)
+			{
+				InternalString* sTemp = own new InternalString("could not get valuetype for some reason ");
+				sTemp.Append(pFunctionDecl.m_pTypeRef.m_pTypeToken.GetString());
+				//pValueType.StringifyType(sTemp);
+				//sTemp.Append(" ");
+				//sTemp.Append(pParent.m_pLeft.m_pValueType.m_eType);
+				pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+			}
+
+			base.Validate(pValidator, pParent);
+
+
+			// validate params
+			if (m_pParamCall.m_pFirstChild == null)
+			{
+				if (pFunctionDecl.m_pParamDecl.m_pFirstChild != null)
+				{
+					pValidator.AddError("Params needed for function call?", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+					return;
+				}
+			}
+			else
+			{
+				if (!pFunctionDecl.m_pParamDecl.ValidateParamCall(m_pParamCall, pValidator))
+					return;
+			}
+		}
+
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		{
+			sOut.Append(m_sMangledName);
+			m_pParamCall.Stringify(eLanguage, eOutputFile, 0, sOut);
 		}
 	}
 }

@@ -12,7 +12,7 @@
 	include_once dirname(__FILE__) . "/Test/CPP/Test.php";
 	include_once dirname(__FILE__) . "/Package/CPP/Package.php";
 	include_once dirname(__FILE__) . "/../Shared/CPP/Shared.php";
-	//include_once dirname(__FILE__) . "/ThirdParty/ThirdParty.php";
+	include_once dirname(__FILE__) . "/../../LangShared/LangShared.php";
 
 	class Lang_Config extends Solution_Config
 	{
@@ -48,8 +48,9 @@
 			//$this->m_pProjectArray[] = new CoreTest_Config($sAction);
 			$this->m_pProjectArray[] = new CLI_Config($sAction);
 			$this->m_pProjectArray[] = new Test_Config($sAction);
-			$this->m_pProjectArray[] = new Package_Config($sAction);
-			$this->m_pProjectArray[] = new Shared_Config($sAction);
+			//$this->m_pProjectArray[] = new Package_Config($sAction);
+			//$this->m_pProjectArray[] = new Shared_Config($sAction);
+			$this->m_pProjectArray[] = new LangShared_Config($sAction, dirname(__FILE__) . "/../LangShared.package-list", dirname(__FILE__) . "/../Transpiled/LangShared");
 		}
 
 		public function GetName() { return "Lang"; }

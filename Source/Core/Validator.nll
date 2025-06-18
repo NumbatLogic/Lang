@@ -1,271 +1,268 @@
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class ValidatorError
 	{
-		class ValidatorError
+		public InternalString* m_sError;
+		public InternalString* m_sFile;
+		public int m_nLine;
+		public int m_nColumn;
+	}
+
+	class ValidatorScope
+	{
+		public Scope m_pScope;
+		public Vector<VarDecl>* m_pVarDeclVector;
+
+		public construct(Scope pScope)
 		{
-			public InternalString* m_sError;
-			public InternalString* m_sFile;
-			public int m_nLine;
-			public int m_nColumn;
+			m_pScope = pScope;
+			m_pVarDeclVector = own new Vector<VarDecl>();
+		}
+	}
+
+	class Validator
+	{
+		private Project m_pProject;
+		private OwnedVector<ValidatorError>* m_pValidatorErrorVector;
+		private OwnedVector<ValidatorScope>* m_pValidatorScopeVector;
+		
+		public NamespaceNode m_pCurrentNamespaceNode;
+
+		public construct(Project pProject)
+		{
+			m_pProject = pProject;
+			m_pValidatorErrorVector = own new OwnedVector<ValidatorError>();
+			m_pValidatorScopeVector = own new OwnedVector<ValidatorScope>();
+			m_pCurrentNamespaceNode = pProject.m_pRootNamespaceNode;
 		}
 
-		class ValidatorScope
+		private void PreparseNamespaces(NamespaceNode pCurrentNode, AST pAST)
 		{
-			public Scope m_pScope;
-			public Vector<VarDecl>* m_pVarDeclVector;
-
-			public construct(Scope pScope)
+			AST pChild = pAST.m_pFirstChild;
+			while (pChild != null)
 			{
-				m_pScope = pScope;
-				m_pVarDeclVector = own new Vector<VarDecl>();
+				if (pChild.m_eType == AST::Type::NAMESPACE_DECL)
+				{
+					NamespaceDecl pNamespaceDecl = cast NamespaceDecl(pChild);
+					NamespaceNode pNextNamespaceNode = pCurrentNode.GetOrCreateChild(pNamespaceDecl);
+					PreparseNamespaces(pNextNamespaceNode, pChild);
+				}
+				pChild = pChild.m_pNextSibling;
 			}
 		}
 
-		class Validator
+		public bool Validate()
 		{
-			private Project m_pProject;
-			private OwnedVector<ValidatorError>* m_pValidatorErrorVector;
-			private OwnedVector<ValidatorScope>* m_pValidatorScopeVector;
-			
-			public NamespaceNode m_pCurrentNamespaceNode;
+			InternalString* sTemp = own new InternalString("");
 
-			public construct(Project pProject)
+			// preparse to collect all the namespaces
+			for (int i = 0; i < m_pProject.m_pTranslationUnitVector.GetSize(); i++)
 			{
-				m_pProject = pProject;
-				m_pValidatorErrorVector = own new OwnedVector<ValidatorError>();
-				m_pValidatorScopeVector = own new OwnedVector<ValidatorScope>();
-				m_pCurrentNamespaceNode = pProject.m_pRootNamespaceNode;
+				TranslationUnit pTranslationUnit = m_pProject.m_pTranslationUnitVector.Get(i);
+				PreparseNamespaces(m_pProject.m_pRootNamespaceNode, pTranslationUnit);
 			}
 
-			private void PreparseNamespaces(NamespaceNode pCurrentNode, AST pAST)
+			for (int i = 0; i < m_pProject.m_pTranslationUnitVector.GetSize(); i++)
 			{
-				AST pChild = pAST.m_pFirstChild;
-				while (pChild != null)
+				TranslationUnit pTranslationUnit = m_pProject.m_pTranslationUnitVector.Get(i);
+				pTranslationUnit.PreValidate(this, null);
+			}
+
+			for (int i = 0; i < m_pProject.m_pTranslationUnitVector.GetSize(); i++)
+			{
+				TranslationUnit pTranslationUnit = m_pProject.m_pTranslationUnitVector.Get(i);
+				pTranslationUnit.Validate(this, null);
+			}
+
+			for (int i = 0; i < m_pValidatorErrorVector.GetSize(); i++)
+			{
+				ValidatorError pValidatorError = m_pValidatorErrorVector.Get(i);
+				sTemp.Set(pValidatorError.m_sFile.GetExternalString());
+				sTemp.Append(":");
+				sTemp.AppendInt(pValidatorError.m_nLine);
+				sTemp.Append(":"); 
+				sTemp.AppendInt(pValidatorError.m_nColumn);
+				sTemp.Append(" - ");
+				sTemp.Append(pValidatorError.m_sError.GetExternalString());
+				Console::Log(sTemp.GetExternalString());
+			}
+
+			if (m_pValidatorErrorVector.GetSize() > 0)
+			{
+				sTemp.Set("");
+				sTemp.AppendInt(m_pValidatorErrorVector.GetSize());
+				sTemp.Append(" errors");
+				Console::Log(sTemp.GetExternalString());
+			}
+
+			return m_pValidatorErrorVector.GetSize() == 0;
+		}
+
+		public void AddError(string sError, InternalString sFile, int nLine, int nColumn)
+		{
+			ValidatorError* pValidatorError = own new ValidatorError();
+			pValidatorError.m_sError = own new InternalString(sError);
+			if (sFile == null)
+				pValidatorError.m_sFile = own new InternalString("-- no file --");
+			else
+				pValidatorError.m_sFile = own new InternalString(sFile.GetExternalString());
+			pValidatorError.m_nLine = nLine;
+			pValidatorError.m_nColumn = nColumn;
+			m_pValidatorErrorVector.PushBack(disown pValidatorError);
+		}
+
+		public void BeginScope(Scope pScope)
+		{
+			ValidatorScope* pValidatorScope = own new ValidatorScope(pScope);
+			m_pValidatorScopeVector.PushBack(disown pValidatorScope);
+		}
+
+		public void AddVarDecl(VarDecl pVarDecl)
+		{
+			ValueType* pValueType = own pVarDecl.m_pTypeRef.CreateValueType();
+			if (pValueType != null) // may be null for unbeknownst types
+			if (pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE && pValueType.m_ePointerType == TypeRef::PointerType::OWNED)
+			{
+				int nIndex = m_pValidatorScopeVector.GetSize()-1;
+				NumbatLogic::Assert::Plz(nIndex >= 0);
+
+				ValidatorScope pValidatorScope = m_pValidatorScopeVector.Get(nIndex);
+				pValidatorScope.m_pVarDeclVector.PushBack(pVarDecl);
+			}
+		}
+
+		public void EndScope(Scope pScope)
+		{
+			ValidatorScope* pValidatorScope = own m_pValidatorScopeVector.PopBack();
+			NumbatLogic::Assert::Plz(pValidatorScope != null);
+			NumbatLogic::Assert::Plz(pValidatorScope.m_pScope == pScope);
+
+			AST pCheck = pScope;
+			while (pCheck != null && pCheck.m_eType == AST::Type::AST_SCOPE)
+			{
+				pCheck = pCheck.m_pLastChild;
+			}
+			if (pCheck != null)
+				if (pCheck.m_eType == AST::Type::AST_RETURN_STMT || pCheck.m_eType == AST::Type::AST_CONTINUE_STMT || pCheck.m_eType == AST::Type::AST_BREAK_STMT)
+					return;
+
+			if (pValidatorScope.m_pVarDeclVector.GetSize() > 0)
+			{
+				VarDeclDescope* pVarDeclDescope = own new VarDeclDescope(false);
+				for (int i = 0; i < pValidatorScope.m_pVarDeclVector.GetSize(); i++)
 				{
-					if (pChild.m_eType == AST::Type::NAMESPACE_DECL)
+					VarDecl pVarDecl = pValidatorScope.m_pVarDeclVector.Get(i);
+					pVarDeclDescope.m_pVarDeclVector.PushBack(pVarDecl);
+				}
+				pScope.AddChild(disown pVarDeclDescope);
+			}
+		}
+
+		public void InjectCleanup(AST pBreakOrContinueOrReturn)
+		{
+			// if we are `return`ing a disowned vardecl, don't delete it!
+			Identifier pDisownedIdentifier = null;
+			if (pBreakOrContinueOrReturn.m_eType == AST::Type::AST_RETURN_STMT)
+			{
+				ReturnStmt pReturnStmt = cast ReturnStmt(pBreakOrContinueOrReturn);
+				//Console::Log("&");
+				if (pReturnStmt.m_pExpression != null && pReturnStmt.m_pExpression.m_eType == AST::Type::AST_DISOWN_EXP)
+				{
+					DisownExpr pDisownExpr = cast DisownExpr(pReturnStmt.m_pExpression);
+					if (pDisownExpr.m_pExpression.m_eType == AST::Type::AST_IDENTIFIER)
 					{
-						NamespaceDecl pNamespaceDecl = cast NamespaceDecl(pChild);
-						NamespaceNode pNextNamespaceNode = pCurrentNode.GetOrCreateChild(pNamespaceDecl);
-						PreparseNamespaces(pNextNamespaceNode, pChild);
+						pDisownedIdentifier = cast Identifier(pDisownExpr.m_pExpression);
 					}
-					pChild = pChild.m_pNextSibling;
 				}
 			}
 
-			public bool Validate()
+
+			VarDeclDescope* pVarDeclDescope = own new VarDeclDescope(false);
+			for (int i = m_pValidatorScopeVector.GetSize()-1; i >= 0; i--)
 			{
-				InternalString* sTemp = own new InternalString("");
-
-				// preparse to collect all the namespaces
-				for (int i = 0; i < m_pProject.m_pTranslationUnitVector.GetSize(); i++)
+				ValidatorScope pValidatorScope = m_pValidatorScopeVector.Get(i);
+				for (int j = 0; j < pValidatorScope.m_pVarDeclVector.GetSize(); j++)
 				{
-					TranslationUnit pTranslationUnit = m_pProject.m_pTranslationUnitVector.Get(i);
-					PreparseNamespaces(m_pProject.m_pRootNamespaceNode, pTranslationUnit);
-				}
-
-				for (int i = 0; i < m_pProject.m_pTranslationUnitVector.GetSize(); i++)
-				{
-					TranslationUnit pTranslationUnit = m_pProject.m_pTranslationUnitVector.Get(i);
-					pTranslationUnit.PreValidate(this, null);
-				}
-
-				for (int i = 0; i < m_pProject.m_pTranslationUnitVector.GetSize(); i++)
-				{
-					TranslationUnit pTranslationUnit = m_pProject.m_pTranslationUnitVector.Get(i);
-					pTranslationUnit.Validate(this, null);
-				}
-
-				for (int i = 0; i < m_pValidatorErrorVector.GetSize(); i++)
-				{
-					ValidatorError pValidatorError = m_pValidatorErrorVector.Get(i);
-					sTemp.Set(pValidatorError.m_sFile.GetExternalString());
-					sTemp.Append(":");
-					sTemp.AppendInt(pValidatorError.m_nLine);
-					sTemp.Append(":"); 
-					sTemp.AppendInt(pValidatorError.m_nColumn);
-					sTemp.Append(" - ");
-					sTemp.Append(pValidatorError.m_sError.GetExternalString());
-					Console::Log(sTemp.GetExternalString());
-				}
-
-				if (m_pValidatorErrorVector.GetSize() > 0)
-				{
-					sTemp.Set("");
-					sTemp.AppendInt(m_pValidatorErrorVector.GetSize());
-					sTemp.Append(" errors");
-					Console::Log(sTemp.GetExternalString());
-				}
-
-				return m_pValidatorErrorVector.GetSize() == 0;
-			}
-
-			public void AddError(string sError, InternalString sFile, int nLine, int nColumn)
-			{
-				ValidatorError* pValidatorError = own new ValidatorError();
-				pValidatorError.m_sError = own new InternalString(sError);
-				if (sFile == null)
-					pValidatorError.m_sFile = own new InternalString("-- no file --");
-				else
-					pValidatorError.m_sFile = own new InternalString(sFile.GetExternalString());
-				pValidatorError.m_nLine = nLine;
-				pValidatorError.m_nColumn = nColumn;
-				m_pValidatorErrorVector.PushBack(disown pValidatorError);
-			}
-
-			public void BeginScope(Scope pScope)
-			{
-				ValidatorScope* pValidatorScope = own new ValidatorScope(pScope);
-				m_pValidatorScopeVector.PushBack(disown pValidatorScope);
-			}
-
-			public void AddVarDecl(VarDecl pVarDecl)
-			{
-				ValueType* pValueType = own pVarDecl.m_pTypeRef.CreateValueType();
-				if (pValueType != null) // may be null for unbeknownst types
-				if (pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE && pValueType.m_ePointerType == TypeRef::PointerType::OWNED)
-				{
-					int nIndex = m_pValidatorScopeVector.GetSize()-1;
-					NumbatLogic::Assert::Plz(nIndex >= 0);
-
-					ValidatorScope pValidatorScope = m_pValidatorScopeVector.Get(nIndex);
-					pValidatorScope.m_pVarDeclVector.PushBack(pVarDecl);
-				}
-			}
-
-			public void EndScope(Scope pScope)
-			{
-				ValidatorScope* pValidatorScope = own m_pValidatorScopeVector.PopBack();
-				NumbatLogic::Assert::Plz(pValidatorScope != null);
-				NumbatLogic::Assert::Plz(pValidatorScope.m_pScope == pScope);
-
-				AST pCheck = pScope;
-				while (pCheck != null && pCheck.m_eType == AST::Type::AST_SCOPE)
-				{
-					pCheck = pCheck.m_pLastChild;
-				}
-				if (pCheck != null)
-					if (pCheck.m_eType == AST::Type::AST_RETURN_STMT || pCheck.m_eType == AST::Type::AST_CONTINUE_STMT || pCheck.m_eType == AST::Type::AST_BREAK_STMT)
-						return;
-
-				if (pValidatorScope.m_pVarDeclVector.GetSize() > 0)
-				{
-					VarDeclDescope* pVarDeclDescope = own new VarDeclDescope(false);
-					for (int i = 0; i < pValidatorScope.m_pVarDeclVector.GetSize(); i++)
+					VarDecl pVarDecl = pValidatorScope.m_pVarDeclVector.Get(j);
+					if (pDisownedIdentifier != null)
 					{
-						VarDecl pVarDecl = pValidatorScope.m_pVarDeclVector.Get(i);
-						pVarDeclDescope.m_pVarDeclVector.PushBack(pVarDecl);
+						if (ExternalString::Equal(pVarDecl.m_pNameToken.GetString(), pDisownedIdentifier.m_pFirstToken.GetString()))
+							continue;
 					}
-					pScope.AddChild(disown pVarDeclDescope);
+					pVarDeclDescope.m_pVarDeclVector.PushBack(pVarDecl);
 				}
-			}
 
-			public void InjectCleanup(AST pBreakOrContinueOrReturn)
-			{
-				// if we are `return`ing a disowned vardecl, don't delete it!
-				Identifier pDisownedIdentifier = null;
 				if (pBreakOrContinueOrReturn.m_eType == AST::Type::AST_RETURN_STMT)
 				{
-					ReturnStmt pReturnStmt = cast ReturnStmt(pBreakOrContinueOrReturn);
-					//Console::Log("&");
-					if (pReturnStmt.m_pExpression != null && pReturnStmt.m_pExpression.m_eType == AST::Type::AST_DISOWN_EXP)
-					{
-						DisownExpr pDisownExpr = cast DisownExpr(pReturnStmt.m_pExpression);
-						if (pDisownExpr.m_pExpression.m_eType == AST::Type::AST_IDENTIFIER)
-						{
-							pDisownedIdentifier = cast Identifier(pDisownExpr.m_pExpression);
-						}
-					}
+					if (pValidatorScope.m_pScope.m_pParent.m_eType == AST::Type::AST_FUNCTION_DECL)
+						break;
 				}
-
-
-				VarDeclDescope* pVarDeclDescope = own new VarDeclDescope(false);
-				for (int i = m_pValidatorScopeVector.GetSize()-1; i >= 0; i--)
+				else
 				{
-					ValidatorScope pValidatorScope = m_pValidatorScopeVector.Get(i);
-					for (int j = 0; j < pValidatorScope.m_pVarDeclVector.GetSize(); j++)
-					{
-						VarDecl pVarDecl = pValidatorScope.m_pVarDeclVector.Get(j);
-						if (pDisownedIdentifier != null)
-						{
-							if (ExternalString::Equal(pVarDecl.m_pNameToken.GetString(), pDisownedIdentifier.m_pFirstToken.GetString()))
-								continue;
-						}
-						pVarDeclDescope.m_pVarDeclVector.PushBack(pVarDecl);
-					}
-
-					if (pBreakOrContinueOrReturn.m_eType == AST::Type::AST_RETURN_STMT)
-					{
-						if (pValidatorScope.m_pScope.m_pParent.m_eType == AST::Type::AST_FUNCTION_DECL)
-							break;
-					}
-					else
-					{
-						if (pValidatorScope.m_pScope.m_pParent.m_eType == AST::Type::AST_FOR_STMT ||
-							pValidatorScope.m_pScope.m_pParent.m_eType == AST::Type::AST_WHILE_STMT ||
-							pValidatorScope.m_pScope.m_pParent.m_eType == AST::Type::AST_SWITCH_STMT)
-							break;
-					}
+					if (pValidatorScope.m_pScope.m_pParent.m_eType == AST::Type::AST_FOR_STMT ||
+						pValidatorScope.m_pScope.m_pParent.m_eType == AST::Type::AST_WHILE_STMT ||
+						pValidatorScope.m_pScope.m_pParent.m_eType == AST::Type::AST_SWITCH_STMT)
+						break;
 				}
+			}
 
-				if (pVarDeclDescope.m_pVarDeclVector.GetSize() > 0)
+			if (pVarDeclDescope.m_pVarDeclVector.GetSize() > 0)
+			{
+				AST pParent = pBreakOrContinueOrReturn.m_pParent;
+
+				Scope* pScope = own new Scope();
+				pScope.AddChild(disown pVarDeclDescope);
+
+				AST* pOwnedBreakOrContinueOrReturn;
+				AST pDisownedScope;
+
+				if (pParent.m_pFirstChild == pBreakOrContinueOrReturn)
 				{
-					AST pParent = pBreakOrContinueOrReturn.m_pParent;
-
-					Scope* pScope = own new Scope();
-					pScope.AddChild(disown pVarDeclDescope);
-
-					AST* pOwnedBreakOrContinueOrReturn;
-					AST pDisownedScope;
-
-					if (pParent.m_pFirstChild == pBreakOrContinueOrReturn)
-					{
-						pOwnedBreakOrContinueOrReturn = own disown pParent.m_pFirstChild;
-						pParent.m_pFirstChild = own disown pScope;
-						pDisownedScope = pParent.m_pFirstChild;
-					}
-					else
-					{
-						pOwnedBreakOrContinueOrReturn = own disown pBreakOrContinueOrReturn.m_pPrevSibling.m_pNextSibling;
-						pBreakOrContinueOrReturn.m_pPrevSibling.m_pNextSibling = own disown pScope;
-						pDisownedScope = pBreakOrContinueOrReturn.m_pPrevSibling.m_pNextSibling;
-						pDisownedScope.m_pPrevSibling = pOwnedBreakOrContinueOrReturn.m_pPrevSibling;
-
-						pOwnedBreakOrContinueOrReturn.m_pPrevSibling = null; // should have been automatic?
-					}
-
-					if (pParent.m_pLastChild == pBreakOrContinueOrReturn)
-					{
-						pParent.m_pLastChild = pDisownedScope;
-					}
-					else
-					{
-						pDisownedScope.m_pNextSibling = own disown pBreakOrContinueOrReturn.m_pNextSibling;
-						pDisownedScope.m_pNextSibling.m_pPrevSibling = pDisownedScope;
-
-						pBreakOrContinueOrReturn.m_pNextSibling = null; // should have been automatic
-					}
-
-					pDisownedScope.AddChild(disown pOwnedBreakOrContinueOrReturn);
+					pOwnedBreakOrContinueOrReturn = own disown pParent.m_pFirstChild;
+					pParent.m_pFirstChild = own disown pScope;
+					pDisownedScope = pParent.m_pFirstChild;
 				}
+				else
+				{
+					pOwnedBreakOrContinueOrReturn = own disown pBreakOrContinueOrReturn.m_pPrevSibling.m_pNextSibling;
+					pBreakOrContinueOrReturn.m_pPrevSibling.m_pNextSibling = own disown pScope;
+					pDisownedScope = pBreakOrContinueOrReturn.m_pPrevSibling.m_pNextSibling;
+					pDisownedScope.m_pPrevSibling = pOwnedBreakOrContinueOrReturn.m_pPrevSibling;
+
+					pOwnedBreakOrContinueOrReturn.m_pPrevSibling = null; // should have been automatic?
+				}
+
+				if (pParent.m_pLastChild == pBreakOrContinueOrReturn)
+				{
+					pParent.m_pLastChild = pDisownedScope;
+				}
+				else
+				{
+					pDisownedScope.m_pNextSibling = own disown pBreakOrContinueOrReturn.m_pNextSibling;
+					pDisownedScope.m_pNextSibling.m_pPrevSibling = pDisownedScope;
+
+					pBreakOrContinueOrReturn.m_pNextSibling = null; // should have been automatic
+				}
+
+				pDisownedScope.AddChild(disown pOwnedBreakOrContinueOrReturn);
 			}
+		}
 
 
-			
+		
 
 
-			public void BeginNamespace(string sxName)
-			{
-				m_pCurrentNamespaceNode = m_pCurrentNamespaceNode.GetChild(sxName);
-				NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode != null);
-			}
+		public void BeginNamespace(string sxName)
+		{
+			m_pCurrentNamespaceNode = m_pCurrentNamespaceNode.GetChild(sxName);
+			NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode != null);
+		}
 
-			public void EndNamespace(string sxName)
-			{
-				NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode.m_sName.IsEqual(sxName));
-				NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode.m_pParent != null);
-				m_pCurrentNamespaceNode = m_pCurrentNamespaceNode.m_pParent;
-			}
+		public void EndNamespace(string sxName)
+		{
+			NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode.m_sName.IsEqual(sxName));
+			NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode.m_pParent != null);
+			m_pCurrentNamespaceNode = m_pCurrentNamespaceNode.m_pParent;
 		}
 	}
 }

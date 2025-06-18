@@ -1,35 +1,29 @@
 #pragma once
 
-#include "../Shared/OwnedVector.hpp"
+#include "../LangShared/Vector/OwnedVector.hpp"
 #include "NamespaceNode.hpp"
-#include "../../Shared/CPP/Vector.hpp"
+#include "../../../LangShared/Vector/CPP/Vector.hpp"
 #include "AST/NamespaceDecl.hpp"
 
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
-	{
-		class InternalString;
-		class NamespaceNode;
-		class NamespaceDecl;
-	}
+	class InternalString;
+	class NamespaceNode;
+	class NamespaceDecl;
 }
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class NamespaceNode
 	{
-		class NamespaceNode
-		{
-			public: InternalString* m_sName;
-			public: NamespaceNode* m_pParent;
-			public: OwnedVector<NamespaceNode*>* m_pChildVector;
-			public: Vector<NamespaceDecl*>* m_pNamespaceDeclVector;
-			public: NamespaceNode(InternalString* sName, NamespaceNode* pParent);
-			public: NamespaceNode* GetOrCreateChild(NamespaceDecl* pNamespaceDecl);
-			public: NamespaceNode* GetChild(const char* sxName);
-			public: NamespaceNode* FindByName(const char* sxName, bool bCanAscend);
-			public: virtual ~NamespaceNode();
-		};
-	}
+		public: InternalString* m_sName;
+		public: NamespaceNode* m_pParent;
+		public: OwnedVector<NamespaceNode*>* m_pChildVector;
+		public: Vector<NamespaceDecl*>* m_pNamespaceDeclVector;
+		public: NamespaceNode(InternalString* sName, NamespaceNode* pParent);
+		public: NamespaceNode* GetOrCreateChild(NamespaceDecl* pNamespaceDecl);
+		public: NamespaceNode* GetChild(const char* sxName);
+		public: NamespaceNode* FindByName(const char* sxName, bool bCanAscend);
+		public: virtual ~NamespaceNode();
+	};
 }
 

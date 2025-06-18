@@ -3,12 +3,12 @@
 #include "../OffsetDatum.hpp"
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
-#include "../../../Shared/CPP/Console.hpp"
+#include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
 #include "TypeRef.hpp"
-#include "../../../Shared/CPP/InternalString.hpp"
+#include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../Util.hpp"
 #include "Scope.hpp"
 #include "VarDecl.hpp"
@@ -16,286 +16,280 @@
 #include "OperatorExpr.hpp"
 #include "ExpressionStmt.hpp"
 
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
-	{
-		class OffsetDatum;
-		class Token;
-		class AST;
-		class DisownExpr;
-		class InternalString;
-		class Scope;
-		class TypeRef;
-		class VarDecl;
-		class NullExpr;
-		class OperatorExpr;
-		class ExpressionStmt;
-	}
+	class OffsetDatum;
+	class Token;
+	class AST;
+	class DisownExpr;
+	class InternalString;
+	class Scope;
+	class TypeRef;
+	class VarDecl;
+	class NullExpr;
+	class OperatorExpr;
+	class ExpressionStmt;
 }
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	DisownExpr::DisownExpr()
 	{
-		DisownExpr::DisownExpr()
-		{
-			m_pExpression = 0;
-			m_sTempVarName = 0;
-			m_eType = AST::Type::AST_DISOWN_EXP;
-		}
+		m_pExpression = 0;
+		m_sTempVarName = 0;
+		m_eType = AST::Type::AST_DISOWN_EXP;
+	}
 
-		DisownExpr* DisownExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
+	DisownExpr* DisownExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
+	{
+		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+		Token* pDisownToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_DISOWN);
+		if (pDisownToken == 0)
 		{
-			OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
-			Token* pDisownToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_DISOWN);
-			if (pDisownToken == 0)
+			if (pTempOffset) delete pTempOffset;
+			return 0;
+		}
+		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+		AST* pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
+		if (pExpression == 0)
+		{
+			Console::Log("expected expresssion");
+			NumbatLogic::Assert::Plz(false);
 			{
 				if (pTempOffset) delete pTempOffset;
+				if (pExpression) delete pExpression;
 				return 0;
 			}
-			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-			AST* pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
-			if (pExpression == 0)
-			{
-				Console::Log("expected expresssion");
-				NumbatLogic::Assert::Plz(false);
-				{
-					if (pTempOffset) delete pTempOffset;
-					if (pExpression) delete pExpression;
-					return 0;
-				}
-			}
-			DisownExpr* pDisownExpr = new DisownExpr();
-			pDisownExpr->m_pFirstToken = pDisownToken;
-			pDisownExpr->m_pExpression = pExpression;
-			{
-				NumberDuck::Secret::AST* __1067118945 = pExpression;
-				pExpression = 0;
-				pDisownExpr->AddChild(__1067118945);
-			}
-			pOffsetDatum->Set(pTempOffset);
-			{
-				NumberDuck::Secret::DisownExpr* __2180824118 = pDisownExpr;
-				pDisownExpr = 0;
-				{
-					if (pTempOffset) delete pTempOffset;
-					if (pExpression) delete pExpression;
-					return __2180824118;
-				}
-			}
 		}
-
-		void DisownExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
+		DisownExpr* pDisownExpr = new DisownExpr();
+		pDisownExpr->m_pFirstToken = pDisownToken;
+		pDisownExpr->m_pExpression = pExpression;
 		{
-			AST::Validate(pValidator, pParent);
-			if (m_pExpression->m_pValueType == 0)
-			{
-				pValidator->AddError("No valuetype for expression???", m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
-				return;
-			}
-			if (m_pExpression->m_pValueType->m_eType != ValueType::Type::CLASS_DECL_VALUE && m_pExpression->m_pValueType->m_eType != ValueType::Type::GENERIC_TYPE_DECL_VALUE)
-			{
-				pValidator->AddError("Expected right side of Disown to be a CLASS_DECL_VALUE or GENERIC_TYPE_DECL_VALUE", m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
-				return;
-			}
-			if (m_pExpression->m_pValueType->m_ePointerType != TypeRef::PointerType::OWNED)
-			{
-				pValidator->AddError("Expected right side of Disown to be a OWNED type", m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
-				return;
-			}
-			m_pValueType = m_pExpression->m_pValueType->Clone();
-			m_pValueType->m_ePointerType = TypeRef::PointerType::TRANSITON;
-			if (m_pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
-			{
-				if (m_pValueType->m_pClassDecl == 0)
-				{
-					pValidator->AddError("Can't disown unbeknownst thing (ClassDecl)", m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
-					return;
-				}
-			}
-			else if (m_pValueType->m_eType == ValueType::Type::GENERIC_TYPE_DECL_VALUE)
-			{
-				if (m_pValueType->m_pGenericTypeDecl == 0)
-				{
-					pValidator->AddError("Can't disown unbeknownst thing (GenericTypeDecl)", m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
-					return;
-				}
-			}
-			AST* pParentStatement = GetParentStatement();
-			if (pParentStatement == 0)
-			{
-				pValidator->AddError("Can'd find disown parent???", m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
-				return;
-			}
-			InternalString* sTempName = new InternalString("");
-			m_pExpression->Stringify(AST::Language::CPP, AST::OutputFile::SOURCE, 0, sTempName);
-			unsigned int nHash = Util::BadHash(sTempName);
-			sTempName->Set("__");
-			sTempName->AppendUint32(nHash);
-			AST* pParentParent = pParentStatement->m_pParent;
-			Scope* pScope = new Scope();
-			AST* pOwnedParentStatement = 0;
-			AST* pDisownedScope = 0;
-			if (pParentParent->m_pFirstChild == pParentStatement)
-			{
-				{
-					NumberDuck::Secret::AST* __1629566089 = pParentParent->m_pFirstChild;
-					pParentParent->m_pFirstChild = 0;
-					pOwnedParentStatement = __1629566089;
-				}
-				{
-					NumberDuck::Secret::Scope* __693694853 = pScope;
-					pScope = 0;
-					pParentParent->m_pFirstChild = __693694853;
-				}
-				pDisownedScope = pParentParent->m_pFirstChild;
-			}
-			else
-			{
-				{
-					NumberDuck::Secret::AST* __411868003 = pParentStatement->m_pPrevSibling->m_pNextSibling;
-					pParentStatement->m_pPrevSibling->m_pNextSibling = 0;
-					pOwnedParentStatement = __411868003;
-				}
-				{
-					NumberDuck::Secret::Scope* __693694853 = pScope;
-					pScope = 0;
-					pParentStatement->m_pPrevSibling->m_pNextSibling = __693694853;
-				}
-				pDisownedScope = pParentStatement->m_pPrevSibling->m_pNextSibling;
-				pDisownedScope->m_pPrevSibling = pOwnedParentStatement->m_pPrevSibling;
-				pOwnedParentStatement->m_pPrevSibling = 0;
-			}
-			pDisownedScope->m_pParent = pParentParent;
-			if (pParentParent->m_pLastChild == pParentStatement)
-			{
-				pParentParent->m_pLastChild = pDisownedScope;
-			}
-			else
-			{
-				{
-					NumberDuck::Secret::AST* __1356546117 = pParentStatement->m_pNextSibling;
-					pParentStatement->m_pNextSibling = 0;
-					pDisownedScope->m_pNextSibling = __1356546117;
-				}
-				pDisownedScope->m_pNextSibling->m_pPrevSibling = pDisownedScope;
-				pParentStatement->m_pNextSibling = 0;
-			}
-			{
-				TypeRef* pTypeRef = m_pValueType->CreateTypeRef();
-				Token* pNameToken = new Token();
-				pNameToken->m_eType = Token::Type::TOKEN_IDENTIFIER;
-				pNameToken->m_sValue = new InternalString(sTempName->GetExternalString());
-				AST* pAssignment = m_pExpression->BaseClone();
-				VarDecl* pTempVarDecl = new VarDecl();
-				pTempVarDecl->m_pFirstToken = pTypeRef->m_pFirstToken;
-				pTempVarDecl->m_pTypeRef = pTypeRef;
-				pTempVarDecl->m_pNameToken = pNameToken;
-				{
-					NumberDuck::Secret::Token* __1290965399 = pNameToken;
-					pNameToken = 0;
-					pTempVarDecl->m_pOwnedNameToken = __1290965399;
-				}
-				pTempVarDecl->m_pAssignment = pAssignment;
-				{
-					NumberDuck::Secret::TypeRef* __3079357496 = pTypeRef;
-					pTypeRef = 0;
-					pTempVarDecl->AddChild(__3079357496);
-				}
-				{
-					NumberDuck::Secret::AST* __267221586 = pAssignment;
-					pAssignment = 0;
-					pTempVarDecl->AddChild(__267221586);
-				}
-				{
-					NumberDuck::Secret::VarDecl* __2352338849 = pTempVarDecl;
-					pTempVarDecl = 0;
-					pDisownedScope->AddChild(__2352338849);
-				}
-				if (pTypeRef) delete pTypeRef;
-				if (pNameToken) delete pNameToken;
-				if (pAssignment) delete pAssignment;
-				if (pTempVarDecl) delete pTempVarDecl;
-			}
-			{
-				AST* pLeft = m_pExpression->BaseClone();
-				NullExpr* pRight = new NullExpr();
-				Token* pOperatorToken = new Token();
-				pOperatorToken->m_eType = Token::Type::TOKEN_EQUALS;
-				OperatorExpr* pOperatorExpr = new OperatorExpr();
-				pOperatorExpr->m_eType = AST::Type::AST_OPERATOR_EXPR;
-				pOperatorExpr->m_pFirstToken = pLeft->m_pFirstToken;
-				pOperatorExpr->m_pOperatorToken = pOperatorToken;
-				{
-					NumberDuck::Secret::Token* __3032764722 = pOperatorToken;
-					pOperatorToken = 0;
-					pOperatorExpr->m_pOwnedOperatorToken = __3032764722;
-				}
-				pOperatorExpr->m_pLeft = pLeft;
-				pOperatorExpr->m_pRight = pRight;
-				{
-					NumberDuck::Secret::AST* __2461073728 = pLeft;
-					pLeft = 0;
-					pOperatorExpr->AddChild(__2461073728);
-				}
-				{
-					NumberDuck::Secret::NullExpr* __1625873296 = pRight;
-					pRight = 0;
-					pOperatorExpr->AddChild(__1625873296);
-				}
-				ExpressionStmt* pExpressionStmt = new ExpressionStmt();
-				pExpressionStmt->m_pFirstToken = pOperatorExpr->m_pFirstToken;
-				pExpressionStmt->m_pExpression = pOperatorExpr;
-				{
-					NumberDuck::Secret::OperatorExpr* __304301329 = pOperatorExpr;
-					pOperatorExpr = 0;
-					pExpressionStmt->AddChild(__304301329);
-				}
-				{
-					NumberDuck::Secret::ExpressionStmt* __817911874 = pExpressionStmt;
-					pExpressionStmt = 0;
-					pDisownedScope->AddChild(__817911874);
-				}
-				if (pLeft) delete pLeft;
-				if (pRight) delete pRight;
-				if (pOperatorToken) delete pOperatorToken;
-				if (pOperatorExpr) delete pOperatorExpr;
-				if (pExpressionStmt) delete pExpressionStmt;
-			}
-			{
-				NumberDuck::Secret::InternalString* __1040485554 = sTempName;
-				sTempName = 0;
-				m_sTempVarName = __1040485554;
-			}
-			{
-				NumberDuck::Secret::AST* __3676823010 = pOwnedParentStatement;
-				pOwnedParentStatement = 0;
-				pDisownedScope->AddChild(__3676823010);
-			}
-			if (sTempName) delete sTempName;
-			if (pScope) delete pScope;
-			if (pOwnedParentStatement) delete pOwnedParentStatement;
+			NumbatLogic::AST* __1067118945 = pExpression;
+			pExpression = 0;
+			pDisownExpr->AddChild(__1067118945);
 		}
-
-		void DisownExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+		pOffsetDatum->Set(pTempOffset);
 		{
-			if (m_sTempVarName != 0)
+			NumbatLogic::DisownExpr* __2180824118 = pDisownExpr;
+			pDisownExpr = 0;
 			{
-				sOut->Append(m_sTempVarName->GetExternalString());
-				return;
+				if (pTempOffset) delete pTempOffset;
+				if (pExpression) delete pExpression;
+				return __2180824118;
 			}
-			if (eLanguage == AST::Language::NLL)
-			{
-				sOut->Append("disown ");
-			}
-			m_pExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
 		}
-
-		DisownExpr::~DisownExpr()
-		{
-			if (m_sTempVarName) delete m_sTempVarName;
-		}
-
 	}
+
+	void DisownExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
+	{
+		AST::Validate(pValidator, pParent);
+		if (m_pExpression->m_pValueType == 0)
+		{
+			pValidator->AddError("No valuetype for expression???", m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
+			return;
+		}
+		if (m_pExpression->m_pValueType->m_eType != ValueType::Type::CLASS_DECL_VALUE && m_pExpression->m_pValueType->m_eType != ValueType::Type::GENERIC_TYPE_DECL_VALUE)
+		{
+			pValidator->AddError("Expected right side of Disown to be a CLASS_DECL_VALUE or GENERIC_TYPE_DECL_VALUE", m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
+			return;
+		}
+		if (m_pExpression->m_pValueType->m_ePointerType != TypeRef::PointerType::OWNED)
+		{
+			pValidator->AddError("Expected right side of Disown to be a OWNED type", m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
+			return;
+		}
+		m_pValueType = m_pExpression->m_pValueType->Clone();
+		m_pValueType->m_ePointerType = TypeRef::PointerType::TRANSITON;
+		if (m_pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
+		{
+			if (m_pValueType->m_pClassDecl == 0)
+			{
+				pValidator->AddError("Can't disown unbeknownst thing (ClassDecl)", m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
+				return;
+			}
+		}
+		else if (m_pValueType->m_eType == ValueType::Type::GENERIC_TYPE_DECL_VALUE)
+		{
+			if (m_pValueType->m_pGenericTypeDecl == 0)
+			{
+				pValidator->AddError("Can't disown unbeknownst thing (GenericTypeDecl)", m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
+				return;
+			}
+		}
+		AST* pParentStatement = GetParentStatement();
+		if (pParentStatement == 0)
+		{
+			pValidator->AddError("Can'd find disown parent???", m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
+			return;
+		}
+		InternalString* sTempName = new InternalString("");
+		m_pExpression->Stringify(AST::Language::CPP, AST::OutputFile::SOURCE, 0, sTempName);
+		unsigned int nHash = Util::BadHash(sTempName);
+		sTempName->Set("__");
+		sTempName->AppendUint32(nHash);
+		AST* pParentParent = pParentStatement->m_pParent;
+		Scope* pScope = new Scope();
+		AST* pOwnedParentStatement = 0;
+		AST* pDisownedScope = 0;
+		if (pParentParent->m_pFirstChild == pParentStatement)
+		{
+			{
+				NumbatLogic::AST* __1629566089 = pParentParent->m_pFirstChild;
+				pParentParent->m_pFirstChild = 0;
+				pOwnedParentStatement = __1629566089;
+			}
+			{
+				NumbatLogic::Scope* __693694853 = pScope;
+				pScope = 0;
+				pParentParent->m_pFirstChild = __693694853;
+			}
+			pDisownedScope = pParentParent->m_pFirstChild;
+		}
+		else
+		{
+			{
+				NumbatLogic::AST* __411868003 = pParentStatement->m_pPrevSibling->m_pNextSibling;
+				pParentStatement->m_pPrevSibling->m_pNextSibling = 0;
+				pOwnedParentStatement = __411868003;
+			}
+			{
+				NumbatLogic::Scope* __693694853 = pScope;
+				pScope = 0;
+				pParentStatement->m_pPrevSibling->m_pNextSibling = __693694853;
+			}
+			pDisownedScope = pParentStatement->m_pPrevSibling->m_pNextSibling;
+			pDisownedScope->m_pPrevSibling = pOwnedParentStatement->m_pPrevSibling;
+			pOwnedParentStatement->m_pPrevSibling = 0;
+		}
+		pDisownedScope->m_pParent = pParentParent;
+		if (pParentParent->m_pLastChild == pParentStatement)
+		{
+			pParentParent->m_pLastChild = pDisownedScope;
+		}
+		else
+		{
+			{
+				NumbatLogic::AST* __1356546117 = pParentStatement->m_pNextSibling;
+				pParentStatement->m_pNextSibling = 0;
+				pDisownedScope->m_pNextSibling = __1356546117;
+			}
+			pDisownedScope->m_pNextSibling->m_pPrevSibling = pDisownedScope;
+			pParentStatement->m_pNextSibling = 0;
+		}
+		{
+			TypeRef* pTypeRef = m_pValueType->CreateTypeRef();
+			Token* pNameToken = new Token();
+			pNameToken->m_eType = Token::Type::TOKEN_IDENTIFIER;
+			pNameToken->m_sValue = new InternalString(sTempName->GetExternalString());
+			AST* pAssignment = m_pExpression->BaseClone();
+			VarDecl* pTempVarDecl = new VarDecl();
+			pTempVarDecl->m_pFirstToken = pTypeRef->m_pFirstToken;
+			pTempVarDecl->m_pTypeRef = pTypeRef;
+			pTempVarDecl->m_pNameToken = pNameToken;
+			{
+				NumbatLogic::Token* __1290965399 = pNameToken;
+				pNameToken = 0;
+				pTempVarDecl->m_pOwnedNameToken = __1290965399;
+			}
+			pTempVarDecl->m_pAssignment = pAssignment;
+			{
+				NumbatLogic::TypeRef* __3079357496 = pTypeRef;
+				pTypeRef = 0;
+				pTempVarDecl->AddChild(__3079357496);
+			}
+			{
+				NumbatLogic::AST* __267221586 = pAssignment;
+				pAssignment = 0;
+				pTempVarDecl->AddChild(__267221586);
+			}
+			{
+				NumbatLogic::VarDecl* __2352338849 = pTempVarDecl;
+				pTempVarDecl = 0;
+				pDisownedScope->AddChild(__2352338849);
+			}
+			if (pTypeRef) delete pTypeRef;
+			if (pNameToken) delete pNameToken;
+			if (pAssignment) delete pAssignment;
+			if (pTempVarDecl) delete pTempVarDecl;
+		}
+		{
+			AST* pLeft = m_pExpression->BaseClone();
+			NullExpr* pRight = new NullExpr();
+			Token* pOperatorToken = new Token();
+			pOperatorToken->m_eType = Token::Type::TOKEN_EQUALS;
+			OperatorExpr* pOperatorExpr = new OperatorExpr();
+			pOperatorExpr->m_eType = AST::Type::AST_OPERATOR_EXPR;
+			pOperatorExpr->m_pFirstToken = pLeft->m_pFirstToken;
+			pOperatorExpr->m_pOperatorToken = pOperatorToken;
+			{
+				NumbatLogic::Token* __3032764722 = pOperatorToken;
+				pOperatorToken = 0;
+				pOperatorExpr->m_pOwnedOperatorToken = __3032764722;
+			}
+			pOperatorExpr->m_pLeft = pLeft;
+			pOperatorExpr->m_pRight = pRight;
+			{
+				NumbatLogic::AST* __2461073728 = pLeft;
+				pLeft = 0;
+				pOperatorExpr->AddChild(__2461073728);
+			}
+			{
+				NumbatLogic::NullExpr* __1625873296 = pRight;
+				pRight = 0;
+				pOperatorExpr->AddChild(__1625873296);
+			}
+			ExpressionStmt* pExpressionStmt = new ExpressionStmt();
+			pExpressionStmt->m_pFirstToken = pOperatorExpr->m_pFirstToken;
+			pExpressionStmt->m_pExpression = pOperatorExpr;
+			{
+				NumbatLogic::OperatorExpr* __304301329 = pOperatorExpr;
+				pOperatorExpr = 0;
+				pExpressionStmt->AddChild(__304301329);
+			}
+			{
+				NumbatLogic::ExpressionStmt* __817911874 = pExpressionStmt;
+				pExpressionStmt = 0;
+				pDisownedScope->AddChild(__817911874);
+			}
+			if (pLeft) delete pLeft;
+			if (pRight) delete pRight;
+			if (pOperatorToken) delete pOperatorToken;
+			if (pOperatorExpr) delete pOperatorExpr;
+			if (pExpressionStmt) delete pExpressionStmt;
+		}
+		{
+			NumbatLogic::InternalString* __1040485554 = sTempName;
+			sTempName = 0;
+			m_sTempVarName = __1040485554;
+		}
+		{
+			NumbatLogic::AST* __3676823010 = pOwnedParentStatement;
+			pOwnedParentStatement = 0;
+			pDisownedScope->AddChild(__3676823010);
+		}
+		if (sTempName) delete sTempName;
+		if (pScope) delete pScope;
+		if (pOwnedParentStatement) delete pOwnedParentStatement;
+	}
+
+	void DisownExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	{
+		if (m_sTempVarName != 0)
+		{
+			sOut->Append(m_sTempVarName->GetExternalString());
+			return;
+		}
+		if (eLanguage == AST::Language::NLL)
+		{
+			sOut->Append("disown ");
+		}
+		m_pExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
+	}
+
+	DisownExpr::~DisownExpr()
+	{
+		if (m_sTempVarName) delete m_sTempVarName;
+	}
+
 }
 

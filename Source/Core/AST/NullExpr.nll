@@ -1,42 +1,39 @@
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class NullExpr : AST
 	{
-		class NullExpr : AST
+		public construct()
 		{
-			public construct()
-			{
-				m_eType = AST::Type::NULL_EXPR;
-			}
+			m_eType = AST::Type::NULL_EXPR;
+		}
 
-			public static NullExpr** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
-			{
-				OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
+		public static NullExpr** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+		{
+			OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
 
-				Token pNullToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_NULL);
-				if (pNullToken == null)
-					return null;
-				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+			Token pNullToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_NULL);
+			if (pNullToken == null)
+				return null;
+			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 
-				NullExpr* pNullExpr = own new NullExpr();
-				pNullExpr.m_pFirstToken = pNullToken;
+			NullExpr* pNullExpr = own new NullExpr();
+			pNullExpr.m_pFirstToken = pNullToken;
 
-				pOffsetDatum.Set(pTempOffset);
-				return disown pNullExpr;
-			}
+			pOffsetDatum.Set(pTempOffset);
+			return disown pNullExpr;
+		}
 
-			public override void Validate(Validator pValidator, OperatorExpr pParent)
-			{
-				m_pValueType = own new ValueType(ValueType::Type::NULL_VALUE);
-			}
+		public override void Validate(Validator pValidator, OperatorExpr pParent)
+		{
+			m_pValueType = own new ValueType(ValueType::Type::NULL_VALUE);
+		}
 
-			public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
-			{
-				if (eLanguage == AST::Language::CPP)
-					sOut.Append("0");
-				else
-					sOut.Append("null");
-			}
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		{
+			if (eLanguage == AST::Language::CPP)
+				sOut.Append("0");
+			else
+				sOut.Append("null");
 		}
 	}
 }

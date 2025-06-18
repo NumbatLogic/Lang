@@ -1,221 +1,218 @@
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class TorDecl : AST
 	{
-		class TorDecl : AST
+		public ClassDecl m_pParentClassDecl;
+		public AccessLevel m_pAccessLevel;
+		public Token m_pTypeToken;
+		public ParamDecl m_pParamDecl;
+		public ParamCall m_pBaseParamCall;
+		public Scope m_pScope;
+		public string m_sDisambiguate;
+		
+		public static TorDecl** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum, ClassDecl pParentClassDecl)
 		{
-			public ClassDecl m_pParentClassDecl;
-			public AccessLevel m_pAccessLevel;
-			public Token m_pTypeToken;
-			public ParamDecl m_pParamDecl;
-			public ParamCall m_pBaseParamCall;
-			public Scope m_pScope;
-			public string m_sDisambiguate;
-			
-			public static TorDecl** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum, ClassDecl pParentClassDecl)
+			OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
+
+			AccessLevel* pAccessLevel = own AccessLevel::TryCreate(pTokenContainer, pTempOffset);
+			if (pAccessLevel == null)
+				return null;
+
+			Token pTypeToken = pTokenContainer.Peek(pTempOffset);
+			if (pTypeToken == null || pTypeToken.m_eType != Token::Type::TOKEN_KEYWORD_CONSTRUCT && pTypeToken.m_eType != Token::Type::TOKEN_KEYWORD_DESTRUCT)
+				return null;
+			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+			ParamDecl* pParamDecl = own ParamDecl::TryCreate(pTokenContainer, pTempOffset);
+			if (pParamDecl == null)
 			{
-				OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
+				Console::Log("expected ParamDecl");
+				Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+				NumbatLogic::Assert::Plz(false);
+				return null;
+			}
 
-				AccessLevel* pAccessLevel = own AccessLevel::TryCreate(pTokenContainer, pTempOffset);
-				if (pAccessLevel == null)
-					return null;
+			TorDecl* pTorDecl = own new TorDecl();
 
-				Token pTypeToken = pTokenContainer.Peek(pTempOffset);
-				if (pTypeToken == null || pTypeToken.m_eType != Token::Type::TOKEN_KEYWORD_CONSTRUCT && pTypeToken.m_eType != Token::Type::TOKEN_KEYWORD_DESTRUCT)
-					return null;
+			Scope* pScope = null;
+			Token pSemicolon = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON);
+			if (pSemicolon != null)
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
-
-				ParamDecl* pParamDecl = own ParamDecl::TryCreate(pTokenContainer, pTempOffset);
-				if (pParamDecl == null)
+			else
+			{
+				Token pColon = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_COLON);
+				if (pColon != null)
 				{
-					Console::Log("expected ParamDecl");
-					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-					NumbatLogic::Assert::Plz(false);
-					return null;
-				}
-
-				TorDecl* pTorDecl = own new TorDecl();
-
-				Scope* pScope = null;
-				Token pSemicolon = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON);
-				if (pSemicolon != null)
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
-				else
-				{
-					Token pColon = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_COLON);
-					if (pColon != null)
+
+					Token pBase = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_BASE);
+					if (pBase == null)
 					{
-						pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
-
-						Token pBase = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_BASE);
-						if (pBase == null)
-						{
-							Console::Log("expected base!");
-							Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-							NumbatLogic::Assert::Plz(false);
-							return null;
-						}
-						pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
-
-						ParamCall* pParamCall = own ParamCall::TryCreate(pTokenContainer, pTempOffset);
-						if (pParamCall == null)
-						{
-							InternalString* sTemp = own new InternalString("expected ParamCall ");
-							sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
-							Console::Log(sTemp.GetExternalString());
-							NumbatLogic::Assert::Plz(false);
-							return null;
-						}
-
-						pTorDecl.m_pBaseParamCall = pParamCall;
-						pTorDecl.AddChild(disown pParamCall);
-					}
-				
-					pScope = own Scope::TryCreate(pTokenContainer, pTempOffset);
-					if (pScope == null)
-					{
-						Console::Log("expected scope");
+						Console::Log("expected base!");
 						Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
 						NumbatLogic::Assert::Plz(false);
+						return null;
 					}
+					pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+					ParamCall* pParamCall = own ParamCall::TryCreate(pTokenContainer, pTempOffset);
+					if (pParamCall == null)
+					{
+						InternalString* sTemp = own new InternalString("expected ParamCall ");
+						sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
+						Console::Log(sTemp.GetExternalString());
+						NumbatLogic::Assert::Plz(false);
+						return null;
+					}
+
+					pTorDecl.m_pBaseParamCall = pParamCall;
+					pTorDecl.AddChild(disown pParamCall);
 				}
-
-				pTorDecl.m_eType = AST::Type::AST_TOR_DECL;
-				pTorDecl.m_pParent = pParentClassDecl;
-				pTorDecl.m_pParentClassDecl = pParentClassDecl;
-				pTorDecl.m_pFirstToken = pTypeToken;
-				pTorDecl.m_pAccessLevel = pAccessLevel;
-				pTorDecl.m_pTypeToken = pTypeToken;
-				pTorDecl.m_pParamDecl = pParamDecl;
-				pTorDecl.m_pScope = pScope;
-				pTorDecl.m_sDisambiguate = "";
-
-				pTorDecl.AddChild(disown pAccessLevel);
-				pTorDecl.AddChild(disown pParamDecl);
-				if (pScope != null)
-					pTorDecl.AddChild(disown pScope);
-
-				pOffsetDatum.Set(pTempOffset);
-				return disown pTorDecl;
+			
+				pScope = own Scope::TryCreate(pTokenContainer, pTempOffset);
+				if (pScope == null)
+				{
+					Console::Log("expected scope");
+					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+					NumbatLogic::Assert::Plz(false);
+				}
 			}
 
-			public override void Validate(Validator pValidator, OperatorExpr pParent)
+			pTorDecl.m_eType = AST::Type::AST_TOR_DECL;
+			pTorDecl.m_pParent = pParentClassDecl;
+			pTorDecl.m_pParentClassDecl = pParentClassDecl;
+			pTorDecl.m_pFirstToken = pTypeToken;
+			pTorDecl.m_pAccessLevel = pAccessLevel;
+			pTorDecl.m_pTypeToken = pTypeToken;
+			pTorDecl.m_pParamDecl = pParamDecl;
+			pTorDecl.m_pScope = pScope;
+			pTorDecl.m_sDisambiguate = "";
+
+			pTorDecl.AddChild(disown pAccessLevel);
+			pTorDecl.AddChild(disown pParamDecl);
+			if (pScope != null)
+				pTorDecl.AddChild(disown pScope);
+
+			pOffsetDatum.Set(pTempOffset);
+			return disown pTorDecl;
+		}
+
+		public override void Validate(Validator pValidator, OperatorExpr pParent)
+		{
+			base.Validate(pValidator, pParent);
+
+
+
+			if (m_pParentClassDecl != null && m_pBaseParamCall != null)
 			{
-				base.Validate(pValidator, pParent);
+			
+				ClassDecl pBaseClass = m_pParentClassDecl.GetBaseClassDecl();
 
-
-
-				if (m_pParentClassDecl != null && m_pBaseParamCall != null)
+				if (pBaseClass == null)
 				{
-				
-					ClassDecl pBaseClass = m_pParentClassDecl.GetBaseClassDecl();
+					pValidator.AddError("no base class??", m_pBaseParamCall.m_pFirstToken.m_sFileName, m_pBaseParamCall.m_pFirstToken.m_nLine, m_pBaseParamCall.m_pFirstToken.m_nColumn);
+					return;
+				}
 
-					if (pBaseClass == null)
+				AST pMember = pBaseClass.m_pFirstChild;
+				while (pMember != null)
+				{
+					if (pMember.m_eType == AST::Type::AST_TOR_DECL)
 					{
-						pValidator.AddError("no base class??", m_pBaseParamCall.m_pFirstToken.m_sFileName, m_pBaseParamCall.m_pFirstToken.m_nLine, m_pBaseParamCall.m_pFirstToken.m_nColumn);
-						return;
-					}
-
-					AST pMember = pBaseClass.m_pFirstChild;
-					while (pMember != null)
-					{
-						if (pMember.m_eType == AST::Type::AST_TOR_DECL)
+						TorDecl pTorDecl = cast TorDecl(pMember);
+						if (pTorDecl.m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_CONSTRUCT)
 						{
-							TorDecl pTorDecl = cast TorDecl(pMember);
-							if (pTorDecl.m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_CONSTRUCT)
+							if (pTorDecl.m_pParamDecl.ValidateParamCall(m_pBaseParamCall, null))
 							{
-								if (pTorDecl.m_pParamDecl.ValidateParamCall(m_pBaseParamCall, null))
-								{
-									break;
-								}
+								break;
 							}
 						}
-						pMember = pMember.m_pNextSibling;
 					}
+					pMember = pMember.m_pNextSibling;
+				}
 
-					if (pMember == null)
-					{
-						InternalString* sTemp = own new InternalString("could not find a matching BASE constructor in ");
-						sTemp.AppendString(pBaseClass.m_pNameToken.GetString());
-						pValidator.AddError(sTemp.GetExternalString(), m_pBaseParamCall.m_pFirstToken.m_sFileName, m_pBaseParamCall.m_pFirstToken.m_nLine, m_pBaseParamCall.m_pFirstToken.m_nColumn);
-						return;
-					}
+				if (pMember == null)
+				{
+					InternalString* sTemp = own new InternalString("could not find a matching BASE constructor in ");
+					sTemp.AppendString(pBaseClass.m_pNameToken.GetString());
+					pValidator.AddError(sTemp.GetExternalString(), m_pBaseParamCall.m_pFirstToken.m_sFileName, m_pBaseParamCall.m_pFirstToken.m_nLine, m_pBaseParamCall.m_pFirstToken.m_nColumn);
+					return;
 				}
 			}
+		}
 
-			public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		{
+			bool bGeneric = m_pParentClassDecl != null && m_pParentClassDecl.m_pGenericTypeDeclVector.GetSize() > 0;
+
+			if (bGeneric && eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
+				return;
+
+			Util::Pad(nDepth, sOut);
+
+			if (!(eLanguage == AST::Language::CS && m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_DESTRUCT))
+			if (!(eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE))
 			{
-				bool bGeneric = m_pParentClassDecl != null && m_pParentClassDecl.m_pGenericTypeDeclVector.GetSize() > 0;
+				m_pAccessLevel.Stringify(eLanguage, eOutputFile, 0, sOut);
+				if (eLanguage == AST::Language::CPP)
+					sOut.AppendChar(':');
+				sOut.AppendChar(' ');
+			}
 
-				if (bGeneric && eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
-					return;
-
-				Util::Pad(nDepth, sOut);
-
-				if (!(eLanguage == AST::Language::CS && m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_DESTRUCT))
-				if (!(eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE))
-				{
-					m_pAccessLevel.Stringify(eLanguage, eOutputFile, 0, sOut);
-					if (eLanguage == AST::Language::CPP)
-						sOut.AppendChar(':');
-					sOut.AppendChar(' ');
-				}
-
-				if (eLanguage == AST::Language::NLL_DEF)
-				{
-					if (m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_DESTRUCT)
-						sOut.Append("destruct");
-					else
-						sOut.Append("construct");
-				}
+			if (eLanguage == AST::Language::NLL_DEF)
+			{
+				if (m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_DESTRUCT)
+					sOut.Append("destruct");
 				else
+					sOut.Append("construct");
+			}
+			else
+			{
+				if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
 				{
-					if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
-					{
-						m_pParentClassDecl.m_pNameToken.Stringify(sOut);
-						sOut.Append("::");
-					}
-
-					if (m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_DESTRUCT)
-					{
-						if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::HEADER)
-							sOut.Append("virtual ");
-
-						sOut.Append("~");
-					}
-
 					m_pParentClassDecl.m_pNameToken.Stringify(sOut);
+					sOut.Append("::");
 				}
-				sOut.Append(m_sDisambiguate);
-				m_pParamDecl.Stringify(eLanguage, eOutputFile, 0, sOut);
 
-
-
-				if ((!bGeneric && eOutputFile == AST::OutputFile::HEADER) || eLanguage == AST::Language::NLL_DEF)
+				if (m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_DESTRUCT)
 				{
-					sOut.Append(";\n");
-					return;
+					if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::HEADER)
+						sOut.Append("virtual ");
+
+					sOut.Append("~");
 				}
 
-				if (m_pScope == null)
+				m_pParentClassDecl.m_pNameToken.Stringify(sOut);
+			}
+			sOut.Append(m_sDisambiguate);
+			m_pParamDecl.Stringify(eLanguage, eOutputFile, 0, sOut);
+
+
+
+			if ((!bGeneric && eOutputFile == AST::OutputFile::HEADER) || eLanguage == AST::Language::NLL_DEF)
+			{
+				sOut.Append(";\n");
+				return;
+			}
+
+			if (m_pScope == null)
+			{
+				sOut.AppendString(";\n");
+			}
+			else
+			{
+				if (m_pBaseParamCall != null)
 				{
-					sOut.AppendString(";\n");
+					sOut.Append(" : ");
+					if (eLanguage == AST::Language::CPP)
+						m_pParentClassDecl.m_pBaseToken.Stringify(sOut);
+					else
+						sOut.Append("base");
+					m_pBaseParamCall.Stringify(eLanguage, eOutputFile, 0, sOut);
 				}
-				else
-				{
-					if (m_pBaseParamCall != null)
-					{
-						sOut.Append(" : ");
-						if (eLanguage == AST::Language::CPP)
-							m_pParentClassDecl.m_pBaseToken.Stringify(sOut);
-						else
-							sOut.Append("base");
-						m_pBaseParamCall.Stringify(eLanguage, eOutputFile, 0, sOut);
-					}
-					sOut.AppendChar('\n');
-					m_pScope.Stringify(eLanguage, eOutputFile, nDepth, sOut);
-					sOut.AppendChar('\n');
-				}
+				sOut.AppendChar('\n');
+				m_pScope.Stringify(eLanguage, eOutputFile, nDepth, sOut);
+				sOut.AppendChar('\n');
 			}
 		}
 	}

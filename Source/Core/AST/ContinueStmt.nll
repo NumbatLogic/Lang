@@ -1,51 +1,48 @@
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class ContinueStmt : AST
 	{
-		class ContinueStmt : AST
+		public construct()
 		{
-			public construct()
+			m_bStatement = true;
+		}
+
+		public static ContinueStmt** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+		{
+			OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
+			
+			Token pBreakToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_CONTINUE);
+			if (pBreakToken == null)
+				return null;
+			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+			if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == null)
 			{
-				m_bStatement = true;
+				Console::Log("expected semicolon");
+				NumbatLogic::Assert::Plz(false);
+				return null;
 			}
+			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 
-			public static ContinueStmt** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
-			{
-				OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
-				
-				Token pBreakToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_CONTINUE);
-				if (pBreakToken == null)
-					return null;
-				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+			ContinueStmt* pContinueStmt = own new ContinueStmt();
 
-				if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == null)
-				{
-					Console::Log("expected semicolon");
-					NumbatLogic::Assert::Plz(false);
-					return null;
-				}
-				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+			pContinueStmt.m_eType = AST::Type::AST_CONTINUE_STMT;
+			pContinueStmt.m_pFirstToken = pBreakToken;
+			
+			pOffsetDatum.Set(pTempOffset);
+			return disown pContinueStmt;
+		}
 
-				ContinueStmt* pContinueStmt = own new ContinueStmt();
+		public override void Validate(Validator pValidator, OperatorExpr pParent)
+		{
+			base.Validate(pValidator, pParent);
+			pValidator.InjectCleanup(this);
+		}
 
-				pContinueStmt.m_eType = AST::Type::AST_CONTINUE_STMT;
-				pContinueStmt.m_pFirstToken = pBreakToken;
-				
-				pOffsetDatum.Set(pTempOffset);
-				return disown pContinueStmt;
-			}
-
-			public override void Validate(Validator pValidator, OperatorExpr pParent)
-			{
-				base.Validate(pValidator, pParent);
-				pValidator.InjectCleanup(this);
-			}
-
-			public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
-			{
-				Util::Pad(nDepth, sOut);
-				sOut.Append("continue;\n");
-			}
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		{
+			Util::Pad(nDepth, sOut);
+			sOut.Append("continue;\n");
 		}
 	}
 }

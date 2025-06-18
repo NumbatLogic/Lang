@@ -1,29 +1,23 @@
 #pragma once
 
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
-	{
-		class InternalString;
-	}
+	class InternalString;
 }
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class ParseDatum
 	{
-		class ParseDatum
-		{
-			public: InternalString* m_sInput;
-			public: InternalString* m_sCurrentRead;
-			public: int m_nCurrentReadLine;
-			public: int m_nCurrentReadColumn;
-			public: InternalString* m_sFileName;
-			public: int m_nLine;
-			public: int m_nColumn;
-			public: ParseDatum();
-			public: void ClearCurrentRead();
-			public: virtual ~ParseDatum();
-		};
-	}
+		public: InternalString* m_sInput;
+		public: InternalString* m_sCurrentRead;
+		public: int m_nCurrentReadLine;
+		public: int m_nCurrentReadColumn;
+		public: InternalString* m_sFileName;
+		public: int m_nLine;
+		public: int m_nColumn;
+		public: ParseDatum();
+		public: void ClearCurrentRead();
+		public: virtual ~ParseDatum();
+	};
 }
 

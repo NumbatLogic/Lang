@@ -5,44 +5,38 @@
 #include "AST.hpp"
 #include "../ValueType.hpp"
 
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
-	{
-		class Token;
-		class CharExpr;
-	}
+	class Token;
+	class CharExpr;
 }
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	CharExpr* CharExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
-		CharExpr* CharExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
+		Token* pToken = pTokenContainer->PeekExpect(pOffsetDatum, Token::Type::TOKEN_CHAR);
+		if (pToken == 0)
+			return 0;
+		pOffsetDatum->m_nOffset = pOffsetDatum->m_nOffset + 1;
+		CharExpr* pCharExpr = new CharExpr();
+		pCharExpr->m_eType = AST::Type::AST_CHAR;
+		pCharExpr->m_pFirstToken = pToken;
 		{
-			Token* pToken = pTokenContainer->PeekExpect(pOffsetDatum, Token::Type::TOKEN_CHAR);
-			if (pToken == 0)
-				return 0;
-			pOffsetDatum->m_nOffset = pOffsetDatum->m_nOffset + 1;
-			CharExpr* pCharExpr = new CharExpr();
-			pCharExpr->m_eType = AST::Type::AST_CHAR;
-			pCharExpr->m_pFirstToken = pToken;
-			{
-				NumberDuck::Secret::CharExpr* __2809165298 = pCharExpr;
-				pCharExpr = 0;
-				return __2809165298;
-			}
+			NumbatLogic::CharExpr* __2809165298 = pCharExpr;
+			pCharExpr = 0;
+			return __2809165298;
 		}
-
-		void CharExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
-		{
-			m_pValueType = new ValueType(ValueType::Type::CHAR);
-		}
-
-		void CharExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
-		{
-			m_pFirstToken->Stringify(sOut);
-		}
-
 	}
+
+	void CharExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
+	{
+		m_pValueType = new ValueType(ValueType::Type::CHAR);
+	}
+
+	void CharExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	{
+		m_pFirstToken->Stringify(sOut);
+	}
+
 }
 

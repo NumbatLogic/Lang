@@ -2,26 +2,20 @@
 
 #include "AST.hpp"
 
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
-	{
-		class ForStmt;
-		class TokenContainer;
-		class OffsetDatum;
-		class InternalString;
-	}
+	class ForStmt;
+	class TokenContainer;
+	class OffsetDatum;
+	class InternalString;
 }
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class ForStmt : public AST
 	{
-		class ForStmt : public AST
-		{
-			public: ForStmt();
-			public: static ForStmt* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-			public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
-		};
-	}
+		public: ForStmt();
+		public: static ForStmt* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+	};
 }
 

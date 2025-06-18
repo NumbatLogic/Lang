@@ -1,18 +1,15 @@
 #pragma once
 
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class Thing
 	{
-		class Thing
-		{
-			public: int m_ff;
-			public: Thing();
-		};
-		class PointerTest
-		{
-			public: static void Run();
-		};
-	}
+		public: int m_ff;
+		public: Thing();
+	};
+	class PointerTest
+	{
+		public: static void Run();
+	};
 }
 

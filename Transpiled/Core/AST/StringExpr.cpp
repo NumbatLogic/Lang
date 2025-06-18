@@ -5,44 +5,38 @@
 #include "AST.hpp"
 #include "../ValueType.hpp"
 
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
-	{
-		class Token;
-		class StringExpr;
-	}
+	class Token;
+	class StringExpr;
 }
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	StringExpr* StringExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
-		StringExpr* StringExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
+		Token* pToken = pTokenContainer->PeekExpect(pOffsetDatum, Token::Type::TOKEN_STRING);
+		if (pToken == 0)
+			return 0;
+		pOffsetDatum->m_nOffset = pOffsetDatum->m_nOffset + 1;
+		StringExpr* pStringExpr = new StringExpr();
+		pStringExpr->m_eType = AST::Type::AST_STRING;
+		pStringExpr->m_pFirstToken = pToken;
 		{
-			Token* pToken = pTokenContainer->PeekExpect(pOffsetDatum, Token::Type::TOKEN_STRING);
-			if (pToken == 0)
-				return 0;
-			pOffsetDatum->m_nOffset = pOffsetDatum->m_nOffset + 1;
-			StringExpr* pStringExpr = new StringExpr();
-			pStringExpr->m_eType = AST::Type::AST_STRING;
-			pStringExpr->m_pFirstToken = pToken;
-			{
-				NumberDuck::Secret::StringExpr* __1750407191 = pStringExpr;
-				pStringExpr = 0;
-				return __1750407191;
-			}
+			NumbatLogic::StringExpr* __1750407191 = pStringExpr;
+			pStringExpr = 0;
+			return __1750407191;
 		}
-
-		void StringExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
-		{
-			m_pValueType = new ValueType(ValueType::Type::STRING);
-		}
-
-		void StringExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
-		{
-			m_pFirstToken->Stringify(sOut);
-		}
-
 	}
+
+	void StringExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
+	{
+		m_pValueType = new ValueType(ValueType::Type::STRING);
+	}
+
+	void StringExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	{
+		m_pFirstToken->Stringify(sOut);
+	}
+
 }
 

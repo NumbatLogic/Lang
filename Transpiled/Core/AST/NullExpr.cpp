@@ -4,62 +4,56 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../ValueType.hpp"
-#include "../../../Shared/CPP/InternalString.hpp"
+#include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
-	{
-		class OffsetDatum;
-		class Token;
-		class NullExpr;
-	}
+	class OffsetDatum;
+	class Token;
+	class NullExpr;
 }
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	NullExpr::NullExpr()
 	{
-		NullExpr::NullExpr()
-		{
-			m_eType = AST::Type::NULL_EXPR;
-		}
+		m_eType = AST::Type::NULL_EXPR;
+	}
 
-		NullExpr* NullExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
+	NullExpr* NullExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
+	{
+		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+		Token* pNullToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_NULL);
+		if (pNullToken == 0)
 		{
-			OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
-			Token* pNullToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_NULL);
-			if (pNullToken == 0)
+			if (pTempOffset) delete pTempOffset;
+			return 0;
+		}
+		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+		NullExpr* pNullExpr = new NullExpr();
+		pNullExpr->m_pFirstToken = pNullToken;
+		pOffsetDatum->Set(pTempOffset);
+		{
+			NumbatLogic::NullExpr* __2544427281 = pNullExpr;
+			pNullExpr = 0;
 			{
 				if (pTempOffset) delete pTempOffset;
-				return 0;
-			}
-			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-			NullExpr* pNullExpr = new NullExpr();
-			pNullExpr->m_pFirstToken = pNullToken;
-			pOffsetDatum->Set(pTempOffset);
-			{
-				NumberDuck::Secret::NullExpr* __2544427281 = pNullExpr;
-				pNullExpr = 0;
-				{
-					if (pTempOffset) delete pTempOffset;
-					return __2544427281;
-				}
+				return __2544427281;
 			}
 		}
-
-		void NullExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
-		{
-			m_pValueType = new ValueType(ValueType::Type::NULL_VALUE);
-		}
-
-		void NullExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
-		{
-			if (eLanguage == AST::Language::CPP)
-				sOut->Append("0");
-			else
-				sOut->Append("null");
-		}
-
 	}
+
+	void NullExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
+	{
+		m_pValueType = new ValueType(ValueType::Type::NULL_VALUE);
+	}
+
+	void NullExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	{
+		if (eLanguage == AST::Language::CPP)
+			sOut->Append("0");
+		else
+			sOut->Append("null");
+	}
+
 }
 

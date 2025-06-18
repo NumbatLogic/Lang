@@ -1,45 +1,42 @@
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class ExpressionStmt : AST
 	{
-		class ExpressionStmt : AST
+		public AST m_pExpression;
+
+		public construct()
 		{
-			public AST m_pExpression;
-
-			public construct()
-			{
-				m_eType = AST::Type::AST_EXPRESSION_STMT;
-				m_bStatement = true;
-			}
+			m_eType = AST::Type::AST_EXPRESSION_STMT;
+			m_bStatement = true;
+		}
+		
+		public static ExpressionStmt** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+		{
+			OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
 			
-			public static ExpressionStmt** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
-			{
-				OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
-				
-				AST* pExpression = own AST::TryCreateExpression(pTokenContainer, pTempOffset);
-				if (pExpression == null)
-					return null;
+			AST* pExpression = own AST::TryCreateExpression(pTokenContainer, pTempOffset);
+			if (pExpression == null)
+				return null;
 
-				if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == null)
-					return null;
-				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+			if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == null)
+				return null;
+			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 
 
-				ExpressionStmt* pExpressionStmt = own new ExpressionStmt();
-				pExpressionStmt.m_pFirstToken = pExpression.m_pFirstToken;
-				pExpressionStmt.m_pExpression = pExpression;
-				pExpressionStmt.AddChild(disown pExpression);
+			ExpressionStmt* pExpressionStmt = own new ExpressionStmt();
+			pExpressionStmt.m_pFirstToken = pExpression.m_pFirstToken;
+			pExpressionStmt.m_pExpression = pExpression;
+			pExpressionStmt.AddChild(disown pExpression);
 
-				pOffsetDatum.Set(pTempOffset);
-				return disown pExpressionStmt;
-			}
+			pOffsetDatum.Set(pTempOffset);
+			return disown pExpressionStmt;
+		}
 
-			public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
-			{
-				Util::Pad(nDepth, sOut);
-				m_pExpression.Stringify(eLanguage, eOutputFile, nDepth, sOut);
-				sOut.Append(";\n");
-			}
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		{
+			Util::Pad(nDepth, sOut);
+			m_pExpression.Stringify(eLanguage, eOutputFile, nDepth, sOut);
+			sOut.Append(";\n");
 		}
 	}
 }

@@ -1,29 +1,26 @@
-namespace NumberDuck
+namespace NumbatLogic
 {
-	namespace Secret
+	class Util
 	{
-		class Util
+		public static void Pad(int nDepth, InternalString sOut)
 		{
-			public static void Pad(int nDepth, InternalString sOut)
+			for (int i = 0; i < nDepth; i = i + 1)
+				sOut.AppendChar('\t');
+		}
+
+		public static Uint32 BadHash(InternalString sString)
+		{
+			Blob* pBlob = own new Blob(true);
+			BlobView pBlobView = pBlob.GetBlobView();
+			
+			for (int i = 0; i < sString.GetLength(); i++)
 			{
-				for (int i = 0; i < nDepth; i = i + 1)
-					sOut.AppendChar('\t');
+				UniChar nChar = sString.GetChar(i);
+				pBlobView.PackUint32(nChar);
 			}
 
-			public static Uint32 BadHash(InternalString sString)
-			{
-				Blob* pBlob = own new Blob(true);
-				BlobView pBlobView = pBlob.GetBlobView();
-				
-				for (int i = 0; i < sString.GetLength(); i++)
-				{
-					UniChar nChar = sString.GetChar(i);
-					pBlobView.PackUint32(nChar);
-				}
-
-				Uint32 nHaxTemp = pBlob.GetMsoCrc32(); // as auto disown will early delete :(
-				return nHaxTemp;
-			}
+			Uint32 nHaxTemp = pBlob.GetMsoCrc32(); // as auto disown will early delete :(
+			return nHaxTemp;
 		}
 	}
 }
