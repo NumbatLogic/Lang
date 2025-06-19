@@ -159,6 +159,14 @@ namespace NumbatLogic
 									ValueType pGenericValueType = pParent.m_pLeft.m_pValueType.m_pGenericValueTypeVector.Get(0);
 									if (pGenericValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 									{
+										ValueType pOldValueType;
+										{
+											NumbatLogic.ValueType __1144705946 = m_pValueType;
+											m_pValueType = null;
+											pOldValueType = __1144705946;
+										}
+										m_pValueType = pGenericValueType.Clone();
+										m_pValueType.m_ePointerType = pOldValueType.m_ePointerType;
 									}
 								}
 							}

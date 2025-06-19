@@ -168,7 +168,7 @@ namespace NumbatLogic
 						{
 							/*Console::Log("!!!!");
 							Console::Log(m_pValueType.m_pGenericTypeDecl.m_pFirstToken.m_sValue.GetExternalString());
-							Console::Log(m_pFirstToken.m_sFileName);
+							Console::Log(m_pFirstToken.m_sFileName.GetExternalString());
 							InternalString* sTemp = own new InternalString("");
 							sTemp.AppendInt(m_pFirstToken.m_nLine);
 							sTemp.Append(":");
@@ -182,12 +182,12 @@ namespace NumbatLogic
 									ValueType pGenericValueType = pParent.m_pLeft.m_pValueType.m_pGenericValueTypeVector.Get(0);
 									if (pGenericValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE)
 									{
-										/*Console::Log(pGenericValueType.m_pClassDecl.m_pNameToken.m_sValue.GetExternalString());
+										//Console::Log(pGenericValueType.m_pClassDecl.m_pNameToken.m_sValue.GetExternalString());
 
 										ValueType* pOldValueType;
 										pOldValueType = own disown m_pValueType;
 										m_pValueType = own pGenericValueType.Clone();
-										m_pValueType.m_ePointerType = pOldValueType.m_ePointerType;*/
+										m_pValueType.m_ePointerType = pOldValueType.m_ePointerType;
 									}
 								}
 							}
