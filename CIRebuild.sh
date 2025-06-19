@@ -1,5 +1,7 @@
 #!/bin/bash
 
+./LangSharedCopy.sh
+
 ./RebuildCPP.sh
 ./DevBuildCPP.sh
 ./DevBuildCS.sh
