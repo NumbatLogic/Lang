@@ -196,15 +196,33 @@ namespace NumbatLogic
 
 					// lazy hax
 					sInFile.Replace("#include \"Assert.hpp\"", "");
+					sInFile.Replace("#include \"../../Assert/CPP/Assert.hpp\"", "");
+
 					sInFile.Replace("#include \"Blob.hpp\"", "");
+					sInFile.Replace("#include \"../../Blob/CPP/Blob.hpp\"", "");
+
 					sInFile.Replace("#include \"Console.hpp\"", "");
+					sInFile.Replace("#include \"../../Console/CPP/Console.hpp\"", "");
+
 					sInFile.Replace("#include \"ExternalString.hpp\"", "");
+					sInFile.Replace("#include \"../../ExternalString/CPP/ExternalString.hpp\"", "");
+
 					sInFile.Replace("#include \"InternalString.hpp\"", "");
+					sInFile.Replace("#include \"../../InternalString/CPP/InternalString.hpp\"", "");
+
 					sInFile.Replace("#include \"Utils.hpp\"", "");
+					sInFile.Replace("#include \"../../Utils/CPP/Utils.hpp\"", "");
+
 					sInFile.Replace("#include \"Vector.hpp\"", "");
+					sInFile.Replace("#include \"../../Vector/CPP/Vector.hpp\"", "");
+
 					//sInFile.Replace("#include \"OwnedVector\"", "");
+
 					sInFile.Replace("#include \"Xml.hpp\"", "");
+					sInFile.Replace("#include \"../../Xml/CPP/Xml.hpp\"", "");
+
 					sInFile.Replace("#include \"Zip.hpp\"", "");
+					sInFile.Replace("#include \"../../Zip/CPP/Zip.hpp\"", "");
 
 					sInFile.Replace("#include \"tinyxml2.h\"", "");
 					sInFile.Replace("#include \"miniz.h\"", "");
