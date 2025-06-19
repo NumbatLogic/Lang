@@ -98,10 +98,28 @@ namespace NumbatLogic
 	AST* ArrayLookup::BaseClone()
 	{
 		ArrayLookup* pArrayLookup = new ArrayLookup();
+		AST* pExpression = m_pExpression->BaseClone();
+		AST* pIndexExpression = m_pIndexExpression->BaseClone();
+		pArrayLookup->m_pExpression = pExpression;
+		pArrayLookup->m_pIndexExpression = pIndexExpression;
+		{
+			NumbatLogic::AST* __1067118945 = pExpression;
+			pExpression = 0;
+			pArrayLookup->AddChild(__1067118945);
+		}
+		{
+			NumbatLogic::AST* __2256997130 = pIndexExpression;
+			pIndexExpression = 0;
+			pArrayLookup->AddChild(__2256997130);
+		}
 		{
 			NumbatLogic::ArrayLookup* __487846044 = pArrayLookup;
 			pArrayLookup = 0;
-			return __487846044;
+			{
+				if (pExpression) delete pExpression;
+				if (pIndexExpression) delete pIndexExpression;
+				return __487846044;
+			}
 		}
 	}
 

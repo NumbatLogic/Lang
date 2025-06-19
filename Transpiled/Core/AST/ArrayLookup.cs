@@ -69,10 +69,26 @@ namespace NumbatLogic
 		public override AST BaseClone()
 		{
 			ArrayLookup pArrayLookup = new ArrayLookup();
+			AST pExpression = m_pExpression.BaseClone();
+			AST pIndexExpression = m_pIndexExpression.BaseClone();
+			pArrayLookup.m_pExpression = pExpression;
+			pArrayLookup.m_pIndexExpression = pIndexExpression;
+			{
+				NumbatLogic.AST __1067118945 = pExpression;
+				pExpression = null;
+				pArrayLookup.AddChild(__1067118945);
+			}
+			{
+				NumbatLogic.AST __2256997130 = pIndexExpression;
+				pIndexExpression = null;
+				pArrayLookup.AddChild(__2256997130);
+			}
 			{
 				NumbatLogic.ArrayLookup __487846044 = pArrayLookup;
 				pArrayLookup = null;
-				return __487846044;
+				{
+					return __487846044;
+				}
 			}
 		}
 
