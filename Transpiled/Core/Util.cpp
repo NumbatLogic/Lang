@@ -2,7 +2,7 @@
 #include "../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../../../LangShared/Blob/CPP/Blob.hpp"
 
-namespace NumberDuck
+namespace NumbatLogic
 {
 	class Blob;
 	class BlobView;

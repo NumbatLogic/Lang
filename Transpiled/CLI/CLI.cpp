@@ -244,6 +244,8 @@ namespace NumbatLogic
 				sInFile->Replace("#include \"../../Xml/CPP/Xml.hpp\"", "");
 				sInFile->Replace("#include \"Zip.hpp\"", "");
 				sInFile->Replace("#include \"../../Zip/CPP/Zip.hpp\"", "");
+				sInFile->Replace("#include \"ZipWriter.hpp\"", "");
+				sInFile->Replace("#include \"../../Zip/CPP/ZipWriter.hpp\"", "");
 				sInFile->Replace("#include \"tinyxml2.h\"", "");
 				sInFile->Replace("#include \"miniz.h\"", "");
 				sAppend->AppendString(sInFile->GetExternalString());
