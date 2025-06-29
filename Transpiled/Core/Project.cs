@@ -30,9 +30,9 @@ namespace NumbatLogic
 				return;
 			}
 			m_pTranslationUnitVector.PushBack(pTranslationUnit);
-			NumbatLogic.TranslationUnit __3109799593 = pTranslationUnit;
+			NumbatLogic.TranslationUnit __2210841974 = pTranslationUnit;
 			pTranslationUnit = null;
-			AddChild(__3109799593);
+			AddChild(__2210841974);
 		}
 
 		public void AddDirectory(string sDirectory, OwnedVector<InternalString> sDefineVector)
@@ -86,15 +86,15 @@ namespace NumbatLogic
 						NumbatLogic.Assert.Plz(pOwnedChild != null);
 						if (pSecretNamespace == null)
 						{
-							NumbatLogic.AST __3216022957 = pOwnedChild;
+							NumbatLogic.AST __2966060645 = pOwnedChild;
 							pOwnedChild = null;
-							pSecretTranslationUnit.AddChild(__3216022957);
+							pSecretTranslationUnit.AddChild(__2966060645);
 						}
 						else
 						{
-							NumbatLogic.AST __3216022957 = pOwnedChild;
+							NumbatLogic.AST __2966060645 = pOwnedChild;
 							pOwnedChild = null;
-							pSecretNamespace.AddChild(__3216022957);
+							pSecretNamespace.AddChild(__2966060645);
 						}
 						pChild = pNextChild;
 						continue;
@@ -106,15 +106,15 @@ namespace NumbatLogic
 					NamespaceDecl pTemp = pNextSecretNamespace;
 					if (pSecretNamespace == null)
 					{
-						NumbatLogic.NamespaceDecl __1799401907 = pNextSecretNamespace;
+						NumbatLogic.NamespaceDecl __1887985763 = pNextSecretNamespace;
 						pNextSecretNamespace = null;
-						pSecretTranslationUnit.AddChild(__1799401907);
+						pSecretTranslationUnit.AddChild(__1887985763);
 					}
 					else
 					{
-						NumbatLogic.NamespaceDecl __1799401907 = pNextSecretNamespace;
+						NumbatLogic.NamespaceDecl __1887985763 = pNextSecretNamespace;
 						pNextSecretNamespace = null;
-						pSecretNamespace.AddChild(__1799401907);
+						pSecretNamespace.AddChild(__1887985763);
 					}
 					RecurseNamespaces(pNamespaceDecl, pTemp, pSecretTranslationUnit);
 				}
@@ -142,25 +142,25 @@ namespace NumbatLogic
 							AST pOwnedChild;
 							pOwnedChild = pParentAST.RemoveChild(pChild);
 							AST pSubChild;
-							NumbatLogic.AST __1159247422 = pOwnedChild.m_pFirstChild;
+							NumbatLogic.AST __2177070729 = pOwnedChild.m_pFirstChild;
 							pOwnedChild.m_pFirstChild = null;
-							pSubChild = __1159247422;
+							pSubChild = __2177070729;
 							pOwnedChild.m_pLastChild = null;
 							if (pSubChild != null)
 							{
 								pSubChild.m_pParent = pPreviousNamespace;
 								if (pPreviousNamespace.m_pFirstChild == null)
 								{
-									NumbatLogic.AST __3883565950 = pSubChild;
+									NumbatLogic.AST __446723994 = pSubChild;
 									pSubChild = null;
-									pPreviousNamespace.m_pFirstChild = __3883565950;
+									pPreviousNamespace.m_pFirstChild = __446723994;
 									pPreviousNamespace.m_pLastChild = pPreviousNamespace.m_pFirstChild;
 								}
 								else
 								{
-									NumbatLogic.AST __3883565950 = pSubChild;
+									NumbatLogic.AST __446723994 = pSubChild;
 									pSubChild = null;
-									pPreviousNamespace.m_pLastChild.m_pNextSibling = __3883565950;
+									pPreviousNamespace.m_pLastChild.m_pNextSibling = __446723994;
 									pPreviousNamespace.m_pLastChild.m_pNextSibling.m_pPrevSibling = pPreviousNamespace.m_pLastChild;
 								}
 								while (pPreviousNamespace.m_pLastChild.m_pNextSibling != null)
@@ -209,22 +209,22 @@ namespace NumbatLogic
 				{
 					Token pToken = pTranslationUnit.m_pTokenContainer.m_pTokenVector.PopFront();
 					pToken.m_sFileName = pPublicTranslationUnit.m_sInFile;
-					NumbatLogic.Token __2538616708 = pToken;
+					NumbatLogic.Token __522985997 = pToken;
 					pToken = null;
-					pPublicTranslationUnit.m_pTokenContainer.m_pTokenVector.PushBack(__2538616708);
+					pPublicTranslationUnit.m_pTokenContainer.m_pTokenVector.PushBack(__522985997);
 				}
 				if (pPublicTranslationUnit.m_pFirstChild == null)
 				{
-					NumbatLogic.AST __2615021536 = pAST.m_pFirstChild;
+					NumbatLogic.AST __2318169564 = pAST.m_pFirstChild;
 					pAST.m_pFirstChild = null;
-					pPublicTranslationUnit.m_pFirstChild = __2615021536;
+					pPublicTranslationUnit.m_pFirstChild = __2318169564;
 					pPublicTranslationUnit.m_pLastChild = pPublicTranslationUnit.m_pFirstChild;
 				}
 				else
 				{
-					NumbatLogic.AST __2615021536 = pAST.m_pFirstChild;
+					NumbatLogic.AST __2318169564 = pAST.m_pFirstChild;
 					pAST.m_pFirstChild = null;
-					pPublicTranslationUnit.m_pLastChild.m_pNextSibling = __2615021536;
+					pPublicTranslationUnit.m_pLastChild.m_pNextSibling = __2318169564;
 					pPublicTranslationUnit.m_pLastChild = pPublicTranslationUnit.m_pLastChild.m_pNextSibling;
 				}
 				while (true)
@@ -238,19 +238,18 @@ namespace NumbatLogic
 			}
 			while (m_pTranslationUnitVector.GetSize() > 0)
 			{
-				int ff = 0;
 				m_pTranslationUnitVector.PopBack();
 			}
 			NamespaceMerge(pPublicTranslationUnit);
 			RecurseNamespaces(pPublicTranslationUnit, null, pSecretTranslationUnit);
 			m_pTranslationUnitVector.PushBack(pSecretTranslationUnit);
-			NumbatLogic.TranslationUnit __254684446 = pSecretTranslationUnit;
+			NumbatLogic.TranslationUnit __3345516770 = pSecretTranslationUnit;
 			pSecretTranslationUnit = null;
-			AddChild(__254684446);
+			AddChild(__3345516770);
 			m_pTranslationUnitVector.PushBack(pPublicTranslationUnit);
-			NumbatLogic.TranslationUnit __3324259267 = pPublicTranslationUnit;
+			NumbatLogic.TranslationUnit __1414343230 = pPublicTranslationUnit;
 			pPublicTranslationUnit = null;
-			AddChild(__3324259267);
+			AddChild(__1414343230);
 		}
 
 		public void Output(AST.Language eLanguage, OutputFile eOutputFile)

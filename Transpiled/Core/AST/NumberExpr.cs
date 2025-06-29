@@ -15,17 +15,17 @@ namespace NumbatLogic
 				return null;
 			pOffsetDatum.m_nOffset = pOffsetDatum.m_nOffset + 1;
 			NumberExpr pNumberExpr = new NumberExpr(pToken);
-			NumbatLogic.NumberExpr __1682288392 = pNumberExpr;
+			NumbatLogic.NumberExpr __1419199686 = pNumberExpr;
 			pNumberExpr = null;
-			return __1682288392;
+			return __1419199686;
 		}
 
 		public override AST BaseClone()
 		{
 			NumberExpr pNumberExpr = new NumberExpr(m_pFirstToken);
-			NumbatLogic.NumberExpr __1682288392 = pNumberExpr;
+			NumbatLogic.NumberExpr __1419199686 = pNumberExpr;
 			pNumberExpr = null;
-			return __1682288392;
+			return __1419199686;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

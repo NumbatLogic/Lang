@@ -23,13 +23,13 @@ namespace NumbatLogic
 			pOwnExpr.m_eType = AST.Type.AST_OWN_EXP;
 			pOwnExpr.m_pFirstToken = pOwnToken;
 			pOwnExpr.m_pExpression = pExpression;
-			NumbatLogic.AST __1067118945 = pExpression;
+			NumbatLogic.AST __2637546178 = pExpression;
 			pExpression = null;
-			pOwnExpr.AddChild(__1067118945);
+			pOwnExpr.AddChild(__2637546178);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.OwnExpr __1829329341 = pOwnExpr;
+			NumbatLogic.OwnExpr __2951986774 = pOwnExpr;
 			pOwnExpr = null;
-			return __1829329341;
+			return __2951986774;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

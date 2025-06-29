@@ -22,19 +22,19 @@ namespace NumbatLogic
 			pOperatorExpr.m_pRight = pOwnedRight;
 			if (pLeft != null)
 			{
-				NumbatLogic.AST __2216975023 = pOwnedLeft;
+				NumbatLogic.AST __2272885997 = pOwnedLeft;
 				pOwnedLeft = null;
-				pOperatorExpr.AddChild(__2216975023);
+				pOperatorExpr.AddChild(__2272885997);
 			}
 			if (pRight != null)
 			{
-				NumbatLogic.AST __766380242 = pOwnedRight;
+				NumbatLogic.AST __1677658587 = pOwnedRight;
 				pOwnedRight = null;
-				pOperatorExpr.AddChild(__766380242);
+				pOperatorExpr.AddChild(__1677658587);
 			}
-			NumbatLogic.OperatorExpr __304301329 = pOperatorExpr;
+			NumbatLogic.OperatorExpr __1530450364 = pOperatorExpr;
 			pOperatorExpr = null;
-			return __304301329;
+			return __1530450364;
 		}
 
 		public override AST BaseClone()
@@ -45,11 +45,11 @@ namespace NumbatLogic
 				pLeft = m_pLeft.BaseClone();
 			if (m_pRight != null)
 				pRight = m_pRight.BaseClone();
-			NumbatLogic.AST __2461073728 = pLeft;
+			NumbatLogic.AST __2269097566 = pLeft;
 			pLeft = null;
-			NumbatLogic.AST __1625873296 = pRight;
+			NumbatLogic.AST __2913628560 = pRight;
 			pRight = null;
-			return Create(m_pOperatorToken, __2461073728, __1625873296);
+			return Create(m_pOperatorToken, __2269097566, __2913628560);
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

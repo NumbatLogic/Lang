@@ -26,9 +26,9 @@ namespace NumbatLogic
 			DelegateDecl pDelegateDecl = new DelegateDecl();
 			pDelegateDecl.m_pFirstToken = pToken;
 			pDelegateDecl.m_pAccessLevel = pAccessLevel;
-			NumbatLogic.AccessLevel __2194276919 = pAccessLevel;
+			NumbatLogic.AccessLevel __1197960421 = pAccessLevel;
 			pAccessLevel = null;
-			pDelegateDecl.AddChild(__2194276919);
+			pDelegateDecl.AddChild(__1197960421);
 			FunctionDecl pFunctionDecl = FunctionDecl.TryCreate(pTokenContainer, pTempOffset, null);
 			if (pFunctionDecl == null)
 			{
@@ -43,13 +43,13 @@ namespace NumbatLogic
 				return null;
 			}
 			pDelegateDecl.m_pFunctionDecl = pFunctionDecl;
-			NumbatLogic.FunctionDecl __549451023 = pFunctionDecl;
+			NumbatLogic.FunctionDecl __1338261948 = pFunctionDecl;
 			pFunctionDecl = null;
-			pDelegateDecl.AddChild(__549451023);
+			pDelegateDecl.AddChild(__1338261948);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.DelegateDecl __2828484651 = pDelegateDecl;
+			NumbatLogic.DelegateDecl __2803299726 = pDelegateDecl;
 			pDelegateDecl = null;
-			return __2828484651;
+			return __2803299726;
 		}
 
 		public override AST FindByName(string sxName, AST pCallingChild)

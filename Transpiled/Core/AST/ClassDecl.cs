@@ -56,9 +56,9 @@ namespace NumbatLogic
 						Console.Log("expected inner GenericTypeDecl");
 						NumbatLogic.Assert.Plz(false);
 					}
-					NumbatLogic.GenericTypeDecl __3828846222 = pGenericTypeDecl;
+					NumbatLogic.GenericTypeDecl __51149864 = pGenericTypeDecl;
 					pGenericTypeDecl = null;
-					pClassDecl.m_pGenericTypeDeclVector.PushBack(__3828846222);
+					pClassDecl.m_pGenericTypeDeclVector.PushBack(__51149864);
 					if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_ANGLE_BRACKET_RIGHT) != null)
 					{
 						continue;
@@ -108,41 +108,41 @@ namespace NumbatLogic
 				pAST = MemberVarDecl.TryCreate(pTokenContainer, pTempOffset);
 				if (pAST != null)
 				{
-					NumbatLogic.AST __3125986036 = pAST;
+					NumbatLogic.AST __2501074547 = pAST;
 					pAST = null;
-					pClassDecl.AddChild(__3125986036);
+					pClassDecl.AddChild(__2501074547);
 					continue;
 				}
 				pAST = MemberFunctionDecl.TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 				if (pAST != null)
 				{
-					NumbatLogic.AST __3125986036 = pAST;
+					NumbatLogic.AST __2501074547 = pAST;
 					pAST = null;
-					pClassDecl.AddChild(__3125986036);
+					pClassDecl.AddChild(__2501074547);
 					continue;
 				}
 				pAST = MemberEnumDecl.TryCreate(pTokenContainer, pTempOffset);
 				if (pAST != null)
 				{
-					NumbatLogic.AST __3125986036 = pAST;
+					NumbatLogic.AST __2501074547 = pAST;
 					pAST = null;
-					pClassDecl.AddChild(__3125986036);
+					pClassDecl.AddChild(__2501074547);
 					continue;
 				}
 				pAST = TorDecl.TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 				if (pAST != null)
 				{
-					NumbatLogic.AST __3125986036 = pAST;
+					NumbatLogic.AST __2501074547 = pAST;
 					pAST = null;
-					pClassDecl.AddChild(__3125986036);
+					pClassDecl.AddChild(__2501074547);
 					continue;
 				}
 				pAST = DelegateDecl.TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 				if (pAST != null)
 				{
-					NumbatLogic.AST __3125986036 = pAST;
+					NumbatLogic.AST __2501074547 = pAST;
 					pAST = null;
-					pClassDecl.AddChild(__3125986036);
+					pClassDecl.AddChild(__2501074547);
 					continue;
 				}
 				Console.Log("expected to parse somethting within class...");
@@ -150,9 +150,9 @@ namespace NumbatLogic
 				NumbatLogic.Assert.Plz(false);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.ClassDecl __112680214 = pClassDecl;
+			NumbatLogic.ClassDecl __1224433545 = pClassDecl;
 			pClassDecl = null;
-			return __112680214;
+			return __1224433545;
 		}
 
 		public override void PreValidate(Validator pValidator, OperatorExpr pParent)
@@ -240,18 +240,18 @@ namespace NumbatLogic
 					pTorDecl.m_pParamDecl = pParamDecl;
 					pTorDecl.m_pScope = pScope;
 					pTorDecl.m_sDisambiguate = "";
-					NumbatLogic.AccessLevel __2194276919 = pAccessLevel;
+					NumbatLogic.AccessLevel __2775018772 = pAccessLevel;
 					pAccessLevel = null;
-					pTorDecl.AddChild(__2194276919);
-					NumbatLogic.ParamDecl __2049651157 = pParamDecl;
+					pTorDecl.AddChild(__2775018772);
+					NumbatLogic.ParamDecl __3832994088 = pParamDecl;
 					pParamDecl = null;
-					pTorDecl.AddChild(__2049651157);
-					NumbatLogic.Scope __693694853 = pScope;
+					pTorDecl.AddChild(__3832994088);
+					NumbatLogic.Scope __271298040 = pScope;
 					pScope = null;
-					pTorDecl.AddChild(__693694853);
-					NumbatLogic.TorDecl __3416457985 = pTorDecl;
+					pTorDecl.AddChild(__271298040);
+					NumbatLogic.TorDecl __2307968412 = pTorDecl;
 					pTorDecl = null;
-					AddChild(__3416457985);
+					AddChild(__2307968412);
 				}
 				if (bHasOwnedPointer && !bHasDestructor)
 				{
@@ -275,18 +275,18 @@ namespace NumbatLogic
 					pTorDecl.m_pParamDecl = pParamDecl;
 					pTorDecl.m_pScope = pScope;
 					pTorDecl.m_sDisambiguate = "";
-					NumbatLogic.AccessLevel __2194276919 = pAccessLevel;
+					NumbatLogic.AccessLevel __2775018772 = pAccessLevel;
 					pAccessLevel = null;
-					pTorDecl.AddChild(__2194276919);
-					NumbatLogic.ParamDecl __2049651157 = pParamDecl;
+					pTorDecl.AddChild(__2775018772);
+					NumbatLogic.ParamDecl __3832994088 = pParamDecl;
 					pParamDecl = null;
-					pTorDecl.AddChild(__2049651157);
-					NumbatLogic.Scope __693694853 = pScope;
+					pTorDecl.AddChild(__3832994088);
+					NumbatLogic.Scope __271298040 = pScope;
 					pScope = null;
-					pTorDecl.AddChild(__693694853);
-					NumbatLogic.TorDecl __3416457985 = pTorDecl;
+					pTorDecl.AddChild(__271298040);
+					NumbatLogic.TorDecl __2307968412 = pTorDecl;
 					pTorDecl = null;
-					AddChild(__3416457985);
+					AddChild(__2307968412);
 				}
 			}
 			base.Validate(pValidator, pParent);

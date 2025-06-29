@@ -110,30 +110,30 @@ namespace NumbatLogic
 		}
 		ForStmt* pForStmt = new ForStmt();
 		pForStmt->m_pFirstToken = pForToken;
-		NumbatLogic::AST* __4132705276 = pBeforeStatement;
+		NumbatLogic::AST* __1887918046 = pBeforeStatement;
 		pBeforeStatement = 0;
-		pForStmt->AddChild(__4132705276);
-		NumbatLogic::AST* __658474541 = pConditionStatement;
+		pForStmt->AddChild(__1887918046);
+		NumbatLogic::AST* __1433499123 = pConditionStatement;
 		pConditionStatement = 0;
-		pForStmt->AddChild(__658474541);
+		pForStmt->AddChild(__1433499123);
 		if (pLoopStatement != 0)
 		{
-			NumbatLogic::AST* __3980311021 = pLoopStatement;
+			NumbatLogic::AST* __2126978282 = pLoopStatement;
 			pLoopStatement = 0;
-			pForStmt->AddChild(__3980311021);
+			pForStmt->AddChild(__2126978282);
 		}
-		NumbatLogic::AST* __688492598 = pStatement;
+		NumbatLogic::AST* __3549063784 = pStatement;
 		pStatement = 0;
-		pForStmt->AddChild(__688492598);
+		pForStmt->AddChild(__3549063784);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::ForStmt* __3863278161 = pForStmt;
+		NumbatLogic::ForStmt* __2317228531 = pForStmt;
 		pForStmt = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pBeforeStatement) delete pBeforeStatement;
 		if (pConditionStatement) delete pConditionStatement;
 		if (pLoopStatement) delete pLoopStatement;
 		if (pStatement) delete pStatement;
-		return __3863278161;
+		return __2317228531;
 	}
 
 	void ForStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

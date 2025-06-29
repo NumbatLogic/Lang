@@ -49,10 +49,10 @@ namespace NumbatLogic
 		pIdentifier->m_eType = AST::Type::AST_IDENTIFIER;
 		pIdentifier->m_pFirstToken = pToken;
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::Identifier* __3324855843 = pIdentifier;
+		NumbatLogic::Identifier* __1369639070 = pIdentifier;
 		pIdentifier = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __3324855843;
+		return __1369639070;
 	}
 
 	AST* Identifier::BaseClone()
@@ -60,9 +60,9 @@ namespace NumbatLogic
 		Identifier* pIdentifier = new Identifier();
 		pIdentifier->m_eType = m_eType;
 		pIdentifier->m_pFirstToken = m_pFirstToken;
-		NumbatLogic::Identifier* __3324855843 = pIdentifier;
+		NumbatLogic::Identifier* __1369639070 = pIdentifier;
 		pIdentifier = 0;
-		return __3324855843;
+		return __1369639070;
 	}
 
 	void Identifier::Validate(Validator* pValidator, OperatorExpr* pParent)
@@ -191,9 +191,9 @@ namespace NumbatLogic
 								if (pGenericValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
 								{
 									ValueType* pOldValueType = 0;
-									NumbatLogic::ValueType* __1144705946 = m_pValueType;
+									NumbatLogic::ValueType* __4084057400 = m_pValueType;
 									m_pValueType = 0;
-									pOldValueType = __1144705946;
+									pOldValueType = __4084057400;
 									m_pValueType = pGenericValueType->Clone();
 									m_pValueType->m_ePointerType = pOldValueType->m_ePointerType;
 									if (pOldValueType) delete pOldValueType;

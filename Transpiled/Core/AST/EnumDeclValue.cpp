@@ -49,10 +49,10 @@ namespace NumbatLogic
 			}
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::EnumDeclValue* __954462356 = pEnumDeclValue;
+		NumbatLogic::EnumDeclValue* __3778153840 = pEnumDeclValue;
 		pEnumDeclValue = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __954462356;
+		return __3778153840;
 	}
 
 	AST* EnumDeclValue::FindByName(const char* sxName, AST* pCallingChild)

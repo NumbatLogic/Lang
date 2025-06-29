@@ -42,16 +42,16 @@ namespace NumbatLogic
 			pArrayLookup.m_pFirstToken = pExpression.m_pFirstToken;
 			pArrayLookup.m_pExpression = pExpression;
 			pArrayLookup.m_pIndexExpression = pIndexExpression;
-			NumbatLogic.AST __1067118945 = pExpression;
+			NumbatLogic.AST __2637546178 = pExpression;
 			pExpression = null;
-			pArrayLookup.AddChild(__1067118945);
-			NumbatLogic.AST __2256997130 = pIndexExpression;
+			pArrayLookup.AddChild(__2637546178);
+			NumbatLogic.AST __3620315840 = pIndexExpression;
 			pIndexExpression = null;
-			pArrayLookup.AddChild(__2256997130);
+			pArrayLookup.AddChild(__3620315840);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.ArrayLookup __487846044 = pArrayLookup;
+			NumbatLogic.ArrayLookup __1902248373 = pArrayLookup;
 			pArrayLookup = null;
-			return __487846044;
+			return __1902248373;
 		}
 
 		public override AST BaseClone()
@@ -61,15 +61,15 @@ namespace NumbatLogic
 			AST pIndexExpression = m_pIndexExpression.BaseClone();
 			pArrayLookup.m_pExpression = pExpression;
 			pArrayLookup.m_pIndexExpression = pIndexExpression;
-			NumbatLogic.AST __1067118945 = pExpression;
+			NumbatLogic.AST __2637546178 = pExpression;
 			pExpression = null;
-			pArrayLookup.AddChild(__1067118945);
-			NumbatLogic.AST __2256997130 = pIndexExpression;
+			pArrayLookup.AddChild(__2637546178);
+			NumbatLogic.AST __3620315840 = pIndexExpression;
 			pIndexExpression = null;
-			pArrayLookup.AddChild(__2256997130);
-			NumbatLogic.ArrayLookup __487846044 = pArrayLookup;
+			pArrayLookup.AddChild(__3620315840);
+			NumbatLogic.ArrayLookup __1650589931 = pArrayLookup;
 			pArrayLookup = null;
-			return __487846044;
+			return __1650589931;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

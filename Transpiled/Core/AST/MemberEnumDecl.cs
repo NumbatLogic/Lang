@@ -26,16 +26,16 @@ namespace NumbatLogic
 			pMemberEnumDecl.m_eType = AST.Type.AST_MEMBER_ENUM_DECL;
 			pMemberEnumDecl.m_pAccessLevel = pAccessLevel;
 			pMemberEnumDecl.m_pEnumDecl = pEnumDecl;
-			NumbatLogic.AccessLevel __2194276919 = pAccessLevel;
+			NumbatLogic.AccessLevel __1197960421 = pAccessLevel;
 			pAccessLevel = null;
-			pMemberEnumDecl.AddChild(__2194276919);
-			NumbatLogic.EnumDecl __3345757416 = pEnumDecl;
+			pMemberEnumDecl.AddChild(__1197960421);
+			NumbatLogic.EnumDecl __3589930583 = pEnumDecl;
 			pEnumDecl = null;
-			pMemberEnumDecl.AddChild(__3345757416);
+			pMemberEnumDecl.AddChild(__3589930583);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.MemberEnumDecl __26865667 = pMemberEnumDecl;
+			NumbatLogic.MemberEnumDecl __381967771 = pMemberEnumDecl;
 			pMemberEnumDecl = null;
-			return __26865667;
+			return __381967771;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

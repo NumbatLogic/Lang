@@ -59,9 +59,9 @@ namespace NumbatLogic
 				for (int i = 0; i < m_pGenericValueTypeVector.GetSize(); i++)
 					pValueType.m_pGenericValueTypeVector.PushBack(m_pGenericValueTypeVector.Get(i).Clone());
 			}
-			NumbatLogic.ValueType __415518348 = pValueType;
+			NumbatLogic.ValueType __399573019 = pValueType;
 			pValueType = null;
-			return __415518348;
+			return __399573019;
 		}
 
 		public bool ValidateAssignable(ValueType pTo, Validator pValidator, Token pToken)
@@ -133,9 +133,9 @@ namespace NumbatLogic
 						{
 							TypeRef pGenericTypeRef = m_pGenericValueTypeVector.Get(i).CreateTypeRef();
 							pTypeRef.m_pGenericTypeRefVector.PushBack(pGenericTypeRef);
-							NumbatLogic.TypeRef __1546460495 = pGenericTypeRef;
+							NumbatLogic.TypeRef __3146165699 = pGenericTypeRef;
 							pGenericTypeRef = null;
-							pTypeRef.AddChild(__1546460495);
+							pTypeRef.AddChild(__3146165699);
 						}
 					}
 					NamespaceNode pNamespaceNode = m_pClassDecl.m_pNamespaceNode;
@@ -147,17 +147,17 @@ namespace NumbatLogic
 						pNamespaceTypeRef.m_pCloneToken.m_sValue = new InternalString(pNamespaceNode.m_sName.GetExternalString());
 						pNamespaceTypeRef.m_pTypeToken = pNamespaceTypeRef.m_pCloneToken;
 						pNamespaceTypeRef.m_pChildTypeRef = pTypeRef;
-						NumbatLogic.TypeRef __3079357496 = pTypeRef;
+						NumbatLogic.TypeRef __2082489365 = pTypeRef;
 						pTypeRef = null;
-						pNamespaceTypeRef.AddChild(__3079357496);
-						NumbatLogic.TypeRef __8652500 = pNamespaceTypeRef;
+						pNamespaceTypeRef.AddChild(__2082489365);
+						NumbatLogic.TypeRef __2805963576 = pNamespaceTypeRef;
 						pNamespaceTypeRef = null;
-						pTypeRef = __8652500;
+						pTypeRef = __2805963576;
 						pNamespaceNode = pNamespaceNode.m_pParent;
 					}
-					NumbatLogic.TypeRef __3079357496 = pTypeRef;
+					NumbatLogic.TypeRef __2367702202 = pTypeRef;
 					pTypeRef = null;
-					return __3079357496;
+					return __2367702202;
 				}
 
 				case Type.GENERIC_TYPE_DECL_VALUE:
@@ -166,9 +166,9 @@ namespace NumbatLogic
 					pTypeRef.m_pCloneToken.m_eType = Token.Type.TOKEN_IDENTIFIER;
 					pTypeRef.m_pCloneToken.m_sValue = new InternalString(m_pGenericTypeDecl.m_pFirstToken.m_sValue.GetExternalString());
 					pTypeRef.m_pTypeToken = pTypeRef.m_pCloneToken;
-					NumbatLogic.TypeRef __3079357496 = pTypeRef;
+					NumbatLogic.TypeRef __2367702202 = pTypeRef;
 					pTypeRef = null;
-					return __3079357496;
+					return __2367702202;
 				}
 
 			}

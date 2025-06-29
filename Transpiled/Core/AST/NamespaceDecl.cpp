@@ -76,9 +76,9 @@ namespace NumbatLogic
 			AST* pAST = AST::CreateFromTokenContainer(pTokenContainer, pTempOffset);
 			if (pAST != 0)
 			{
-				NumbatLogic::AST* __3125986036 = pAST;
+				NumbatLogic::AST* __2501074547 = pAST;
 				pAST = 0;
-				pNamespaceDecl->AddChild(__3125986036);
+				pNamespaceDecl->AddChild(__2501074547);
 				if (pAST) delete pAST;
 				continue;
 			}
@@ -88,10 +88,10 @@ namespace NumbatLogic
 			if (pAST) delete pAST;
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::NamespaceDecl* __2577615172 = pNamespaceDecl;
+		NumbatLogic::NamespaceDecl* __96409182 = pNamespaceDecl;
 		pNamespaceDecl = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __2577615172;
+		return __96409182;
 	}
 
 	void NamespaceDecl::PreValidate(Validator* pValidator, OperatorExpr* pParent)

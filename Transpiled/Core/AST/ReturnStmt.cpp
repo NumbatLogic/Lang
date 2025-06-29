@@ -46,16 +46,16 @@ namespace NumbatLogic
 		pReturnStmt->m_pExpression = pExpression;
 		if (pExpression != 0)
 		{
-			NumbatLogic::AST* __1067118945 = pExpression;
+			NumbatLogic::AST* __3493184307 = pExpression;
 			pExpression = 0;
-			pReturnStmt->AddChild(__1067118945);
+			pReturnStmt->AddChild(__3493184307);
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::ReturnStmt* __3384094912 = pReturnStmt;
+		NumbatLogic::ReturnStmt* __1016877357 = pReturnStmt;
 		pReturnStmt = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pExpression) delete pExpression;
-		return __3384094912;
+		return __1016877357;
 	}
 
 	void ReturnStmt::Validate(Validator* pValidator, OperatorExpr* pParent)

@@ -15,9 +15,9 @@ namespace NumbatLogic
 			pAccessLevel.m_eType = AST.Type.AST_ACCESS_LEVEL;
 			pAccessLevel.m_pFirstToken = pAccessLevelToken;
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.AccessLevel __2194276919 = pAccessLevel;
+			NumbatLogic.AccessLevel __1197960421 = pAccessLevel;
 			pAccessLevel = null;
-			return __2194276919;
+			return __1197960421;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

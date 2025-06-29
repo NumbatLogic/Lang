@@ -52,9 +52,9 @@ namespace NumbatLogic
 				if (pStaticArray) delete pStaticArray;
 				return 0;
 			}
-			NumbatLogic::AST* __1668941636 = pElement;
+			NumbatLogic::AST* __1307930818 = pElement;
 			pElement = 0;
-			pStaticArray->AddChild(__1668941636);
+			pStaticArray->AddChild(__1307930818);
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_RIGHT) != 0)
 			{
 				if (pElement) delete pElement;
@@ -70,10 +70,10 @@ namespace NumbatLogic
 			if (pElement) delete pElement;
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::StaticArray* __1093080310 = pStaticArray;
+		NumbatLogic::StaticArray* __2560962993 = pStaticArray;
 		pStaticArray = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __1093080310;
+		return __2560962993;
 	}
 
 	void StaticArray::Validate(Validator* pValidator, OperatorExpr* pParent)

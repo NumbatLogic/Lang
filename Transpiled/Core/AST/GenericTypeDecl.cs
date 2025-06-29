@@ -15,9 +15,9 @@ namespace NumbatLogic
 			pGenericTypeDecl.m_eType = AST.Type.AST_GENERIC_TYPE_DECL;
 			pGenericTypeDecl.m_pFirstToken = pTypeToken;
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.GenericTypeDecl __3828846222 = pGenericTypeDecl;
+			NumbatLogic.GenericTypeDecl __3775692249 = pGenericTypeDecl;
 			pGenericTypeDecl = null;
-			return __3828846222;
+			return __3775692249;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

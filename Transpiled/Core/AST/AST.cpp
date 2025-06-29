@@ -81,37 +81,37 @@ namespace NumbatLogic
 		pAst = FunctionDecl::TryCreate(pTokenContainer, pOffsetDatum, 0);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = ClassDecl::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = NamespaceDecl::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = CreateStatementFromTokenContainer(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = TryCreateExpression(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		if (pAst) delete pAst;
 		return 0;
@@ -123,86 +123,86 @@ namespace NumbatLogic
 		pAst = ReturnStmt::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = BreakStmt::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = ContinueStmt::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = Scope::TryCreate(pTokenContainer, pOffsetDatum, false);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = VarDecl::TryCreate(pTokenContainer, pOffsetDatum, false);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = EnumDecl::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = DeleteStmt::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = IfStmt::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = ForStmt::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = WhileStmt::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = SwitchStmt::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = ExpressionStmt::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		if (pAst) delete pAst;
 		return 0;
@@ -214,121 +214,121 @@ namespace NumbatLogic
 		pAst = NumberExpr::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = BoolExpr::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = CharExpr::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = StringExpr::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = NullExpr::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = ThisExpr::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = BaseExpr::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = FunctionCall::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = New::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = CastExpr::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = Unary::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = Paren::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = ArrayLookup::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = StaticArray::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = OwnExpr::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = DisownExpr::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		pAst = Identifier::TryCreate(pTokenContainer, pOffsetDatum);
 		if (pAst != 0)
 		{
-			NumbatLogic::AST* __4200063409 = pAst;
+			NumbatLogic::AST* __4162090953 = pAst;
 			pAst = 0;
-			return __4200063409;
+			return __4162090953;
 		}
 		if (pAst) delete pAst;
 		return 0;
@@ -347,21 +347,21 @@ namespace NumbatLogic
 				{
 					pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 					pOffsetDatum->Set(pTempOffset);
-					NumbatLogic::AST* __2461073728 = pLeft;
+					NumbatLogic::AST* __2487201536 = pLeft;
 					pLeft = 0;
 					if (pTempOffset) delete pTempOffset;
 					if (pLeft) delete pLeft;
-					return OperatorExpr::Create(pOperatorToken, __2461073728, 0);
+					return OperatorExpr::Create(pOperatorToken, __2487201536, 0);
 				}
 				if (pOperatorToken->m_eType == Token::Type::TOKEN_QUESTION_MARK)
 				{
 					pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 					pOffsetDatum->Set(pTempOffset);
-					NumbatLogic::AST* __2461073728 = pLeft;
+					NumbatLogic::AST* __2487201536 = pLeft;
 					pLeft = 0;
 					if (pTempOffset) delete pTempOffset;
 					if (pLeft) delete pLeft;
-					return TrinaryExpr::Create(__2461073728, pTokenContainer, pOffsetDatum);
+					return TrinaryExpr::Create(__2487201536, pTokenContainer, pOffsetDatum);
 				}
 				if (pOperatorToken->m_eType == Token::Type::TOKEN_AND || pOperatorToken->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT || pOperatorToken->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT_EQUALS || pOperatorToken->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT || pOperatorToken->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT_EQUALS || pOperatorToken->m_eType == Token::Type::TOKEN_BITWISE_AND || pOperatorToken->m_eType == Token::Type::TOKEN_BITWISE_OR || pOperatorToken->m_eType == Token::Type::TOKEN_CARET || pOperatorToken->m_eType == Token::Type::TOKEN_DIVIDE || pOperatorToken->m_eType == Token::Type::TOKEN_DOT || pOperatorToken->m_eType == Token::Type::TOKEN_DOUBLE_ANGLE_BRACKET_LEFT || pOperatorToken->m_eType == Token::Type::TOKEN_DOUBLE_ANGLE_BRACKET_RIGHT || pOperatorToken->m_eType == Token::Type::TOKEN_DOUBLE_COLON || pOperatorToken->m_eType == Token::Type::TOKEN_DOUBLE_EQUALS || pOperatorToken->m_eType == Token::Type::TOKEN_EQUALS || pOperatorToken->m_eType == Token::Type::TOKEN_MINUS || pOperatorToken->m_eType == Token::Type::TOKEN_MINUS_EQUALS || pOperatorToken->m_eType == Token::Type::TOKEN_NOT_EQUALS || pOperatorToken->m_eType == Token::Type::TOKEN_OR || pOperatorToken->m_eType == Token::Type::TOKEN_PLUS || pOperatorToken->m_eType == Token::Type::TOKEN_PLUS_EQUALS || pOperatorToken->m_eType == Token::Type::TOKEN_STAR || pOperatorToken->m_eType == Token::Type::TOKEN_MODULUS)
 				{
@@ -370,23 +370,23 @@ namespace NumbatLogic
 					if (pRight != 0)
 					{
 						pOffsetDatum->Set(pTempOffset);
-						NumbatLogic::AST* __2461073728 = pLeft;
+						NumbatLogic::AST* __994029312 = pLeft;
 						pLeft = 0;
-						NumbatLogic::AST* __1625873296 = pRight;
+						NumbatLogic::AST* __296382670 = pRight;
 						pRight = 0;
 						if (pRight) delete pRight;
 						if (pTempOffset) delete pTempOffset;
 						if (pLeft) delete pLeft;
-						return OperatorExpr::Create(pOperatorToken, __2461073728, __1625873296);
+						return OperatorExpr::Create(pOperatorToken, __994029312, __296382670);
 					}
 					if (pRight) delete pRight;
 				}
 			}
 			pOffsetDatum->Set(pTempOffset);
-			NumbatLogic::AST* __2461073728 = pLeft;
+			NumbatLogic::AST* __3393171375 = pLeft;
 			pLeft = 0;
 			if (pTempOffset) delete pTempOffset;
-			return __2461073728;
+			return __3393171375;
 		}
 		if (pTempOffset) delete pTempOffset;
 		if (pLeft) delete pLeft;
@@ -509,9 +509,9 @@ namespace NumbatLogic
 			return;
 		}
 		pAst->m_pParent = this;
-		NumbatLogic::AST* __1962663712 = m_pFirstChild;
+		NumbatLogic::AST* __3936977016 = m_pFirstChild;
 		m_pFirstChild = 0;
-		pAst->m_pNextSibling = __1962663712;
+		pAst->m_pNextSibling = __3936977016;
 		m_pFirstChild = pAst;
 		pAst->m_pNextSibling->m_pPrevSibling = m_pFirstChild;
 	}
@@ -522,17 +522,17 @@ namespace NumbatLogic
 		pAst->m_pParent = this;
 		if (m_pFirstChild == pBefore)
 		{
-			NumbatLogic::AST* __1962663712 = m_pFirstChild;
+			NumbatLogic::AST* __2812903817 = m_pFirstChild;
 			m_pFirstChild = 0;
-			pAst->m_pNextSibling = __1962663712;
+			pAst->m_pNextSibling = __2812903817;
 			m_pFirstChild = pAst;
 			pBefore->m_pPrevSibling = m_pFirstChild;
 		}
 		else
 		{
-			NumbatLogic::AST* __2598141643 = pBefore->m_pPrevSibling->m_pNextSibling;
+			NumbatLogic::AST* __2336627637 = pBefore->m_pPrevSibling->m_pNextSibling;
 			pBefore->m_pPrevSibling->m_pNextSibling = 0;
-			pAst->m_pNextSibling = __2598141643;
+			pAst->m_pNextSibling = __2336627637;
 			pAst->m_pPrevSibling = pBefore->m_pPrevSibling;
 			pBefore->m_pPrevSibling = (AST*)(pAst);
 			pAst->m_pPrevSibling->m_pNextSibling = pAst;
@@ -544,21 +544,21 @@ namespace NumbatLogic
 		if (m_pFirstChild == pChild)
 		{
 			AST* pOwnedChild = 0;
-			NumbatLogic::AST* __1962663712 = m_pFirstChild;
+			NumbatLogic::AST* __2812903817 = m_pFirstChild;
 			m_pFirstChild = 0;
-			pOwnedChild = __1962663712;
+			pOwnedChild = __2812903817;
 			if (m_pLastChild == pOwnedChild)
 				m_pLastChild = 0;
 			else
 			{
-				NumbatLogic::AST* __585396278 = pOwnedChild->m_pNextSibling;
+				NumbatLogic::AST* __3592997157 = pOwnedChild->m_pNextSibling;
 				pOwnedChild->m_pNextSibling = 0;
-				m_pFirstChild = __585396278;
+				m_pFirstChild = __3592997157;
 			}
 			pOwnedChild->m_pParent = 0;
-			NumbatLogic::AST* __3216022957 = pOwnedChild;
+			NumbatLogic::AST* __1103789770 = pOwnedChild;
 			pOwnedChild = 0;
-			return __3216022957;
+			return __1103789770;
 		}
 		else
 		{
@@ -568,21 +568,21 @@ namespace NumbatLogic
 				if (pFindChild->m_pNextSibling == pChild)
 				{
 					AST* pOwnedChild = 0;
-					NumbatLogic::AST* __4143530587 = pFindChild->m_pNextSibling;
+					NumbatLogic::AST* __648906925 = pFindChild->m_pNextSibling;
 					pFindChild->m_pNextSibling = 0;
-					pOwnedChild = __4143530587;
+					pOwnedChild = __648906925;
 					if (m_pLastChild == pOwnedChild)
 						m_pLastChild = pFindChild;
 					else
 					{
-						NumbatLogic::AST* __585396278 = pOwnedChild->m_pNextSibling;
+						NumbatLogic::AST* __2284374410 = pOwnedChild->m_pNextSibling;
 						pOwnedChild->m_pNextSibling = 0;
-						pFindChild->m_pNextSibling = __585396278;
+						pFindChild->m_pNextSibling = __2284374410;
 					}
 					pOwnedChild->m_pParent = 0;
-					NumbatLogic::AST* __3216022957 = pOwnedChild;
+					NumbatLogic::AST* __533364325 = pOwnedChild;
 					pOwnedChild = 0;
-					return __3216022957;
+					return __533364325;
 				}
 				pFindChild = pFindChild->m_pNextSibling;
 			}

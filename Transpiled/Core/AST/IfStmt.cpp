@@ -94,26 +94,26 @@ namespace NumbatLogic
 		IfStmt* pIfStmt = new IfStmt();
 		pIfStmt->m_eType = AST::Type::AST_IF_STMT;
 		pIfStmt->m_pFirstToken = pIfToken;
-		NumbatLogic::AST* __3534699931 = pCondition;
+		NumbatLogic::AST* __1263343886 = pCondition;
 		pCondition = 0;
-		pIfStmt->AddChild(__3534699931);
-		NumbatLogic::Scope* __797977631 = pThenScope;
+		pIfStmt->AddChild(__1263343886);
+		NumbatLogic::Scope* __1768042414 = pThenScope;
 		pThenScope = 0;
-		pIfStmt->AddChild(__797977631);
+		pIfStmt->AddChild(__1768042414);
 		if (pElseScope != 0)
 		{
-			NumbatLogic::Scope* __1035947483 = pElseScope;
+			NumbatLogic::Scope* __2575948586 = pElseScope;
 			pElseScope = 0;
-			pIfStmt->AddChild(__1035947483);
+			pIfStmt->AddChild(__2575948586);
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::IfStmt* __2301836827 = pIfStmt;
+		NumbatLogic::IfStmt* __2834868349 = pIfStmt;
 		pIfStmt = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pCondition) delete pCondition;
 		if (pThenScope) delete pThenScope;
 		if (pElseScope) delete pElseScope;
-		return __2301836827;
+		return __2834868349;
 	}
 
 	void IfStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

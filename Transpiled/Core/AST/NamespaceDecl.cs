@@ -49,9 +49,9 @@ namespace NumbatLogic
 				AST pAST = AST.CreateFromTokenContainer(pTokenContainer, pTempOffset);
 				if (pAST != null)
 				{
-					NumbatLogic.AST __3125986036 = pAST;
+					NumbatLogic.AST __2501074547 = pAST;
 					pAST = null;
-					pNamespaceDecl.AddChild(__3125986036);
+					pNamespaceDecl.AddChild(__2501074547);
 					continue;
 				}
 				Console.Log("expected to parse somethting within namespace...");
@@ -59,9 +59,9 @@ namespace NumbatLogic
 				NumbatLogic.Assert.Plz(false);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.NamespaceDecl __2577615172 = pNamespaceDecl;
+			NumbatLogic.NamespaceDecl __96409182 = pNamespaceDecl;
 			pNamespaceDecl = null;
-			return __2577615172;
+			return __96409182;
 		}
 
 		public override void PreValidate(Validator pValidator, OperatorExpr pParent)

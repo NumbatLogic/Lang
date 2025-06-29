@@ -36,9 +36,9 @@ namespace NumbatLogic
 					NumbatLogic.Assert.Plz(false);
 				}
 				pParamDecl.m_pParamVector.PushBack(pParam);
-				NumbatLogic.VarDecl __3343749822 = pParam;
+				NumbatLogic.VarDecl __2381799284 = pParam;
 				pParam = null;
-				pParamDecl.AddChild(__3343749822);
+				pParamDecl.AddChild(__2381799284);
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_RIGHT) != null)
 				{
 					continue;
@@ -52,9 +52,9 @@ namespace NumbatLogic
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.ParamDecl __2049651157 = pParamDecl;
+			NumbatLogic.ParamDecl __108452057 = pParamDecl;
 			pParamDecl = null;
-			return __2049651157;
+			return __108452057;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

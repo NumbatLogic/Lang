@@ -51,15 +51,15 @@ namespace NumbatLogic
 		DeleteStmt* pDelete = new DeleteStmt();
 		pDelete->m_pFirstToken = pDeleteToken;
 		pDelete->m_pExpression = pExpression;
-		NumbatLogic::AST* __1067118945 = pExpression;
+		NumbatLogic::AST* __2637546178 = pExpression;
 		pExpression = 0;
-		pDelete->AddChild(__1067118945);
+		pDelete->AddChild(__2637546178);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::DeleteStmt* __4122039678 = pDelete;
+		NumbatLogic::DeleteStmt* __3927712687 = pDelete;
 		pDelete = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pExpression) delete pExpression;
-		return __4122039678;
+		return __3927712687;
 	}
 
 	void DeleteStmt::Validate(Validator* pValidator, OperatorExpr* pParent)

@@ -11,9 +11,9 @@ namespace NumbatLogic
 		OffsetDatum* pThis = new OffsetDatum();
 		if (pOther != 0)
 			pThis->Set(pOther);
-		NumbatLogic::OffsetDatum* __186135525 = pThis;
+		NumbatLogic::OffsetDatum* __1737917541 = pThis;
 		pThis = 0;
-		return __186135525;
+		return __1737917541;
 	}
 
 	void OffsetDatum::Set(OffsetDatum* pOther)
