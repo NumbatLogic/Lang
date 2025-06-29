@@ -99,41 +99,6 @@ namespace NumbatLogic
 
 			AST pParentParent = pParentStatement.m_pParent;
 
-			/*Scope* pScope = own new Scope();
-
-			AST* pOwnedParentStatement;
-			AST pDisownedScope;
-
-			if (pParentParent.m_pFirstChild == pParentStatement)
-			{
-				pOwnedParentStatement = own disown pParentParent.m_pFirstChild;
-				pParentParent.m_pFirstChild = own disown pScope;
-				pDisownedScope = pParentParent.m_pFirstChild;
-			}
-			else
-			{
-				pOwnedParentStatement = own disown pParentStatement.m_pPrevSibling.m_pNextSibling;
-				pParentStatement.m_pPrevSibling.m_pNextSibling = own disown pScope;
-				pDisownedScope = pParentStatement.m_pPrevSibling.m_pNextSibling;
-				pDisownedScope.m_pPrevSibling = pOwnedParentStatement.m_pPrevSibling;
-
-				pOwnedParentStatement.m_pPrevSibling = null;
-			}
-
-			pDisownedScope.m_pParent = pParentParent;
-
-			if (pParentParent.m_pLastChild == pParentStatement)
-			{
-				pParentParent.m_pLastChild = pDisownedScope;
-			}
-			else
-			{
-				pDisownedScope.m_pNextSibling = own disown pParentStatement.m_pNextSibling;
-				pDisownedScope.m_pNextSibling.m_pPrevSibling = pDisownedScope;
-
-				pParentStatement.m_pNextSibling = null;
-			}*/
-
 			{
 				TypeRef* pTypeRef = own m_pValueType.CreateTypeRef();
 				Token* pNameToken = own new Token();
@@ -153,8 +118,6 @@ namespace NumbatLogic
 				pTempVarDecl.AddChild(disown pTypeRef);
 				pTempVarDecl.AddChild(disown pAssignment);
 				
-				//pDisownedScope.AddChild(disown pTempVarDecl);
-
 				pParentParent.AddChildBefore(disown pTempVarDecl, pParentStatement);
 			}
 
@@ -182,13 +145,10 @@ namespace NumbatLogic
 				pExpressionStmt.m_pExpression = pOperatorExpr;
 				pExpressionStmt.AddChild(disown pOperatorExpr);
 
-				//pDisownedScope.AddChild(disown pExpressionStmt);
 				pParentParent.AddChildBefore(disown pExpressionStmt, pParentStatement);
 			}
 
 			m_sTempVarName = own disown sTempName;
-
-			//pDisownedScope.AddChild(disown pOwnedParentStatement);
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

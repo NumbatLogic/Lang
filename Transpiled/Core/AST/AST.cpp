@@ -543,22 +543,21 @@ namespace NumbatLogic
 	{
 		if (m_pFirstChild == pChild)
 		{
-			AST* pOwnedChild = 0;
-			NumbatLogic::AST* __931511915 = m_pFirstChild;
+			NumbatLogic::AST* __2558901867 = m_pFirstChild;
 			m_pFirstChild = 0;
-			pOwnedChild = __931511915;
+			AST* pOwnedChild = __2558901867;
 			if (m_pLastChild == pOwnedChild)
 				m_pLastChild = 0;
 			else
 			{
-				NumbatLogic::AST* __1213399723 = pOwnedChild->m_pNextSibling;
+				NumbatLogic::AST* __3880977067 = pOwnedChild->m_pNextSibling;
 				pOwnedChild->m_pNextSibling = 0;
-				m_pFirstChild = __1213399723;
+				m_pFirstChild = __3880977067;
 			}
 			pOwnedChild->m_pParent = 0;
-			NumbatLogic::AST* __2040457964 = pOwnedChild;
+			NumbatLogic::AST* __3600739052 = pOwnedChild;
 			pOwnedChild = 0;
-			return __2040457964;
+			return __3600739052;
 		}
 		else
 		{
@@ -567,22 +566,21 @@ namespace NumbatLogic
 			{
 				if (pFindChild->m_pNextSibling == pChild)
 				{
-					AST* pOwnedChild = 0;
-					NumbatLogic::AST* __1569440455 = pFindChild->m_pNextSibling;
+					NumbatLogic::AST* __1888217512 = pFindChild->m_pNextSibling;
 					pFindChild->m_pNextSibling = 0;
-					pOwnedChild = __1569440455;
+					AST* pOwnedChild = __1888217512;
 					if (m_pLastChild == pOwnedChild)
 						m_pLastChild = pFindChild;
 					else
 					{
-						NumbatLogic::AST* __3662855423 = pOwnedChild->m_pNextSibling;
+						NumbatLogic::AST* __944946446 = pOwnedChild->m_pNextSibling;
 						pOwnedChild->m_pNextSibling = 0;
-						pFindChild->m_pNextSibling = __3662855423;
+						pFindChild->m_pNextSibling = __944946446;
 					}
 					pOwnedChild->m_pParent = 0;
-					NumbatLogic::AST* __3466510945 = pOwnedChild;
+					NumbatLogic::AST* __2426323662 = pOwnedChild;
 					pOwnedChild = 0;
-					return __3466510945;
+					return __2426323662;
 				}
 				pFindChild = pFindChild->m_pNextSibling;
 			}

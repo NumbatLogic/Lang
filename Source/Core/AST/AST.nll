@@ -471,8 +471,7 @@ namespace NumbatLogic
 		{
 			if (m_pFirstChild == pChild)
 			{
-				AST* pOwnedChild;
-				pOwnedChild = own disown m_pFirstChild;
+				AST* pOwnedChild = own disown m_pFirstChild;
 				if (m_pLastChild == pOwnedChild)
 					m_pLastChild = null;
 				else
@@ -487,8 +486,7 @@ namespace NumbatLogic
 				{
 					if (pFindChild.m_pNextSibling == pChild)
 					{
-						AST* pOwnedChild;
-						pOwnedChild = own disown pFindChild.m_pNextSibling;
+						AST* pOwnedChild = own disown pFindChild.m_pNextSibling;
 						if (m_pLastChild == pOwnedChild)
 							m_pLastChild = pFindChild;
 						else
