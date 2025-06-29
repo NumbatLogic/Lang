@@ -24,9 +24,7 @@ namespace NumbatLogic
 				Console.Log("expected TypeRef...");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			ParamCall pParamCall = ParamCall.TryCreate(pTokenContainer, pTempOffset);
 			if (pParamCall == null)
@@ -34,32 +32,22 @@ namespace NumbatLogic
 				Console.Log("expected ParamCall");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			CastExpr pCastExpr = new CastExpr();
 			pCastExpr.m_pFirstToken = pCastToken;
 			pCastExpr.m_pTypeRef = pTypeRef;
 			pCastExpr.m_pParamCall = pParamCall;
-			{
-				NumbatLogic.TypeRef __3079357496 = pTypeRef;
-				pTypeRef = null;
-				pCastExpr.AddChild(__3079357496);
-			}
-			{
-				NumbatLogic.ParamCall __3062759993 = pParamCall;
-				pParamCall = null;
-				pCastExpr.AddChild(__3062759993);
-			}
+			NumbatLogic.TypeRef __3079357496 = pTypeRef;
+			pTypeRef = null;
+			pCastExpr.AddChild(__3079357496);
+			NumbatLogic.ParamCall __3062759993 = pParamCall;
+			pParamCall = null;
+			pCastExpr.AddChild(__3062759993);
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.CastExpr __2866925773 = pCastExpr;
-				pCastExpr = null;
-				{
-					return __2866925773;
-				}
-			}
+			NumbatLogic.CastExpr __2866925773 = pCastExpr;
+			pCastExpr = null;
+			return __2866925773;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

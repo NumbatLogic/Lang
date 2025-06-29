@@ -69,7 +69,7 @@ namespace NumbatLogic
 					pTorDecl.AddChild(disown pParamCall);
 				}
 			
-				pScope = own Scope::TryCreate(pTokenContainer, pTempOffset);
+				pScope = own Scope::TryCreate(pTokenContainer, pTempOffset, false);
 				if (pScope == null)
 				{
 					Console::Log("expected scope");

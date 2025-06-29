@@ -26,9 +26,7 @@ namespace NumbatLogic
 				Console.Log("expected namespace name");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_CURLY_BRACE_LEFT) == null)
@@ -36,9 +34,7 @@ namespace NumbatLogic
 				Console.Log("expected opening curly brace");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			pNamespaceDecl.m_pFirstToken = pNamespaceToken;
@@ -53,27 +49,19 @@ namespace NumbatLogic
 				AST pAST = AST.CreateFromTokenContainer(pTokenContainer, pTempOffset);
 				if (pAST != null)
 				{
-					{
-						NumbatLogic.AST __3125986036 = pAST;
-						pAST = null;
-						pNamespaceDecl.AddChild(__3125986036);
-					}
-					{
-						continue;
-					}
+					NumbatLogic.AST __3125986036 = pAST;
+					pAST = null;
+					pNamespaceDecl.AddChild(__3125986036);
+					continue;
 				}
 				Console.Log("expected to parse somethting within namespace...");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.NamespaceDecl __2577615172 = pNamespaceDecl;
-				pNamespaceDecl = null;
-				{
-					return __2577615172;
-				}
-			}
+			NumbatLogic.NamespaceDecl __2577615172 = pNamespaceDecl;
+			pNamespaceDecl = null;
+			return __2577615172;
 		}
 
 		public override void PreValidate(Validator pValidator, OperatorExpr pParent)

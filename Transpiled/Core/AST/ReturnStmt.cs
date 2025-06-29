@@ -34,13 +34,9 @@ namespace NumbatLogic
 				pReturnStmt.AddChild(__1067118945);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.ReturnStmt __3384094912 = pReturnStmt;
-				pReturnStmt = null;
-				{
-					return __3384094912;
-				}
-			}
+			NumbatLogic.ReturnStmt __3384094912 = pReturnStmt;
+			pReturnStmt = null;
+			return __3384094912;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

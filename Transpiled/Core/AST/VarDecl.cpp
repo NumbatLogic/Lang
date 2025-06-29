@@ -66,13 +66,11 @@ namespace NumbatLogic
 				Console::Log("unable to parse array size...");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 				NumbatLogic::Assert::Plz(false);
-				{
-					if (pArraySize) delete pArraySize;
-					if (pTempOffset) delete pTempOffset;
-					if (pTypeRef) delete pTypeRef;
-					if (pVarDecl) delete pVarDecl;
-					return 0;
-				}
+				if (pArraySize) delete pArraySize;
+				if (pTempOffset) delete pTempOffset;
+				if (pTypeRef) delete pTypeRef;
+				if (pVarDecl) delete pVarDecl;
+				return 0;
 			}
 			Token* pSquareBracketRightToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_RIGHT);
 			if (pSquareBracketRightToken == 0)
@@ -80,21 +78,17 @@ namespace NumbatLogic
 				Console::Log("unable to parse closing square bracket");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 				NumbatLogic::Assert::Plz(false);
-				{
-					if (pArraySize) delete pArraySize;
-					if (pTempOffset) delete pTempOffset;
-					if (pTypeRef) delete pTypeRef;
-					if (pVarDecl) delete pVarDecl;
-					return 0;
-				}
+				if (pArraySize) delete pArraySize;
+				if (pTempOffset) delete pTempOffset;
+				if (pTypeRef) delete pTypeRef;
+				if (pVarDecl) delete pVarDecl;
+				return 0;
 			}
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 			pVarDecl->m_pArraySize = pArraySize;
-			{
-				NumbatLogic::AST* __2516344687 = pArraySize;
-				pArraySize = 0;
-				pVarDecl->AddChild(__2516344687);
-			}
+			NumbatLogic::AST* __2516344687 = pArraySize;
+			pArraySize = 0;
+			pVarDecl->AddChild(__2516344687);
 			if (pArraySize) delete pArraySize;
 		}
 		AST* pAssignment = 0;
@@ -108,13 +102,11 @@ namespace NumbatLogic
 				Console::Log("expected to parse assignment...");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 				NumbatLogic::Assert::Plz(false);
-				{
-					if (pTempOffset) delete pTempOffset;
-					if (pTypeRef) delete pTypeRef;
-					if (pVarDecl) delete pVarDecl;
-					if (pAssignment) delete pAssignment;
-					return 0;
-				}
+				if (pTempOffset) delete pTempOffset;
+				if (pTypeRef) delete pTypeRef;
+				if (pVarDecl) delete pVarDecl;
+				if (pAssignment) delete pAssignment;
+				return 0;
 			}
 		}
 		if (!bInline)
@@ -135,11 +127,9 @@ namespace NumbatLogic
 		pVarDecl->m_pNameToken = pNameToken;
 		pVarDecl->m_pAssignment = pAssignment;
 		pVarDecl->m_bInline = bInline;
-		{
-			NumbatLogic::TypeRef* __3079357496 = pTypeRef;
-			pTypeRef = 0;
-			pVarDecl->AddChild(__3079357496);
-		}
+		NumbatLogic::TypeRef* __3079357496 = pTypeRef;
+		pTypeRef = 0;
+		pVarDecl->AddChild(__3079357496);
 		if (pAssignment != 0)
 		{
 			NumbatLogic::AST* __267221586 = pAssignment;
@@ -147,16 +137,12 @@ namespace NumbatLogic
 			pVarDecl->AddChild(__267221586);
 		}
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::VarDecl* __2920859675 = pVarDecl;
-			pVarDecl = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pTypeRef) delete pTypeRef;
-				if (pAssignment) delete pAssignment;
-				return __2920859675;
-			}
-		}
+		NumbatLogic::VarDecl* __2920859675 = pVarDecl;
+		pVarDecl = 0;
+		if (pTempOffset) delete pTempOffset;
+		if (pTypeRef) delete pTypeRef;
+		if (pAssignment) delete pAssignment;
+		return __2920859675;
 	}
 
 	AST* VarDecl::FindByName(const char* sxName, AST* pCallingChild)
@@ -175,28 +161,22 @@ namespace NumbatLogic
 		if (pValueType == 0)
 		{
 			pValidator->AddError("Unknown ValueType for TypeRef", m_pTypeRef->m_pFirstToken->m_sFileName, m_pTypeRef->m_pFirstToken->m_nLine, m_pTypeRef->m_pFirstToken->m_nColumn);
-			{
-				if (pValueType) delete pValueType;
-				return;
-			}
+			if (pValueType) delete pValueType;
+			return;
 		}
 		if (m_pAssignment != 0)
 		{
 			if (m_pAssignment->m_pValueType == 0)
 			{
 				pValidator->AddError("Unknown assignment?", m_pAssignment->m_pFirstToken->m_sFileName, m_pAssignment->m_pFirstToken->m_nLine, m_pAssignment->m_pFirstToken->m_nColumn);
-				{
-					if (pValueType) delete pValueType;
-					return;
-				}
+				if (pValueType) delete pValueType;
+				return;
 			}
 			if (m_pArraySize != 0 && m_pAssignment->m_pValueType->m_eType != ValueType::Type::STATIC_ARRAY || m_pArraySize == 0 && m_pAssignment->m_pValueType->m_eType == ValueType::Type::STATIC_ARRAY)
 			{
 				pValidator->AddError("Can only assign a static array to a vardecl with array size", m_pAssignment->m_pFirstToken->m_sFileName, m_pAssignment->m_pFirstToken->m_nLine, m_pAssignment->m_pFirstToken->m_nColumn);
-				{
-					if (pValueType) delete pValueType;
-					return;
-				}
+				if (pValueType) delete pValueType;
+				return;
 			}
 			if (!m_pAssignment->m_pValueType->ValidateAssignable(pValueType, pValidator, m_pAssignment->m_pFirstToken))
 			{
@@ -206,27 +186,22 @@ namespace NumbatLogic
 			if (pValueType->m_ePointerType != TypeRef::PointerType::OWNED && m_pAssignment->m_pValueType->m_ePointerType == TypeRef::PointerType::OWNED_PREASSSIGN)
 			{
 				pValidator->AddError("Can't assign an owned pointer to a non-owned variable", m_pAssignment->m_pFirstToken->m_sFileName, m_pAssignment->m_pFirstToken->m_nLine, m_pAssignment->m_pFirstToken->m_nColumn);
-				{
-					if (pValueType) delete pValueType;
-					return;
-				}
+				if (pValueType) delete pValueType;
+				return;
 			}
 			if (pValueType->m_ePointerType == TypeRef::PointerType::OWNED && (m_pAssignment->m_pValueType->m_ePointerType != TypeRef::PointerType::OWNED_PREASSSIGN && m_pAssignment->m_pValueType->m_eType != ValueType::Type::NULL_VALUE))
 			{
 				pValidator->AddError("Expected right side of = to be OWNED_PREASSSIGN (result of own)", m_pAssignment->m_pFirstToken->m_sFileName, m_pAssignment->m_pFirstToken->m_nLine, m_pAssignment->m_pFirstToken->m_nColumn);
+				if (pValueType) delete pValueType;
+				return;
+			}
+			else
+				if (m_pAssignment->m_pValueType->m_ePointerType == TypeRef::PointerType::TRANSITON)
 				{
+					pValidator->AddError("Cannot store a TRANSITION pointer (need to `own` it)", m_pAssignment->m_pFirstToken->m_sFileName, m_pAssignment->m_pFirstToken->m_nLine, m_pAssignment->m_pFirstToken->m_nColumn);
 					if (pValueType) delete pValueType;
 					return;
 				}
-			}
-			else if (m_pAssignment->m_pValueType->m_ePointerType == TypeRef::PointerType::TRANSITON)
-			{
-				pValidator->AddError("Cannot store a TRANSITION pointer (need to `own` it)", m_pAssignment->m_pFirstToken->m_sFileName, m_pAssignment->m_pFirstToken->m_nLine, m_pAssignment->m_pFirstToken->m_nColumn);
-				{
-					if (pValueType) delete pValueType;
-					return;
-				}
-			}
 		}
 		if (pValueType) delete pValueType;
 	}

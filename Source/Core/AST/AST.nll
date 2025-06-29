@@ -138,7 +138,7 @@ namespace NumbatLogic
 			if (pAst!=null)
 				return disown pAst;
 
-			pAst = own Scope::TryCreate(pTokenContainer,pOffsetDatum);
+			pAst = own Scope::TryCreate(pTokenContainer,pOffsetDatum, false);
 			if (pAst!=null)
 				return disown pAst;
 
@@ -444,6 +444,27 @@ namespace NumbatLogic
 			pAst.m_pNextSibling = own disown m_pFirstChild;
 			m_pFirstChild = own pAst;
 			pAst.m_pNextSibling.m_pPrevSibling = m_pFirstChild;
+		}
+
+		public void AddChildBefore(AST** pAst, AST pBefore)
+		{
+			NumbatLogic::Assert::Plz(pBefore.m_pParent == this);
+			
+			pAst.m_pParent = this;
+
+			if (m_pFirstChild == pBefore)
+			{
+				pAst.m_pNextSibling = own disown m_pFirstChild;
+				m_pFirstChild = own pAst;
+				pBefore.m_pPrevSibling = m_pFirstChild;
+			}
+			else
+			{
+				pAst.m_pNextSibling = own disown pBefore.m_pPrevSibling.m_pNextSibling;
+				pAst.m_pPrevSibling = pBefore.m_pPrevSibling;
+				pBefore.m_pPrevSibling = cast AST(pAst);
+				pAst.m_pPrevSibling.m_pNextSibling = own pAst;
+			}
 		}
 
 		public AST** RemoveChild(AST pChild)

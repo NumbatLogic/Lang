@@ -21,11 +21,9 @@ namespace NumbatLogic
 		BoolExpr* pBoolExpr = new BoolExpr();
 		pBoolExpr->m_eType = AST::Type::AST_BOOL_EXPR;
 		pBoolExpr->m_pFirstToken = pToken;
-		{
-			NumbatLogic::BoolExpr* __2413782726 = pBoolExpr;
-			pBoolExpr = 0;
-			return __2413782726;
-		}
+		NumbatLogic::BoolExpr* __2413782726 = pBoolExpr;
+		pBoolExpr = 0;
+		return __2413782726;
 	}
 
 	void BoolExpr::Validate(Validator* pValidator, OperatorExpr* pParent)

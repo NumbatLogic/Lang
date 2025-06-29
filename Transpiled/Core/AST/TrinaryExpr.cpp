@@ -36,12 +36,10 @@ namespace NumbatLogic
 			Console::Log("expected second expresssion");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pFirstExpression) delete pFirstExpression;
-				if (pSecondExpression) delete pSecondExpression;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pFirstExpression) delete pFirstExpression;
+			if (pSecondExpression) delete pSecondExpression;
+			return 0;
 		}
 		Token* pColonToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_COLON);
 		if (pColonToken == 0)
@@ -58,45 +56,33 @@ namespace NumbatLogic
 			Console::Log("expected second expresssion");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pFirstExpression) delete pFirstExpression;
-				if (pSecondExpression) delete pSecondExpression;
-				if (pThirdExpression) delete pThirdExpression;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pFirstExpression) delete pFirstExpression;
+			if (pSecondExpression) delete pSecondExpression;
+			if (pThirdExpression) delete pThirdExpression;
+			return 0;
 		}
 		TrinaryExpr* pTrinaryExpr = new TrinaryExpr();
 		pTrinaryExpr->m_pFirstExpression = pFirstExpression;
 		pTrinaryExpr->m_pSecondExpression = pSecondExpression;
 		pTrinaryExpr->m_pThirdExpression = pThirdExpression;
-		{
-			NumbatLogic::AST* __1176577974 = pFirstExpression;
-			pFirstExpression = 0;
-			pTrinaryExpr->AddChild(__1176577974);
-		}
-		{
-			NumbatLogic::AST* __2317218345 = pSecondExpression;
-			pSecondExpression = 0;
-			pTrinaryExpr->AddChild(__2317218345);
-		}
-		{
-			NumbatLogic::AST* __2588391620 = pThirdExpression;
-			pThirdExpression = 0;
-			pTrinaryExpr->AddChild(__2588391620);
-		}
+		NumbatLogic::AST* __1176577974 = pFirstExpression;
+		pFirstExpression = 0;
+		pTrinaryExpr->AddChild(__1176577974);
+		NumbatLogic::AST* __2317218345 = pSecondExpression;
+		pSecondExpression = 0;
+		pTrinaryExpr->AddChild(__2317218345);
+		NumbatLogic::AST* __2588391620 = pThirdExpression;
+		pThirdExpression = 0;
+		pTrinaryExpr->AddChild(__2588391620);
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::TrinaryExpr* __1659060397 = pTrinaryExpr;
-			pTrinaryExpr = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pFirstExpression) delete pFirstExpression;
-				if (pSecondExpression) delete pSecondExpression;
-				if (pThirdExpression) delete pThirdExpression;
-				return __1659060397;
-			}
-		}
+		NumbatLogic::TrinaryExpr* __1659060397 = pTrinaryExpr;
+		pTrinaryExpr = 0;
+		if (pTempOffset) delete pTempOffset;
+		if (pFirstExpression) delete pFirstExpression;
+		if (pSecondExpression) delete pSecondExpression;
+		if (pThirdExpression) delete pThirdExpression;
+		return __1659060397;
 	}
 
 	void TrinaryExpr::Validate(Validator* pValidator, OperatorExpr* pParent)

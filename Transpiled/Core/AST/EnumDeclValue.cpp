@@ -43,22 +43,16 @@ namespace NumbatLogic
 			{
 				Console::Log("expected to parse something...");
 				NumbatLogic::Assert::Plz(false);
-				{
-					if (pTempOffset) delete pTempOffset;
-					if (pEnumDeclValue) delete pEnumDeclValue;
-					return 0;
-				}
+				if (pTempOffset) delete pTempOffset;
+				if (pEnumDeclValue) delete pEnumDeclValue;
+				return 0;
 			}
 		}
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::EnumDeclValue* __954462356 = pEnumDeclValue;
-			pEnumDeclValue = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				return __954462356;
-			}
-		}
+		NumbatLogic::EnumDeclValue* __954462356 = pEnumDeclValue;
+		pEnumDeclValue = 0;
+		if (pTempOffset) delete pTempOffset;
+		return __954462356;
 	}
 
 	AST* EnumDeclValue::FindByName(const char* sxName, AST* pCallingChild)

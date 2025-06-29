@@ -25,19 +25,13 @@ namespace NumbatLogic
 			Paren pParen = new Paren();
 			pParen.m_eType = AST.Type.AST_PAREN;
 			pParen.m_pFirstToken = pOpeningToken;
-			{
-				NumbatLogic.AST __4076228335 = pChild;
-				pChild = null;
-				pParen.AddChild(__4076228335);
-			}
+			NumbatLogic.AST __4076228335 = pChild;
+			pChild = null;
+			pParen.AddChild(__4076228335);
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.Paren __1649227598 = pParen;
-				pParen = null;
-				{
-					return __1649227598;
-				}
-			}
+			NumbatLogic.Paren __1649227598 = pParen;
+			pParen = null;
+			return __1649227598;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

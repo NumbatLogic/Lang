@@ -31,15 +31,11 @@ namespace NumbatLogic
 					Console.Log("expected element");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 					NumbatLogic.Assert.Plz(false);
-					{
-						return null;
-					}
+					return null;
 				}
-				{
-					NumbatLogic.AST __1668941636 = pElement;
-					pElement = null;
-					pStaticArray.AddChild(__1668941636);
-				}
+				NumbatLogic.AST __1668941636 = pElement;
+				pElement = null;
+				pStaticArray.AddChild(__1668941636);
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SQUARE_BRACKET_RIGHT) != null)
 				{
 					continue;
@@ -53,13 +49,9 @@ namespace NumbatLogic
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			}
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.StaticArray __1093080310 = pStaticArray;
-				pStaticArray = null;
-				{
-					return __1093080310;
-				}
-			}
+			NumbatLogic.StaticArray __1093080310 = pStaticArray;
+			pStaticArray = null;
+			return __1093080310;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

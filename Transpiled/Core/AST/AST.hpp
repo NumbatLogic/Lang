@@ -107,6 +107,7 @@ namespace NumbatLogic
 		public: virtual AST* FindByName(const char* sName, AST* pCallingChild);
 		public: void AddChild(AST* pAst);
 		public: void AddChildFront(AST* pAst);
+		public: void AddChildBefore(AST* pAst, AST* pBefore);
 		public: AST* RemoveChild(AST* pChild);
 		public: virtual void AddClassDeclReference(ClassDecl* pClassDecl, OutputFile eOutputFile, bool bForwardReference);
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);

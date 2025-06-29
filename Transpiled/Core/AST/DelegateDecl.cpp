@@ -51,53 +51,41 @@ namespace NumbatLogic
 		DelegateDecl* pDelegateDecl = new DelegateDecl();
 		pDelegateDecl->m_pFirstToken = pToken;
 		pDelegateDecl->m_pAccessLevel = pAccessLevel;
-		{
-			NumbatLogic::AccessLevel* __2194276919 = pAccessLevel;
-			pAccessLevel = 0;
-			pDelegateDecl->AddChild(__2194276919);
-		}
+		NumbatLogic::AccessLevel* __2194276919 = pAccessLevel;
+		pAccessLevel = 0;
+		pDelegateDecl->AddChild(__2194276919);
 		FunctionDecl* pFunctionDecl = FunctionDecl::TryCreate(pTokenContainer, pTempOffset, 0);
 		if (pFunctionDecl == 0)
 		{
 			Console::Log("expected function decl");
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pAccessLevel) delete pAccessLevel;
-				if (pDelegateDecl) delete pDelegateDecl;
-				if (pFunctionDecl) delete pFunctionDecl;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pAccessLevel) delete pAccessLevel;
+			if (pDelegateDecl) delete pDelegateDecl;
+			if (pFunctionDecl) delete pFunctionDecl;
+			return 0;
 		}
 		if (pFunctionDecl->m_pScope != 0)
 		{
 			Console::Log("function def can't have scope!");
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pAccessLevel) delete pAccessLevel;
-				if (pDelegateDecl) delete pDelegateDecl;
-				if (pFunctionDecl) delete pFunctionDecl;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pAccessLevel) delete pAccessLevel;
+			if (pDelegateDecl) delete pDelegateDecl;
+			if (pFunctionDecl) delete pFunctionDecl;
+			return 0;
 		}
 		pDelegateDecl->m_pFunctionDecl = pFunctionDecl;
-		{
-			NumbatLogic::FunctionDecl* __549451023 = pFunctionDecl;
-			pFunctionDecl = 0;
-			pDelegateDecl->AddChild(__549451023);
-		}
+		NumbatLogic::FunctionDecl* __549451023 = pFunctionDecl;
+		pFunctionDecl = 0;
+		pDelegateDecl->AddChild(__549451023);
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::DelegateDecl* __2828484651 = pDelegateDecl;
-			pDelegateDecl = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pAccessLevel) delete pAccessLevel;
-				if (pFunctionDecl) delete pFunctionDecl;
-				return __2828484651;
-			}
-		}
+		NumbatLogic::DelegateDecl* __2828484651 = pDelegateDecl;
+		pDelegateDecl = 0;
+		if (pTempOffset) delete pTempOffset;
+		if (pAccessLevel) delete pAccessLevel;
+		if (pFunctionDecl) delete pFunctionDecl;
+		return __2828484651;
 	}
 
 	AST* DelegateDecl::FindByName(const char* sxName, AST* pCallingChild)

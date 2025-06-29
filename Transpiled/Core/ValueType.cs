@@ -59,11 +59,9 @@ namespace NumbatLogic
 				for (int i = 0; i < m_pGenericValueTypeVector.GetSize(); i++)
 					pValueType.m_pGenericValueTypeVector.PushBack(m_pGenericValueTypeVector.Get(i).Clone());
 			}
-			{
-				NumbatLogic.ValueType __415518348 = pValueType;
-				pValueType = null;
-				return __415518348;
-			}
+			NumbatLogic.ValueType __415518348 = pValueType;
+			pValueType = null;
+			return __415518348;
 		}
 
 		public bool ValidateAssignable(ValueType pTo, Validator pValidator, Token pToken)
@@ -84,11 +82,12 @@ namespace NumbatLogic
 				pValidator.AddError("Expected right side of = to be OWNED_PREASSSIGN (result of own)", pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
 				return false;
 			}
-			else if (m_ePointerType == TypeRef.PointerType.TRANSITON)
-			{
-				pValidator.AddError("Cannot store a TRANSITION pointer (need to `own` it)", pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
-				return false;
-			}
+			else
+				if (m_ePointerType == TypeRef.PointerType.TRANSITON)
+				{
+					pValidator.AddError("Cannot store a TRANSITION pointer (need to `own` it)", pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
+					return false;
+				}
 			if ((m_pGenericValueTypeVector == null) != (pTo.m_pGenericValueTypeVector == null))
 			{
 				pValidator.AddError("m_pGenericValueTypeVector null mismatch", pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
@@ -134,11 +133,9 @@ namespace NumbatLogic
 						{
 							TypeRef pGenericTypeRef = m_pGenericValueTypeVector.Get(i).CreateTypeRef();
 							pTypeRef.m_pGenericTypeRefVector.PushBack(pGenericTypeRef);
-							{
-								NumbatLogic.TypeRef __1546460495 = pGenericTypeRef;
-								pGenericTypeRef = null;
-								pTypeRef.AddChild(__1546460495);
-							}
+							NumbatLogic.TypeRef __1546460495 = pGenericTypeRef;
+							pGenericTypeRef = null;
+							pTypeRef.AddChild(__1546460495);
 						}
 					}
 					NamespaceNode pNamespaceNode = m_pClassDecl.m_pNamespaceNode;
@@ -150,23 +147,17 @@ namespace NumbatLogic
 						pNamespaceTypeRef.m_pCloneToken.m_sValue = new InternalString(pNamespaceNode.m_sName.GetExternalString());
 						pNamespaceTypeRef.m_pTypeToken = pNamespaceTypeRef.m_pCloneToken;
 						pNamespaceTypeRef.m_pChildTypeRef = pTypeRef;
-						{
-							NumbatLogic.TypeRef __3079357496 = pTypeRef;
-							pTypeRef = null;
-							pNamespaceTypeRef.AddChild(__3079357496);
-						}
-						{
-							NumbatLogic.TypeRef __8652500 = pNamespaceTypeRef;
-							pNamespaceTypeRef = null;
-							pTypeRef = __8652500;
-						}
-						pNamespaceNode = pNamespaceNode.m_pParent;
-					}
-					{
 						NumbatLogic.TypeRef __3079357496 = pTypeRef;
 						pTypeRef = null;
-						return __3079357496;
+						pNamespaceTypeRef.AddChild(__3079357496);
+						NumbatLogic.TypeRef __8652500 = pNamespaceTypeRef;
+						pNamespaceTypeRef = null;
+						pTypeRef = __8652500;
+						pNamespaceNode = pNamespaceNode.m_pParent;
 					}
+					NumbatLogic.TypeRef __3079357496 = pTypeRef;
+					pTypeRef = null;
+					return __3079357496;
 				}
 
 				case Type.GENERIC_TYPE_DECL_VALUE:
@@ -175,18 +166,14 @@ namespace NumbatLogic
 					pTypeRef.m_pCloneToken.m_eType = Token.Type.TOKEN_IDENTIFIER;
 					pTypeRef.m_pCloneToken.m_sValue = new InternalString(m_pGenericTypeDecl.m_pFirstToken.m_sValue.GetExternalString());
 					pTypeRef.m_pTypeToken = pTypeRef.m_pCloneToken;
-					{
-						NumbatLogic.TypeRef __3079357496 = pTypeRef;
-						pTypeRef = null;
-						return __3079357496;
-					}
+					NumbatLogic.TypeRef __3079357496 = pTypeRef;
+					pTypeRef = null;
+					return __3079357496;
 				}
 
 			}
 			NumbatLogic.Assert.Plz(false);
-			{
-				return null;
-			}
+			return null;
 		}
 
 		public virtual void StringifyType(InternalString sOut)

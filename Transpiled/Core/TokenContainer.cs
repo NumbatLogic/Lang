@@ -69,9 +69,7 @@ namespace NumbatLogic
 						if (bFound)
 						{
 							nIfdefDepth++;
-							{
-								continue;
-							}
+							continue;
 						}
 						while (true)
 						{
@@ -95,9 +93,7 @@ namespace NumbatLogic
 								pParseDatum.m_nColumn = 0;
 							}
 						}
-						{
-							continue;
-						}
+						continue;
 					}
 					if (pParseDatum.m_sInput.StartsWith("endif"))
 					{
@@ -130,27 +126,28 @@ namespace NumbatLogic
 							pParseDatum.m_nLine = pParseDatum.m_nLine + 1;
 							continue;
 						}
-						else if (nNextChar == '*')
-						{
-							ProcessCurrentRead(pParseDatum);
-							int nLastChar = 0;
-							while (true)
+						else
+							if (nNextChar == '*')
 							{
-								char nNextNextChar = ReadChar(pParseDatum, false);
-								if (nNextNextChar == 0 || nNextNextChar < 0)
-									break;
-								pParseDatum.m_nColumn = pParseDatum.m_nColumn + 1;
-								if (nNextNextChar == '\n')
+								ProcessCurrentRead(pParseDatum);
+								int nLastChar = 0;
+								while (true)
 								{
-									pParseDatum.m_nLine = pParseDatum.m_nLine + 1;
-									pParseDatum.m_nColumn = 0;
+									char nNextNextChar = ReadChar(pParseDatum, false);
+									if (nNextNextChar == 0 || nNextNextChar < 0)
+										break;
+									pParseDatum.m_nColumn = pParseDatum.m_nColumn + 1;
+									if (nNextNextChar == '\n')
+									{
+										pParseDatum.m_nLine = pParseDatum.m_nLine + 1;
+										pParseDatum.m_nColumn = 0;
+									}
+									if (nNextNextChar == '/' && nLastChar == '*')
+										break;
+									nLastChar = nNextNextChar;
 								}
-								if (nNextNextChar == '/' && nLastChar == '*')
-									break;
-								nLastChar = nNextNextChar;
+								continue;
 							}
-							continue;
-						}
 					}
 				}
 				switch (nChar)
@@ -222,9 +219,7 @@ namespace NumbatLogic
 				pParseDatum.m_sCurrentRead.AppendChar(nChar);
 				pParseDatum.m_nColumn = pParseDatum.m_nColumn + 1;
 			}
-			{
-				return true;
-			}
+			return true;
 		}
 
 		protected void ProcessCurrentRead(ParseDatum pParseDatum)
@@ -854,11 +849,9 @@ namespace NumbatLogic
 			if (bCopyString)
 				pToken.m_sValue = new InternalString(pParseDatum.m_sCurrentRead.GetExternalString());
 			pParseDatum.ClearCurrentRead();
-			{
-				NumbatLogic.Token __2538616708 = pToken;
-				pToken = null;
-				m_pTokenVector.PushBack(__2538616708);
-			}
+			NumbatLogic.Token __2538616708 = pToken;
+			pToken = null;
+			m_pTokenVector.PushBack(__2538616708);
 		}
 
 		protected void ParseQuoted(ParseDatum pParseDatum, char nQuoteChar)
@@ -887,10 +880,11 @@ namespace NumbatLogic
 				}
 				if (bEscaping)
 					bEscaping = false;
-				else if (nChar == '\\')
-				{
-					bEscaping = true;
-				}
+				else
+					if (nChar == '\\')
+					{
+						bEscaping = true;
+					}
 			}
 		}
 

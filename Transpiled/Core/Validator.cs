@@ -85,7 +85,7 @@ namespace NumbatLogic
 				sTemp.AppendInt(pValidatorError.m_nLine);
 				sTemp.Append(":");
 				sTemp.AppendInt(pValidatorError.m_nColumn);
-				sTemp.Append(" - ");
+				sTemp.Append(" Error: ");
 				sTemp.Append(pValidatorError.m_sError.GetExternalString());
 				Console.Log(sTemp.GetExternalString());
 			}
@@ -96,9 +96,7 @@ namespace NumbatLogic
 				sTemp.Append(" errors");
 				Console.Log(sTemp.GetExternalString());
 			}
-			{
-				return m_pValidatorErrorVector.GetSize() == 0;
-			}
+			return m_pValidatorErrorVector.GetSize() == 0;
 		}
 
 		public void AddError(string sError, InternalString sFile, int nLine, int nColumn)
@@ -111,21 +109,17 @@ namespace NumbatLogic
 				pValidatorError.m_sFile = new InternalString(sFile.GetExternalString());
 			pValidatorError.m_nLine = nLine;
 			pValidatorError.m_nColumn = nColumn;
-			{
-				NumbatLogic.ValidatorError __3836503360 = pValidatorError;
-				pValidatorError = null;
-				m_pValidatorErrorVector.PushBack(__3836503360);
-			}
+			NumbatLogic.ValidatorError __3836503360 = pValidatorError;
+			pValidatorError = null;
+			m_pValidatorErrorVector.PushBack(__3836503360);
 		}
 
 		public void BeginScope(Scope pScope)
 		{
 			ValidatorScope pValidatorScope = new ValidatorScope(pScope);
-			{
-				NumbatLogic.ValidatorScope __2371446692 = pValidatorScope;
-				pValidatorScope = null;
-				m_pValidatorScopeVector.PushBack(__2371446692);
-			}
+			NumbatLogic.ValidatorScope __2371446692 = pValidatorScope;
+			pValidatorScope = null;
+			m_pValidatorScopeVector.PushBack(__2371446692);
 		}
 
 		public void AddVarDecl(VarDecl pVarDecl)
@@ -158,17 +152,15 @@ namespace NumbatLogic
 				}
 			if (pValidatorScope.m_pVarDeclVector.GetSize() > 0)
 			{
-				VarDeclDescope pVarDeclDescope = new VarDeclDescope(false);
+				VarDeclDescope pVarDeclDescope = new VarDeclDescope();
 				for (int i = 0; i < pValidatorScope.m_pVarDeclVector.GetSize(); i++)
 				{
 					VarDecl pVarDecl = pValidatorScope.m_pVarDeclVector.Get(i);
 					pVarDeclDescope.m_pVarDeclVector.PushBack(pVarDecl);
 				}
-				{
-					NumbatLogic.VarDeclDescope __4129538314 = pVarDeclDescope;
-					pVarDeclDescope = null;
-					pScope.AddChild(__4129538314);
-				}
+				NumbatLogic.VarDeclDescope __4129538314 = pVarDeclDescope;
+				pVarDeclDescope = null;
+				pScope.AddChild(__4129538314);
 			}
 		}
 
@@ -187,7 +179,7 @@ namespace NumbatLogic
 					}
 				}
 			}
-			VarDeclDescope pVarDeclDescope = new VarDeclDescope(false);
+			VarDeclDescope pVarDeclDescope = new VarDeclDescope();
 			for (int i = m_pValidatorScopeVector.GetSize() - 1; i >= 0; i--)
 			{
 				ValidatorScope pValidatorScope = m_pValidatorScopeVector.Get(i);
@@ -215,63 +207,9 @@ namespace NumbatLogic
 			if (pVarDeclDescope.m_pVarDeclVector.GetSize() > 0)
 			{
 				AST pParent = pBreakOrContinueOrReturn.m_pParent;
-				Scope pScope = new Scope();
-				{
-					NumbatLogic.VarDeclDescope __4129538314 = pVarDeclDescope;
-					pVarDeclDescope = null;
-					pScope.AddChild(__4129538314);
-				}
-				AST pOwnedBreakOrContinueOrReturn;
-				AST pDisownedScope;
-				if (pParent.m_pFirstChild == pBreakOrContinueOrReturn)
-				{
-					{
-						NumbatLogic.AST __1269199543 = pParent.m_pFirstChild;
-						pParent.m_pFirstChild = null;
-						pOwnedBreakOrContinueOrReturn = __1269199543;
-					}
-					{
-						NumbatLogic.Scope __693694853 = pScope;
-						pScope = null;
-						pParent.m_pFirstChild = __693694853;
-					}
-					pDisownedScope = pParent.m_pFirstChild;
-				}
-				else
-				{
-					{
-						NumbatLogic.AST __650031855 = pBreakOrContinueOrReturn.m_pPrevSibling.m_pNextSibling;
-						pBreakOrContinueOrReturn.m_pPrevSibling.m_pNextSibling = null;
-						pOwnedBreakOrContinueOrReturn = __650031855;
-					}
-					{
-						NumbatLogic.Scope __693694853 = pScope;
-						pScope = null;
-						pBreakOrContinueOrReturn.m_pPrevSibling.m_pNextSibling = __693694853;
-					}
-					pDisownedScope = pBreakOrContinueOrReturn.m_pPrevSibling.m_pNextSibling;
-					pDisownedScope.m_pPrevSibling = pOwnedBreakOrContinueOrReturn.m_pPrevSibling;
-					pOwnedBreakOrContinueOrReturn.m_pPrevSibling = null;
-				}
-				if (pParent.m_pLastChild == pBreakOrContinueOrReturn)
-				{
-					pParent.m_pLastChild = pDisownedScope;
-				}
-				else
-				{
-					{
-						NumbatLogic.AST __2124115737 = pBreakOrContinueOrReturn.m_pNextSibling;
-						pBreakOrContinueOrReturn.m_pNextSibling = null;
-						pDisownedScope.m_pNextSibling = __2124115737;
-					}
-					pDisownedScope.m_pNextSibling.m_pPrevSibling = pDisownedScope;
-					pBreakOrContinueOrReturn.m_pNextSibling = null;
-				}
-				{
-					NumbatLogic.AST __2336879980 = pOwnedBreakOrContinueOrReturn;
-					pOwnedBreakOrContinueOrReturn = null;
-					pDisownedScope.AddChild(__2336879980);
-				}
+				NumbatLogic.VarDeclDescope __4129538314 = pVarDeclDescope;
+				pVarDeclDescope = null;
+				pParent.AddChildBefore(__4129538314, pBreakOrContinueOrReturn);
 			}
 		}
 

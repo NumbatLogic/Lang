@@ -20,22 +20,16 @@ namespace NumbatLogic
 			{
 				Console.Log("expected semicolon");
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			BreakStmt pBreakStmt = new BreakStmt();
 			pBreakStmt.m_eType = AST.Type.AST_BREAK_STMT;
 			pBreakStmt.m_pFirstToken = pBreakToken;
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.BreakStmt __4137675600 = pBreakStmt;
-				pBreakStmt = null;
-				{
-					return __4137675600;
-				}
-			}
+			NumbatLogic.BreakStmt __4137675600 = pBreakStmt;
+			pBreakStmt = null;
+			return __4137675600;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

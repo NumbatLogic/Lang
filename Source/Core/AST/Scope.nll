@@ -2,22 +2,44 @@ namespace NumbatLogic
 {
 	class Scope : AST
 	{
+		// a psuedo scope is one that does not have curly braces, eg a single line if
+		public bool m_bPseudo;
+
 		public construct()
 		{
 			m_eType = AST::Type::AST_SCOPE;
+			m_bPseudo = false;
 		}
 
-		public static Scope** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+		public static Scope** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum, bool bPseudoScope)
 		{
+			Scope* pScope;
+
 			OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
 
 			Token pOpeningToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_LEFT);
 			if (pOpeningToken == null)
+			{
+				if (bPseudoScope)
+				{
+					AST* pChild = own AST::CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
+					if (pChild != null)
+					{
+						pScope = own new Scope();
+						pScope.m_pFirstToken = pChild.m_pFirstToken;
+						pScope.m_bPseudo = true;
+						pScope.AddChild(disown pChild);
+						pOffsetDatum.Set(pTempOffset);
+						return disown pScope;
+					}
+				}
+
 				return null;
+			}
 
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 
-			Scope* pScope = own new Scope();
+			pScope = own new Scope();
 			pScope.m_pFirstToken = pOpeningToken;
 
 			while (true)
@@ -95,8 +117,11 @@ namespace NumbatLogic
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
 		{
-			Util::Pad(nDepth, sOut);
-			sOut.Append("{\n");
+			if (!m_bPseudo || m_pFirstChild == null || m_pFirstChild != m_pLastChild)
+			{
+				Util::Pad(nDepth, sOut);
+				sOut.Append("{\n");
+			}
 
 			AST pChild = m_pFirstChild;
 			while (pChild != null)
@@ -105,8 +130,11 @@ namespace NumbatLogic
 				pChild = pChild.m_pNextSibling;
 			}
 
-			Util::Pad(nDepth, sOut);
-			sOut.Append("}\n");
+			if (!m_bPseudo || m_pFirstChild == null || m_pFirstChild != m_pLastChild)
+			{
+				Util::Pad(nDepth, sOut);
+				sOut.Append("}\n");
+			}
 		}
 	}
 }

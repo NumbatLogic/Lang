@@ -29,9 +29,7 @@ namespace NumbatLogic
 				Console.Log("expected ParamDecl");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			TorDecl pTorDecl = new TorDecl();
 			Scope pScope = null;
@@ -50,9 +48,7 @@ namespace NumbatLogic
 						Console.Log("expected base!");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 						NumbatLogic.Assert.Plz(false);
-						{
-							return null;
-						}
+						return null;
 					}
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 					ParamCall pParamCall = ParamCall.TryCreate(pTokenContainer, pTempOffset);
@@ -62,18 +58,14 @@ namespace NumbatLogic
 						sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
 						Console.Log(sTemp.GetExternalString());
 						NumbatLogic.Assert.Plz(false);
-						{
-							return null;
-						}
+						return null;
 					}
 					pTorDecl.m_pBaseParamCall = pParamCall;
-					{
-						NumbatLogic.ParamCall __3062759993 = pParamCall;
-						pParamCall = null;
-						pTorDecl.AddChild(__3062759993);
-					}
+					NumbatLogic.ParamCall __3062759993 = pParamCall;
+					pParamCall = null;
+					pTorDecl.AddChild(__3062759993);
 				}
-				pScope = Scope.TryCreate(pTokenContainer, pTempOffset);
+				pScope = Scope.TryCreate(pTokenContainer, pTempOffset, false);
 				if (pScope == null)
 				{
 					Console.Log("expected scope");
@@ -90,16 +82,12 @@ namespace NumbatLogic
 			pTorDecl.m_pParamDecl = pParamDecl;
 			pTorDecl.m_pScope = pScope;
 			pTorDecl.m_sDisambiguate = "";
-			{
-				NumbatLogic.AccessLevel __2194276919 = pAccessLevel;
-				pAccessLevel = null;
-				pTorDecl.AddChild(__2194276919);
-			}
-			{
-				NumbatLogic.ParamDecl __2049651157 = pParamDecl;
-				pParamDecl = null;
-				pTorDecl.AddChild(__2049651157);
-			}
+			NumbatLogic.AccessLevel __2194276919 = pAccessLevel;
+			pAccessLevel = null;
+			pTorDecl.AddChild(__2194276919);
+			NumbatLogic.ParamDecl __2049651157 = pParamDecl;
+			pParamDecl = null;
+			pTorDecl.AddChild(__2049651157);
 			if (pScope != null)
 			{
 				NumbatLogic.Scope __693694853 = pScope;
@@ -107,13 +95,9 @@ namespace NumbatLogic
 				pTorDecl.AddChild(__693694853);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.TorDecl __3416457985 = pTorDecl;
-				pTorDecl = null;
-				{
-					return __3416457985;
-				}
-			}
+			NumbatLogic.TorDecl __3416457985 = pTorDecl;
+			pTorDecl = null;
+			return __3416457985;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
@@ -148,9 +132,7 @@ namespace NumbatLogic
 					InternalString sTemp = new InternalString("could not find a matching BASE constructor in ");
 					sTemp.AppendString(pBaseClass.m_pNameToken.GetString());
 					pValidator.AddError(sTemp.GetExternalString(), m_pBaseParamCall.m_pFirstToken.m_sFileName, m_pBaseParamCall.m_pFirstToken.m_nLine, m_pBaseParamCall.m_pFirstToken.m_nColumn);
-					{
-						return;
-					}
+					return;
 				}
 			}
 		}

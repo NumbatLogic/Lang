@@ -23,10 +23,8 @@ namespace NumbatLogic
 			InternalString* sTemp = new InternalString("expected even number of args! Got ");
 			sTemp->AppendInt(sArgVector->GetSize());
 			Console::Log(sTemp->GetExternalString());
-			{
-				if (sTemp) delete sTemp;
-				return;
-			}
+			if (sTemp) delete sTemp;
+			return;
 		}
 		Project* pProject = new Project();
 		InternalString* sAmalgamateFileName = 0;
@@ -47,10 +45,8 @@ namespace NumbatLogic
 			if (ExternalString::Equal(sxArg0, "-d"))
 			{
 				sDefineVector->PushBack(new InternalString(sxArg1));
-				{
-					if (sTemp) delete sTemp;
-					continue;
-				}
+				if (sTemp) delete sTemp;
+				continue;
 			}
 			if (ExternalString::Equal(sxArg0, "-f"))
 			{
@@ -58,10 +54,8 @@ namespace NumbatLogic
 				sTemp->Append(sxArg1);
 				Console::Log(sTemp->GetExternalString());
 				pProject->AddDirectory(sxArg1, sDefineVector);
-				{
-					if (sTemp) delete sTemp;
-					continue;
-				}
+				if (sTemp) delete sTemp;
+				continue;
 			}
 			if (ExternalString::Equal(sxArg0, "-fi"))
 			{
@@ -69,88 +63,70 @@ namespace NumbatLogic
 				sTemp->Append(sxArg1);
 				Console::Log(sTemp->GetExternalString());
 				pProject->AddFile(sxArg1, sDefineVector);
-				{
-					if (sTemp) delete sTemp;
-					continue;
-				}
+				if (sTemp) delete sTemp;
+				continue;
 			}
 			if (ExternalString::Equal(sxArg0, "-a"))
 			{
 				sAmalgamateFileName = new InternalString(sxArg1);
-				{
-					if (sTemp) delete sTemp;
-					continue;
-				}
+				if (sTemp) delete sTemp;
+				continue;
 			}
 			if (ExternalString::Equal(sxArg0, "--output-nll-def"))
 			{
 				if (!ExternalString::Equal(sxArg1, "true"))
 				{
 					Console::Log("if set, --output-nll must be true");
-					{
-						if (sTemp) delete sTemp;
-						if (pProject) delete pProject;
-						if (sAmalgamateFileName) delete sAmalgamateFileName;
-						if (sAmalgamatedHPPAppend) delete sAmalgamatedHPPAppend;
-						if (sAmalgamatedCPPPrepend) delete sAmalgamatedCPPPrepend;
-						if (sAmalgamatedCPPAppend) delete sAmalgamatedCPPAppend;
-						if (sAmalgamatedCSAppend) delete sAmalgamatedCSAppend;
-						if (sDefineVector) delete sDefineVector;
-						return;
-					}
+					if (sTemp) delete sTemp;
+					if (pProject) delete pProject;
+					if (sAmalgamateFileName) delete sAmalgamateFileName;
+					if (sAmalgamatedHPPAppend) delete sAmalgamatedHPPAppend;
+					if (sAmalgamatedCPPPrepend) delete sAmalgamatedCPPPrepend;
+					if (sAmalgamatedCPPAppend) delete sAmalgamatedCPPAppend;
+					if (sAmalgamatedCSAppend) delete sAmalgamatedCSAppend;
+					if (sDefineVector) delete sDefineVector;
+					return;
 				}
 				bOutputNLLDef = true;
-				{
-					if (sTemp) delete sTemp;
-					continue;
-				}
+				if (sTemp) delete sTemp;
+				continue;
 			}
 			if (ExternalString::Equal(sxArg0, "-ahppa"))
 			{
 				sAmalgamatedHPPAppend->PushBack(new InternalString(sxArg1));
-				{
-					if (sTemp) delete sTemp;
-					continue;
-				}
+				if (sTemp) delete sTemp;
+				continue;
 			}
 			if (ExternalString::Equal(sxArg0, "-acppp"))
 			{
 				sAmalgamatedCPPPrepend->PushBack(new InternalString(sxArg1));
-				{
-					if (sTemp) delete sTemp;
-					continue;
-				}
+				if (sTemp) delete sTemp;
+				continue;
 			}
 			if (ExternalString::Equal(sxArg0, "-acppa"))
 			{
 				sAmalgamatedCPPAppend->PushBack(new InternalString(sxArg1));
-				{
-					if (sTemp) delete sTemp;
-					continue;
-				}
+				if (sTemp) delete sTemp;
+				continue;
 			}
 			if (ExternalString::Equal(sxArg0, "-acsa"))
 			{
 				sAmalgamatedCSAppend->PushBack(new InternalString(sxArg1));
-				{
-					if (sTemp) delete sTemp;
-					continue;
-				}
+				if (sTemp) delete sTemp;
+				continue;
 			}
 			sTemp = new InternalString("Unexpected arg: ");
 			sTemp->Append(sxArg0);
 			Console::Log(sTemp->GetExternalString());
-			{
-				if (sTemp) delete sTemp;
-				if (pProject) delete pProject;
-				if (sAmalgamateFileName) delete sAmalgamateFileName;
-				if (sAmalgamatedHPPAppend) delete sAmalgamatedHPPAppend;
-				if (sAmalgamatedCPPPrepend) delete sAmalgamatedCPPPrepend;
-				if (sAmalgamatedCPPAppend) delete sAmalgamatedCPPAppend;
-				if (sAmalgamatedCSAppend) delete sAmalgamatedCSAppend;
-				if (sDefineVector) delete sDefineVector;
-				return;
-			}
+			if (sTemp) delete sTemp;
+			if (pProject) delete pProject;
+			if (sAmalgamateFileName) delete sAmalgamateFileName;
+			if (sAmalgamatedHPPAppend) delete sAmalgamatedHPPAppend;
+			if (sAmalgamatedCPPPrepend) delete sAmalgamatedCPPPrepend;
+			if (sAmalgamatedCPPAppend) delete sAmalgamatedCPPAppend;
+			if (sAmalgamatedCSAppend) delete sAmalgamatedCSAppend;
+			if (sDefineVector) delete sDefineVector;
+			return;
 		}
 		if (sAmalgamateFileName != 0)
 		{

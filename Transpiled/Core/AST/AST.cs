@@ -129,9 +129,7 @@ namespace NumbatLogic
 				pAst = null;
 				return __4200063409;
 			}
-			{
-				return null;
-			}
+			return null;
 		}
 
 		public static AST CreateStatementFromTokenContainer(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
@@ -158,7 +156,7 @@ namespace NumbatLogic
 				pAst = null;
 				return __4200063409;
 			}
-			pAst = Scope.TryCreate(pTokenContainer, pOffsetDatum);
+			pAst = Scope.TryCreate(pTokenContainer, pOffsetDatum, false);
 			if (pAst != null)
 			{
 				NumbatLogic.AST __4200063409 = pAst;
@@ -221,9 +219,7 @@ namespace NumbatLogic
 				pAst = null;
 				return __4200063409;
 			}
-			{
-				return null;
-			}
+			return null;
 		}
 
 		protected static AST TryCreateInnerExpression(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
@@ -348,9 +344,7 @@ namespace NumbatLogic
 				pAst = null;
 				return __4200063409;
 			}
-			{
-				return null;
-			}
+			return null;
 		}
 
 		public static AST TryCreateExpression(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
@@ -366,25 +360,17 @@ namespace NumbatLogic
 					{
 						pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 						pOffsetDatum.Set(pTempOffset);
-						{
-							NumbatLogic.AST __2461073728 = pLeft;
-							pLeft = null;
-							{
-								return OperatorExpr.Create(pOperatorToken, __2461073728, null);
-							}
-						}
+						NumbatLogic.AST __2461073728 = pLeft;
+						pLeft = null;
+						return OperatorExpr.Create(pOperatorToken, __2461073728, null);
 					}
 					if (pOperatorToken.m_eType == Token.Type.TOKEN_QUESTION_MARK)
 					{
 						pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 						pOffsetDatum.Set(pTempOffset);
-						{
-							NumbatLogic.AST __2461073728 = pLeft;
-							pLeft = null;
-							{
-								return TrinaryExpr.Create(__2461073728, pTokenContainer, pOffsetDatum);
-							}
-						}
+						NumbatLogic.AST __2461073728 = pLeft;
+						pLeft = null;
+						return TrinaryExpr.Create(__2461073728, pTokenContainer, pOffsetDatum);
 					}
 					if (pOperatorToken.m_eType == Token.Type.TOKEN_AND || pOperatorToken.m_eType == Token.Type.TOKEN_ANGLE_BRACKET_LEFT || pOperatorToken.m_eType == Token.Type.TOKEN_ANGLE_BRACKET_LEFT_EQUALS || pOperatorToken.m_eType == Token.Type.TOKEN_ANGLE_BRACKET_RIGHT || pOperatorToken.m_eType == Token.Type.TOKEN_ANGLE_BRACKET_RIGHT_EQUALS || pOperatorToken.m_eType == Token.Type.TOKEN_BITWISE_AND || pOperatorToken.m_eType == Token.Type.TOKEN_BITWISE_OR || pOperatorToken.m_eType == Token.Type.TOKEN_CARET || pOperatorToken.m_eType == Token.Type.TOKEN_DIVIDE || pOperatorToken.m_eType == Token.Type.TOKEN_DOT || pOperatorToken.m_eType == Token.Type.TOKEN_DOUBLE_ANGLE_BRACKET_LEFT || pOperatorToken.m_eType == Token.Type.TOKEN_DOUBLE_ANGLE_BRACKET_RIGHT || pOperatorToken.m_eType == Token.Type.TOKEN_DOUBLE_COLON || pOperatorToken.m_eType == Token.Type.TOKEN_DOUBLE_EQUALS || pOperatorToken.m_eType == Token.Type.TOKEN_EQUALS || pOperatorToken.m_eType == Token.Type.TOKEN_MINUS || pOperatorToken.m_eType == Token.Type.TOKEN_MINUS_EQUALS || pOperatorToken.m_eType == Token.Type.TOKEN_NOT_EQUALS || pOperatorToken.m_eType == Token.Type.TOKEN_OR || pOperatorToken.m_eType == Token.Type.TOKEN_PLUS || pOperatorToken.m_eType == Token.Type.TOKEN_PLUS_EQUALS || pOperatorToken.m_eType == Token.Type.TOKEN_STAR || pOperatorToken.m_eType == Token.Type.TOKEN_MODULUS)
 					{
@@ -393,32 +379,20 @@ namespace NumbatLogic
 						if (pRight != null)
 						{
 							pOffsetDatum.Set(pTempOffset);
-							{
-								NumbatLogic.AST __2461073728 = pLeft;
-								pLeft = null;
-								{
-									NumbatLogic.AST __1625873296 = pRight;
-									pRight = null;
-									{
-										return OperatorExpr.Create(pOperatorToken, __2461073728, __1625873296);
-									}
-								}
-							}
+							NumbatLogic.AST __2461073728 = pLeft;
+							pLeft = null;
+							NumbatLogic.AST __1625873296 = pRight;
+							pRight = null;
+							return OperatorExpr.Create(pOperatorToken, __2461073728, __1625873296);
 						}
 					}
 				}
 				pOffsetDatum.Set(pTempOffset);
-				{
-					NumbatLogic.AST __2461073728 = pLeft;
-					pLeft = null;
-					{
-						return __2461073728;
-					}
-				}
+				NumbatLogic.AST __2461073728 = pLeft;
+				pLeft = null;
+				return __2461073728;
 			}
-			{
-				return null;
-			}
+			return null;
 		}
 
 		public virtual void PreValidate(Validator pValidator, OperatorExpr pParent)
@@ -537,13 +511,34 @@ namespace NumbatLogic
 				return;
 			}
 			pAst.m_pParent = this;
+			NumbatLogic.AST __1962663712 = m_pFirstChild;
+			m_pFirstChild = null;
+			pAst.m_pNextSibling = __1962663712;
+			m_pFirstChild = pAst;
+			pAst.m_pNextSibling.m_pPrevSibling = m_pFirstChild;
+		}
+
+		public void AddChildBefore(AST pAst, AST pBefore)
+		{
+			NumbatLogic.Assert.Plz(pBefore.m_pParent == this);
+			pAst.m_pParent = this;
+			if (m_pFirstChild == pBefore)
 			{
 				NumbatLogic.AST __1962663712 = m_pFirstChild;
 				m_pFirstChild = null;
 				pAst.m_pNextSibling = __1962663712;
+				m_pFirstChild = pAst;
+				pBefore.m_pPrevSibling = m_pFirstChild;
 			}
-			m_pFirstChild = pAst;
-			pAst.m_pNextSibling.m_pPrevSibling = m_pFirstChild;
+			else
+			{
+				NumbatLogic.AST __2598141643 = pBefore.m_pPrevSibling.m_pNextSibling;
+				pBefore.m_pPrevSibling.m_pNextSibling = null;
+				pAst.m_pNextSibling = __2598141643;
+				pAst.m_pPrevSibling = pBefore.m_pPrevSibling;
+				pBefore.m_pPrevSibling = (AST)(pAst);
+				pAst.m_pPrevSibling.m_pNextSibling = pAst;
+			}
 		}
 
 		public AST RemoveChild(AST pChild)
@@ -551,11 +546,9 @@ namespace NumbatLogic
 			if (m_pFirstChild == pChild)
 			{
 				AST pOwnedChild;
-				{
-					NumbatLogic.AST __1962663712 = m_pFirstChild;
-					m_pFirstChild = null;
-					pOwnedChild = __1962663712;
-				}
+				NumbatLogic.AST __1962663712 = m_pFirstChild;
+				m_pFirstChild = null;
+				pOwnedChild = __1962663712;
 				if (m_pLastChild == pOwnedChild)
 					m_pLastChild = null;
 				else
@@ -565,11 +558,9 @@ namespace NumbatLogic
 					m_pFirstChild = __585396278;
 				}
 				pOwnedChild.m_pParent = null;
-				{
-					NumbatLogic.AST __3216022957 = pOwnedChild;
-					pOwnedChild = null;
-					return __3216022957;
-				}
+				NumbatLogic.AST __3216022957 = pOwnedChild;
+				pOwnedChild = null;
+				return __3216022957;
 			}
 			else
 			{
@@ -579,11 +570,9 @@ namespace NumbatLogic
 					if (pFindChild.m_pNextSibling == pChild)
 					{
 						AST pOwnedChild;
-						{
-							NumbatLogic.AST __4143530587 = pFindChild.m_pNextSibling;
-							pFindChild.m_pNextSibling = null;
-							pOwnedChild = __4143530587;
-						}
+						NumbatLogic.AST __4143530587 = pFindChild.m_pNextSibling;
+						pFindChild.m_pNextSibling = null;
+						pOwnedChild = __4143530587;
 						if (m_pLastChild == pOwnedChild)
 							m_pLastChild = pFindChild;
 						else
@@ -593,11 +582,9 @@ namespace NumbatLogic
 							pFindChild.m_pNextSibling = __585396278;
 						}
 						pOwnedChild.m_pParent = null;
-						{
-							NumbatLogic.AST __3216022957 = pOwnedChild;
-							pOwnedChild = null;
-							return __3216022957;
-						}
+						NumbatLogic.AST __3216022957 = pOwnedChild;
+						pOwnedChild = null;
+						return __3216022957;
 					}
 					pFindChild = pFindChild.m_pNextSibling;
 				}
@@ -622,9 +609,7 @@ namespace NumbatLogic
 			StringifyType(sTemp);
 			Console.Log(sTemp.GetExternalString());
 			NumbatLogic.Assert.Plz(false);
-			{
-				return null;
-			}
+			return null;
 		}
 
 		public AST GetParentStatement()

@@ -28,19 +28,13 @@ namespace NumbatLogic
 				{
 					Console.Log("expected to parse something...");
 					NumbatLogic.Assert.Plz(false);
-					{
-						return null;
-					}
+					return null;
 				}
 			}
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.EnumDeclValue __954462356 = pEnumDeclValue;
-				pEnumDeclValue = null;
-				{
-					return __954462356;
-				}
-			}
+			NumbatLogic.EnumDeclValue __954462356 = pEnumDeclValue;
+			pEnumDeclValue = null;
+			return __954462356;
 		}
 
 		public override AST FindByName(string sxName, AST pCallingChild)

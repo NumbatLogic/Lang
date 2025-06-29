@@ -19,9 +19,7 @@ namespace NumbatLogic
 				Console.Log("expected TypeRef...");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			ParamCall pParamCall = ParamCall.TryCreate(pTokenContainer, pTempOffset);
 			if (pParamCall == null)
@@ -29,33 +27,23 @@ namespace NumbatLogic
 				Console.Log("expected ParamCall ");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			New pNew = new New();
 			pNew.m_eType = AST.Type.AST_NEW_EXP;
 			pNew.m_pFirstToken = pNewToken;
 			pNew.m_pTypeRef = pTypeRef;
 			pNew.m_pParamCall = pParamCall;
-			{
-				NumbatLogic.TypeRef __3079357496 = pTypeRef;
-				pTypeRef = null;
-				pNew.AddChild(__3079357496);
-			}
-			{
-				NumbatLogic.ParamCall __3062759993 = pParamCall;
-				pParamCall = null;
-				pNew.AddChild(__3062759993);
-			}
+			NumbatLogic.TypeRef __3079357496 = pTypeRef;
+			pTypeRef = null;
+			pNew.AddChild(__3079357496);
+			NumbatLogic.ParamCall __3062759993 = pParamCall;
+			pParamCall = null;
+			pNew.AddChild(__3062759993);
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.New __1420129270 = pNew;
-				pNew = null;
-				{
-					return __1420129270;
-				}
-			}
+			NumbatLogic.New __1420129270 = pNew;
+			pNew = null;
+			return __1420129270;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
@@ -77,9 +65,7 @@ namespace NumbatLogic
 					sTemp.AppendString(m_pTypeRef.m_pFirstToken.m_sValue.GetExternalString());
 					sTemp.AppendString("\"");
 					pValidator.AddError(sTemp.GetExternalString(), m_pParamCall.m_pFirstToken.m_sFileName, m_pParamCall.m_pFirstToken.m_nLine, m_pParamCall.m_pFirstToken.m_nColumn);
-					{
-						return;
-					}
+					return;
 				}
 				ClassDecl pClassDecl = m_pValueType.m_pClassDecl;
 				AST pMember = pClassDecl.m_pFirstChild;

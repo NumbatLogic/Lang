@@ -2,21 +2,41 @@ namespace NumbatLogic
 {
 	class Scope : AST
 	{
+		public bool m_bPseudo;
 		public Scope()
 		{
 			m_eType = AST.Type.AST_SCOPE;
+			m_bPseudo = false;
 		}
 
-		public static Scope TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+		public static Scope TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum, bool bPseudoScope)
 		{
+			Scope pScope;
 			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
 			Token pOpeningToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_CURLY_BRACE_LEFT);
 			if (pOpeningToken == null)
 			{
+				if (bPseudoScope)
+				{
+					AST pChild = AST.CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
+					if (pChild != null)
+					{
+						pScope = new Scope();
+						pScope.m_pFirstToken = pChild.m_pFirstToken;
+						pScope.m_bPseudo = true;
+						NumbatLogic.AST __4076228335 = pChild;
+						pChild = null;
+						pScope.AddChild(__4076228335);
+						pOffsetDatum.Set(pTempOffset);
+						NumbatLogic.Scope __693694853 = pScope;
+						pScope = null;
+						return __693694853;
+					}
+				}
 				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-			Scope pScope = new Scope();
+			pScope = new Scope();
 			pScope.m_pFirstToken = pOpeningToken;
 			while (true)
 			{
@@ -32,24 +52,16 @@ namespace NumbatLogic
 					Console.Log("expected to parse somethting within scope...");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 					NumbatLogic.Assert.Plz(false);
-					{
-						return null;
-					}
+					return null;
 				}
-				{
-					NumbatLogic.AST __4076228335 = pChild;
-					pChild = null;
-					pScope.AddChild(__4076228335);
-				}
+				NumbatLogic.AST __4076228335 = pChild;
+				pChild = null;
+				pScope.AddChild(__4076228335);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.Scope __693694853 = pScope;
-				pScope = null;
-				{
-					return __693694853;
-				}
-			}
+			NumbatLogic.Scope __693694853 = pScope;
+			pScope = null;
+			return __693694853;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
@@ -93,16 +105,22 @@ namespace NumbatLogic
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
 		{
-			Util.Pad(nDepth, sOut);
-			sOut.Append("{\n");
+			if (!m_bPseudo || m_pFirstChild == null || m_pFirstChild != m_pLastChild)
+			{
+				Util.Pad(nDepth, sOut);
+				sOut.Append("{\n");
+			}
 			AST pChild = m_pFirstChild;
 			while (pChild != null)
 			{
 				pChild.Stringify(eLanguage, eOutputFile, nDepth + 1, sOut);
 				pChild = pChild.m_pNextSibling;
 			}
-			Util.Pad(nDepth, sOut);
-			sOut.Append("}\n");
+			if (!m_bPseudo || m_pFirstChild == null || m_pFirstChild != m_pLastChild)
+			{
+				Util.Pad(nDepth, sOut);
+				sOut.Append("}\n");
+			}
 		}
 
 	}

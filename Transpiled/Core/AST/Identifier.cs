@@ -15,13 +15,9 @@ namespace NumbatLogic
 			pIdentifier.m_eType = AST.Type.AST_IDENTIFIER;
 			pIdentifier.m_pFirstToken = pToken;
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.Identifier __3324855843 = pIdentifier;
-				pIdentifier = null;
-				{
-					return __3324855843;
-				}
-			}
+			NumbatLogic.Identifier __3324855843 = pIdentifier;
+			pIdentifier = null;
+			return __3324855843;
 		}
 
 		public override AST BaseClone()
@@ -29,11 +25,9 @@ namespace NumbatLogic
 			Identifier pIdentifier = new Identifier();
 			pIdentifier.m_eType = m_eType;
 			pIdentifier.m_pFirstToken = m_pFirstToken;
-			{
-				NumbatLogic.Identifier __3324855843 = pIdentifier;
-				pIdentifier = null;
-				return __3324855843;
-			}
+			NumbatLogic.Identifier __3324855843 = pIdentifier;
+			pIdentifier = null;
+			return __3324855843;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
@@ -50,36 +44,39 @@ namespace NumbatLogic
 					pBase = pParent.m_pLeft.m_pValueType.m_pClassDecl;
 					pChild = null;
 				}
-				else if (pParent.m_pOperatorToken.m_eType == Token.Type.TOKEN_DOUBLE_COLON)
-				{
-					if (pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL)
+				else
+					if (pParent.m_pOperatorToken.m_eType == Token.Type.TOKEN_DOUBLE_COLON)
 					{
-						AddClassDeclReference(pParent.m_pLeft.m_pValueType.m_pClassDecl, AST.OutputFile.SOURCE, false);
-						pBase = pParent.m_pLeft.m_pValueType.m_pClassDecl;
-						pChild = null;
-					}
-					else if (pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.ENUM_DECL)
-					{
-						pBase = pParent.m_pLeft.m_pValueType.m_pEnumDecl;
-						pChild = null;
-					}
-					else if (pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.NAMESPACE_NODE)
-					{
-						Vector<NamespaceDecl> pNamespaceDeclVector = pParent.m_pLeft.m_pValueType.m_pNamespaceNode.m_pNamespaceDeclVector;
-						for (int i = 0; i < pNamespaceDeclVector.GetSize(); i++)
+						if (pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL)
 						{
-							NamespaceDecl pNamespaceDecl = pNamespaceDeclVector.Get(i);
-							pAST = pNamespaceDecl.FindByName(sName, null);
-							if (pAST != null)
-								break;
+							AddClassDeclReference(pParent.m_pLeft.m_pValueType.m_pClassDecl, AST.OutputFile.SOURCE, false);
+							pBase = pParent.m_pLeft.m_pValueType.m_pClassDecl;
+							pChild = null;
 						}
+						else
+							if (pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.ENUM_DECL)
+							{
+								pBase = pParent.m_pLeft.m_pValueType.m_pEnumDecl;
+								pChild = null;
+							}
+							else
+								if (pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.NAMESPACE_NODE)
+								{
+									Vector<NamespaceDecl> pNamespaceDeclVector = pParent.m_pLeft.m_pValueType.m_pNamespaceNode.m_pNamespaceDeclVector;
+									for (int i = 0; i < pNamespaceDeclVector.GetSize(); i++)
+									{
+										NamespaceDecl pNamespaceDecl = pNamespaceDeclVector.Get(i);
+										pAST = pNamespaceDecl.FindByName(sName, null);
+										if (pAST != null)
+											break;
+									}
+								}
+								else
+								{
+									pValidator.AddError("Unexpected left of ::", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+									return;
+								}
 					}
-					else
-					{
-						pValidator.AddError("Unexpected left of ::", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-						return;
-					}
-				}
 			}
 			if (pAST == null)
 				pAST = pBase.FindByName(sName, pChild);
@@ -92,9 +89,7 @@ namespace NumbatLogic
 				sTemp.Append(" base: ");
 				pBase.StringifyType(sTemp);
 				pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-				{
-					return;
-				}
+				return;
 			}
 			if (pAST.m_eType == AST.Type.AST_CLASS_DECL)
 			{
@@ -160,11 +155,9 @@ namespace NumbatLogic
 									if (pGenericValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 									{
 										ValueType pOldValueType;
-										{
-											NumbatLogic.ValueType __1144705946 = m_pValueType;
-											m_pValueType = null;
-											pOldValueType = __1144705946;
-										}
+										NumbatLogic.ValueType __1144705946 = m_pValueType;
+										m_pValueType = null;
+										pOldValueType = __1144705946;
 										m_pValueType = pGenericValueType.Clone();
 										m_pValueType.m_ePointerType = pOldValueType.m_ePointerType;
 									}

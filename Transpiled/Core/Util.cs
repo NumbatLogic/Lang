@@ -18,9 +18,7 @@ namespace NumbatLogic
 				pBlobView.PackUint32(nChar);
 			}
 			uint nHaxTemp = pBlob.GetMsoCrc32();
-			{
-				return nHaxTemp;
-			}
+			return nHaxTemp;
 		}
 
 	}

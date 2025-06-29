@@ -24,28 +24,20 @@ namespace NumbatLogic
 				sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
 				Console.Log(sTemp.GetExternalString());
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			FunctionCall pFunctionCall = new FunctionCall();
 			pFunctionCall.m_eType = AST.Type.AST_FUNCTION_CALL;
 			pFunctionCall.m_pFirstToken = pNameToken;
 			pFunctionCall.m_sMangledName = pNameToken.GetString();
 			pFunctionCall.m_pParamCall = pParamCall;
-			{
-				NumbatLogic.ParamCall __3062759993 = pParamCall;
-				pParamCall = null;
-				pFunctionCall.AddChild(__3062759993);
-			}
+			NumbatLogic.ParamCall __3062759993 = pParamCall;
+			pParamCall = null;
+			pFunctionCall.AddChild(__3062759993);
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.FunctionCall __3961177827 = pFunctionCall;
-				pFunctionCall = null;
-				{
-					return __3961177827;
-				}
-			}
+			NumbatLogic.FunctionCall __3961177827 = pFunctionCall;
+			pFunctionCall = null;
+			return __3961177827;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
@@ -61,25 +53,27 @@ namespace NumbatLogic
 					pBase = pParent.m_pLeft.m_pValueType.m_pClassDecl;
 					pChild = null;
 				}
-				else if (pParent.m_pOperatorToken.m_eType == Token.Type.TOKEN_DOUBLE_COLON)
-				{
-					if (pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL)
+				else
+					if (pParent.m_pOperatorToken.m_eType == Token.Type.TOKEN_DOUBLE_COLON)
 					{
-						AddClassDeclReference(pParent.m_pLeft.m_pValueType.m_pClassDecl, AST.OutputFile.SOURCE, false);
-						pBase = pParent.m_pLeft.m_pValueType.m_pClassDecl;
-						pChild = null;
+						if (pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL)
+						{
+							AddClassDeclReference(pParent.m_pLeft.m_pValueType.m_pClassDecl, AST.OutputFile.SOURCE, false);
+							pBase = pParent.m_pLeft.m_pValueType.m_pClassDecl;
+							pChild = null;
+						}
+						else
+							if (pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.ENUM_DECL)
+							{
+								pBase = pParent.m_pLeft.m_pValueType.m_pEnumDecl;
+								pChild = null;
+							}
+							else
+							{
+								pValidator.AddError("Unexpected left of ::", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+								return;
+							}
 					}
-					else if (pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.ENUM_DECL)
-					{
-						pBase = pParent.m_pLeft.m_pValueType.m_pEnumDecl;
-						pChild = null;
-					}
-					else
-					{
-						pValidator.AddError("Unexpected left of ::", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-						return;
-					}
-				}
 			}
 			AST pAST = pBase.FindByName(sName, pChild);
 			if (pAST == null)
@@ -87,9 +81,7 @@ namespace NumbatLogic
 				InternalString sTemp = new InternalString("Func Unbeknownst! ");
 				sTemp.Append(sName);
 				pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-				{
-					return;
-				}
+				return;
 			}
 			FunctionDecl pFunctionDecl = null;
 			if (pAST.m_eType == AST.Type.AST_VAR_DECL)
@@ -104,9 +96,7 @@ namespace NumbatLogic
 						{
 							InternalString sTemp = new InternalString("DELEGATE_DECL_VALUE does not have m_pDelegateDecl set???");
 							pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-							{
-								return;
-							}
+							return;
 						}
 						pFunctionDecl = pValueType.m_pDelegateDecl.m_pFunctionDecl;
 					}
@@ -123,9 +113,7 @@ namespace NumbatLogic
 				sTemp.Append(" ");
 				pAST.StringifyType(sTemp);
 				pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-				{
-					return;
-				}
+				return;
 			}
 			if (pParent != null && pParent.m_pLeft != null)
 			{
@@ -143,9 +131,7 @@ namespace NumbatLogic
 						sTemp2.Append(" ");
 						sTemp2.AppendInt(pLeftValueType.m_pClassDecl.m_pGenericTypeDeclVector.GetSize());
 						pValidator.AddError(sTemp2.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-						{
-							return;
-						}
+						return;
 					}
 					for (int i = 0; i < pLeftValueType.m_pGenericValueTypeVector.GetSize(); i++)
 					{
@@ -153,11 +139,9 @@ namespace NumbatLogic
 						GenericTypeDecl pGenericTypeDecl = pLeftValueType.m_pClassDecl.m_pGenericTypeDeclVector.Get(i);
 						if (ExternalString.Equal(pGenericTypeDecl.m_pFirstToken.GetString(), pFunctionDecl.m_pTypeRef.m_pTypeToken.GetString()))
 						{
-							{
-								NumbatLogic.ValueType __19552071 = pGenericValueType;
-								pGenericValueType = null;
-								m_pValueType = __19552071;
-							}
+							NumbatLogic.ValueType __19552071 = pGenericValueType;
+							pGenericValueType = null;
+							m_pValueType = __19552071;
 							m_pValueType.m_ePointerType = pFunctionDecl.m_pTypeRef.m_ePointerType;
 						}
 					}

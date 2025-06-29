@@ -82,7 +82,7 @@ namespace NumbatLogic
 				sTemp.AppendInt(pValidatorError.m_nLine);
 				sTemp.Append(":"); 
 				sTemp.AppendInt(pValidatorError.m_nColumn);
-				sTemp.Append(" - ");
+				sTemp.Append(" Error: ");
 				sTemp.Append(pValidatorError.m_sError.GetExternalString());
 				Console::Log(sTemp.GetExternalString());
 			}
@@ -148,7 +148,7 @@ namespace NumbatLogic
 
 			if (pValidatorScope.m_pVarDeclVector.GetSize() > 0)
 			{
-				VarDeclDescope* pVarDeclDescope = own new VarDeclDescope(false);
+				VarDeclDescope* pVarDeclDescope = own new VarDeclDescope();
 				for (int i = 0; i < pValidatorScope.m_pVarDeclVector.GetSize(); i++)
 				{
 					VarDecl pVarDecl = pValidatorScope.m_pVarDeclVector.Get(i);
@@ -177,7 +177,7 @@ namespace NumbatLogic
 			}
 
 
-			VarDeclDescope* pVarDeclDescope = own new VarDeclDescope(false);
+			VarDeclDescope* pVarDeclDescope = own new VarDeclDescope();
 			for (int i = m_pValidatorScopeVector.GetSize()-1; i >= 0; i--)
 			{
 				ValidatorScope pValidatorScope = m_pValidatorScopeVector.Get(i);
@@ -209,42 +209,7 @@ namespace NumbatLogic
 			if (pVarDeclDescope.m_pVarDeclVector.GetSize() > 0)
 			{
 				AST pParent = pBreakOrContinueOrReturn.m_pParent;
-
-				Scope* pScope = own new Scope();
-				pScope.AddChild(disown pVarDeclDescope);
-
-				AST* pOwnedBreakOrContinueOrReturn;
-				AST pDisownedScope;
-
-				if (pParent.m_pFirstChild == pBreakOrContinueOrReturn)
-				{
-					pOwnedBreakOrContinueOrReturn = own disown pParent.m_pFirstChild;
-					pParent.m_pFirstChild = own disown pScope;
-					pDisownedScope = pParent.m_pFirstChild;
-				}
-				else
-				{
-					pOwnedBreakOrContinueOrReturn = own disown pBreakOrContinueOrReturn.m_pPrevSibling.m_pNextSibling;
-					pBreakOrContinueOrReturn.m_pPrevSibling.m_pNextSibling = own disown pScope;
-					pDisownedScope = pBreakOrContinueOrReturn.m_pPrevSibling.m_pNextSibling;
-					pDisownedScope.m_pPrevSibling = pOwnedBreakOrContinueOrReturn.m_pPrevSibling;
-
-					pOwnedBreakOrContinueOrReturn.m_pPrevSibling = null; // should have been automatic?
-				}
-
-				if (pParent.m_pLastChild == pBreakOrContinueOrReturn)
-				{
-					pParent.m_pLastChild = pDisownedScope;
-				}
-				else
-				{
-					pDisownedScope.m_pNextSibling = own disown pBreakOrContinueOrReturn.m_pNextSibling;
-					pDisownedScope.m_pNextSibling.m_pPrevSibling = pDisownedScope;
-
-					pBreakOrContinueOrReturn.m_pNextSibling = null; // should have been automatic
-				}
-
-				pDisownedScope.AddChild(disown pOwnedBreakOrContinueOrReturn);
+				pParent.AddChildBefore(disown pVarDeclDescope, pBreakOrContinueOrReturn);
 			}
 		}
 

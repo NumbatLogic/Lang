@@ -38,10 +38,8 @@ namespace NumbatLogic
 		{
 			Console::Log("expected left paren");
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		AST* pBeforeStatement = VarDecl::TryCreate(pTokenContainer, pTempOffset, true);
@@ -53,11 +51,9 @@ namespace NumbatLogic
 				Console::Log("expected before statement");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 				NumbatLogic::Assert::Plz(false);
-				{
-					if (pTempOffset) delete pTempOffset;
-					if (pBeforeStatement) delete pBeforeStatement;
-					return 0;
-				}
+				if (pTempOffset) delete pTempOffset;
+				if (pBeforeStatement) delete pBeforeStatement;
+				return 0;
 			}
 		}
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == 0)
@@ -65,11 +61,9 @@ namespace NumbatLogic
 			Console::Log("expected semicolon");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pBeforeStatement) delete pBeforeStatement;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pBeforeStatement) delete pBeforeStatement;
+			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		AST* pConditionStatement = AST::TryCreateExpression(pTokenContainer, pTempOffset);
@@ -78,24 +72,20 @@ namespace NumbatLogic
 			Console::Log("expected condition statement");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pBeforeStatement) delete pBeforeStatement;
-				if (pConditionStatement) delete pConditionStatement;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pBeforeStatement) delete pBeforeStatement;
+			if (pConditionStatement) delete pConditionStatement;
+			return 0;
 		}
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == 0)
 		{
 			Console::Log("expected semicolon");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pBeforeStatement) delete pBeforeStatement;
-				if (pConditionStatement) delete pConditionStatement;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pBeforeStatement) delete pBeforeStatement;
+			if (pConditionStatement) delete pConditionStatement;
+			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		AST* pLoopStatement = AST::TryCreateExpression(pTokenContainer, pTempOffset);
@@ -104,13 +94,11 @@ namespace NumbatLogic
 			Console::Log("expected right paren");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pBeforeStatement) delete pBeforeStatement;
-				if (pConditionStatement) delete pConditionStatement;
-				if (pLoopStatement) delete pLoopStatement;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pBeforeStatement) delete pBeforeStatement;
+			if (pConditionStatement) delete pConditionStatement;
+			if (pLoopStatement) delete pLoopStatement;
+			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		AST* pStatement = AST::CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
@@ -122,40 +110,30 @@ namespace NumbatLogic
 		}
 		ForStmt* pForStmt = new ForStmt();
 		pForStmt->m_pFirstToken = pForToken;
-		{
-			NumbatLogic::AST* __4132705276 = pBeforeStatement;
-			pBeforeStatement = 0;
-			pForStmt->AddChild(__4132705276);
-		}
-		{
-			NumbatLogic::AST* __658474541 = pConditionStatement;
-			pConditionStatement = 0;
-			pForStmt->AddChild(__658474541);
-		}
+		NumbatLogic::AST* __4132705276 = pBeforeStatement;
+		pBeforeStatement = 0;
+		pForStmt->AddChild(__4132705276);
+		NumbatLogic::AST* __658474541 = pConditionStatement;
+		pConditionStatement = 0;
+		pForStmt->AddChild(__658474541);
 		if (pLoopStatement != 0)
 		{
 			NumbatLogic::AST* __3980311021 = pLoopStatement;
 			pLoopStatement = 0;
 			pForStmt->AddChild(__3980311021);
 		}
-		{
-			NumbatLogic::AST* __688492598 = pStatement;
-			pStatement = 0;
-			pForStmt->AddChild(__688492598);
-		}
+		NumbatLogic::AST* __688492598 = pStatement;
+		pStatement = 0;
+		pForStmt->AddChild(__688492598);
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::ForStmt* __3863278161 = pForStmt;
-			pForStmt = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pBeforeStatement) delete pBeforeStatement;
-				if (pConditionStatement) delete pConditionStatement;
-				if (pLoopStatement) delete pLoopStatement;
-				if (pStatement) delete pStatement;
-				return __3863278161;
-			}
-		}
+		NumbatLogic::ForStmt* __3863278161 = pForStmt;
+		pForStmt = 0;
+		if (pTempOffset) delete pTempOffset;
+		if (pBeforeStatement) delete pBeforeStatement;
+		if (pConditionStatement) delete pConditionStatement;
+		if (pLoopStatement) delete pLoopStatement;
+		if (pStatement) delete pStatement;
+		return __3863278161;
 	}
 
 	void ForStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

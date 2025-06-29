@@ -10,7 +10,6 @@
 #include "TypeRef.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../Util.hpp"
-#include "Scope.hpp"
 #include "VarDecl.hpp"
 #include "NullExpr.hpp"
 #include "OperatorExpr.hpp"
@@ -23,7 +22,6 @@ namespace NumbatLogic
 	class AST;
 	class DisownExpr;
 	class InternalString;
-	class Scope;
 	class TypeRef;
 	class VarDecl;
 	class NullExpr;
@@ -54,30 +52,22 @@ namespace NumbatLogic
 		{
 			Console::Log("expected expresssion");
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pExpression) delete pExpression;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pExpression) delete pExpression;
+			return 0;
 		}
 		DisownExpr* pDisownExpr = new DisownExpr();
 		pDisownExpr->m_pFirstToken = pDisownToken;
 		pDisownExpr->m_pExpression = pExpression;
-		{
-			NumbatLogic::AST* __1067118945 = pExpression;
-			pExpression = 0;
-			pDisownExpr->AddChild(__1067118945);
-		}
+		NumbatLogic::AST* __1067118945 = pExpression;
+		pExpression = 0;
+		pDisownExpr->AddChild(__1067118945);
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::DisownExpr* __2180824118 = pDisownExpr;
-			pDisownExpr = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pExpression) delete pExpression;
-				return __2180824118;
-			}
-		}
+		NumbatLogic::DisownExpr* __2180824118 = pDisownExpr;
+		pDisownExpr = 0;
+		if (pTempOffset) delete pTempOffset;
+		if (pExpression) delete pExpression;
+		return __2180824118;
 	}
 
 	void DisownExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
@@ -108,14 +98,15 @@ namespace NumbatLogic
 				return;
 			}
 		}
-		else if (m_pValueType->m_eType == ValueType::Type::GENERIC_TYPE_DECL_VALUE)
-		{
-			if (m_pValueType->m_pGenericTypeDecl == 0)
+		else
+			if (m_pValueType->m_eType == ValueType::Type::GENERIC_TYPE_DECL_VALUE)
 			{
-				pValidator->AddError("Can't disown unbeknownst thing (GenericTypeDecl)", m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
-				return;
+				if (m_pValueType->m_pGenericTypeDecl == 0)
+				{
+					pValidator->AddError("Can't disown unbeknownst thing (GenericTypeDecl)", m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
+					return;
+				}
 			}
-		}
 		AST* pParentStatement = GetParentStatement();
 		if (pParentStatement == 0)
 		{
@@ -128,54 +119,6 @@ namespace NumbatLogic
 		sTempName->Set("__");
 		sTempName->AppendUint32(nHash);
 		AST* pParentParent = pParentStatement->m_pParent;
-		Scope* pScope = new Scope();
-		AST* pOwnedParentStatement = 0;
-		AST* pDisownedScope = 0;
-		if (pParentParent->m_pFirstChild == pParentStatement)
-		{
-			{
-				NumbatLogic::AST* __1629566089 = pParentParent->m_pFirstChild;
-				pParentParent->m_pFirstChild = 0;
-				pOwnedParentStatement = __1629566089;
-			}
-			{
-				NumbatLogic::Scope* __693694853 = pScope;
-				pScope = 0;
-				pParentParent->m_pFirstChild = __693694853;
-			}
-			pDisownedScope = pParentParent->m_pFirstChild;
-		}
-		else
-		{
-			{
-				NumbatLogic::AST* __411868003 = pParentStatement->m_pPrevSibling->m_pNextSibling;
-				pParentStatement->m_pPrevSibling->m_pNextSibling = 0;
-				pOwnedParentStatement = __411868003;
-			}
-			{
-				NumbatLogic::Scope* __693694853 = pScope;
-				pScope = 0;
-				pParentStatement->m_pPrevSibling->m_pNextSibling = __693694853;
-			}
-			pDisownedScope = pParentStatement->m_pPrevSibling->m_pNextSibling;
-			pDisownedScope->m_pPrevSibling = pOwnedParentStatement->m_pPrevSibling;
-			pOwnedParentStatement->m_pPrevSibling = 0;
-		}
-		pDisownedScope->m_pParent = pParentParent;
-		if (pParentParent->m_pLastChild == pParentStatement)
-		{
-			pParentParent->m_pLastChild = pDisownedScope;
-		}
-		else
-		{
-			{
-				NumbatLogic::AST* __1356546117 = pParentStatement->m_pNextSibling;
-				pParentStatement->m_pNextSibling = 0;
-				pDisownedScope->m_pNextSibling = __1356546117;
-			}
-			pDisownedScope->m_pNextSibling->m_pPrevSibling = pDisownedScope;
-			pParentStatement->m_pNextSibling = 0;
-		}
 		{
 			TypeRef* pTypeRef = m_pValueType->CreateTypeRef();
 			Token* pNameToken = new Token();
@@ -186,27 +129,19 @@ namespace NumbatLogic
 			pTempVarDecl->m_pFirstToken = pTypeRef->m_pFirstToken;
 			pTempVarDecl->m_pTypeRef = pTypeRef;
 			pTempVarDecl->m_pNameToken = pNameToken;
-			{
-				NumbatLogic::Token* __1290965399 = pNameToken;
-				pNameToken = 0;
-				pTempVarDecl->m_pOwnedNameToken = __1290965399;
-			}
+			NumbatLogic::Token* __1290965399 = pNameToken;
+			pNameToken = 0;
+			pTempVarDecl->m_pOwnedNameToken = __1290965399;
 			pTempVarDecl->m_pAssignment = pAssignment;
-			{
-				NumbatLogic::TypeRef* __3079357496 = pTypeRef;
-				pTypeRef = 0;
-				pTempVarDecl->AddChild(__3079357496);
-			}
-			{
-				NumbatLogic::AST* __267221586 = pAssignment;
-				pAssignment = 0;
-				pTempVarDecl->AddChild(__267221586);
-			}
-			{
-				NumbatLogic::VarDecl* __2352338849 = pTempVarDecl;
-				pTempVarDecl = 0;
-				pDisownedScope->AddChild(__2352338849);
-			}
+			NumbatLogic::TypeRef* __3079357496 = pTypeRef;
+			pTypeRef = 0;
+			pTempVarDecl->AddChild(__3079357496);
+			NumbatLogic::AST* __267221586 = pAssignment;
+			pAssignment = 0;
+			pTempVarDecl->AddChild(__267221586);
+			NumbatLogic::VarDecl* __2352338849 = pTempVarDecl;
+			pTempVarDecl = 0;
+			pParentParent->AddChildBefore(__2352338849, pParentStatement);
 			if (pTypeRef) delete pTypeRef;
 			if (pNameToken) delete pNameToken;
 			if (pAssignment) delete pAssignment;
@@ -221,55 +156,36 @@ namespace NumbatLogic
 			pOperatorExpr->m_eType = AST::Type::AST_OPERATOR_EXPR;
 			pOperatorExpr->m_pFirstToken = pLeft->m_pFirstToken;
 			pOperatorExpr->m_pOperatorToken = pOperatorToken;
-			{
-				NumbatLogic::Token* __3032764722 = pOperatorToken;
-				pOperatorToken = 0;
-				pOperatorExpr->m_pOwnedOperatorToken = __3032764722;
-			}
+			NumbatLogic::Token* __3032764722 = pOperatorToken;
+			pOperatorToken = 0;
+			pOperatorExpr->m_pOwnedOperatorToken = __3032764722;
 			pOperatorExpr->m_pLeft = pLeft;
 			pOperatorExpr->m_pRight = pRight;
-			{
-				NumbatLogic::AST* __2461073728 = pLeft;
-				pLeft = 0;
-				pOperatorExpr->AddChild(__2461073728);
-			}
-			{
-				NumbatLogic::NullExpr* __1625873296 = pRight;
-				pRight = 0;
-				pOperatorExpr->AddChild(__1625873296);
-			}
+			NumbatLogic::AST* __2461073728 = pLeft;
+			pLeft = 0;
+			pOperatorExpr->AddChild(__2461073728);
+			NumbatLogic::NullExpr* __1625873296 = pRight;
+			pRight = 0;
+			pOperatorExpr->AddChild(__1625873296);
 			ExpressionStmt* pExpressionStmt = new ExpressionStmt();
 			pExpressionStmt->m_pFirstToken = pOperatorExpr->m_pFirstToken;
 			pExpressionStmt->m_pExpression = pOperatorExpr;
-			{
-				NumbatLogic::OperatorExpr* __304301329 = pOperatorExpr;
-				pOperatorExpr = 0;
-				pExpressionStmt->AddChild(__304301329);
-			}
-			{
-				NumbatLogic::ExpressionStmt* __817911874 = pExpressionStmt;
-				pExpressionStmt = 0;
-				pDisownedScope->AddChild(__817911874);
-			}
+			NumbatLogic::OperatorExpr* __304301329 = pOperatorExpr;
+			pOperatorExpr = 0;
+			pExpressionStmt->AddChild(__304301329);
+			NumbatLogic::ExpressionStmt* __817911874 = pExpressionStmt;
+			pExpressionStmt = 0;
+			pParentParent->AddChildBefore(__817911874, pParentStatement);
 			if (pLeft) delete pLeft;
 			if (pRight) delete pRight;
 			if (pOperatorToken) delete pOperatorToken;
 			if (pOperatorExpr) delete pOperatorExpr;
 			if (pExpressionStmt) delete pExpressionStmt;
 		}
-		{
-			NumbatLogic::InternalString* __1040485554 = sTempName;
-			sTempName = 0;
-			m_sTempVarName = __1040485554;
-		}
-		{
-			NumbatLogic::AST* __3676823010 = pOwnedParentStatement;
-			pOwnedParentStatement = 0;
-			pDisownedScope->AddChild(__3676823010);
-		}
+		NumbatLogic::InternalString* __1040485554 = sTempName;
+		sTempName = 0;
+		m_sTempVarName = __1040485554;
 		if (sTempName) delete sTempName;
-		if (pScope) delete pScope;
-		if (pOwnedParentStatement) delete pOwnedParentStatement;
 	}
 
 	void DisownExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

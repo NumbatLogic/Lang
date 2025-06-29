@@ -26,42 +26,30 @@ namespace NumbatLogic
 			DelegateDecl pDelegateDecl = new DelegateDecl();
 			pDelegateDecl.m_pFirstToken = pToken;
 			pDelegateDecl.m_pAccessLevel = pAccessLevel;
-			{
-				NumbatLogic.AccessLevel __2194276919 = pAccessLevel;
-				pAccessLevel = null;
-				pDelegateDecl.AddChild(__2194276919);
-			}
+			NumbatLogic.AccessLevel __2194276919 = pAccessLevel;
+			pAccessLevel = null;
+			pDelegateDecl.AddChild(__2194276919);
 			FunctionDecl pFunctionDecl = FunctionDecl.TryCreate(pTokenContainer, pTempOffset, null);
 			if (pFunctionDecl == null)
 			{
 				Console.Log("expected function decl");
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			if (pFunctionDecl.m_pScope != null)
 			{
 				Console.Log("function def can't have scope!");
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			pDelegateDecl.m_pFunctionDecl = pFunctionDecl;
-			{
-				NumbatLogic.FunctionDecl __549451023 = pFunctionDecl;
-				pFunctionDecl = null;
-				pDelegateDecl.AddChild(__549451023);
-			}
+			NumbatLogic.FunctionDecl __549451023 = pFunctionDecl;
+			pFunctionDecl = null;
+			pDelegateDecl.AddChild(__549451023);
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.DelegateDecl __2828484651 = pDelegateDecl;
-				pDelegateDecl = null;
-				{
-					return __2828484651;
-				}
-			}
+			NumbatLogic.DelegateDecl __2828484651 = pDelegateDecl;
+			pDelegateDecl = null;
+			return __2828484651;
 		}
 
 		public override AST FindByName(string sxName, AST pCallingChild)

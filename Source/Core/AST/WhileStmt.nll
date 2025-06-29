@@ -44,7 +44,7 @@ namespace NumbatLogic
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 
-			Scope* pScope = own Scope::TryCreate(pTokenContainer, pTempOffset);
+			Scope* pScope = own Scope::TryCreate(pTokenContainer, pTempOffset, true);
 			if (pScope == null)
 			{
 				Console::Log("expected scope");

@@ -40,10 +40,8 @@ namespace NumbatLogic
 		{
 			Console::Log("expected left paren");
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		AST* pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
@@ -51,25 +49,21 @@ namespace NumbatLogic
 		{
 			Console::Log("expected expression");
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pExpression) delete pExpression;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pExpression) delete pExpression;
+			return 0;
 		}
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT) == 0)
 		{
 			Console::Log("expected right paren");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pExpression) delete pExpression;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pExpression) delete pExpression;
+			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-		Scope* pScope = Scope::TryCreate(pTokenContainer, pTempOffset);
+		Scope* pScope = Scope::TryCreate(pTokenContainer, pTempOffset, true);
 		if (pScope == 0)
 		{
 			Console::Log("expected scope");
@@ -81,27 +75,19 @@ namespace NumbatLogic
 		pWhileStmt->m_pFirstToken = pWhileToken;
 		pWhileStmt->m_pExpression = pExpression;
 		pWhileStmt->m_pScope = pScope;
-		{
-			NumbatLogic::AST* __1067118945 = pExpression;
-			pExpression = 0;
-			pWhileStmt->AddChild(__1067118945);
-		}
-		{
-			NumbatLogic::Scope* __693694853 = pScope;
-			pScope = 0;
-			pWhileStmt->AddChild(__693694853);
-		}
+		NumbatLogic::AST* __1067118945 = pExpression;
+		pExpression = 0;
+		pWhileStmt->AddChild(__1067118945);
+		NumbatLogic::Scope* __693694853 = pScope;
+		pScope = 0;
+		pWhileStmt->AddChild(__693694853);
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::WhileStmt* __2912286049 = pWhileStmt;
-			pWhileStmt = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pExpression) delete pExpression;
-				if (pScope) delete pScope;
-				return __2912286049;
-			}
-		}
+		NumbatLogic::WhileStmt* __2912286049 = pWhileStmt;
+		pWhileStmt = 0;
+		if (pTempOffset) delete pTempOffset;
+		if (pExpression) delete pExpression;
+		if (pScope) delete pScope;
+		return __2912286049;
 	}
 
 	void WhileStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

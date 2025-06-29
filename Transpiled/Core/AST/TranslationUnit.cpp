@@ -51,15 +51,11 @@ namespace NumbatLogic
 		}
 		ReferenceNode* pCreatedChild = new ReferenceNode(sxName);
 		pChild = pCreatedChild;
-		{
-			NumbatLogic::ReferenceNode* __478136406 = pCreatedChild;
-			pCreatedChild = 0;
-			m_pChildNodeVector->PushBack(__478136406);
-		}
-		{
-			if (pCreatedChild) delete pCreatedChild;
-			return pChild;
-		}
+		NumbatLogic::ReferenceNode* __478136406 = pCreatedChild;
+		pCreatedChild = 0;
+		m_pChildNodeVector->PushBack(__478136406);
+		if (pCreatedChild) delete pCreatedChild;
+		return pChild;
 	}
 
 	void ReferenceNode::Stringify(AST::Language eLanguage, AST::OutputFile eOutputFile, int nDepth, InternalString* sOut)
@@ -135,22 +131,16 @@ namespace NumbatLogic
 				if (pAST) delete pAST;
 				break;
 			}
-			{
-				NumbatLogic::AST* __3125986036 = pAST;
-				pAST = 0;
-				pThis->AddChild(__3125986036);
-			}
+			NumbatLogic::AST* __3125986036 = pAST;
+			pAST = 0;
+			pThis->AddChild(__3125986036);
 			if (pAST) delete pAST;
 		}
-		{
-			NumbatLogic::TranslationUnit* __186135525 = pThis;
-			pThis = 0;
-			{
-				if (sInput) delete sInput;
-				if (pOffsetDatum) delete pOffsetDatum;
-				return __186135525;
-			}
-		}
+		NumbatLogic::TranslationUnit* __186135525 = pThis;
+		pThis = 0;
+		if (sInput) delete sInput;
+		if (pOffsetDatum) delete pOffsetDatum;
+		return __186135525;
 	}
 
 	void TranslationUnit::AddClassDeclReference(ClassDecl* pClassDecl, OutputFile eOutputFile, bool bForwardReference)
@@ -171,11 +161,9 @@ namespace NumbatLogic
 		pClassDeclReference->m_pClassDecl = pClassDecl;
 		pClassDeclReference->m_eOutputFile = eOutputFile;
 		pClassDeclReference->m_bForwardReference = bForwardReference;
-		{
-			NumbatLogic::ClassDeclReference* __2059001961 = pClassDeclReference;
-			pClassDeclReference = 0;
-			m_pClassDeclReferenceVector->PushBack(__2059001961);
-		}
+		NumbatLogic::ClassDeclReference* __2059001961 = pClassDeclReference;
+		pClassDeclReference = 0;
+		m_pClassDeclReferenceVector->PushBack(__2059001961);
 		AST::AddClassDeclReference(pClassDecl, eOutputFile, bForwardReference);
 		if (pClassDeclReference) delete pClassDeclReference;
 	}
@@ -229,11 +217,9 @@ namespace NumbatLogic
 			}
 			sPath->Set(sFolder->GetExternalString());
 			sPath->Append(sFile->GetExternalString());
-			{
-				if (sFolder) delete sFolder;
-				if (sFile) delete sFile;
-				return;
-			}
+			if (sFolder) delete sFolder;
+			if (sFile) delete sFile;
+			return;
 		}
 		sPath->Replace("Source", "Transpiled");
 		switch (eLanguage)
@@ -283,11 +269,9 @@ namespace NumbatLogic
 			InternalString* sTemp = sFrom->CreateClone();
 			sTemp->SubStr(0, nIndex + 1);
 			sFrom->CropFront(nIndex + 1);
-			{
-				NumbatLogic::InternalString* __1006353954 = sTemp;
-				sTemp = 0;
-				sFromVector->PushBack(__1006353954);
-			}
+			NumbatLogic::InternalString* __1006353954 = sTemp;
+			sTemp = 0;
+			sFromVector->PushBack(__1006353954);
 			if (sTemp) delete sTemp;
 		}
 		while (true)
@@ -298,11 +282,9 @@ namespace NumbatLogic
 			InternalString* sTemp = sTo->CreateClone();
 			sTemp->SubStr(0, nIndex + 1);
 			sTo->CropFront(nIndex + 1);
-			{
-				NumbatLogic::InternalString* __1006353954 = sTemp;
-				sTemp = 0;
-				sToVector->PushBack(__1006353954);
-			}
+			NumbatLogic::InternalString* __1006353954 = sTemp;
+			sTemp = 0;
+			sToVector->PushBack(__1006353954);
 			if (sTemp) delete sTemp;
 		}
 		while (true)
@@ -320,17 +302,13 @@ namespace NumbatLogic
 		for (int i = 0; i < sToVector->GetSize(); i++)
 			sOut->Append(sToVector->Get(i)->GetExternalString());
 		sOut->Append(sTo->GetExternalString());
-		{
-			NumbatLogic::InternalString* __4206426222 = sOut;
-			sOut = 0;
-			{
-				if (sFrom) delete sFrom;
-				if (sTo) delete sTo;
-				if (sFromVector) delete sFromVector;
-				if (sToVector) delete sToVector;
-				return __4206426222;
-			}
-		}
+		NumbatLogic::InternalString* __4206426222 = sOut;
+		sOut = 0;
+		if (sFrom) delete sFrom;
+		if (sTo) delete sTo;
+		if (sFromVector) delete sFromVector;
+		if (sToVector) delete sToVector;
+		return __4206426222;
 	}
 
 	void TranslationUnit::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

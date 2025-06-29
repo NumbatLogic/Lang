@@ -69,9 +69,7 @@ namespace NumbatLogic
 				Console.Log(sInput);
 				Console.Log("\n->\n");
 				Console.Log(sxTokenized);
-				{
-					return;
-				}
+				return;
 			}
 			pTokenContainer.StripWhitespace();
 			OffsetDatum pOffsetDatum = OffsetDatum.Create(null);
@@ -79,18 +77,14 @@ namespace NumbatLogic
 			if (pAST == null)
 			{
 				Console.Log("  ** NO AST!");
-				{
-					return;
-				}
+				return;
 			}
 			if (pAST.m_eType != eAstType)
 			{
 				Console.Log("  ** AST TYPE MISMATCH!\n");
 				Console.Log(sxTokenized);
 				Console.Log(" != ");
-				{
-					return;
-				}
+				return;
 			}
 			InternalString sOut = new InternalString("");
 			pAST.Stringify(AST.Language.NLL, AST.OutputFile.SOURCE, 0, sOut);
@@ -107,9 +101,7 @@ namespace NumbatLogic
 				Console.Log("'\n->\n'");
 				Console.Log(sOut.GetExternalString());
 				Console.Log("'");
-				{
-					return;
-				}
+				return;
 			}
 		}
 

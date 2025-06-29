@@ -60,11 +60,9 @@ namespace NumbatLogic
 				NumbatLogic::Assert::Plz(false);
 			}
 			pParamDecl->m_pParamVector->PushBack(pParam);
-			{
-				NumbatLogic::VarDecl* __3343749822 = pParam;
-				pParam = 0;
-				pParamDecl->AddChild(__3343749822);
-			}
+			NumbatLogic::VarDecl* __3343749822 = pParam;
+			pParam = 0;
+			pParamDecl->AddChild(__3343749822);
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT) != 0)
 			{
 				if (pParam) delete pParam;
@@ -80,14 +78,10 @@ namespace NumbatLogic
 			if (pParam) delete pParam;
 		}
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::ParamDecl* __2049651157 = pParamDecl;
-			pParamDecl = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				return __2049651157;
-			}
-		}
+		NumbatLogic::ParamDecl* __2049651157 = pParamDecl;
+		pParamDecl = 0;
+		if (pTempOffset) delete pTempOffset;
+		return __2049651157;
 	}
 
 	void ParamDecl::Validate(Validator* pValidator, OperatorExpr* pParent)
@@ -139,12 +133,13 @@ namespace NumbatLogic
 					pValidator->AddError("Param count mismatch (pCallChild == null)", m_pFirstToken->m_sFileName, m_pFirstToken->m_nLine, m_pFirstToken->m_nColumn);
 				return false;
 			}
-			else if (pDeclChild == 0)
-			{
-				if (pValidator != 0)
-					pValidator->AddError("Param count mismatch (pDeclChild == null)", m_pFirstToken->m_sFileName, m_pFirstToken->m_nLine, m_pFirstToken->m_nColumn);
-				return false;
-			}
+			else
+				if (pDeclChild == 0)
+				{
+					if (pValidator != 0)
+						pValidator->AddError("Param count mismatch (pDeclChild == null)", m_pFirstToken->m_sFileName, m_pFirstToken->m_nLine, m_pFirstToken->m_nColumn);
+					return false;
+				}
 			if (pCallChild->m_pValueType == 0)
 			{
 				if (pValidator != 0)
@@ -173,28 +168,22 @@ namespace NumbatLogic
 			{
 				if (pValidator != 0)
 					pValidator->AddError("Unknown decl valuetype???", pCallChild->m_pFirstToken->m_sFileName, pCallChild->m_pFirstToken->m_nLine, pCallChild->m_pFirstToken->m_nColumn);
-				{
-					if (pValueType) delete pValueType;
-					return false;
-				}
+				if (pValueType) delete pValueType;
+				return false;
 			}
 			if (pValueType->m_ePointerType == TypeRef::PointerType::TRANSITON && pCallChild->m_pValueType->m_ePointerType != TypeRef::PointerType::TRANSITON && pCallChild->m_pValueType->m_eType != ValueType::Type::NULL_VALUE)
 			{
 				if (pValidator != 0)
 					pValidator->AddError("Must pass a transition pointer!", pCallChild->m_pFirstToken->m_sFileName, pCallChild->m_pFirstToken->m_nLine, pCallChild->m_pFirstToken->m_nColumn);
-				{
-					if (pValueType) delete pValueType;
-					return false;
-				}
+				if (pValueType) delete pValueType;
+				return false;
 			}
 			if (pCallChild->m_pValueType->m_ePointerType == TypeRef::PointerType::TRANSITON && pValueType->m_ePointerType != TypeRef::PointerType::TRANSITON)
 			{
 				if (pValidator != 0)
 					pValidator->AddError("Was not expecting a transition pointer??", pCallChild->m_pFirstToken->m_sFileName, pCallChild->m_pFirstToken->m_nLine, pCallChild->m_pFirstToken->m_nColumn);
-				{
-					if (pValueType) delete pValueType;
-					return false;
-				}
+				if (pValueType) delete pValueType;
+				return false;
 			}
 			if (pCallChild->m_pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE || pCallChild->m_pValueType->m_eType == ValueType::Type::GENERIC_TYPE_DECL_VALUE || pCallChild->m_pValueType->m_eType == ValueType::Type::VOIDPTR)
 			{
@@ -209,10 +198,8 @@ namespace NumbatLogic
 						pValidator->AddError(sTemp->GetExternalString(), pCallChild->m_pFirstToken->m_sFileName, pCallChild->m_pFirstToken->m_nLine, pCallChild->m_pFirstToken->m_nColumn);
 						if (sTemp) delete sTemp;
 					}
-					{
-						if (pValueType) delete pValueType;
-						return false;
-					}
+					if (pValueType) delete pValueType;
+					return false;
 				}
 			}
 			nIndex++;

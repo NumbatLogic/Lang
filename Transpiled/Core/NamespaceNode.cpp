@@ -31,11 +31,9 @@ namespace NumbatLogic
 		if (pNamespaceNode == 0)
 		{
 			NamespaceNode* pOwnedNamespaceNode = new NamespaceNode(pNamespaceDecl->m_pNameToken->m_sValue, this);
-			{
-				NumbatLogic::NamespaceNode* __1551009467 = pOwnedNamespaceNode;
-				pOwnedNamespaceNode = 0;
-				pNamespaceNode = m_pChildVector->PushBack(__1551009467);
-			}
+			NumbatLogic::NamespaceNode* __1551009467 = pOwnedNamespaceNode;
+			pOwnedNamespaceNode = 0;
+			pNamespaceNode = m_pChildVector->PushBack(__1551009467);
 			if (pOwnedNamespaceNode) delete pOwnedNamespaceNode;
 		}
 		pNamespaceNode->m_pNamespaceDeclVector->PushBack(pNamespaceDecl);

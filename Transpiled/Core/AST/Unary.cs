@@ -17,19 +17,13 @@ namespace NumbatLogic
 			pUnary.m_eType = AST.Type.AST_UNARY;
 			pUnary.m_pFirstToken = pToken;
 			pUnary.m_pExpression = pExpression;
-			{
-				NumbatLogic.AST __1067118945 = pExpression;
-				pExpression = null;
-				pUnary.AddChild(__1067118945);
-			}
+			NumbatLogic.AST __1067118945 = pExpression;
+			pExpression = null;
+			pUnary.AddChild(__1067118945);
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.Unary __2316923926 = pUnary;
-				pUnary = null;
-				{
-					return __2316923926;
-				}
-			}
+			NumbatLogic.Unary __2316923926 = pUnary;
+			pUnary = null;
+			return __2316923926;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
@@ -40,9 +34,7 @@ namespace NumbatLogic
 				InternalString sTemp = new InternalString("expression did not validate?? ");
 				m_pExpression.StringifyType(sTemp);
 				pValidator.AddError(sTemp.GetExternalString(), m_pExpression.m_pFirstToken.m_sFileName, m_pExpression.m_pFirstToken.m_nLine, m_pExpression.m_pFirstToken.m_nColumn);
-				{
-					return;
-				}
+				return;
 			}
 			m_pValueType = m_pExpression.m_pValueType.Clone();
 		}

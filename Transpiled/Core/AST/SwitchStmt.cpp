@@ -46,10 +46,8 @@ namespace NumbatLogic
 		{
 			Console::Log("expected left paren");
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		AST* pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
@@ -57,43 +55,35 @@ namespace NumbatLogic
 		{
 			Console::Log("expected expression");
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pExpression) delete pExpression;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pExpression) delete pExpression;
+			return 0;
 		}
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT) == 0)
 		{
 			Console::Log("expected right paren");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pExpression) delete pExpression;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pExpression) delete pExpression;
+			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_LEFT) == 0)
 		{
 			Console::Log("expected opening curly brace");
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pExpression) delete pExpression;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pExpression) delete pExpression;
+			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		SwitchStmt* pSwitchStmt = new SwitchStmt();
 		pSwitchStmt->m_pFirstToken = pSwitchToken;
 		pSwitchStmt->m_pExpression = pExpression;
-		{
-			NumbatLogic::AST* __1067118945 = pExpression;
-			pExpression = 0;
-			pSwitchStmt->AddChild(__1067118945);
-		}
+		NumbatLogic::AST* __1067118945 = pExpression;
+		pExpression = 0;
+		pSwitchStmt->AddChild(__1067118945);
 		while (true)
 		{
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_RIGHT) != 0)
@@ -106,12 +96,10 @@ namespace NumbatLogic
 				Console::Log("expected default to be last thing in switch statement");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 				NumbatLogic::Assert::Plz(false);
-				{
-					if (pTempOffset) delete pTempOffset;
-					if (pExpression) delete pExpression;
-					if (pSwitchStmt) delete pSwitchStmt;
-					return 0;
-				}
+				if (pTempOffset) delete pTempOffset;
+				if (pExpression) delete pExpression;
+				if (pSwitchStmt) delete pSwitchStmt;
+				return 0;
 			}
 			Token* pCaseToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_CASE);
 			Token* pDefaultToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_DEFAULT);
@@ -120,12 +108,10 @@ namespace NumbatLogic
 				Console::Log("expected case or default");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 				NumbatLogic::Assert::Plz(false);
-				{
-					if (pTempOffset) delete pTempOffset;
-					if (pExpression) delete pExpression;
-					if (pSwitchStmt) delete pSwitchStmt;
-					return 0;
-				}
+				if (pTempOffset) delete pTempOffset;
+				if (pExpression) delete pExpression;
+				if (pSwitchStmt) delete pSwitchStmt;
+				return 0;
 			}
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 			if (pDefaultToken != 0)
@@ -135,12 +121,10 @@ namespace NumbatLogic
 					Console::Log("expected colon A");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 					NumbatLogic::Assert::Plz(false);
-					{
-						if (pTempOffset) delete pTempOffset;
-						if (pExpression) delete pExpression;
-						if (pSwitchStmt) delete pSwitchStmt;
-						return 0;
-					}
+					if (pTempOffset) delete pTempOffset;
+					if (pExpression) delete pExpression;
+					if (pSwitchStmt) delete pSwitchStmt;
+					return 0;
 				}
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 				AST* pDefaultStatement = AST::CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
@@ -149,13 +133,11 @@ namespace NumbatLogic
 					Console::Log("expected case statement");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 					NumbatLogic::Assert::Plz(false);
-					{
-						if (pDefaultStatement) delete pDefaultStatement;
-						if (pTempOffset) delete pTempOffset;
-						if (pExpression) delete pExpression;
-						if (pSwitchStmt) delete pSwitchStmt;
-						return 0;
-					}
+					if (pDefaultStatement) delete pDefaultStatement;
+					if (pTempOffset) delete pTempOffset;
+					if (pExpression) delete pExpression;
+					if (pSwitchStmt) delete pSwitchStmt;
+					return 0;
 				}
 				AST* pScopedDefaultStatement = 0;
 				if (pDefaultStatement->m_eType == AST::Type::AST_SCOPE)
@@ -167,23 +149,17 @@ namespace NumbatLogic
 				else
 				{
 					pScopedDefaultStatement = new Scope();
-					{
-						NumbatLogic::AST* __4278855511 = pDefaultStatement;
-						pDefaultStatement = 0;
-						pScopedDefaultStatement->AddChild(__4278855511);
-					}
+					NumbatLogic::AST* __4278855511 = pDefaultStatement;
+					pDefaultStatement = 0;
+					pScopedDefaultStatement->AddChild(__4278855511);
 				}
 				pSwitchStmt->m_pDefaultStatement = pScopedDefaultStatement;
-				{
-					NumbatLogic::AST* __1253506085 = pScopedDefaultStatement;
-					pScopedDefaultStatement = 0;
-					pSwitchStmt->AddChild(__1253506085);
-				}
-				{
-					if (pDefaultStatement) delete pDefaultStatement;
-					if (pScopedDefaultStatement) delete pScopedDefaultStatement;
-					continue;
-				}
+				NumbatLogic::AST* __1253506085 = pScopedDefaultStatement;
+				pScopedDefaultStatement = 0;
+				pSwitchStmt->AddChild(__1253506085);
+				if (pDefaultStatement) delete pDefaultStatement;
+				if (pScopedDefaultStatement) delete pScopedDefaultStatement;
+				continue;
 			}
 			AST* pCaseExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 			if (pCaseExpression == 0)
@@ -191,41 +167,33 @@ namespace NumbatLogic
 				Console::Log("expected case expression");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 				NumbatLogic::Assert::Plz(false);
-				{
-					if (pCaseExpression) delete pCaseExpression;
-					if (pTempOffset) delete pTempOffset;
-					if (pExpression) delete pExpression;
-					if (pSwitchStmt) delete pSwitchStmt;
-					return 0;
-				}
+				if (pCaseExpression) delete pCaseExpression;
+				if (pTempOffset) delete pTempOffset;
+				if (pExpression) delete pExpression;
+				if (pSwitchStmt) delete pSwitchStmt;
+				return 0;
 			}
 			pSwitchStmt->m_pExpressionVector->PushBack(pCaseExpression);
-			{
-				NumbatLogic::AST* __3025039859 = pCaseExpression;
-				pCaseExpression = 0;
-				pSwitchStmt->AddChild(__3025039859);
-			}
+			NumbatLogic::AST* __3025039859 = pCaseExpression;
+			pCaseExpression = 0;
+			pSwitchStmt->AddChild(__3025039859);
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_COLON) == 0)
 			{
 				Console::Log("expected colon B");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 				NumbatLogic::Assert::Plz(false);
-				{
-					if (pCaseExpression) delete pCaseExpression;
-					if (pTempOffset) delete pTempOffset;
-					if (pExpression) delete pExpression;
-					if (pSwitchStmt) delete pSwitchStmt;
-					return 0;
-				}
+				if (pCaseExpression) delete pCaseExpression;
+				if (pTempOffset) delete pTempOffset;
+				if (pExpression) delete pExpression;
+				if (pSwitchStmt) delete pSwitchStmt;
+				return 0;
 			}
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_CASE) != 0)
 			{
 				pSwitchStmt->m_pStatementVector->PushBack(0);
-				{
-					if (pCaseExpression) delete pCaseExpression;
-					continue;
-				}
+				if (pCaseExpression) delete pCaseExpression;
+				continue;
 			}
 			AST* pCaseStatement = AST::CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
 			if (pCaseStatement == 0)
@@ -233,14 +201,12 @@ namespace NumbatLogic
 				Console::Log("expected case statement");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 				NumbatLogic::Assert::Plz(false);
-				{
-					if (pCaseExpression) delete pCaseExpression;
-					if (pCaseStatement) delete pCaseStatement;
-					if (pTempOffset) delete pTempOffset;
-					if (pExpression) delete pExpression;
-					if (pSwitchStmt) delete pSwitchStmt;
-					return 0;
-				}
+				if (pCaseExpression) delete pCaseExpression;
+				if (pCaseStatement) delete pCaseStatement;
+				if (pTempOffset) delete pTempOffset;
+				if (pExpression) delete pExpression;
+				if (pSwitchStmt) delete pSwitchStmt;
+				return 0;
 			}
 			AST* pScopedCaseStatement = 0;
 			if (pCaseStatement->m_eType == AST::Type::AST_SCOPE)
@@ -252,32 +218,24 @@ namespace NumbatLogic
 			else
 			{
 				pScopedCaseStatement = new Scope();
-				{
-					NumbatLogic::AST* __3618575045 = pCaseStatement;
-					pCaseStatement = 0;
-					pScopedCaseStatement->AddChild(__3618575045);
-				}
+				NumbatLogic::AST* __3618575045 = pCaseStatement;
+				pCaseStatement = 0;
+				pScopedCaseStatement->AddChild(__3618575045);
 			}
 			pSwitchStmt->m_pStatementVector->PushBack(pScopedCaseStatement);
-			{
-				NumbatLogic::AST* __128648087 = pScopedCaseStatement;
-				pScopedCaseStatement = 0;
-				pSwitchStmt->AddChild(__128648087);
-			}
+			NumbatLogic::AST* __128648087 = pScopedCaseStatement;
+			pScopedCaseStatement = 0;
+			pSwitchStmt->AddChild(__128648087);
 			if (pCaseExpression) delete pCaseExpression;
 			if (pCaseStatement) delete pCaseStatement;
 			if (pScopedCaseStatement) delete pScopedCaseStatement;
 		}
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::SwitchStmt* __3496390470 = pSwitchStmt;
-			pSwitchStmt = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pExpression) delete pExpression;
-				return __3496390470;
-			}
-		}
+		NumbatLogic::SwitchStmt* __3496390470 = pSwitchStmt;
+		pSwitchStmt = 0;
+		if (pTempOffset) delete pTempOffset;
+		if (pExpression) delete pExpression;
+		return __3496390470;
 	}
 
 	void SwitchStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

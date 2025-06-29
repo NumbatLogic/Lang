@@ -17,27 +17,19 @@ namespace NumbatLogic
 			{
 				Console.Log("expected expresssion");
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			OwnExpr pOwnExpr = new OwnExpr();
 			pOwnExpr.m_eType = AST.Type.AST_OWN_EXP;
 			pOwnExpr.m_pFirstToken = pOwnToken;
 			pOwnExpr.m_pExpression = pExpression;
-			{
-				NumbatLogic.AST __1067118945 = pExpression;
-				pExpression = null;
-				pOwnExpr.AddChild(__1067118945);
-			}
+			NumbatLogic.AST __1067118945 = pExpression;
+			pExpression = null;
+			pOwnExpr.AddChild(__1067118945);
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.OwnExpr __1829329341 = pOwnExpr;
-				pOwnExpr = null;
-				{
-					return __1829329341;
-				}
-			}
+			NumbatLogic.OwnExpr __1829329341 = pOwnExpr;
+			pOwnExpr = null;
+			return __1829329341;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
@@ -53,9 +45,7 @@ namespace NumbatLogic
 				InternalString sError = new InternalString("Expected right side of own to be a CLASS_DECL_VALUE or GENERIC_TYPE_DECL_VALUE, got: ");
 				m_pExpression.m_pValueType.StringifyType(sError);
 				pValidator.AddError(sError.GetExternalString(), m_pExpression.m_pFirstToken.m_sFileName, m_pExpression.m_pFirstToken.m_nLine, m_pExpression.m_pFirstToken.m_nColumn);
-				{
-					return;
-				}
+				return;
 			}
 			if (m_pExpression.m_pValueType.m_ePointerType != TypeRef.PointerType.TRANSITON)
 			{

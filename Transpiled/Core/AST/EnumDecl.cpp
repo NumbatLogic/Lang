@@ -46,22 +46,18 @@ namespace NumbatLogic
 		{
 			Console::Log("expected enum name");
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pEnumDecl) delete pEnumDecl;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pEnumDecl) delete pEnumDecl;
+			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_LEFT) == 0)
 		{
 			Console::Log("expected opening curly brace");
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pEnumDecl) delete pEnumDecl;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pEnumDecl) delete pEnumDecl;
+			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		while (true)
@@ -78,11 +74,9 @@ namespace NumbatLogic
 				NumbatLogic::Assert::Plz(false);
 			}
 			pEnumDecl->m_pEnumDeclValueVector->PushBack(pEnumDeclValue);
-			{
-				NumbatLogic::EnumDeclValue* __954462356 = pEnumDeclValue;
-				pEnumDeclValue = 0;
-				pEnumDecl->AddChild(__954462356);
-			}
+			NumbatLogic::EnumDeclValue* __954462356 = pEnumDeclValue;
+			pEnumDeclValue = 0;
+			pEnumDecl->AddChild(__954462356);
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_RIGHT) != 0)
 			{
 				if (pEnumDeclValue) delete pEnumDeclValue;
@@ -98,14 +92,10 @@ namespace NumbatLogic
 			if (pEnumDeclValue) delete pEnumDeclValue;
 		}
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::EnumDecl* __3345757416 = pEnumDecl;
-			pEnumDecl = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				return __3345757416;
-			}
-		}
+		NumbatLogic::EnumDecl* __3345757416 = pEnumDecl;
+		pEnumDecl = 0;
+		if (pTempOffset) delete pTempOffset;
+		return __3345757416;
 	}
 
 	AST* EnumDecl::FindByName(const char* sxName, AST* pCallingChild)

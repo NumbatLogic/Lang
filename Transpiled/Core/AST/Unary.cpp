@@ -32,21 +32,15 @@ namespace NumbatLogic
 		pUnary->m_eType = AST::Type::AST_UNARY;
 		pUnary->m_pFirstToken = pToken;
 		pUnary->m_pExpression = pExpression;
-		{
-			NumbatLogic::AST* __1067118945 = pExpression;
-			pExpression = 0;
-			pUnary->AddChild(__1067118945);
-		}
+		NumbatLogic::AST* __1067118945 = pExpression;
+		pExpression = 0;
+		pUnary->AddChild(__1067118945);
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::Unary* __2316923926 = pUnary;
-			pUnary = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pExpression) delete pExpression;
-				return __2316923926;
-			}
-		}
+		NumbatLogic::Unary* __2316923926 = pUnary;
+		pUnary = 0;
+		if (pTempOffset) delete pTempOffset;
+		if (pExpression) delete pExpression;
+		return __2316923926;
 	}
 
 	void Unary::Validate(Validator* pValidator, OperatorExpr* pParent)
@@ -57,10 +51,8 @@ namespace NumbatLogic
 			InternalString* sTemp = new InternalString("expression did not validate?? ");
 			m_pExpression->StringifyType(sTemp);
 			pValidator->AddError(sTemp->GetExternalString(), m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
-			{
-				if (sTemp) delete sTemp;
-				return;
-			}
+			if (sTemp) delete sTemp;
+			return;
 		}
 		m_pValueType = m_pExpression->m_pValueType->Clone();
 	}

@@ -2,9 +2,9 @@
 #include "AST.hpp"
 #include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "VarDecl.hpp"
+#include "../Token.hpp"
 #include "../Util.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
-#include "../Token.hpp"
 
 namespace NumbatLogic
 {
@@ -12,12 +12,10 @@ namespace NumbatLogic
 }
 namespace NumbatLogic
 {
-	VarDeclDescope::VarDeclDescope(bool bScope)
+	VarDeclDescope::VarDeclDescope()
 	{
-		m_bScope = false;
 		m_pVarDeclVector = 0;
 		m_eType = AST::Type::AST_VAR_DECL_DESCOPE;
-		m_bScope = bScope;
 		m_pVarDeclVector = new Vector<VarDecl*>();
 	}
 
@@ -25,12 +23,6 @@ namespace NumbatLogic
 	{
 		if (eLanguage == AST::Language::CPP)
 		{
-			if (m_bScope)
-			{
-				Util::Pad(nDepth, sOut);
-				sOut->Append("{\n");
-				nDepth++;
-			}
 			for (int i = 0; i < m_pVarDeclVector->GetSize(); i++)
 			{
 				VarDecl* pVarDecl = m_pVarDeclVector->Get(i);
@@ -54,12 +46,6 @@ namespace NumbatLogic
 					sOut->Append(sxName);
 					sOut->Append(";\n");
 				}
-			}
-			if (m_bScope)
-			{
-				nDepth--;
-				Util::Pad(nDepth, sOut);
-				sOut->Append("}\n");
 			}
 		}
 	}

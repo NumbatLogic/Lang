@@ -51,15 +51,11 @@ namespace NumbatLogic
 			pReturnStmt->AddChild(__1067118945);
 		}
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::ReturnStmt* __3384094912 = pReturnStmt;
-			pReturnStmt = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pExpression) delete pExpression;
-				return __3384094912;
-			}
-		}
+		NumbatLogic::ReturnStmt* __3384094912 = pReturnStmt;
+		pReturnStmt = 0;
+		if (pTempOffset) delete pTempOffset;
+		if (pExpression) delete pExpression;
+		return __3384094912;
 	}
 
 	void ReturnStmt::Validate(Validator* pValidator, OperatorExpr* pParent)

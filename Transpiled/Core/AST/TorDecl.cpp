@@ -54,12 +54,10 @@ namespace NumbatLogic
 			Console::Log("expected ParamDecl");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pAccessLevel) delete pAccessLevel;
-				if (pParamDecl) delete pParamDecl;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pAccessLevel) delete pAccessLevel;
+			if (pParamDecl) delete pParamDecl;
+			return 0;
 		}
 		TorDecl* pTorDecl = new TorDecl();
 		Scope* pScope = 0;
@@ -78,14 +76,12 @@ namespace NumbatLogic
 					Console::Log("expected base!");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 					NumbatLogic::Assert::Plz(false);
-					{
-						if (pTempOffset) delete pTempOffset;
-						if (pAccessLevel) delete pAccessLevel;
-						if (pParamDecl) delete pParamDecl;
-						if (pTorDecl) delete pTorDecl;
-						if (pScope) delete pScope;
-						return 0;
-					}
+					if (pTempOffset) delete pTempOffset;
+					if (pAccessLevel) delete pAccessLevel;
+					if (pParamDecl) delete pParamDecl;
+					if (pTorDecl) delete pTorDecl;
+					if (pScope) delete pScope;
+					return 0;
 				}
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 				ParamCall* pParamCall = ParamCall::TryCreate(pTokenContainer, pTempOffset);
@@ -95,26 +91,22 @@ namespace NumbatLogic
 					sTemp->Append(pTokenContainer->StringifyOffset(pTempOffset));
 					Console::Log(sTemp->GetExternalString());
 					NumbatLogic::Assert::Plz(false);
-					{
-						if (sTemp) delete sTemp;
-						if (pParamCall) delete pParamCall;
-						if (pTempOffset) delete pTempOffset;
-						if (pAccessLevel) delete pAccessLevel;
-						if (pParamDecl) delete pParamDecl;
-						if (pTorDecl) delete pTorDecl;
-						if (pScope) delete pScope;
-						return 0;
-					}
+					if (sTemp) delete sTemp;
+					if (pParamCall) delete pParamCall;
+					if (pTempOffset) delete pTempOffset;
+					if (pAccessLevel) delete pAccessLevel;
+					if (pParamDecl) delete pParamDecl;
+					if (pTorDecl) delete pTorDecl;
+					if (pScope) delete pScope;
+					return 0;
 				}
 				pTorDecl->m_pBaseParamCall = pParamCall;
-				{
-					NumbatLogic::ParamCall* __3062759993 = pParamCall;
-					pParamCall = 0;
-					pTorDecl->AddChild(__3062759993);
-				}
+				NumbatLogic::ParamCall* __3062759993 = pParamCall;
+				pParamCall = 0;
+				pTorDecl->AddChild(__3062759993);
 				if (pParamCall) delete pParamCall;
 			}
-			pScope = Scope::TryCreate(pTokenContainer, pTempOffset);
+			pScope = Scope::TryCreate(pTokenContainer, pTempOffset, false);
 			if (pScope == 0)
 			{
 				Console::Log("expected scope");
@@ -131,16 +123,12 @@ namespace NumbatLogic
 		pTorDecl->m_pParamDecl = pParamDecl;
 		pTorDecl->m_pScope = pScope;
 		pTorDecl->m_sDisambiguate = "";
-		{
-			NumbatLogic::AccessLevel* __2194276919 = pAccessLevel;
-			pAccessLevel = 0;
-			pTorDecl->AddChild(__2194276919);
-		}
-		{
-			NumbatLogic::ParamDecl* __2049651157 = pParamDecl;
-			pParamDecl = 0;
-			pTorDecl->AddChild(__2049651157);
-		}
+		NumbatLogic::AccessLevel* __2194276919 = pAccessLevel;
+		pAccessLevel = 0;
+		pTorDecl->AddChild(__2194276919);
+		NumbatLogic::ParamDecl* __2049651157 = pParamDecl;
+		pParamDecl = 0;
+		pTorDecl->AddChild(__2049651157);
 		if (pScope != 0)
 		{
 			NumbatLogic::Scope* __693694853 = pScope;
@@ -148,17 +136,13 @@ namespace NumbatLogic
 			pTorDecl->AddChild(__693694853);
 		}
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::TorDecl* __3416457985 = pTorDecl;
-			pTorDecl = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pAccessLevel) delete pAccessLevel;
-				if (pParamDecl) delete pParamDecl;
-				if (pScope) delete pScope;
-				return __3416457985;
-			}
-		}
+		NumbatLogic::TorDecl* __3416457985 = pTorDecl;
+		pTorDecl = 0;
+		if (pTempOffset) delete pTempOffset;
+		if (pAccessLevel) delete pAccessLevel;
+		if (pParamDecl) delete pParamDecl;
+		if (pScope) delete pScope;
+		return __3416457985;
 	}
 
 	void TorDecl::Validate(Validator* pValidator, OperatorExpr* pParent)
@@ -193,10 +177,8 @@ namespace NumbatLogic
 				InternalString* sTemp = new InternalString("could not find a matching BASE constructor in ");
 				sTemp->AppendString(pBaseClass->m_pNameToken->GetString());
 				pValidator->AddError(sTemp->GetExternalString(), m_pBaseParamCall->m_pFirstToken->m_sFileName, m_pBaseParamCall->m_pFirstToken->m_nLine, m_pBaseParamCall->m_pFirstToken->m_nColumn);
-				{
-					if (sTemp) delete sTemp;
-					return;
-				}
+				if (sTemp) delete sTemp;
+				return;
 			}
 		}
 	}

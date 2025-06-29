@@ -8,11 +8,9 @@ namespace NumbatLogic
 			OffsetDatum pThis = new OffsetDatum();
 			if (pOther != null)
 				pThis.Set(pOther);
-			{
-				NumbatLogic.OffsetDatum __186135525 = pThis;
-				pThis = null;
-				return __186135525;
-			}
+			NumbatLogic.OffsetDatum __186135525 = pThis;
+			pThis = null;
+			return __186135525;
 		}
 
 		public void Set(OffsetDatum pOther)

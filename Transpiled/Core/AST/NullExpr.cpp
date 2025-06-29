@@ -32,14 +32,10 @@ namespace NumbatLogic
 		NullExpr* pNullExpr = new NullExpr();
 		pNullExpr->m_pFirstToken = pNullToken;
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::NullExpr* __2544427281 = pNullExpr;
-			pNullExpr = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				return __2544427281;
-			}
-		}
+		NumbatLogic::NullExpr* __2544427281 = pNullExpr;
+		pNullExpr = 0;
+		if (pTempOffset) delete pTempOffset;
+		return __2544427281;
 	}
 
 	void NullExpr::Validate(Validator* pValidator, OperatorExpr* pParent)

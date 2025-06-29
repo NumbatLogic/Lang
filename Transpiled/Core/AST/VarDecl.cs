@@ -39,9 +39,7 @@ namespace NumbatLogic
 					Console.Log("unable to parse array size...");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 					NumbatLogic.Assert.Plz(false);
-					{
-						return null;
-					}
+					return null;
 				}
 				Token pSquareBracketRightToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SQUARE_BRACKET_RIGHT);
 				if (pSquareBracketRightToken == null)
@@ -49,17 +47,13 @@ namespace NumbatLogic
 					Console.Log("unable to parse closing square bracket");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 					NumbatLogic.Assert.Plz(false);
-					{
-						return null;
-					}
+					return null;
 				}
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 				pVarDecl.m_pArraySize = pArraySize;
-				{
-					NumbatLogic.AST __2516344687 = pArraySize;
-					pArraySize = null;
-					pVarDecl.AddChild(__2516344687);
-				}
+				NumbatLogic.AST __2516344687 = pArraySize;
+				pArraySize = null;
+				pVarDecl.AddChild(__2516344687);
 			}
 			AST pAssignment = null;
 			Token pEqualsToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_EQUALS);
@@ -72,9 +66,7 @@ namespace NumbatLogic
 					Console.Log("expected to parse assignment...");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 					NumbatLogic.Assert.Plz(false);
-					{
-						return null;
-					}
+					return null;
 				}
 			}
 			if (!bInline)
@@ -91,11 +83,9 @@ namespace NumbatLogic
 			pVarDecl.m_pNameToken = pNameToken;
 			pVarDecl.m_pAssignment = pAssignment;
 			pVarDecl.m_bInline = bInline;
-			{
-				NumbatLogic.TypeRef __3079357496 = pTypeRef;
-				pTypeRef = null;
-				pVarDecl.AddChild(__3079357496);
-			}
+			NumbatLogic.TypeRef __3079357496 = pTypeRef;
+			pTypeRef = null;
+			pVarDecl.AddChild(__3079357496);
 			if (pAssignment != null)
 			{
 				NumbatLogic.AST __267221586 = pAssignment;
@@ -103,13 +93,9 @@ namespace NumbatLogic
 				pVarDecl.AddChild(__267221586);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.VarDecl __2920859675 = pVarDecl;
-				pVarDecl = null;
-				{
-					return __2920859675;
-				}
-			}
+			NumbatLogic.VarDecl __2920859675 = pVarDecl;
+			pVarDecl = null;
+			return __2920859675;
 		}
 
 		public override AST FindByName(string sxName, AST pCallingChild)
@@ -128,25 +114,19 @@ namespace NumbatLogic
 			if (pValueType == null)
 			{
 				pValidator.AddError("Unknown ValueType for TypeRef", m_pTypeRef.m_pFirstToken.m_sFileName, m_pTypeRef.m_pFirstToken.m_nLine, m_pTypeRef.m_pFirstToken.m_nColumn);
-				{
-					return;
-				}
+				return;
 			}
 			if (m_pAssignment != null)
 			{
 				if (m_pAssignment.m_pValueType == null)
 				{
 					pValidator.AddError("Unknown assignment?", m_pAssignment.m_pFirstToken.m_sFileName, m_pAssignment.m_pFirstToken.m_nLine, m_pAssignment.m_pFirstToken.m_nColumn);
-					{
-						return;
-					}
+					return;
 				}
 				if (m_pArraySize != null && m_pAssignment.m_pValueType.m_eType != ValueType.Type.STATIC_ARRAY || m_pArraySize == null && m_pAssignment.m_pValueType.m_eType == ValueType.Type.STATIC_ARRAY)
 				{
 					pValidator.AddError("Can only assign a static array to a vardecl with array size", m_pAssignment.m_pFirstToken.m_sFileName, m_pAssignment.m_pFirstToken.m_nLine, m_pAssignment.m_pFirstToken.m_nColumn);
-					{
-						return;
-					}
+					return;
 				}
 				if (!m_pAssignment.m_pValueType.ValidateAssignable(pValueType, pValidator, m_pAssignment.m_pFirstToken))
 				{
@@ -155,24 +135,19 @@ namespace NumbatLogic
 				if (pValueType.m_ePointerType != TypeRef.PointerType.OWNED && m_pAssignment.m_pValueType.m_ePointerType == TypeRef.PointerType.OWNED_PREASSSIGN)
 				{
 					pValidator.AddError("Can't assign an owned pointer to a non-owned variable", m_pAssignment.m_pFirstToken.m_sFileName, m_pAssignment.m_pFirstToken.m_nLine, m_pAssignment.m_pFirstToken.m_nColumn);
-					{
-						return;
-					}
+					return;
 				}
 				if (pValueType.m_ePointerType == TypeRef.PointerType.OWNED && (m_pAssignment.m_pValueType.m_ePointerType != TypeRef.PointerType.OWNED_PREASSSIGN && m_pAssignment.m_pValueType.m_eType != ValueType.Type.NULL_VALUE))
 				{
 					pValidator.AddError("Expected right side of = to be OWNED_PREASSSIGN (result of own)", m_pAssignment.m_pFirstToken.m_sFileName, m_pAssignment.m_pFirstToken.m_nLine, m_pAssignment.m_pFirstToken.m_nColumn);
+					return;
+				}
+				else
+					if (m_pAssignment.m_pValueType.m_ePointerType == TypeRef.PointerType.TRANSITON)
 					{
+						pValidator.AddError("Cannot store a TRANSITION pointer (need to `own` it)", m_pAssignment.m_pFirstToken.m_sFileName, m_pAssignment.m_pFirstToken.m_nLine, m_pAssignment.m_pFirstToken.m_nColumn);
 						return;
 					}
-				}
-				else if (m_pAssignment.m_pValueType.m_ePointerType == TypeRef.PointerType.TRANSITON)
-				{
-					pValidator.AddError("Cannot store a TRANSITION pointer (need to `own` it)", m_pAssignment.m_pFirstToken.m_sFileName, m_pAssignment.m_pFirstToken.m_nLine, m_pAssignment.m_pFirstToken.m_nColumn);
-					{
-						return;
-					}
-				}
 			}
 		}
 

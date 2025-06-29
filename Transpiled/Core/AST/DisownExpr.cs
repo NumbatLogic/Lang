@@ -23,26 +23,18 @@ namespace NumbatLogic
 			{
 				Console.Log("expected expresssion");
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			DisownExpr pDisownExpr = new DisownExpr();
 			pDisownExpr.m_pFirstToken = pDisownToken;
 			pDisownExpr.m_pExpression = pExpression;
-			{
-				NumbatLogic.AST __1067118945 = pExpression;
-				pExpression = null;
-				pDisownExpr.AddChild(__1067118945);
-			}
+			NumbatLogic.AST __1067118945 = pExpression;
+			pExpression = null;
+			pDisownExpr.AddChild(__1067118945);
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.DisownExpr __2180824118 = pDisownExpr;
-				pDisownExpr = null;
-				{
-					return __2180824118;
-				}
-			}
+			NumbatLogic.DisownExpr __2180824118 = pDisownExpr;
+			pDisownExpr = null;
+			return __2180824118;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
@@ -73,14 +65,15 @@ namespace NumbatLogic
 					return;
 				}
 			}
-			else if (m_pValueType.m_eType == ValueType.Type.GENERIC_TYPE_DECL_VALUE)
-			{
-				if (m_pValueType.m_pGenericTypeDecl == null)
+			else
+				if (m_pValueType.m_eType == ValueType.Type.GENERIC_TYPE_DECL_VALUE)
 				{
-					pValidator.AddError("Can't disown unbeknownst thing (GenericTypeDecl)", m_pExpression.m_pFirstToken.m_sFileName, m_pExpression.m_pFirstToken.m_nLine, m_pExpression.m_pFirstToken.m_nColumn);
-					return;
+					if (m_pValueType.m_pGenericTypeDecl == null)
+					{
+						pValidator.AddError("Can't disown unbeknownst thing (GenericTypeDecl)", m_pExpression.m_pFirstToken.m_sFileName, m_pExpression.m_pFirstToken.m_nLine, m_pExpression.m_pFirstToken.m_nColumn);
+						return;
+					}
 				}
-			}
 			AST pParentStatement = GetParentStatement();
 			if (pParentStatement == null)
 			{
@@ -93,54 +86,6 @@ namespace NumbatLogic
 			sTempName.Set("__");
 			sTempName.AppendUint32(nHash);
 			AST pParentParent = pParentStatement.m_pParent;
-			Scope pScope = new Scope();
-			AST pOwnedParentStatement;
-			AST pDisownedScope;
-			if (pParentParent.m_pFirstChild == pParentStatement)
-			{
-				{
-					NumbatLogic.AST __1629566089 = pParentParent.m_pFirstChild;
-					pParentParent.m_pFirstChild = null;
-					pOwnedParentStatement = __1629566089;
-				}
-				{
-					NumbatLogic.Scope __693694853 = pScope;
-					pScope = null;
-					pParentParent.m_pFirstChild = __693694853;
-				}
-				pDisownedScope = pParentParent.m_pFirstChild;
-			}
-			else
-			{
-				{
-					NumbatLogic.AST __411868003 = pParentStatement.m_pPrevSibling.m_pNextSibling;
-					pParentStatement.m_pPrevSibling.m_pNextSibling = null;
-					pOwnedParentStatement = __411868003;
-				}
-				{
-					NumbatLogic.Scope __693694853 = pScope;
-					pScope = null;
-					pParentStatement.m_pPrevSibling.m_pNextSibling = __693694853;
-				}
-				pDisownedScope = pParentStatement.m_pPrevSibling.m_pNextSibling;
-				pDisownedScope.m_pPrevSibling = pOwnedParentStatement.m_pPrevSibling;
-				pOwnedParentStatement.m_pPrevSibling = null;
-			}
-			pDisownedScope.m_pParent = pParentParent;
-			if (pParentParent.m_pLastChild == pParentStatement)
-			{
-				pParentParent.m_pLastChild = pDisownedScope;
-			}
-			else
-			{
-				{
-					NumbatLogic.AST __1356546117 = pParentStatement.m_pNextSibling;
-					pParentStatement.m_pNextSibling = null;
-					pDisownedScope.m_pNextSibling = __1356546117;
-				}
-				pDisownedScope.m_pNextSibling.m_pPrevSibling = pDisownedScope;
-				pParentStatement.m_pNextSibling = null;
-			}
 			{
 				TypeRef pTypeRef = m_pValueType.CreateTypeRef();
 				Token pNameToken = new Token();
@@ -151,27 +96,19 @@ namespace NumbatLogic
 				pTempVarDecl.m_pFirstToken = pTypeRef.m_pFirstToken;
 				pTempVarDecl.m_pTypeRef = pTypeRef;
 				pTempVarDecl.m_pNameToken = pNameToken;
-				{
-					NumbatLogic.Token __1290965399 = pNameToken;
-					pNameToken = null;
-					pTempVarDecl.m_pOwnedNameToken = __1290965399;
-				}
+				NumbatLogic.Token __1290965399 = pNameToken;
+				pNameToken = null;
+				pTempVarDecl.m_pOwnedNameToken = __1290965399;
 				pTempVarDecl.m_pAssignment = pAssignment;
-				{
-					NumbatLogic.TypeRef __3079357496 = pTypeRef;
-					pTypeRef = null;
-					pTempVarDecl.AddChild(__3079357496);
-				}
-				{
-					NumbatLogic.AST __267221586 = pAssignment;
-					pAssignment = null;
-					pTempVarDecl.AddChild(__267221586);
-				}
-				{
-					NumbatLogic.VarDecl __2352338849 = pTempVarDecl;
-					pTempVarDecl = null;
-					pDisownedScope.AddChild(__2352338849);
-				}
+				NumbatLogic.TypeRef __3079357496 = pTypeRef;
+				pTypeRef = null;
+				pTempVarDecl.AddChild(__3079357496);
+				NumbatLogic.AST __267221586 = pAssignment;
+				pAssignment = null;
+				pTempVarDecl.AddChild(__267221586);
+				NumbatLogic.VarDecl __2352338849 = pTempVarDecl;
+				pTempVarDecl = null;
+				pParentParent.AddChildBefore(__2352338849, pParentStatement);
 			}
 			{
 				AST pLeft = m_pExpression.BaseClone();
@@ -182,47 +119,30 @@ namespace NumbatLogic
 				pOperatorExpr.m_eType = AST.Type.AST_OPERATOR_EXPR;
 				pOperatorExpr.m_pFirstToken = pLeft.m_pFirstToken;
 				pOperatorExpr.m_pOperatorToken = pOperatorToken;
-				{
-					NumbatLogic.Token __3032764722 = pOperatorToken;
-					pOperatorToken = null;
-					pOperatorExpr.m_pOwnedOperatorToken = __3032764722;
-				}
+				NumbatLogic.Token __3032764722 = pOperatorToken;
+				pOperatorToken = null;
+				pOperatorExpr.m_pOwnedOperatorToken = __3032764722;
 				pOperatorExpr.m_pLeft = pLeft;
 				pOperatorExpr.m_pRight = pRight;
-				{
-					NumbatLogic.AST __2461073728 = pLeft;
-					pLeft = null;
-					pOperatorExpr.AddChild(__2461073728);
-				}
-				{
-					NumbatLogic.NullExpr __1625873296 = pRight;
-					pRight = null;
-					pOperatorExpr.AddChild(__1625873296);
-				}
+				NumbatLogic.AST __2461073728 = pLeft;
+				pLeft = null;
+				pOperatorExpr.AddChild(__2461073728);
+				NumbatLogic.NullExpr __1625873296 = pRight;
+				pRight = null;
+				pOperatorExpr.AddChild(__1625873296);
 				ExpressionStmt pExpressionStmt = new ExpressionStmt();
 				pExpressionStmt.m_pFirstToken = pOperatorExpr.m_pFirstToken;
 				pExpressionStmt.m_pExpression = pOperatorExpr;
-				{
-					NumbatLogic.OperatorExpr __304301329 = pOperatorExpr;
-					pOperatorExpr = null;
-					pExpressionStmt.AddChild(__304301329);
-				}
-				{
-					NumbatLogic.ExpressionStmt __817911874 = pExpressionStmt;
-					pExpressionStmt = null;
-					pDisownedScope.AddChild(__817911874);
-				}
+				NumbatLogic.OperatorExpr __304301329 = pOperatorExpr;
+				pOperatorExpr = null;
+				pExpressionStmt.AddChild(__304301329);
+				NumbatLogic.ExpressionStmt __817911874 = pExpressionStmt;
+				pExpressionStmt = null;
+				pParentParent.AddChildBefore(__817911874, pParentStatement);
 			}
-			{
-				NumbatLogic.InternalString __1040485554 = sTempName;
-				sTempName = null;
-				m_sTempVarName = __1040485554;
-			}
-			{
-				NumbatLogic.AST __3676823010 = pOwnedParentStatement;
-				pOwnedParentStatement = null;
-				pDisownedScope.AddChild(__3676823010);
-			}
+			NumbatLogic.InternalString __1040485554 = sTempName;
+			sTempName = null;
+			m_sTempVarName = __1040485554;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

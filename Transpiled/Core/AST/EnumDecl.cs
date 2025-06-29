@@ -27,18 +27,14 @@ namespace NumbatLogic
 			{
 				Console.Log("expected enum name");
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_CURLY_BRACE_LEFT) == null)
 			{
 				Console.Log("expected opening curly brace");
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			while (true)
@@ -55,11 +51,9 @@ namespace NumbatLogic
 					NumbatLogic.Assert.Plz(false);
 				}
 				pEnumDecl.m_pEnumDeclValueVector.PushBack(pEnumDeclValue);
-				{
-					NumbatLogic.EnumDeclValue __954462356 = pEnumDeclValue;
-					pEnumDeclValue = null;
-					pEnumDecl.AddChild(__954462356);
-				}
+				NumbatLogic.EnumDeclValue __954462356 = pEnumDeclValue;
+				pEnumDeclValue = null;
+				pEnumDecl.AddChild(__954462356);
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_CURLY_BRACE_RIGHT) != null)
 				{
 					continue;
@@ -73,13 +67,9 @@ namespace NumbatLogic
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			}
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.EnumDecl __3345757416 = pEnumDecl;
-				pEnumDecl = null;
-				{
-					return __3345757416;
-				}
-			}
+			NumbatLogic.EnumDecl __3345757416 = pEnumDecl;
+			pEnumDecl = null;
+			return __3345757416;
 		}
 
 		public override AST FindByName(string sxName, AST pCallingChild)

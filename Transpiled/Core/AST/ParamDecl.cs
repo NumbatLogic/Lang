@@ -36,11 +36,9 @@ namespace NumbatLogic
 					NumbatLogic.Assert.Plz(false);
 				}
 				pParamDecl.m_pParamVector.PushBack(pParam);
-				{
-					NumbatLogic.VarDecl __3343749822 = pParam;
-					pParam = null;
-					pParamDecl.AddChild(__3343749822);
-				}
+				NumbatLogic.VarDecl __3343749822 = pParam;
+				pParam = null;
+				pParamDecl.AddChild(__3343749822);
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_RIGHT) != null)
 				{
 					continue;
@@ -54,13 +52,9 @@ namespace NumbatLogic
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			}
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.ParamDecl __2049651157 = pParamDecl;
-				pParamDecl = null;
-				{
-					return __2049651157;
-				}
-			}
+			NumbatLogic.ParamDecl __2049651157 = pParamDecl;
+			pParamDecl = null;
+			return __2049651157;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
@@ -112,12 +106,13 @@ namespace NumbatLogic
 						pValidator.AddError("Param count mismatch (pCallChild == null)", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 					return false;
 				}
-				else if (pDeclChild == null)
-				{
-					if (pValidator != null)
-						pValidator.AddError("Param count mismatch (pDeclChild == null)", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-					return false;
-				}
+				else
+					if (pDeclChild == null)
+					{
+						if (pValidator != null)
+							pValidator.AddError("Param count mismatch (pDeclChild == null)", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+						return false;
+					}
 				if (pCallChild.m_pValueType == null)
 				{
 					if (pValidator != null)
@@ -144,25 +139,19 @@ namespace NumbatLogic
 				{
 					if (pValidator != null)
 						pValidator.AddError("Unknown decl valuetype???", pCallChild.m_pFirstToken.m_sFileName, pCallChild.m_pFirstToken.m_nLine, pCallChild.m_pFirstToken.m_nColumn);
-					{
-						return false;
-					}
+					return false;
 				}
 				if (pValueType.m_ePointerType == TypeRef.PointerType.TRANSITON && pCallChild.m_pValueType.m_ePointerType != TypeRef.PointerType.TRANSITON && pCallChild.m_pValueType.m_eType != ValueType.Type.NULL_VALUE)
 				{
 					if (pValidator != null)
 						pValidator.AddError("Must pass a transition pointer!", pCallChild.m_pFirstToken.m_sFileName, pCallChild.m_pFirstToken.m_nLine, pCallChild.m_pFirstToken.m_nColumn);
-					{
-						return false;
-					}
+					return false;
 				}
 				if (pCallChild.m_pValueType.m_ePointerType == TypeRef.PointerType.TRANSITON && pValueType.m_ePointerType != TypeRef.PointerType.TRANSITON)
 				{
 					if (pValidator != null)
 						pValidator.AddError("Was not expecting a transition pointer??", pCallChild.m_pFirstToken.m_sFileName, pCallChild.m_pFirstToken.m_nLine, pCallChild.m_pFirstToken.m_nColumn);
-					{
-						return false;
-					}
+					return false;
 				}
 				if (pCallChild.m_pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE || pCallChild.m_pValueType.m_eType == ValueType.Type.GENERIC_TYPE_DECL_VALUE || pCallChild.m_pValueType.m_eType == ValueType.Type.VOIDPTR)
 				{
@@ -176,9 +165,7 @@ namespace NumbatLogic
 							pValueType.StringifyType(sTemp);
 							pValidator.AddError(sTemp.GetExternalString(), pCallChild.m_pFirstToken.m_sFileName, pCallChild.m_pFirstToken.m_nLine, pCallChild.m_pFirstToken.m_nColumn);
 						}
-						{
-							return false;
-						}
+						return false;
 					}
 				}
 				nIndex++;

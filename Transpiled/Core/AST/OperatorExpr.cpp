@@ -46,15 +46,11 @@ namespace NumbatLogic
 			pOwnedRight = 0;
 			pOperatorExpr->AddChild(__766380242);
 		}
-		{
-			NumbatLogic::OperatorExpr* __304301329 = pOperatorExpr;
-			pOperatorExpr = 0;
-			{
-				if (pOwnedLeft) delete pOwnedLeft;
-				if (pOwnedRight) delete pOwnedRight;
-				return __304301329;
-			}
-		}
+		NumbatLogic::OperatorExpr* __304301329 = pOperatorExpr;
+		pOperatorExpr = 0;
+		if (pOwnedLeft) delete pOwnedLeft;
+		if (pOwnedRight) delete pOwnedRight;
+		return __304301329;
 	}
 
 	AST* OperatorExpr::BaseClone()
@@ -65,19 +61,13 @@ namespace NumbatLogic
 			pLeft = m_pLeft->BaseClone();
 		if (m_pRight != 0)
 			pRight = m_pRight->BaseClone();
-		{
-			NumbatLogic::AST* __2461073728 = pLeft;
-			pLeft = 0;
-			{
-				NumbatLogic::AST* __1625873296 = pRight;
-				pRight = 0;
-				{
-					if (pLeft) delete pLeft;
-					if (pRight) delete pRight;
-					return Create(m_pOperatorToken, __2461073728, __1625873296);
-				}
-			}
-		}
+		NumbatLogic::AST* __2461073728 = pLeft;
+		pLeft = 0;
+		NumbatLogic::AST* __1625873296 = pRight;
+		pRight = 0;
+		if (pLeft) delete pLeft;
+		if (pRight) delete pRight;
+		return Create(m_pOperatorToken, __2461073728, __1625873296);
 	}
 
 	void OperatorExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
@@ -109,10 +99,8 @@ namespace NumbatLogic
 						InternalString* sTemp = new InternalString("Unexpected right side of TOKEN_DOUBLE_COLON operator: ");
 						m_pRight->StringifyType(sTemp);
 						pValidator->AddError(sTemp->GetExternalString(), m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
-						{
-							if (sTemp) delete sTemp;
-							return;
-						}
+						if (sTemp) delete sTemp;
+						return;
 					}
 					m_pRight->Validate(pValidator, this);
 					if (m_pRight->m_pValueType == 0)
@@ -133,19 +121,20 @@ namespace NumbatLogic
 							return;
 						}
 					}
-					else if (m_pLeft->m_pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
-					{
-						if (m_pLeft->m_pValueType->m_pClassDecl == 0)
+					else
+						if (m_pLeft->m_pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
 						{
-							pValidator->AddError(" set but m_pClassDecl is null???", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+							if (m_pLeft->m_pValueType->m_pClassDecl == 0)
+							{
+								pValidator->AddError(" set but m_pClassDecl is null???", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+								return;
+							}
+						}
+						else
+						{
+							pValidator->AddError("Expected ValueType::Type::CLASS_DECL_VALUE or ValueType::Type::GENERIC_TYPE_DECL_VALUE on left of TOKEN_DOT operator", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
 							return;
 						}
-					}
-					else
-					{
-						pValidator->AddError("Expected ValueType::Type::CLASS_DECL_VALUE or ValueType::Type::GENERIC_TYPE_DECL_VALUE on left of TOKEN_DOT operator", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
-						return;
-					}
 					m_pRight->Validate(pValidator, this);
 					if (m_pRight->m_pValueType == 0)
 					{
@@ -224,24 +213,24 @@ namespace NumbatLogic
 									sTemp->AppendString(" to ");
 									sTemp->AppendString(m_pLeft->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
 									pValidator->AddError(sTemp->GetExternalString(), m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
-									{
-										if (sTemp) delete sTemp;
-										return;
-									}
+									if (sTemp) delete sTemp;
+									return;
 								}
 							}
 						}
-						else if (m_pRight->m_pValueType->m_eType == ValueType::Type::NULL_VALUE)
-						{
-						}
-						else if (m_pRight->m_pValueType->m_eType == ValueType::Type::GENERIC_TYPE_DECL_VALUE)
-						{
-						}
 						else
-						{
-							pValidator->AddError("Expected right side of = to also be CLASS_DECL_VALUE or NULL_VALUE\n", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
-							return;
-						}
+							if (m_pRight->m_pValueType->m_eType == ValueType::Type::NULL_VALUE)
+							{
+							}
+							else
+								if (m_pRight->m_pValueType->m_eType == ValueType::Type::GENERIC_TYPE_DECL_VALUE)
+								{
+								}
+								else
+								{
+									pValidator->AddError("Expected right side of = to also be CLASS_DECL_VALUE or NULL_VALUE\n", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+									return;
+								}
 					}
 					m_pValueType = m_pLeft->m_pValueType->Clone();
 					return;

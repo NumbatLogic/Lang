@@ -43,23 +43,23 @@ namespace NumbatLogic
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 
-			AST* pThen = own AST::CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
-			if (pThen == null)
+			Scope* pThenScope = own Scope::TryCreate(pTokenContainer, pTempOffset, true);
+			if (pThenScope == null)
 			{
-				Console::Log("expected statement");
+				Console::Log("expected then statement / scope");
 				Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic::Assert::Plz(false);
 				return null;
 			}
 
-			AST* pElse = null;
+			Scope* pElseScope = null;
 			if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_ELSE) != null)
 			{
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
-				pElse = own AST::CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
-				if (pElse == null)
+				pElseScope = own Scope::TryCreate(pTokenContainer, pTempOffset, true);
+				if (pElseScope == null)
 				{
-					Console::Log("expected else statement");
+					Console::Log("expected else statement / scope");
 					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
 					NumbatLogic::Assert::Plz(false);
 					return null;
@@ -72,9 +72,9 @@ namespace NumbatLogic
 			pIfStmt.m_pFirstToken = pIfToken;
 
 			pIfStmt.AddChild(disown pCondition);
-			pIfStmt.AddChild(disown pThen);
-			if (pElse != null)
-				pIfStmt.AddChild(disown pElse);
+			pIfStmt.AddChild(disown pThenScope);
+			if (pElseScope != null)
+				pIfStmt.AddChild(disown pElseScope);
 
 			pOffsetDatum.Set(pTempOffset);
 			return disown pIfStmt;
@@ -85,8 +85,6 @@ namespace NumbatLogic
 			AST pCondition = m_pFirstChild;
 			AST pThen = pCondition.m_pNextSibling;
 			AST pElse = pThen.m_pNextSibling;
-
-
 
 			IfStmt pParentIfStmt = null;
 			if (m_pParent != null && m_pParent.m_eType == AST::Type::AST_IF_STMT)
@@ -99,10 +97,7 @@ namespace NumbatLogic
 			sOut.Append("if (");
 			pCondition.Stringify(eLanguage, eOutputFile, 0, sOut);
 			sOut.Append(")\n");
-			if (pThen.m_eType == AST::Type::AST_SCOPE)
-				pThen.Stringify(eLanguage, eOutputFile, nDepth, sOut);
-			else
-				pThen.Stringify(eLanguage, eOutputFile, nDepth + 1, sOut);
+			pThen.Stringify(eLanguage, eOutputFile, nDepth, sOut);
 			if (pElse != null)
 			{
 				Util::Pad(nDepth, sOut);
@@ -115,10 +110,7 @@ namespace NumbatLogic
 				{
 					
 					sOut.Append("else\n");
-					if (pElse.m_eType == AST::Type::AST_SCOPE)
-						pElse.Stringify(eLanguage, eOutputFile, nDepth, sOut);
-					else
-						pElse.Stringify(eLanguage, eOutputFile, nDepth + 1, sOut);
+					pElse.Stringify(eLanguage, eOutputFile, nDepth, sOut);
 				}
 			}
 		}

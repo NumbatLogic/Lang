@@ -21,9 +21,7 @@ namespace NumbatLogic
 			{
 				Console.Log("expected left paren");
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			AST pBeforeStatement = VarDecl.TryCreate(pTokenContainer, pTempOffset, true);
@@ -35,9 +33,7 @@ namespace NumbatLogic
 					Console.Log("expected before statement");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 					NumbatLogic.Assert.Plz(false);
-					{
-						return null;
-					}
+					return null;
 				}
 			}
 			if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SEMICOLON) == null)
@@ -45,9 +41,7 @@ namespace NumbatLogic
 				Console.Log("expected semicolon");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			AST pConditionStatement = AST.TryCreateExpression(pTokenContainer, pTempOffset);
@@ -56,18 +50,14 @@ namespace NumbatLogic
 				Console.Log("expected condition statement");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SEMICOLON) == null)
 			{
 				Console.Log("expected semicolon");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			AST pLoopStatement = AST.TryCreateExpression(pTokenContainer, pTempOffset);
@@ -76,9 +66,7 @@ namespace NumbatLogic
 				Console.Log("expected right paren");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			AST pStatement = AST.CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
@@ -90,35 +78,25 @@ namespace NumbatLogic
 			}
 			ForStmt pForStmt = new ForStmt();
 			pForStmt.m_pFirstToken = pForToken;
-			{
-				NumbatLogic.AST __4132705276 = pBeforeStatement;
-				pBeforeStatement = null;
-				pForStmt.AddChild(__4132705276);
-			}
-			{
-				NumbatLogic.AST __658474541 = pConditionStatement;
-				pConditionStatement = null;
-				pForStmt.AddChild(__658474541);
-			}
+			NumbatLogic.AST __4132705276 = pBeforeStatement;
+			pBeforeStatement = null;
+			pForStmt.AddChild(__4132705276);
+			NumbatLogic.AST __658474541 = pConditionStatement;
+			pConditionStatement = null;
+			pForStmt.AddChild(__658474541);
 			if (pLoopStatement != null)
 			{
 				NumbatLogic.AST __3980311021 = pLoopStatement;
 				pLoopStatement = null;
 				pForStmt.AddChild(__3980311021);
 			}
-			{
-				NumbatLogic.AST __688492598 = pStatement;
-				pStatement = null;
-				pForStmt.AddChild(__688492598);
-			}
+			NumbatLogic.AST __688492598 = pStatement;
+			pStatement = null;
+			pForStmt.AddChild(__688492598);
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.ForStmt __3863278161 = pForStmt;
-				pForStmt = null;
-				{
-					return __3863278161;
-				}
-			}
+			NumbatLogic.ForStmt __3863278161 = pForStmt;
+			pForStmt = null;
+			return __3863278161;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

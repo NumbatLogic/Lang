@@ -21,9 +21,7 @@ namespace NumbatLogic
 				Console.Log("expected left paren");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			AST pCondition = AST.TryCreateExpression(pTokenContainer, pTempOffset);
@@ -32,72 +30,56 @@ namespace NumbatLogic
 				Console.Log("expected condition");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_RIGHT) == null)
 			{
 				Console.Log("expected right paren");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-			AST pThen = AST.CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
-			if (pThen == null)
+			Scope pThenScope = Scope.TryCreate(pTokenContainer, pTempOffset, true);
+			if (pThenScope == null)
 			{
-				Console.Log("expected statement");
+				Console.Log("expected then statement / scope");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
-			AST pElse = null;
+			Scope pElseScope = null;
 			if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_KEYWORD_ELSE) != null)
 			{
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-				pElse = AST.CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
-				if (pElse == null)
+				pElseScope = Scope.TryCreate(pTokenContainer, pTempOffset, true);
+				if (pElseScope == null)
 				{
-					Console.Log("expected else statement");
+					Console.Log("expected else statement / scope");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 					NumbatLogic.Assert.Plz(false);
-					{
-						return null;
-					}
+					return null;
 				}
 			}
 			IfStmt pIfStmt = new IfStmt();
 			pIfStmt.m_eType = AST.Type.AST_IF_STMT;
 			pIfStmt.m_pFirstToken = pIfToken;
+			NumbatLogic.AST __3534699931 = pCondition;
+			pCondition = null;
+			pIfStmt.AddChild(__3534699931);
+			NumbatLogic.Scope __797977631 = pThenScope;
+			pThenScope = null;
+			pIfStmt.AddChild(__797977631);
+			if (pElseScope != null)
 			{
-				NumbatLogic.AST __3534699931 = pCondition;
-				pCondition = null;
-				pIfStmt.AddChild(__3534699931);
-			}
-			{
-				NumbatLogic.AST __1813633903 = pThen;
-				pThen = null;
-				pIfStmt.AddChild(__1813633903);
-			}
-			if (pElse != null)
-			{
-				NumbatLogic.AST __1661904051 = pElse;
-				pElse = null;
-				pIfStmt.AddChild(__1661904051);
+				NumbatLogic.Scope __1035947483 = pElseScope;
+				pElseScope = null;
+				pIfStmt.AddChild(__1035947483);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.IfStmt __2301836827 = pIfStmt;
-				pIfStmt = null;
-				{
-					return __2301836827;
-				}
-			}
+			NumbatLogic.IfStmt __2301836827 = pIfStmt;
+			pIfStmt = null;
+			return __2301836827;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
@@ -115,10 +97,7 @@ namespace NumbatLogic
 			sOut.Append("if (");
 			pCondition.Stringify(eLanguage, eOutputFile, 0, sOut);
 			sOut.Append(")\n");
-			if (pThen.m_eType == AST.Type.AST_SCOPE)
-				pThen.Stringify(eLanguage, eOutputFile, nDepth, sOut);
-			else
-				pThen.Stringify(eLanguage, eOutputFile, nDepth + 1, sOut);
+			pThen.Stringify(eLanguage, eOutputFile, nDepth, sOut);
 			if (pElse != null)
 			{
 				Util.Pad(nDepth, sOut);
@@ -130,10 +109,7 @@ namespace NumbatLogic
 				else
 				{
 					sOut.Append("else\n");
-					if (pElse.m_eType == AST.Type.AST_SCOPE)
-						pElse.Stringify(eLanguage, eOutputFile, nDepth, sOut);
-					else
-						pElse.Stringify(eLanguage, eOutputFile, nDepth + 1, sOut);
+					pElse.Stringify(eLanguage, eOutputFile, nDepth, sOut);
 				}
 			}
 		}

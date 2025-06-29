@@ -10,9 +10,7 @@ namespace NumbatLogic
 				InternalString sTemp = new InternalString("expected even number of args! Got ");
 				sTemp.AppendInt(sArgVector.GetSize());
 				Console.Log(sTemp.GetExternalString());
-				{
-					return;
-				}
+				return;
 			}
 			Project pProject = new Project();
 			InternalString sAmalgamateFileName = null;
@@ -33,9 +31,7 @@ namespace NumbatLogic
 				if (ExternalString.Equal(sxArg0, "-d"))
 				{
 					sDefineVector.PushBack(new InternalString(sxArg1));
-					{
-						continue;
-					}
+					continue;
 				}
 				if (ExternalString.Equal(sxArg0, "-f"))
 				{
@@ -43,9 +39,7 @@ namespace NumbatLogic
 					sTemp.Append(sxArg1);
 					Console.Log(sTemp.GetExternalString());
 					pProject.AddDirectory(sxArg1, sDefineVector);
-					{
-						continue;
-					}
+					continue;
 				}
 				if (ExternalString.Equal(sxArg0, "-fi"))
 				{
@@ -53,65 +47,47 @@ namespace NumbatLogic
 					sTemp.Append(sxArg1);
 					Console.Log(sTemp.GetExternalString());
 					pProject.AddFile(sxArg1, sDefineVector);
-					{
-						continue;
-					}
+					continue;
 				}
 				if (ExternalString.Equal(sxArg0, "-a"))
 				{
 					sAmalgamateFileName = new InternalString(sxArg1);
-					{
-						continue;
-					}
+					continue;
 				}
 				if (ExternalString.Equal(sxArg0, "--output-nll-def"))
 				{
 					if (!ExternalString.Equal(sxArg1, "true"))
 					{
 						Console.Log("if set, --output-nll must be true");
-						{
-							return;
-						}
+						return;
 					}
 					bOutputNLLDef = true;
-					{
-						continue;
-					}
+					continue;
 				}
 				if (ExternalString.Equal(sxArg0, "-ahppa"))
 				{
 					sAmalgamatedHPPAppend.PushBack(new InternalString(sxArg1));
-					{
-						continue;
-					}
+					continue;
 				}
 				if (ExternalString.Equal(sxArg0, "-acppp"))
 				{
 					sAmalgamatedCPPPrepend.PushBack(new InternalString(sxArg1));
-					{
-						continue;
-					}
+					continue;
 				}
 				if (ExternalString.Equal(sxArg0, "-acppa"))
 				{
 					sAmalgamatedCPPAppend.PushBack(new InternalString(sxArg1));
-					{
-						continue;
-					}
+					continue;
 				}
 				if (ExternalString.Equal(sxArg0, "-acsa"))
 				{
 					sAmalgamatedCSAppend.PushBack(new InternalString(sxArg1));
-					{
-						continue;
-					}
+					continue;
 				}
 				sTemp = new InternalString("Unexpected arg: ");
 				sTemp.Append(sxArg0);
 				Console.Log(sTemp.GetExternalString());
-				{
-					return;
-				}
+				return;
 			}
 			if (sAmalgamateFileName != null)
 			{

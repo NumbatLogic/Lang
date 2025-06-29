@@ -15,9 +15,9 @@
 
 namespace NumbatLogic
 {
+	class Scope;
 	class OffsetDatum;
 	class Token;
-	class Scope;
 	class AST;
 	class TorDecl;
 	class MemberVarDecl;
@@ -27,20 +27,44 @@ namespace NumbatLogic
 {
 	Scope::Scope()
 	{
+		m_bPseudo = false;
 		m_eType = AST::Type::AST_SCOPE;
+		m_bPseudo = false;
 	}
 
-	Scope* Scope::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
+	Scope* Scope::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, bool bPseudoScope)
 	{
+		Scope* pScope = 0;
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
 		Token* pOpeningToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_LEFT);
 		if (pOpeningToken == 0)
 		{
+			if (bPseudoScope)
+			{
+				AST* pChild = AST::CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
+				if (pChild != 0)
+				{
+					pScope = new Scope();
+					pScope->m_pFirstToken = pChild->m_pFirstToken;
+					pScope->m_bPseudo = true;
+					NumbatLogic::AST* __4076228335 = pChild;
+					pChild = 0;
+					pScope->AddChild(__4076228335);
+					pOffsetDatum->Set(pTempOffset);
+					NumbatLogic::Scope* __693694853 = pScope;
+					pScope = 0;
+					if (pChild) delete pChild;
+					if (pTempOffset) delete pTempOffset;
+					return __693694853;
+				}
+				if (pChild) delete pChild;
+			}
+			if (pScope) delete pScope;
 			if (pTempOffset) delete pTempOffset;
 			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-		Scope* pScope = new Scope();
+		pScope = new Scope();
 		pScope->m_pFirstToken = pOpeningToken;
 		while (true)
 		{
@@ -56,29 +80,21 @@ namespace NumbatLogic
 				Console::Log("expected to parse somethting within scope...");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 				NumbatLogic::Assert::Plz(false);
-				{
-					if (pChild) delete pChild;
-					if (pTempOffset) delete pTempOffset;
-					if (pScope) delete pScope;
-					return 0;
-				}
+				if (pChild) delete pChild;
+				if (pScope) delete pScope;
+				if (pTempOffset) delete pTempOffset;
+				return 0;
 			}
-			{
-				NumbatLogic::AST* __4076228335 = pChild;
-				pChild = 0;
-				pScope->AddChild(__4076228335);
-			}
+			NumbatLogic::AST* __4076228335 = pChild;
+			pChild = 0;
+			pScope->AddChild(__4076228335);
 			if (pChild) delete pChild;
 		}
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::Scope* __693694853 = pScope;
-			pScope = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				return __693694853;
-			}
-		}
+		NumbatLogic::Scope* __693694853 = pScope;
+		pScope = 0;
+		if (pTempOffset) delete pTempOffset;
+		return __693694853;
 	}
 
 	void Scope::Validate(Validator* pValidator, OperatorExpr* pParent)
@@ -122,16 +138,22 @@ namespace NumbatLogic
 
 	void Scope::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
 	{
-		Util::Pad(nDepth, sOut);
-		sOut->Append("{\n");
+		if (!m_bPseudo || m_pFirstChild == 0 || m_pFirstChild != m_pLastChild)
+		{
+			Util::Pad(nDepth, sOut);
+			sOut->Append("{\n");
+		}
 		AST* pChild = m_pFirstChild;
 		while (pChild != 0)
 		{
 			pChild->Stringify(eLanguage, eOutputFile, nDepth + 1, sOut);
 			pChild = pChild->m_pNextSibling;
 		}
-		Util::Pad(nDepth, sOut);
-		sOut->Append("}\n");
+		if (!m_bPseudo || m_pFirstChild == 0 || m_pFirstChild != m_pLastChild)
+		{
+			Util::Pad(nDepth, sOut);
+			sOut->Append("}\n");
+		}
 	}
 
 }

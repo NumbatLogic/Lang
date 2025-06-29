@@ -57,12 +57,10 @@ namespace NumbatLogic
 			Console::Log("expected ParamDecl");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pTypeRef) delete pTypeRef;
-				if (pParamDecl) delete pParamDecl;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pTypeRef) delete pTypeRef;
+			if (pParamDecl) delete pParamDecl;
+			return 0;
 		}
 		bool bConst = false;
 		Token* pConst = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_CONST);
@@ -77,7 +75,7 @@ namespace NumbatLogic
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		else
 		{
-			pScope = Scope::TryCreate(pTokenContainer, pTempOffset);
+			pScope = Scope::TryCreate(pTokenContainer, pTempOffset, false);
 			if (pScope == 0)
 			{
 				Console::Log("expected scope");
@@ -95,16 +93,12 @@ namespace NumbatLogic
 		pFunctionDecl->m_pParamDecl = pParamDecl;
 		pFunctionDecl->m_bConst = bConst;
 		pFunctionDecl->m_pScope = pScope;
-		{
-			NumbatLogic::TypeRef* __3079357496 = pTypeRef;
-			pTypeRef = 0;
-			pFunctionDecl->AddChild(__3079357496);
-		}
-		{
-			NumbatLogic::ParamDecl* __2049651157 = pParamDecl;
-			pParamDecl = 0;
-			pFunctionDecl->AddChild(__2049651157);
-		}
+		NumbatLogic::TypeRef* __3079357496 = pTypeRef;
+		pTypeRef = 0;
+		pFunctionDecl->AddChild(__3079357496);
+		NumbatLogic::ParamDecl* __2049651157 = pParamDecl;
+		pParamDecl = 0;
+		pFunctionDecl->AddChild(__2049651157);
 		if (pScope != 0)
 		{
 			NumbatLogic::Scope* __693694853 = pScope;
@@ -112,17 +106,13 @@ namespace NumbatLogic
 			pFunctionDecl->AddChild(__693694853);
 		}
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::FunctionDecl* __549451023 = pFunctionDecl;
-			pFunctionDecl = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pTypeRef) delete pTypeRef;
-				if (pParamDecl) delete pParamDecl;
-				if (pScope) delete pScope;
-				return __549451023;
-			}
-		}
+		NumbatLogic::FunctionDecl* __549451023 = pFunctionDecl;
+		pFunctionDecl = 0;
+		if (pTempOffset) delete pTempOffset;
+		if (pTypeRef) delete pTypeRef;
+		if (pParamDecl) delete pParamDecl;
+		if (pScope) delete pScope;
+		return __549451023;
 	}
 
 	AST* FunctionDecl::FindByName(const char* sxName, AST* pCallingChild)

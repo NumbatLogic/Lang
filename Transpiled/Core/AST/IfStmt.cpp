@@ -5,6 +5,7 @@
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "AST.hpp"
+#include "Scope.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../Util.hpp"
 
@@ -13,6 +14,7 @@ namespace NumbatLogic
 	class OffsetDatum;
 	class Token;
 	class AST;
+	class Scope;
 	class IfStmt;
 }
 namespace NumbatLogic
@@ -37,10 +39,8 @@ namespace NumbatLogic
 			Console::Log("expected left paren");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		AST* pCondition = AST::TryCreateExpression(pTokenContainer, pTempOffset);
@@ -49,87 +49,71 @@ namespace NumbatLogic
 			Console::Log("expected condition");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pCondition) delete pCondition;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pCondition) delete pCondition;
+			return 0;
 		}
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT) == 0)
 		{
 			Console::Log("expected right paren");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pCondition) delete pCondition;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pCondition) delete pCondition;
+			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-		AST* pThen = AST::CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
-		if (pThen == 0)
+		Scope* pThenScope = Scope::TryCreate(pTokenContainer, pTempOffset, true);
+		if (pThenScope == 0)
 		{
-			Console::Log("expected statement");
+			Console::Log("expected then statement / scope");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pCondition) delete pCondition;
-				if (pThen) delete pThen;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pCondition) delete pCondition;
+			if (pThenScope) delete pThenScope;
+			return 0;
 		}
-		AST* pElse = 0;
+		Scope* pElseScope = 0;
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_ELSE) != 0)
 		{
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-			pElse = AST::CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
-			if (pElse == 0)
+			pElseScope = Scope::TryCreate(pTokenContainer, pTempOffset, true);
+			if (pElseScope == 0)
 			{
-				Console::Log("expected else statement");
+				Console::Log("expected else statement / scope");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 				NumbatLogic::Assert::Plz(false);
-				{
-					if (pTempOffset) delete pTempOffset;
-					if (pCondition) delete pCondition;
-					if (pThen) delete pThen;
-					if (pElse) delete pElse;
-					return 0;
-				}
+				if (pTempOffset) delete pTempOffset;
+				if (pCondition) delete pCondition;
+				if (pThenScope) delete pThenScope;
+				if (pElseScope) delete pElseScope;
+				return 0;
 			}
 		}
 		IfStmt* pIfStmt = new IfStmt();
 		pIfStmt->m_eType = AST::Type::AST_IF_STMT;
 		pIfStmt->m_pFirstToken = pIfToken;
+		NumbatLogic::AST* __3534699931 = pCondition;
+		pCondition = 0;
+		pIfStmt->AddChild(__3534699931);
+		NumbatLogic::Scope* __797977631 = pThenScope;
+		pThenScope = 0;
+		pIfStmt->AddChild(__797977631);
+		if (pElseScope != 0)
 		{
-			NumbatLogic::AST* __3534699931 = pCondition;
-			pCondition = 0;
-			pIfStmt->AddChild(__3534699931);
-		}
-		{
-			NumbatLogic::AST* __1813633903 = pThen;
-			pThen = 0;
-			pIfStmt->AddChild(__1813633903);
-		}
-		if (pElse != 0)
-		{
-			NumbatLogic::AST* __1661904051 = pElse;
-			pElse = 0;
-			pIfStmt->AddChild(__1661904051);
+			NumbatLogic::Scope* __1035947483 = pElseScope;
+			pElseScope = 0;
+			pIfStmt->AddChild(__1035947483);
 		}
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::IfStmt* __2301836827 = pIfStmt;
-			pIfStmt = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pCondition) delete pCondition;
-				if (pThen) delete pThen;
-				if (pElse) delete pElse;
-				return __2301836827;
-			}
-		}
+		NumbatLogic::IfStmt* __2301836827 = pIfStmt;
+		pIfStmt = 0;
+		if (pTempOffset) delete pTempOffset;
+		if (pCondition) delete pCondition;
+		if (pThenScope) delete pThenScope;
+		if (pElseScope) delete pElseScope;
+		return __2301836827;
 	}
 
 	void IfStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
@@ -147,10 +131,7 @@ namespace NumbatLogic
 		sOut->Append("if (");
 		pCondition->Stringify(eLanguage, eOutputFile, 0, sOut);
 		sOut->Append(")\n");
-		if (pThen->m_eType == AST::Type::AST_SCOPE)
-			pThen->Stringify(eLanguage, eOutputFile, nDepth, sOut);
-		else
-			pThen->Stringify(eLanguage, eOutputFile, nDepth + 1, sOut);
+		pThen->Stringify(eLanguage, eOutputFile, nDepth, sOut);
 		if (pElse != 0)
 		{
 			Util::Pad(nDepth, sOut);
@@ -162,10 +143,7 @@ namespace NumbatLogic
 			else
 			{
 				sOut->Append("else\n");
-				if (pElse->m_eType == AST::Type::AST_SCOPE)
-					pElse->Stringify(eLanguage, eOutputFile, nDepth, sOut);
-				else
-					pElse->Stringify(eLanguage, eOutputFile, nDepth + 1, sOut);
+				pElse->Stringify(eLanguage, eOutputFile, nDepth, sOut);
 			}
 		}
 	}

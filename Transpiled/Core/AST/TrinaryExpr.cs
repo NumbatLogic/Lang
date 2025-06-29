@@ -20,9 +20,7 @@ namespace NumbatLogic
 				Console.Log("expected second expresssion");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			Token pColonToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_COLON);
 			if (pColonToken == null)
@@ -36,37 +34,25 @@ namespace NumbatLogic
 				Console.Log("expected second expresssion");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			TrinaryExpr pTrinaryExpr = new TrinaryExpr();
 			pTrinaryExpr.m_pFirstExpression = pFirstExpression;
 			pTrinaryExpr.m_pSecondExpression = pSecondExpression;
 			pTrinaryExpr.m_pThirdExpression = pThirdExpression;
-			{
-				NumbatLogic.AST __1176577974 = pFirstExpression;
-				pFirstExpression = null;
-				pTrinaryExpr.AddChild(__1176577974);
-			}
-			{
-				NumbatLogic.AST __2317218345 = pSecondExpression;
-				pSecondExpression = null;
-				pTrinaryExpr.AddChild(__2317218345);
-			}
-			{
-				NumbatLogic.AST __2588391620 = pThirdExpression;
-				pThirdExpression = null;
-				pTrinaryExpr.AddChild(__2588391620);
-			}
+			NumbatLogic.AST __1176577974 = pFirstExpression;
+			pFirstExpression = null;
+			pTrinaryExpr.AddChild(__1176577974);
+			NumbatLogic.AST __2317218345 = pSecondExpression;
+			pSecondExpression = null;
+			pTrinaryExpr.AddChild(__2317218345);
+			NumbatLogic.AST __2588391620 = pThirdExpression;
+			pThirdExpression = null;
+			pTrinaryExpr.AddChild(__2588391620);
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.TrinaryExpr __1659060397 = pTrinaryExpr;
-				pTrinaryExpr = null;
-				{
-					return __1659060397;
-				}
-			}
+			NumbatLogic.TrinaryExpr __1659060397 = pTrinaryExpr;
+			pTrinaryExpr = null;
+			return __1659060397;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

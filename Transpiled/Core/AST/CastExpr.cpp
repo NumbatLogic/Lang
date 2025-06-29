@@ -45,11 +45,9 @@ namespace NumbatLogic
 			Console::Log("expected TypeRef...");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pTypeRef) delete pTypeRef;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pTypeRef) delete pTypeRef;
+			return 0;
 		}
 		ParamCall* pParamCall = ParamCall::TryCreate(pTokenContainer, pTempOffset);
 		if (pParamCall == 0)
@@ -57,38 +55,28 @@ namespace NumbatLogic
 			Console::Log("expected ParamCall");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pTypeRef) delete pTypeRef;
-				if (pParamCall) delete pParamCall;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pTypeRef) delete pTypeRef;
+			if (pParamCall) delete pParamCall;
+			return 0;
 		}
 		CastExpr* pCastExpr = new CastExpr();
 		pCastExpr->m_pFirstToken = pCastToken;
 		pCastExpr->m_pTypeRef = pTypeRef;
 		pCastExpr->m_pParamCall = pParamCall;
-		{
-			NumbatLogic::TypeRef* __3079357496 = pTypeRef;
-			pTypeRef = 0;
-			pCastExpr->AddChild(__3079357496);
-		}
-		{
-			NumbatLogic::ParamCall* __3062759993 = pParamCall;
-			pParamCall = 0;
-			pCastExpr->AddChild(__3062759993);
-		}
+		NumbatLogic::TypeRef* __3079357496 = pTypeRef;
+		pTypeRef = 0;
+		pCastExpr->AddChild(__3079357496);
+		NumbatLogic::ParamCall* __3062759993 = pParamCall;
+		pParamCall = 0;
+		pCastExpr->AddChild(__3062759993);
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::CastExpr* __2866925773 = pCastExpr;
-			pCastExpr = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pTypeRef) delete pTypeRef;
-				if (pParamCall) delete pParamCall;
-				return __2866925773;
-			}
-		}
+		NumbatLogic::CastExpr* __2866925773 = pCastExpr;
+		pCastExpr = 0;
+		if (pTempOffset) delete pTempOffset;
+		if (pTypeRef) delete pTypeRef;
+		if (pParamCall) delete pParamCall;
+		return __2866925773;
 	}
 
 	void CastExpr::Validate(Validator* pValidator, OperatorExpr* pParent)

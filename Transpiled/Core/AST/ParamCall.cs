@@ -11,9 +11,7 @@ namespace NumbatLogic
 				Console.Log("expected '(' ");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			ParamCall pParamCall = new ParamCall();
@@ -33,11 +31,9 @@ namespace NumbatLogic
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 					NumbatLogic.Assert.Plz(false);
 				}
-				{
-					NumbatLogic.AST __3343749822 = pParam;
-					pParam = null;
-					pParamCall.AddChild(__3343749822);
-				}
+				NumbatLogic.AST __3343749822 = pParam;
+				pParam = null;
+				pParamCall.AddChild(__3343749822);
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_RIGHT) != null)
 				{
 					continue;
@@ -51,13 +47,9 @@ namespace NumbatLogic
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			}
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.ParamCall __3062759993 = pParamCall;
-				pParamCall = null;
-				{
-					return __3062759993;
-				}
-			}
+			NumbatLogic.ParamCall __3062759993 = pParamCall;
+			pParamCall = null;
+			return __3062759993;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

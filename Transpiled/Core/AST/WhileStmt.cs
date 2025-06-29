@@ -22,9 +22,7 @@ namespace NumbatLogic
 			{
 				Console.Log("expected left paren");
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			AST pExpression = AST.TryCreateExpression(pTokenContainer, pTempOffset);
@@ -32,21 +30,17 @@ namespace NumbatLogic
 			{
 				Console.Log("expected expression");
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_RIGHT) == null)
 			{
 				Console.Log("expected right paren");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-			Scope pScope = Scope.TryCreate(pTokenContainer, pTempOffset);
+			Scope pScope = Scope.TryCreate(pTokenContainer, pTempOffset, true);
 			if (pScope == null)
 			{
 				Console.Log("expected scope");
@@ -58,24 +52,16 @@ namespace NumbatLogic
 			pWhileStmt.m_pFirstToken = pWhileToken;
 			pWhileStmt.m_pExpression = pExpression;
 			pWhileStmt.m_pScope = pScope;
-			{
-				NumbatLogic.AST __1067118945 = pExpression;
-				pExpression = null;
-				pWhileStmt.AddChild(__1067118945);
-			}
-			{
-				NumbatLogic.Scope __693694853 = pScope;
-				pScope = null;
-				pWhileStmt.AddChild(__693694853);
-			}
+			NumbatLogic.AST __1067118945 = pExpression;
+			pExpression = null;
+			pWhileStmt.AddChild(__1067118945);
+			NumbatLogic.Scope __693694853 = pScope;
+			pScope = null;
+			pWhileStmt.AddChild(__693694853);
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.WhileStmt __2912286049 = pWhileStmt;
-				pWhileStmt = null;
-				{
-					return __2912286049;
-				}
-			}
+			NumbatLogic.WhileStmt __2912286049 = pWhileStmt;
+			pWhileStmt = null;
+			return __2912286049;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

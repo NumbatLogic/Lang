@@ -82,10 +82,8 @@ namespace NumbatLogic
 					if (bFound)
 					{
 						nIfdefDepth++;
-						{
-							if (sName) delete sName;
-							continue;
-						}
+						if (sName) delete sName;
+						continue;
 					}
 					while (true)
 					{
@@ -109,10 +107,8 @@ namespace NumbatLogic
 							pParseDatum->m_nColumn = 0;
 						}
 					}
-					{
-						if (sName) delete sName;
-						continue;
-					}
+					if (sName) delete sName;
+					continue;
 				}
 				if (pParseDatum->m_sInput->StartsWith("endif"))
 				{
@@ -145,27 +141,28 @@ namespace NumbatLogic
 						pParseDatum->m_nLine = pParseDatum->m_nLine + 1;
 						continue;
 					}
-					else if (nNextChar == '*')
-					{
-						ProcessCurrentRead(pParseDatum);
-						int nLastChar = 0;
-						while (true)
+					else
+						if (nNextChar == '*')
 						{
-							unsigned short nNextNextChar = ReadChar(pParseDatum, false);
-							if (nNextNextChar == 0 || nNextNextChar < 0)
-								break;
-							pParseDatum->m_nColumn = pParseDatum->m_nColumn + 1;
-							if (nNextNextChar == '\n')
+							ProcessCurrentRead(pParseDatum);
+							int nLastChar = 0;
+							while (true)
 							{
-								pParseDatum->m_nLine = pParseDatum->m_nLine + 1;
-								pParseDatum->m_nColumn = 0;
+								unsigned short nNextNextChar = ReadChar(pParseDatum, false);
+								if (nNextNextChar == 0 || nNextNextChar < 0)
+									break;
+								pParseDatum->m_nColumn = pParseDatum->m_nColumn + 1;
+								if (nNextNextChar == '\n')
+								{
+									pParseDatum->m_nLine = pParseDatum->m_nLine + 1;
+									pParseDatum->m_nColumn = 0;
+								}
+								if (nNextNextChar == '/' && nLastChar == '*')
+									break;
+								nLastChar = nNextNextChar;
 							}
-							if (nNextNextChar == '/' && nLastChar == '*')
-								break;
-							nLastChar = nNextNextChar;
+							continue;
 						}
-						continue;
-					}
 				}
 			}
 			switch (nChar)
@@ -237,10 +234,8 @@ namespace NumbatLogic
 			pParseDatum->m_sCurrentRead->AppendChar(nChar);
 			pParseDatum->m_nColumn = pParseDatum->m_nColumn + 1;
 		}
-		{
-			if (pParseDatum) delete pParseDatum;
-			return true;
-		}
+		if (pParseDatum) delete pParseDatum;
+		return true;
 	}
 
 	void TokenContainer::ProcessCurrentRead(ParseDatum* pParseDatum)
@@ -870,11 +865,9 @@ namespace NumbatLogic
 		if (bCopyString)
 			pToken->m_sValue = new InternalString(pParseDatum->m_sCurrentRead->GetExternalString());
 		pParseDatum->ClearCurrentRead();
-		{
-			NumbatLogic::Token* __2538616708 = pToken;
-			pToken = 0;
-			m_pTokenVector->PushBack(__2538616708);
-		}
+		NumbatLogic::Token* __2538616708 = pToken;
+		pToken = 0;
+		m_pTokenVector->PushBack(__2538616708);
 		if (pToken) delete pToken;
 	}
 
@@ -904,10 +897,11 @@ namespace NumbatLogic
 			}
 			if (bEscaping)
 				bEscaping = false;
-			else if (nChar == '\\')
-			{
-				bEscaping = true;
-			}
+			else
+				if (nChar == '\\')
+				{
+					bEscaping = true;
+				}
 		}
 	}
 

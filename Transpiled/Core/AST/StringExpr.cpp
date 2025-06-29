@@ -21,11 +21,9 @@ namespace NumbatLogic
 		StringExpr* pStringExpr = new StringExpr();
 		pStringExpr->m_eType = AST::Type::AST_STRING;
 		pStringExpr->m_pFirstToken = pToken;
-		{
-			NumbatLogic::StringExpr* __1750407191 = pStringExpr;
-			pStringExpr = 0;
-			return __1750407191;
-		}
+		NumbatLogic::StringExpr* __1750407191 = pStringExpr;
+		pStringExpr = 0;
+		return __1750407191;
 	}
 
 	void StringExpr::Validate(Validator* pValidator, OperatorExpr* pParent)

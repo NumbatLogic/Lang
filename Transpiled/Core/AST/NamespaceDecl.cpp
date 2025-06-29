@@ -49,11 +49,9 @@ namespace NumbatLogic
 			Console::Log("expected namespace name");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pNamespaceDecl) delete pNamespaceDecl;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pNamespaceDecl) delete pNamespaceDecl;
+			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_LEFT) == 0)
@@ -61,11 +59,9 @@ namespace NumbatLogic
 			Console::Log("expected opening curly brace");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pNamespaceDecl) delete pNamespaceDecl;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pNamespaceDecl) delete pNamespaceDecl;
+			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		pNamespaceDecl->m_pFirstToken = pNamespaceToken;
@@ -80,15 +76,11 @@ namespace NumbatLogic
 			AST* pAST = AST::CreateFromTokenContainer(pTokenContainer, pTempOffset);
 			if (pAST != 0)
 			{
-				{
-					NumbatLogic::AST* __3125986036 = pAST;
-					pAST = 0;
-					pNamespaceDecl->AddChild(__3125986036);
-				}
-				{
-					if (pAST) delete pAST;
-					continue;
-				}
+				NumbatLogic::AST* __3125986036 = pAST;
+				pAST = 0;
+				pNamespaceDecl->AddChild(__3125986036);
+				if (pAST) delete pAST;
+				continue;
 			}
 			Console::Log("expected to parse somethting within namespace...");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
@@ -96,14 +88,10 @@ namespace NumbatLogic
 			if (pAST) delete pAST;
 		}
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::NamespaceDecl* __2577615172 = pNamespaceDecl;
-			pNamespaceDecl = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				return __2577615172;
-			}
-		}
+		NumbatLogic::NamespaceDecl* __2577615172 = pNamespaceDecl;
+		pNamespaceDecl = 0;
+		if (pTempOffset) delete pTempOffset;
+		return __2577615172;
 	}
 
 	void NamespaceDecl::PreValidate(Validator* pValidator, OperatorExpr* pParent)

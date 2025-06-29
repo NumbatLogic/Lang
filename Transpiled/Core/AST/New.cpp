@@ -44,11 +44,9 @@ namespace NumbatLogic
 			Console::Log("expected TypeRef...");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pTypeRef) delete pTypeRef;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pTypeRef) delete pTypeRef;
+			return 0;
 		}
 		ParamCall* pParamCall = ParamCall::TryCreate(pTokenContainer, pTempOffset);
 		if (pParamCall == 0)
@@ -56,39 +54,29 @@ namespace NumbatLogic
 			Console::Log("expected ParamCall ");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pTypeRef) delete pTypeRef;
-				if (pParamCall) delete pParamCall;
-				return 0;
-			}
+			if (pTempOffset) delete pTempOffset;
+			if (pTypeRef) delete pTypeRef;
+			if (pParamCall) delete pParamCall;
+			return 0;
 		}
 		New* pNew = new New();
 		pNew->m_eType = AST::Type::AST_NEW_EXP;
 		pNew->m_pFirstToken = pNewToken;
 		pNew->m_pTypeRef = pTypeRef;
 		pNew->m_pParamCall = pParamCall;
-		{
-			NumbatLogic::TypeRef* __3079357496 = pTypeRef;
-			pTypeRef = 0;
-			pNew->AddChild(__3079357496);
-		}
-		{
-			NumbatLogic::ParamCall* __3062759993 = pParamCall;
-			pParamCall = 0;
-			pNew->AddChild(__3062759993);
-		}
+		NumbatLogic::TypeRef* __3079357496 = pTypeRef;
+		pTypeRef = 0;
+		pNew->AddChild(__3079357496);
+		NumbatLogic::ParamCall* __3062759993 = pParamCall;
+		pParamCall = 0;
+		pNew->AddChild(__3062759993);
 		pOffsetDatum->Set(pTempOffset);
-		{
-			NumbatLogic::New* __1420129270 = pNew;
-			pNew = 0;
-			{
-				if (pTempOffset) delete pTempOffset;
-				if (pTypeRef) delete pTypeRef;
-				if (pParamCall) delete pParamCall;
-				return __1420129270;
-			}
-		}
+		NumbatLogic::New* __1420129270 = pNew;
+		pNew = 0;
+		if (pTempOffset) delete pTempOffset;
+		if (pTypeRef) delete pTypeRef;
+		if (pParamCall) delete pParamCall;
+		return __1420129270;
 	}
 
 	void New::Validate(Validator* pValidator, OperatorExpr* pParent)
@@ -110,10 +98,8 @@ namespace NumbatLogic
 				sTemp->AppendString(m_pTypeRef->m_pFirstToken->m_sValue->GetExternalString());
 				sTemp->AppendString("\"");
 				pValidator->AddError(sTemp->GetExternalString(), m_pParamCall->m_pFirstToken->m_sFileName, m_pParamCall->m_pFirstToken->m_nLine, m_pParamCall->m_pFirstToken->m_nColumn);
-				{
-					if (sTemp) delete sTemp;
-					return;
-				}
+				if (sTemp) delete sTemp;
+				return;
 			}
 			ClassDecl* pClassDecl = m_pValueType->m_pClassDecl;
 			AST* pMember = pClassDecl->m_pFirstChild;

@@ -2,12 +2,10 @@ namespace NumbatLogic
 {
 	class VarDeclDescope : AST
 	{
-		protected bool m_bScope;
 		public Vector<VarDecl> m_pVarDeclVector;
-		public VarDeclDescope(bool bScope)
+		public VarDeclDescope()
 		{
 			m_eType = AST.Type.AST_VAR_DECL_DESCOPE;
-			m_bScope = bScope;
 			m_pVarDeclVector = new Vector<VarDecl>();
 		}
 
@@ -15,12 +13,6 @@ namespace NumbatLogic
 		{
 			if (eLanguage == AST.Language.CPP)
 			{
-				if (m_bScope)
-				{
-					Util.Pad(nDepth, sOut);
-					sOut.Append("{\n");
-					nDepth++;
-				}
 				for (int i = 0; i < m_pVarDeclVector.GetSize(); i++)
 				{
 					VarDecl pVarDecl = m_pVarDeclVector.Get(i);
@@ -44,12 +36,6 @@ namespace NumbatLogic
 						sOut.Append(sxName);
 						sOut.Append(";\n");
 					}
-				}
-				if (m_bScope)
-				{
-					nDepth--;
-					Util.Pad(nDepth, sOut);
-					sOut.Append("}\n");
 				}
 			}
 		}

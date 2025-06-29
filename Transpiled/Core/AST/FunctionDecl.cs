@@ -32,9 +32,7 @@ namespace NumbatLogic
 				Console.Log("expected ParamDecl");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
-				{
-					return null;
-				}
+				return null;
 			}
 			bool bConst = false;
 			Token pConst = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_KEYWORD_CONST);
@@ -49,7 +47,7 @@ namespace NumbatLogic
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			else
 			{
-				pScope = Scope.TryCreate(pTokenContainer, pTempOffset);
+				pScope = Scope.TryCreate(pTokenContainer, pTempOffset, false);
 				if (pScope == null)
 				{
 					Console.Log("expected scope");
@@ -67,16 +65,12 @@ namespace NumbatLogic
 			pFunctionDecl.m_pParamDecl = pParamDecl;
 			pFunctionDecl.m_bConst = bConst;
 			pFunctionDecl.m_pScope = pScope;
-			{
-				NumbatLogic.TypeRef __3079357496 = pTypeRef;
-				pTypeRef = null;
-				pFunctionDecl.AddChild(__3079357496);
-			}
-			{
-				NumbatLogic.ParamDecl __2049651157 = pParamDecl;
-				pParamDecl = null;
-				pFunctionDecl.AddChild(__2049651157);
-			}
+			NumbatLogic.TypeRef __3079357496 = pTypeRef;
+			pTypeRef = null;
+			pFunctionDecl.AddChild(__3079357496);
+			NumbatLogic.ParamDecl __2049651157 = pParamDecl;
+			pParamDecl = null;
+			pFunctionDecl.AddChild(__2049651157);
 			if (pScope != null)
 			{
 				NumbatLogic.Scope __693694853 = pScope;
@@ -84,13 +78,9 @@ namespace NumbatLogic
 				pFunctionDecl.AddChild(__693694853);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			{
-				NumbatLogic.FunctionDecl __549451023 = pFunctionDecl;
-				pFunctionDecl = null;
-				{
-					return __549451023;
-				}
-			}
+			NumbatLogic.FunctionDecl __549451023 = pFunctionDecl;
+			pFunctionDecl = null;
+			return __549451023;
 		}
 
 		public override AST FindByName(string sxName, AST pCallingChild)

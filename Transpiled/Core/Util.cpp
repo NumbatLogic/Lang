@@ -25,10 +25,8 @@ namespace NumbatLogic
 			pBlobView->PackUint32(nChar);
 		}
 		unsigned int nHaxTemp = pBlob->GetMsoCrc32();
-		{
-			if (pBlob) delete pBlob;
-			return nHaxTemp;
-		}
+		if (pBlob) delete pBlob;
+		return nHaxTemp;
 	}
 
 }

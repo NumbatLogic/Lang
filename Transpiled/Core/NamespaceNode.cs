@@ -20,11 +20,9 @@ namespace NumbatLogic
 			if (pNamespaceNode == null)
 			{
 				NamespaceNode pOwnedNamespaceNode = new NamespaceNode(pNamespaceDecl.m_pNameToken.m_sValue, this);
-				{
-					NumbatLogic.NamespaceNode __1551009467 = pOwnedNamespaceNode;
-					pOwnedNamespaceNode = null;
-					pNamespaceNode = m_pChildVector.PushBack(__1551009467);
-				}
+				NumbatLogic.NamespaceNode __1551009467 = pOwnedNamespaceNode;
+				pOwnedNamespaceNode = null;
+				pNamespaceNode = m_pChildVector.PushBack(__1551009467);
 			}
 			pNamespaceNode.m_pNamespaceDeclVector.PushBack(pNamespaceDecl);
 			pNamespaceDecl.m_pNamespaceNode = pNamespaceNode;

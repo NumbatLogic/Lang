@@ -83,13 +83,11 @@ namespace NumbatLogic
 			Console::Log(sInput);
 			Console::Log("\n->\n");
 			Console::Log(sxTokenized);
-			{
-				if (sDefineVector) delete sDefineVector;
-				if (pTokenContainer) delete pTokenContainer;
-				if (sTest) delete sTest;
-				if (sTokenized) delete sTokenized;
-				return;
-			}
+			if (sDefineVector) delete sDefineVector;
+			if (pTokenContainer) delete pTokenContainer;
+			if (sTest) delete sTest;
+			if (sTokenized) delete sTokenized;
+			return;
 		}
 		pTokenContainer->StripWhitespace();
 		OffsetDatum* pOffsetDatum = OffsetDatum::Create(0);
@@ -97,30 +95,26 @@ namespace NumbatLogic
 		if (pAST == 0)
 		{
 			Console::Log("  ** NO AST!");
-			{
-				if (sDefineVector) delete sDefineVector;
-				if (pTokenContainer) delete pTokenContainer;
-				if (sTest) delete sTest;
-				if (sTokenized) delete sTokenized;
-				if (pOffsetDatum) delete pOffsetDatum;
-				if (pAST) delete pAST;
-				return;
-			}
+			if (sDefineVector) delete sDefineVector;
+			if (pTokenContainer) delete pTokenContainer;
+			if (sTest) delete sTest;
+			if (sTokenized) delete sTokenized;
+			if (pOffsetDatum) delete pOffsetDatum;
+			if (pAST) delete pAST;
+			return;
 		}
 		if (pAST->m_eType != eAstType)
 		{
 			Console::Log("  ** AST TYPE MISMATCH!\n");
 			Console::Log(sxTokenized);
 			Console::Log(" != ");
-			{
-				if (sDefineVector) delete sDefineVector;
-				if (pTokenContainer) delete pTokenContainer;
-				if (sTest) delete sTest;
-				if (sTokenized) delete sTokenized;
-				if (pOffsetDatum) delete pOffsetDatum;
-				if (pAST) delete pAST;
-				return;
-			}
+			if (sDefineVector) delete sDefineVector;
+			if (pTokenContainer) delete pTokenContainer;
+			if (sTest) delete sTest;
+			if (sTokenized) delete sTokenized;
+			if (pOffsetDatum) delete pOffsetDatum;
+			if (pAST) delete pAST;
+			return;
 		}
 		InternalString* sOut = new InternalString("");
 		pAST->Stringify(AST::Language::NLL, AST::OutputFile::SOURCE, 0, sOut);
@@ -137,16 +131,14 @@ namespace NumbatLogic
 			Console::Log("'\n->\n'");
 			Console::Log(sOut->GetExternalString());
 			Console::Log("'");
-			{
-				if (sDefineVector) delete sDefineVector;
-				if (pTokenContainer) delete pTokenContainer;
-				if (sTest) delete sTest;
-				if (sTokenized) delete sTokenized;
-				if (pOffsetDatum) delete pOffsetDatum;
-				if (pAST) delete pAST;
-				if (sOut) delete sOut;
-				return;
-			}
+			if (sDefineVector) delete sDefineVector;
+			if (pTokenContainer) delete pTokenContainer;
+			if (sTest) delete sTest;
+			if (sTokenized) delete sTokenized;
+			if (pOffsetDatum) delete pOffsetDatum;
+			if (pAST) delete pAST;
+			if (sOut) delete sOut;
+			return;
 		}
 		if (sDefineVector) delete sDefineVector;
 		if (pTokenContainer) delete pTokenContainer;
