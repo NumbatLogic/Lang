@@ -11,9 +11,9 @@ namespace NumbatLogic
 			CharExpr pCharExpr = new CharExpr();
 			pCharExpr.m_eType = AST.Type.AST_CHAR;
 			pCharExpr.m_pFirstToken = pToken;
-			NumbatLogic.CharExpr __4175857163 = pCharExpr;
+			NumbatLogic.CharExpr __3944088616 = pCharExpr;
 			pCharExpr = null;
-			return __4175857163;
+			return __3944088616;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

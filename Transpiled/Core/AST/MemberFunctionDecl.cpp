@@ -93,20 +93,20 @@ namespace NumbatLogic
 			if (pFunctionDecl) delete pFunctionDecl;
 			return 0;
 		}
-		NumbatLogic::AccessLevel* __1197960421 = pAccessLevel;
+		NumbatLogic::AccessLevel* __3646168542 = pAccessLevel;
 		pAccessLevel = 0;
-		pMemberFunctionDecl->AddChild(__1197960421);
+		pMemberFunctionDecl->AddChild(__3646168542);
 		pMemberFunctionDecl->m_pFunctionDecl = pFunctionDecl;
-		NumbatLogic::FunctionDecl* __1338261948 = pFunctionDecl;
+		NumbatLogic::FunctionDecl* __1624742725 = pFunctionDecl;
 		pFunctionDecl = 0;
-		pMemberFunctionDecl->AddChild(__1338261948);
+		pMemberFunctionDecl->AddChild(__1624742725);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::MemberFunctionDecl* __2033347627 = pMemberFunctionDecl;
+		NumbatLogic::MemberFunctionDecl* __3782689298 = pMemberFunctionDecl;
 		pMemberFunctionDecl = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pAccessLevel) delete pAccessLevel;
 		if (pFunctionDecl) delete pFunctionDecl;
-		return __2033347627;
+		return __3782689298;
 	}
 
 	void MemberFunctionDecl::Validate(Validator* pValidator, OperatorExpr* pParent)

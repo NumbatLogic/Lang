@@ -68,9 +68,9 @@ namespace NumbatLogic
 							NumbatLogic.Assert.Plz(false);
 						}
 						pTypeRef.m_pGenericTypeRefVector.PushBack(pGenericTypeRef);
-						NumbatLogic.TypeRef __344370627 = pGenericTypeRef;
+						NumbatLogic.TypeRef __1931929978 = pGenericTypeRef;
 						pGenericTypeRef = null;
-						pTypeRef.AddChild(__344370627);
+						pTypeRef.AddChild(__1931929978);
 						if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_ANGLE_BRACKET_RIGHT) != null)
 						{
 							continue;
@@ -99,9 +99,9 @@ namespace NumbatLogic
 					return null;
 				}
 				pTypeRef.m_pChildTypeRef = pChildTypeRef;
-				NumbatLogic.TypeRef __1838761807 = pChildTypeRef;
+				NumbatLogic.TypeRef __3769513442 = pChildTypeRef;
 				pChildTypeRef = null;
-				pTypeRef.AddChild(__1838761807);
+				pTypeRef.AddChild(__3769513442);
 			}
 			else
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_STAR) != null)
@@ -116,9 +116,9 @@ namespace NumbatLogic
 						pTypeRef.m_ePointerType = PointerType.TRANSITON;
 					}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.TypeRef __1864385867 = pTypeRef;
+			NumbatLogic.TypeRef __2161789305 = pTypeRef;
 			pTypeRef = null;
-			return __1864385867;
+			return __2161789305;
 		}
 
 		protected void ValidateClassDecl(Validator pValidator, ClassDecl pClassDecl, TypeRef pThisOrChild)
@@ -281,23 +281,23 @@ namespace NumbatLogic
 			{
 				TypeRef pGenericTypeRef = m_pGenericTypeRefVector.Get(i).Clone();
 				pTypeRef.m_pGenericTypeRefVector.PushBack(pGenericTypeRef);
-				NumbatLogic.TypeRef __1250340204 = pGenericTypeRef;
+				NumbatLogic.TypeRef __667874834 = pGenericTypeRef;
 				pGenericTypeRef = null;
-				pTypeRef.AddChild(__1250340204);
+				pTypeRef.AddChild(__667874834);
 			}
 			pTypeRef.m_pChildTypeRef = null;
 			if (m_pChildTypeRef != null)
 			{
 				TypeRef pChildTypeRef = m_pChildTypeRef.Clone();
 				pTypeRef.m_pChildTypeRef = pChildTypeRef;
-				NumbatLogic.TypeRef __1838761807 = pChildTypeRef;
+				NumbatLogic.TypeRef __2760838574 = pChildTypeRef;
 				pChildTypeRef = null;
-				pTypeRef.AddChild(__1838761807);
+				pTypeRef.AddChild(__2760838574);
 			}
 			pTypeRef.m_ePointerType = m_ePointerType;
-			NumbatLogic.TypeRef __1864385867 = pTypeRef;
+			NumbatLogic.TypeRef __2012972899 = pTypeRef;
 			pTypeRef = null;
-			return __1864385867;
+			return __2012972899;
 		}
 
 		public override AST BaseClone()
@@ -563,9 +563,9 @@ namespace NumbatLogic
 								{
 									return null;
 								}
-								NumbatLogic.ValueType __3605289819 = pGenericValueType;
+								NumbatLogic.ValueType __1566986364 = pGenericValueType;
 								pGenericValueType = null;
-								m_pValueType.m_pGenericValueTypeVector.PushBack(__3605289819);
+								m_pValueType.m_pGenericValueTypeVector.PushBack(__1566986364);
 							}
 							return m_pValueType;
 						}

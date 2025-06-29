@@ -65,22 +65,22 @@ namespace NumbatLogic
 			pFunctionDecl.m_pParamDecl = pParamDecl;
 			pFunctionDecl.m_bConst = bConst;
 			pFunctionDecl.m_pScope = pScope;
-			NumbatLogic.TypeRef __1864385867 = pTypeRef;
+			NumbatLogic.TypeRef __3049869076 = pTypeRef;
 			pTypeRef = null;
-			pFunctionDecl.AddChild(__1864385867);
-			NumbatLogic.ParamDecl __108452057 = pParamDecl;
+			pFunctionDecl.AddChild(__3049869076);
+			NumbatLogic.ParamDecl __759239250 = pParamDecl;
 			pParamDecl = null;
-			pFunctionDecl.AddChild(__108452057);
+			pFunctionDecl.AddChild(__759239250);
 			if (pScope != null)
 			{
-				NumbatLogic.Scope __3207310840 = pScope;
+				NumbatLogic.Scope __371996354 = pScope;
 				pScope = null;
-				pFunctionDecl.AddChild(__3207310840);
+				pFunctionDecl.AddChild(__371996354);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.FunctionDecl __1338261948 = pFunctionDecl;
+			NumbatLogic.FunctionDecl __3436580640 = pFunctionDecl;
 			pFunctionDecl = null;
-			return __1338261948;
+			return __3436580640;
 		}
 
 		public override AST FindByName(string sxName, AST pCallingChild)

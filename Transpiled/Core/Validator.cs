@@ -109,17 +109,17 @@ namespace NumbatLogic
 				pValidatorError.m_sFile = new InternalString(sFile.GetExternalString());
 			pValidatorError.m_nLine = nLine;
 			pValidatorError.m_nColumn = nColumn;
-			NumbatLogic.ValidatorError __3096980995 = pValidatorError;
+			NumbatLogic.ValidatorError __3262958952 = pValidatorError;
 			pValidatorError = null;
-			m_pValidatorErrorVector.PushBack(__3096980995);
+			m_pValidatorErrorVector.PushBack(__3262958952);
 		}
 
 		public void BeginScope(Scope pScope)
 		{
 			ValidatorScope pValidatorScope = new ValidatorScope(pScope);
-			NumbatLogic.ValidatorScope __786038918 = pValidatorScope;
+			NumbatLogic.ValidatorScope __2559738613 = pValidatorScope;
 			pValidatorScope = null;
-			m_pValidatorScopeVector.PushBack(__786038918);
+			m_pValidatorScopeVector.PushBack(__2559738613);
 		}
 
 		public void AddVarDecl(VarDecl pVarDecl)
@@ -158,9 +158,9 @@ namespace NumbatLogic
 					VarDecl pVarDecl = pValidatorScope.m_pVarDeclVector.Get(i);
 					pVarDeclDescope.m_pVarDeclVector.PushBack(pVarDecl);
 				}
-				NumbatLogic.VarDeclDescope __174971037 = pVarDeclDescope;
+				NumbatLogic.VarDeclDescope __3697432986 = pVarDeclDescope;
 				pVarDeclDescope = null;
-				pScope.AddChild(__174971037);
+				pScope.AddChild(__3697432986);
 			}
 		}
 
@@ -207,9 +207,9 @@ namespace NumbatLogic
 			if (pVarDeclDescope.m_pVarDeclVector.GetSize() > 0)
 			{
 				AST pParent = pBreakOrContinueOrReturn.m_pParent;
-				NumbatLogic.VarDeclDescope __174971037 = pVarDeclDescope;
+				NumbatLogic.VarDeclDescope __4266839444 = pVarDeclDescope;
 				pVarDeclDescope = null;
-				pParent.AddChildBefore(__174971037, pBreakOrContinueOrReturn);
+				pParent.AddChildBefore(__4266839444, pBreakOrContinueOrReturn);
 			}
 		}
 

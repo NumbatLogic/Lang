@@ -46,9 +46,9 @@ namespace NumbatLogic
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 				NumbatLogic::Assert::Plz(false);
 			}
-			NumbatLogic::AST* __2381799284 = pParam;
+			NumbatLogic::AST* __876224153 = pParam;
 			pParam = 0;
-			pParamCall->AddChild(__2381799284);
+			pParamCall->AddChild(__876224153);
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT) != 0)
 			{
 				if (pParam) delete pParam;
@@ -64,10 +64,10 @@ namespace NumbatLogic
 			if (pParam) delete pParam;
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::ParamCall* __3256575972 = pParamCall;
+		NumbatLogic::ParamCall* __474271540 = pParamCall;
 		pParamCall = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __3256575972;
+		return __474271540;
 	}
 
 	void ParamCall::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

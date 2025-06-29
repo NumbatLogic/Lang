@@ -35,16 +35,16 @@ namespace NumbatLogic
 			pMemberVarDecl.m_pAccessLevel = pAccessLevel;
 			pMemberVarDecl.m_bStatic = bStatic;
 			pMemberVarDecl.m_pVarDecl = pVarDecl;
-			NumbatLogic.AccessLevel __1197960421 = pAccessLevel;
+			NumbatLogic.AccessLevel __1431588250 = pAccessLevel;
 			pAccessLevel = null;
-			pMemberVarDecl.AddChild(__1197960421);
-			NumbatLogic.VarDecl __351343471 = pVarDecl;
+			pMemberVarDecl.AddChild(__1431588250);
+			NumbatLogic.VarDecl __1710550748 = pVarDecl;
 			pVarDecl = null;
-			pMemberVarDecl.AddChild(__351343471);
+			pMemberVarDecl.AddChild(__1710550748);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.MemberVarDecl __3523532676 = pMemberVarDecl;
+			NumbatLogic.MemberVarDecl __3049868366 = pMemberVarDecl;
 			pMemberVarDecl = null;
-			return __3523532676;
+			return __3049868366;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

@@ -60,9 +60,9 @@ namespace NumbatLogic
 				NumbatLogic::Assert::Plz(false);
 			}
 			pParamDecl->m_pParamVector->PushBack(pParam);
-			NumbatLogic::VarDecl* __2381799284 = pParam;
+			NumbatLogic::VarDecl* __658120647 = pParam;
 			pParam = 0;
-			pParamDecl->AddChild(__2381799284);
+			pParamDecl->AddChild(__658120647);
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT) != 0)
 			{
 				if (pParam) delete pParam;
@@ -78,10 +78,10 @@ namespace NumbatLogic
 			if (pParam) delete pParam;
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::ParamDecl* __108452057 = pParamDecl;
+		NumbatLogic::ParamDecl* __3963700199 = pParamDecl;
 		pParamDecl = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __108452057;
+		return __3963700199;
 	}
 
 	void ParamDecl::Validate(Validator* pValidator, OperatorExpr* pParent)

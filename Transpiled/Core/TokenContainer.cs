@@ -849,9 +849,9 @@ namespace NumbatLogic
 			if (bCopyString)
 				pToken.m_sValue = new InternalString(pParseDatum.m_sCurrentRead.GetExternalString());
 			pParseDatum.ClearCurrentRead();
-			NumbatLogic.Token __4247528444 = pToken;
+			NumbatLogic.Token __4017698039 = pToken;
 			pToken = null;
-			m_pTokenVector.PushBack(__4247528444);
+			m_pTokenVector.PushBack(__4017698039);
 		}
 
 		protected void ParseQuoted(ParseDatum pParseDatum, char nQuoteChar)

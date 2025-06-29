@@ -15,9 +15,9 @@ namespace NumbatLogic
 			pThisExpr.m_eType = AST.Type.THIS_EXPR;
 			pThisExpr.m_pFirstToken = pThisToken;
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.ThisExpr __1209978893 = pThisExpr;
+			NumbatLogic.ThisExpr __4045177256 = pThisExpr;
 			pThisExpr = null;
-			return __1209978893;
+			return __4045177256;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

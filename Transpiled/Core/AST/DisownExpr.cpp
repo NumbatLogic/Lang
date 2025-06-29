@@ -59,15 +59,15 @@ namespace NumbatLogic
 		DisownExpr* pDisownExpr = new DisownExpr();
 		pDisownExpr->m_pFirstToken = pDisownToken;
 		pDisownExpr->m_pExpression = pExpression;
-		NumbatLogic::AST* __2637546178 = pExpression;
+		NumbatLogic::AST* __2860403603 = pExpression;
 		pExpression = 0;
-		pDisownExpr->AddChild(__2637546178);
+		pDisownExpr->AddChild(__2860403603);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::DisownExpr* __2866505445 = pDisownExpr;
+		NumbatLogic::DisownExpr* __1761905829 = pDisownExpr;
 		pDisownExpr = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pExpression) delete pExpression;
-		return __2866505445;
+		return __1761905829;
 	}
 
 	void DisownExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
@@ -115,7 +115,7 @@ namespace NumbatLogic
 		}
 		InternalString* sTempName = new InternalString("");
 		m_pExpression->Stringify(AST::Language::CPP, AST::OutputFile::SOURCE, 0, sTempName);
-		sTempName->AppendInt(pParentStatement->m_pFirstToken->m_nColumn);
+		sTempName->AppendInt(pParentStatement->m_pFirstToken->m_nLine);
 		unsigned int nHash = Util::BadHash(sTempName);
 		sTempName->Set("__");
 		sTempName->AppendUint32(nHash);
@@ -130,19 +130,19 @@ namespace NumbatLogic
 			pTempVarDecl->m_pFirstToken = pTypeRef->m_pFirstToken;
 			pTempVarDecl->m_pTypeRef = pTypeRef;
 			pTempVarDecl->m_pNameToken = pNameToken;
-			NumbatLogic::Token* __3394477698 = pNameToken;
+			NumbatLogic::Token* __2589041192 = pNameToken;
 			pNameToken = 0;
-			pTempVarDecl->m_pOwnedNameToken = __3394477698;
+			pTempVarDecl->m_pOwnedNameToken = __2589041192;
 			pTempVarDecl->m_pAssignment = pAssignment;
-			NumbatLogic::TypeRef* __572540090 = pTypeRef;
+			NumbatLogic::TypeRef* __802834809 = pTypeRef;
 			pTypeRef = 0;
-			pTempVarDecl->AddChild(__572540090);
-			NumbatLogic::AST* __4160477207 = pAssignment;
+			pTempVarDecl->AddChild(__802834809);
+			NumbatLogic::AST* __1114918871 = pAssignment;
 			pAssignment = 0;
-			pTempVarDecl->AddChild(__4160477207);
-			NumbatLogic::VarDecl* __4118188900 = pTempVarDecl;
+			pTempVarDecl->AddChild(__1114918871);
+			NumbatLogic::VarDecl* __1656425058 = pTempVarDecl;
 			pTempVarDecl = 0;
-			pParentParent->AddChildBefore(__4118188900, pParentStatement);
+			pParentParent->AddChildBefore(__1656425058, pParentStatement);
 			if (pTypeRef) delete pTypeRef;
 			if (pNameToken) delete pNameToken;
 			if (pAssignment) delete pAssignment;
@@ -157,35 +157,35 @@ namespace NumbatLogic
 			pOperatorExpr->m_eType = AST::Type::AST_OPERATOR_EXPR;
 			pOperatorExpr->m_pFirstToken = pLeft->m_pFirstToken;
 			pOperatorExpr->m_pOperatorToken = pOperatorToken;
-			NumbatLogic::Token* __4275938099 = pOperatorToken;
+			NumbatLogic::Token* __1410729535 = pOperatorToken;
 			pOperatorToken = 0;
-			pOperatorExpr->m_pOwnedOperatorToken = __4275938099;
+			pOperatorExpr->m_pOwnedOperatorToken = __1410729535;
 			pOperatorExpr->m_pLeft = pLeft;
 			pOperatorExpr->m_pRight = pRight;
-			NumbatLogic::AST* __3393171375 = pLeft;
+			NumbatLogic::AST* __1926080510 = pLeft;
 			pLeft = 0;
-			pOperatorExpr->AddChild(__3393171375);
-			NumbatLogic::NullExpr* __3769266273 = pRight;
+			pOperatorExpr->AddChild(__1926080510);
+			NumbatLogic::NullExpr* __3954022087 = pRight;
 			pRight = 0;
-			pOperatorExpr->AddChild(__3769266273);
+			pOperatorExpr->AddChild(__3954022087);
 			ExpressionStmt* pExpressionStmt = new ExpressionStmt();
 			pExpressionStmt->m_pFirstToken = pOperatorExpr->m_pFirstToken;
 			pExpressionStmt->m_pExpression = pOperatorExpr;
-			NumbatLogic::OperatorExpr* __372822093 = pOperatorExpr;
+			NumbatLogic::OperatorExpr* __1650736823 = pOperatorExpr;
 			pOperatorExpr = 0;
-			pExpressionStmt->AddChild(__372822093);
-			NumbatLogic::ExpressionStmt* __73687181 = pExpressionStmt;
+			pExpressionStmt->AddChild(__1650736823);
+			NumbatLogic::ExpressionStmt* __1385987715 = pExpressionStmt;
 			pExpressionStmt = 0;
-			pParentParent->AddChildBefore(__73687181, pParentStatement);
+			pParentParent->AddChildBefore(__1385987715, pParentStatement);
 			if (pLeft) delete pLeft;
 			if (pRight) delete pRight;
 			if (pOperatorToken) delete pOperatorToken;
 			if (pOperatorExpr) delete pOperatorExpr;
 			if (pExpressionStmt) delete pExpressionStmt;
 		}
-		NumbatLogic::InternalString* __1777077891 = sTempName;
+		NumbatLogic::InternalString* __1093496711 = sTempName;
 		sTempName = 0;
-		m_sTempVarName = __1777077891;
+		m_sTempVarName = __1093496711;
 		if (sTempName) delete sTempName;
 	}
 

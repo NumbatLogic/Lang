@@ -43,15 +43,15 @@ namespace NumbatLogic
 		pOwnExpr->m_eType = AST::Type::AST_OWN_EXP;
 		pOwnExpr->m_pFirstToken = pOwnToken;
 		pOwnExpr->m_pExpression = pExpression;
-		NumbatLogic::AST* __2637546178 = pExpression;
+		NumbatLogic::AST* __2491310498 = pExpression;
 		pExpression = 0;
-		pOwnExpr->AddChild(__2637546178);
+		pOwnExpr->AddChild(__2491310498);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::OwnExpr* __2951986774 = pOwnExpr;
+		NumbatLogic::OwnExpr* __2045709764 = pOwnExpr;
 		pOwnExpr = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pExpression) delete pExpression;
-		return __2951986774;
+		return __2045709764;
 	}
 
 	void OwnExpr::Validate(Validator* pValidator, OperatorExpr* pParent)

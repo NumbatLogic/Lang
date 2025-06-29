@@ -32,15 +32,15 @@ namespace NumbatLogic
 		pUnary->m_eType = AST::Type::AST_UNARY;
 		pUnary->m_pFirstToken = pToken;
 		pUnary->m_pExpression = pExpression;
-		NumbatLogic::AST* __2637546178 = pExpression;
+		NumbatLogic::AST* __4286472943 = pExpression;
 		pExpression = 0;
-		pUnary->AddChild(__2637546178);
+		pUnary->AddChild(__4286472943);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::Unary* __1209092537 = pUnary;
+		NumbatLogic::Unary* __3127995765 = pUnary;
 		pUnary = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pExpression) delete pExpression;
-		return __1209092537;
+		return __3127995765;
 	}
 
 	void Unary::Validate(Validator* pValidator, OperatorExpr* pParent)

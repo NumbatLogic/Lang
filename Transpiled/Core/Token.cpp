@@ -489,9 +489,9 @@ namespace NumbatLogic
 		pToken->m_nColumn = m_nColumn;
 		if (m_sValue != 0)
 			pToken->m_sValue = new InternalString(m_sValue->GetExternalString());
-		NumbatLogic::Token* __4247528444 = pToken;
+		NumbatLogic::Token* __959048406 = pToken;
 		pToken = 0;
-		return __4247528444;
+		return __959048406;
 	}
 
 	Token::Token()

@@ -31,10 +31,10 @@ namespace NumbatLogic
 		pThisExpr->m_eType = AST::Type::THIS_EXPR;
 		pThisExpr->m_pFirstToken = pThisToken;
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::ThisExpr* __1209978893 = pThisExpr;
+		NumbatLogic::ThisExpr* __4045177256 = pThisExpr;
 		pThisExpr = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __1209978893;
+		return __4045177256;
 	}
 
 	void ThisExpr::Validate(Validator* pValidator, OperatorExpr* pParent)

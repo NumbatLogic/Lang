@@ -51,9 +51,9 @@ namespace NumbatLogic
 				}
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 				pVarDecl.m_pArraySize = pArraySize;
-				NumbatLogic.AST __2880640907 = pArraySize;
+				NumbatLogic.AST __3043530774 = pArraySize;
 				pArraySize = null;
-				pVarDecl.AddChild(__2880640907);
+				pVarDecl.AddChild(__3043530774);
 			}
 			AST pAssignment = null;
 			Token pEqualsToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_EQUALS);
@@ -83,19 +83,19 @@ namespace NumbatLogic
 			pVarDecl.m_pNameToken = pNameToken;
 			pVarDecl.m_pAssignment = pAssignment;
 			pVarDecl.m_bInline = bInline;
-			NumbatLogic.TypeRef __1864385867 = pTypeRef;
+			NumbatLogic.TypeRef __4039701331 = pTypeRef;
 			pTypeRef = null;
-			pVarDecl.AddChild(__1864385867);
+			pVarDecl.AddChild(__4039701331);
 			if (pAssignment != null)
 			{
-				NumbatLogic.AST __4160477207 = pAssignment;
+				NumbatLogic.AST __3148560342 = pAssignment;
 				pAssignment = null;
-				pVarDecl.AddChild(__4160477207);
+				pVarDecl.AddChild(__3148560342);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.VarDecl __351343471 = pVarDecl;
+			NumbatLogic.VarDecl __3184751856 = pVarDecl;
 			pVarDecl = null;
-			return __351343471;
+			return __3184751856;
 		}
 
 		public override AST FindByName(string sxName, AST pCallingChild)

@@ -25,17 +25,17 @@ namespace NumbatLogic
 			return 0;
 		pOffsetDatum->m_nOffset = pOffsetDatum->m_nOffset + 1;
 		NumberExpr* pNumberExpr = new NumberExpr(pToken);
-		NumbatLogic::NumberExpr* __1419199686 = pNumberExpr;
+		NumbatLogic::NumberExpr* __269765533 = pNumberExpr;
 		pNumberExpr = 0;
-		return __1419199686;
+		return __269765533;
 	}
 
 	AST* NumberExpr::BaseClone()
 	{
 		NumberExpr* pNumberExpr = new NumberExpr(m_pFirstToken);
-		NumbatLogic::NumberExpr* __1419199686 = pNumberExpr;
+		NumbatLogic::NumberExpr* __2215916372 = pNumberExpr;
 		pNumberExpr = 0;
-		return __1419199686;
+		return __2215916372;
 	}
 
 	void NumberExpr::Validate(Validator* pValidator, OperatorExpr* pParent)

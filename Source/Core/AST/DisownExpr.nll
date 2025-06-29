@@ -89,7 +89,7 @@ namespace NumbatLogic
 
 			InternalString* sTempName = own new InternalString("");
 			m_pExpression.Stringify(AST::Language::CPP, AST::OutputFile::SOURCE, 0, sTempName);
-			sTempName.AppendInt(pParentStatement.m_pFirstToken.m_nColumn); // hax, but avoids name collisions eg: { { return disown x; } return disown x; }
+			sTempName.AppendInt(pParentStatement.m_pFirstToken.m_nLine); // hax, but avoids name collisions eg: { { return disown x; } return disown x; }
 			Uint32 nHash = Util::BadHash(sTempName);
 			sTempName.Set("__");
 			sTempName.AppendUint32(nHash);

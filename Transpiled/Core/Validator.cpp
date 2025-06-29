@@ -142,18 +142,18 @@ namespace NumbatLogic
 			pValidatorError->m_sFile = new InternalString(sFile->GetExternalString());
 		pValidatorError->m_nLine = nLine;
 		pValidatorError->m_nColumn = nColumn;
-		NumbatLogic::ValidatorError* __3096980995 = pValidatorError;
+		NumbatLogic::ValidatorError* __3262958952 = pValidatorError;
 		pValidatorError = 0;
-		m_pValidatorErrorVector->PushBack(__3096980995);
+		m_pValidatorErrorVector->PushBack(__3262958952);
 		if (pValidatorError) delete pValidatorError;
 	}
 
 	void Validator::BeginScope(Scope* pScope)
 	{
 		ValidatorScope* pValidatorScope = new ValidatorScope(pScope);
-		NumbatLogic::ValidatorScope* __786038918 = pValidatorScope;
+		NumbatLogic::ValidatorScope* __2559738613 = pValidatorScope;
 		pValidatorScope = 0;
-		m_pValidatorScopeVector->PushBack(__786038918);
+		m_pValidatorScopeVector->PushBack(__2559738613);
 		if (pValidatorScope) delete pValidatorScope;
 	}
 
@@ -195,9 +195,9 @@ namespace NumbatLogic
 				VarDecl* pVarDecl = pValidatorScope->m_pVarDeclVector->Get(i);
 				pVarDeclDescope->m_pVarDeclVector->PushBack(pVarDecl);
 			}
-			NumbatLogic::VarDeclDescope* __174971037 = pVarDeclDescope;
+			NumbatLogic::VarDeclDescope* __3697432986 = pVarDeclDescope;
 			pVarDeclDescope = 0;
-			pScope->AddChild(__174971037);
+			pScope->AddChild(__3697432986);
 			if (pVarDeclDescope) delete pVarDeclDescope;
 		}
 		if (pValidatorScope) delete pValidatorScope;
@@ -246,9 +246,9 @@ namespace NumbatLogic
 		if (pVarDeclDescope->m_pVarDeclVector->GetSize() > 0)
 		{
 			AST* pParent = pBreakOrContinueOrReturn->m_pParent;
-			NumbatLogic::VarDeclDescope* __174971037 = pVarDeclDescope;
+			NumbatLogic::VarDeclDescope* __4266839444 = pVarDeclDescope;
 			pVarDeclDescope = 0;
-			pParent->AddChildBefore(__174971037, pBreakOrContinueOrReturn);
+			pParent->AddChildBefore(__4266839444, pBreakOrContinueOrReturn);
 		}
 		if (pVarDeclDescope) delete pVarDeclDescope;
 	}

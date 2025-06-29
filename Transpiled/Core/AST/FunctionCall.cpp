@@ -68,15 +68,15 @@ namespace NumbatLogic
 		pFunctionCall->m_pFirstToken = pNameToken;
 		pFunctionCall->m_sMangledName = pNameToken->GetString();
 		pFunctionCall->m_pParamCall = pParamCall;
-		NumbatLogic::ParamCall* __3256575972 = pParamCall;
+		NumbatLogic::ParamCall* __1296316563 = pParamCall;
 		pParamCall = 0;
-		pFunctionCall->AddChild(__3256575972);
+		pFunctionCall->AddChild(__1296316563);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::FunctionCall* __2343173761 = pFunctionCall;
+		NumbatLogic::FunctionCall* __1523740656 = pFunctionCall;
 		pFunctionCall = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pParamCall) delete pParamCall;
-		return __2343173761;
+		return __1523740656;
 	}
 
 	void FunctionCall::Validate(Validator* pValidator, OperatorExpr* pParent)
@@ -184,9 +184,9 @@ namespace NumbatLogic
 					GenericTypeDecl* pGenericTypeDecl = pLeftValueType->m_pClassDecl->m_pGenericTypeDeclVector->Get(i);
 					if (ExternalString::Equal(pGenericTypeDecl->m_pFirstToken->GetString(), pFunctionDecl->m_pTypeRef->m_pTypeToken->GetString()))
 					{
-						NumbatLogic::ValueType* __3823392953 = pGenericValueType;
+						NumbatLogic::ValueType* __3843479488 = pGenericValueType;
 						pGenericValueType = 0;
-						m_pValueType = __3823392953;
+						m_pValueType = __3843479488;
 						m_pValueType->m_ePointerType = pFunctionDecl->m_pTypeRef->m_ePointerType;
 					}
 					if (pGenericValueType) delete pGenericValueType;

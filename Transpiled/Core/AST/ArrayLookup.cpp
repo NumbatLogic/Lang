@@ -68,19 +68,19 @@ namespace NumbatLogic
 		pArrayLookup->m_pFirstToken = pExpression->m_pFirstToken;
 		pArrayLookup->m_pExpression = pExpression;
 		pArrayLookup->m_pIndexExpression = pIndexExpression;
-		NumbatLogic::AST* __2637546178 = pExpression;
+		NumbatLogic::AST* __1786680837 = pExpression;
 		pExpression = 0;
-		pArrayLookup->AddChild(__2637546178);
-		NumbatLogic::AST* __3620315840 = pIndexExpression;
+		pArrayLookup->AddChild(__1786680837);
+		NumbatLogic::AST* __1792315361 = pIndexExpression;
 		pIndexExpression = 0;
-		pArrayLookup->AddChild(__3620315840);
+		pArrayLookup->AddChild(__1792315361);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::ArrayLookup* __1902248373 = pArrayLookup;
+		NumbatLogic::ArrayLookup* __1602094050 = pArrayLookup;
 		pArrayLookup = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pExpression) delete pExpression;
 		if (pIndexExpression) delete pIndexExpression;
-		return __1902248373;
+		return __1602094050;
 	}
 
 	AST* ArrayLookup::BaseClone()
@@ -90,17 +90,17 @@ namespace NumbatLogic
 		AST* pIndexExpression = m_pIndexExpression->BaseClone();
 		pArrayLookup->m_pExpression = pExpression;
 		pArrayLookup->m_pIndexExpression = pIndexExpression;
-		NumbatLogic::AST* __2637546178 = pExpression;
+		NumbatLogic::AST* __75417520 = pExpression;
 		pExpression = 0;
-		pArrayLookup->AddChild(__2637546178);
-		NumbatLogic::AST* __3620315840 = pIndexExpression;
+		pArrayLookup->AddChild(__75417520);
+		NumbatLogic::AST* __2010445204 = pIndexExpression;
 		pIndexExpression = 0;
-		pArrayLookup->AddChild(__3620315840);
-		NumbatLogic::ArrayLookup* __1650589931 = pArrayLookup;
+		pArrayLookup->AddChild(__2010445204);
+		NumbatLogic::ArrayLookup* __2256435930 = pArrayLookup;
 		pArrayLookup = 0;
 		if (pExpression) delete pExpression;
 		if (pIndexExpression) delete pIndexExpression;
-		return __1650589931;
+		return __2256435930;
 	}
 
 	void ArrayLookup::Validate(Validator* pValidator, OperatorExpr* pParent)

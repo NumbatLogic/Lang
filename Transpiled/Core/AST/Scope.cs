@@ -24,13 +24,13 @@ namespace NumbatLogic
 						pScope = new Scope();
 						pScope.m_pFirstToken = pChild.m_pFirstToken;
 						pScope.m_bPseudo = true;
-						NumbatLogic.AST __2627667935 = pChild;
+						NumbatLogic.AST __1363581045 = pChild;
 						pChild = null;
-						pScope.AddChild(__2627667935);
+						pScope.AddChild(__1363581045);
 						pOffsetDatum.Set(pTempOffset);
-						NumbatLogic.Scope __3777736023 = pScope;
+						NumbatLogic.Scope __4264334019 = pScope;
 						pScope = null;
-						return __3777736023;
+						return __4264334019;
 					}
 				}
 				return null;
@@ -54,14 +54,14 @@ namespace NumbatLogic
 					NumbatLogic.Assert.Plz(false);
 					return null;
 				}
-				NumbatLogic.AST __3265202032 = pChild;
+				NumbatLogic.AST __239473913 = pChild;
 				pChild = null;
-				pScope.AddChild(__3265202032);
+				pScope.AddChild(__239473913);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.Scope __4062948361 = pScope;
+			NumbatLogic.Scope __1126965182 = pScope;
 			pScope = null;
-			return __4062948361;
+			return __1126965182;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

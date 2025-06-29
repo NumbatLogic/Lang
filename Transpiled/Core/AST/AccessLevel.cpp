@@ -27,10 +27,10 @@ namespace NumbatLogic
 		pAccessLevel->m_eType = AST::Type::AST_ACCESS_LEVEL;
 		pAccessLevel->m_pFirstToken = pAccessLevelToken;
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::AccessLevel* __1197960421 = pAccessLevel;
+		NumbatLogic::AccessLevel* __4115970706 = pAccessLevel;
 		pAccessLevel = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __1197960421;
+		return __4115970706;
 	}
 
 	void AccessLevel::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

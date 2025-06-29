@@ -97,37 +97,37 @@ namespace NumbatLogic
 			pAst = FunctionDecl.TryCreate(pTokenContainer, pOffsetDatum, null);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __595439423 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __595439423;
 			}
 			pAst = ClassDecl.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __3883773042 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __3883773042;
 			}
 			pAst = NamespaceDecl.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __2491254706 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __2491254706;
 			}
 			pAst = CreateStatementFromTokenContainer(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __679315180 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __679315180;
 			}
 			pAst = TryCreateExpression(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __897449113 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __897449113;
 			}
 			return null;
 		}
@@ -138,86 +138,86 @@ namespace NumbatLogic
 			pAst = ReturnStmt.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __3481130469 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __3481130469;
 			}
 			pAst = BreakStmt.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __1937626299 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __1937626299;
 			}
 			pAst = ContinueStmt.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __3078477814 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __3078477814;
 			}
 			pAst = Scope.TryCreate(pTokenContainer, pOffsetDatum, false);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __981273489 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __981273489;
 			}
 			pAst = VarDecl.TryCreate(pTokenContainer, pOffsetDatum, false);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __2256341711 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __2256341711;
 			}
 			pAst = EnumDecl.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __830284354 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __830284354;
 			}
 			pAst = DeleteStmt.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __2373788444 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __2373788444;
 			}
 			pAst = IfStmt.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __1232937041 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __1232937041;
 			}
 			pAst = ForStmt.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __2424133993 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __2424133993;
 			}
 			pAst = WhileStmt.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __746412087 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __746412087;
 			}
 			pAst = SwitchStmt.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __2608689338 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __2608689338;
 			}
 			pAst = ExpressionStmt.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __662532580 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __662532580;
 			}
 			return null;
 		}
@@ -228,121 +228,121 @@ namespace NumbatLogic
 			pAst = NumberExpr.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __3581732142 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __3581732142;
 			}
 			pAst = BoolExpr.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __1652346275 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __1652346275;
 			}
 			pAst = CharExpr.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __3732720893 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __3732720893;
 			}
 			pAst = StringExpr.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __444387248 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __444387248;
 			}
 			pAst = NullExpr.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __2756550337 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __2756550337;
 			}
 			pAst = ThisExpr.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __407740319 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __407740319;
 			}
 			pAst = BaseExpr.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __2941105938 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __2941105938;
 			}
 			pAst = FunctionCall.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __323860044 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __323860044;
 			}
 			pAst = New.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __3612194049 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __3612194049;
 			}
 			pAst = CastExpr.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __239979577 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __239979577;
 			}
 			pAst = Unary.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __2991443303 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __2991443303;
 			}
 			pAst = Paren.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __88991210 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __88991210;
 			}
 			pAst = ArrayLookup.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __3108889780 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __3108889780;
 			}
 			pAst = StaticArray.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __2102257657 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __2102257657;
 			}
 			pAst = OwnExpr.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __4031593374 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __4031593374;
 			}
 			pAst = DisownExpr.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __1280129728 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __1280129728;
 			}
 			pAst = Identifier.TryCreate(pTokenContainer, pOffsetDatum);
 			if (pAst != null)
 			{
-				NumbatLogic.AST __4162090953 = pAst;
+				NumbatLogic.AST __4216132173 = pAst;
 				pAst = null;
-				return __4162090953;
+				return __4216132173;
 			}
 			return null;
 		}
@@ -360,17 +360,17 @@ namespace NumbatLogic
 					{
 						pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 						pOffsetDatum.Set(pTempOffset);
-						NumbatLogic.AST __2487201536 = pLeft;
+						NumbatLogic.AST __1526568448 = pLeft;
 						pLeft = null;
-						return OperatorExpr.Create(pOperatorToken, __2487201536, null);
+						return OperatorExpr.Create(pOperatorToken, __1526568448, null);
 					}
 					if (pOperatorToken.m_eType == Token.Type.TOKEN_QUESTION_MARK)
 					{
 						pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 						pOffsetDatum.Set(pTempOffset);
-						NumbatLogic.AST __2487201536 = pLeft;
+						NumbatLogic.AST __402495473 = pLeft;
 						pLeft = null;
-						return TrinaryExpr.Create(__2487201536, pTokenContainer, pOffsetDatum);
+						return TrinaryExpr.Create(__402495473, pTokenContainer, pOffsetDatum);
 					}
 					if (pOperatorToken.m_eType == Token.Type.TOKEN_AND || pOperatorToken.m_eType == Token.Type.TOKEN_ANGLE_BRACKET_LEFT || pOperatorToken.m_eType == Token.Type.TOKEN_ANGLE_BRACKET_LEFT_EQUALS || pOperatorToken.m_eType == Token.Type.TOKEN_ANGLE_BRACKET_RIGHT || pOperatorToken.m_eType == Token.Type.TOKEN_ANGLE_BRACKET_RIGHT_EQUALS || pOperatorToken.m_eType == Token.Type.TOKEN_BITWISE_AND || pOperatorToken.m_eType == Token.Type.TOKEN_BITWISE_OR || pOperatorToken.m_eType == Token.Type.TOKEN_CARET || pOperatorToken.m_eType == Token.Type.TOKEN_DIVIDE || pOperatorToken.m_eType == Token.Type.TOKEN_DOT || pOperatorToken.m_eType == Token.Type.TOKEN_DOUBLE_ANGLE_BRACKET_LEFT || pOperatorToken.m_eType == Token.Type.TOKEN_DOUBLE_ANGLE_BRACKET_RIGHT || pOperatorToken.m_eType == Token.Type.TOKEN_DOUBLE_COLON || pOperatorToken.m_eType == Token.Type.TOKEN_DOUBLE_EQUALS || pOperatorToken.m_eType == Token.Type.TOKEN_EQUALS || pOperatorToken.m_eType == Token.Type.TOKEN_MINUS || pOperatorToken.m_eType == Token.Type.TOKEN_MINUS_EQUALS || pOperatorToken.m_eType == Token.Type.TOKEN_NOT_EQUALS || pOperatorToken.m_eType == Token.Type.TOKEN_OR || pOperatorToken.m_eType == Token.Type.TOKEN_PLUS || pOperatorToken.m_eType == Token.Type.TOKEN_PLUS_EQUALS || pOperatorToken.m_eType == Token.Type.TOKEN_STAR || pOperatorToken.m_eType == Token.Type.TOKEN_MODULUS)
 					{
@@ -379,18 +379,18 @@ namespace NumbatLogic
 						if (pRight != null)
 						{
 							pOffsetDatum.Set(pTempOffset);
-							NumbatLogic.AST __994029312 = pLeft;
+							NumbatLogic.AST __2280485282 = pLeft;
 							pLeft = null;
-							NumbatLogic.AST __296382670 = pRight;
+							NumbatLogic.AST __730678137 = pRight;
 							pRight = null;
-							return OperatorExpr.Create(pOperatorToken, __994029312, __296382670);
+							return OperatorExpr.Create(pOperatorToken, __2280485282, __730678137);
 						}
 					}
 				}
 				pOffsetDatum.Set(pTempOffset);
-				NumbatLogic.AST __3393171375 = pLeft;
+				NumbatLogic.AST __2498588924 = pLeft;
 				pLeft = null;
-				return __3393171375;
+				return __2498588924;
 			}
 			return null;
 		}
@@ -511,9 +511,9 @@ namespace NumbatLogic
 				return;
 			}
 			pAst.m_pParent = this;
-			NumbatLogic.AST __3936977016 = m_pFirstChild;
+			NumbatLogic.AST __1736820207 = m_pFirstChild;
 			m_pFirstChild = null;
-			pAst.m_pNextSibling = __3936977016;
+			pAst.m_pNextSibling = __1736820207;
 			m_pFirstChild = pAst;
 			pAst.m_pNextSibling.m_pPrevSibling = m_pFirstChild;
 		}
@@ -524,17 +524,17 @@ namespace NumbatLogic
 			pAst.m_pParent = this;
 			if (m_pFirstChild == pBefore)
 			{
-				NumbatLogic.AST __2812903817 = m_pFirstChild;
+				NumbatLogic.AST __3280333884 = m_pFirstChild;
 				m_pFirstChild = null;
-				pAst.m_pNextSibling = __2812903817;
+				pAst.m_pNextSibling = __3280333884;
 				m_pFirstChild = pAst;
 				pBefore.m_pPrevSibling = m_pFirstChild;
 			}
 			else
 			{
-				NumbatLogic.AST __2336627637 = pBefore.m_pPrevSibling.m_pNextSibling;
+				NumbatLogic.AST __2988992197 = pBefore.m_pPrevSibling.m_pNextSibling;
 				pBefore.m_pPrevSibling.m_pNextSibling = null;
-				pAst.m_pNextSibling = __2336627637;
+				pAst.m_pNextSibling = __2988992197;
 				pAst.m_pPrevSibling = pBefore.m_pPrevSibling;
 				pBefore.m_pPrevSibling = (AST)(pAst);
 				pAst.m_pPrevSibling.m_pNextSibling = pAst;
@@ -546,21 +546,21 @@ namespace NumbatLogic
 			if (m_pFirstChild == pChild)
 			{
 				AST pOwnedChild;
-				NumbatLogic.AST __2812903817 = m_pFirstChild;
+				NumbatLogic.AST __931511915 = m_pFirstChild;
 				m_pFirstChild = null;
-				pOwnedChild = __2812903817;
+				pOwnedChild = __931511915;
 				if (m_pLastChild == pOwnedChild)
 					m_pLastChild = null;
 				else
 				{
-					NumbatLogic.AST __3592997157 = pOwnedChild.m_pNextSibling;
+					NumbatLogic.AST __1213399723 = pOwnedChild.m_pNextSibling;
 					pOwnedChild.m_pNextSibling = null;
-					m_pFirstChild = __3592997157;
+					m_pFirstChild = __1213399723;
 				}
 				pOwnedChild.m_pParent = null;
-				NumbatLogic.AST __1103789770 = pOwnedChild;
+				NumbatLogic.AST __2040457964 = pOwnedChild;
 				pOwnedChild = null;
-				return __1103789770;
+				return __2040457964;
 			}
 			else
 			{
@@ -570,21 +570,21 @@ namespace NumbatLogic
 					if (pFindChild.m_pNextSibling == pChild)
 					{
 						AST pOwnedChild;
-						NumbatLogic.AST __648906925 = pFindChild.m_pNextSibling;
+						NumbatLogic.AST __1569440455 = pFindChild.m_pNextSibling;
 						pFindChild.m_pNextSibling = null;
-						pOwnedChild = __648906925;
+						pOwnedChild = __1569440455;
 						if (m_pLastChild == pOwnedChild)
 							m_pLastChild = pFindChild;
 						else
 						{
-							NumbatLogic.AST __2284374410 = pOwnedChild.m_pNextSibling;
+							NumbatLogic.AST __3662855423 = pOwnedChild.m_pNextSibling;
 							pOwnedChild.m_pNextSibling = null;
-							pFindChild.m_pNextSibling = __2284374410;
+							pFindChild.m_pNextSibling = __3662855423;
 						}
 						pOwnedChild.m_pParent = null;
-						NumbatLogic.AST __533364325 = pOwnedChild;
+						NumbatLogic.AST __3466510945 = pOwnedChild;
 						pOwnedChild = null;
-						return __533364325;
+						return __3466510945;
 					}
 					pFindChild = pFindChild.m_pNextSibling;
 				}

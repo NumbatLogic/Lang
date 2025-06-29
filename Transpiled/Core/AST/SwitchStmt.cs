@@ -56,9 +56,9 @@ namespace NumbatLogic
 			SwitchStmt pSwitchStmt = new SwitchStmt();
 			pSwitchStmt.m_pFirstToken = pSwitchToken;
 			pSwitchStmt.m_pExpression = pExpression;
-			NumbatLogic.AST __2637546178 = pExpression;
+			NumbatLogic.AST __75417520 = pExpression;
 			pExpression = null;
-			pSwitchStmt.AddChild(__2637546178);
+			pSwitchStmt.AddChild(__75417520);
 			while (true)
 			{
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_CURLY_BRACE_RIGHT) != null)
@@ -104,21 +104,21 @@ namespace NumbatLogic
 					AST pScopedDefaultStatement = null;
 					if (pDefaultStatement.m_eType == AST.Type.AST_SCOPE)
 					{
-						NumbatLogic.AST __2469445242 = pDefaultStatement;
+						NumbatLogic.AST __1943075521 = pDefaultStatement;
 						pDefaultStatement = null;
-						pScopedDefaultStatement = __2469445242;
+						pScopedDefaultStatement = __1943075521;
 					}
 					else
 					{
 						pScopedDefaultStatement = new Scope();
-						NumbatLogic.AST __2469445242 = pDefaultStatement;
+						NumbatLogic.AST __1859158196 = pDefaultStatement;
 						pDefaultStatement = null;
-						pScopedDefaultStatement.AddChild(__2469445242);
+						pScopedDefaultStatement.AddChild(__1859158196);
 					}
 					pSwitchStmt.m_pDefaultStatement = pScopedDefaultStatement;
-					NumbatLogic.AST __2920717757 = pScopedDefaultStatement;
+					NumbatLogic.AST __4123816369 = pScopedDefaultStatement;
 					pScopedDefaultStatement = null;
-					pSwitchStmt.AddChild(__2920717757);
+					pSwitchStmt.AddChild(__4123816369);
 					continue;
 				}
 				AST pCaseExpression = AST.TryCreateExpression(pTokenContainer, pTempOffset);
@@ -130,9 +130,9 @@ namespace NumbatLogic
 					return null;
 				}
 				pSwitchStmt.m_pExpressionVector.PushBack(pCaseExpression);
-				NumbatLogic.AST __2909683676 = pCaseExpression;
+				NumbatLogic.AST __1609920147 = pCaseExpression;
 				pCaseExpression = null;
-				pSwitchStmt.AddChild(__2909683676);
+				pSwitchStmt.AddChild(__1609920147);
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_COLON) == null)
 				{
 					Console.Log("expected colon B");
@@ -157,26 +157,26 @@ namespace NumbatLogic
 				AST pScopedCaseStatement = null;
 				if (pCaseStatement.m_eType == AST.Type.AST_SCOPE)
 				{
-					NumbatLogic.AST __3126782731 = pCaseStatement;
+					NumbatLogic.AST __3494567234 = pCaseStatement;
 					pCaseStatement = null;
-					pScopedCaseStatement = __3126782731;
+					pScopedCaseStatement = __3494567234;
 				}
 				else
 				{
 					pScopedCaseStatement = new Scope();
-					NumbatLogic.AST __3126782731 = pCaseStatement;
+					NumbatLogic.AST __1732965839 = pCaseStatement;
 					pCaseStatement = null;
-					pScopedCaseStatement.AddChild(__3126782731);
+					pScopedCaseStatement.AddChild(__1732965839);
 				}
 				pSwitchStmt.m_pStatementVector.PushBack(pScopedCaseStatement);
-				NumbatLogic.AST __2817041239 = pScopedCaseStatement;
+				NumbatLogic.AST __1861627875 = pScopedCaseStatement;
 				pScopedCaseStatement = null;
-				pSwitchStmt.AddChild(__2817041239);
+				pSwitchStmt.AddChild(__1861627875);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.SwitchStmt __1820739194 = pSwitchStmt;
+			NumbatLogic.SwitchStmt __3401844597 = pSwitchStmt;
 			pSwitchStmt = null;
-			return __1820739194;
+			return __3401844597;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

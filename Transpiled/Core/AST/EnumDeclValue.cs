@@ -32,9 +32,9 @@ namespace NumbatLogic
 				}
 			}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.EnumDeclValue __3778153840 = pEnumDeclValue;
+			NumbatLogic.EnumDeclValue __2856957497 = pEnumDeclValue;
 			pEnumDeclValue = null;
-			return __3778153840;
+			return __2856957497;
 		}
 
 		public override AST FindByName(string sxName, AST pCallingChild)

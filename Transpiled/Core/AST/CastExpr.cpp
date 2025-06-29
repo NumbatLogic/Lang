@@ -64,19 +64,19 @@ namespace NumbatLogic
 		pCastExpr->m_pFirstToken = pCastToken;
 		pCastExpr->m_pTypeRef = pTypeRef;
 		pCastExpr->m_pParamCall = pParamCall;
-		NumbatLogic::TypeRef* __1864385867 = pTypeRef;
+		NumbatLogic::TypeRef* __2831758689 = pTypeRef;
 		pTypeRef = 0;
-		pCastExpr->AddChild(__1864385867);
-		NumbatLogic::ParamCall* __3256575972 = pParamCall;
+		pCastExpr->AddChild(__2831758689);
+		NumbatLogic::ParamCall* __1229252168 = pParamCall;
 		pParamCall = 0;
-		pCastExpr->AddChild(__3256575972);
+		pCastExpr->AddChild(__1229252168);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::CastExpr* __3464097635 = pCastExpr;
+		NumbatLogic::CastExpr* __2271758890 = pCastExpr;
 		pCastExpr = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pTypeRef) delete pTypeRef;
 		if (pParamCall) delete pParamCall;
-		return __3464097635;
+		return __2271758890;
 	}
 
 	void CastExpr::Validate(Validator* pValidator, OperatorExpr* pParent)

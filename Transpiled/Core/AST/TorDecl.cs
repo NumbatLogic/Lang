@@ -61,9 +61,9 @@ namespace NumbatLogic
 						return null;
 					}
 					pTorDecl.m_pBaseParamCall = pParamCall;
-					NumbatLogic.ParamCall __538666517 = pParamCall;
+					NumbatLogic.ParamCall __3594827602 = pParamCall;
 					pParamCall = null;
-					pTorDecl.AddChild(__538666517);
+					pTorDecl.AddChild(__3594827602);
 				}
 				pScope = Scope.TryCreate(pTokenContainer, pTempOffset, false);
 				if (pScope == null)
@@ -82,22 +82,22 @@ namespace NumbatLogic
 			pTorDecl.m_pParamDecl = pParamDecl;
 			pTorDecl.m_pScope = pScope;
 			pTorDecl.m_sDisambiguate = "";
-			NumbatLogic.AccessLevel __1197960421 = pAccessLevel;
+			NumbatLogic.AccessLevel __223710120 = pAccessLevel;
 			pAccessLevel = null;
-			pTorDecl.AddChild(__1197960421);
-			NumbatLogic.ParamDecl __108452057 = pParamDecl;
+			pTorDecl.AddChild(__223710120);
+			NumbatLogic.ParamDecl __2571153082 = pParamDecl;
 			pParamDecl = null;
-			pTorDecl.AddChild(__108452057);
+			pTorDecl.AddChild(__2571153082);
 			if (pScope != null)
 			{
-				NumbatLogic.Scope __3207310840 = pScope;
+				NumbatLogic.Scope __2972552052 = pScope;
 				pScope = null;
-				pTorDecl.AddChild(__3207310840);
+				pTorDecl.AddChild(__2972552052);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.TorDecl __1804651629 = pTorDecl;
+			NumbatLogic.TorDecl __2869605135 = pTorDecl;
 			pTorDecl = null;
-			return __1804651629;
+			return __2869605135;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
