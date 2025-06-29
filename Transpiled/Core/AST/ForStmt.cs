@@ -69,10 +69,10 @@ namespace NumbatLogic
 				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-			AST pStatement = AST.CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
+			AST pStatement = Scope.TryCreate(pTokenContainer, pTempOffset, true);
 			if (pStatement == null)
 			{
-				Console.Log("expected statement");
+				Console.Log("expected statement / scope");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
 				NumbatLogic.Assert.Plz(false);
 			}
@@ -116,10 +116,7 @@ namespace NumbatLogic
 			sOut.Append(")\n");
 			if (pStatement == null)
 				pStatement = pLoopStatement;
-			if (pStatement.m_eType == AST.Type.AST_SCOPE)
-				pStatement.Stringify(eLanguage, eOutputFile, nDepth, sOut);
-			else
-				pStatement.Stringify(eLanguage, eOutputFile, nDepth + 1, sOut);
+			pStatement.Stringify(eLanguage, eOutputFile, nDepth, sOut);
 		}
 
 	}

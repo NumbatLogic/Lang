@@ -6,6 +6,7 @@
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "VarDecl.hpp"
+#include "Scope.hpp"
 #include "../Util.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
@@ -101,10 +102,10 @@ namespace NumbatLogic
 			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-		AST* pStatement = AST::CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
+		AST* pStatement = Scope::TryCreate(pTokenContainer, pTempOffset, true);
 		if (pStatement == 0)
 		{
-			Console::Log("expected statement");
+			Console::Log("expected statement / scope");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
 		}
@@ -153,10 +154,7 @@ namespace NumbatLogic
 		sOut->Append(")\n");
 		if (pStatement == 0)
 			pStatement = pLoopStatement;
-		if (pStatement->m_eType == AST::Type::AST_SCOPE)
-			pStatement->Stringify(eLanguage, eOutputFile, nDepth, sOut);
-		else
-			pStatement->Stringify(eLanguage, eOutputFile, nDepth + 1, sOut);
+		pStatement->Stringify(eLanguage, eOutputFile, nDepth, sOut);
 	}
 
 }
