@@ -88,7 +88,8 @@ namespace NumbatLogic
 	void MemberVarDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
 	{
 		bool bArrayAssignment = m_pVarDecl->m_pArraySize != 0 && m_pVarDecl->m_pAssignment != 0;
-		if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE && !bArrayAssignment)
+		bool bStaticVar = m_bStatic && !m_pVarDecl->m_pTypeRef->m_bConst;
+		if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE && !bArrayAssignment && !bStaticVar)
 			return;
 		Util::Pad(nDepth, sOut);
 		if (!(eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE))
