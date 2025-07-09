@@ -60,7 +60,8 @@ namespace NumbatLogic
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
 		{
 			bool bArrayAssignment = m_pVarDecl.m_pArraySize != null && m_pVarDecl.m_pAssignment != null;
-			if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE && !bArrayAssignment)
+			bool bStaticVar = m_bStatic && !m_pVarDecl.m_pTypeRef.m_bConst;
+			if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE && !bArrayAssignment && !bStaticVar)
 				return;
 
 			Util::Pad(nDepth, sOut);

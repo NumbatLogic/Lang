@@ -20,6 +20,12 @@ namespace NumbatLogic
 			if (m_pVector) delete m_pVector;
 		}
 
+		public: T PushFront(T xObject)
+		{
+			m_pVector->PushFront(xObject);
+			return m_pVector->Get(0);
+		}
+
 		public: T PushBack(T xObject)
 		{
 			m_pVector->PushBack(xObject);
