@@ -658,6 +658,11 @@ namespace NumbatLogic
 			return null;
 		}
 
+		public bool IsIntegral()
+		{
+			return m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_INT || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UNICHAR || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT8 || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT16 || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT32 || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT64 || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_INT8 || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_INT16 || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_INT32;
+		}
+
 		~TypeRef()
 		{
 		}

@@ -46,6 +46,7 @@ namespace NumbatLogic
 		public: ValueType* GetRecursiveValueType();
 		public: ValueType* CreateValueType();
 		protected: ValueType* SetValueType();
+		public: bool IsIntegral();
 		public: virtual ~TypeRef();
 	};
 }

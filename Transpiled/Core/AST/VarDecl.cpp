@@ -12,6 +12,7 @@
 #include "../Util.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "ClassDecl.hpp"
+#include "MemberVarDecl.hpp"
 
 namespace NumbatLogic
 {
@@ -22,6 +23,7 @@ namespace NumbatLogic
 	class AST;
 	class ValueType;
 	class ClassDecl;
+	class MemberVarDecl;
 }
 namespace NumbatLogic
 {
@@ -261,9 +263,19 @@ namespace NumbatLogic
 		if (m_pAssignment != 0)
 		{
 			bool bArrayAssignment = m_pArraySize != 0;
-			bool bDoIt = !(bArrayAssignment && eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::HEADER);
-			if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_PARAM_DECL && eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
-				bDoIt = false;
+			bool bStatic = m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_MEMBER_VAR_DECL && ((MemberVarDecl*)(m_pParent))->m_bStatic;
+			bool bDoIt = true;
+			if (eLanguage == AST::Language::CPP)
+			{
+				if (bArrayAssignment && eOutputFile == AST::OutputFile::HEADER)
+					bDoIt = false;
+				if (bStatic && !m_pTypeRef->IsIntegral() && eOutputFile == AST::OutputFile::HEADER)
+					bDoIt = false;
+				if (bStatic && m_pTypeRef->IsIntegral() && eOutputFile == AST::OutputFile::SOURCE)
+					bDoIt = false;
+				if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_PARAM_DECL && eOutputFile == AST::OutputFile::SOURCE)
+					bDoIt = false;
+			}
 			if (bDoIt)
 			{
 				sOut->AppendString(" = ");
