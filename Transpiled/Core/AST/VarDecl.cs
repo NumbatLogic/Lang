@@ -214,7 +214,7 @@ namespace NumbatLogic
 						bDoIt = false;
 					if (bStatic && !m_pTypeRef.IsIntegral() && eOutputFile == AST.OutputFile.HEADER)
 						bDoIt = false;
-					if (bStatic && m_pTypeRef.IsIntegral() && eOutputFile == AST.OutputFile.SOURCE)
+					if (bStatic && !bArrayAssignment && m_pTypeRef.IsIntegral() && eOutputFile == AST.OutputFile.SOURCE)
 						bDoIt = false;
 					if (m_pParent != null && m_pParent.m_eType == AST.Type.AST_PARAM_DECL && eOutputFile == AST.OutputFile.SOURCE)
 						bDoIt = false;

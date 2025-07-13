@@ -60,9 +60,23 @@ namespace NumbatLogic
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
 		{
 			bool bArrayAssignment = m_pVarDecl.m_pArraySize != null && m_pVarDecl.m_pAssignment != null;
-			bool bStaticVar = m_bStatic;// && !m_pVarDecl.m_pTypeRef.m_bConst;
-			if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE && !bArrayAssignment && !bStaticVar)
-				return;
+			//bool bStaticConstNonIntegralVar = m_bStatic && m_pVarDecl.m_pTypeRef.m_bConst && m_pVarDecl.m_pTypeRef.IsIntegral();
+			//if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE && !bArrayAssignment && !bStaticConstNonIntegralVar)
+			//	return;
+
+			if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
+			{
+				bool bDoIt = false;
+				if (bArrayAssignment)
+					bDoIt = true;
+
+				if (m_bStatic && !m_pVarDecl.m_pTypeRef.IsIntegral())
+					bDoIt = true;
+
+				if (!bDoIt)
+					return;
+			}
+
 
 			Util::Pad(nDepth, sOut);
 
