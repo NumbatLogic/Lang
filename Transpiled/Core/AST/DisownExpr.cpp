@@ -17,31 +17,21 @@
 
 namespace NumbatLogic
 {
-	class DisownExpr;
-	class AST;
-	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
-	class Token;
 	class AST;
 	class Console;
 	class Assert;
 	class DisownExpr;
 	class Validator;
 	class ValueType;
-	class TypeRef;
-	class InternalString;
 	class InternalString;
 	class Util;
 	class TypeRef;
 	class VarDecl;
-	class VarDecl;
-	class NullExpr;
 	class NullExpr;
 	class OperatorExpr;
-	class OperatorExpr;
-	class ExpressionStmt;
 	class ExpressionStmt;
 }
 namespace NumbatLogic

@@ -19,9 +19,7 @@ namespace NumbatLogic
 	template <class T>
 	class Vector;
 	class TranslationUnit;
-	class TranslationUnit;
 	class NamespaceNode;
-	class InternalString;
 	class InternalString;
 	class Console;
 	class Assert;
@@ -29,12 +27,8 @@ namespace NumbatLogic
 	class OwnedVector;
 	class File;
 	class Validator;
-	class Validator;
-	class AST;
 	class AST;
 	class NamespaceDecl;
-	class NamespaceDecl;
-	class Token;
 	class TokenContainer;
 	class Token;
 }

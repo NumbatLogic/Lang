@@ -3,7 +3,6 @@
 namespace NumbatLogic
 {
 	class OffsetDatum;
-	class OffsetDatum;
 }
 namespace NumbatLogic
 {

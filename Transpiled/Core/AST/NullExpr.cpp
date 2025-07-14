@@ -8,13 +8,10 @@
 
 namespace NumbatLogic
 {
-	class NullExpr;
 	class AST;
-	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
-	class Token;
 	class NullExpr;
 	class ValueType;
 	class InternalString;

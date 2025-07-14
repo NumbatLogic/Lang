@@ -19,31 +19,20 @@
 
 namespace NumbatLogic
 {
-	class Identifier;
-	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
-	class Token;
 	class Identifier;
 	class AST;
-	class AST;
 	class OperatorExpr;
-	class ValueType;
-	class ClassDecl;
-	class EnumDecl;
 	template <class T>
 	class Vector;
 	class NamespaceDecl;
 	class NamespaceNode;
-	class NamespaceDecl;
 	class Validator;
-	class InternalString;
 	class InternalString;
 	class ClassDecl;
 	class VarDecl;
-	class VarDecl;
-	class MemberVarDecl;
 	class MemberVarDecl;
 	class EnumDecl;
 	class EnumDeclValue;

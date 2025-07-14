@@ -16,15 +16,10 @@
 
 namespace NumbatLogic
 {
-	class VarDecl;
-	class AST;
 	class OffsetDatum;
-	class OffsetDatum;
-	class TypeRef;
 	class TypeRef;
 	class Token;
 	class TokenContainer;
-	class Token;
 	class VarDecl;
 	class AST;
 	class Console;
@@ -32,12 +27,9 @@ namespace NumbatLogic
 	class ExternalString;
 	class Validator;
 	class ValueType;
-	class ValueType;
 	class Util;
 	class InternalString;
 	class ClassDecl;
-	class ClassDecl;
-	class MemberVarDecl;
 	class MemberVarDecl;
 }
 namespace NumbatLogic

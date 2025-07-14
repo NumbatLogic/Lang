@@ -12,18 +12,13 @@
 
 namespace NumbatLogic
 {
-	class MemberFunctionDecl;
 	class AST;
 	class OffsetDatum;
-	class OffsetDatum;
-	class AccessLevel;
 	class AccessLevel;
 	class Token;
 	class TokenContainer;
-	class Token;
 	class MemberFunctionDecl;
 	class ClassDecl;
-	class FunctionDecl;
 	class FunctionDecl;
 	template <class T>
 	class OwnedVector;

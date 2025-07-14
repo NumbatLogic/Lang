@@ -12,19 +12,13 @@
 
 namespace NumbatLogic
 {
-	class MemberVarDecl;
 	class OffsetDatum;
-	class OffsetDatum;
-	class AccessLevel;
 	class AccessLevel;
 	class Token;
 	class TokenContainer;
-	class Token;
-	class VarDecl;
 	class VarDecl;
 	class MemberVarDecl;
 	class AST;
-	class InternalString;
 	class InternalString;
 	class TypeRef;
 	class Validator;

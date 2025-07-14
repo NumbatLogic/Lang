@@ -15,17 +15,12 @@
 
 namespace NumbatLogic
 {
-	class DelegateDecl;
 	class AST;
 	class OffsetDatum;
-	class OffsetDatum;
-	class AccessLevel;
 	class AccessLevel;
 	class Token;
 	class TokenContainer;
-	class Token;
 	class DelegateDecl;
-	class FunctionDecl;
 	class FunctionDecl;
 	class Console;
 	class Assert;

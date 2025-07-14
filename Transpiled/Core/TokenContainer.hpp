@@ -8,7 +8,6 @@ namespace NumbatLogic
 	template <class T>
 	class OwnedVector;
 	class Token;
-	class Token;
 	class InternalString;
 	class ParseDatum;
 	class OffsetDatum;

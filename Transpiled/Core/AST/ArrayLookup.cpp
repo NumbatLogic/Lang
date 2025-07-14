@@ -12,9 +12,6 @@
 
 namespace NumbatLogic
 {
-	class ArrayLookup;
-	class AST;
-	class OffsetDatum;
 	class OffsetDatum;
 	class AST;
 	class Identifier;

@@ -11,12 +11,9 @@
 
 namespace NumbatLogic
 {
-	class BreakStmt;
-	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
-	class Token;
 	class Console;
 	class Assert;
 	class BreakStmt;

@@ -7,8 +7,6 @@ namespace NumbatLogic
 	class Util;
 	class InternalString;
 	class Blob;
-	class Blob;
-	class BlobView;
 	class BlobView;
 }
 namespace NumbatLogic

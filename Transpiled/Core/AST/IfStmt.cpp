@@ -11,17 +11,12 @@
 
 namespace NumbatLogic
 {
-	class IfStmt;
-	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
-	class Token;
 	class Console;
 	class Assert;
 	class AST;
-	class AST;
-	class Scope;
 	class Scope;
 	class IfStmt;
 	class InternalString;

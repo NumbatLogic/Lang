@@ -293,6 +293,26 @@ namespace NumbatLogic
 					ClassDeclReference pClassDeclReference = m_pClassDeclReferenceVector.Get(i);
 					if (eOutputFile == pClassDeclReference.m_eOutputFile)
 					{
+						bool bOnlyInclude = !pClassDeclReference.m_bForwardReference;
+						if (bOnlyInclude)
+						{
+							for (int j = 0; j < m_pClassDeclReferenceVector.GetSize(); j++)
+							{
+								ClassDeclReference pTestClassDeclReference = m_pClassDeclReferenceVector.Get(j);
+								if (pTestClassDeclReference.m_pClassDecl == pClassDeclReference.m_pClassDecl)
+								{
+									if (pTestClassDeclReference.m_eOutputFile == pClassDeclReference.m_eOutputFile)
+									{
+										if (pTestClassDeclReference.m_bForwardReference)
+										{
+											bOnlyInclude = false;
+											break;
+										}
+									}
+								}
+							}
+						}
+						if (pClassDeclReference.m_bForwardReference || bOnlyInclude)
 						{
 							Vector<InternalString> sNamespaceVector = new Vector<InternalString>();
 							NamespaceNode pNamespaceNode = pClassDeclReference.m_pClassDecl.m_pNamespaceNode;

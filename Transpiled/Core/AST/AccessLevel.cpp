@@ -7,12 +7,9 @@
 
 namespace NumbatLogic
 {
-	class AccessLevel;
-	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
-	class Token;
 	class AccessLevel;
 	class AST;
 	class InternalString;

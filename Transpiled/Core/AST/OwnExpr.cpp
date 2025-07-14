@@ -12,20 +12,15 @@
 
 namespace NumbatLogic
 {
-	class OwnExpr;
-	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
-	class Token;
-	class AST;
 	class AST;
 	class Console;
 	class Assert;
 	class OwnExpr;
 	class Validator;
 	class ValueType;
-	class InternalString;
 	class InternalString;
 	class TypeRef;
 }

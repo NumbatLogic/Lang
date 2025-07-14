@@ -13,24 +13,18 @@
 
 namespace NumbatLogic
 {
-	class TypeRef;
-	class AST;
 	template <class T>
 	class Vector;
 	class TypeRef;
 	class OffsetDatum;
-	class OffsetDatum;
 	class Token;
 	class TokenContainer;
-	class Token;
 	class Console;
 	class Assert;
-	class InternalString;
 	class InternalString;
 	class AST;
 	class Validator;
 	class ClassDecl;
-	class ValueType;
 	class ValueType;
 	template <class T>
 	class OwnedVector;

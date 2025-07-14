@@ -13,9 +13,6 @@
 
 namespace NumbatLogic
 {
-	class ClassDeclReference;
-	class ReferenceNode;
-	class InternalString;
 	template <class T>
 	class OwnedVector;
 	class ReferenceNode;
@@ -25,16 +22,12 @@ namespace NumbatLogic
 	class Util;
 	class ClassDecl;
 	class Token;
-	class TranslationUnit;
 	class TokenContainer;
 	class InternalString;
 	class TranslationUnit;
 	class File;
 	class OffsetDatum;
-	class OffsetDatum;
 	class AST;
-	class AST;
-	class NamespaceNode;
 	class NamespaceNode;
 }
 namespace NumbatLogic
@@ -342,6 +335,26 @@ namespace NumbatLogic
 				ClassDeclReference* pClassDeclReference = m_pClassDeclReferenceVector->Get(i);
 				if (eOutputFile == pClassDeclReference->m_eOutputFile)
 				{
+					bool bOnlyInclude = !pClassDeclReference->m_bForwardReference;
+					if (bOnlyInclude)
+					{
+						for (int j = 0; j < m_pClassDeclReferenceVector->GetSize(); j++)
+						{
+							ClassDeclReference* pTestClassDeclReference = m_pClassDeclReferenceVector->Get(j);
+							if (pTestClassDeclReference->m_pClassDecl == pClassDeclReference->m_pClassDecl)
+							{
+								if (pTestClassDeclReference->m_eOutputFile == pClassDeclReference->m_eOutputFile)
+								{
+									if (pTestClassDeclReference->m_bForwardReference)
+									{
+										bOnlyInclude = false;
+										break;
+									}
+								}
+							}
+						}
+					}
+					if (pClassDeclReference->m_bForwardReference || bOnlyInclude)
 					{
 						Vector<InternalString*>* sNamespaceVector = new Vector<InternalString*>();
 						NamespaceNode* pNamespaceNode = pClassDeclReference->m_pClassDecl->m_pNamespaceNode;
