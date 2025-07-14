@@ -732,6 +732,11 @@ namespace NumbatLogic
 
 		public bool IsIntegral()
 		{
+			// todo: we should be able to use ValueType for everything, but there is not a float type yet....
+			ValueType pValueType = GetRecursiveValueType();
+			if (pValueType.m_eType == ValueType::Type::ENUM_DECL_VALUE)
+				return true;
+			
 			return m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_INT ||
 				m_pTypeToken.m_eType ==Token::Type::TOKEN_KEYWORD_UNICHAR ||
 				m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_UINT ||
@@ -741,7 +746,8 @@ namespace NumbatLogic
 				m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_UINT64 ||
 				m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_INT8 ||
 				m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_INT16 ||
-				m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_INT32;
+				m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_INT32 ||
+				m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_BOOL;
 		}
 	}
 }
