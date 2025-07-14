@@ -9,16 +9,11 @@
 
 namespace NumbatLogic
 {
-	class Unary;
-	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
-	class Token;
-	class AST;
 	class AST;
 	class Unary;
-	class InternalString;
 	class InternalString;
 	class Validator;
 	class ValueType;

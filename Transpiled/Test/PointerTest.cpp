@@ -3,7 +3,6 @@
 
 namespace NumbatLogic
 {
-	class Thing;
 	class PointerTest;
 	class Console;
 	class Thing;

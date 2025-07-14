@@ -15,13 +15,9 @@
 
 namespace NumbatLogic
 {
-	class NamespaceDecl;
-	class AST;
-	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
-	class Token;
 	class NamespaceDecl;
 	class Console;
 	class Assert;
@@ -29,10 +25,8 @@ namespace NumbatLogic
 	class Validator;
 	class ExternalString;
 	class NamespaceNode;
-	class NamespaceNode;
 	template <class T>
 	class Vector;
-	class ClassDecl;
 	class ClassDecl;
 	class Util;
 	class InternalString;

@@ -15,8 +15,6 @@ namespace NumbatLogic
 	template <class T>
 	class Vector;
 	class InternalString;
-	class InternalString;
-	class Project;
 	class Project;
 	template <class T>
 	class OwnedVector;

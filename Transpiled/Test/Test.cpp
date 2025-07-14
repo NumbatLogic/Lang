@@ -11,15 +11,11 @@ namespace NumbatLogic
 {
 	class Test;
 	class Console;
-	class AST;
 	class PointerTest;
 	template <class T>
 	class OwnedVector;
 	class InternalString;
-	class InternalString;
 	class TokenContainer;
-	class TokenContainer;
-	class OffsetDatum;
 	class OffsetDatum;
 	class AST;
 }

@@ -314,8 +314,27 @@ namespace NumbatLogic
 						// but not prefix appending to amalgamated secret header
 						// this adds unneded verbosity, but meh
 						// maybe only do this for amalgamation?
+						bool bOnlyInclude = !pClassDeclReference.m_bForwardReference;
+						if (bOnlyInclude)
+						{
+							for (int j = 0; j < m_pClassDeclReferenceVector.GetSize(); j++)
+							{
+								ClassDeclReference pTestClassDeclReference = m_pClassDeclReferenceVector.Get(j);
+								if (pTestClassDeclReference.m_pClassDecl == pClassDeclReference.m_pClassDecl)
+								{
+									if (pTestClassDeclReference.m_eOutputFile == pClassDeclReference.m_eOutputFile)
+									{
+										if (pTestClassDeclReference.m_bForwardReference)
+										{
+											bOnlyInclude = false;
+											break;
+										}
+									}
+								}
+							}
+						}
 
-	 					//if (pClassDeclReference.m_bForwardReference)
+	 					if (pClassDeclReference.m_bForwardReference || bOnlyInclude)
 	 					{
 	 						Vector<InternalString>* sNamespaceVector = own new Vector<InternalString>();
 	 						NamespaceNode pNamespaceNode = pClassDeclReference.m_pClassDecl.m_pNamespaceNode;
@@ -335,7 +354,7 @@ namespace NumbatLogic
 
 	 						pCurrentNode.m_pChildClassVector.PushBack(pClassDeclReference);
 	 					}
-	 					//else
+						
 						if (!pClassDeclReference.m_bForwardReference)
 	 					{
 	 						bool bFound = false;

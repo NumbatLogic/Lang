@@ -43,12 +43,9 @@
 
 namespace NumbatLogic
 {
-	class AST;
-	class Token;
 	class ValueType;
 	class AST;
 	class FunctionDecl;
-	class ClassDecl;
 	class NamespaceDecl;
 	class ReturnStmt;
 	class BreakStmt;
@@ -80,14 +77,12 @@ namespace NumbatLogic
 	class DisownExpr;
 	class Identifier;
 	class OffsetDatum;
-	class OffsetDatum;
 	class Token;
 	class TokenContainer;
 	class OperatorExpr;
 	class TrinaryExpr;
 	class ClassDecl;
 	class Assert;
-	class InternalString;
 	class InternalString;
 	class Console;
 }

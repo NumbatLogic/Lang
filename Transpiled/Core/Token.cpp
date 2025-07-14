@@ -3,7 +3,6 @@
 
 namespace NumbatLogic
 {
-	class Token;
 	class InternalString;
 	class Token;
 }

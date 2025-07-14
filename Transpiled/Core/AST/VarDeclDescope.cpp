@@ -13,7 +13,6 @@ namespace NumbatLogic
 	template <class T>
 	class Vector;
 	class VarDecl;
-	class VarDecl;
 	class Token;
 	class Util;
 	class InternalString;

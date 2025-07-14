@@ -6,11 +6,9 @@
 
 namespace NumbatLogic
 {
-	class AST;
 	class Token;
 	template <class T>
 	class Vector;
-	class EnumDeclValue;
 	class EnumDeclValue;
 	class EnumDecl;
 	class TokenContainer;

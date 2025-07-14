@@ -7,13 +7,11 @@
 namespace NumbatLogic
 {
 	class ClassDecl;
-	class TypeRef;
 	class GenericTypeDecl;
 	class EnumDecl;
 	class EnumDeclValue;
 	template <class T>
 	class OwnedVector;
-	class ValueType;
 	class ValueType;
 	class DelegateDecl;
 	class FunctionDecl;

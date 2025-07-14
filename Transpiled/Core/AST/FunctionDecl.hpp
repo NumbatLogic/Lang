@@ -4,7 +4,6 @@
 
 namespace NumbatLogic
 {
-	class AST;
 	class TypeRef;
 	class Token;
 	class ParamDecl;

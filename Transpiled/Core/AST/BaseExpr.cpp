@@ -10,18 +10,13 @@
 
 namespace NumbatLogic
 {
-	class BaseExpr;
-	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
-	class Token;
 	class BaseExpr;
-	class AST;
 	class ValueType;
 	class AST;
 	class Validator;
-	class ClassDecl;
 	class ClassDecl;
 	class InternalString;
 }

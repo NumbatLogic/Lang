@@ -4,7 +4,6 @@
 
 namespace NumbatLogic
 {
-	class AST;
 	class Token;
 	class AST;
 	class OperatorExpr;

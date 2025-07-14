@@ -12,16 +12,12 @@
 
 namespace NumbatLogic
 {
-	class SwitchStmt;
-	class AST;
 	template <class T>
 	class Vector;
 	class AST;
 	class OffsetDatum;
-	class OffsetDatum;
 	class Token;
 	class TokenContainer;
-	class Token;
 	class Console;
 	class Assert;
 	class SwitchStmt;

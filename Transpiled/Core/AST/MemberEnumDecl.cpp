@@ -8,12 +8,8 @@
 
 namespace NumbatLogic
 {
-	class MemberEnumDecl;
-	class OffsetDatum;
 	class OffsetDatum;
 	class AccessLevel;
-	class AccessLevel;
-	class EnumDecl;
 	class EnumDecl;
 	class MemberEnumDecl;
 	class AST;

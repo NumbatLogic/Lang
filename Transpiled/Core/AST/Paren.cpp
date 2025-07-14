@@ -9,13 +9,9 @@
 
 namespace NumbatLogic
 {
-	class Paren;
-	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
-	class Token;
-	class AST;
 	class AST;
 	class Paren;
 	class Validator;

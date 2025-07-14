@@ -8,13 +8,11 @@
 
 namespace NumbatLogic
 {
-	class NamespaceNode;
 	template <class T>
 	class OwnedVector;
 	class NamespaceNode;
 	template <class T>
 	class Vector;
-	class NamespaceDecl;
 	class NamespaceDecl;
 	class Token;
 	class InternalString;
