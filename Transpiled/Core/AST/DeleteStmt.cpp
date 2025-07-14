@@ -10,10 +10,19 @@
 
 namespace NumbatLogic
 {
+	class DeleteStmt;
+	class AST;
 	class OffsetDatum;
+	class OffsetDatum;
+	class Token;
+	class TokenContainer;
 	class Token;
 	class AST;
 	class DeleteStmt;
+	class Validator;
+	class ValueType;
+	class Util;
+	class InternalString;
 }
 namespace NumbatLogic
 {

@@ -3,5 +3,12 @@
 
 namespace NumbatLogic
 {
+	template <class T>
+	class OwnedVector;
+	template <class T>
+	class Vector;
+}
+namespace NumbatLogic
+{
 										}
 

@@ -5,6 +5,7 @@
 namespace NumbatLogic
 {
 	class AST;
+	class AST;
 	class ArrayLookup;
 	class TokenContainer;
 	class OffsetDatum;

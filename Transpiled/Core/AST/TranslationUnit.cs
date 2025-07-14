@@ -293,7 +293,6 @@ namespace NumbatLogic
 					ClassDeclReference pClassDeclReference = m_pClassDeclReferenceVector.Get(i);
 					if (eOutputFile == pClassDeclReference.m_eOutputFile)
 					{
-						if (pClassDeclReference.m_bForwardReference)
 						{
 							Vector<InternalString> sNamespaceVector = new Vector<InternalString>();
 							NamespaceNode pNamespaceNode = pClassDeclReference.m_pClassDecl.m_pNamespaceNode;
@@ -310,7 +309,7 @@ namespace NumbatLogic
 							}
 							pCurrentNode.m_pChildClassVector.PushBack(pClassDeclReference);
 						}
-						else
+						if (!pClassDeclReference.m_bForwardReference)
 						{
 							bool bFound = false;
 							for (int j = 0; j < sPreviousIncludes.GetSize(); j++)

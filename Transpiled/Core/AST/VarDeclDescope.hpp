@@ -6,6 +6,10 @@
 
 namespace NumbatLogic
 {
+	class AST;
+	template <class T>
+	class Vector;
+	class VarDecl;
 	class VarDecl;
 	class InternalString;
 }

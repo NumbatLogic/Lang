@@ -9,9 +9,16 @@ namespace NumbatLogic
 {
 	class InternalString;
 	class Scope;
+	template <class T>
+	class Vector;
+	class VarDecl;
 	class VarDecl;
 	class Project;
+	template <class T>
+	class OwnedVector;
 	class ValidatorError;
+	class ValidatorError;
+	class ValidatorScope;
 	class ValidatorScope;
 	class NamespaceNode;
 	class AST;

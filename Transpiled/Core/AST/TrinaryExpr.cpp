@@ -11,10 +11,20 @@
 
 namespace NumbatLogic
 {
+	class TrinaryExpr;
+	class AST;
+	class OffsetDatum;
 	class OffsetDatum;
 	class AST;
+	class Console;
+	class TokenContainer;
+	class Assert;
+	class Token;
 	class Token;
 	class TrinaryExpr;
+	class Validator;
+	class ValueType;
+	class InternalString;
 }
 namespace NumbatLogic
 {

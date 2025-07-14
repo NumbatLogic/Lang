@@ -44,10 +44,52 @@
 namespace NumbatLogic
 {
 	class AST;
+	class Token;
+	class ValueType;
+	class AST;
+	class FunctionDecl;
+	class ClassDecl;
+	class NamespaceDecl;
+	class ReturnStmt;
+	class BreakStmt;
+	class ContinueStmt;
+	class Scope;
+	class VarDecl;
+	class EnumDecl;
+	class DeleteStmt;
+	class IfStmt;
+	class ForStmt;
+	class WhileStmt;
+	class SwitchStmt;
+	class ExpressionStmt;
+	class NumberExpr;
+	class BoolExpr;
+	class CharExpr;
+	class StringExpr;
+	class NullExpr;
+	class ThisExpr;
+	class BaseExpr;
+	class FunctionCall;
+	class New;
+	class CastExpr;
+	class Unary;
+	class Paren;
+	class ArrayLookup;
+	class StaticArray;
+	class OwnExpr;
+	class DisownExpr;
+	class Identifier;
+	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
+	class TokenContainer;
+	class OperatorExpr;
+	class TrinaryExpr;
 	class ClassDecl;
+	class Assert;
 	class InternalString;
+	class InternalString;
+	class Console;
 }
 namespace NumbatLogic
 {

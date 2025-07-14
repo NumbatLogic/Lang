@@ -26,18 +26,44 @@
 
 namespace NumbatLogic
 {
-	class GenericTypeDecl;
-	class OffsetDatum;
-	class Token;
 	class ClassDecl;
 	class AST;
+	template <class T>
+	class OwnedVector;
+	class GenericTypeDecl;
+	class GenericTypeDecl;
+	class OffsetDatum;
+	class OffsetDatum;
+	class Token;
+	class TokenContainer;
+	class Token;
+	class ClassDecl;
+	class Console;
+	class Assert;
+	class AST;
+	class MemberVarDecl;
+	class MemberFunctionDecl;
+	class MemberEnumDecl;
+	class TorDecl;
+	class DelegateDecl;
+	class Validator;
+	class InternalString;
 	class InternalString;
 	class MemberVarDecl;
 	class TypeRef;
+	class VarDecl;
+	class TypeRef;
 	class TorDecl;
+	class Scope;
+	class MemberVarsSetDefaultStmt;
+	class AccessLevel;
 	class AccessLevel;
 	class ParamDecl;
+	class ParamDecl;
 	class Scope;
+	class ExternalString;
+	class Util;
+	class NamespaceNode;
 }
 namespace NumbatLogic
 {

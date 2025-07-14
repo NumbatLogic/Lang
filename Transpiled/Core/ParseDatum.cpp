@@ -3,6 +3,11 @@
 
 namespace NumbatLogic
 {
+	class ParseDatum;
+	class InternalString;
+}
+namespace NumbatLogic
+{
 	ParseDatum::ParseDatum()
 	{
 		m_sInput = 0;

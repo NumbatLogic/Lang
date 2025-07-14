@@ -8,7 +8,15 @@
 
 namespace NumbatLogic
 {
+	class VarDeclDescope;
+	class AST;
+	template <class T>
+	class Vector;
 	class VarDecl;
+	class VarDecl;
+	class Token;
+	class Util;
+	class InternalString;
 }
 namespace NumbatLogic
 {

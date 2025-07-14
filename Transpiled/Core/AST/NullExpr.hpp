@@ -4,6 +4,7 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class NullExpr;
 	class TokenContainer;
 	class OffsetDatum;

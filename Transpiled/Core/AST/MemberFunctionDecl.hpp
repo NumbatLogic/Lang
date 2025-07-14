@@ -4,6 +4,7 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class ClassDecl;
 	class AccessLevel;
 	class FunctionDecl;

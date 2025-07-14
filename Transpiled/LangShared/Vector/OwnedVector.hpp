@@ -5,6 +5,11 @@
 namespace NumbatLogic
 {
 	template <class T>
+	class Vector;
+}
+namespace NumbatLogic
+{
+	template <class T>
 	class OwnedVector
 	{
 		protected: Vector<T>* m_pVector;

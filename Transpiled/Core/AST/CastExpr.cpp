@@ -13,12 +13,24 @@
 
 namespace NumbatLogic
 {
-	class OffsetDatum;
-	class Token;
-	class TypeRef;
-	class ParamCall;
 	class CastExpr;
 	class AST;
+	class OffsetDatum;
+	class OffsetDatum;
+	class Token;
+	class TokenContainer;
+	class Token;
+	class TypeRef;
+	class TypeRef;
+	class Console;
+	class Assert;
+	class ParamCall;
+	class ParamCall;
+	class CastExpr;
+	class Validator;
+	class AST;
+	class ValueType;
+	class InternalString;
 }
 namespace NumbatLogic
 {

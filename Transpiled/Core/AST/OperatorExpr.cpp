@@ -11,7 +11,15 @@ namespace NumbatLogic
 {
 	class OperatorExpr;
 	class AST;
+	class OperatorExpr;
+	class AST;
+	class Validator;
+	class Token;
+	class ValueType;
 	class InternalString;
+	class InternalString;
+	class TypeRef;
+	class ClassDecl;
 	class ClassDecl;
 }
 namespace NumbatLogic

@@ -5,6 +5,7 @@
 namespace NumbatLogic
 {
 	class AST;
+	class AST;
 	class Scope;
 	class WhileStmt;
 	class TokenContainer;

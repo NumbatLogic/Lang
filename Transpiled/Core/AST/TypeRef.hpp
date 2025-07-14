@@ -6,7 +6,11 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class Token;
+	template <class T>
+	class Vector;
+	class TypeRef;
 	class TypeRef;
 	class AST;
 	class TokenContainer;

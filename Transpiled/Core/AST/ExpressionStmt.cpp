@@ -8,9 +8,16 @@
 
 namespace NumbatLogic
 {
+	class ExpressionStmt;
+	class AST;
+	class OffsetDatum;
 	class OffsetDatum;
 	class AST;
+	class TokenContainer;
+	class Token;
 	class ExpressionStmt;
+	class Util;
+	class InternalString;
 }
 namespace NumbatLogic
 {

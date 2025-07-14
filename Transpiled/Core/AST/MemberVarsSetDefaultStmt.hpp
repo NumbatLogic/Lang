@@ -4,6 +4,7 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class Validator;
 	class OperatorExpr;
 	class InternalString;

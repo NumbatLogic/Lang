@@ -9,11 +9,19 @@
 
 namespace NumbatLogic
 {
+	class ThisExpr;
 	class OffsetDatum;
+	class OffsetDatum;
+	class Token;
+	class TokenContainer;
 	class Token;
 	class ThisExpr;
 	class AST;
+	class ValueType;
+	class AST;
+	class Validator;
 	class ClassDecl;
+	class InternalString;
 }
 namespace NumbatLogic
 {

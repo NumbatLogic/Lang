@@ -12,9 +12,20 @@
 
 namespace NumbatLogic
 {
+	class ArrayLookup;
+	class AST;
+	class OffsetDatum;
 	class OffsetDatum;
 	class AST;
+	class Identifier;
+	class TokenContainer;
+	class Token;
+	class Console;
+	class Assert;
 	class ArrayLookup;
+	class Validator;
+	class ValueType;
+	class InternalString;
 }
 namespace NumbatLogic
 {
