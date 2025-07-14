@@ -6,6 +6,9 @@
 namespace NumbatLogic
 {
 	class AST;
+	class AST;
+	template <class T>
+	class Vector;
 	class SwitchStmt;
 	class TokenContainer;
 	class OffsetDatum;

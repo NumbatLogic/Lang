@@ -10,10 +10,19 @@
 
 namespace NumbatLogic
 {
+	class StaticArray;
+	class AST;
 	class OffsetDatum;
+	class OffsetDatum;
+	class Token;
+	class TokenContainer;
 	class Token;
 	class StaticArray;
 	class AST;
+	class Console;
+	class Assert;
+	class ValueType;
+	class InternalString;
 }
 namespace NumbatLogic
 {

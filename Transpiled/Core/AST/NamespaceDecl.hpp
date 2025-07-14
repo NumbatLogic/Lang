@@ -4,6 +4,7 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class Token;
 	class NamespaceNode;
 	class NamespaceDecl;

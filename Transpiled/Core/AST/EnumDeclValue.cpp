@@ -10,9 +10,18 @@
 
 namespace NumbatLogic
 {
+	class EnumDeclValue;
+	class AST;
+	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
+	class TokenContainer;
+	class Token;
 	class EnumDeclValue;
+	class Console;
+	class Assert;
+	class ExternalString;
+	class InternalString;
 }
 namespace NumbatLogic
 {

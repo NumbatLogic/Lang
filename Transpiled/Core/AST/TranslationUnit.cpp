@@ -13,12 +13,28 @@
 
 namespace NumbatLogic
 {
-	class ReferenceNode;
 	class ClassDeclReference;
+	class ReferenceNode;
+	class InternalString;
+	template <class T>
+	class OwnedVector;
+	class ReferenceNode;
+	template <class T>
+	class Vector;
+	class ClassDeclReference;
+	class Util;
+	class ClassDecl;
+	class Token;
+	class TranslationUnit;
+	class TokenContainer;
 	class InternalString;
 	class TranslationUnit;
+	class File;
+	class OffsetDatum;
 	class OffsetDatum;
 	class AST;
+	class AST;
+	class NamespaceNode;
 	class NamespaceNode;
 }
 namespace NumbatLogic
@@ -326,7 +342,6 @@ namespace NumbatLogic
 				ClassDeclReference* pClassDeclReference = m_pClassDeclReferenceVector->Get(i);
 				if (eOutputFile == pClassDeclReference->m_eOutputFile)
 				{
-					if (pClassDeclReference->m_bForwardReference)
 					{
 						Vector<InternalString*>* sNamespaceVector = new Vector<InternalString*>();
 						NamespaceNode* pNamespaceNode = pClassDeclReference->m_pClassDecl->m_pNamespaceNode;
@@ -344,7 +359,7 @@ namespace NumbatLogic
 						pCurrentNode->m_pChildClassVector->PushBack(pClassDeclReference);
 						if (sNamespaceVector) delete sNamespaceVector;
 					}
-					else
+					if (!pClassDeclReference->m_bForwardReference)
 					{
 						bool bFound = false;
 						for (int j = 0; j < sPreviousIncludes->GetSize(); j++)

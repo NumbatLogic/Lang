@@ -21,19 +21,43 @@
 
 namespace NumbatLogic
 {
+	class ValidatorError;
+	class InternalString;
+	class ValidatorScope;
+	template <class T>
+	class Vector;
 	class VarDecl;
+	class VarDecl;
+	class Scope;
+	class Validator;
+	template <class T>
+	class OwnedVector;
 	class ValidatorError;
 	class ValidatorScope;
+	class Project;
+	class AST;
 	class AST;
 	class NamespaceDecl;
 	class NamespaceNode;
+	class NamespaceNode;
 	class InternalString;
 	class TranslationUnit;
+	class TranslationUnit;
+	class Console;
 	class ValueType;
+	class TypeRef;
+	class ValueType;
+	class Assert;
+	class VarDeclDescope;
 	class VarDeclDescope;
 	class Identifier;
 	class ReturnStmt;
+	class ReturnStmt;
 	class DisownExpr;
+	class DisownExpr;
+	class ExternalString;
+	class Token;
+	class Identifier;
 }
 namespace NumbatLogic
 {

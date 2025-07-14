@@ -15,11 +15,27 @@
 
 namespace NumbatLogic
 {
+	class Project;
+	template <class T>
+	class Vector;
 	class TranslationUnit;
+	class TranslationUnit;
+	class NamespaceNode;
 	class InternalString;
+	class InternalString;
+	class Console;
+	class Assert;
+	template <class T>
+	class OwnedVector;
+	class File;
+	class Validator;
 	class Validator;
 	class AST;
+	class AST;
 	class NamespaceDecl;
+	class NamespaceDecl;
+	class Token;
+	class TokenContainer;
 	class Token;
 }
 namespace NumbatLogic

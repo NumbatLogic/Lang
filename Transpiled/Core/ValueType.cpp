@@ -17,8 +17,25 @@
 namespace NumbatLogic
 {
 	class ValueType;
+	template <class T>
+	class OwnedVector;
+	class ValueType;
 	class TypeRef;
+	class Validator;
+	class Token;
+	class TypeRef;
+	class InternalString;
+	class ClassDecl;
+	template <class T>
+	class Vector;
 	class NamespaceNode;
+	class NamespaceNode;
+	class GenericTypeDecl;
+	class Assert;
+	class EnumDecl;
+	class EnumDeclValue;
+	class DelegateDecl;
+	class FunctionDecl;
 }
 namespace NumbatLogic
 {

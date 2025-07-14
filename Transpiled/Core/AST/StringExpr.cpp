@@ -7,8 +7,14 @@
 
 namespace NumbatLogic
 {
-	class Token;
 	class StringExpr;
+	class Token;
+	class TokenContainer;
+	class Token;
+	class OffsetDatum;
+	class StringExpr;
+	class AST;
+	class ValueType;
 }
 namespace NumbatLogic
 {

@@ -4,6 +4,8 @@
 
 namespace NumbatLogic
 {
+	template <class T>
+	class Vector;
 	class InternalString;
 }
 namespace NumbatLogic

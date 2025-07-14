@@ -23,16 +23,39 @@
 
 namespace NumbatLogic
 {
+	class FunctionCall;
+	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
+	class TokenContainer;
+	class Token;
+	class ParamCall;
 	class ParamCall;
 	class InternalString;
+	class InternalString;
+	class Console;
+	class Assert;
 	class FunctionCall;
 	class AST;
+	class AST;
+	class OperatorExpr;
+	class ValueType;
+	class ClassDecl;
+	class EnumDecl;
+	class Validator;
 	class FunctionDecl;
 	class VarDecl;
 	class ValueType;
+	class VarDecl;
+	class TypeRef;
+	class DelegateDecl;
+	template <class T>
+	class OwnedVector;
 	class GenericTypeDecl;
+	class ExternalString;
+	class GenericTypeDecl;
+	class FunctionDecl;
+	class ParamDecl;
 }
 namespace NumbatLogic
 {

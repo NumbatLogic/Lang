@@ -11,11 +11,21 @@
 
 namespace NumbatLogic
 {
+	class WhileStmt;
+	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
+	class TokenContainer;
+	class Token;
+	class Console;
+	class Assert;
+	class AST;
 	class AST;
 	class Scope;
+	class Scope;
 	class WhileStmt;
+	class Util;
+	class InternalString;
 }
 namespace NumbatLogic
 {

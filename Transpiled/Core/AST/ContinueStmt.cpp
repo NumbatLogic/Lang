@@ -11,9 +11,19 @@
 
 namespace NumbatLogic
 {
+	class ContinueStmt;
+	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
+	class TokenContainer;
+	class Token;
+	class Console;
+	class Assert;
 	class ContinueStmt;
+	class AST;
+	class Validator;
+	class Util;
+	class InternalString;
 }
 namespace NumbatLogic
 {

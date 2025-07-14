@@ -10,8 +10,19 @@
 
 namespace NumbatLogic
 {
+	class CLI;
+	class Console;
+	template <class T>
+	class Vector;
+	class InternalString;
 	class InternalString;
 	class Project;
+	class Project;
+	template <class T>
+	class OwnedVector;
+	class ExternalString;
+	class AST;
+	class File;
 }
 namespace NumbatLogic
 {

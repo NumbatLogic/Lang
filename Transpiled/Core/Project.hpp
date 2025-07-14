@@ -7,8 +7,14 @@
 
 namespace NumbatLogic
 {
+	class AST;
+	template <class T>
+	class Vector;
+	class TranslationUnit;
 	class TranslationUnit;
 	class NamespaceNode;
+	template <class T>
+	class OwnedVector;
 	class InternalString;
 	class AST;
 	class NamespaceDecl;

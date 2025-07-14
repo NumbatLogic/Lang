@@ -9,9 +9,18 @@
 
 namespace NumbatLogic
 {
+	class TokenContainer;
+	template <class T>
+	class OwnedVector;
+	class Token;
 	class Token;
 	class InternalString;
 	class ParseDatum;
+	class InternalString;
+	class ParseDatum;
+	class Console;
+	class Assert;
+	class OffsetDatum;
 }
 namespace NumbatLogic
 {

@@ -16,15 +16,30 @@
 
 namespace NumbatLogic
 {
+	class New;
+	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
+	class TokenContainer;
+	class Token;
 	class TypeRef;
+	class TypeRef;
+	class Console;
+	class Assert;
+	class ParamCall;
 	class ParamCall;
 	class New;
+	class AST;
+	class Validator;
+	class ValueType;
+	class InternalString;
 	class InternalString;
 	class ClassDecl;
 	class AST;
+	class ClassDecl;
 	class TorDecl;
+	class TorDecl;
+	class ParamDecl;
 }
 namespace NumbatLogic
 {

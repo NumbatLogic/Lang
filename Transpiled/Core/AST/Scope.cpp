@@ -16,12 +16,26 @@
 namespace NumbatLogic
 {
 	class Scope;
+	class AST;
+	class Scope;
+	class OffsetDatum;
 	class OffsetDatum;
 	class Token;
+	class TokenContainer;
+	class Token;
 	class AST;
+	class Console;
+	class Assert;
+	class Validator;
+	class TorDecl;
 	class TorDecl;
 	class MemberVarDecl;
+	class MemberVarDecl;
+	class VarDecl;
+	class TypeRef;
 	class ClassDecl;
+	class Util;
+	class InternalString;
 }
 namespace NumbatLogic
 {

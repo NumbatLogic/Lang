@@ -4,6 +4,7 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class TypeRef;
 	class ParamCall;
 	class CastExpr;

@@ -15,10 +15,25 @@
 
 namespace NumbatLogic
 {
+	class MemberVarsSetDefaultStmt;
+	class AST;
 	class TorDecl;
+	class TorDecl;
+	class Token;
+	class Validator;
 	class AST;
 	class MemberVarDecl;
 	class ValueType;
+	class MemberVarDecl;
+	class VarDecl;
+	class TypeRef;
+	class Util;
+	class InternalString;
+	class ValueType;
+	class EnumDeclValue;
+	class EnumDecl;
+	template <class T>
+	class Vector;
 	class EnumDeclValue;
 }
 namespace NumbatLogic

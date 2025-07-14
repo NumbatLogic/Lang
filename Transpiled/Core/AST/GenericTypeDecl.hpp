@@ -4,6 +4,7 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class GenericTypeDecl;
 	class TokenContainer;
 	class OffsetDatum;

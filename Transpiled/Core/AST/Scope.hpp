@@ -4,6 +4,7 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class Scope;
 	class TokenContainer;
 	class OffsetDatum;

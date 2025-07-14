@@ -8,8 +8,15 @@
 namespace NumbatLogic
 {
 	class ClassDecl;
+	class AST;
 	class InternalString;
+	template <class T>
+	class OwnedVector;
 	class ReferenceNode;
+	class ReferenceNode;
+	template <class T>
+	class Vector;
+	class ClassDeclReference;
 	class ClassDeclReference;
 	class TokenContainer;
 	class TranslationUnit;

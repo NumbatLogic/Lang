@@ -15,12 +15,27 @@
 
 namespace NumbatLogic
 {
-	class OffsetDatum;
-	class Token;
 	class NamespaceDecl;
 	class AST;
+	class OffsetDatum;
+	class OffsetDatum;
+	class Token;
+	class TokenContainer;
+	class Token;
+	class NamespaceDecl;
+	class Console;
+	class Assert;
+	class AST;
+	class Validator;
+	class ExternalString;
 	class NamespaceNode;
+	class NamespaceNode;
+	template <class T>
+	class Vector;
 	class ClassDecl;
+	class ClassDecl;
+	class Util;
+	class InternalString;
 }
 namespace NumbatLogic
 {

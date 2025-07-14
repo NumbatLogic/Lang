@@ -17,13 +17,30 @@
 
 namespace NumbatLogic
 {
+	class FunctionDecl;
+	class OffsetDatum;
 	class OffsetDatum;
 	class TypeRef;
+	class TypeRef;
+	class Token;
+	class TokenContainer;
 	class Token;
 	class ParamDecl;
+	class ParamDecl;
+	class Console;
+	class Assert;
+	class Scope;
 	class Scope;
 	class FunctionDecl;
+	class AST;
+	class ExternalString;
+	class Validator;
 	class MemberFunctionDecl;
+	class MemberFunctionDecl;
+	class ClassDecl;
+	template <class T>
+	class OwnedVector;
+	class InternalString;
 }
 namespace NumbatLogic
 {
