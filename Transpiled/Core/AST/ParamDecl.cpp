@@ -138,14 +138,14 @@ namespace NumbatLogic
 					}
 				}
 				if (pValidator != 0)
-					pValidator->AddError("Param count mismatch (pCallChild == null)", m_pFirstToken->m_sFileName, m_pFirstToken->m_nLine, m_pFirstToken->m_nColumn);
+					pValidator->AddError("Param count mismatch (pCallChild == null)", pParamCall->m_pFirstToken->m_sFileName, pParamCall->m_pFirstToken->m_nLine, pParamCall->m_pFirstToken->m_nColumn);
 				return false;
 			}
 			else
 				if (pDeclChild == 0)
 				{
 					if (pValidator != 0)
-						pValidator->AddError("Param count mismatch (pDeclChild == null)", m_pFirstToken->m_sFileName, m_pFirstToken->m_nLine, m_pFirstToken->m_nColumn);
+						pValidator->AddError("Param count mismatch (pDeclChild == null)", pParamCall->m_pFirstToken->m_sFileName, pParamCall->m_pFirstToken->m_nLine, pParamCall->m_pFirstToken->m_nColumn);
 					return false;
 				}
 			if (pCallChild->m_pValueType == 0)
