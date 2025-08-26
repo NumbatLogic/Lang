@@ -51,7 +51,7 @@ namespace NumbatLogic
 			base.Validate(pValidator, pParent);
 
 			InternalString* sTemp = own new InternalString(m_pVarDecl.m_pNameToken.GetString());
-			if (!sTemp.StartsWith("m_") && !m_pVarDecl.m_pTypeRef.m_bConst)
+			if (!(sTemp.StartsWith("m_") || sTemp.StartsWith("__")) && !m_pVarDecl.m_pTypeRef.m_bConst)
 			{
 				pValidator.AddError("Member var name does not start with \"m_\"", m_pVarDecl.m_pNameToken.m_sFileName, m_pVarDecl.m_pNameToken.m_nLine, m_pVarDecl.m_pNameToken.m_nColumn);
 			}
