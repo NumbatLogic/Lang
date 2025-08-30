@@ -376,7 +376,12 @@ namespace NumbatLogic
 				sOut->Append("unsigned short");
 			else
 				if (m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_STRING)
-					sOut->Append("const char*");
+				{
+					if (m_bConst)
+						sOut->Append("char*");
+					else
+						sOut->Append("const char*");
+				}
 				else
 					if (m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_UINT)
 						sOut->Append("unsigned int");
@@ -603,9 +608,9 @@ namespace NumbatLogic
 								if (pGenericValueType) delete pGenericValueType;
 								return 0;
 							}
-							NumbatLogic::ValueType* __1566986364 = pGenericValueType;
+							NumbatLogic::ValueType* __3848703993 = pGenericValueType;
 							pGenericValueType = 0;
-							m_pValueType->m_pGenericValueTypeVector->PushBack(__1566986364);
+							m_pValueType->m_pGenericValueTypeVector->PushBack(__3848703993);
 							if (pGenericValueType) delete pGenericValueType;
 						}
 						return m_pValueType;

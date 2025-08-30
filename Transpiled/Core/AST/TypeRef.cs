@@ -337,7 +337,12 @@ namespace NumbatLogic
 					sOut.Append("unsigned short");
 				else
 					if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_STRING)
-						sOut.Append("const char*");
+					{
+						if (m_bConst)
+							sOut.Append("char*");
+						else
+							sOut.Append("const char*");
+					}
 					else
 						if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT)
 							sOut.Append("unsigned int");
@@ -563,9 +568,9 @@ namespace NumbatLogic
 								{
 									return null;
 								}
-								NumbatLogic.ValueType __1566986364 = pGenericValueType;
+								NumbatLogic.ValueType __3848703993 = pGenericValueType;
 								pGenericValueType = null;
-								m_pValueType.m_pGenericValueTypeVector.PushBack(__1566986364);
+								m_pValueType.m_pGenericValueTypeVector.PushBack(__3848703993);
 							}
 							return m_pValueType;
 						}
