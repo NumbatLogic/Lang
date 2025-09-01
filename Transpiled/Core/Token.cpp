@@ -267,6 +267,11 @@ namespace NumbatLogic
 				return "return";
 			}
 
+			case Type::TOKEN_KEYWORD_REF:
+			{
+				return "ref";
+			}
+
 			case Type::TOKEN_KEYWORD_STRING:
 			{
 				return "string";
@@ -490,9 +495,9 @@ namespace NumbatLogic
 		pToken->m_nColumn = m_nColumn;
 		if (m_sValue != 0)
 			pToken->m_sValue = new InternalString(m_sValue->GetExternalString());
-		NumbatLogic::Token* __959048406 = pToken;
+		NumbatLogic::Token* __338280889 = pToken;
 		pToken = 0;
-		return __959048406;
+		return __338280889;
 	}
 
 	Token::Token()

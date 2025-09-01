@@ -61,6 +61,7 @@ namespace NumbatLogic
 			TOKEN_KEYWORD_PRIVATE,
 			TOKEN_KEYWORD_PUBLIC,
 			TOKEN_KEYWORD_RETURN,
+			TOKEN_KEYWORD_REF,
 			TOKEN_KEYWORD_STATIC,
 			TOKEN_KEYWORD_STRING,
 			TOKEN_KEYWORD_SWITCH,
@@ -367,6 +368,11 @@ namespace NumbatLogic
 					return "return";
 				}
 
+				case Type.TOKEN_KEYWORD_REF:
+				{
+					return "ref";
+				}
+
 				case Type.TOKEN_KEYWORD_STRING:
 				{
 					return "string";
@@ -590,9 +596,9 @@ namespace NumbatLogic
 			pToken.m_nColumn = m_nColumn;
 			if (m_sValue != null)
 				pToken.m_sValue = new InternalString(m_sValue.GetExternalString());
-			NumbatLogic.Token __959048406 = pToken;
+			NumbatLogic.Token __338280889 = pToken;
 			pToken = null;
-			return __959048406;
+			return __338280889;
 		}
 
 		public Token()

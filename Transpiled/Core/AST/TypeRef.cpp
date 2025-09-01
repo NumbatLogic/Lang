@@ -38,6 +38,7 @@ namespace NumbatLogic
 	TypeRef::TypeRef()
 	{
 		m_bConst = false;
+		m_bRef = false;
 		m_pTypeToken = 0;
 		m_pGenericTypeRefVector = 0;
 		m_pChildTypeRef = 0;
@@ -47,6 +48,7 @@ namespace NumbatLogic
 		m_eType = AST::Type::AST_TYPE_REF;
 		m_pGenericTypeRefVector = new Vector<TypeRef*>();
 		m_bConst = false;
+		m_bRef = false;
 	}
 
 	TypeRef* TypeRef::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
@@ -57,6 +59,13 @@ namespace NumbatLogic
 		if (pConstToken != 0)
 		{
 			bConst = true;
+			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+		}
+		bool bRef = false;
+		Token* pRefToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_REF);
+		if (pRefToken != 0)
+		{
+			bRef = true;
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		}
 		Token* pTypeToken = pTokenContainer->Peek(pTempOffset);
@@ -94,9 +103,9 @@ namespace NumbatLogic
 						NumbatLogic::Assert::Plz(false);
 					}
 					pTypeRef->m_pGenericTypeRefVector->PushBack(pGenericTypeRef);
-					NumbatLogic::TypeRef* __1931929978 = pGenericTypeRef;
+					NumbatLogic::TypeRef* __4025458202 = pGenericTypeRef;
 					pGenericTypeRef = 0;
-					pTypeRef->AddChild(__1931929978);
+					pTypeRef->AddChild(__4025458202);
 					if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_ANGLE_BRACKET_RIGHT) != 0)
 					{
 						if (pGenericTypeRef) delete pGenericTypeRef;
@@ -132,9 +141,9 @@ namespace NumbatLogic
 				return 0;
 			}
 			pTypeRef->m_pChildTypeRef = pChildTypeRef;
-			NumbatLogic::TypeRef* __3769513442 = pChildTypeRef;
+			NumbatLogic::TypeRef* __1269754681 = pChildTypeRef;
 			pChildTypeRef = 0;
-			pTypeRef->AddChild(__3769513442);
+			pTypeRef->AddChild(__1269754681);
 			if (pChildTypeRef) delete pChildTypeRef;
 		}
 		else
@@ -150,10 +159,10 @@ namespace NumbatLogic
 					pTypeRef->m_ePointerType = PointerType::TRANSITON;
 				}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::TypeRef* __2161789305 = pTypeRef;
+		NumbatLogic::TypeRef* __2145006333 = pTypeRef;
 		pTypeRef = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __2161789305;
+		return __2145006333;
 	}
 
 	void TypeRef::ValidateClassDecl(Validator* pValidator, ClassDecl* pClassDecl, TypeRef* pThisOrChild)
@@ -318,9 +327,9 @@ namespace NumbatLogic
 		{
 			TypeRef* pGenericTypeRef = m_pGenericTypeRefVector->Get(i)->Clone();
 			pTypeRef->m_pGenericTypeRefVector->PushBack(pGenericTypeRef);
-			NumbatLogic::TypeRef* __667874834 = pGenericTypeRef;
+			NumbatLogic::TypeRef* __1926160238 = pGenericTypeRef;
 			pGenericTypeRef = 0;
-			pTypeRef->AddChild(__667874834);
+			pTypeRef->AddChild(__1926160238);
 			if (pGenericTypeRef) delete pGenericTypeRef;
 		}
 		pTypeRef->m_pChildTypeRef = 0;
@@ -328,15 +337,15 @@ namespace NumbatLogic
 		{
 			TypeRef* pChildTypeRef = m_pChildTypeRef->Clone();
 			pTypeRef->m_pChildTypeRef = pChildTypeRef;
-			NumbatLogic::TypeRef* __2760838574 = pChildTypeRef;
+			NumbatLogic::TypeRef* __2969443959 = pChildTypeRef;
 			pChildTypeRef = 0;
-			pTypeRef->AddChild(__2760838574);
+			pTypeRef->AddChild(__2969443959);
 			if (pChildTypeRef) delete pChildTypeRef;
 		}
 		pTypeRef->m_ePointerType = m_ePointerType;
-		NumbatLogic::TypeRef* __2012972899 = pTypeRef;
+		NumbatLogic::TypeRef* __1670026426 = pTypeRef;
 		pTypeRef = 0;
-		return __2012972899;
+		return __1670026426;
 	}
 
 	AST* TypeRef::BaseClone()
@@ -408,10 +417,14 @@ namespace NumbatLogic
 													sOut->Append("void*");
 												else
 													m_pTypeToken->Stringify(sOut);
+			if (m_bRef)
+				sOut->AppendString("&");
 		}
 		else
 			if (eLanguage == AST::Language::CS)
 			{
+				if (m_bRef && eLanguage == AST::Language::CS)
+					sOut->AppendString("ref ");
 				switch (m_pTypeToken->m_eType)
 				{
 					case Token::Type::TOKEN_KEYWORD_UNICHAR:
@@ -608,9 +621,9 @@ namespace NumbatLogic
 								if (pGenericValueType) delete pGenericValueType;
 								return 0;
 							}
-							NumbatLogic::ValueType* __3848703993 = pGenericValueType;
+							NumbatLogic::ValueType* __291954094 = pGenericValueType;
 							pGenericValueType = 0;
-							m_pValueType->m_pGenericValueTypeVector->PushBack(__3848703993);
+							m_pValueType->m_pGenericValueTypeVector->PushBack(__291954094);
 							if (pGenericValueType) delete pGenericValueType;
 						}
 						return m_pValueType;

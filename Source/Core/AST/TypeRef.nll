@@ -11,6 +11,7 @@ namespace NumbatLogic
 		}
 
 		public bool m_bConst;
+		public bool m_bRef;
 		public Token m_pTypeToken;
 		public Vector<TypeRef>* m_pGenericTypeRefVector;
 		public TypeRef m_pChildTypeRef;
@@ -25,6 +26,7 @@ namespace NumbatLogic
 			m_eType = AST::Type::AST_TYPE_REF;
 			m_pGenericTypeRefVector = own new Vector<TypeRef>();
 			m_bConst = false;
+			m_bRef = false;
 		}
 		
 		public static TypeRef** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
@@ -36,6 +38,14 @@ namespace NumbatLogic
 			if (pConstToken != null)
 			{
 				bConst = true;
+				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+			}
+
+			bool bRef = false;
+			Token pRefToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_REF);
+			if (pRefToken != null)
+			{
+				bRef = true;
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 			}
 
@@ -431,6 +441,8 @@ namespace NumbatLogic
 					sOut.AppendString("const ");
 			}
 
+			
+
 			if (eLanguage == AST::Language::CPP)
 			{
 				if (m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_UNICHAR)
@@ -460,9 +472,15 @@ namespace NumbatLogic
 					sOut.Append("void*");
 				else
 					m_pTypeToken.Stringify(sOut);
+
+				if (m_bRef)
+					sOut.AppendString("&");
 			}
 			else if (eLanguage == AST::Language::CS)
 			{
+				if (m_bRef && eLanguage == AST::Language::CS)
+					sOut.AppendString("ref ");
+
 				switch (m_pTypeToken.m_eType)
 				{
 					case Token::Type::TOKEN_KEYWORD_UNICHAR: { sOut.Append("char"); break; }
