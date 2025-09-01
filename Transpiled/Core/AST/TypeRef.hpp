@@ -32,6 +32,7 @@ namespace NumbatLogic
 		};
 
 		public: bool m_bConst;
+		public: bool m_bRef;
 		public: Token* m_pTypeToken;
 		public: Vector<TypeRef*>* m_pGenericTypeRefVector;
 		public: TypeRef* m_pChildTypeRef;

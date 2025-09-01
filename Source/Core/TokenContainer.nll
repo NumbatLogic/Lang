@@ -448,6 +448,11 @@ namespace NumbatLogic
 						PushToken(Token::Type::TOKEN_KEYWORD_OWN, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
 						return;
 					}
+					if (pParseDatum.m_sCurrentRead.IsEqual("ref"))
+					{
+						PushToken(Token::Type::TOKEN_KEYWORD_REF, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
+						return;
+					}
 					break;
 				}
 				case 4:

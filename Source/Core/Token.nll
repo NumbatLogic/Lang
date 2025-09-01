@@ -60,6 +60,7 @@ namespace NumbatLogic
 			TOKEN_KEYWORD_PRIVATE,
 			TOKEN_KEYWORD_PUBLIC,
 			TOKEN_KEYWORD_RETURN,
+			TOKEN_KEYWORD_REF,
 			TOKEN_KEYWORD_STATIC,
 			TOKEN_KEYWORD_STRING,
 			TOKEN_KEYWORD_SWITCH,
@@ -167,6 +168,7 @@ namespace NumbatLogic
 				case Type::TOKEN_KEYWORD_PRIVATE: return "private";
 				case Type::TOKEN_KEYWORD_PUBLIC: return "public";
 				case Type::TOKEN_KEYWORD_RETURN: return "return";
+				case Type::TOKEN_KEYWORD_REF: return "ref";
 				case Type::TOKEN_KEYWORD_STRING: return "string";
 				case Type::TOKEN_KEYWORD_SWITCH: return "switch";
 				case Type::TOKEN_KEYWORD_THIS: return "this";
