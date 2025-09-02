@@ -21,6 +21,7 @@ namespace NumbatLogic
 			AST_GENERIC_TYPE_DECL,
 			AST_IDENTIFIER,
 			AST_IF_STMT,
+			AST_MEMBER_CLASS_DECL,
 			AST_MEMBER_ENUM_DECL,
 			AST_MEMBER_FUNCTION_DECL,
 			AST_MEMBER_VAR_DECL,
@@ -103,7 +104,7 @@ namespace NumbatLogic
 			if (pAst!=null)
 				return disown pAst;
 
-			pAst = own ClassDecl::TryCreate(pTokenContainer,pOffsetDatum);
+			pAst = own ClassDecl::TryCreate(pTokenContainer,pOffsetDatum, null);
 			if (pAst!=null)
 				return disown pAst;
 

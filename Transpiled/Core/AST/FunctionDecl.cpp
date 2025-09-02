@@ -26,14 +26,14 @@ namespace NumbatLogic
 	class Assert;
 	class Scope;
 	class FunctionDecl;
-	class AST;
 	class ExternalString;
 	class Validator;
 	class MemberFunctionDecl;
-	class ClassDecl;
 	template <class T>
 	class OwnedVector;
+	class AST;
 	class InternalString;
+	class ClassDecl;
 }
 namespace NumbatLogic
 {
@@ -163,8 +163,24 @@ namespace NumbatLogic
 		{
 			if (pMemberFunctionDecl != 0)
 			{
-				pMemberFunctionDecl->m_pParentClassDecl->m_pNameToken->Stringify(sOut);
-				sOut->Append("::");
+				AST* pPrefixParent = pMemberFunctionDecl;
+				InternalString* sPrefix = new InternalString("");
+				InternalString* sTemp = new InternalString("");
+				while (pPrefixParent->m_pParent != 0)
+				{
+					if (pPrefixParent->m_eType == AST::Type::AST_CLASS_DECL)
+					{
+						sTemp->Set(sPrefix->GetExternalString());
+						sPrefix->Set("");
+						((ClassDecl*)(pPrefixParent))->m_pNameToken->Stringify(sPrefix);
+						sPrefix->Append("::");
+						sPrefix->Append(sTemp->GetExternalString());
+					}
+					pPrefixParent = pPrefixParent->m_pParent;
+				}
+				sOut->Append(sPrefix->GetExternalString());
+				if (sPrefix) delete sPrefix;
+				if (sTemp) delete sTemp;
 			}
 		}
 		sOut->Append(m_sMangledName);

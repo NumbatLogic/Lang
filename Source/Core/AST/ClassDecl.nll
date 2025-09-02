@@ -24,7 +24,7 @@ namespace NumbatLogic
 			m_pBaseClassDecl = null;
 		}
 		
-		public static ClassDecl** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+		public static ClassDecl** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum, AST pParent)
 		{
 			OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
 
@@ -133,6 +133,13 @@ namespace NumbatLogic
 				}
 
 				pAST = own MemberFunctionDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
+				if (pAST != null)
+				{
+					pClassDecl.AddChild(disown pAST);
+					continue;
+				}
+
+				pAST = own MemberClassDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 				if (pAST != null)
 				{
 					pClassDecl.AddChild(disown pAST);

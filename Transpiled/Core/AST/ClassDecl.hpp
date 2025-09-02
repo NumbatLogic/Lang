@@ -14,9 +14,9 @@ namespace NumbatLogic
 	class ClassDecl;
 	class TokenContainer;
 	class OffsetDatum;
+	class AST;
 	class Validator;
 	class OperatorExpr;
-	class AST;
 	class InternalString;
 }
 namespace NumbatLogic
@@ -33,7 +33,7 @@ namespace NumbatLogic
 		protected: Token* m_pConstructorAccessLevelToken;
 		protected: Token* m_pConstructorTypeToken;
 		public: ClassDecl();
-		public: static ClassDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
+		public: static ClassDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, AST* pParent);
 		public: virtual void PreValidate(Validator* pValidator, OperatorExpr* pParent);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
 		public: virtual ClassDecl* FindClassDecl(const char* sTypeName, AST* pCallingChild);
