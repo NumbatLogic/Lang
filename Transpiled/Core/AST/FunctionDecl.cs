@@ -121,8 +121,22 @@ namespace NumbatLogic
 			{
 				if (pMemberFunctionDecl != null)
 				{
-					pMemberFunctionDecl.m_pParentClassDecl.m_pNameToken.Stringify(sOut);
-					sOut.Append("::");
+					AST pPrefixParent = pMemberFunctionDecl;
+					InternalString sPrefix = new InternalString("");
+					InternalString sTemp = new InternalString("");
+					while (pPrefixParent.m_pParent != null)
+					{
+						if (pPrefixParent.m_eType == AST.Type.AST_CLASS_DECL)
+						{
+							sTemp.Set(sPrefix.GetExternalString());
+							sPrefix.Set("");
+							((ClassDecl)(pPrefixParent)).m_pNameToken.Stringify(sPrefix);
+							sPrefix.Append("::");
+							sPrefix.Append(sTemp.GetExternalString());
+						}
+						pPrefixParent = pPrefixParent.m_pParent;
+					}
+					sOut.Append(sPrefix.GetExternalString());
 				}
 			}
 			sOut.Append(m_sMangledName);
