@@ -20,7 +20,7 @@
 			$this->m_pProjectArray[] = new Core_Config($sAction);
 			$this->m_pProjectArray[] = new CLI_Config($sAction);
 			$this->m_pProjectArray[] = new Test_Config($sAction);
-			$this->m_pProjectArray[] = new LangShared_Config($sAction, dirname(__FILE__) . "/../LangShared.package-list", dirname(__FILE__) . "/../Transpiled/LangShared");
+			$this->m_pProjectArray[] = new LangShared_Config($sAction, dirname(__FILE__) . "/../LangShared.package-list");
 		}
 
 		public function GetName() { return "Lang"; }
