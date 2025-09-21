@@ -15,7 +15,7 @@
 #include "VarDecl.hpp"
 #include "TypeRef.hpp"
 #include "DelegateDecl.hpp"
-#include "../../LangShared/Vector/OwnedVector.hpp"
+#include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
 #include "GenericTypeDecl.hpp"
 #include "FunctionDecl.hpp"

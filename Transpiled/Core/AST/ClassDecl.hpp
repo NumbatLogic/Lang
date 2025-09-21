@@ -1,7 +1,7 @@
 #pragma once
 
 #include "AST.hpp"
-#include "../../LangShared/Vector/OwnedVector.hpp"
+#include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "GenericTypeDecl.hpp"
 
 namespace NumbatLogic

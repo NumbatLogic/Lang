@@ -1,5 +1,5 @@
 #include "ValueType.hpp"
-#include "../LangShared/Vector/OwnedVector.hpp"
+#include "../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "AST/TypeRef.hpp"
 #include "Validator.hpp"
 #include "Token.hpp"

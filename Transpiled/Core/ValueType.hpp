@@ -1,7 +1,7 @@
 #pragma once
 
 #include "AST/TypeRef.hpp"
-#include "../LangShared/Vector/OwnedVector.hpp"
+#include "../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "ValueType.hpp"
 
 namespace NumbatLogic

@@ -15,7 +15,7 @@
 #include "VarDecl.hpp"
 #include "MemberVarDecl.hpp"
 #include "TypeRef.hpp"
-#include "../../LangShared/Vector/OwnedVector.hpp"
+#include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 
 namespace NumbatLogic
 {

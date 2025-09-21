@@ -5,7 +5,7 @@
 #include "../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../LangShared/Assert/CPP/Assert.hpp"
-#include "../LangShared/Vector/OwnedVector.hpp"
+#include "../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "../../../LangShared/File/CPP/File.hpp"
 #include "Validator.hpp"
 #include "AST/AST.hpp"
@@ -88,7 +88,7 @@ namespace NumbatLogic
 			TranslationUnit* pTranslationUnit = m_pTranslationUnitVector->Get(i);
 			if (pTranslationUnit->m_sInFile->EndsWith(".nll"))
 			{
-				pTranslationUnit->m_sInFile->Replace("../LangShared", "Source/LangShared");
+				pTranslationUnit->m_sInFile->Replace("../LangShared", "../LangShared/Transpiled");
 				if (pTranslationUnit->m_sInFile->StartsWith("Shared"))
 					pTranslationUnit->m_sInFile->Replace("Shared", "Source/Shared");
 				else

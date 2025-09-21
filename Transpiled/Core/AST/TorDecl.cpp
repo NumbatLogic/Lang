@@ -12,7 +12,7 @@
 #include "AST.hpp"
 #include "ClassDecl.hpp"
 #include "../Validator.hpp"
-#include "../../LangShared/Vector/OwnedVector.hpp"
+#include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "../Util.hpp"
 
 namespace NumbatLogic
