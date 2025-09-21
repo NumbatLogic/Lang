@@ -52,7 +52,7 @@ namespace NumbatLogic
 				TranslationUnit pTranslationUnit = m_pTranslationUnitVector.Get(i);
 				if (pTranslationUnit.m_sInFile.EndsWith(".nll"))
 				{
-					pTranslationUnit.m_sInFile.Replace("../LangShared", "Source/LangShared");
+					pTranslationUnit.m_sInFile.Replace("../LangShared", "../LangShared/Transpiled");
 					if (pTranslationUnit.m_sInFile.StartsWith("Shared"))
 						pTranslationUnit.m_sInFile.Replace("Shared", "Source/Shared");
 					else

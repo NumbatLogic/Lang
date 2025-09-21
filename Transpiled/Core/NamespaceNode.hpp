@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../LangShared/Vector/OwnedVector.hpp"
+#include "../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "NamespaceNode.hpp"
 #include "../../../LangShared/Vector/CPP/Vector.hpp"
 #include "AST/NamespaceDecl.hpp"

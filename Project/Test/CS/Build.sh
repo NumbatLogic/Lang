@@ -8,14 +8,16 @@ fi
 mapfile -t sPackages < ../../../LangShared.package-list
 sLangSharedFiles=()
 for sPackage in "${sPackages[@]}"; do
-    while IFS= read -r -d '' csfile; do
-        sLangSharedFiles+=("$csfile")
-    done < <(find "../../../../LangShared/$sPackage" -type f -name '*.cs' -print0)
+	while IFS= read -r -d '' csfile; do
+		sLangSharedFiles+=("$csfile")
+	done < <(find "../../../../LangShared/$sPackage" -type f -name '*.cs' -print0)
+
+	transpiledDirectory="../../../../LangShared/Transpiled/$sPackage"
+	if [ -d "$transpiledDirectory" ]; then
+		while IFS= read -r -d '' csfile; do
+			sLangSharedFiles+=("$csfile")
+		done < <(find "$transpiledDirectory" -type f -name '*.cs' -print0)
+	fi
 done
-
-while IFS= read -r -d '' csfile; do
-    sLangSharedFiles+=("$csfile")
-done < <(find ../../../Transpiled/LangShared -type f -name '*.cs' -print0)
-
 
 ${compiler} -debug:full -reference:System.IO.Compression.dll *.cs ../../../Transpiled/Test/*.cs ../../../Transpiled/Core/*.cs ../../../Transpiled/Core/AST/*.cs ${sLangSharedFiles[@]}

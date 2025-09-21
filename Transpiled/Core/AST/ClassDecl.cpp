@@ -1,6 +1,6 @@
 #include "ClassDecl.hpp"
 #include "AST.hpp"
-#include "../../LangShared/Vector/OwnedVector.hpp"
+#include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "GenericTypeDecl.hpp"
 #include "../OffsetDatum.hpp"
 #include "../TokenContainer.hpp"

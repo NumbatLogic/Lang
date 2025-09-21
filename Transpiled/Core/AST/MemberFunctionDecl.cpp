@@ -6,7 +6,7 @@
 #include "../Token.hpp"
 #include "ClassDecl.hpp"
 #include "FunctionDecl.hpp"
-#include "../../LangShared/Vector/OwnedVector.hpp"
+#include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "../Util.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 

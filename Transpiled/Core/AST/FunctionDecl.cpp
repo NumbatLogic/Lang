@@ -12,7 +12,7 @@
 #include "../Validator.hpp"
 #include "MemberFunctionDecl.hpp"
 #include "ClassDecl.hpp"
-#include "../../LangShared/Vector/OwnedVector.hpp"
+#include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
