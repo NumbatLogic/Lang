@@ -12,8 +12,8 @@
 
 namespace NumbatLogic
 {
-	class OffsetDatum;
 	class AST;
+	class OffsetDatum;
 	class Identifier;
 	class TokenContainer;
 	class Token;

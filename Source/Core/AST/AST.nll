@@ -379,6 +379,28 @@ namespace NumbatLogic
 			return null;
 		}
 
+		public virtual NamespaceDecl FindNamespaceDecl(string sTypeName, AST pCallingChild)
+		{
+			if (pCallingChild != null)
+			{
+				AST pChild = m_pFirstChild;
+				while (pChild != null)
+				{
+					if (pChild != pCallingChild)
+					{
+						NamespaceDecl pResult = pChild.FindNamespaceDecl(sTypeName, null);
+						if (pResult != null)
+							return pResult;
+					}
+					pChild = pChild.m_pNextSibling;
+				}
+
+				if (m_pParent != null)
+					return m_pParent.FindNamespaceDecl(sTypeName, this);
+			}
+			return null;
+		}
+
 		public virtual AST FindByName(string sName, AST pCallingChild)
 		{
 			if (pCallingChild != null)

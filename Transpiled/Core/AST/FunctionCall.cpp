@@ -23,6 +23,7 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
@@ -31,7 +32,6 @@ namespace NumbatLogic
 	class Console;
 	class Assert;
 	class FunctionCall;
-	class AST;
 	class OperatorExpr;
 	class ClassDecl;
 	class EnumDecl;

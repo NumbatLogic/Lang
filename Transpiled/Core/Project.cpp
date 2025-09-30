@@ -16,6 +16,7 @@
 namespace NumbatLogic
 {
 	class Project;
+	class AST;
 	template <class T>
 	class Vector;
 	class TranslationUnit;
@@ -27,7 +28,6 @@ namespace NumbatLogic
 	class OwnedVector;
 	class File;
 	class Validator;
-	class AST;
 	class NamespaceDecl;
 	class TokenContainer;
 	class Token;

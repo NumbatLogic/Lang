@@ -16,12 +16,12 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class OffsetDatum;
 	class TypeRef;
 	class Token;
 	class TokenContainer;
 	class VarDecl;
-	class AST;
 	class Console;
 	class Assert;
 	class ExternalString;

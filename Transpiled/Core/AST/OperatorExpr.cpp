@@ -9,8 +9,8 @@
 
 namespace NumbatLogic
 {
-	class OperatorExpr;
 	class AST;
+	class OperatorExpr;
 	class Validator;
 	class Token;
 	class ValueType;

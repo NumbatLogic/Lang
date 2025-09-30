@@ -16,6 +16,7 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
@@ -28,7 +29,6 @@ namespace NumbatLogic
 	class ValueType;
 	class InternalString;
 	class ClassDecl;
-	class AST;
 	class TorDecl;
 	class ParamDecl;
 }

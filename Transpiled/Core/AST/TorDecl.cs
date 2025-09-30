@@ -190,7 +190,7 @@ namespace NumbatLogic
 				{
 					sOut.Append(" : ");
 					if (eLanguage == AST.Language.CPP)
-						m_pParentClassDecl.m_pBaseToken.Stringify(sOut);
+						m_pParentClassDecl.m_pBaseTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
 					else
 						sOut.Append("base");
 					m_pBaseParamCall.Stringify(eLanguage, eOutputFile, 0, sOut);

@@ -7,6 +7,7 @@
 #include "../Token.hpp"
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
+#include "TypeRef.hpp"
 #include "MemberVarDecl.hpp"
 #include "MemberFunctionDecl.hpp"
 #include "MemberClassDecl.hpp"
@@ -15,8 +16,8 @@
 #include "DelegateDecl.hpp"
 #include "../Validator.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
+#include "../ValueType.hpp"
 #include "VarDecl.hpp"
-#include "TypeRef.hpp"
 #include "Scope.hpp"
 #include "MemberVarsSetDefaultStmt.hpp"
 #include "AccessLevel.hpp"
@@ -27,6 +28,7 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	template <class T>
 	class OwnedVector;
 	class GenericTypeDecl;
@@ -36,15 +38,15 @@ namespace NumbatLogic
 	class ClassDecl;
 	class Console;
 	class Assert;
-	class AST;
+	class TypeRef;
 	class MemberFunctionDecl;
 	class MemberClassDecl;
 	class MemberEnumDecl;
 	class DelegateDecl;
 	class Validator;
+	class ValueType;
 	class InternalString;
 	class MemberVarDecl;
-	class TypeRef;
 	class VarDecl;
 	class TorDecl;
 	class MemberVarsSetDefaultStmt;
@@ -60,7 +62,7 @@ namespace NumbatLogic
 	ClassDecl::ClassDecl()
 	{
 		m_pNameToken = 0;
-		m_pBaseToken = 0;
+		m_pBaseTypeRef = 0;
 		m_pGenericTypeDeclVector = 0;
 		m_pNamespaceNode = 0;
 		m_pBaseClassDecl = 0;
@@ -132,21 +134,21 @@ namespace NumbatLogic
 				if (pGenericTypeDecl) delete pGenericTypeDecl;
 			}
 		}
-		Token* pBaseToken = 0;
+		TypeRef* pBaseTypeRef = 0;
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_COLON) != 0)
 		{
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-			pBaseToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
-			if (pNameToken == 0)
+			pBaseTypeRef = TypeRef::TryCreate(pTokenContainer, pTempOffset);
+			if (pBaseTypeRef == 0)
 			{
-				Console::Log("expected base class name");
+				Console::Log("expected base class");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 				NumbatLogic::Assert::Plz(false);
 				if (pTempOffset) delete pTempOffset;
 				if (pClassDecl) delete pClassDecl;
+				if (pBaseTypeRef) delete pBaseTypeRef;
 				return 0;
 			}
-			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		}
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_LEFT) == 0)
 		{
@@ -155,12 +157,19 @@ namespace NumbatLogic
 			NumbatLogic::Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pClassDecl) delete pClassDecl;
+			if (pBaseTypeRef) delete pBaseTypeRef;
 			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		pClassDecl->m_pFirstToken = pClassToken;
 		pClassDecl->m_pNameToken = pNameToken;
-		pClassDecl->m_pBaseToken = pBaseToken;
+		pClassDecl->m_pBaseTypeRef = pBaseTypeRef;
+		if (pBaseTypeRef != 0)
+		{
+			NumbatLogic::TypeRef* __1622809105 = pBaseTypeRef;
+			pBaseTypeRef = 0;
+			pClassDecl->AddChild(__1622809105);
+		}
 		while (true)
 		{
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_RIGHT) != 0)
@@ -172,54 +181,54 @@ namespace NumbatLogic
 			pAST = MemberVarDecl::TryCreate(pTokenContainer, pTempOffset);
 			if (pAST != 0)
 			{
-				NumbatLogic::AST* __1913155045 = pAST;
+				NumbatLogic::AST* __2198367562 = pAST;
 				pAST = 0;
-				pClassDecl->AddChild(__1913155045);
+				pClassDecl->AddChild(__2198367562);
 				if (pAST) delete pAST;
 				continue;
 			}
 			pAST = MemberFunctionDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 			if (pAST != 0)
 			{
-				NumbatLogic::AST* __2768793590 = pAST;
+				NumbatLogic::AST* __168325110 = pAST;
 				pAST = 0;
-				pClassDecl->AddChild(__2768793590);
+				pClassDecl->AddChild(__168325110);
 				if (pAST) delete pAST;
 				continue;
 			}
 			pAST = MemberClassDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 			if (pAST != 0)
 			{
-				NumbatLogic::AST* __1695068768 = pAST;
+				NumbatLogic::AST* __2483598031 = pAST;
 				pAST = 0;
-				pClassDecl->AddChild(__1695068768);
+				pClassDecl->AddChild(__2483598031);
 				if (pAST) delete pAST;
 				continue;
 			}
 			pAST = MemberEnumDecl::TryCreate(pTokenContainer, pTempOffset);
 			if (pAST != 0)
 			{
-				NumbatLogic::AST* __2097715949 = pAST;
+				NumbatLogic::AST* __3523779309 = pAST;
 				pAST = 0;
-				pClassDecl->AddChild(__2097715949);
+				pClassDecl->AddChild(__3523779309);
 				if (pAST) delete pAST;
 				continue;
 			}
 			pAST = TorDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 			if (pAST != 0)
 			{
-				NumbatLogic::AST* __4094203985 = pAST;
+				NumbatLogic::AST* __3691569606 = pAST;
 				pAST = 0;
-				pClassDecl->AddChild(__4094203985);
+				pClassDecl->AddChild(__3691569606);
 				if (pAST) delete pAST;
 				continue;
 			}
 			pAST = DelegateDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 			if (pAST != 0)
 			{
-				NumbatLogic::AST* __1040769079 = pAST;
+				NumbatLogic::AST* __2433278007 = pAST;
 				pAST = 0;
-				pClassDecl->AddChild(__1040769079);
+				pClassDecl->AddChild(__2433278007);
 				if (pAST) delete pAST;
 				continue;
 			}
@@ -229,10 +238,11 @@ namespace NumbatLogic
 			if (pAST) delete pAST;
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::ClassDecl* __2697205707 = pClassDecl;
+		NumbatLogic::ClassDecl* __2512655401 = pClassDecl;
 		pClassDecl = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __2697205707;
+		if (pBaseTypeRef) delete pBaseTypeRef;
+		return __2512655401;
 	}
 
 	void ClassDecl::PreValidate(Validator* pValidator, OperatorExpr* pParent)
@@ -243,27 +253,28 @@ namespace NumbatLogic
 	void ClassDecl::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
 		AddClassDeclReference(this, AST::OutputFile::SOURCE, false);
-		if (m_pBaseToken != 0)
+		if (m_pBaseTypeRef != 0)
 		{
-			const char* sClassName = m_pBaseToken->GetString();
-			AST* pType = FindByName(sClassName, this);
-			if (pType == 0)
+			ValueType* pBaseValueType = m_pBaseTypeRef->CreateValueType();
+			if (pBaseValueType == 0)
 			{
 				InternalString* sTemp = new InternalString("Unknown base class: ");
-				sTemp->Append(sClassName);
-				pValidator->AddError(sTemp->GetExternalString(), m_pBaseToken->m_sFileName, m_pBaseToken->m_nLine, m_pBaseToken->m_nColumn);
+				sTemp->Append(m_pBaseTypeRef->m_pTypeToken->GetString());
+				pValidator->AddError(sTemp->GetExternalString(), m_pBaseTypeRef->m_pFirstToken->m_sFileName, m_pBaseTypeRef->m_pFirstToken->m_nLine, m_pBaseTypeRef->m_pFirstToken->m_nColumn);
+				if (sTemp) delete sTemp;
+				if (pBaseValueType) delete pBaseValueType;
+				return;
+			}
+			if (pBaseValueType->m_eType != ValueType::Type::CLASS_DECL_VALUE)
+			{
+				InternalString* sTemp = new InternalString("Unknown base class is not a class: ");
+				sTemp->Append(m_pBaseTypeRef->m_pTypeToken->GetString());
+				pValidator->AddError(sTemp->GetExternalString(), m_pBaseTypeRef->m_pFirstToken->m_sFileName, m_pBaseTypeRef->m_pFirstToken->m_nLine, m_pBaseTypeRef->m_pFirstToken->m_nColumn);
 				if (sTemp) delete sTemp;
 			}
-			else
-				if (pType->m_eType != AST::Type::AST_CLASS_DECL)
-				{
-					InternalString* sTemp = new InternalString("Unknown base class is not a class: ");
-					sTemp->Append(sClassName);
-					pValidator->AddError(sTemp->GetExternalString(), m_pBaseToken->m_sFileName, m_pBaseToken->m_nLine, m_pBaseToken->m_nColumn);
-					if (sTemp) delete sTemp;
-				}
-			ClassDecl* pClassDecl = (ClassDecl*)(pType);
-			AddClassDeclReference(pClassDecl, AST::OutputFile::HEADER, false);
+			Assert::Plz(pBaseValueType->m_pClassDecl != 0);
+			AddClassDeclReference(pBaseValueType->m_pClassDecl, AST::OutputFile::HEADER, false);
+			if (pBaseValueType) delete pBaseValueType;
 		}
 		{
 			bool bHasOwnedPointer = false;
@@ -322,18 +333,18 @@ namespace NumbatLogic
 				pTorDecl->m_pParamDecl = pParamDecl;
 				pTorDecl->m_pScope = pScope;
 				pTorDecl->m_sDisambiguate = "";
-				NumbatLogic::AccessLevel* __3636564698 = pAccessLevel;
+				NumbatLogic::AccessLevel* __2260832885 = pAccessLevel;
 				pAccessLevel = 0;
-				pTorDecl->AddChild(__3636564698);
-				NumbatLogic::ParamDecl* __1278555893 = pParamDecl;
+				pTorDecl->AddChild(__2260832885);
+				NumbatLogic::ParamDecl* __305477210 = pParamDecl;
 				pParamDecl = 0;
-				pTorDecl->AddChild(__1278555893);
-				NumbatLogic::Scope* __3798549207 = pScope;
+				pTorDecl->AddChild(__305477210);
+				NumbatLogic::Scope* __6898470 = pScope;
 				pScope = 0;
-				pTorDecl->AddChild(__3798549207);
-				NumbatLogic::TorDecl* __1071539809 = pTorDecl;
+				pTorDecl->AddChild(__6898470);
+				NumbatLogic::TorDecl* __1641965262 = pTorDecl;
 				pTorDecl = 0;
-				AddChild(__1071539809);
+				AddChild(__1641965262);
 				if (pAccessLevel) delete pAccessLevel;
 				if (pParamDecl) delete pParamDecl;
 				if (pScope) delete pScope;
@@ -361,18 +372,18 @@ namespace NumbatLogic
 				pTorDecl->m_pParamDecl = pParamDecl;
 				pTorDecl->m_pScope = pScope;
 				pTorDecl->m_sDisambiguate = "";
-				NumbatLogic::AccessLevel* __366010435 = pAccessLevel;
+				NumbatLogic::AccessLevel* __1271980268 = pAccessLevel;
 				pAccessLevel = 0;
-				pTorDecl->AddChild(__366010435);
-				NumbatLogic::ParamDecl* __3743696067 = pParamDecl;
+				pTorDecl->AddChild(__1271980268);
+				NumbatLogic::ParamDecl* __1160005409 = pParamDecl;
 				pParamDecl = 0;
-				pTorDecl->AddChild(__3743696067);
-				NumbatLogic::Scope* __796405838 = pScope;
+				pTorDecl->AddChild(__1160005409);
+				NumbatLogic::Scope* __3044553644 = pScope;
 				pScope = 0;
-				pTorDecl->AddChild(__796405838);
-				NumbatLogic::TorDecl* __2328827627 = pTorDecl;
+				pTorDecl->AddChild(__3044553644);
+				NumbatLogic::TorDecl* __231698300 = pTorDecl;
 				pTorDecl = 0;
-				AddChild(__2328827627);
+				AddChild(__231698300);
 				if (pAccessLevel) delete pAccessLevel;
 				if (pParamDecl) delete pParamDecl;
 				if (pScope) delete pScope;
@@ -418,15 +429,16 @@ namespace NumbatLogic
 	{
 		if (m_pBaseClassDecl != 0)
 			return m_pBaseClassDecl;
-		if (m_pBaseToken != 0 && m_pParent != 0)
+		if (m_pBaseTypeRef != 0 && m_pParent != 0)
 		{
-			const char* sBaseClassName = m_pBaseToken->GetString();
-			ClassDecl* pBaseClassDecl = m_pParent->FindClassDecl(sBaseClassName, this);
-			if (pBaseClassDecl != 0)
+			ValueType* pBaseValueType = m_pBaseTypeRef->CreateValueType();
+			if (pBaseValueType != 0)
 			{
-				m_pBaseClassDecl = pBaseClassDecl;
-				return pBaseClassDecl;
+				m_pBaseClassDecl = pBaseValueType->m_pClassDecl;
+				if (pBaseValueType) delete pBaseValueType;
+				return m_pBaseClassDecl;
 			}
+			if (pBaseValueType) delete pBaseValueType;
 		}
 		return 0;
 	}
@@ -475,12 +487,12 @@ namespace NumbatLogic
 					sOut->AppendChar('>');
 				}
 			}
-			if (m_pBaseToken != 0)
+			if (m_pBaseTypeRef != 0)
 			{
 				sOut->Append(" : ");
 				if (eLanguage == AST::Language::CPP)
 					sOut->Append("public ");
-				m_pBaseToken->Stringify(sOut);
+				m_pBaseTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
 			}
 			if (eLanguage == AST::Language::CS && m_pGenericTypeDeclVector->GetSize() > 0)
 			{
@@ -509,7 +521,8 @@ namespace NumbatLogic
 		AST* pMember = m_pFirstChild;
 		while (pMember != 0)
 		{
-			pMember->Stringify(eLanguage, eOutputFile, nDepth, sOut);
+			if (pMember != m_pBaseTypeRef)
+				pMember->Stringify(eLanguage, eOutputFile, nDepth, sOut);
 			pMember = pMember->m_pNextSibling;
 		}
 		if (!(eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE))

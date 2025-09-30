@@ -6,11 +6,11 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
 	class GenericTypeDecl;
-	class AST;
 }
 namespace NumbatLogic
 {

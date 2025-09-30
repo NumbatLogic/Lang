@@ -7,12 +7,15 @@
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
+#include "ClassDecl.hpp"
+#include "NamespaceDecl.hpp"
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
 #include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 
 namespace NumbatLogic
 {
+	class AST;
 	template <class T>
 	class Vector;
 	class TypeRef;
@@ -22,9 +25,9 @@ namespace NumbatLogic
 	class Console;
 	class Assert;
 	class InternalString;
-	class AST;
-	class Validator;
 	class ClassDecl;
+	class NamespaceDecl;
+	class Validator;
 	class ValueType;
 	template <class T>
 	class OwnedVector;
@@ -44,6 +47,7 @@ namespace NumbatLogic
 		m_pChildTypeRef = 0;
 		m_ePointerType = PointerType::SHARED;
 		m_pCloneToken = 0;
+		m_bAttemptedToFindType = false;
 		m_pFoundType = 0;
 		m_eType = AST::Type::AST_TYPE_REF;
 		m_pGenericTypeRefVector = new Vector<TypeRef*>();
@@ -103,9 +107,9 @@ namespace NumbatLogic
 						NumbatLogic::Assert::Plz(false);
 					}
 					pTypeRef->m_pGenericTypeRefVector->PushBack(pGenericTypeRef);
-					NumbatLogic::TypeRef* __4025458202 = pGenericTypeRef;
+					NumbatLogic::TypeRef* __1089445402 = pGenericTypeRef;
 					pGenericTypeRef = 0;
-					pTypeRef->AddChild(__4025458202);
+					pTypeRef->AddChild(__1089445402);
 					if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_ANGLE_BRACKET_RIGHT) != 0)
 					{
 						if (pGenericTypeRef) delete pGenericTypeRef;
@@ -141,9 +145,9 @@ namespace NumbatLogic
 				return 0;
 			}
 			pTypeRef->m_pChildTypeRef = pChildTypeRef;
-			NumbatLogic::TypeRef* __1269754681 = pChildTypeRef;
+			NumbatLogic::TypeRef* __3836668729 = pChildTypeRef;
 			pChildTypeRef = 0;
-			pTypeRef->AddChild(__1269754681);
+			pTypeRef->AddChild(__3836668729);
 			if (pChildTypeRef) delete pChildTypeRef;
 		}
 		else
@@ -159,10 +163,48 @@ namespace NumbatLogic
 					pTypeRef->m_ePointerType = PointerType::TRANSITON;
 				}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::TypeRef* __2145006333 = pTypeRef;
+		NumbatLogic::TypeRef* __3503960829 = pTypeRef;
 		pTypeRef = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __2145006333;
+		return __3503960829;
+	}
+
+	AST* TypeRef::FindType()
+	{
+		if (m_bAttemptedToFindType)
+			return m_pFoundType;
+		m_bAttemptedToFindType = true;
+		TypeRef* pParentTypeRef = 0;
+		if (m_pParent->m_eType == AST::Type::AST_TYPE_REF)
+		{
+			pParentTypeRef = (TypeRef*)(m_pParent);
+			if (pParentTypeRef->m_pChildTypeRef != this)
+				pParentTypeRef = 0;
+		}
+		if (m_pTypeToken->m_eType == Token::Type::TOKEN_IDENTIFIER)
+		{
+			const char* sTypeName = m_pTypeToken->GetString();
+			if (pParentTypeRef != 0)
+			{
+				if (pParentTypeRef->m_pFoundType != 0)
+					m_pFoundType = pParentTypeRef->m_pFoundType->FindByName(sTypeName, 0);
+			}
+			else
+			{
+				if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_CLASS_DECL && ((ClassDecl*)(m_pParent))->m_pBaseTypeRef == this)
+				{
+					if (m_pParent->m_pParent != 0)
+						m_pFoundType = m_pParent->m_pParent->FindClassDecl(sTypeName, m_pParent);
+					if (m_pFoundType == 0)
+						m_pFoundType = FindNamespaceDecl(sTypeName, this);
+				}
+				else
+				{
+					m_pFoundType = FindByName(sTypeName, this);
+				}
+			}
+		}
+		return m_pFoundType;
 	}
 
 	void TypeRef::ValidateClassDecl(Validator* pValidator, ClassDecl* pClassDecl, TypeRef* pThisOrChild)
@@ -231,25 +273,20 @@ namespace NumbatLogic
 
 	void TypeRef::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
-		TypeRef* pParentTypeRef = 0;
-		if (m_pParent->m_eType == AST::Type::AST_TYPE_REF)
-		{
-			pParentTypeRef = (TypeRef*)(m_pParent);
-			if (pParentTypeRef->m_pChildTypeRef != this)
-				pParentTypeRef = 0;
-		}
 		if (m_pTypeToken->m_eType == Token::Type::TOKEN_IDENTIFIER)
 		{
-			const char* sTypeName = m_pTypeToken->GetString();
-			if (pParentTypeRef != 0 && pParentTypeRef->m_pFoundType != 0)
-				m_pFoundType = pParentTypeRef->m_pFoundType->FindByName(sTypeName, 0);
-			else
-				m_pFoundType = FindByName(sTypeName, this);
-			AST* pType = m_pFoundType;
+			AST* pType = FindType();
 			if (pType == 0)
 			{
 				InternalString* sTemp = new InternalString("Unknown type: ");
-				sTemp->Append(sTypeName);
+				sTemp->Append(m_pTypeToken->GetString());
+				TypeRef* pParentTypeRef = 0;
+				if (m_pParent->m_eType == AST::Type::AST_TYPE_REF)
+				{
+					pParentTypeRef = (TypeRef*)(m_pParent);
+					if (pParentTypeRef->m_pChildTypeRef != this)
+						pParentTypeRef = 0;
+				}
 				if (pParentTypeRef != 0 && pParentTypeRef->m_pFoundType != 0)
 					sTemp->Append(" -- had parent");
 				pValidator->AddError(sTemp->GetExternalString(), m_pTypeToken->m_sFileName, m_pTypeToken->m_nLine, m_pTypeToken->m_nColumn);
@@ -327,9 +364,9 @@ namespace NumbatLogic
 		{
 			TypeRef* pGenericTypeRef = m_pGenericTypeRefVector->Get(i)->Clone();
 			pTypeRef->m_pGenericTypeRefVector->PushBack(pGenericTypeRef);
-			NumbatLogic::TypeRef* __1926160238 = pGenericTypeRef;
+			NumbatLogic::TypeRef* __2411717781 = pGenericTypeRef;
 			pGenericTypeRef = 0;
-			pTypeRef->AddChild(__1926160238);
+			pTypeRef->AddChild(__2411717781);
 			if (pGenericTypeRef) delete pGenericTypeRef;
 		}
 		pTypeRef->m_pChildTypeRef = 0;
@@ -337,15 +374,15 @@ namespace NumbatLogic
 		{
 			TypeRef* pChildTypeRef = m_pChildTypeRef->Clone();
 			pTypeRef->m_pChildTypeRef = pChildTypeRef;
-			NumbatLogic::TypeRef* __2969443959 = pChildTypeRef;
+			NumbatLogic::TypeRef* __2801683921 = pChildTypeRef;
 			pChildTypeRef = 0;
-			pTypeRef->AddChild(__2969443959);
+			pTypeRef->AddChild(__2801683921);
 			if (pChildTypeRef) delete pChildTypeRef;
 		}
 		pTypeRef->m_ePointerType = m_ePointerType;
-		NumbatLogic::TypeRef* __1670026426 = pTypeRef;
+		NumbatLogic::TypeRef* __227198223 = pTypeRef;
 		pTypeRef = 0;
-		return __1670026426;
+		return __227198223;
 	}
 
 	AST* TypeRef::BaseClone()
@@ -560,6 +597,12 @@ namespace NumbatLogic
 					if (pParentTypeRef->m_pChildTypeRef == this)
 						sxAppendString = "";
 				}
+				if (m_pParent->m_eType == AST::Type::AST_CLASS_DECL)
+				{
+					ClassDecl* pParentClassDecl = (ClassDecl*)(m_pParent);
+					if (pParentClassDecl->m_pBaseTypeRef == this)
+						sxAppendString = "";
+				}
 				sOut->AppendString(sxAppendString);
 			}
 		}
@@ -587,23 +630,11 @@ namespace NumbatLogic
 
 	ValueType* TypeRef::SetValueType()
 	{
-		TypeRef* pParentTypeRef = 0;
-		if (m_pParent->m_eType == AST::Type::AST_TYPE_REF)
-		{
-			pParentTypeRef = (TypeRef*)(m_pParent);
-			if (pParentTypeRef->m_pChildTypeRef != this)
-				pParentTypeRef = 0;
-		}
 		switch (m_pTypeToken->m_eType)
 		{
 			case Token::Type::TOKEN_IDENTIFIER:
 			{
-				const char* sTypeName = m_pTypeToken->GetString();
-				if (pParentTypeRef != 0 && pParentTypeRef->m_pFoundType != 0)
-					m_pFoundType = pParentTypeRef->m_pFoundType->FindByName(sTypeName, 0);
-				else
-					m_pFoundType = FindByName(sTypeName, this);
-				AST* pType = m_pFoundType;
+				AST* pType = FindType();
 				if (pType != 0)
 				{
 					if (pType->m_eType == AST::Type::AST_CLASS_DECL)
@@ -621,9 +652,9 @@ namespace NumbatLogic
 								if (pGenericValueType) delete pGenericValueType;
 								return 0;
 							}
-							NumbatLogic::ValueType* __291954094 = pGenericValueType;
+							NumbatLogic::ValueType* __2791765283 = pGenericValueType;
 							pGenericValueType = 0;
-							m_pValueType->m_pGenericValueTypeVector->PushBack(__291954094);
+							m_pValueType->m_pGenericValueTypeVector->PushBack(__2791765283);
 							if (pGenericValueType) delete pGenericValueType;
 						}
 						return m_pValueType;

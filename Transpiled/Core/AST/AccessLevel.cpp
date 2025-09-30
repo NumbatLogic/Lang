@@ -7,11 +7,11 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
 	class AccessLevel;
-	class AST;
 	class InternalString;
 }
 namespace NumbatLogic

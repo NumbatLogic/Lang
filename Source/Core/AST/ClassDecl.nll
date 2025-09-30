@@ -3,7 +3,7 @@ namespace NumbatLogic
 	class ClassDecl : AST
 	{
 		public Token m_pNameToken;
-		public Token m_pBaseToken;
+		public TypeRef m_pBaseTypeRef;
 		public OwnedVector<GenericTypeDecl>* m_pGenericTypeDeclVector;
 		public NamespaceNode m_pNamespaceNode;
 
@@ -83,20 +83,18 @@ namespace NumbatLogic
 			}
 
 			// base class
-			Token pBaseToken = null;
+			TypeRef* pBaseTypeRef = null;
 			if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_COLON) != null)
 			{
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
-
-				pBaseToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
-				if (pNameToken == null)
+				pBaseTypeRef = own TypeRef::TryCreate(pTokenContainer, pTempOffset);
+				if (pBaseTypeRef == null)
 				{
-					Console::Log("expected base class name");
+					Console::Log("expected base class");
 					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
 					NumbatLogic::Assert::Plz(false);
 					return null;
 				}
-				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 			}
 
 			if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_LEFT) == null)
@@ -112,7 +110,9 @@ namespace NumbatLogic
 			
 			pClassDecl.m_pFirstToken = pClassToken;
 			pClassDecl.m_pNameToken = pNameToken;
-			pClassDecl.m_pBaseToken = pBaseToken;
+			pClassDecl.m_pBaseTypeRef = pBaseTypeRef;
+			if (pBaseTypeRef != null)
+				pClassDecl.AddChild(disown pBaseTypeRef);
 
 
 			while (true)
@@ -186,25 +186,26 @@ namespace NumbatLogic
 		{
 			AddClassDeclReference(this, AST::OutputFile::SOURCE, false);
 
-			if (m_pBaseToken != null)
+			if (m_pBaseTypeRef != null)
 			{
-				string sClassName = m_pBaseToken.GetString();
-				AST pType = FindByName(sClassName, this);
-				if (pType == null)
+				ValueType* pBaseValueType = own m_pBaseTypeRef.CreateValueType();
+				if (pBaseValueType == null)
 				{
 					InternalString* sTemp = own new InternalString("Unknown base class: ");
-					sTemp.Append(sClassName);
-					pValidator.AddError(sTemp.GetExternalString(), m_pBaseToken.m_sFileName, m_pBaseToken.m_nLine, m_pBaseToken.m_nColumn);
-				}
-				else if (pType.m_eType != AST::Type::AST_CLASS_DECL)
-				{
-					InternalString* sTemp = own new InternalString("Unknown base class is not a class: ");
-					sTemp.Append(sClassName);
-					pValidator.AddError(sTemp.GetExternalString(), m_pBaseToken.m_sFileName, m_pBaseToken.m_nLine, m_pBaseToken.m_nColumn);
+					sTemp.Append(m_pBaseTypeRef.m_pTypeToken.GetString());
+					pValidator.AddError(sTemp.GetExternalString(), m_pBaseTypeRef.m_pFirstToken.m_sFileName, m_pBaseTypeRef.m_pFirstToken.m_nLine, m_pBaseTypeRef.m_pFirstToken.m_nColumn);
+					return;
 				}
 
-				ClassDecl pClassDecl = cast ClassDecl(pType);
-				AddClassDeclReference(pClassDecl, AST::OutputFile::HEADER, false);
+				if (pBaseValueType.m_eType != ValueType::Type::CLASS_DECL_VALUE)
+				{
+					InternalString* sTemp = own new InternalString("Unknown base class is not a class: ");
+					sTemp.Append(m_pBaseTypeRef.m_pTypeToken.GetString());
+					pValidator.AddError(sTemp.GetExternalString(), m_pBaseTypeRef.m_pFirstToken.m_sFileName, m_pBaseTypeRef.m_pFirstToken.m_nLine, m_pBaseTypeRef.m_pFirstToken.m_nColumn);
+				}
+
+				Assert::Plz(pBaseValueType.m_pClassDecl != null);
+				AddClassDeclReference(pBaseValueType.m_pClassDecl, AST::OutputFile::HEADER, false);
 			}
 
 			// if we have owned member vars, make sure we have a destructor (inject if needed)
@@ -359,37 +360,19 @@ namespace NumbatLogic
 			return base.FindByName(sxName, pCallingChild);
 		}
 
-		/*public ClassDecl GetBaseClassDecl()
-		{
-			if (m_pBaseClassDecl != null)
-				return m_pBaseClassDecl;
-
-			if (m_pBaseToken != null && m_pParent != null)
-			{
-				string sBaseClassName = m_pBaseToken.GetString();
-				AST pAst = m_pParent.FindByName(sBaseClassName, this);
-				if (pAst != null && pAst.m_eType == AST::Type::AST_CLASS_DECL)
-				{
-					m_pBaseClassDecl = cast ClassDecl(pAst);
-					return m_pBaseClassDecl;
-				}
-			}
-			return null;
-		}*/
-
 		public ClassDecl GetBaseClassDecl()
 		{
 			if (m_pBaseClassDecl != null)
 				return m_pBaseClassDecl;
 
-			if (m_pBaseToken != null && m_pParent != null)
+
+			if (m_pBaseTypeRef != null && m_pParent != null)
 			{
-				string sBaseClassName = m_pBaseToken.GetString();
-				ClassDecl pBaseClassDecl = m_pParent.FindClassDecl(sBaseClassName, this);
-				if (pBaseClassDecl != null)
+				ValueType* pBaseValueType = own m_pBaseTypeRef.CreateValueType();
+				if (pBaseValueType != null)
 				{
-					m_pBaseClassDecl = pBaseClassDecl;
-					return pBaseClassDecl;
+					m_pBaseClassDecl = pBaseValueType.m_pClassDecl;
+					return m_pBaseClassDecl;
 				}
 			}
 			return null;
@@ -442,12 +425,12 @@ namespace NumbatLogic
 					}
 				}
 
-				if (m_pBaseToken != null)
+				if (m_pBaseTypeRef != null)
 				{
 					sOut.Append(" : ");
 					if (eLanguage == AST::Language::CPP)
 						sOut.Append("public ");
-					m_pBaseToken.Stringify(sOut);
+					m_pBaseTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
 				}
 
 				if (eLanguage == AST::Language::CS && m_pGenericTypeDeclVector.GetSize() > 0)
@@ -481,7 +464,8 @@ namespace NumbatLogic
 			AST pMember = m_pFirstChild;
 			while (pMember != null)
 			{
-				pMember.Stringify(eLanguage, eOutputFile, nDepth, sOut);
+				if (pMember != m_pBaseTypeRef)
+					pMember.Stringify(eLanguage, eOutputFile, nDepth, sOut);
 				pMember = pMember.m_pNextSibling;
 			}
 

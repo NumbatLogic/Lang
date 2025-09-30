@@ -10,6 +10,7 @@ namespace NumbatLogic
 	class Validator;
 	class OperatorExpr;
 	class ClassDecl;
+	class NamespaceDecl;
 	class InternalString;
 }
 namespace NumbatLogic
@@ -105,6 +106,7 @@ namespace NumbatLogic
 		public: virtual void PreValidate(Validator* pValidator, OperatorExpr* pParent);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
 		public: virtual ClassDecl* FindClassDecl(const char* sTypeName, AST* pCallingChild);
+		public: virtual NamespaceDecl* FindNamespaceDecl(const char* sTypeName, AST* pCallingChild);
 		public: virtual AST* FindByName(const char* sName, AST* pCallingChild);
 		public: void AddChild(AST* pAst);
 		public: void AddChildFront(AST* pAst);

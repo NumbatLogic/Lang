@@ -14,9 +14,11 @@
 #include "../Validator.hpp"
 #include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "../Util.hpp"
+#include "TypeRef.hpp"
 
 namespace NumbatLogic
 {
+	class AST;
 	class OffsetDatum;
 	class AccessLevel;
 	class Token;
@@ -30,10 +32,10 @@ namespace NumbatLogic
 	class InternalString;
 	class ClassDecl;
 	class Validator;
-	class AST;
 	template <class T>
 	class OwnedVector;
 	class Util;
+	class TypeRef;
 }
 namespace NumbatLogic
 {
@@ -243,7 +245,7 @@ namespace NumbatLogic
 			{
 				sOut->Append(" : ");
 				if (eLanguage == AST::Language::CPP)
-					m_pParentClassDecl->m_pBaseToken->Stringify(sOut);
+					m_pParentClassDecl->m_pBaseTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
 				else
 					sOut->Append("base");
 				m_pBaseParamCall->Stringify(eLanguage, eOutputFile, 0, sOut);
