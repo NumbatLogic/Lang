@@ -453,6 +453,27 @@ namespace NumbatLogic
 			return null;
 		}
 
+		public virtual NamespaceDecl FindNamespaceDecl(string sTypeName, AST pCallingChild)
+		{
+			if (pCallingChild != null)
+			{
+				AST pChild = m_pFirstChild;
+				while (pChild != null)
+				{
+					if (pChild != pCallingChild)
+					{
+						NamespaceDecl pResult = pChild.FindNamespaceDecl(sTypeName, null);
+						if (pResult != null)
+							return pResult;
+					}
+					pChild = pChild.m_pNextSibling;
+				}
+				if (m_pParent != null)
+					return m_pParent.FindNamespaceDecl(sTypeName, this);
+			}
+			return null;
+		}
+
 		public virtual AST FindByName(string sName, AST pCallingChild)
 		{
 			if (pCallingChild != null)
@@ -512,9 +533,9 @@ namespace NumbatLogic
 				return;
 			}
 			pAst.m_pParent = this;
-			NumbatLogic.AST __3364210159 = m_pFirstChild;
+			NumbatLogic.AST __2290363216 = m_pFirstChild;
 			m_pFirstChild = null;
-			pAst.m_pNextSibling = __3364210159;
+			pAst.m_pNextSibling = __2290363216;
 			m_pFirstChild = pAst;
 			pAst.m_pNextSibling.m_pPrevSibling = m_pFirstChild;
 		}
@@ -525,17 +546,17 @@ namespace NumbatLogic
 			pAst.m_pParent = this;
 			if (m_pFirstChild == pBefore)
 			{
-				NumbatLogic.AST __4135972830 = m_pFirstChild;
+				NumbatLogic.AST __3464758130 = m_pFirstChild;
 				m_pFirstChild = null;
-				pAst.m_pNextSibling = __4135972830;
+				pAst.m_pNextSibling = __3464758130;
 				m_pFirstChild = pAst;
 				pBefore.m_pPrevSibling = m_pFirstChild;
 			}
 			else
 			{
-				NumbatLogic.AST __4280837940 = pBefore.m_pPrevSibling.m_pNextSibling;
+				NumbatLogic.AST __2654503368 = pBefore.m_pPrevSibling.m_pNextSibling;
 				pBefore.m_pPrevSibling.m_pNextSibling = null;
-				pAst.m_pNextSibling = __4280837940;
+				pAst.m_pNextSibling = __2654503368;
 				pAst.m_pPrevSibling = pBefore.m_pPrevSibling;
 				pBefore.m_pPrevSibling = (AST)(pAst);
 				pAst.m_pPrevSibling.m_pNextSibling = pAst;
@@ -546,21 +567,21 @@ namespace NumbatLogic
 		{
 			if (m_pFirstChild == pChild)
 			{
-				NumbatLogic.AST __931511915 = m_pFirstChild;
+				NumbatLogic.AST __1452628119 = m_pFirstChild;
 				m_pFirstChild = null;
-				AST pOwnedChild = __931511915;
+				AST pOwnedChild = __1452628119;
 				if (m_pLastChild == pOwnedChild)
 					m_pLastChild = null;
 				else
 				{
-					NumbatLogic.AST __1213399723 = pOwnedChild.m_pNextSibling;
+					NumbatLogic.AST __1363404356 = pOwnedChild.m_pNextSibling;
 					pOwnedChild.m_pNextSibling = null;
-					m_pFirstChild = __1213399723;
+					m_pFirstChild = __1363404356;
 				}
 				pOwnedChild.m_pParent = null;
-				NumbatLogic.AST __2040457964 = pOwnedChild;
+				NumbatLogic.AST __1167038682 = pOwnedChild;
 				pOwnedChild = null;
-				return __2040457964;
+				return __1167038682;
 			}
 			else
 			{
@@ -569,21 +590,21 @@ namespace NumbatLogic
 				{
 					if (pFindChild.m_pNextSibling == pChild)
 					{
-						NumbatLogic.AST __4069245639 = pFindChild.m_pNextSibling;
+						NumbatLogic.AST __1687872009 = pFindChild.m_pNextSibling;
 						pFindChild.m_pNextSibling = null;
-						AST pOwnedChild = __4069245639;
+						AST pOwnedChild = __1687872009;
 						if (m_pLastChild == pOwnedChild)
 							m_pLastChild = pFindChild;
 						else
 						{
-							NumbatLogic.AST __1968356607 = pOwnedChild.m_pNextSibling;
+							NumbatLogic.AST __3896751586 = pOwnedChild.m_pNextSibling;
 							pOwnedChild.m_pNextSibling = null;
-							pFindChild.m_pNextSibling = __1968356607;
+							pFindChild.m_pNextSibling = __3896751586;
 						}
 						pOwnedChild.m_pParent = null;
-						NumbatLogic.AST __1637794401 = pOwnedChild;
+						NumbatLogic.AST __4237282172 = pOwnedChild;
 						pOwnedChild = null;
-						return __1637794401;
+						return __4237282172;
 					}
 					pFindChild = pFindChild.m_pNextSibling;
 				}

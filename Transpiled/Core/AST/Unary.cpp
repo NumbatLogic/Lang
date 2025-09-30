@@ -9,10 +9,10 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
-	class AST;
 	class Unary;
 	class InternalString;
 	class Validator;

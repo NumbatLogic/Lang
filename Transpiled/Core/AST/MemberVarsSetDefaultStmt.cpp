@@ -16,10 +16,10 @@
 namespace NumbatLogic
 {
 	class MemberVarsSetDefaultStmt;
+	class AST;
 	class TorDecl;
 	class Token;
 	class Validator;
-	class AST;
 	class MemberVarDecl;
 	class ValueType;
 	class VarDecl;

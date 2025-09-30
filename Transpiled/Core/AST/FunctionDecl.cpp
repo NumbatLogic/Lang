@@ -17,6 +17,7 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class OffsetDatum;
 	class TypeRef;
 	class Token;
@@ -31,7 +32,6 @@ namespace NumbatLogic
 	class MemberFunctionDecl;
 	template <class T>
 	class OwnedVector;
-	class AST;
 	class InternalString;
 	class ClassDecl;
 }

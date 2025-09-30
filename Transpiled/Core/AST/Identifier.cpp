@@ -19,11 +19,11 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
 	class Identifier;
-	class AST;
 	class OperatorExpr;
 	template <class T>
 	class Vector;

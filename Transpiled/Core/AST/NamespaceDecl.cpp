@@ -15,13 +15,13 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
 	class NamespaceDecl;
 	class Console;
 	class Assert;
-	class AST;
 	class Validator;
 	class ExternalString;
 	class NamespaceNode;
@@ -117,6 +117,19 @@ namespace NumbatLogic
 		pValidator->BeginNamespace(sxName);
 		AST::Validate(pValidator, pParent);
 		pValidator->EndNamespace(sxName);
+	}
+
+	NamespaceDecl* NamespaceDecl::FindNamespaceDecl(const char* sxName, AST* pCallingChild)
+	{
+		if (ExternalString::Equal(sxName, m_pNameToken->GetString()))
+			return this;
+		NamespaceDecl* pFound = AST::FindNamespaceDecl(sxName, pCallingChild);
+		if (pFound != 0)
+			return pFound;
+		NamespaceNode* pFoundNamespace = m_pNamespaceNode->FindByName(sxName, pCallingChild == 0);
+		if (pFoundNamespace != 0)
+			return pFoundNamespace->m_pNamespaceDeclVector->Get(0);
+		return 0;
 	}
 
 	AST* NamespaceDecl::SubFindByName(const char* sxName, AST* pCallingChild)

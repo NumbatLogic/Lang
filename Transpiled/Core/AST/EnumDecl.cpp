@@ -13,11 +13,11 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
 	class EnumDecl;
-	class AST;
 	template <class T>
 	class Vector;
 	class EnumDeclValue;

@@ -12,9 +12,9 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	template <class T>
 	class Vector;
-	class AST;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;

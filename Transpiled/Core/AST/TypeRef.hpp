@@ -38,9 +38,11 @@ namespace NumbatLogic
 		public: TypeRef* m_pChildTypeRef;
 		public: PointerType m_ePointerType;
 		public: Token* m_pCloneToken;
+		protected: bool m_bAttemptedToFindType;
 		protected: AST* m_pFoundType;
 		public: TypeRef();
 		public: static TypeRef* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
+		protected: AST* FindType();
 		protected: void ValidateClassDecl(Validator* pValidator, ClassDecl* pClassDecl, TypeRef* pThisOrChild);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
 		public: TypeRef* Clone();

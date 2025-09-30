@@ -17,6 +17,7 @@ namespace NumbatLogic
 		public TypeRef m_pChildTypeRef;
 		public PointerType m_ePointerType;
 		public Token m_pCloneToken;
+		protected bool m_bAttemptedToFindType;
 		protected AST m_pFoundType;
 		public TypeRef()
 		{
@@ -77,9 +78,9 @@ namespace NumbatLogic
 							NumbatLogic.Assert.Plz(false);
 						}
 						pTypeRef.m_pGenericTypeRefVector.PushBack(pGenericTypeRef);
-						NumbatLogic.TypeRef __4025458202 = pGenericTypeRef;
+						NumbatLogic.TypeRef __1089445402 = pGenericTypeRef;
 						pGenericTypeRef = null;
-						pTypeRef.AddChild(__4025458202);
+						pTypeRef.AddChild(__1089445402);
 						if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_ANGLE_BRACKET_RIGHT) != null)
 						{
 							continue;
@@ -108,9 +109,9 @@ namespace NumbatLogic
 					return null;
 				}
 				pTypeRef.m_pChildTypeRef = pChildTypeRef;
-				NumbatLogic.TypeRef __1269754681 = pChildTypeRef;
+				NumbatLogic.TypeRef __3836668729 = pChildTypeRef;
 				pChildTypeRef = null;
-				pTypeRef.AddChild(__1269754681);
+				pTypeRef.AddChild(__3836668729);
 			}
 			else
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_STAR) != null)
@@ -125,9 +126,47 @@ namespace NumbatLogic
 						pTypeRef.m_ePointerType = PointerType.TRANSITON;
 					}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.TypeRef __2145006333 = pTypeRef;
+			NumbatLogic.TypeRef __3503960829 = pTypeRef;
 			pTypeRef = null;
-			return __2145006333;
+			return __3503960829;
+		}
+
+		protected AST FindType()
+		{
+			if (m_bAttemptedToFindType)
+				return m_pFoundType;
+			m_bAttemptedToFindType = true;
+			TypeRef pParentTypeRef = null;
+			if (m_pParent.m_eType == AST.Type.AST_TYPE_REF)
+			{
+				pParentTypeRef = (TypeRef)(m_pParent);
+				if (pParentTypeRef.m_pChildTypeRef != this)
+					pParentTypeRef = null;
+			}
+			if (m_pTypeToken.m_eType == Token.Type.TOKEN_IDENTIFIER)
+			{
+				string sTypeName = m_pTypeToken.GetString();
+				if (pParentTypeRef != null)
+				{
+					if (pParentTypeRef.m_pFoundType != null)
+						m_pFoundType = pParentTypeRef.m_pFoundType.FindByName(sTypeName, null);
+				}
+				else
+				{
+					if (m_pParent != null && m_pParent.m_eType == AST.Type.AST_CLASS_DECL && ((ClassDecl)(m_pParent)).m_pBaseTypeRef == this)
+					{
+						if (m_pParent.m_pParent != null)
+							m_pFoundType = m_pParent.m_pParent.FindClassDecl(sTypeName, m_pParent);
+						if (m_pFoundType == null)
+							m_pFoundType = FindNamespaceDecl(sTypeName, this);
+					}
+					else
+					{
+						m_pFoundType = FindByName(sTypeName, this);
+					}
+				}
+			}
+			return m_pFoundType;
 		}
 
 		protected void ValidateClassDecl(Validator pValidator, ClassDecl pClassDecl, TypeRef pThisOrChild)
@@ -196,25 +235,20 @@ namespace NumbatLogic
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
-			TypeRef pParentTypeRef = null;
-			if (m_pParent.m_eType == AST.Type.AST_TYPE_REF)
-			{
-				pParentTypeRef = (TypeRef)(m_pParent);
-				if (pParentTypeRef.m_pChildTypeRef != this)
-					pParentTypeRef = null;
-			}
 			if (m_pTypeToken.m_eType == Token.Type.TOKEN_IDENTIFIER)
 			{
-				string sTypeName = m_pTypeToken.GetString();
-				if (pParentTypeRef != null && pParentTypeRef.m_pFoundType != null)
-					m_pFoundType = pParentTypeRef.m_pFoundType.FindByName(sTypeName, null);
-				else
-					m_pFoundType = FindByName(sTypeName, this);
-				AST pType = m_pFoundType;
+				AST pType = FindType();
 				if (pType == null)
 				{
 					InternalString sTemp = new InternalString("Unknown type: ");
-					sTemp.Append(sTypeName);
+					sTemp.Append(m_pTypeToken.GetString());
+					TypeRef pParentTypeRef = null;
+					if (m_pParent.m_eType == AST.Type.AST_TYPE_REF)
+					{
+						pParentTypeRef = (TypeRef)(m_pParent);
+						if (pParentTypeRef.m_pChildTypeRef != this)
+							pParentTypeRef = null;
+					}
 					if (pParentTypeRef != null && pParentTypeRef.m_pFoundType != null)
 						sTemp.Append(" -- had parent");
 					pValidator.AddError(sTemp.GetExternalString(), m_pTypeToken.m_sFileName, m_pTypeToken.m_nLine, m_pTypeToken.m_nColumn);
@@ -290,23 +324,23 @@ namespace NumbatLogic
 			{
 				TypeRef pGenericTypeRef = m_pGenericTypeRefVector.Get(i).Clone();
 				pTypeRef.m_pGenericTypeRefVector.PushBack(pGenericTypeRef);
-				NumbatLogic.TypeRef __1926160238 = pGenericTypeRef;
+				NumbatLogic.TypeRef __2411717781 = pGenericTypeRef;
 				pGenericTypeRef = null;
-				pTypeRef.AddChild(__1926160238);
+				pTypeRef.AddChild(__2411717781);
 			}
 			pTypeRef.m_pChildTypeRef = null;
 			if (m_pChildTypeRef != null)
 			{
 				TypeRef pChildTypeRef = m_pChildTypeRef.Clone();
 				pTypeRef.m_pChildTypeRef = pChildTypeRef;
-				NumbatLogic.TypeRef __2969443959 = pChildTypeRef;
+				NumbatLogic.TypeRef __2801683921 = pChildTypeRef;
 				pChildTypeRef = null;
-				pTypeRef.AddChild(__2969443959);
+				pTypeRef.AddChild(__2801683921);
 			}
 			pTypeRef.m_ePointerType = m_ePointerType;
-			NumbatLogic.TypeRef __1670026426 = pTypeRef;
+			NumbatLogic.TypeRef __227198223 = pTypeRef;
 			pTypeRef = null;
-			return __1670026426;
+			return __227198223;
 		}
 
 		public override AST BaseClone()
@@ -521,6 +555,12 @@ namespace NumbatLogic
 						if (pParentTypeRef.m_pChildTypeRef == this)
 							sxAppendString = "";
 					}
+					if (m_pParent.m_eType == AST.Type.AST_CLASS_DECL)
+					{
+						ClassDecl pParentClassDecl = (ClassDecl)(m_pParent);
+						if (pParentClassDecl.m_pBaseTypeRef == this)
+							sxAppendString = "";
+					}
 					sOut.AppendString(sxAppendString);
 				}
 			}
@@ -548,23 +588,11 @@ namespace NumbatLogic
 
 		protected ValueType SetValueType()
 		{
-			TypeRef pParentTypeRef = null;
-			if (m_pParent.m_eType == AST.Type.AST_TYPE_REF)
-			{
-				pParentTypeRef = (TypeRef)(m_pParent);
-				if (pParentTypeRef.m_pChildTypeRef != this)
-					pParentTypeRef = null;
-			}
 			switch (m_pTypeToken.m_eType)
 			{
 				case Token.Type.TOKEN_IDENTIFIER:
 				{
-					string sTypeName = m_pTypeToken.GetString();
-					if (pParentTypeRef != null && pParentTypeRef.m_pFoundType != null)
-						m_pFoundType = pParentTypeRef.m_pFoundType.FindByName(sTypeName, null);
-					else
-						m_pFoundType = FindByName(sTypeName, this);
-					AST pType = m_pFoundType;
+					AST pType = FindType();
 					if (pType != null)
 					{
 						if (pType.m_eType == AST.Type.AST_CLASS_DECL)
@@ -581,9 +609,9 @@ namespace NumbatLogic
 								{
 									return null;
 								}
-								NumbatLogic.ValueType __291954094 = pGenericValueType;
+								NumbatLogic.ValueType __2791765283 = pGenericValueType;
 								pGenericValueType = null;
-								m_pValueType.m_pGenericValueTypeVector.PushBack(__291954094);
+								m_pValueType.m_pGenericValueTypeVector.PushBack(__2791765283);
 							}
 							return m_pValueType;
 						}

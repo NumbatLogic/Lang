@@ -9,13 +9,13 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
 	class Console;
 	class Assert;
 	class ParamCall;
-	class AST;
 	class InternalString;
 }
 namespace NumbatLogic

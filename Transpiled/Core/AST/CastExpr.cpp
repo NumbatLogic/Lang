@@ -13,6 +13,7 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
@@ -22,7 +23,6 @@ namespace NumbatLogic
 	class ParamCall;
 	class CastExpr;
 	class Validator;
-	class AST;
 	class ValueType;
 	class InternalString;
 }

@@ -80,6 +80,19 @@ namespace NumbatLogic
 			pValidator.EndNamespace(sxName);
 		}
 
+		public override NamespaceDecl FindNamespaceDecl(string sxName, AST pCallingChild)
+		{
+			if (ExternalString.Equal(sxName, m_pNameToken.GetString()))
+				return this;
+			NamespaceDecl pFound = base.FindNamespaceDecl(sxName, pCallingChild);
+			if (pFound != null)
+				return pFound;
+			NamespaceNode pFoundNamespace = m_pNamespaceNode.FindByName(sxName, pCallingChild == null);
+			if (pFoundNamespace != null)
+				return pFoundNamespace.m_pNamespaceDeclVector.Get(0);
+			return null;
+		}
+
 		protected AST SubFindByName(string sxName, AST pCallingChild)
 		{
 			return base.FindByName(sxName, pCallingChild);

@@ -15,11 +15,11 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class Scope;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
-	class AST;
 	class Console;
 	class Assert;
 	class Validator;

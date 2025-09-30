@@ -7,6 +7,7 @@
 namespace NumbatLogic
 {
 	class Token;
+	class TypeRef;
 	template <class T>
 	class OwnedVector;
 	class GenericTypeDecl;
@@ -24,7 +25,7 @@ namespace NumbatLogic
 	class ClassDecl : public AST
 	{
 		public: Token* m_pNameToken;
-		public: Token* m_pBaseToken;
+		public: TypeRef* m_pBaseTypeRef;
 		public: OwnedVector<GenericTypeDecl*>* m_pGenericTypeDeclVector;
 		public: NamespaceNode* m_pNamespaceNode;
 		protected: ClassDecl* m_pBaseClassDecl;

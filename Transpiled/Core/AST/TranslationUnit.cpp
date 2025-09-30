@@ -22,12 +22,12 @@ namespace NumbatLogic
 	class Util;
 	class ClassDecl;
 	class Token;
+	class AST;
 	class TokenContainer;
 	class InternalString;
 	class TranslationUnit;
 	class File;
 	class OffsetDatum;
-	class AST;
 	class NamespaceNode;
 }
 namespace NumbatLogic

@@ -24,6 +24,7 @@ namespace NumbatLogic
 		public: static NamespaceDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 		public: virtual void PreValidate(Validator* pValidator, OperatorExpr* pParent);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
+		public: virtual NamespaceDecl* FindNamespaceDecl(const char* sxName, AST* pCallingChild);
 		protected: AST* SubFindByName(const char* sxName, AST* pCallingChild);
 		public: virtual AST* FindByName(const char* sxName, AST* pCallingChild);
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);

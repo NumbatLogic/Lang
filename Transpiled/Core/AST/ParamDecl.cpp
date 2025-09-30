@@ -15,6 +15,7 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	template <class T>
 	class Vector;
 	class VarDecl;
@@ -24,7 +25,6 @@ namespace NumbatLogic
 	class ParamDecl;
 	class Console;
 	class Assert;
-	class AST;
 	class Validator;
 	class TypeRef;
 	class ParamCall;

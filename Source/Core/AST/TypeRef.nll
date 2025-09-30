@@ -19,6 +19,7 @@ namespace NumbatLogic
 
 		public Token* m_pCloneToken;
 
+		private bool m_bAttemptedToFindType;
 		private AST m_pFoundType;
 
 		public construct()
@@ -162,6 +163,51 @@ namespace NumbatLogic
 			return disown pTypeRef;
 		}
 
+
+		private AST FindType()
+		{
+			if (m_bAttemptedToFindType)
+				return m_pFoundType;
+
+			m_bAttemptedToFindType = true;
+
+			TypeRef pParentTypeRef = null;
+			if (m_pParent.m_eType == AST::Type::AST_TYPE_REF)
+			{
+				pParentTypeRef = cast TypeRef(m_pParent);
+				if (pParentTypeRef.m_pChildTypeRef != this)
+					pParentTypeRef = null;
+			}
+			
+			if (m_pTypeToken.m_eType == Token::Type::TOKEN_IDENTIFIER)
+			{
+				string sTypeName = m_pTypeToken.GetString();
+
+				if (pParentTypeRef != null)
+				{
+					if (pParentTypeRef.m_pFoundType != null)
+						m_pFoundType = pParentTypeRef.m_pFoundType.FindByName(sTypeName, null);
+				}
+				else
+				{
+					// hax to avoid infinte loop
+					if (m_pParent != null && m_pParent.m_eType == AST::Type::AST_CLASS_DECL && (cast ClassDecl(m_pParent)).m_pBaseTypeRef == this)
+					{
+						if (m_pParent.m_pParent != null)
+							m_pFoundType = m_pParent.m_pParent.FindClassDecl(sTypeName, m_pParent);
+						if (m_pFoundType == null)
+							m_pFoundType = FindNamespaceDecl(sTypeName, this);
+					}
+					else
+					{
+						m_pFoundType = FindByName(sTypeName, this);
+					}
+				}
+			}
+
+			return m_pFoundType;
+		}
+
 		private void ValidateClassDecl(Validator pValidator, ClassDecl pClassDecl, TypeRef pThisOrChild)
 		{
 			if (m_pParent != null)
@@ -237,40 +283,21 @@ namespace NumbatLogic
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
-			//if (m_pChildTypeRef != null)
-			//	m_pChildTypeRef.Validate(pValidator, pParent);
-
-
-			TypeRef pParentTypeRef = null;
-			if (m_pParent.m_eType == AST::Type::AST_TYPE_REF)
-			{
-				pParentTypeRef = cast TypeRef(m_pParent);
-				if (pParentTypeRef.m_pChildTypeRef != this)
-					pParentTypeRef = null;
-			}
-
-
-			
 			if (m_pTypeToken.m_eType == Token::Type::TOKEN_IDENTIFIER)
 			{
-				string sTypeName = m_pTypeToken.GetString();
-				//AST pType = FindByName(sTypeName, this);
-
-				if (pParentTypeRef != null && pParentTypeRef.m_pFoundType != null)
-					m_pFoundType = pParentTypeRef.m_pFoundType.FindByName(sTypeName, null);
-				else
-					m_pFoundType = FindByName(sTypeName, this);
-				
-				AST pType = m_pFoundType;
-
-
-
-
+				AST pType = FindType();
 				if (pType == null)
 				{
 					InternalString* sTemp = own new InternalString("Unknown type: ");
-					sTemp.Append(sTypeName);
+					sTemp.Append(m_pTypeToken.GetString());
 
+					TypeRef pParentTypeRef = null;
+					if (m_pParent.m_eType == AST::Type::AST_TYPE_REF)
+					{
+						pParentTypeRef = cast TypeRef(m_pParent);
+						if (pParentTypeRef.m_pChildTypeRef != this)
+							pParentTypeRef = null;
+					}
 					if (pParentTypeRef != null && pParentTypeRef.m_pFoundType != null)
 						sTemp.Append(" -- had parent");
 
@@ -368,9 +395,6 @@ namespace NumbatLogic
 				TypeRef pGenericTypeRef = m_pGenericTypeRefVector.Get(i);
 				pGenericTypeRef.Validate(pValidator, null);
 			}
-
-
-			
 
 			// todo: something with m_pChildTypeRef
 
@@ -583,6 +607,13 @@ namespace NumbatLogic
 							sxAppendString = "";
 					}
 
+					if (m_pParent.m_eType == AST::Type::AST_CLASS_DECL)
+					{
+						ClassDecl pParentClassDecl = cast ClassDecl(m_pParent);
+						if (pParentClassDecl.m_pBaseTypeRef == this)
+							sxAppendString = "";
+					}
+
 					sOut.AppendString(sxAppendString);
 				}
 			}
@@ -618,27 +649,12 @@ namespace NumbatLogic
 		{
 			// todo: conssst!
 
-			TypeRef pParentTypeRef = null;
-			if (m_pParent.m_eType == AST::Type::AST_TYPE_REF)
-			{
-				pParentTypeRef = cast TypeRef(m_pParent);
-				if (pParentTypeRef.m_pChildTypeRef != this)
-					pParentTypeRef = null;
-			}
-			
-
 			switch (m_pTypeToken.m_eType)
 			{
 				case Token::Type::TOKEN_IDENTIFIER:
 				{
-					string sTypeName = m_pTypeToken.GetString();
+					AST pType = FindType();
 
-					if (pParentTypeRef != null && pParentTypeRef.m_pFoundType != null)
-						m_pFoundType = pParentTypeRef.m_pFoundType.FindByName(sTypeName, null);
-					else
-						m_pFoundType = FindByName(sTypeName, this);
-
-					AST pType = m_pFoundType;
 					if (pType != null)
 					{
 						if (pType.m_eType == AST::Type::AST_CLASS_DECL)
@@ -695,13 +711,9 @@ namespace NumbatLogic
 							m_pValueType.m_pDelegateDecl = cast DelegateDecl(pType);
 							return m_pValueType;
 						}
-
-						
-
-						//Console::Log(sTypeName);
 					}
 
-					return null;// new ValueType(ValueType::Type::INSTANCE);
+					return null;
 				}
 				case Token::Type::TOKEN_KEYWORD_INT:
 				case Token::Type::TOKEN_KEYWORD_UINT:

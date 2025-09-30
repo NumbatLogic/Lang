@@ -10,11 +10,11 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
 	class StaticArray;
-	class AST;
 	class Console;
 	class Assert;
 	class ValueType;
