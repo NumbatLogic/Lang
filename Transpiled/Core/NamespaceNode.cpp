@@ -1,19 +1,19 @@
 #include "NamespaceNode.hpp"
 #include "../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
-#include "../../../LangShared/Vector/CPP/Vector.hpp"
 #include "AST/NamespaceDecl.hpp"
+#include "../../../LangShared/Vector/CPP/Vector.hpp"
 #include "Token.hpp"
 #include "../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../../../LangShared/ExternalString/CPP/ExternalString.hpp"
 
 namespace NumbatLogic
 {
-	template <class T>
-	class OwnedVector;
 	class NamespaceNode;
 	template <class T>
-	class Vector;
+	class OwnedVector;
 	class NamespaceDecl;
+	template <class T>
+	class Vector;
 	class Token;
 	class InternalString;
 	class ExternalString;

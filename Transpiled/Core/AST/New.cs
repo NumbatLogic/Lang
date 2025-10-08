@@ -91,6 +91,7 @@ namespace NumbatLogic
 				}
 			}
 			m_pValueType.m_ePointerType = TypeRef.PointerType.TRANSITON;
+			AddClassDeclReference(m_pValueType.m_pClassDecl, AST.OutputFile.SOURCE, false);
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

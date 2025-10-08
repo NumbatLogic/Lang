@@ -1,7 +1,7 @@
 #include "Validator.hpp"
 #include "../../../LangShared/InternalString/CPP/InternalString.hpp"
-#include "../../../LangShared/Vector/CPP/Vector.hpp"
 #include "AST/VarDecl.hpp"
+#include "../../../LangShared/Vector/CPP/Vector.hpp"
 #include "AST/Scope.hpp"
 #include "../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "Project.hpp"
@@ -21,14 +21,14 @@
 
 namespace NumbatLogic
 {
+	class VarDecl;
 	template <class T>
 	class Vector;
-	class VarDecl;
 	class Scope;
 	class Validator;
+	class ValidatorError;
 	template <class T>
 	class OwnedVector;
-	class ValidatorError;
 	class ValidatorScope;
 	class Project;
 	class AST;

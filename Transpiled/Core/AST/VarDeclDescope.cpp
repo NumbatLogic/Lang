@@ -1,7 +1,7 @@
 #include "VarDeclDescope.hpp"
 #include "AST.hpp"
-#include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "VarDecl.hpp"
+#include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "../Token.hpp"
 #include "../Util.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
@@ -10,9 +10,9 @@ namespace NumbatLogic
 {
 	class VarDeclDescope;
 	class AST;
+	class VarDecl;
 	template <class T>
 	class Vector;
-	class VarDecl;
 	class Token;
 	class Util;
 	class InternalString;

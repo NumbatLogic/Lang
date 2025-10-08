@@ -1,6 +1,6 @@
 #include "Project.hpp"
-#include "../../../LangShared/Vector/CPP/Vector.hpp"
 #include "AST/TranslationUnit.hpp"
+#include "../../../LangShared/Vector/CPP/Vector.hpp"
 #include "NamespaceNode.hpp"
 #include "../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../../../LangShared/Console/CPP/Console.hpp"
@@ -17,9 +17,9 @@ namespace NumbatLogic
 {
 	class Project;
 	class AST;
+	class TranslationUnit;
 	template <class T>
 	class Vector;
-	class TranslationUnit;
 	class NamespaceNode;
 	class InternalString;
 	class Console;

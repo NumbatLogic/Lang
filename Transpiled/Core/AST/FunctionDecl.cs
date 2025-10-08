@@ -101,6 +101,14 @@ namespace NumbatLogic
 					return;
 				}
 			}
+			ValueType pValueType = m_pTypeRef.CreateValueType();
+			if (pValueType == null)
+			{
+				pValidator.AddError("Unable to compute value type of function result", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+				return;
+			}
+			if (pValueType.m_pClassDecl != null)
+				AddClassDeclReference(pValueType.m_pClassDecl, AST.OutputFile.HEADER, true);
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

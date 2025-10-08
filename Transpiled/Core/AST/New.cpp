@@ -131,6 +131,7 @@ namespace NumbatLogic
 			}
 		}
 		m_pValueType->m_ePointerType = TypeRef::PointerType::TRANSITON;
+		AddClassDeclReference(m_pValueType->m_pClassDecl, AST::OutputFile::SOURCE, false);
 	}
 
 	void New::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

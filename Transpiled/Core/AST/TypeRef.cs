@@ -175,7 +175,6 @@ namespace NumbatLogic
 			{
 				if (m_pParent.m_eType == AST.Type.AST_NEW_EXP)
 				{
-					AddClassDeclReference(pClassDecl, AST.OutputFile.SOURCE, false);
 				}
 				else
 					if (m_pParent.m_eType == AST.Type.AST_TYPE_REF)
@@ -324,23 +323,23 @@ namespace NumbatLogic
 			{
 				TypeRef pGenericTypeRef = m_pGenericTypeRefVector.Get(i).Clone();
 				pTypeRef.m_pGenericTypeRefVector.PushBack(pGenericTypeRef);
-				NumbatLogic.TypeRef __2411717781 = pGenericTypeRef;
+				NumbatLogic.TypeRef __549446805 = pGenericTypeRef;
 				pGenericTypeRef = null;
-				pTypeRef.AddChild(__2411717781);
+				pTypeRef.AddChild(__549446805);
 			}
 			pTypeRef.m_pChildTypeRef = null;
 			if (m_pChildTypeRef != null)
 			{
 				TypeRef pChildTypeRef = m_pChildTypeRef.Clone();
 				pTypeRef.m_pChildTypeRef = pChildTypeRef;
-				NumbatLogic.TypeRef __2801683921 = pChildTypeRef;
+				NumbatLogic.TypeRef __167661009 = pChildTypeRef;
 				pChildTypeRef = null;
-				pTypeRef.AddChild(__2801683921);
+				pTypeRef.AddChild(__167661009);
 			}
 			pTypeRef.m_ePointerType = m_ePointerType;
-			NumbatLogic.TypeRef __227198223 = pTypeRef;
+			NumbatLogic.TypeRef __2408246880 = pTypeRef;
 			pTypeRef = null;
-			return __227198223;
+			return __2408246880;
 		}
 
 		public override AST BaseClone()
@@ -609,9 +608,9 @@ namespace NumbatLogic
 								{
 									return null;
 								}
-								NumbatLogic.ValueType __2791765283 = pGenericValueType;
+								NumbatLogic.ValueType __157742371 = pGenericValueType;
 								pGenericValueType = null;
-								m_pValueType.m_pGenericValueTypeVector.PushBack(__2791765283);
+								m_pValueType.m_pGenericValueTypeVector.PushBack(__157742371);
 							}
 							return m_pValueType;
 						}

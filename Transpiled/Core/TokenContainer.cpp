@@ -1,6 +1,6 @@
 #include "TokenContainer.hpp"
-#include "../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "Token.hpp"
+#include "../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "ParseDatum.hpp"
 #include "../../../LangShared/Console/CPP/Console.hpp"
@@ -10,9 +10,9 @@
 namespace NumbatLogic
 {
 	class TokenContainer;
+	class Token;
 	template <class T>
 	class OwnedVector;
-	class Token;
 	class InternalString;
 	class ParseDatum;
 	class Console;
