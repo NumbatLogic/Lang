@@ -16,9 +16,9 @@
 namespace NumbatLogic
 {
 	class AST;
+	class TypeRef;
 	template <class T>
 	class Vector;
-	class TypeRef;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;
@@ -213,7 +213,6 @@ namespace NumbatLogic
 		{
 			if (m_pParent->m_eType == AST::Type::AST_NEW_EXP)
 			{
-				AddClassDeclReference(pClassDecl, AST::OutputFile::SOURCE, false);
 			}
 			else
 				if (m_pParent->m_eType == AST::Type::AST_TYPE_REF)
@@ -364,9 +363,9 @@ namespace NumbatLogic
 		{
 			TypeRef* pGenericTypeRef = m_pGenericTypeRefVector->Get(i)->Clone();
 			pTypeRef->m_pGenericTypeRefVector->PushBack(pGenericTypeRef);
-			NumbatLogic::TypeRef* __2411717781 = pGenericTypeRef;
+			NumbatLogic::TypeRef* __549446805 = pGenericTypeRef;
 			pGenericTypeRef = 0;
-			pTypeRef->AddChild(__2411717781);
+			pTypeRef->AddChild(__549446805);
 			if (pGenericTypeRef) delete pGenericTypeRef;
 		}
 		pTypeRef->m_pChildTypeRef = 0;
@@ -374,15 +373,15 @@ namespace NumbatLogic
 		{
 			TypeRef* pChildTypeRef = m_pChildTypeRef->Clone();
 			pTypeRef->m_pChildTypeRef = pChildTypeRef;
-			NumbatLogic::TypeRef* __2801683921 = pChildTypeRef;
+			NumbatLogic::TypeRef* __167661009 = pChildTypeRef;
 			pChildTypeRef = 0;
-			pTypeRef->AddChild(__2801683921);
+			pTypeRef->AddChild(__167661009);
 			if (pChildTypeRef) delete pChildTypeRef;
 		}
 		pTypeRef->m_ePointerType = m_ePointerType;
-		NumbatLogic::TypeRef* __227198223 = pTypeRef;
+		NumbatLogic::TypeRef* __2408246880 = pTypeRef;
 		pTypeRef = 0;
-		return __227198223;
+		return __2408246880;
 	}
 
 	AST* TypeRef::BaseClone()
@@ -652,9 +651,9 @@ namespace NumbatLogic
 								if (pGenericValueType) delete pGenericValueType;
 								return 0;
 							}
-							NumbatLogic::ValueType* __2791765283 = pGenericValueType;
+							NumbatLogic::ValueType* __157742371 = pGenericValueType;
 							pGenericValueType = 0;
-							m_pValueType->m_pGenericValueTypeVector->PushBack(__2791765283);
+							m_pValueType->m_pGenericValueTypeVector->PushBack(__157742371);
 							if (pGenericValueType) delete pGenericValueType;
 						}
 						return m_pValueType;

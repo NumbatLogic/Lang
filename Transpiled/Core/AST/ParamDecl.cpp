@@ -1,7 +1,7 @@
 #include "ParamDecl.hpp"
 #include "AST.hpp"
-#include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "VarDecl.hpp"
+#include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "../OffsetDatum.hpp"
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
@@ -16,9 +16,9 @@
 namespace NumbatLogic
 {
 	class AST;
+	class VarDecl;
 	template <class T>
 	class Vector;
-	class VarDecl;
 	class OffsetDatum;
 	class Token;
 	class TokenContainer;

@@ -3,8 +3,8 @@
 #include "AST/TypeRef.hpp"
 #include "Validator.hpp"
 #include "Token.hpp"
-#include "../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "AST/ClassDecl.hpp"
+#include "../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../../../LangShared/Vector/CPP/Vector.hpp"
 #include "NamespaceNode.hpp"
 #include "AST/GenericTypeDecl.hpp"
@@ -16,14 +16,14 @@
 
 namespace NumbatLogic
 {
+	class ValueType;
 	template <class T>
 	class OwnedVector;
-	class ValueType;
 	class Validator;
 	class Token;
 	class TypeRef;
-	class InternalString;
 	class ClassDecl;
+	class InternalString;
 	template <class T>
 	class Vector;
 	class NamespaceNode;

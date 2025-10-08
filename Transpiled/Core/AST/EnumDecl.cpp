@@ -3,8 +3,8 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "AST.hpp"
-#include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "EnumDeclValue.hpp"
+#include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
@@ -18,9 +18,9 @@ namespace NumbatLogic
 	class Token;
 	class TokenContainer;
 	class EnumDecl;
+	class EnumDeclValue;
 	template <class T>
 	class Vector;
-	class EnumDeclValue;
 	class Console;
 	class Assert;
 	class ExternalString;

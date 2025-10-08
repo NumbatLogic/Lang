@@ -13,12 +13,12 @@
 
 namespace NumbatLogic
 {
-	template <class T>
-	class OwnedVector;
 	class ReferenceNode;
 	template <class T>
-	class Vector;
+	class OwnedVector;
 	class ClassDeclReference;
+	template <class T>
+	class Vector;
 	class Util;
 	class ClassDecl;
 	class Token;

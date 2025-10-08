@@ -10,6 +10,7 @@
 #include "AST.hpp"
 #include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
 #include "../Validator.hpp"
+#include "../ValueType.hpp"
 #include "MemberFunctionDecl.hpp"
 #include "ClassDecl.hpp"
 #include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
@@ -29,6 +30,7 @@ namespace NumbatLogic
 	class FunctionDecl;
 	class ExternalString;
 	class Validator;
+	class ValueType;
 	class MemberFunctionDecl;
 	template <class T>
 	class OwnedVector;
@@ -143,6 +145,16 @@ namespace NumbatLogic
 				return;
 			}
 		}
+		ValueType* pValueType = m_pTypeRef->CreateValueType();
+		if (pValueType == 0)
+		{
+			pValidator->AddError("Unable to compute value type of function result", m_pFirstToken->m_sFileName, m_pFirstToken->m_nLine, m_pFirstToken->m_nColumn);
+			if (pValueType) delete pValueType;
+			return;
+		}
+		if (pValueType->m_pClassDecl != 0)
+			AddClassDeclReference(pValueType->m_pClassDecl, AST::OutputFile::HEADER, true);
+		if (pValueType) delete pValueType;
 	}
 
 	void FunctionDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

@@ -216,7 +216,8 @@ namespace NumbatLogic
 
 				if (m_pParent.m_eType == AST::Type::AST_NEW_EXP)
 				{
-					AddClassDeclReference(pClassDecl, AST::OutputFile::SOURCE, false);
+					// now handled in New.nll
+					//AddClassDeclReference(pClassDecl, AST::OutputFile::SOURCE, false);
 				}
 				else if (m_pParent.m_eType == AST::Type::AST_TYPE_REF)
 				{
