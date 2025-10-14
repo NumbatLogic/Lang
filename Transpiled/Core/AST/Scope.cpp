@@ -124,15 +124,18 @@ namespace NumbatLogic
 					if (pChild->m_eType == AST::Type::AST_MEMBER_VAR_DECL)
 					{
 						MemberVarDecl* pMemberVarDecl = (MemberVarDecl*)(pChild);
-						pValidator->AddVarDecl(pMemberVarDecl->m_pVarDecl);
-						if (pMemberVarDecl->m_pVarDecl->m_pTypeRef->m_pTypeToken->m_eType == Token::Type::TOKEN_IDENTIFIER)
+						if (!pMemberVarDecl->m_bStatic)
 						{
-							const char* sTypeName = pMemberVarDecl->m_pVarDecl->m_pTypeRef->m_pTypeToken->GetString();
-							AST* pType = FindByName(sTypeName, this);
-							if (pType != 0 && pType->m_eType == AST::Type::AST_CLASS_DECL)
+							pValidator->AddVarDecl(pMemberVarDecl->m_pVarDecl);
+							if (pMemberVarDecl->m_pVarDecl->m_pTypeRef->m_pTypeToken->m_eType == Token::Type::TOKEN_IDENTIFIER)
 							{
-								ClassDecl* pClassDecl = (ClassDecl*)(pType);
-								AddClassDeclReference(pClassDecl, AST::OutputFile::SOURCE, false);
+								const char* sTypeName = pMemberVarDecl->m_pVarDecl->m_pTypeRef->m_pTypeToken->GetString();
+								AST* pType = FindByName(sTypeName, this);
+								if (pType != 0 && pType->m_eType == AST::Type::AST_CLASS_DECL)
+								{
+									ClassDecl* pClassDecl = (ClassDecl*)(pType);
+									AddClassDeclReference(pClassDecl, AST::OutputFile::SOURCE, false);
+								}
 							}
 						}
 					}

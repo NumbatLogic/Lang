@@ -89,18 +89,22 @@ namespace NumbatLogic
 						if (pChild.m_eType == AST::Type::AST_MEMBER_VAR_DECL)
 						{
 							MemberVarDecl pMemberVarDecl = cast MemberVarDecl(pChild);
-							pValidator.AddVarDecl(pMemberVarDecl.m_pVarDecl);
 
-							if (pMemberVarDecl.m_pVarDecl.m_pTypeRef.m_pTypeToken.m_eType == Token::Type::TOKEN_IDENTIFIER)
+							if (!pMemberVarDecl.m_bStatic) // static owned pointers don't auto destruct!
 							{
-								// also add to #includes
-								string sTypeName = pMemberVarDecl.m_pVarDecl.m_pTypeRef.m_pTypeToken.GetString();
-								AST pType = FindByName(sTypeName, this);
-								
-								if (pType != null && pType.m_eType == AST::Type::AST_CLASS_DECL)
+								pValidator.AddVarDecl(pMemberVarDecl.m_pVarDecl);
+
+								if (pMemberVarDecl.m_pVarDecl.m_pTypeRef.m_pTypeToken.m_eType == Token::Type::TOKEN_IDENTIFIER)
 								{
-									ClassDecl pClassDecl = cast ClassDecl(pType);
-									AddClassDeclReference(pClassDecl, AST::OutputFile::SOURCE, false);
+									// also add to #includes
+									string sTypeName = pMemberVarDecl.m_pVarDecl.m_pTypeRef.m_pTypeToken.GetString();
+									AST pType = FindByName(sTypeName, this);
+									
+									if (pType != null && pType.m_eType == AST::Type::AST_CLASS_DECL)
+									{
+										ClassDecl pClassDecl = cast ClassDecl(pType);
+										AddClassDeclReference(pClassDecl, AST::OutputFile::SOURCE, false);
+									}
 								}
 							}
 						}
