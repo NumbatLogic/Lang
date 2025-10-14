@@ -8,3 +8,5 @@ for sPackage in "${sPackages[@]}"; do
 done
 
 gdb -ex "set confirm off" -ex run -ex backtrace -ex quit --args ../../../Bin/CLI -f ../../../Source "${sLangSharedArgs[@]}"
+
+#valgrind ../../../Bin/CLI -f ../../../Source "${sLangSharedArgs[@]}"
