@@ -211,7 +211,7 @@ namespace NumbatLogic
 						{
 							pTypeRef = pTypeRef.m_pChildTypeRef;
 						}
-						if (pTypeRef.m_ePointerType == TypeRef.PointerType.OWNED)
+						if (pTypeRef.m_ePointerType == TypeRef.PointerType.OWNED && !pMemberVarDecl.m_bStatic)
 							bHasOwnedPointer = true;
 						bHasDefaultableVariable = true;
 					}

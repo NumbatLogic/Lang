@@ -45,129 +45,132 @@ namespace NumbatLogic
 					if (pChild.m_eType == AST.Type.AST_MEMBER_VAR_DECL)
 					{
 						MemberVarDecl pMemberVarDecl = (MemberVarDecl)(pChild);
-						ValueType pValueType = pMemberVarDecl.m_pVarDecl.m_pTypeRef.GetRecursiveValueType();
-						if (!pMemberVarDecl.m_pVarDecl.m_pTypeRef.m_bConst)
+						if (!pMemberVarDecl.m_bStatic)
 						{
-							if (pMemberVarDecl.m_pVarDecl.m_pArraySize != null)
+							ValueType pValueType = pMemberVarDecl.m_pVarDecl.m_pTypeRef.GetRecursiveValueType();
+							if (!pMemberVarDecl.m_pVarDecl.m_pTypeRef.m_bConst)
 							{
-								Util.Pad(nDepth, sOut);
-								sOut.Append("for (int _x = 0; _x < ");
-								pMemberVarDecl.m_pVarDecl.m_pArraySize.Stringify(eLanguage, eOutputFile, 0, sOut);
-								sOut.Append("; _x++) ");
-								sOut.AppendString(pMemberVarDecl.m_pVarDecl.m_pNameToken.GetString());
-								sOut.Append("[_x] = ");
-								switch (pValueType.m_eType)
+								if (pMemberVarDecl.m_pVarDecl.m_pArraySize != null)
 								{
-									case ValueType.Type.INT:
+									Util.Pad(nDepth, sOut);
+									sOut.Append("for (int _x = 0; _x < ");
+									pMemberVarDecl.m_pVarDecl.m_pArraySize.Stringify(eLanguage, eOutputFile, 0, sOut);
+									sOut.Append("; _x++) ");
+									sOut.AppendString(pMemberVarDecl.m_pVarDecl.m_pNameToken.GetString());
+									sOut.Append("[_x] = ");
+									switch (pValueType.m_eType)
 									{
-										sOut.Append("0");
-										break;
-									}
+										case ValueType.Type.INT:
+										{
+											sOut.Append("0");
+											break;
+										}
 
-									case ValueType.Type.BOOL:
-									{
-										sOut.Append("false");
-										break;
-									}
+										case ValueType.Type.BOOL:
+										{
+											sOut.Append("false");
+											break;
+										}
 
-									case ValueType.Type.CHAR:
-									case ValueType.Type.UNICHAR:
-									{
-										sOut.Append("'0'");
-										break;
-									}
+										case ValueType.Type.CHAR:
+										case ValueType.Type.UNICHAR:
+										{
+											sOut.Append("'0'");
+											break;
+										}
 
-									case ValueType.Type.CLASS_DECL_VALUE:
-									case ValueType.Type.GENERIC_TYPE_DECL_VALUE:
-									case ValueType.Type.DELEGATE_DECL_VALUE:
-									case ValueType.Type.VOIDPTR:
-									case ValueType.Type.STRING:
-									{
-										sOut.Append("0");
-										break;
-									}
+										case ValueType.Type.CLASS_DECL_VALUE:
+										case ValueType.Type.GENERIC_TYPE_DECL_VALUE:
+										case ValueType.Type.DELEGATE_DECL_VALUE:
+										case ValueType.Type.VOIDPTR:
+										case ValueType.Type.STRING:
+										{
+											sOut.Append("0");
+											break;
+										}
 
-									case ValueType.Type.ENUM_DECL_VALUE:
-									{
-										if (pValueType.m_pEnumDecl == null)
-											sOut.Append("no_m_pEnumDecl");
-										EnumDeclValue pEnumDeclValue = pValueType.m_pEnumDecl.m_pEnumDeclValueVector.Get(0);
-										if (pValueType.m_pEnumDecl == null)
-											sOut.Append("no_pEnumDeclValue");
-										pMemberVarDecl.m_pVarDecl.m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
-										sOut.Append("::");
-										pEnumDeclValue.m_pFirstToken.Stringify(sOut);
-										break;
-									}
+										case ValueType.Type.ENUM_DECL_VALUE:
+										{
+											if (pValueType.m_pEnumDecl == null)
+												sOut.Append("no_m_pEnumDecl");
+											EnumDeclValue pEnumDeclValue = pValueType.m_pEnumDecl.m_pEnumDeclValueVector.Get(0);
+											if (pValueType.m_pEnumDecl == null)
+												sOut.Append("no_pEnumDeclValue");
+											pMemberVarDecl.m_pVarDecl.m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
+											sOut.Append("::");
+											pEnumDeclValue.m_pFirstToken.Stringify(sOut);
+											break;
+										}
 
-									default:
-									{
-										sOut.Append("???");
-										pValueType.StringifyType(sOut);
-										break;
-									}
+										default:
+										{
+											sOut.Append("???");
+											pValueType.StringifyType(sOut);
+											break;
+										}
 
+									}
+									sOut.Append(";\n");
 								}
-								sOut.Append(";\n");
-							}
-							else
-							{
-								Util.Pad(nDepth, sOut);
-								sOut.AppendString(pMemberVarDecl.m_pVarDecl.m_pNameToken.GetString());
-								sOut.Append(" = ");
-								switch (pValueType.m_eType)
+								else
 								{
-									case ValueType.Type.INT:
+									Util.Pad(nDepth, sOut);
+									sOut.AppendString(pMemberVarDecl.m_pVarDecl.m_pNameToken.GetString());
+									sOut.Append(" = ");
+									switch (pValueType.m_eType)
 									{
-										sOut.Append("0");
-										break;
-									}
+										case ValueType.Type.INT:
+										{
+											sOut.Append("0");
+											break;
+										}
 
-									case ValueType.Type.BOOL:
-									{
-										sOut.Append("false");
-										break;
-									}
+										case ValueType.Type.BOOL:
+										{
+											sOut.Append("false");
+											break;
+										}
 
-									case ValueType.Type.CHAR:
-									case ValueType.Type.UNICHAR:
-									{
-										sOut.Append("'0'");
-										break;
-									}
+										case ValueType.Type.CHAR:
+										case ValueType.Type.UNICHAR:
+										{
+											sOut.Append("'0'");
+											break;
+										}
 
-									case ValueType.Type.CLASS_DECL_VALUE:
-									case ValueType.Type.GENERIC_TYPE_DECL_VALUE:
-									case ValueType.Type.DELEGATE_DECL_VALUE:
-									case ValueType.Type.VOIDPTR:
-									case ValueType.Type.STRING:
-									{
-										sOut.Append("0");
-										break;
-									}
+										case ValueType.Type.CLASS_DECL_VALUE:
+										case ValueType.Type.GENERIC_TYPE_DECL_VALUE:
+										case ValueType.Type.DELEGATE_DECL_VALUE:
+										case ValueType.Type.VOIDPTR:
+										case ValueType.Type.STRING:
+										{
+											sOut.Append("0");
+											break;
+										}
 
-									case ValueType.Type.ENUM_DECL_VALUE:
-									{
-										if (pValueType.m_pEnumDecl == null)
-											sOut.Append("no_m_pEnumDecl");
-										EnumDeclValue pEnumDeclValue = pValueType.m_pEnumDecl.m_pEnumDeclValueVector.Get(0);
-										if (pValueType.m_pEnumDecl == null)
-											sOut.Append("no_pEnumDeclValue");
-										pMemberVarDecl.m_pVarDecl.m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
-										sOut.Append("::");
-										pEnumDeclValue.m_pFirstToken.Stringify(sOut);
-										break;
-									}
+										case ValueType.Type.ENUM_DECL_VALUE:
+										{
+											if (pValueType.m_pEnumDecl == null)
+												sOut.Append("no_m_pEnumDecl");
+											EnumDeclValue pEnumDeclValue = pValueType.m_pEnumDecl.m_pEnumDeclValueVector.Get(0);
+											if (pValueType.m_pEnumDecl == null)
+												sOut.Append("no_pEnumDeclValue");
+											pMemberVarDecl.m_pVarDecl.m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
+											sOut.Append("::");
+											pEnumDeclValue.m_pFirstToken.Stringify(sOut);
+											break;
+										}
 
-									default:
-									{
-										sOut.Append("???");
-										pValueType.StringifyType(sOut);
-										break;
-									}
+										default:
+										{
+											sOut.Append("???");
+											pValueType.StringifyType(sOut);
+											break;
+										}
 
+									}
+									sOut.Append(";\n");
 								}
-								sOut.Append(";\n");
 							}
 						}
 					}
