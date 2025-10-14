@@ -70,7 +70,8 @@ namespace NumbatLogic
 				if (bArrayAssignment)
 					bDoIt = true;
 
-				if (m_bStatic && !m_pVarDecl.m_pTypeRef.IsIntegral())
+				// is static but not a static const int
+				if (m_bStatic && !(m_pVarDecl.m_pTypeRef.m_bConst && m_pVarDecl.m_pTypeRef.IsIntegral()))
 					bDoIt = true;
 
 				if (!bDoIt)

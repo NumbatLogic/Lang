@@ -201,7 +201,7 @@ namespace NumbatLogic
 			}
 			sOut.AppendChar(' ');
 
-			// if cpp and source and member vard decl, we need to fully qualify the name
+			// if cpp and source and member var decl, we need to fully qualify the name
 			if (m_pParent != null && m_pParent.m_eType == AST::Type::AST_MEMBER_VAR_DECL && eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
 			{
 				AST pParentParent = m_pParent.m_pParent;
@@ -224,28 +224,37 @@ namespace NumbatLogic
 				sOut.AppendChar(']');
 			}
 
+			MemberVarDecl pMemberVarDecl = (m_pParent != null && m_pParent.m_eType == AST::Type::AST_MEMBER_VAR_DECL) ? cast MemberVarDecl(m_pParent) : null;
+			bool bStatic = pMemberVarDecl != null && pMemberVarDecl.m_bStatic;
+
 			if (m_pAssignment != null)
 			{
 				bool bArrayAssignment = m_pArraySize != null;
-				bool bStatic = m_pParent != null && m_pParent.m_eType == AST::Type::AST_MEMBER_VAR_DECL && (cast MemberVarDecl(m_pParent)).m_bStatic;
-
+				
 				bool bDoIt = true;// !((bArrayAssignment || (bStatic && !m_pTypeRef.IsIntegral())) && eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::HEADER);
 
 				if (eLanguage == AST::Language::CPP)
 				{
-					// array assignment only in source
-					if (bArrayAssignment && eOutputFile == AST::OutputFile::HEADER)
-						bDoIt = false;
-
-					// only integral assignments in header
-					if (bStatic && !m_pTypeRef.IsIntegral() && eOutputFile == AST::OutputFile::HEADER)
-						bDoIt = false;
-					if (bStatic && !bArrayAssignment && m_pTypeRef.IsIntegral() && eOutputFile == AST::OutputFile::SOURCE)
-						bDoIt = false;
-
-					// param default values only in header
-					if (m_pParent != null && m_pParent.m_eType == AST::Type::AST_PARAM_DECL && eOutputFile == AST::OutputFile::SOURCE)
-						bDoIt = false;
+					if (pMemberVarDecl != null)
+					{
+						if (eOutputFile == AST::OutputFile::HEADER)
+						{
+							// only integral static const assignments in header
+							if (!(bStatic && m_pTypeRef.m_bConst && m_pTypeRef.IsIntegral() && !bArrayAssignment))
+								bDoIt = false;
+						}
+						else // eOutputFile == AST::OutputFile::SOURCE
+						{
+							if (bStatic && m_pTypeRef.m_bConst && m_pTypeRef.IsIntegral() && !bArrayAssignment)
+								bDoIt = false;
+						}
+					}
+					else
+					{
+						// param default values only in header
+						if (m_pParent != null && m_pParent.m_eType == AST::Type::AST_PARAM_DECL && eOutputFile == AST::OutputFile::SOURCE)
+							bDoIt = false;
+					}
 				}
 
 				if (bDoIt)
@@ -258,10 +267,16 @@ namespace NumbatLogic
 			{
 				if (!m_bInline && eLanguage == AST::Language::CPP)
 				{
-					ValueType* pValueType = own m_pTypeRef.CreateValueType();
-					// todo: this could me more complete like MemberVarsSetDefaultStmt
-					if (pValueType != null && pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE && m_pArraySize == null && eOutputFile == AST::OutputFile::SOURCE)
-						sOut.AppendString(" = 0");
+					if (eOutputFile == AST::OutputFile::SOURCE)
+					{
+						ValueType* pValueType = own m_pTypeRef.CreateValueType();
+						// todo: this could me more complete like MemberVarsSetDefaultStmt
+						if (pValueType != null && pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE && m_pArraySize == null)
+							sOut.AppendString(" = 0");
+
+						if (bStatic && m_pTypeRef.IsIntegral())
+							sOut.AppendString(" = 0");
+					}
 				}
 
 				if (!m_bInline && eLanguage == AST::Language::CS && m_pArraySize != null)

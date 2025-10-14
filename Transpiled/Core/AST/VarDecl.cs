@@ -203,21 +203,32 @@ namespace NumbatLogic
 				m_pArraySize.Stringify(eLanguage, eOutputFile, 0, sOut);
 				sOut.AppendChar(']');
 			}
+			MemberVarDecl pMemberVarDecl = (m_pParent != null && m_pParent.m_eType == AST.Type.AST_MEMBER_VAR_DECL) ? (MemberVarDecl)(m_pParent) : null;
+			bool bStatic = pMemberVarDecl != null && pMemberVarDecl.m_bStatic;
 			if (m_pAssignment != null)
 			{
 				bool bArrayAssignment = m_pArraySize != null;
-				bool bStatic = m_pParent != null && m_pParent.m_eType == AST.Type.AST_MEMBER_VAR_DECL && ((MemberVarDecl)(m_pParent)).m_bStatic;
 				bool bDoIt = true;
 				if (eLanguage == AST.Language.CPP)
 				{
-					if (bArrayAssignment && eOutputFile == AST.OutputFile.HEADER)
-						bDoIt = false;
-					if (bStatic && !m_pTypeRef.IsIntegral() && eOutputFile == AST.OutputFile.HEADER)
-						bDoIt = false;
-					if (bStatic && !bArrayAssignment && m_pTypeRef.IsIntegral() && eOutputFile == AST.OutputFile.SOURCE)
-						bDoIt = false;
-					if (m_pParent != null && m_pParent.m_eType == AST.Type.AST_PARAM_DECL && eOutputFile == AST.OutputFile.SOURCE)
-						bDoIt = false;
+					if (pMemberVarDecl != null)
+					{
+						if (eOutputFile == AST.OutputFile.HEADER)
+						{
+							if (!(bStatic && m_pTypeRef.m_bConst && m_pTypeRef.IsIntegral() && !bArrayAssignment))
+								bDoIt = false;
+						}
+						else
+						{
+							if (bStatic && m_pTypeRef.m_bConst && m_pTypeRef.IsIntegral() && !bArrayAssignment)
+								bDoIt = false;
+						}
+					}
+					else
+					{
+						if (m_pParent != null && m_pParent.m_eType == AST.Type.AST_PARAM_DECL && eOutputFile == AST.OutputFile.SOURCE)
+							bDoIt = false;
+					}
 				}
 				if (bDoIt)
 				{
@@ -229,9 +240,14 @@ namespace NumbatLogic
 			{
 				if (!m_bInline && eLanguage == AST.Language.CPP)
 				{
-					ValueType pValueType = m_pTypeRef.CreateValueType();
-					if (pValueType != null && pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE && m_pArraySize == null && eOutputFile == AST.OutputFile.SOURCE)
-						sOut.AppendString(" = 0");
+					if (eOutputFile == AST.OutputFile.SOURCE)
+					{
+						ValueType pValueType = m_pTypeRef.CreateValueType();
+						if (pValueType != null && pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE && m_pArraySize == null)
+							sOut.AppendString(" = 0");
+						if (bStatic && m_pTypeRef.IsIntegral())
+							sOut.AppendString(" = 0");
+					}
 				}
 				if (!m_bInline && eLanguage == AST.Language.CS && m_pArraySize != null)
 				{
