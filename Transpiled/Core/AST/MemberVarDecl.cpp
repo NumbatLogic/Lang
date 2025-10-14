@@ -98,7 +98,7 @@ namespace NumbatLogic
 			bool bDoIt = false;
 			if (bArrayAssignment)
 				bDoIt = true;
-			if (m_bStatic && !m_pVarDecl->m_pTypeRef->IsIntegral())
+			if (m_bStatic && !(m_pVarDecl->m_pTypeRef->m_bConst && m_pVarDecl->m_pTypeRef->IsIntegral()))
 				bDoIt = true;
 			if (!bDoIt)
 				return;

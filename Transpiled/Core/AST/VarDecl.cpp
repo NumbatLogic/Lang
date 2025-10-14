@@ -267,21 +267,32 @@ namespace NumbatLogic
 			m_pArraySize->Stringify(eLanguage, eOutputFile, 0, sOut);
 			sOut->AppendChar(']');
 		}
+		MemberVarDecl* pMemberVarDecl = (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_MEMBER_VAR_DECL) ? (MemberVarDecl*)(m_pParent) : 0;
+		bool bStatic = pMemberVarDecl != 0 && pMemberVarDecl->m_bStatic;
 		if (m_pAssignment != 0)
 		{
 			bool bArrayAssignment = m_pArraySize != 0;
-			bool bStatic = m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_MEMBER_VAR_DECL && ((MemberVarDecl*)(m_pParent))->m_bStatic;
 			bool bDoIt = true;
 			if (eLanguage == AST::Language::CPP)
 			{
-				if (bArrayAssignment && eOutputFile == AST::OutputFile::HEADER)
-					bDoIt = false;
-				if (bStatic && !m_pTypeRef->IsIntegral() && eOutputFile == AST::OutputFile::HEADER)
-					bDoIt = false;
-				if (bStatic && !bArrayAssignment && m_pTypeRef->IsIntegral() && eOutputFile == AST::OutputFile::SOURCE)
-					bDoIt = false;
-				if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_PARAM_DECL && eOutputFile == AST::OutputFile::SOURCE)
-					bDoIt = false;
+				if (pMemberVarDecl != 0)
+				{
+					if (eOutputFile == AST::OutputFile::HEADER)
+					{
+						if (!(bStatic && m_pTypeRef->m_bConst && m_pTypeRef->IsIntegral() && !bArrayAssignment))
+							bDoIt = false;
+					}
+					else
+					{
+						if (bStatic && m_pTypeRef->m_bConst && m_pTypeRef->IsIntegral() && !bArrayAssignment)
+							bDoIt = false;
+					}
+				}
+				else
+				{
+					if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_PARAM_DECL && eOutputFile == AST::OutputFile::SOURCE)
+						bDoIt = false;
+				}
 			}
 			if (bDoIt)
 			{
@@ -293,10 +304,15 @@ namespace NumbatLogic
 		{
 			if (!m_bInline && eLanguage == AST::Language::CPP)
 			{
-				ValueType* pValueType = m_pTypeRef->CreateValueType();
-				if (pValueType != 0 && pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE && m_pArraySize == 0 && eOutputFile == AST::OutputFile::SOURCE)
-					sOut->AppendString(" = 0");
-				if (pValueType) delete pValueType;
+				if (eOutputFile == AST::OutputFile::SOURCE)
+				{
+					ValueType* pValueType = m_pTypeRef->CreateValueType();
+					if (pValueType != 0 && pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE && m_pArraySize == 0)
+						sOut->AppendString(" = 0");
+					if (bStatic && m_pTypeRef->IsIntegral())
+						sOut->AppendString(" = 0");
+					if (pValueType) delete pValueType;
+				}
 			}
 			if (!m_bInline && eLanguage == AST::Language::CS && m_pArraySize != 0)
 			{
