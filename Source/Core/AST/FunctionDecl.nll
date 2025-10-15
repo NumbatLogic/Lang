@@ -120,9 +120,6 @@ namespace NumbatLogic
 
 			bool bGeneric = pMemberFunctionDecl != null && pMemberFunctionDecl.m_pParentClassDecl.m_pGenericTypeDeclVector.GetSize() > 0;
 
-			if (bGeneric && eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
-				return;
-
 			if (pMemberFunctionDecl != null && eLanguage == AST::Language::CS && ExternalString::Equal("GetType", m_pNameToken.GetString()))
 			{
 				// override object.GetType in c#
