@@ -19,20 +19,38 @@ namespace NumbatLogic
 					VarDecl pVarDecl = m_pVarDeclVector.Get(i);
 					string sxName = pVarDecl.m_pNameToken.GetString();
 
-					Util::Pad(nDepth, sOut);
-
-					if (pVarDecl.m_pArraySize != null)
+					if (pVarDecl.m_pArraySizeVector != null)
 					{
-						sOut.Append("for (int _x = 0; _x < ");
-						pVarDecl.m_pArraySize.Stringify(eLanguage, eOutputFile, 0, sOut);
-						sOut.Append("; _x++) if (");
+						int nArraySizeSize = pVarDecl.m_pArraySizeVector.GetSize();
+						for (int i = 0; i < nArraySizeSize; i++)
+						{
+							AST pArraySize = pVarDecl.m_pArraySizeVector.Get(i);
+							Util::Pad(nDepth + i, sOut);
+							sOut.Append("for (int _x");
+							sOut.AppendInt(i);
+							sOut.Append(" = 0; _x");
+							sOut.AppendInt(i);
+							sOut.Append(" < ");
+							pArraySize.Stringify(eLanguage, eOutputFile, 0, sOut);
+							sOut.Append("; _x");
+							sOut.AppendInt(i);
+							sOut.Append("++)\n");
+						}
+
+						Util::Pad(nDepth + nArraySizeSize, sOut);
+						sOut.Append("delete ");
 						sOut.Append(sxName);
-						sOut.Append("[_x]) delete ");
-						sOut.Append(sxName);
-						sOut.Append("[_x];\n");
+						for (int i = 0; i < nArraySizeSize; i++)
+						{
+							sOut.Append("[_x");
+							sOut.AppendInt(i);
+							sOut.Append("]");
+						}
+						sOut.Append(";\n");
 					}
 					else
 					{
+						Util::Pad(nDepth, sOut);
 						sOut.Append("if (");
 						sOut.Append(sxName);
 						sOut.Append(") delete ");

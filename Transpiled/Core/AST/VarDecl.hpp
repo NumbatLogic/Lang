@@ -1,12 +1,15 @@
 #pragma once
 
 #include "AST.hpp"
+#include "../../../../LangShared/Vector/CPP/Vector.hpp"
 
 namespace NumbatLogic
 {
 	class TypeRef;
 	class Token;
 	class AST;
+	template <class T>
+	class Vector;
 	class VarDecl;
 	class TokenContainer;
 	class OffsetDatum;
@@ -22,7 +25,7 @@ namespace NumbatLogic
 		public: Token* m_pNameToken;
 		public: AST* m_pAssignment;
 		public: bool m_bInline;
-		public: AST* m_pArraySize;
+		public: Vector<AST*>* m_pArraySizeVector;
 		public: Token* m_pOwnedNameToken;
 		public: VarDecl();
 		public: static VarDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, bool bInline);

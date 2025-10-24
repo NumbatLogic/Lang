@@ -6,7 +6,7 @@ namespace NumbatLogic
 		public Token m_pNameToken;
 		public AST m_pAssignment;
 		public bool m_bInline;
-		public AST m_pArraySize;
+		public Vector<AST> m_pArraySizeVector;
 		public Token m_pOwnedNameToken;
 		public VarDecl()
 		{
@@ -30,8 +30,10 @@ namespace NumbatLogic
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			VarDecl pVarDecl = new VarDecl();
 			Token pSquareBracketLeftToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SQUARE_BRACKET_LEFT);
-			if (pSquareBracketLeftToken != null)
+			while (pSquareBracketLeftToken != null)
 			{
+				if (pVarDecl.m_pArraySizeVector == null)
+					pVarDecl.m_pArraySizeVector = new Vector<AST>();
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 				AST pArraySize = AST.TryCreateExpression(pTokenContainer, pTempOffset);
 				if (pArraySize == null)
@@ -50,10 +52,11 @@ namespace NumbatLogic
 					return null;
 				}
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-				pVarDecl.m_pArraySize = pArraySize;
-				NumbatLogic.AST __3043530774 = pArraySize;
+				pVarDecl.m_pArraySizeVector.PushBack(pArraySize);
+				NumbatLogic.AST __2791872840 = pArraySize;
 				pArraySize = null;
-				pVarDecl.AddChild(__3043530774);
+				pVarDecl.AddChild(__2791872840);
+				pSquareBracketLeftToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SQUARE_BRACKET_LEFT);
 			}
 			AST pAssignment = null;
 			Token pEqualsToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_EQUALS);
@@ -83,19 +86,19 @@ namespace NumbatLogic
 			pVarDecl.m_pNameToken = pNameToken;
 			pVarDecl.m_pAssignment = pAssignment;
 			pVarDecl.m_bInline = bInline;
-			NumbatLogic.TypeRef __4039701331 = pTypeRef;
+			NumbatLogic.TypeRef __1893385717 = pTypeRef;
 			pTypeRef = null;
-			pVarDecl.AddChild(__4039701331);
+			pVarDecl.AddChild(__1893385717);
 			if (pAssignment != null)
 			{
-				NumbatLogic.AST __3148560342 = pAssignment;
+				NumbatLogic.AST __242532869 = pAssignment;
 				pAssignment = null;
-				pVarDecl.AddChild(__3148560342);
+				pVarDecl.AddChild(__242532869);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.VarDecl __3184751856 = pVarDecl;
+			NumbatLogic.VarDecl __4040389889 = pVarDecl;
 			pVarDecl = null;
-			return __3184751856;
+			return __4040389889;
 		}
 
 		public override AST FindByName(string sxName, AST pCallingChild)
@@ -123,7 +126,7 @@ namespace NumbatLogic
 					pValidator.AddError("Unknown assignment?", m_pAssignment.m_pFirstToken.m_sFileName, m_pAssignment.m_pFirstToken.m_nLine, m_pAssignment.m_pFirstToken.m_nColumn);
 					return;
 				}
-				if (m_pArraySize != null && m_pAssignment.m_pValueType.m_eType != ValueType.Type.STATIC_ARRAY || m_pArraySize == null && m_pAssignment.m_pValueType.m_eType == ValueType.Type.STATIC_ARRAY)
+				if (m_pArraySizeVector != null && m_pAssignment.m_pValueType.m_eType != ValueType.Type.STATIC_ARRAY || m_pArraySizeVector == null && m_pAssignment.m_pValueType.m_eType == ValueType.Type.STATIC_ARRAY)
 				{
 					pValidator.AddError("Can only assign a static array to a vardecl with array size", m_pAssignment.m_pFirstToken.m_sFileName, m_pAssignment.m_pFirstToken.m_nLine, m_pAssignment.m_pFirstToken.m_nColumn);
 					return;
@@ -166,7 +169,7 @@ namespace NumbatLogic
 				else
 				{
 					bool bBefore = m_pTypeRef.m_bConst;
-					if (m_pArraySize != null && bBefore)
+					if (m_pArraySizeVector != null && bBefore)
 					{
 						m_pTypeRef.m_bConst = false;
 						sOut.Append("readonly ");
@@ -174,7 +177,7 @@ namespace NumbatLogic
 					m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
 					m_pTypeRef.m_bConst = bBefore;
 				}
-				if (m_pArraySize != null)
+				if (m_pArraySizeVector != null)
 				{
 					sOut.AppendChar('[');
 					sOut.AppendChar(']');
@@ -197,17 +200,21 @@ namespace NumbatLogic
 				sOut.AppendString("::");
 			}
 			sOut.AppendString(m_pNameToken.GetString());
-			if (m_pArraySize != null && eLanguage != AST.Language.CS)
+			if (m_pArraySizeVector != null && eLanguage != AST.Language.CS)
 			{
-				sOut.AppendChar('[');
-				m_pArraySize.Stringify(eLanguage, eOutputFile, 0, sOut);
-				sOut.AppendChar(']');
+				for (int i = 0; i < m_pArraySizeVector.GetSize(); i++)
+				{
+					AST pArraySize = m_pArraySizeVector.Get(i);
+					sOut.AppendChar('[');
+					pArraySize.Stringify(eLanguage, eOutputFile, 0, sOut);
+					sOut.AppendChar(']');
+				}
 			}
 			MemberVarDecl pMemberVarDecl = (m_pParent != null && m_pParent.m_eType == AST.Type.AST_MEMBER_VAR_DECL) ? (MemberVarDecl)(m_pParent) : null;
 			bool bStatic = pMemberVarDecl != null && pMemberVarDecl.m_bStatic;
 			if (m_pAssignment != null)
 			{
-				bool bArrayAssignment = m_pArraySize != null;
+				bool bArrayAssignment = m_pArraySizeVector != null;
 				bool bDoIt = true;
 				if (eLanguage == AST.Language.CPP)
 				{
@@ -243,19 +250,23 @@ namespace NumbatLogic
 					if (eOutputFile == AST.OutputFile.SOURCE)
 					{
 						ValueType pValueType = m_pTypeRef.CreateValueType();
-						if (pValueType != null && pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE && m_pArraySize == null)
+						if (pValueType != null && pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE && m_pArraySizeVector == null)
 							sOut.AppendString(" = 0");
 						if (bStatic && m_pTypeRef.IsIntegral())
 							sOut.AppendString(" = 0");
 					}
 				}
-				if (!m_bInline && eLanguage == AST.Language.CS && m_pArraySize != null)
+				if (!m_bInline && eLanguage == AST.Language.CS && m_pArraySizeVector != null)
 				{
 					sOut.AppendString(" = new ");
 					m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
-					sOut.AppendChar('[');
-					m_pArraySize.Stringify(eLanguage, eOutputFile, 0, sOut);
-					sOut.AppendChar(']');
+					for (int i = 0; i < m_pArraySizeVector.GetSize(); i++)
+					{
+						AST pArraySize = m_pArraySizeVector.Get(i);
+						sOut.AppendChar('[');
+						pArraySize.Stringify(eLanguage, eOutputFile, 0, sOut);
+						sOut.AppendChar(']');
+					}
 				}
 			}
 			if (!m_bInline)

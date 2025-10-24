@@ -4,6 +4,7 @@
 #include "TypeRef.hpp"
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
+#include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
@@ -22,6 +23,8 @@ namespace NumbatLogic
 	class Token;
 	class TokenContainer;
 	class VarDecl;
+	template <class T>
+	class Vector;
 	class Console;
 	class Assert;
 	class ExternalString;
@@ -40,7 +43,7 @@ namespace NumbatLogic
 		m_pNameToken = 0;
 		m_pAssignment = 0;
 		m_bInline = false;
-		m_pArraySize = 0;
+		m_pArraySizeVector = 0;
 		m_pOwnedNameToken = 0;
 		m_bInline = false;
 		m_eType = AST::Type::AST_VAR_DECL;
@@ -66,8 +69,10 @@ namespace NumbatLogic
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		VarDecl* pVarDecl = new VarDecl();
 		Token* pSquareBracketLeftToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_LEFT);
-		if (pSquareBracketLeftToken != 0)
+		while (pSquareBracketLeftToken != 0)
 		{
+			if (pVarDecl->m_pArraySizeVector == 0)
+				pVarDecl->m_pArraySizeVector = new Vector<AST*>();
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 			AST* pArraySize = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 			if (pArraySize == 0)
@@ -94,10 +99,11 @@ namespace NumbatLogic
 				return 0;
 			}
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-			pVarDecl->m_pArraySize = pArraySize;
-			NumbatLogic::AST* __3043530774 = pArraySize;
+			pVarDecl->m_pArraySizeVector->PushBack(pArraySize);
+			NumbatLogic::AST* __2791872840 = pArraySize;
 			pArraySize = 0;
-			pVarDecl->AddChild(__3043530774);
+			pVarDecl->AddChild(__2791872840);
+			pSquareBracketLeftToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_LEFT);
 			if (pArraySize) delete pArraySize;
 		}
 		AST* pAssignment = 0;
@@ -136,22 +142,22 @@ namespace NumbatLogic
 		pVarDecl->m_pNameToken = pNameToken;
 		pVarDecl->m_pAssignment = pAssignment;
 		pVarDecl->m_bInline = bInline;
-		NumbatLogic::TypeRef* __4039701331 = pTypeRef;
+		NumbatLogic::TypeRef* __1893385717 = pTypeRef;
 		pTypeRef = 0;
-		pVarDecl->AddChild(__4039701331);
+		pVarDecl->AddChild(__1893385717);
 		if (pAssignment != 0)
 		{
-			NumbatLogic::AST* __3148560342 = pAssignment;
+			NumbatLogic::AST* __242532869 = pAssignment;
 			pAssignment = 0;
-			pVarDecl->AddChild(__3148560342);
+			pVarDecl->AddChild(__242532869);
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::VarDecl* __3184751856 = pVarDecl;
+		NumbatLogic::VarDecl* __4040389889 = pVarDecl;
 		pVarDecl = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pTypeRef) delete pTypeRef;
 		if (pAssignment) delete pAssignment;
-		return __3184751856;
+		return __4040389889;
 	}
 
 	AST* VarDecl::FindByName(const char* sxName, AST* pCallingChild)
@@ -181,7 +187,7 @@ namespace NumbatLogic
 				if (pValueType) delete pValueType;
 				return;
 			}
-			if (m_pArraySize != 0 && m_pAssignment->m_pValueType->m_eType != ValueType::Type::STATIC_ARRAY || m_pArraySize == 0 && m_pAssignment->m_pValueType->m_eType == ValueType::Type::STATIC_ARRAY)
+			if (m_pArraySizeVector != 0 && m_pAssignment->m_pValueType->m_eType != ValueType::Type::STATIC_ARRAY || m_pArraySizeVector == 0 && m_pAssignment->m_pValueType->m_eType == ValueType::Type::STATIC_ARRAY)
 			{
 				pValidator->AddError("Can only assign a static array to a vardecl with array size", m_pAssignment->m_pFirstToken->m_sFileName, m_pAssignment->m_pFirstToken->m_nLine, m_pAssignment->m_pFirstToken->m_nColumn);
 				if (pValueType) delete pValueType;
@@ -230,7 +236,7 @@ namespace NumbatLogic
 			else
 			{
 				bool bBefore = m_pTypeRef->m_bConst;
-				if (m_pArraySize != 0 && bBefore)
+				if (m_pArraySizeVector != 0 && bBefore)
 				{
 					m_pTypeRef->m_bConst = false;
 					sOut->Append("readonly ");
@@ -238,7 +244,7 @@ namespace NumbatLogic
 				m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
 				m_pTypeRef->m_bConst = bBefore;
 			}
-			if (m_pArraySize != 0)
+			if (m_pArraySizeVector != 0)
 			{
 				sOut->AppendChar('[');
 				sOut->AppendChar(']');
@@ -261,17 +267,21 @@ namespace NumbatLogic
 			sOut->AppendString("::");
 		}
 		sOut->AppendString(m_pNameToken->GetString());
-		if (m_pArraySize != 0 && eLanguage != AST::Language::CS)
+		if (m_pArraySizeVector != 0 && eLanguage != AST::Language::CS)
 		{
-			sOut->AppendChar('[');
-			m_pArraySize->Stringify(eLanguage, eOutputFile, 0, sOut);
-			sOut->AppendChar(']');
+			for (int i = 0; i < m_pArraySizeVector->GetSize(); i++)
+			{
+				AST* pArraySize = m_pArraySizeVector->Get(i);
+				sOut->AppendChar('[');
+				pArraySize->Stringify(eLanguage, eOutputFile, 0, sOut);
+				sOut->AppendChar(']');
+			}
 		}
 		MemberVarDecl* pMemberVarDecl = (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_MEMBER_VAR_DECL) ? (MemberVarDecl*)(m_pParent) : 0;
 		bool bStatic = pMemberVarDecl != 0 && pMemberVarDecl->m_bStatic;
 		if (m_pAssignment != 0)
 		{
-			bool bArrayAssignment = m_pArraySize != 0;
+			bool bArrayAssignment = m_pArraySizeVector != 0;
 			bool bDoIt = true;
 			if (eLanguage == AST::Language::CPP)
 			{
@@ -307,20 +317,24 @@ namespace NumbatLogic
 				if (eOutputFile == AST::OutputFile::SOURCE)
 				{
 					ValueType* pValueType = m_pTypeRef->CreateValueType();
-					if (pValueType != 0 && pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE && m_pArraySize == 0)
+					if (pValueType != 0 && pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE && m_pArraySizeVector == 0)
 						sOut->AppendString(" = 0");
 					if (bStatic && m_pTypeRef->IsIntegral())
 						sOut->AppendString(" = 0");
 					if (pValueType) delete pValueType;
 				}
 			}
-			if (!m_bInline && eLanguage == AST::Language::CS && m_pArraySize != 0)
+			if (!m_bInline && eLanguage == AST::Language::CS && m_pArraySizeVector != 0)
 			{
 				sOut->AppendString(" = new ");
 				m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
-				sOut->AppendChar('[');
-				m_pArraySize->Stringify(eLanguage, eOutputFile, 0, sOut);
-				sOut->AppendChar(']');
+				for (int i = 0; i < m_pArraySizeVector->GetSize(); i++)
+				{
+					AST* pArraySize = m_pArraySizeVector->Get(i);
+					sOut->AppendChar('[');
+					pArraySize->Stringify(eLanguage, eOutputFile, 0, sOut);
+					sOut->AppendChar(']');
+				}
 			}
 		}
 		if (!m_bInline)
@@ -329,6 +343,7 @@ namespace NumbatLogic
 
 	VarDecl::~VarDecl()
 	{
+		if (m_pArraySizeVector) delete m_pArraySizeVector;
 		if (m_pOwnedNameToken) delete m_pOwnedNameToken;
 	}
 
