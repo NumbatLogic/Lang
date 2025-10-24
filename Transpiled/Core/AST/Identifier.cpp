@@ -150,7 +150,19 @@ namespace NumbatLogic
 				if (pCheckParent->m_eType == AST::Type::AST_VAR_DECL)
 				{
 					VarDecl* pVarDecl = (VarDecl*)(pCheckParent);
-					if (pCurrent == pVarDecl->m_pArraySize && pVarDecl->m_pParent != 0 && pVarDecl->m_pParent->m_eType == AST::Type::AST_MEMBER_VAR_DECL)
+					bool bInArraySize = false;
+					if (pVarDecl->m_pArraySizeVector != 0)
+					{
+						for (int j = 0; j < pVarDecl->m_pArraySizeVector->GetSize(); j++)
+						{
+							if (pCurrent == pVarDecl->m_pArraySizeVector->Get(j))
+							{
+								bInArraySize = true;
+								break;
+							}
+						}
+					}
+					if (bInArraySize && pVarDecl->m_pParent != 0 && pVarDecl->m_pParent->m_eType == AST::Type::AST_MEMBER_VAR_DECL)
 						AddClassDeclReference(m_pValueType->m_pClassDecl, AST::OutputFile::HEADER, false);
 					if (pCurrent == pVarDecl->m_pAssignment && pVarDecl->m_pParent != 0 && pVarDecl->m_pParent->m_eType == AST::Type::AST_MEMBER_VAR_DECL)
 					{
@@ -200,9 +212,9 @@ namespace NumbatLogic
 								if (pGenericValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
 								{
 									ValueType* pOldValueType = 0;
-									NumbatLogic::ValueType* __1479815806 = m_pValueType;
+									NumbatLogic::ValueType* __1107643100 = m_pValueType;
 									m_pValueType = 0;
-									pOldValueType = __1479815806;
+									pOldValueType = __1107643100;
 									m_pValueType = pGenericValueType->Clone();
 									m_pValueType->m_ePointerType = pOldValueType->m_ePointerType;
 									if (pOldValueType) delete pOldValueType;

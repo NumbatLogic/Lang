@@ -59,7 +59,7 @@ namespace NumbatLogic
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
 		{
-			bool bArrayAssignment = m_pVarDecl.m_pArraySize != null && m_pVarDecl.m_pAssignment != null;
+			bool bArrayAssignment = m_pVarDecl.m_pArraySizeVector != null && m_pVarDecl.m_pAssignment != null;
 			if (eLanguage == AST.Language.CPP && eOutputFile == AST.OutputFile.SOURCE)
 			{
 				bool bDoIt = false;
@@ -81,7 +81,7 @@ namespace NumbatLogic
 				{
 					if (eLanguage == AST.Language.CS)
 					{
-						if (m_pVarDecl.m_pTypeRef.m_bConst == false || m_pVarDecl.m_pArraySize != null)
+						if (m_pVarDecl.m_pTypeRef.m_bConst == false || m_pVarDecl.m_pArraySizeVector != null)
 							sOut.AppendString("static ");
 					}
 					else

@@ -112,8 +112,21 @@ namespace NumbatLogic
 					{
 						VarDecl pVarDecl = cast VarDecl(pCheckParent);
 
+						bool bInArraySize = false;
+						if (pVarDecl.m_pArraySizeVector != null)
+						{
+							for (int j = 0; j < pVarDecl.m_pArraySizeVector.GetSize(); j++)
+							{
+								if (pCurrent == pVarDecl.m_pArraySizeVector.Get(j))
+								{
+									bInArraySize = true;
+									break;
+								}
+							}
+						}
+
 						// if we are inside a member var array size
-						if (pCurrent == pVarDecl.m_pArraySize && pVarDecl.m_pParent != null && pVarDecl.m_pParent.m_eType == AST::Type::AST_MEMBER_VAR_DECL)
+						if (bInArraySize && pVarDecl.m_pParent != null && pVarDecl.m_pParent.m_eType == AST::Type::AST_MEMBER_VAR_DECL)
 							AddClassDeclReference(m_pValueType.m_pClassDecl, AST::OutputFile::HEADER, false);
 
 						// if we are being assigned to a static const member var

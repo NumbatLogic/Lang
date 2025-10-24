@@ -6,11 +6,11 @@
 #include "MemberVarDecl.hpp"
 #include "VarDecl.hpp"
 #include "TypeRef.hpp"
+#include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "../Util.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../ValueType.hpp"
 #include "EnumDecl.hpp"
-#include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "EnumDeclValue.hpp"
 
 namespace NumbatLogic
@@ -24,12 +24,12 @@ namespace NumbatLogic
 	class ValueType;
 	class VarDecl;
 	class TypeRef;
+	template <class T>
+	class Vector;
 	class Util;
 	class InternalString;
 	class EnumDeclValue;
 	class EnumDecl;
-	template <class T>
-	class Vector;
 }
 namespace NumbatLogic
 {
@@ -81,14 +81,32 @@ namespace NumbatLogic
 						ValueType* pValueType = pMemberVarDecl->m_pVarDecl->m_pTypeRef->GetRecursiveValueType();
 						if (!pMemberVarDecl->m_pVarDecl->m_pTypeRef->m_bConst)
 						{
-							if (pMemberVarDecl->m_pVarDecl->m_pArraySize != 0)
+							if (pMemberVarDecl->m_pVarDecl->m_pArraySizeVector != 0)
 							{
-								Util::Pad(nDepth, sOut);
-								sOut->Append("for (int _x = 0; _x < ");
-								pMemberVarDecl->m_pVarDecl->m_pArraySize->Stringify(eLanguage, eOutputFile, 0, sOut);
-								sOut->Append("; _x++) ");
+								int nArraySizeSize = pMemberVarDecl->m_pVarDecl->m_pArraySizeVector->GetSize();
+								for (int i = 0; i < nArraySizeSize; i++)
+								{
+									AST* pArraySize = pMemberVarDecl->m_pVarDecl->m_pArraySizeVector->Get(i);
+									Util::Pad(nDepth + i, sOut);
+									sOut->Append("for (int _x");
+									sOut->AppendInt(i);
+									sOut->Append(" = 0; _x");
+									sOut->AppendInt(i);
+									sOut->Append(" < ");
+									pArraySize->Stringify(eLanguage, eOutputFile, 0, sOut);
+									sOut->Append("; _x");
+									sOut->AppendInt(i);
+									sOut->Append("++)\n");
+								}
+								Util::Pad(nDepth + nArraySizeSize, sOut);
 								sOut->AppendString(pMemberVarDecl->m_pVarDecl->m_pNameToken->GetString());
-								sOut->Append("[_x] = ");
+								for (int i = 0; i < nArraySizeSize; i++)
+								{
+									sOut->Append("[_x");
+									sOut->AppendInt(i);
+									sOut->Append("]");
+								}
+								sOut->Append(" = ");
 								switch (pValueType->m_eType)
 								{
 									case ValueType::Type::INT:
