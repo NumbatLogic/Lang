@@ -1,13 +1,16 @@
 namespace NumbatLogic
 {
+	// kinda wrong since it's identifier[] not expression[]
+	// should be somehow part of left/right expression without an operator...
 	class ArrayLookup : AST
 	{
 		public AST m_pExpression;
-		public AST m_pIndexExpression;
+		public Vector<AST>* m_pIndexExpressionVector;
 
 		public construct()
 		{
 			m_eType = AST::Type::AST_ARRAY_LOOKUP;
+			m_pIndexExpressionVector = own new Vector<AST>();
 		}
 
 		public static ArrayLookup** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
@@ -21,34 +24,38 @@ namespace NumbatLogic
 
 			if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_LEFT) == null)
 				return null;
-			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
-
-			AST* pIndexExpression = own AST::TryCreateExpression(pTokenContainer, pTempOffset);
-			if (pIndexExpression == null)
-			{
-				Console::Log("expected index expression");
-				Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
-				return null;
-			}
-
-			if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_RIGHT) == null)
-			{
-				Console::Log("expected right bracket");
-				Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
-				return null;
-			}
-			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 
 			ArrayLookup* pArrayLookup = own new ArrayLookup();
 			pArrayLookup.m_pFirstToken = pExpression.m_pFirstToken;
 			pArrayLookup.m_pExpression = pExpression;
-			pArrayLookup.m_pIndexExpression = pIndexExpression;
-
 			pArrayLookup.AddChild(disown pExpression);
-			pArrayLookup.AddChild(disown pIndexExpression);
+			
+			while (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_LEFT) != null)
+			{
+				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 
+				AST* pIndexExpression = own AST::TryCreateExpression(pTokenContainer, pTempOffset);
+				if (pIndexExpression == null)
+				{
+					Console::Log("expected index expression");
+					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+					NumbatLogic::Assert::Plz(false);
+					return null;
+				}
+
+				if (pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_RIGHT) == null)
+				{
+					Console::Log("expected right bracket");
+					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
+					NumbatLogic::Assert::Plz(false);
+					return null;
+				}
+				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
+				pArrayLookup.m_pIndexExpressionVector.PushBack(pIndexExpression);
+				pArrayLookup.AddChild(disown pIndexExpression);
+			}
+			
 			pOffsetDatum.Set(pTempOffset);
 			return disown pArrayLookup;
 		}
@@ -58,12 +65,15 @@ namespace NumbatLogic
 			ArrayLookup* pArrayLookup = own new ArrayLookup();
 
 			AST* pExpression = own m_pExpression.BaseClone();
-			AST* pIndexExpression = own m_pIndexExpression.BaseClone();
 			pArrayLookup.m_pExpression = pExpression;
-			pArrayLookup.m_pIndexExpression = pIndexExpression;
-
 			pArrayLookup.AddChild(disown pExpression);
-			pArrayLookup.AddChild(disown pIndexExpression);
+
+			for (int i = 0; i < m_pIndexExpressionVector.GetSize(); i++)
+			{
+				AST* pIndexExpression = own m_pIndexExpressionVector.Get(i).BaseClone();
+				pArrayLookup.m_pIndexExpressionVector.PushBack(pIndexExpression);
+				pArrayLookup.AddChild(disown pIndexExpression);
+			}
 
 			// clone logic here
 			return disown pArrayLookup;
@@ -83,9 +93,12 @@ namespace NumbatLogic
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
 		{
 			m_pExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
-			sOut.AppendChar('[');
-			m_pIndexExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
-			sOut.AppendChar(']');
+			for (int i = 0; i < m_pIndexExpressionVector.GetSize(); i++)
+			{
+				sOut.AppendChar('[');
+				m_pIndexExpressionVector.Get(0).Stringify(eLanguage, eOutputFile, 0, sOut);
+				sOut.AppendChar(']');
+			}
 		}
 	}
 }
