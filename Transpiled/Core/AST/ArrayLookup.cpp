@@ -140,7 +140,7 @@ namespace NumbatLogic
 		for (int i = 0; i < m_pIndexExpressionVector->GetSize(); i++)
 		{
 			sOut->AppendChar('[');
-			m_pIndexExpressionVector->Get(0)->Stringify(eLanguage, eOutputFile, 0, sOut);
+			m_pIndexExpressionVector->Get(i)->Stringify(eLanguage, eOutputFile, 0, sOut);
 			sOut->AppendChar(']');
 		}
 	}
