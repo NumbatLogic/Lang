@@ -83,6 +83,8 @@ namespace NumbatLogic
 			pTypeRef.m_pChildTypeRef = null;
 			pTypeRef.m_ePointerType = PointerType::SHARED;
 
+			pTypeRef.m_bRef = bRef;
+
 			if (pTypeToken.m_eType == Token::Type::TOKEN_IDENTIFIER)
 			{
 				Token pAngleBracketLeft = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_ANGLE_BRACKET_LEFT);
