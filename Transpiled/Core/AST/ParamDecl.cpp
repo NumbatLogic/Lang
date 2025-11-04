@@ -214,7 +214,7 @@ namespace NumbatLogic
 			}
 			if (pVarDecl->m_pTypeRef->m_bRef)
 			{
-				if (pCallChild->m_eType != AST_IDENTIFIER)
+				if (pCallChild->m_eType != AST::Type::AST_IDENTIFIER)
 				{
 					pValidator->AddError("Must pass an identifier to a ref parameter", pCallChild->m_pFirstToken->m_sFileName, pCallChild->m_pFirstToken->m_nLine, pCallChild->m_pFirstToken->m_nColumn);
 					if (pValueType) delete pValueType;

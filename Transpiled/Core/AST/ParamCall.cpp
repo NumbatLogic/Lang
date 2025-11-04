@@ -6,10 +6,6 @@
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "AST.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
-#include "ParamDecl.hpp"
-#include "../../../../LangShared/Vector/CPP/Vector.hpp"
-#include "VarDecl.hpp"
-#include "TypeRef.hpp"
 
 namespace NumbatLogic
 {
@@ -21,11 +17,6 @@ namespace NumbatLogic
 	class Assert;
 	class ParamCall;
 	class InternalString;
-	class VarDecl;
-	class ParamDecl;
-	template <class T>
-	class Vector;
-	class TypeRef;
 }
 namespace NumbatLogic
 {
@@ -59,9 +50,9 @@ namespace NumbatLogic
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 				NumbatLogic::Assert::Plz(false);
 			}
-			NumbatLogic::AST* __1782193718 = pParam;
+			NumbatLogic::AST* __876224153 = pParam;
 			pParam = 0;
-			pParamCall->AddChild(__1782193718);
+			pParamCall->AddChild(__876224153);
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT) != 0)
 			{
 				if (pParam) delete pParam;
@@ -77,35 +68,24 @@ namespace NumbatLogic
 			if (pParam) delete pParam;
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::ParamCall* __2252655830 = pParamCall;
+		NumbatLogic::ParamCall* __474271540 = pParamCall;
 		pParamCall = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __2252655830;
+		return __474271540;
 	}
 
 	void ParamCall::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
 	{
 		sOut->AppendChar('(');
 		AST* pParam = m_pFirstChild;
-		int index = 0;
 		while (pParam != 0)
 		{
-			VarDecl* pDeclParam = m_pFoundParamDecl != 0 ? m_pFoundParamDecl->m_pParamVector->Get(index) : 0;
 			if (pParam != m_pFirstChild)
 				sOut->Append(", ");
-			if (eLanguage == AST::Language::CS && pDeclParam != 0 && pDeclParam->m_pTypeRef->m_bRef)
-			{
-			}
 			pParam->Stringify(eLanguage, eOutputFile, 0, sOut);
 			pParam = pParam->m_pNextSibling;
-			index++;
 		}
 		sOut->AppendChar(')');
-	}
-
-	ParamCall::ParamCall()
-	{
-		m_pFoundParamDecl = 0;
 	}
 
 }
