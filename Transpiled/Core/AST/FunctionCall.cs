@@ -158,7 +158,6 @@ namespace NumbatLogic
 				pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 			}
 			base.Validate(pValidator, pParent);
-			m_pParamCall.m_pFoundParamDecl = pFunctionDecl.m_pParamDecl;
 			if (m_pParamCall.m_pFirstChild == null)
 			{
 				if (pFunctionDecl.m_pParamDecl.m_pFirstChild != null)

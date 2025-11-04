@@ -218,7 +218,6 @@ namespace NumbatLogic
 			if (sTemp) delete sTemp;
 		}
 		AST::Validate(pValidator, pParent);
-		m_pParamCall->m_pFoundParamDecl = pFunctionDecl->m_pParamDecl;
 		if (m_pParamCall->m_pFirstChild == 0)
 		{
 			if (pFunctionDecl->m_pParamDecl->m_pFirstChild != 0)
