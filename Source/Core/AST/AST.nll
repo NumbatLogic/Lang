@@ -39,10 +39,11 @@ namespace NumbatLogic
 			AST_SWITCH_STMT,
 			AST_TOR_DECL,
 			AST_TRANSLATION_UNIT,
+			AST_TTHASH_EXP,
 			AST_TYPE_REF,
 			AST_UNARY,
-			AST_VAR_DECL,
 			AST_VAR_DECL_DESCOPE,
+			AST_VAR_DECL,
 			AST_WHILE_STMT,
 			BASE_EXPR,
 			DELEGATE_DECL,
@@ -219,6 +220,10 @@ namespace NumbatLogic
 				return disown pAst;
 
 			pAst = own CastExpr::TryCreate(pTokenContainer,pOffsetDatum);
+			if (pAst!=null)
+				return disown pAst;
+
+			pAst = own TTHashExpr::TryCreate(pTokenContainer,pOffsetDatum);
 			if (pAst!=null)
 				return disown pAst;
 
@@ -598,6 +603,7 @@ namespace NumbatLogic
 				case Type::AST_SWITCH_STMT: { sOut.Append("AST_SWITCH_STMT"); return; }
 				case Type::AST_TOR_DECL: { sOut.Append("AST_TOR_DECL"); return; }
 				case Type::AST_TRANSLATION_UNIT: { sOut.Append("AST_TRANSLATION_UNIT"); return; }
+				case Type::AST_TTHASH_EXP: { sOut.Append("AST_TTHASH_EXP"); return; }
 				case Type::AST_TYPE_REF: { sOut.Append("AST_TYPE_REF"); return; }
 				case Type::AST_UNARY: { sOut.Append("AST_UNARY"); return; }
 				case Type::AST_VAR_DECL: { sOut.Append("AST_VAR_DECL"); return; }

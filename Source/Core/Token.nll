@@ -4,17 +4,17 @@ namespace NumbatLogic
 	{
 		public enum Type {
 			TOKEN_AND,
-			TOKEN_ANGLE_BRACKET_LEFT,
 			TOKEN_ANGLE_BRACKET_LEFT_EQUALS,
-			TOKEN_ANGLE_BRACKET_RIGHT,
+			TOKEN_ANGLE_BRACKET_LEFT,
 			TOKEN_ANGLE_BRACKET_RIGHT_EQUALS,
+			TOKEN_ANGLE_BRACKET_RIGHT,
 			TOKEN_BANG,
 			TOKEN_BITWISE_AND,
 			TOKEN_BITWISE_OR,
 			TOKEN_CARET,
 			TOKEN_CARRIGE_RETURN,
-			TOKEN_CHAR,
 			TOKEN_CHAR_UNTERMINATED,
+			TOKEN_CHAR,
 			TOKEN_COLON,
 			TOKEN_COMMA,
 			TOKEN_CURLY_BRACE_LEFT,
@@ -59,13 +59,14 @@ namespace NumbatLogic
 			TOKEN_KEYWORD_OWN,
 			TOKEN_KEYWORD_PRIVATE,
 			TOKEN_KEYWORD_PUBLIC,
-			TOKEN_KEYWORD_RETURN,
 			TOKEN_KEYWORD_REF,
+			TOKEN_KEYWORD_RETURN,
 			TOKEN_KEYWORD_STATIC,
 			TOKEN_KEYWORD_STRING,
 			TOKEN_KEYWORD_SWITCH,
 			TOKEN_KEYWORD_THIS,
 			TOKEN_KEYWORD_TRUE,
+			TOKEN_KEYWORD_TTHASH,
 			TOKEN_KEYWORD_UINT,
 			TOKEN_KEYWORD_UINT16,
 			TOKEN_KEYWORD_UINT32,
@@ -77,9 +78,9 @@ namespace NumbatLogic
 			TOKEN_KEYWORD_VOID,
 			TOKEN_KEYWORD_VOIDPTR,
 			TOKEN_KEYWORD_WHILE,
-			TOKEN_MINUS,
 			TOKEN_MINUS_EQUALS,
 			TOKEN_MINUS_MINUS,
+			TOKEN_MINUS,
 			TOKEN_MODULUS,
 			TOKEN_NEW_LINE,
 			TOKEN_NOT_EQUALS,
@@ -87,18 +88,18 @@ namespace NumbatLogic
 			TOKEN_OR,
 			TOKEN_PARENTHESIS_LEFT,
 			TOKEN_PARENTHESIS_RIGHT,
-			TOKEN_PLUS,
 			TOKEN_PLUS_EQUALS,
 			TOKEN_PLUS_PLUS,
+			TOKEN_PLUS,
 			TOKEN_QUESTION_MARK,
 			TOKEN_SEMICOLON,
 			TOKEN_SPACE,
 			TOKEN_SQUARE_BRACKET_LEFT,
 			TOKEN_SQUARE_BRACKET_RIGHT,
-			TOKEN_STAR,
 			TOKEN_STAR_DOUBLE,
-			TOKEN_STRING,
+			TOKEN_STAR,
 			TOKEN_STRING_UNTERMINATED,
+			TOKEN_STRING,
 			TOKEN_TAB,
 			TOKEN_TILDE,
 		}
@@ -119,10 +120,10 @@ namespace NumbatLogic
 			switch (m_eType)
 			{
 				case Type::TOKEN_AND: return "&&";
-				case Type::TOKEN_ANGLE_BRACKET_LEFT: return "<";
 				case Type::TOKEN_ANGLE_BRACKET_LEFT_EQUALS: return "<=";
-				case Type::TOKEN_ANGLE_BRACKET_RIGHT: return ">";
+				case Type::TOKEN_ANGLE_BRACKET_LEFT: return "<";
 				case Type::TOKEN_ANGLE_BRACKET_RIGHT_EQUALS: return ">=";
+				case Type::TOKEN_ANGLE_BRACKET_RIGHT: return ">";
 				case Type::TOKEN_BANG: return "!";
 				case Type::TOKEN_BITWISE_AND: return "&";
 				case Type::TOKEN_BITWISE_OR: return "|";
@@ -156,10 +157,10 @@ namespace NumbatLogic
 				case Type::TOKEN_KEYWORD_FLOAT: return "float";
 				case Type::TOKEN_KEYWORD_FOR: return "for";
 				case Type::TOKEN_KEYWORD_IF: return "if";
+				case Type::TOKEN_KEYWORD_INT: return "int";
 				case Type::TOKEN_KEYWORD_INT16: return "Int16";
 				case Type::TOKEN_KEYWORD_INT32: return "Int32";
 				case Type::TOKEN_KEYWORD_INT8: return "Int8";
-				case Type::TOKEN_KEYWORD_INT: return "int";
 				case Type::TOKEN_KEYWORD_NAMESPACE: return "namespace";
 				case Type::TOKEN_KEYWORD_NEW: return "new";
 				case Type::TOKEN_KEYWORD_NULL: return "null";
@@ -167,35 +168,36 @@ namespace NumbatLogic
 				case Type::TOKEN_KEYWORD_OWN: return "own";
 				case Type::TOKEN_KEYWORD_PRIVATE: return "private";
 				case Type::TOKEN_KEYWORD_PUBLIC: return "public";
-				case Type::TOKEN_KEYWORD_RETURN: return "return";
 				case Type::TOKEN_KEYWORD_REF: return "ref";
+				case Type::TOKEN_KEYWORD_RETURN: return "return";
 				case Type::TOKEN_KEYWORD_STRING: return "string";
 				case Type::TOKEN_KEYWORD_SWITCH: return "switch";
 				case Type::TOKEN_KEYWORD_THIS: return "this";
 				case Type::TOKEN_KEYWORD_TRUE: return "true";
+				case Type::TOKEN_KEYWORD_TTHASH: return "tthash";
+				case Type::TOKEN_KEYWORD_UINT: return "uint";
 				case Type::TOKEN_KEYWORD_UINT16: return "Uint16";
 				case Type::TOKEN_KEYWORD_UINT32: return "Uint32";
 				case Type::TOKEN_KEYWORD_UINT64: return "Uint64";
 				case Type::TOKEN_KEYWORD_UINT8: return "Uint8";
-				case Type::TOKEN_KEYWORD_UINT: return "uint";
 				case Type::TOKEN_KEYWORD_UNICHAR: return "UniChar";
 				case Type::TOKEN_KEYWORD_USING: return "using";
 				case Type::TOKEN_KEYWORD_VIRTUAL: return "virtual";
 				case Type::TOKEN_KEYWORD_VOID: return "void";
 				case Type::TOKEN_KEYWORD_VOIDPTR: return "voidptr";
 				case Type::TOKEN_KEYWORD_WHILE: return "while";
-				case Type::TOKEN_MINUS: return "-";
 				case Type::TOKEN_MINUS_EQUALS: return "-=";
 				case Type::TOKEN_MINUS_MINUS: return "--";
+				case Type::TOKEN_MINUS: return "-";
 				case Type::TOKEN_MODULUS: return "%";
 				case Type::TOKEN_NEW_LINE: return "\n";
 				case Type::TOKEN_NOT_EQUALS: return "!=";
 				case Type::TOKEN_OR: return "||";
 				case Type::TOKEN_PARENTHESIS_LEFT: return "(";
 				case Type::TOKEN_PARENTHESIS_RIGHT: return ")";
-				case Type::TOKEN_PLUS: return "+";
 				case Type::TOKEN_PLUS_EQUALS: return "+=";
 				case Type::TOKEN_PLUS_PLUS: return "++";
+				case Type::TOKEN_PLUS: return "+";
 				case Type::TOKEN_QUESTION_MARK: return "?";
 				case Type::TOKEN_SEMICOLON: return ";";
 				case Type::TOKEN_SPACE: return " ";

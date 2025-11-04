@@ -615,6 +615,11 @@ namespace NumbatLogic
 						PushToken(Token::Type::TOKEN_KEYWORD_SWITCH, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
 						return;
 					}
+					if (pParseDatum.m_sCurrentRead.IsEqual("tthash"))
+					{
+						PushToken(Token::Type::TOKEN_KEYWORD_TTHASH, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
+						return;
+					}
 					if (pParseDatum.m_sCurrentRead.IsEqual("Uint16"))
 					{
 						PushToken(Token::Type::TOKEN_KEYWORD_UINT16, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
