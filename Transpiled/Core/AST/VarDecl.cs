@@ -245,27 +245,52 @@ namespace NumbatLogic
 			}
 			else
 			{
-				if (!m_bInline && eLanguage == AST.Language.CPP)
+				if (!m_bInline)
 				{
-					if (eOutputFile == AST.OutputFile.SOURCE)
+					string sxToAppend = null;
+					if (eOutputFile == AST.OutputFile.SOURCE && eLanguage != AST.Language.NLL && eLanguage != AST.Language.NLL_DEF)
 					{
-						ValueType pValueType = m_pTypeRef.CreateValueType();
-						if (pValueType != null && pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE && m_pArraySizeVector == null)
-							sOut.AppendString(" = 0");
-						if (bStatic && m_pTypeRef.IsIntegral())
-							sOut.AppendString(" = 0");
+						if (m_pParent.m_eType != AST.Type.AST_MEMBER_VAR_DECL)
+						{
+							if (m_pArraySizeVector == null)
+							{
+								if (m_pTypeRef.IsInt())
+									sxToAppend = " = 0";
+								else
+									if (m_pTypeRef.IsBool())
+										sxToAppend = " = false";
+							}
+						}
 					}
-				}
-				if (!m_bInline && eLanguage == AST.Language.CS && m_pArraySizeVector != null)
-				{
-					sOut.AppendString(" = new ");
-					m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
-					for (int i = 0; i < m_pArraySizeVector.GetSize(); i++)
+					if (sxToAppend != null)
 					{
-						AST pArraySize = m_pArraySizeVector.Get(i);
-						sOut.AppendChar('[');
-						pArraySize.Stringify(eLanguage, eOutputFile, 0, sOut);
-						sOut.AppendChar(']');
+						sOut.AppendString(sxToAppend);
+					}
+					else
+					{
+						if (eLanguage == AST.Language.CPP)
+						{
+							if (eOutputFile == AST.OutputFile.SOURCE)
+							{
+								ValueType pValueType = m_pTypeRef.CreateValueType();
+								if (pValueType != null && pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE && m_pArraySizeVector == null)
+									sOut.AppendString(" = 0");
+								if (bStatic && m_pTypeRef.IsIntegral())
+									sOut.AppendString(" = 0");
+							}
+						}
+						if (eLanguage == AST.Language.CS && m_pArraySizeVector != null)
+						{
+							sOut.AppendString(" = new ");
+							m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
+							for (int i = 0; i < m_pArraySizeVector.GetSize(); i++)
+							{
+								AST pArraySize = m_pArraySizeVector.Get(i);
+								sOut.AppendChar('[');
+								pArraySize.Stringify(eLanguage, eOutputFile, 0, sOut);
+								sOut.AppendChar(']');
+							}
+						}
 					}
 				}
 			}

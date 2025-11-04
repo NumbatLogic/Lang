@@ -312,28 +312,53 @@ namespace NumbatLogic
 		}
 		else
 		{
-			if (!m_bInline && eLanguage == AST::Language::CPP)
+			if (!m_bInline)
 			{
-				if (eOutputFile == AST::OutputFile::SOURCE)
+				const char* sxToAppend = 0;
+				if (eOutputFile == AST::OutputFile::SOURCE && eLanguage != AST::Language::NLL && eLanguage != AST::Language::NLL_DEF)
 				{
-					ValueType* pValueType = m_pTypeRef->CreateValueType();
-					if (pValueType != 0 && pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE && m_pArraySizeVector == 0)
-						sOut->AppendString(" = 0");
-					if (bStatic && m_pTypeRef->IsIntegral())
-						sOut->AppendString(" = 0");
-					if (pValueType) delete pValueType;
+					if (m_pParent->m_eType != AST::Type::AST_MEMBER_VAR_DECL)
+					{
+						if (m_pArraySizeVector == 0)
+						{
+							if (m_pTypeRef->IsInt())
+								sxToAppend = " = 0";
+							else
+								if (m_pTypeRef->IsBool())
+									sxToAppend = " = false";
+						}
+					}
 				}
-			}
-			if (!m_bInline && eLanguage == AST::Language::CS && m_pArraySizeVector != 0)
-			{
-				sOut->AppendString(" = new ");
-				m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
-				for (int i = 0; i < m_pArraySizeVector->GetSize(); i++)
+				if (sxToAppend != 0)
 				{
-					AST* pArraySize = m_pArraySizeVector->Get(i);
-					sOut->AppendChar('[');
-					pArraySize->Stringify(eLanguage, eOutputFile, 0, sOut);
-					sOut->AppendChar(']');
+					sOut->AppendString(sxToAppend);
+				}
+				else
+				{
+					if (eLanguage == AST::Language::CPP)
+					{
+						if (eOutputFile == AST::OutputFile::SOURCE)
+						{
+							ValueType* pValueType = m_pTypeRef->CreateValueType();
+							if (pValueType != 0 && pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE && m_pArraySizeVector == 0)
+								sOut->AppendString(" = 0");
+							if (bStatic && m_pTypeRef->IsIntegral())
+								sOut->AppendString(" = 0");
+							if (pValueType) delete pValueType;
+						}
+					}
+					if (eLanguage == AST::Language::CS && m_pArraySizeVector != 0)
+					{
+						sOut->AppendString(" = new ");
+						m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
+						for (int i = 0; i < m_pArraySizeVector->GetSize(); i++)
+						{
+							AST* pArraySize = m_pArraySizeVector->Get(i);
+							sOut->AppendChar('[');
+							pArraySize->Stringify(eLanguage, eOutputFile, 0, sOut);
+							sOut->AppendChar(']');
+						}
+					}
 				}
 			}
 		}

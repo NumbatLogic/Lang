@@ -52,6 +52,8 @@ namespace NumbatLogic
 		public: ValueType* CreateValueType();
 		protected: ValueType* SetValueType();
 		public: bool IsIntegral();
+		public: bool IsInt();
+		public: bool IsBool();
 		public: virtual ~TypeRef();
 	};
 }
