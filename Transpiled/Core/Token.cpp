@@ -22,24 +22,24 @@ namespace NumbatLogic
 				return "&&";
 			}
 
-			case Type::TOKEN_ANGLE_BRACKET_LEFT:
-			{
-				return "<";
-			}
-
 			case Type::TOKEN_ANGLE_BRACKET_LEFT_EQUALS:
 			{
 				return "<=";
 			}
 
-			case Type::TOKEN_ANGLE_BRACKET_RIGHT:
+			case Type::TOKEN_ANGLE_BRACKET_LEFT:
 			{
-				return ">";
+				return "<";
 			}
 
 			case Type::TOKEN_ANGLE_BRACKET_RIGHT_EQUALS:
 			{
 				return ">=";
+			}
+
+			case Type::TOKEN_ANGLE_BRACKET_RIGHT:
+			{
+				return ">";
 			}
 
 			case Type::TOKEN_BANG:
@@ -207,6 +207,11 @@ namespace NumbatLogic
 				return "if";
 			}
 
+			case Type::TOKEN_KEYWORD_INT:
+			{
+				return "int";
+			}
+
 			case Type::TOKEN_KEYWORD_INT16:
 			{
 				return "Int16";
@@ -220,11 +225,6 @@ namespace NumbatLogic
 			case Type::TOKEN_KEYWORD_INT8:
 			{
 				return "Int8";
-			}
-
-			case Type::TOKEN_KEYWORD_INT:
-			{
-				return "int";
 			}
 
 			case Type::TOKEN_KEYWORD_NAMESPACE:
@@ -262,14 +262,14 @@ namespace NumbatLogic
 				return "public";
 			}
 
-			case Type::TOKEN_KEYWORD_RETURN:
-			{
-				return "return";
-			}
-
 			case Type::TOKEN_KEYWORD_REF:
 			{
 				return "ref";
+			}
+
+			case Type::TOKEN_KEYWORD_RETURN:
+			{
+				return "return";
 			}
 
 			case Type::TOKEN_KEYWORD_STRING:
@@ -292,6 +292,16 @@ namespace NumbatLogic
 				return "true";
 			}
 
+			case Type::TOKEN_KEYWORD_TTHASH:
+			{
+				return "tthash";
+			}
+
+			case Type::TOKEN_KEYWORD_UINT:
+			{
+				return "uint";
+			}
+
 			case Type::TOKEN_KEYWORD_UINT16:
 			{
 				return "Uint16";
@@ -310,11 +320,6 @@ namespace NumbatLogic
 			case Type::TOKEN_KEYWORD_UINT8:
 			{
 				return "Uint8";
-			}
-
-			case Type::TOKEN_KEYWORD_UINT:
-			{
-				return "uint";
 			}
 
 			case Type::TOKEN_KEYWORD_UNICHAR:
@@ -347,11 +352,6 @@ namespace NumbatLogic
 				return "while";
 			}
 
-			case Type::TOKEN_MINUS:
-			{
-				return "-";
-			}
-
 			case Type::TOKEN_MINUS_EQUALS:
 			{
 				return "-=";
@@ -360,6 +360,11 @@ namespace NumbatLogic
 			case Type::TOKEN_MINUS_MINUS:
 			{
 				return "--";
+			}
+
+			case Type::TOKEN_MINUS:
+			{
+				return "-";
 			}
 
 			case Type::TOKEN_MODULUS:
@@ -392,11 +397,6 @@ namespace NumbatLogic
 				return ")";
 			}
 
-			case Type::TOKEN_PLUS:
-			{
-				return "+";
-			}
-
 			case Type::TOKEN_PLUS_EQUALS:
 			{
 				return "+=";
@@ -405,6 +405,11 @@ namespace NumbatLogic
 			case Type::TOKEN_PLUS_PLUS:
 			{
 				return "++";
+			}
+
+			case Type::TOKEN_PLUS:
+			{
+				return "+";
 			}
 
 			case Type::TOKEN_QUESTION_MARK:
@@ -495,9 +500,9 @@ namespace NumbatLogic
 		pToken->m_nColumn = m_nColumn;
 		if (m_sValue != 0)
 			pToken->m_sValue = new InternalString(m_sValue->GetExternalString());
-		NumbatLogic::Token* __338280889 = pToken;
+		NumbatLogic::Token* __1244250390 = pToken;
 		pToken = 0;
-		return __338280889;
+		return __1244250390;
 	}
 
 	Token::Token()

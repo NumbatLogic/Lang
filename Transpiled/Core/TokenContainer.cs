@@ -709,6 +709,11 @@ namespace NumbatLogic
 						PushToken(Token.Type.TOKEN_KEYWORD_SWITCH, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
 						return;
 					}
+					if (pParseDatum.m_sCurrentRead.IsEqual("tthash"))
+					{
+						PushToken(Token.Type.TOKEN_KEYWORD_TTHASH, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
+						return;
+					}
 					if (pParseDatum.m_sCurrentRead.IsEqual("Uint16"))
 					{
 						PushToken(Token.Type.TOKEN_KEYWORD_UINT16, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
@@ -854,9 +859,9 @@ namespace NumbatLogic
 			if (bCopyString)
 				pToken.m_sValue = new InternalString(pParseDatum.m_sCurrentRead.GetExternalString());
 			pParseDatum.ClearCurrentRead();
-			NumbatLogic.Token __4235802025 = pToken;
+			NumbatLogic.Token __3967328402 = pToken;
 			pToken = null;
-			m_pTokenVector.PushBack(__4235802025);
+			m_pTokenVector.PushBack(__3967328402);
 		}
 
 		protected void ParseQuoted(ParseDatum pParseDatum, char nQuoteChar)
