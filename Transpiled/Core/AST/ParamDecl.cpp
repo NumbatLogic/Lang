@@ -12,6 +12,7 @@
 #include "ParamCall.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../ValueType.hpp"
+#include "Identifier.hpp"
 
 namespace NumbatLogic
 {
@@ -30,6 +31,7 @@ namespace NumbatLogic
 	class ParamCall;
 	class InternalString;
 	class ValueType;
+	class Identifier;
 }
 namespace NumbatLogic
 {
@@ -206,6 +208,22 @@ namespace NumbatLogic
 						pValidator->AddError(sTemp->GetExternalString(), pCallChild->m_pFirstToken->m_sFileName, pCallChild->m_pFirstToken->m_nLine, pCallChild->m_pFirstToken->m_nColumn);
 						if (sTemp) delete sTemp;
 					}
+					if (pValueType) delete pValueType;
+					return false;
+				}
+			}
+			if (pVarDecl->m_pTypeRef->m_bRef)
+			{
+				if (pCallChild->m_eType != AST_IDENTIFIER)
+				{
+					pValidator->AddError("Must pass an identifier to a ref parameter", pCallChild->m_pFirstToken->m_sFileName, pCallChild->m_pFirstToken->m_nLine, pCallChild->m_pFirstToken->m_nColumn);
+					if (pValueType) delete pValueType;
+					return false;
+				}
+				Identifier* pIdentifier = (Identifier*)(pCallChild);
+				if (!pIdentifier->m_bRef)
+				{
+					pValidator->AddError("Must prefix ref parameter with ref!", pCallChild->m_pFirstToken->m_sFileName, pCallChild->m_pFirstToken->m_nLine, pCallChild->m_pFirstToken->m_nColumn);
 					if (pValueType) delete pValueType;
 					return false;
 				}

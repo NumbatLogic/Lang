@@ -168,6 +168,20 @@ namespace NumbatLogic
 						return false;
 					}
 				}
+				if (pVarDecl.m_pTypeRef.m_bRef)
+				{
+					if (pCallChild.m_eType != AST_IDENTIFIER)
+					{
+						pValidator.AddError("Must pass an identifier to a ref parameter", pCallChild.m_pFirstToken.m_sFileName, pCallChild.m_pFirstToken.m_nLine, pCallChild.m_pFirstToken.m_nColumn);
+						return false;
+					}
+					Identifier pIdentifier = (Identifier)(pCallChild);
+					if (!pIdentifier.m_bRef)
+					{
+						pValidator.AddError("Must prefix ref parameter with ref!", pCallChild.m_pFirstToken.m_sFileName, pCallChild.m_pFirstToken.m_nLine, pCallChild.m_pFirstToken.m_nColumn);
+						return false;
+					}
+				}
 				nIndex++;
 				pCallChild = pCallChild.m_pNextSibling;
 				pDeclChild = pDeclChild.m_pNextSibling;
