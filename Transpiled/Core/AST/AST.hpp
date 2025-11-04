@@ -48,6 +48,7 @@ namespace NumbatLogic
 			AST_PARAM_CALL,
 			AST_PARAM_DECL,
 			AST_PAREN,
+			AST_REF_EXPR,
 			AST_RETURN_STMT,
 			AST_SCOPE,
 			AST_STATIC_ARRAY,

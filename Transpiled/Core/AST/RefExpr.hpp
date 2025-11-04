@@ -4,26 +4,23 @@
 
 namespace NumbatLogic
 {
-	class Token;
-	class Identifier;
+	class AST;
+	class RefExpr;
 	class TokenContainer;
 	class OffsetDatum;
-	class AST;
 	class Validator;
 	class OperatorExpr;
-	class NamespaceDecl;
 	class InternalString;
 }
 namespace NumbatLogic
 {
-	class Identifier : public AST
+	class RefExpr : public AST
 	{
-		public: Token* m_pNameToken;
-		public: static Identifier* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-		public: virtual AST* BaseClone();
+		public: AST* m_pExpression;
+		public: static RefExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
-		public: Identifier();
+		public: RefExpr();
 	};
 }
 

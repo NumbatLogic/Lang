@@ -2,17 +2,11 @@ namespace NumbatLogic
 {
 	class Identifier : AST
 	{
-		//public Token* m_pOwnedNameToken;
-		public bool m_bRef;
 		public Token m_pNameToken;
 
 		public static Identifier** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
 		{
 			OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
-
-			Token pRefToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_REF);
-			if (pRefToken != null)
-				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 
 			Token pToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
 			if (pToken == null)
@@ -21,11 +15,9 @@ namespace NumbatLogic
 			
 			Identifier* pIdentifier = own new Identifier();
 			pIdentifier.m_eType = AST::Type::AST_IDENTIFIER;
-			pIdentifier.m_bRef = pRefToken != null;
 			pIdentifier.m_pNameToken = pToken;
-			pIdentifier.m_pFirstToken = pIdentifier.m_bRef ? pRefToken : pToken;
+			pIdentifier.m_pFirstToken = pToken;
 
-			
 			pOffsetDatum.Set(pTempOffset);
 
 			return disown pIdentifier;
@@ -35,7 +27,6 @@ namespace NumbatLogic
 		{
 			Identifier* pIdentifier = own new Identifier();
 			pIdentifier.m_eType = m_eType;
-			pIdentifier.m_bRef = m_bRef;
 			pIdentifier.m_pNameToken = m_pNameToken;
 			pIdentifier.m_pFirstToken = m_pFirstToken;
 			return disown pIdentifier;
@@ -248,8 +239,6 @@ namespace NumbatLogic
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
 		{
-			if (m_bRef && eLanguage == AST::Language::CS)
-				sOut.Append("ref ");
 			m_pNameToken.Stringify(sOut);
 		}
 	}

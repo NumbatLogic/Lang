@@ -32,6 +32,7 @@ namespace NumbatLogic
 			AST_PARAM_CALL,
 			AST_PARAM_DECL,
 			AST_PAREN,
+			AST_REF_EXPR,
 			AST_RETURN_STMT,
 			AST_SCOPE,
 			AST_STATIC_ARRAY,
@@ -248,6 +249,10 @@ namespace NumbatLogic
 				return disown pAst;
 
 			pAst = own DisownExpr::TryCreate(pTokenContainer,pOffsetDatum);
+			if (pAst!=null)
+				return disown pAst;
+
+			pAst = own RefExpr::TryCreate(pTokenContainer,pOffsetDatum);
 			if (pAst!=null)
 				return disown pAst;
 
@@ -596,6 +601,7 @@ namespace NumbatLogic
 				case Type::AST_PARAM_CALL: { sOut.Append("AST_PARAM_CALL"); return; }
 				case Type::AST_PARAM_DECL: { sOut.Append("AST_PARAM_DECL"); return; }
 				case Type::AST_PAREN: { sOut.Append("AST_PAREN"); return; }
+				case Type::AST_REF_EXPR: { sOut.Append("AST_REF_EXPR"); return; }
 				case Type::AST_RETURN_STMT: { sOut.Append("AST_RETURN_STMT"); return; }
 				case Type::AST_SCOPE: { sOut.Append("AST_SCOPE"); return; }
 				case Type::AST_STATIC_ARRAY: { sOut.Append("AST_STATIC_ARRAY"); return; }
@@ -606,8 +612,8 @@ namespace NumbatLogic
 				case Type::AST_TTHASH_EXP: { sOut.Append("AST_TTHASH_EXP"); return; }
 				case Type::AST_TYPE_REF: { sOut.Append("AST_TYPE_REF"); return; }
 				case Type::AST_UNARY: { sOut.Append("AST_UNARY"); return; }
-				case Type::AST_VAR_DECL: { sOut.Append("AST_VAR_DECL"); return; }
 				case Type::AST_VAR_DECL_DESCOPE: { sOut.Append("AST_VAR_DECL_DESCOPE"); return; }
+				case Type::AST_VAR_DECL: { sOut.Append("AST_VAR_DECL"); return; }
 				case Type::AST_WHILE_STMT: { sOut.Append("AST_WHILE_STMT"); return; }
 				case Type::BASE_EXPR: { sOut.Append("BASE_EXPR"); return; }
 				case Type::DELEGATE_DECL: { sOut.Append("DELEGATE_DECL"); return; }
