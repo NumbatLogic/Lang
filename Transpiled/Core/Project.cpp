@@ -171,7 +171,7 @@ namespace NumbatLogic
 			{
 				NamespaceDecl* pNamespaceDecl = (NamespaceDecl*)(pChild);
 				const char* sxName = pNamespaceDecl->m_pNameToken->m_sValue->GetExternalString();
-				int i;
+				int i = 0;
 				for (i = 0; i < pPreviousNamespaceDecls->GetSize(); i++)
 				{
 					NamespaceDecl* pPreviousNamespace = pPreviousNamespaceDecls->Get(i);
