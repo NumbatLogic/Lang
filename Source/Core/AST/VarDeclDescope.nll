@@ -14,9 +14,9 @@ namespace NumbatLogic
 		{
 			if (eLanguage == AST::Language::CPP)
 			{
-				for (int i = 0; i < m_pVarDeclVector.GetSize(); i++)
+				for (int j = 0; j < m_pVarDeclVector.GetSize(); j++)
 				{
-					VarDecl pVarDecl = m_pVarDeclVector.Get(i);
+					VarDecl pVarDecl = m_pVarDeclVector.Get(j);
 					string sxName = pVarDecl.m_pNameToken.GetString();
 
 					if (pVarDecl.m_pArraySizeVector != null)
