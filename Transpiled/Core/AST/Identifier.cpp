@@ -47,6 +47,9 @@ namespace NumbatLogic
 	Identifier* Identifier::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+		Token* pRefToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_REF);
+		if (pRefToken != 0)
+			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		Token* pToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
 		if (pToken == 0)
 		{
@@ -56,27 +59,31 @@ namespace NumbatLogic
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		Identifier* pIdentifier = new Identifier();
 		pIdentifier->m_eType = AST::Type::AST_IDENTIFIER;
-		pIdentifier->m_pFirstToken = pToken;
+		pIdentifier->m_bRef = pRefToken != 0;
+		pIdentifier->m_pNameToken = pToken;
+		pIdentifier->m_pFirstToken = pIdentifier->m_bRef ? pRefToken : pToken;
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::Identifier* __3348370355 = pIdentifier;
+		NumbatLogic::Identifier* __1670658656 = pIdentifier;
 		pIdentifier = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __3348370355;
+		return __1670658656;
 	}
 
 	AST* Identifier::BaseClone()
 	{
 		Identifier* pIdentifier = new Identifier();
 		pIdentifier->m_eType = m_eType;
+		pIdentifier->m_bRef = m_bRef;
+		pIdentifier->m_pNameToken = m_pNameToken;
 		pIdentifier->m_pFirstToken = m_pFirstToken;
-		NumbatLogic::Identifier* __3432266336 = pIdentifier;
+		NumbatLogic::Identifier* __3365201083 = pIdentifier;
 		pIdentifier = 0;
-		return __3432266336;
+		return __3365201083;
 	}
 
 	void Identifier::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
-		const char* sName = m_pFirstToken->GetString();
+		const char* sName = m_pNameToken->GetString();
 		AST* pAST = 0;
 		AST* pBase = this;
 		AST* pChild = this;
@@ -212,9 +219,9 @@ namespace NumbatLogic
 								if (pGenericValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
 								{
 									ValueType* pOldValueType = 0;
-									NumbatLogic::ValueType* __1107643100 = m_pValueType;
+									NumbatLogic::ValueType* __3859112719 = m_pValueType;
 									m_pValueType = 0;
-									pOldValueType = __1107643100;
+									pOldValueType = __3859112719;
 									m_pValueType = pGenericValueType->Clone();
 									m_pValueType->m_ePointerType = pOldValueType->m_ePointerType;
 									if (pOldValueType) delete pOldValueType;
@@ -249,7 +256,15 @@ namespace NumbatLogic
 
 	void Identifier::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
 	{
-		m_pFirstToken->Stringify(sOut);
+		if (m_bRef && eLanguage == AST::Language::CS)
+			sOut->Append("ref ");
+		m_pNameToken->Stringify(sOut);
+	}
+
+	Identifier::Identifier()
+	{
+		m_bRef = false;
+		m_pNameToken = 0;
 	}
 
 }
