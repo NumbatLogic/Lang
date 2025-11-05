@@ -3,6 +3,7 @@ namespace NumbatLogic
 	class ClassDecl : AST
 	{
 		public Token m_pNameToken;
+		public bool m_bDisposable;
 		public TypeRef m_pBaseTypeRef;
 		public OwnedVector<GenericTypeDecl>* m_pGenericTypeDeclVector;
 		public NamespaceNode m_pNamespaceNode;
@@ -33,7 +34,12 @@ namespace NumbatLogic
 				return null;
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 
+			Token pDisposableToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_DISPOSABLE);
+			if (pDisposableToken != null)
+				pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+
 			ClassDecl* pClassDecl = own new ClassDecl();
+			pClassDecl.m_bDisposable = pDisposableToken != null;
 
 			Token pNameToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
 			if (pNameToken == null)
@@ -431,6 +437,15 @@ namespace NumbatLogic
 					if (eLanguage == AST::Language::CPP)
 						sOut.Append("public ");
 					m_pBaseTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
+				}
+
+				if (eLanguage == AST::Language::CS && m_bDisposable)
+				{
+					if (m_pBaseTypeRef == null)
+						sOut.Append(" : ");
+					else
+						sOut.Append(", ");
+					sOut.Append("System.IDisposable");
 				}
 
 				if (eLanguage == AST::Language::CS && m_pGenericTypeDeclVector.GetSize() > 0)

@@ -824,6 +824,16 @@ namespace NumbatLogic
 				break;
 			}
 
+			case 10:
+			{
+				if (pParseDatum->m_sCurrentRead->IsEqual("disposable"))
+				{
+					PushToken(Token::Type::TOKEN_KEYWORD_DISPOSABLE, pParseDatum->m_nCurrentReadLine, pParseDatum->m_nCurrentReadColumn, pParseDatum, false);
+					return;
+				}
+				break;
+			}
+
 		}
 		{
 			int i = 0;
@@ -881,9 +891,9 @@ namespace NumbatLogic
 		if (bCopyString)
 			pToken->m_sValue = new InternalString(pParseDatum->m_sCurrentRead->GetExternalString());
 		pParseDatum->ClearCurrentRead();
-		NumbatLogic::Token* __3967328402 = pToken;
+		NumbatLogic::Token* __997761665 = pToken;
 		pToken = 0;
-		m_pTokenVector->PushBack(__3967328402);
+		m_pTokenVector->PushBack(__997761665);
 		if (pToken) delete pToken;
 	}
 

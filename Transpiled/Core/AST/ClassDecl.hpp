@@ -25,6 +25,7 @@ namespace NumbatLogic
 	class ClassDecl : public AST
 	{
 		public: Token* m_pNameToken;
+		public: bool m_bDisposable;
 		public: TypeRef* m_pBaseTypeRef;
 		public: OwnedVector<GenericTypeDecl*>* m_pGenericTypeDeclVector;
 		public: NamespaceNode* m_pNamespaceNode;

@@ -706,6 +706,15 @@ namespace NumbatLogic
 					}
 					break;
 				}
+				case 10:
+				{
+					if (pParseDatum.m_sCurrentRead.IsEqual("disposable"))
+					{
+						PushToken(Token::Type::TOKEN_KEYWORD_DISPOSABLE, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
+						return;
+					}
+					break;
+				}
 			}
 
 			// check for number

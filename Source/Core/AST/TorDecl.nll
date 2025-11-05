@@ -148,6 +148,48 @@ namespace NumbatLogic
 			if (bGeneric && eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
 				return;
 
+
+			if (eLanguage == AST::Language::CS)
+			{
+				if (m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_DESTRUCT)
+				{
+					if (m_pParentClassDecl.m_bDisposable)
+					{
+						Util::Pad(nDepth, sOut);
+						sOut.AppendChar('~');
+						m_pParentClassDecl.m_pNameToken.Stringify(sOut);
+						sOut.Append(m_sDisambiguate);
+						m_pParamDecl.Stringify(eLanguage, eOutputFile, 0, sOut);
+						sOut.AppendChar('\n');
+						Util::Pad(nDepth, sOut);
+						sOut.Append("{\n");
+						Util::Pad(nDepth+1, sOut);
+						sOut.Append("Dispose();\n");
+						Util::Pad(nDepth, sOut);
+						sOut.Append("}\n");
+						sOut.AppendChar('\n');
+
+						Util::Pad(nDepth, sOut);
+						sOut.Append("public void Dispose()\n");
+						Util::Pad(nDepth, sOut);
+						sOut.Append("{\n");
+
+						nDepth++;
+						m_pScope.Stringify(eLanguage, eOutputFile, nDepth, sOut);
+						Util::Pad(nDepth, sOut);
+						sOut.Append("System.GC.SuppressFinalize(this);\n");
+
+						nDepth--;
+
+						Util::Pad(nDepth, sOut);
+						sOut.Append("}\n");
+						sOut.AppendChar('\n');
+
+						return;
+					}
+				}
+			}
+
 			Util::Pad(nDepth, sOut);
 
 			if (!(eLanguage == AST::Language::CS && m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_DESTRUCT))

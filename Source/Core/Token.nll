@@ -41,6 +41,7 @@ namespace NumbatLogic
 			TOKEN_KEYWORD_DELETE,
 			TOKEN_KEYWORD_DESTRUCT,
 			TOKEN_KEYWORD_DISOWN,
+			TOKEN_KEYWORD_DISPOSABLE,
 			TOKEN_KEYWORD_DOUBLE,
 			TOKEN_KEYWORD_ELSE,
 			TOKEN_KEYWORD_ENUM,
@@ -150,6 +151,7 @@ namespace NumbatLogic
 				case Type::TOKEN_KEYWORD_DEFAULT: return "default";
 				case Type::TOKEN_KEYWORD_DELETE: return "delete";
 				case Type::TOKEN_KEYWORD_DISOWN: return "disown";
+				case Type::TOKEN_KEYWORD_DISPOSABLE: return "disposable";
 				case Type::TOKEN_KEYWORD_DOUBLE: return "double";
 				case Type::TOKEN_KEYWORD_ELSE: return "else";
 				case Type::TOKEN_KEYWORD_ENUM: return "enum";
