@@ -5,6 +5,9 @@
 #include "../Token.hpp"
 #include "../Util.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
+#include "TypeRef.hpp"
+#include "../ValueType.hpp"
+#include "ClassDecl.hpp"
 
 namespace NumbatLogic
 {
@@ -16,6 +19,9 @@ namespace NumbatLogic
 	class Token;
 	class Util;
 	class InternalString;
+	class ValueType;
+	class TypeRef;
+	class ClassDecl;
 }
 namespace NumbatLogic
 {
@@ -28,13 +34,13 @@ namespace NumbatLogic
 
 	void VarDeclDescope::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
 	{
-		if (eLanguage == AST::Language::CPP)
+		for (int j = 0; j < m_pVarDeclVector->GetSize(); j++)
 		{
-			for (int j = 0; j < m_pVarDeclVector->GetSize(); j++)
+			VarDecl* pVarDecl = m_pVarDeclVector->Get(j);
+			const char* sxName = pVarDecl->m_pNameToken->GetString();
+			if (pVarDecl->m_pArraySizeVector != 0)
 			{
-				VarDecl* pVarDecl = m_pVarDeclVector->Get(j);
-				const char* sxName = pVarDecl->m_pNameToken->GetString();
-				if (pVarDecl->m_pArraySizeVector != 0)
+				if (eLanguage == AST::Language::CPP)
 				{
 					int nArraySizeSize = pVarDecl->m_pArraySizeVector->GetSize();
 					for (int i = 0; i < nArraySizeSize; i++)
@@ -62,7 +68,10 @@ namespace NumbatLogic
 					}
 					sOut->Append(";\n");
 				}
-				else
+			}
+			else
+			{
+				if (eLanguage == AST::Language::CPP)
 				{
 					Util::Pad(nDepth, sOut);
 					sOut->Append("if (");
@@ -71,6 +80,24 @@ namespace NumbatLogic
 					sOut->Append(sxName);
 					sOut->Append(";\n");
 				}
+				else
+					if (eLanguage == AST::Language::CS)
+					{
+						ValueType* pValueType = pVarDecl->m_pTypeRef->CreateValueType();
+						if (pValueType != 0 && pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
+						{
+							if (pValueType->m_pClassDecl != 0 && pValueType->m_pClassDecl->m_bDisposable)
+							{
+								Util::Pad(nDepth, sOut);
+								sOut->Append("if (");
+								sOut->Append(sxName);
+								sOut->Append(" != null) ");
+								sOut->Append(sxName);
+								sOut->Append(".Dispose();\n");
+							}
+						}
+						if (pValueType) delete pValueType;
+					}
 			}
 		}
 	}

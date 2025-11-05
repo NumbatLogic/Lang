@@ -172,6 +172,11 @@ namespace NumbatLogic
 				return "disown";
 			}
 
+			case Type::TOKEN_KEYWORD_DISPOSABLE:
+			{
+				return "disposable";
+			}
+
 			case Type::TOKEN_KEYWORD_DOUBLE:
 			{
 				return "double";
@@ -500,9 +505,9 @@ namespace NumbatLogic
 		pToken->m_nColumn = m_nColumn;
 		if (m_sValue != 0)
 			pToken->m_sValue = new InternalString(m_sValue->GetExternalString());
-		NumbatLogic::Token* __1244250390 = pToken;
+		NumbatLogic::Token* __2821308647 = pToken;
 		pToken = 0;
-		return __1244250390;
+		return __2821308647;
 	}
 
 	Token::Token()

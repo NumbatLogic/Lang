@@ -7,6 +7,7 @@
 #include "../ValueType.hpp"
 #include "../Util.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
+#include "ClassDecl.hpp"
 
 namespace NumbatLogic
 {
@@ -19,6 +20,7 @@ namespace NumbatLogic
 	class ValueType;
 	class Util;
 	class InternalString;
+	class ClassDecl;
 }
 namespace NumbatLogic
 {
@@ -91,6 +93,17 @@ namespace NumbatLogic
 			m_pExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
 			sOut->Append(";\n");
 		}
+		else
+			if (eLanguage == AST::Language::CS)
+			{
+				if (m_pExpression->m_pValueType->m_pClassDecl != 0 && m_pExpression->m_pValueType->m_pClassDecl->m_bDisposable)
+				{
+					Util::Pad(nDepth, sOut);
+					sOut->Append("(");
+					m_pExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
+					sOut->Append(").Dispose();\n");
+				}
+			}
 		if (m_pExpression->m_eType == AST::Type::AST_IDENTIFIER)
 		{
 			Util::Pad(nDepth, sOut);

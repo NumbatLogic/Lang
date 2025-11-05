@@ -62,6 +62,7 @@ namespace NumbatLogic
 	ClassDecl::ClassDecl()
 	{
 		m_pNameToken = 0;
+		m_bDisposable = false;
 		m_pBaseTypeRef = 0;
 		m_pGenericTypeDeclVector = 0;
 		m_pNamespaceNode = 0;
@@ -87,7 +88,11 @@ namespace NumbatLogic
 			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+		Token* pDisposableToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_DISPOSABLE);
+		if (pDisposableToken != 0)
+			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		ClassDecl* pClassDecl = new ClassDecl();
+		pClassDecl->m_bDisposable = pDisposableToken != 0;
 		Token* pNameToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
 		if (pNameToken == 0)
 		{
@@ -116,9 +121,9 @@ namespace NumbatLogic
 					Console::Log("expected inner GenericTypeDecl");
 					NumbatLogic::Assert::Plz(false);
 				}
-				NumbatLogic::GenericTypeDecl* __3472322917 = pGenericTypeDecl;
+				NumbatLogic::GenericTypeDecl* __1610046292 = pGenericTypeDecl;
 				pGenericTypeDecl = 0;
-				pClassDecl->m_pGenericTypeDeclVector->PushBack(__3472322917);
+				pClassDecl->m_pGenericTypeDeclVector->PushBack(__1610046292);
 				if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_ANGLE_BRACKET_RIGHT) != 0)
 				{
 					if (pGenericTypeDecl) delete pGenericTypeDecl;
@@ -166,9 +171,9 @@ namespace NumbatLogic
 		pClassDecl->m_pBaseTypeRef = pBaseTypeRef;
 		if (pBaseTypeRef != 0)
 		{
-			NumbatLogic::TypeRef* __2444892862 = pBaseTypeRef;
+			NumbatLogic::TypeRef* __3535429732 = pBaseTypeRef;
 			pBaseTypeRef = 0;
-			pClassDecl->AddChild(__2444892862);
+			pClassDecl->AddChild(__3535429732);
 		}
 		while (true)
 		{
@@ -181,54 +186,54 @@ namespace NumbatLogic
 			pAST = MemberVarDecl::TryCreate(pTokenContainer, pTempOffset);
 			if (pAST != 0)
 			{
-				NumbatLogic::AST* __1913155045 = pAST;
+				NumbatLogic::AST* __2416471060 = pAST;
 				pAST = 0;
-				pClassDecl->AddChild(__1913155045);
+				pClassDecl->AddChild(__2416471060);
 				if (pAST) delete pAST;
 				continue;
 			}
 			pAST = MemberFunctionDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 			if (pAST != 0)
 			{
-				NumbatLogic::AST* __2768793590 = pAST;
+				NumbatLogic::AST* __3389567584 = pAST;
 				pAST = 0;
-				pClassDecl->AddChild(__2768793590);
+				pClassDecl->AddChild(__3389567584);
 				if (pAST) delete pAST;
 				continue;
 			}
 			pAST = MemberClassDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 			if (pAST != 0)
 			{
-				NumbatLogic::AST* __1695068768 = pAST;
+				NumbatLogic::AST* __2349374018 = pAST;
 				pAST = 0;
-				pClassDecl->AddChild(__1695068768);
+				pClassDecl->AddChild(__2349374018);
 				if (pAST) delete pAST;
 				continue;
 			}
 			pAST = MemberEnumDecl::TryCreate(pTokenContainer, pTempOffset);
 			if (pAST != 0)
 			{
-				NumbatLogic::AST* __2097715949 = pAST;
+				NumbatLogic::AST* __1527289937 = pAST;
 				pAST = 0;
-				pClassDecl->AddChild(__2097715949);
+				pClassDecl->AddChild(__1527289937);
 				if (pAST) delete pAST;
 				continue;
 			}
 			pAST = TorDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 			if (pAST != 0)
 			{
-				NumbatLogic::AST* __4094203985 = pAST;
+				NumbatLogic::AST* __3473465496 = pAST;
 				pAST = 0;
-				pClassDecl->AddChild(__4094203985);
+				pClassDecl->AddChild(__3473465496);
 				if (pAST) delete pAST;
 				continue;
 			}
 			pAST = DelegateDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 			if (pAST != 0)
 			{
-				NumbatLogic::AST* __1040769079 = pAST;
+				NumbatLogic::AST* __3607676949 = pAST;
 				pAST = 0;
-				pClassDecl->AddChild(__1040769079);
+				pClassDecl->AddChild(__3607676949);
 				if (pAST) delete pAST;
 				continue;
 			}
@@ -238,11 +243,11 @@ namespace NumbatLogic
 			if (pAST) delete pAST;
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::ClassDecl* __2697205707 = pClassDecl;
+		NumbatLogic::ClassDecl* __533037808 = pClassDecl;
 		pClassDecl = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pBaseTypeRef) delete pBaseTypeRef;
-		return __2697205707;
+		return __533037808;
 	}
 
 	void ClassDecl::PreValidate(Validator* pValidator, OperatorExpr* pParent)
@@ -333,18 +338,18 @@ namespace NumbatLogic
 				pTorDecl->m_pParamDecl = pParamDecl;
 				pTorDecl->m_pScope = pScope;
 				pTorDecl->m_sDisambiguate = "";
-				NumbatLogic::AccessLevel* __2009174746 = pAccessLevel;
+				NumbatLogic::AccessLevel* __2512491307 = pAccessLevel;
 				pAccessLevel = 0;
-				pTorDecl->AddChild(__2009174746);
-				NumbatLogic::ParamDecl* __3174381146 = pParamDecl;
+				pTorDecl->AddChild(__2512491307);
+				NumbatLogic::ParamDecl* __2603955430 = pParamDecl;
 				pParamDecl = 0;
-				pTorDecl->AddChild(__3174381146);
-				NumbatLogic::Scope* __1298744023 = pScope;
+				pTorDecl->AddChild(__2603955430);
+				NumbatLogic::Scope* __1802059883 = pScope;
 				pScope = 0;
-				pTorDecl->AddChild(__1298744023);
-				NumbatLogic::TorDecl* __2430494305 = pTorDecl;
+				pTorDecl->AddChild(__1802059883);
+				NumbatLogic::TorDecl* __2044612163 = pTorDecl;
 				pTorDecl = 0;
-				AddChild(__2430494305);
+				AddChild(__2044612163);
 				if (pAccessLevel) delete pAccessLevel;
 				if (pParamDecl) delete pParamDecl;
 				if (pScope) delete pScope;
@@ -372,18 +377,18 @@ namespace NumbatLogic
 				pTorDecl->m_pParamDecl = pParamDecl;
 				pTorDecl->m_pScope = pScope;
 				pTorDecl->m_sDisambiguate = "";
-				NumbatLogic::AccessLevel* __3838894316 = pAccessLevel;
+				NumbatLogic::AccessLevel* __2815466038 = pAccessLevel;
 				pAccessLevel = 0;
-				pTorDecl->AddChild(__3838894316);
-				NumbatLogic::ParamDecl* __1881425091 = pParamDecl;
+				pTorDecl->AddChild(__2815466038);
+				NumbatLogic::ParamDecl* __858013209 = pParamDecl;
 				pParamDecl = 0;
-				pTorDecl->AddChild(__1881425091);
-				NumbatLogic::Scope* __444085164 = pScope;
+				pTorDecl->AddChild(__858013209);
+				NumbatLogic::Scope* __561531749 = pScope;
 				pScope = 0;
-				pTorDecl->AddChild(__444085164);
-				NumbatLogic::TorDecl* __2731503484 = pTorDecl;
+				pTorDecl->AddChild(__561531749);
+				NumbatLogic::TorDecl* __1087336077 = pTorDecl;
 				pTorDecl = 0;
-				AddChild(__2731503484);
+				AddChild(__1087336077);
 				if (pAccessLevel) delete pAccessLevel;
 				if (pParamDecl) delete pParamDecl;
 				if (pScope) delete pScope;
@@ -493,6 +498,14 @@ namespace NumbatLogic
 				if (eLanguage == AST::Language::CPP)
 					sOut->Append("public ");
 				m_pBaseTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
+			}
+			if (eLanguage == AST::Language::CS && m_bDisposable)
+			{
+				if (m_pBaseTypeRef == 0)
+					sOut->Append(" : ");
+				else
+					sOut->Append(", ");
+				sOut->Append("System.IDisposable");
 			}
 			if (eLanguage == AST::Language::CS && m_pGenericTypeDeclVector->GetSize() > 0)
 			{

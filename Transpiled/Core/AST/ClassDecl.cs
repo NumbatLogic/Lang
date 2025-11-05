@@ -3,6 +3,7 @@ namespace NumbatLogic
 	class ClassDecl : AST
 	{
 		public Token m_pNameToken;
+		public bool m_bDisposable;
 		public TypeRef m_pBaseTypeRef;
 		public OwnedVector<GenericTypeDecl> m_pGenericTypeDeclVector;
 		public NamespaceNode m_pNamespaceNode;
@@ -29,7 +30,11 @@ namespace NumbatLogic
 				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+			Token pDisposableToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_KEYWORD_DISPOSABLE);
+			if (pDisposableToken != null)
+				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			ClassDecl pClassDecl = new ClassDecl();
+			pClassDecl.m_bDisposable = pDisposableToken != null;
 			Token pNameToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_IDENTIFIER);
 			if (pNameToken == null)
 			{
@@ -56,9 +61,9 @@ namespace NumbatLogic
 						Console.Log("expected inner GenericTypeDecl");
 						NumbatLogic.Assert.Plz(false);
 					}
-					NumbatLogic.GenericTypeDecl __3472322917 = pGenericTypeDecl;
+					NumbatLogic.GenericTypeDecl __1610046292 = pGenericTypeDecl;
 					pGenericTypeDecl = null;
-					pClassDecl.m_pGenericTypeDeclVector.PushBack(__3472322917);
+					pClassDecl.m_pGenericTypeDeclVector.PushBack(__1610046292);
 					if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_ANGLE_BRACKET_RIGHT) != null)
 					{
 						continue;
@@ -98,9 +103,9 @@ namespace NumbatLogic
 			pClassDecl.m_pBaseTypeRef = pBaseTypeRef;
 			if (pBaseTypeRef != null)
 			{
-				NumbatLogic.TypeRef __2444892862 = pBaseTypeRef;
+				NumbatLogic.TypeRef __3535429732 = pBaseTypeRef;
 				pBaseTypeRef = null;
-				pClassDecl.AddChild(__2444892862);
+				pClassDecl.AddChild(__3535429732);
 			}
 			while (true)
 			{
@@ -113,49 +118,49 @@ namespace NumbatLogic
 				pAST = MemberVarDecl.TryCreate(pTokenContainer, pTempOffset);
 				if (pAST != null)
 				{
-					NumbatLogic.AST __1913155045 = pAST;
+					NumbatLogic.AST __2416471060 = pAST;
 					pAST = null;
-					pClassDecl.AddChild(__1913155045);
+					pClassDecl.AddChild(__2416471060);
 					continue;
 				}
 				pAST = MemberFunctionDecl.TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 				if (pAST != null)
 				{
-					NumbatLogic.AST __2768793590 = pAST;
+					NumbatLogic.AST __3389567584 = pAST;
 					pAST = null;
-					pClassDecl.AddChild(__2768793590);
+					pClassDecl.AddChild(__3389567584);
 					continue;
 				}
 				pAST = MemberClassDecl.TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 				if (pAST != null)
 				{
-					NumbatLogic.AST __1695068768 = pAST;
+					NumbatLogic.AST __2349374018 = pAST;
 					pAST = null;
-					pClassDecl.AddChild(__1695068768);
+					pClassDecl.AddChild(__2349374018);
 					continue;
 				}
 				pAST = MemberEnumDecl.TryCreate(pTokenContainer, pTempOffset);
 				if (pAST != null)
 				{
-					NumbatLogic.AST __2097715949 = pAST;
+					NumbatLogic.AST __1527289937 = pAST;
 					pAST = null;
-					pClassDecl.AddChild(__2097715949);
+					pClassDecl.AddChild(__1527289937);
 					continue;
 				}
 				pAST = TorDecl.TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 				if (pAST != null)
 				{
-					NumbatLogic.AST __4094203985 = pAST;
+					NumbatLogic.AST __3473465496 = pAST;
 					pAST = null;
-					pClassDecl.AddChild(__4094203985);
+					pClassDecl.AddChild(__3473465496);
 					continue;
 				}
 				pAST = DelegateDecl.TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 				if (pAST != null)
 				{
-					NumbatLogic.AST __1040769079 = pAST;
+					NumbatLogic.AST __3607676949 = pAST;
 					pAST = null;
-					pClassDecl.AddChild(__1040769079);
+					pClassDecl.AddChild(__3607676949);
 					continue;
 				}
 				Console.Log("expected to parse somethting within class...");
@@ -163,9 +168,9 @@ namespace NumbatLogic
 				NumbatLogic.Assert.Plz(false);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.ClassDecl __2697205707 = pClassDecl;
+			NumbatLogic.ClassDecl __533037808 = pClassDecl;
 			pClassDecl = null;
-			return __2697205707;
+			return __533037808;
 		}
 
 		public override void PreValidate(Validator pValidator, OperatorExpr pParent)
@@ -252,18 +257,18 @@ namespace NumbatLogic
 					pTorDecl.m_pParamDecl = pParamDecl;
 					pTorDecl.m_pScope = pScope;
 					pTorDecl.m_sDisambiguate = "";
-					NumbatLogic.AccessLevel __2009174746 = pAccessLevel;
+					NumbatLogic.AccessLevel __2512491307 = pAccessLevel;
 					pAccessLevel = null;
-					pTorDecl.AddChild(__2009174746);
-					NumbatLogic.ParamDecl __3174381146 = pParamDecl;
+					pTorDecl.AddChild(__2512491307);
+					NumbatLogic.ParamDecl __2603955430 = pParamDecl;
 					pParamDecl = null;
-					pTorDecl.AddChild(__3174381146);
-					NumbatLogic.Scope __1298744023 = pScope;
+					pTorDecl.AddChild(__2603955430);
+					NumbatLogic.Scope __1802059883 = pScope;
 					pScope = null;
-					pTorDecl.AddChild(__1298744023);
-					NumbatLogic.TorDecl __2430494305 = pTorDecl;
+					pTorDecl.AddChild(__1802059883);
+					NumbatLogic.TorDecl __2044612163 = pTorDecl;
 					pTorDecl = null;
-					AddChild(__2430494305);
+					AddChild(__2044612163);
 				}
 				if (bHasOwnedPointer && !bHasDestructor)
 				{
@@ -287,18 +292,18 @@ namespace NumbatLogic
 					pTorDecl.m_pParamDecl = pParamDecl;
 					pTorDecl.m_pScope = pScope;
 					pTorDecl.m_sDisambiguate = "";
-					NumbatLogic.AccessLevel __3838894316 = pAccessLevel;
+					NumbatLogic.AccessLevel __2815466038 = pAccessLevel;
 					pAccessLevel = null;
-					pTorDecl.AddChild(__3838894316);
-					NumbatLogic.ParamDecl __1881425091 = pParamDecl;
+					pTorDecl.AddChild(__2815466038);
+					NumbatLogic.ParamDecl __858013209 = pParamDecl;
 					pParamDecl = null;
-					pTorDecl.AddChild(__1881425091);
-					NumbatLogic.Scope __444085164 = pScope;
+					pTorDecl.AddChild(__858013209);
+					NumbatLogic.Scope __561531749 = pScope;
 					pScope = null;
-					pTorDecl.AddChild(__444085164);
-					NumbatLogic.TorDecl __2731503484 = pTorDecl;
+					pTorDecl.AddChild(__561531749);
+					NumbatLogic.TorDecl __1087336077 = pTorDecl;
 					pTorDecl = null;
-					AddChild(__2731503484);
+					AddChild(__1087336077);
 				}
 			}
 			base.Validate(pValidator, pParent);
@@ -402,6 +407,14 @@ namespace NumbatLogic
 					if (eLanguage == AST.Language.CPP)
 						sOut.Append("public ");
 					m_pBaseTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
+				}
+				if (eLanguage == AST.Language.CS && m_bDisposable)
+				{
+					if (m_pBaseTypeRef == null)
+						sOut.Append(" : ");
+					else
+						sOut.Append(", ");
+					sOut.Append("System.IDisposable");
 				}
 				if (eLanguage == AST.Language.CS && m_pGenericTypeDeclVector.GetSize() > 0)
 				{

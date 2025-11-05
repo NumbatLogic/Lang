@@ -65,6 +65,16 @@ namespace NumbatLogic
 				m_pExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
 				sOut.Append(";\n");
 			}
+			else if (eLanguage == AST::Language::CS)
+			{
+				if (m_pExpression.m_pValueType.m_pClassDecl != null && m_pExpression.m_pValueType.m_pClassDecl.m_bDisposable)
+				{
+					Util::Pad(nDepth, sOut);
+					sOut.Append("(");
+					m_pExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
+					sOut.Append(").Dispose();\n");
+				}
+			}
 
 			if (m_pExpression.m_eType == AST::Type::AST_IDENTIFIER) // hax, expression may yeld identifier...
 			{

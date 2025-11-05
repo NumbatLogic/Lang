@@ -42,6 +42,7 @@ namespace NumbatLogic
 			TOKEN_KEYWORD_DELETE,
 			TOKEN_KEYWORD_DESTRUCT,
 			TOKEN_KEYWORD_DISOWN,
+			TOKEN_KEYWORD_DISPOSABLE,
 			TOKEN_KEYWORD_DOUBLE,
 			TOKEN_KEYWORD_ELSE,
 			TOKEN_KEYWORD_ENUM,
@@ -272,6 +273,11 @@ namespace NumbatLogic
 				case Type.TOKEN_KEYWORD_DISOWN:
 				{
 					return "disown";
+				}
+
+				case Type.TOKEN_KEYWORD_DISPOSABLE:
+				{
+					return "disposable";
 				}
 
 				case Type.TOKEN_KEYWORD_DOUBLE:
@@ -602,9 +608,9 @@ namespace NumbatLogic
 			pToken.m_nColumn = m_nColumn;
 			if (m_sValue != null)
 				pToken.m_sValue = new InternalString(m_sValue.GetExternalString());
-			NumbatLogic.Token __1244250390 = pToken;
+			NumbatLogic.Token __2821308647 = pToken;
 			pToken = null;
-			return __1244250390;
+			return __2821308647;
 		}
 
 		public Token()
