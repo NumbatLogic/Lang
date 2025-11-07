@@ -72,7 +72,9 @@ namespace NumbatLogic
 			}
 			else
 			{
-				sOut.AppendUint32(ExternalString::GetChecksum(m_pStringExpr.m_pFirstToken.m_sValue.GetExternalString()));
+				InternalString* sTemp = own new InternalString(m_pStringExpr.m_pFirstToken.m_sValue.GetExternalString());
+				sTemp.Crop(1, sTemp.GetLength() - 2);
+				sOut.AppendUint32(ExternalString::GetChecksum(sTemp.GetExternalString()));
 			}
 		}
 	}
