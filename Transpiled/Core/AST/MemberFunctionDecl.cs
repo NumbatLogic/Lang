@@ -67,17 +67,17 @@ namespace NumbatLogic
 			{
 				return null;
 			}
-			NumbatLogic.AccessLevel __3646168542 = pAccessLevel;
+			NumbatLogic.AccessLevel __1211889024 = pAccessLevel;
 			pAccessLevel = null;
-			pMemberFunctionDecl.AddChild(__3646168542);
+			pMemberFunctionDecl.AddChild(__1211889024);
 			pMemberFunctionDecl.m_pFunctionDecl = pFunctionDecl;
-			NumbatLogic.FunctionDecl __1624742725 = pFunctionDecl;
+			NumbatLogic.FunctionDecl __72691636 = pFunctionDecl;
 			pFunctionDecl = null;
-			pMemberFunctionDecl.AddChild(__1624742725);
+			pMemberFunctionDecl.AddChild(__72691636);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.MemberFunctionDecl __3782689298 = pMemberFunctionDecl;
+			NumbatLogic.MemberFunctionDecl __1146433440 = pMemberFunctionDecl;
 			pMemberFunctionDecl = null;
-			return __3782689298;
+			return __1146433440;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

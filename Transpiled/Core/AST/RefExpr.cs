@@ -23,13 +23,13 @@ namespace NumbatLogic
 			pRefExpr.m_eType = AST.Type.AST_REF_EXPR;
 			pRefExpr.m_pFirstToken = pRefToken;
 			pRefExpr.m_pExpression = pExpression;
-			NumbatLogic.AST __2491310498 = pExpression;
+			NumbatLogic.AST __297214788 = pExpression;
 			pExpression = null;
-			pRefExpr.AddChild(__2491310498);
+			pRefExpr.AddChild(__297214788);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.RefExpr __3051183261 = pRefExpr;
+			NumbatLogic.RefExpr __335634296 = pRefExpr;
 			pRefExpr = null;
-			return __3051183261;
+			return __335634296;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

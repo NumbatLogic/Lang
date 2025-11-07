@@ -27,9 +27,9 @@ namespace NumbatLogic
 			pBreakStmt.m_eType = AST.Type.AST_BREAK_STMT;
 			pBreakStmt.m_pFirstToken = pBreakToken;
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.BreakStmt __2307065999 = pBreakStmt;
+			NumbatLogic.BreakStmt __1162564604 = pBreakStmt;
 			pBreakStmt = null;
-			return __2307065999;
+			return __1162564604;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

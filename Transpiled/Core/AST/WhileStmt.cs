@@ -52,16 +52,16 @@ namespace NumbatLogic
 			pWhileStmt.m_pFirstToken = pWhileToken;
 			pWhileStmt.m_pExpression = pExpression;
 			pWhileStmt.m_pScope = pScope;
-			NumbatLogic.AST __1233045057 = pExpression;
+			NumbatLogic.AST __297214760 = pExpression;
 			pExpression = null;
-			pWhileStmt.AddChild(__1233045057);
-			NumbatLogic.Scope __4281081568 = pScope;
+			pWhileStmt.AddChild(__297214760);
+			NumbatLogic.Scope __3242206956 = pScope;
 			pScope = null;
-			pWhileStmt.AddChild(__4281081568);
+			pWhileStmt.AddChild(__3242206956);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.WhileStmt __1903884803 = pWhileStmt;
+			NumbatLogic.WhileStmt __1100338104 = pWhileStmt;
 			pWhileStmt = null;
-			return __1903884803;
+			return __1100338104;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

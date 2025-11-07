@@ -60,9 +60,9 @@ namespace NumbatLogic
 		}
 		ReferenceNode* pCreatedChild = new ReferenceNode(sxName);
 		pChild = pCreatedChild;
-		NumbatLogic::ReferenceNode* __3032358876 = pCreatedChild;
+		NumbatLogic::ReferenceNode* __1139249892 = pCreatedChild;
 		pCreatedChild = 0;
-		m_pChildNodeVector->PushBack(__3032358876);
+		m_pChildNodeVector->PushBack(__1139249892);
 		if (pCreatedChild) delete pCreatedChild;
 		return pChild;
 	}
@@ -140,16 +140,16 @@ namespace NumbatLogic
 				if (pAST) delete pAST;
 				break;
 			}
-			NumbatLogic::AST* __252198158 = pAST;
+			NumbatLogic::AST* __4031891376 = pAST;
 			pAST = 0;
-			pThis->AddChild(__252198158);
+			pThis->AddChild(__4031891376);
 			if (pAST) delete pAST;
 		}
-		NumbatLogic::TranslationUnit* __1025862288 = pThis;
+		NumbatLogic::TranslationUnit* __3242285220 = pThis;
 		pThis = 0;
 		if (sInput) delete sInput;
 		if (pOffsetDatum) delete pOffsetDatum;
-		return __1025862288;
+		return __3242285220;
 	}
 
 	void TranslationUnit::AddClassDeclReference(ClassDecl* pClassDecl, OutputFile eOutputFile, bool bForwardReference)
@@ -170,9 +170,9 @@ namespace NumbatLogic
 		pClassDeclReference->m_pClassDecl = pClassDecl;
 		pClassDeclReference->m_eOutputFile = eOutputFile;
 		pClassDeclReference->m_bForwardReference = bForwardReference;
-		NumbatLogic::ClassDeclReference* __653368864 = pClassDeclReference;
+		NumbatLogic::ClassDeclReference* __2362984164 = pClassDeclReference;
 		pClassDeclReference = 0;
-		m_pClassDeclReferenceVector->PushBack(__653368864);
+		m_pClassDeclReferenceVector->PushBack(__2362984164);
 		AST::AddClassDeclReference(pClassDecl, eOutputFile, bForwardReference);
 		if (pClassDeclReference) delete pClassDeclReference;
 	}
@@ -278,9 +278,9 @@ namespace NumbatLogic
 			InternalString* sTemp = sFrom->CreateClone();
 			sTemp->SubStr(0, nIndex + 1);
 			sFrom->CropFront(nIndex + 1);
-			NumbatLogic::InternalString* __1764770805 = sTemp;
+			NumbatLogic::InternalString* __3242367756 = sTemp;
 			sTemp = 0;
-			sFromVector->PushBack(__1764770805);
+			sFromVector->PushBack(__3242367756);
 			if (sTemp) delete sTemp;
 		}
 		while (true)
@@ -291,9 +291,9 @@ namespace NumbatLogic
 			InternalString* sTemp = sTo->CreateClone();
 			sTemp->SubStr(0, nIndex + 1);
 			sTo->CropFront(nIndex + 1);
-			NumbatLogic::InternalString* __204487571 = sTemp;
+			NumbatLogic::InternalString* __3242367748 = sTemp;
 			sTemp = 0;
-			sToVector->PushBack(__204487571);
+			sToVector->PushBack(__3242367748);
 			if (sTemp) delete sTemp;
 		}
 		while (true)
@@ -311,13 +311,13 @@ namespace NumbatLogic
 		for (int i = 0; i < sToVector->GetSize(); i++)
 			sOut->Append(sToVector->Get(i)->GetExternalString());
 		sOut->Append(sTo->GetExternalString());
-		NumbatLogic::InternalString* __3292448510 = sOut;
+		NumbatLogic::InternalString* __4031864796 = sOut;
 		sOut = 0;
 		if (sFrom) delete sFrom;
 		if (sTo) delete sTo;
 		if (sFromVector) delete sFromVector;
 		if (sToVector) delete sToVector;
-		return __3292448510;
+		return __4031864796;
 	}
 
 	void TranslationUnit::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

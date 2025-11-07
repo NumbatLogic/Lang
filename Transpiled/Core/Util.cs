@@ -8,19 +8,6 @@ namespace NumbatLogic
 				sOut.AppendChar('\t');
 		}
 
-		public static uint BadHash(InternalString sString)
-		{
-			Blob pBlob = new Blob(true);
-			BlobView pBlobView = pBlob.GetBlobView();
-			for (int i = 0; i < sString.GetLength(); i++)
-			{
-				char nChar = sString.GetChar(i);
-				pBlobView.PackUint32(nChar);
-			}
-			uint nHaxTemp = pBlob.GetMsoCrc32();
-			return nHaxTemp;
-		}
-
 	}
 }
 

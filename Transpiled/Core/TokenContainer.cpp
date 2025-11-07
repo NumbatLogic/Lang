@@ -891,9 +891,9 @@ namespace NumbatLogic
 		if (bCopyString)
 			pToken->m_sValue = new InternalString(pParseDatum->m_sCurrentRead->GetExternalString());
 		pParseDatum->ClearCurrentRead();
-		NumbatLogic::Token* __997761665 = pToken;
+		NumbatLogic::Token* __84182180 = pToken;
 		pToken = 0;
-		m_pTokenVector->PushBack(__997761665);
+		m_pTokenVector->PushBack(__84182180);
 		if (pToken) delete pToken;
 	}
 

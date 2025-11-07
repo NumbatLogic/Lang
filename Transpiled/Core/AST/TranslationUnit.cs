@@ -33,9 +33,9 @@ namespace NumbatLogic
 			}
 			ReferenceNode pCreatedChild = new ReferenceNode(sxName);
 			pChild = pCreatedChild;
-			NumbatLogic.ReferenceNode __3032358876 = pCreatedChild;
+			NumbatLogic.ReferenceNode __1139249892 = pCreatedChild;
 			pCreatedChild = null;
-			m_pChildNodeVector.PushBack(__3032358876);
+			m_pChildNodeVector.PushBack(__1139249892);
 			return pChild;
 		}
 
@@ -111,13 +111,13 @@ namespace NumbatLogic
 				{
 					break;
 				}
-				NumbatLogic.AST __252198158 = pAST;
+				NumbatLogic.AST __4031891376 = pAST;
 				pAST = null;
-				pThis.AddChild(__252198158);
+				pThis.AddChild(__4031891376);
 			}
-			NumbatLogic.TranslationUnit __1025862288 = pThis;
+			NumbatLogic.TranslationUnit __3242285220 = pThis;
 			pThis = null;
-			return __1025862288;
+			return __3242285220;
 		}
 
 		public override void AddClassDeclReference(ClassDecl pClassDecl, OutputFile eOutputFile, bool bForwardReference)
@@ -138,9 +138,9 @@ namespace NumbatLogic
 			pClassDeclReference.m_pClassDecl = pClassDecl;
 			pClassDeclReference.m_eOutputFile = eOutputFile;
 			pClassDeclReference.m_bForwardReference = bForwardReference;
-			NumbatLogic.ClassDeclReference __653368864 = pClassDeclReference;
+			NumbatLogic.ClassDeclReference __2362984164 = pClassDeclReference;
 			pClassDeclReference = null;
-			m_pClassDeclReferenceVector.PushBack(__653368864);
+			m_pClassDeclReferenceVector.PushBack(__2362984164);
 			base.AddClassDeclReference(pClassDecl, eOutputFile, bForwardReference);
 		}
 
@@ -242,9 +242,9 @@ namespace NumbatLogic
 				InternalString sTemp = sFrom.CreateClone();
 				sTemp.SubStr(0, nIndex + 1);
 				sFrom.CropFront(nIndex + 1);
-				NumbatLogic.InternalString __1764770805 = sTemp;
+				NumbatLogic.InternalString __3242367756 = sTemp;
 				sTemp = null;
-				sFromVector.PushBack(__1764770805);
+				sFromVector.PushBack(__3242367756);
 			}
 			while (true)
 			{
@@ -254,9 +254,9 @@ namespace NumbatLogic
 				InternalString sTemp = sTo.CreateClone();
 				sTemp.SubStr(0, nIndex + 1);
 				sTo.CropFront(nIndex + 1);
-				NumbatLogic.InternalString __204487571 = sTemp;
+				NumbatLogic.InternalString __3242367748 = sTemp;
 				sTemp = null;
-				sToVector.PushBack(__204487571);
+				sToVector.PushBack(__3242367748);
 			}
 			while (true)
 			{
@@ -273,9 +273,9 @@ namespace NumbatLogic
 			for (int i = 0; i < sToVector.GetSize(); i++)
 				sOut.Append(sToVector.Get(i).GetExternalString());
 			sOut.Append(sTo.GetExternalString());
-			NumbatLogic.InternalString __3292448510 = sOut;
+			NumbatLogic.InternalString __4031864796 = sOut;
 			sOut = null;
-			return __3292448510;
+			return __4031864796;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

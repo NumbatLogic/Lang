@@ -17,13 +17,13 @@ namespace NumbatLogic
 			pUnary.m_eType = AST.Type.AST_UNARY;
 			pUnary.m_pFirstToken = pToken;
 			pUnary.m_pExpression = pExpression;
-			NumbatLogic.AST __4286472943 = pExpression;
+			NumbatLogic.AST __297214832 = pExpression;
 			pExpression = null;
-			pUnary.AddChild(__4286472943);
+			pUnary.AddChild(__297214832);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.Unary __3127995765 = pUnary;
+			NumbatLogic.Unary __3242281916 = pUnary;
 			pUnary = null;
-			return __3127995765;
+			return __3242281916;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

@@ -29,14 +29,14 @@ namespace NumbatLogic
 			pReturnStmt.m_pExpression = pExpression;
 			if (pExpression != null)
 			{
-				NumbatLogic.AST __2860403603 = pExpression;
+				NumbatLogic.AST __297214816 = pExpression;
 				pExpression = null;
-				pReturnStmt.AddChild(__2860403603);
+				pReturnStmt.AddChild(__297214816);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.ReturnStmt __3549794103 = pReturnStmt;
+			NumbatLogic.ReturnStmt __28906476 = pReturnStmt;
 			pReturnStmt = null;
-			return __3549794103;
+			return __28906476;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

@@ -40,21 +40,21 @@ namespace NumbatLogic
 		pOperatorExpr->m_pRight = pOwnedRight;
 		if (pLeft != 0)
 		{
-			NumbatLogic::AST* __3308560438 = pOwnedLeft;
+			NumbatLogic::AST* __1181822148 = pOwnedLeft;
 			pOwnedLeft = 0;
-			pOperatorExpr->AddChild(__3308560438);
+			pOperatorExpr->AddChild(__1181822148);
 		}
 		if (pRight != 0)
 		{
-			NumbatLogic::AST* __1365274285 = pOwnedRight;
+			NumbatLogic::AST* __432274168 = pOwnedRight;
 			pOwnedRight = 0;
-			pOperatorExpr->AddChild(__1365274285);
+			pOperatorExpr->AddChild(__432274168);
 		}
-		NumbatLogic::OperatorExpr* __253643324 = pOperatorExpr;
+		NumbatLogic::OperatorExpr* __2385928032 = pOperatorExpr;
 		pOperatorExpr = 0;
 		if (pOwnedLeft) delete pOwnedLeft;
 		if (pOwnedRight) delete pOwnedRight;
-		return __253643324;
+		return __2385928032;
 	}
 
 	AST* OperatorExpr::BaseClone()
@@ -65,13 +65,13 @@ namespace NumbatLogic
 			pLeft = m_pLeft->BaseClone();
 		if (m_pRight != 0)
 			pRight = m_pRight->BaseClone();
-		NumbatLogic::AST* __392244779 = pLeft;
+		NumbatLogic::AST* __4031900832 = pLeft;
 		pLeft = 0;
-		NumbatLogic::AST* __2389892014 = pRight;
+		NumbatLogic::AST* __3242261152 = pRight;
 		pRight = 0;
 		if (pLeft) delete pLeft;
 		if (pRight) delete pRight;
-		return Create(m_pOperatorToken, __392244779, __2389892014);
+		return Create(m_pOperatorToken, __4031900832, __3242261152);
 	}
 
 	void OperatorExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
