@@ -108,9 +108,9 @@ namespace NumbatLogic
 						NumbatLogic::Assert::Plz(false);
 					}
 					pTypeRef->m_pGenericTypeRefVector->PushBack(pGenericTypeRef);
-					NumbatLogic::TypeRef* __1844426101 = pGenericTypeRef;
+					NumbatLogic::TypeRef* __1829346708 = pGenericTypeRef;
 					pGenericTypeRef = 0;
-					pTypeRef->AddChild(__1844426101);
+					pTypeRef->AddChild(__1829346708);
 					if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_ANGLE_BRACKET_RIGHT) != 0)
 					{
 						if (pGenericTypeRef) delete pGenericTypeRef;
@@ -146,9 +146,9 @@ namespace NumbatLogic
 				return 0;
 			}
 			pTypeRef->m_pChildTypeRef = pChildTypeRef;
-			NumbatLogic::TypeRef* __3132025750 = pChildTypeRef;
+			NumbatLogic::TypeRef* __2513018316 = pChildTypeRef;
 			pChildTypeRef = 0;
-			pTypeRef->AddChild(__3132025750);
+			pTypeRef->AddChild(__2513018316);
 			if (pChildTypeRef) delete pChildTypeRef;
 		}
 		else
@@ -164,10 +164,10 @@ namespace NumbatLogic
 					pTypeRef->m_ePointerType = PointerType::TRANSITON;
 				}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::TypeRef* __853160716 = pTypeRef;
+		NumbatLogic::TypeRef* __1342807540 = pTypeRef;
 		pTypeRef = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __853160716;
+		return __1342807540;
 	}
 
 	AST* TypeRef::FindType()
@@ -364,9 +364,9 @@ namespace NumbatLogic
 		{
 			TypeRef* pGenericTypeRef = m_pGenericTypeRefVector->Get(i)->Clone();
 			pTypeRef->m_pGenericTypeRefVector->PushBack(pGenericTypeRef);
-			NumbatLogic::TypeRef* __3133138807 = pGenericTypeRef;
+			NumbatLogic::TypeRef* __1829346548 = pGenericTypeRef;
 			pGenericTypeRef = 0;
-			pTypeRef->AddChild(__3133138807);
+			pTypeRef->AddChild(__1829346548);
 			if (pGenericTypeRef) delete pGenericTypeRef;
 		}
 		pTypeRef->m_pChildTypeRef = 0;
@@ -374,15 +374,15 @@ namespace NumbatLogic
 		{
 			TypeRef* pChildTypeRef = m_pChildTypeRef->Clone();
 			pTypeRef->m_pChildTypeRef = pChildTypeRef;
-			NumbatLogic::TypeRef* __1476283774 = pChildTypeRef;
+			NumbatLogic::TypeRef* __2513018108 = pChildTypeRef;
 			pChildTypeRef = 0;
-			pTypeRef->AddChild(__1476283774);
+			pTypeRef->AddChild(__2513018108);
 			if (pChildTypeRef) delete pChildTypeRef;
 		}
 		pTypeRef->m_ePointerType = m_ePointerType;
-		NumbatLogic::TypeRef* __3515543247 = pTypeRef;
+		NumbatLogic::TypeRef* __1342807288 = pTypeRef;
 		pTypeRef = 0;
-		return __3515543247;
+		return __1342807288;
 	}
 
 	AST* TypeRef::BaseClone()
@@ -652,9 +652,9 @@ namespace NumbatLogic
 								if (pGenericValueType) delete pGenericValueType;
 								return 0;
 							}
-							NumbatLogic::ValueType* __2472998593 = pGenericValueType;
+							NumbatLogic::ValueType* __3575790356 = pGenericValueType;
 							pGenericValueType = 0;
-							m_pValueType->m_pGenericValueTypeVector->PushBack(__2472998593);
+							m_pValueType->m_pGenericValueTypeVector->PushBack(__3575790356);
 							if (pGenericValueType) delete pGenericValueType;
 						}
 						return m_pValueType;

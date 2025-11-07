@@ -80,19 +80,19 @@ namespace NumbatLogic
 		pWhileStmt->m_pFirstToken = pWhileToken;
 		pWhileStmt->m_pExpression = pExpression;
 		pWhileStmt->m_pScope = pScope;
-		NumbatLogic::AST* __1233045057 = pExpression;
+		NumbatLogic::AST* __297214760 = pExpression;
 		pExpression = 0;
-		pWhileStmt->AddChild(__1233045057);
-		NumbatLogic::Scope* __4281081568 = pScope;
+		pWhileStmt->AddChild(__297214760);
+		NumbatLogic::Scope* __3242206956 = pScope;
 		pScope = 0;
-		pWhileStmt->AddChild(__4281081568);
+		pWhileStmt->AddChild(__3242206956);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::WhileStmt* __1903884803 = pWhileStmt;
+		NumbatLogic::WhileStmt* __1100338104 = pWhileStmt;
 		pWhileStmt = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pExpression) delete pExpression;
 		if (pScope) delete pScope;
-		return __1903884803;
+		return __1100338104;
 	}
 
 	void WhileStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

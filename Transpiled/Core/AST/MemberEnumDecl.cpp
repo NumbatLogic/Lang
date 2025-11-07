@@ -47,19 +47,19 @@ namespace NumbatLogic
 		pMemberEnumDecl->m_eType = AST::Type::AST_MEMBER_ENUM_DECL;
 		pMemberEnumDecl->m_pAccessLevel = pAccessLevel;
 		pMemberEnumDecl->m_pEnumDecl = pEnumDecl;
-		NumbatLogic::AccessLevel* __257201134 = pAccessLevel;
+		NumbatLogic::AccessLevel* __1211889140 = pAccessLevel;
 		pAccessLevel = 0;
-		pMemberEnumDecl->AddChild(__257201134);
-		NumbatLogic::EnumDecl* __2346898043 = pEnumDecl;
+		pMemberEnumDecl->AddChild(__1211889140);
+		NumbatLogic::EnumDecl* __1363406840 = pEnumDecl;
 		pEnumDecl = 0;
-		pMemberEnumDecl->AddChild(__2346898043);
+		pMemberEnumDecl->AddChild(__1363406840);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::MemberEnumDecl* __1876560565 = pMemberEnumDecl;
+		NumbatLogic::MemberEnumDecl* __1677979620 = pMemberEnumDecl;
 		pMemberEnumDecl = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pAccessLevel) delete pAccessLevel;
 		if (pEnumDecl) delete pEnumDecl;
-		return __1876560565;
+		return __1677979620;
 	}
 
 	void MemberEnumDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

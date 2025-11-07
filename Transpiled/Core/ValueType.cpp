@@ -71,9 +71,9 @@ namespace NumbatLogic
 			for (int i = 0; i < m_pGenericValueTypeVector->GetSize(); i++)
 				pValueType->m_pGenericValueTypeVector->PushBack(m_pGenericValueTypeVector->Get(i)->Clone());
 		}
-		NumbatLogic::ValueType* __3239983008 = pValueType;
+		NumbatLogic::ValueType* __1095274012 = pValueType;
 		pValueType = 0;
-		return __3239983008;
+		return __1095274012;
 	}
 
 	bool ValueType::ValidateAssignable(ValueType* pTo, Validator* pValidator, Token* pToken)
@@ -145,9 +145,9 @@ namespace NumbatLogic
 					{
 						TypeRef* pGenericTypeRef = m_pGenericValueTypeVector->Get(i)->CreateTypeRef();
 						pTypeRef->m_pGenericTypeRefVector->PushBack(pGenericTypeRef);
-						NumbatLogic::TypeRef* __888078180 = pGenericTypeRef;
+						NumbatLogic::TypeRef* __1829346584 = pGenericTypeRef;
 						pGenericTypeRef = 0;
-						pTypeRef->AddChild(__888078180);
+						pTypeRef->AddChild(__1829346584);
 						if (pGenericTypeRef) delete pGenericTypeRef;
 					}
 				}
@@ -160,18 +160,18 @@ namespace NumbatLogic
 					pNamespaceTypeRef->m_pCloneToken->m_sValue = new InternalString(pNamespaceNode->m_sName->GetExternalString());
 					pNamespaceTypeRef->m_pTypeToken = pNamespaceTypeRef->m_pCloneToken;
 					pNamespaceTypeRef->m_pChildTypeRef = pTypeRef;
-					NumbatLogic::TypeRef* __1844115433 = pTypeRef;
+					NumbatLogic::TypeRef* __1342807396 = pTypeRef;
 					pTypeRef = 0;
-					pNamespaceTypeRef->AddChild(__1844115433);
-					NumbatLogic::TypeRef* __153808142 = pNamespaceTypeRef;
+					pNamespaceTypeRef->AddChild(__1342807396);
+					NumbatLogic::TypeRef* __982097236 = pNamespaceTypeRef;
 					pNamespaceTypeRef = 0;
-					pTypeRef = __153808142;
+					pTypeRef = __982097236;
 					pNamespaceNode = pNamespaceNode->m_pParent;
 					if (pNamespaceTypeRef) delete pNamespaceTypeRef;
 				}
-				NumbatLogic::TypeRef* __233495927 = pTypeRef;
+				NumbatLogic::TypeRef* __1342807368 = pTypeRef;
 				pTypeRef = 0;
-				return __233495927;
+				return __1342807368;
 			}
 
 			case Type::GENERIC_TYPE_DECL_VALUE:
@@ -180,9 +180,9 @@ namespace NumbatLogic
 				pTypeRef->m_pCloneToken->m_eType = Token::Type::TOKEN_IDENTIFIER;
 				pTypeRef->m_pCloneToken->m_sValue = new InternalString(m_pGenericTypeDecl->m_pFirstToken->m_sValue->GetExternalString());
 				pTypeRef->m_pTypeToken = pTypeRef->m_pCloneToken;
-				NumbatLogic::TypeRef* __2901059164 = pTypeRef;
+				NumbatLogic::TypeRef* __1342807408 = pTypeRef;
 				pTypeRef = 0;
-				return __2901059164;
+				return __1342807408;
 			}
 
 		}

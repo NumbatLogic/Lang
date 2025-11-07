@@ -46,13 +46,13 @@ namespace NumbatLogic
 			TTHashExpr pTTHashExpr = new TTHashExpr();
 			pTTHashExpr.m_pFirstToken = pTTHashToken;
 			pTTHashExpr.m_pStringExpr = pStringExpr;
-			NumbatLogic.StringExpr __377119105 = pStringExpr;
+			NumbatLogic.StringExpr __83238656 = pStringExpr;
 			pStringExpr = null;
-			pTTHashExpr.AddChild(__377119105);
+			pTTHashExpr.AddChild(__83238656);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.TTHashExpr __4265136966 = pTTHashExpr;
+			NumbatLogic.TTHashExpr __141090572 = pTTHashExpr;
 			pTTHashExpr = null;
-			return __4265136966;
+			return __141090572;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
@@ -70,7 +70,9 @@ namespace NumbatLogic
 			}
 			else
 			{
-				sOut.AppendUint32(ExternalString.GetChecksum(m_pStringExpr.m_pFirstToken.m_sValue.GetExternalString()));
+				InternalString sTemp = new InternalString(m_pStringExpr.m_pFirstToken.m_sValue.GetExternalString());
+				sTemp.Crop(1, sTemp.GetLength() - 2);
+				sOut.AppendUint32(ExternalString.GetChecksum(sTemp.GetExternalString()));
 			}
 		}
 

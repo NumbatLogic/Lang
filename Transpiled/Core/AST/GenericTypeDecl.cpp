@@ -28,10 +28,10 @@ namespace NumbatLogic
 		pGenericTypeDecl->m_eType = AST::Type::AST_GENERIC_TYPE_DECL;
 		pGenericTypeDecl->m_pFirstToken = pTypeToken;
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::GenericTypeDecl* __1308087849 = pGenericTypeDecl;
+		NumbatLogic::GenericTypeDecl* __1829302240 = pGenericTypeDecl;
 		pGenericTypeDecl = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __1308087849;
+		return __1829302240;
 	}
 
 	void GenericTypeDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

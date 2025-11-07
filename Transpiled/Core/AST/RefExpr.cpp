@@ -45,15 +45,15 @@ namespace NumbatLogic
 		pRefExpr->m_eType = AST::Type::AST_REF_EXPR;
 		pRefExpr->m_pFirstToken = pRefToken;
 		pRefExpr->m_pExpression = pExpression;
-		NumbatLogic::AST* __2491310498 = pExpression;
+		NumbatLogic::AST* __297214788 = pExpression;
 		pExpression = 0;
-		pRefExpr->AddChild(__2491310498);
+		pRefExpr->AddChild(__297214788);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::RefExpr* __3051183261 = pRefExpr;
+		NumbatLogic::RefExpr* __335634296 = pRefExpr;
 		pRefExpr = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pExpression) delete pExpression;
-		return __3051183261;
+		return __335634296;
 	}
 
 	void RefExpr::Validate(Validator* pValidator, OperatorExpr* pParent)

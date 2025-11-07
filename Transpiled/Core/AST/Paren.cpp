@@ -48,15 +48,15 @@ namespace NumbatLogic
 		Paren* pParen = new Paren();
 		pParen->m_eType = AST::Type::AST_PAREN;
 		pParen->m_pFirstToken = pOpeningToken;
-		NumbatLogic::AST* __3863392504 = pChild;
+		NumbatLogic::AST* __3242496764 = pChild;
 		pChild = 0;
-		pParen->AddChild(__3863392504);
+		pParen->AddChild(__3242496764);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::Paren* __987830577 = pParen;
+		NumbatLogic::Paren* __3242239344 = pParen;
 		pParen = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pChild) delete pChild;
-		return __987830577;
+		return __3242239344;
 	}
 
 	void Paren::Validate(Validator* pValidator, OperatorExpr* pParent)

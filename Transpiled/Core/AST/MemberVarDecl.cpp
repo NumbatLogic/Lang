@@ -64,19 +64,19 @@ namespace NumbatLogic
 		pMemberVarDecl->m_pAccessLevel = pAccessLevel;
 		pMemberVarDecl->m_bStatic = bStatic;
 		pMemberVarDecl->m_pVarDecl = pVarDecl;
-		NumbatLogic::AccessLevel* __1431588250 = pAccessLevel;
+		NumbatLogic::AccessLevel* __1211889032 = pAccessLevel;
 		pAccessLevel = 0;
-		pMemberVarDecl->AddChild(__1431588250);
-		NumbatLogic::VarDecl* __1710550748 = pVarDecl;
+		pMemberVarDecl->AddChild(__1211889032);
+		NumbatLogic::VarDecl* __336605068 = pVarDecl;
 		pVarDecl = 0;
-		pMemberVarDecl->AddChild(__1710550748);
+		pMemberVarDecl->AddChild(__336605068);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::MemberVarDecl* __3049868366 = pMemberVarDecl;
+		NumbatLogic::MemberVarDecl* __3644862360 = pMemberVarDecl;
 		pMemberVarDecl = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pAccessLevel) delete pAccessLevel;
 		if (pVarDecl) delete pVarDecl;
-		return __3049868366;
+		return __3644862360;
 	}
 
 	void MemberVarDecl::Validate(Validator* pValidator, OperatorExpr* pParent)

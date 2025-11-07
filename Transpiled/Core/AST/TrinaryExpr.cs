@@ -40,19 +40,19 @@ namespace NumbatLogic
 			pTrinaryExpr.m_pFirstExpression = pFirstExpression;
 			pTrinaryExpr.m_pSecondExpression = pSecondExpression;
 			pTrinaryExpr.m_pThirdExpression = pThirdExpression;
-			NumbatLogic.AST __444647246 = pFirstExpression;
+			NumbatLogic.AST __1035412260 = pFirstExpression;
 			pFirstExpression = null;
-			pTrinaryExpr.AddChild(__444647246);
-			NumbatLogic.AST __1855585283 = pSecondExpression;
+			pTrinaryExpr.AddChild(__1035412260);
+			NumbatLogic.AST __3988202256 = pSecondExpression;
 			pSecondExpression = null;
-			pTrinaryExpr.AddChild(__1855585283);
-			NumbatLogic.AST __2014240932 = pThirdExpression;
+			pTrinaryExpr.AddChild(__3988202256);
+			NumbatLogic.AST __2914460436 = pThirdExpression;
 			pThirdExpression = null;
-			pTrinaryExpr.AddChild(__2014240932);
+			pTrinaryExpr.AddChild(__2914460436);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.TrinaryExpr __2141953376 = pTrinaryExpr;
+			NumbatLogic.TrinaryExpr __256745216 = pTrinaryExpr;
 			pTrinaryExpr = null;
-			return __2141953376;
+			return __256745216;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
