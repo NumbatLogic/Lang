@@ -769,6 +769,16 @@ namespace NumbatLogic
 		return m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_BOOL;
 	}
 
+	bool TypeRef::IsFloat()
+	{
+		return m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_FLOAT;
+	}
+
+	bool TypeRef::IsDouble()
+	{
+		return m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_DOUBLE;
+	}
+
 	TypeRef::~TypeRef()
 	{
 		if (m_pGenericTypeRefVector) delete m_pGenericTypeRefVector;
