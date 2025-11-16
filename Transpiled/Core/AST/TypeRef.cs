@@ -408,10 +408,13 @@ namespace NumbatLogic
 												if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_INT16)
 													sOut.Append("short");
 												else
-													if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_VOIDPTR)
-														sOut.Append("void*");
+													if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_INT8)
+														sOut.Append("signed char");
 													else
-														m_pTypeToken.Stringify(sOut);
+														if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_VOIDPTR)
+															sOut.Append("void*");
+														else
+															m_pTypeToken.Stringify(sOut);
 				if (m_bRef)
 					sOut.AppendString("&");
 			}
@@ -609,9 +612,9 @@ namespace NumbatLogic
 								{
 									return null;
 								}
-								NumbatLogic.ValueType __3575790356 = pGenericValueType;
+								NumbatLogic.ValueType __3575790532 = pGenericValueType;
 								pGenericValueType = null;
-								m_pValueType.m_pGenericValueTypeVector.PushBack(__3575790356);
+								m_pValueType.m_pGenericValueTypeVector.PushBack(__3575790532);
 							}
 							return m_pValueType;
 						}
