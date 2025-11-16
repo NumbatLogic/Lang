@@ -54,6 +54,8 @@ namespace NumbatLogic
 		public: bool IsIntegral();
 		public: bool IsInt();
 		public: bool IsBool();
+		public: bool IsFloat();
+		public: bool IsDouble();
 		public: virtual ~TypeRef();
 	};
 }

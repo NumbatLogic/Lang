@@ -259,6 +259,12 @@ namespace NumbatLogic
 								else
 									if (m_pTypeRef.IsBool())
 										sxToAppend = " = false";
+									else
+										if (m_pTypeRef.IsFloat())
+											sxToAppend = " = 0.0f";
+										else
+											if (m_pTypeRef.IsDouble())
+												sxToAppend = " = 0.0";
 							}
 						}
 					}

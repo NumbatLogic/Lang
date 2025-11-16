@@ -725,6 +725,16 @@ namespace NumbatLogic
 			return m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_BOOL;
 		}
 
+		public bool IsFloat()
+		{
+			return m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_FLOAT;
+		}
+
+		public bool IsDouble()
+		{
+			return m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_DOUBLE;
+		}
+
 		~TypeRef()
 		{
 		}
