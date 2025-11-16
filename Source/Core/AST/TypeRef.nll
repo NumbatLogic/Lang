@@ -495,6 +495,8 @@ namespace NumbatLogic
 					sOut.Append("int");
 				else if (m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_INT16)
 					sOut.Append("short");
+				else if (m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_INT8)
+					sOut.Append("signed char");
 				else if (m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_VOIDPTR)
 					sOut.Append("void*");
 				else
