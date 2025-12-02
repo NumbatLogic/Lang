@@ -56,6 +56,7 @@ namespace NumbatLogic
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
+			base.Validate(pValidator, pParent);
 			m_pValueType = new ValueType(ValueType.Type.STATIC_ARRAY);
 		}
 

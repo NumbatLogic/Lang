@@ -83,6 +83,7 @@ namespace NumbatLogic
 
 	void StaticArray::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
+		AST::Validate(pValidator, pParent);
 		m_pValueType = new ValueType(ValueType::Type::STATIC_ARRAY);
 	}
 
