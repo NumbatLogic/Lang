@@ -18,6 +18,7 @@ error /MrTest error/
 # list of warnings here...
 warning /(?i)^warning/
 warning /(?i)^php warning/
+warning /: warning CS/
 
 # create a quick access link to lines in the report containing 'INFO'
 info /INFO/
