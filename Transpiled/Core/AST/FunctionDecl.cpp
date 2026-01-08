@@ -105,26 +105,26 @@ namespace NumbatLogic
 		pFunctionDecl->m_pParamDecl = pParamDecl;
 		pFunctionDecl->m_bConst = bConst;
 		pFunctionDecl->m_pScope = pScope;
-		NumbatLogic::TypeRef* __335701820 = pTypeRef;
+		NumbatLogic::TypeRef* __2942767685 = pTypeRef;
 		pTypeRef = 0;
-		pFunctionDecl->AddChild(__335701820);
-		NumbatLogic::ParamDecl* __1084747680 = pParamDecl;
+		pFunctionDecl->AddChild(__2942767685);
+		NumbatLogic::ParamDecl* __3702925988 = pParamDecl;
 		pParamDecl = 0;
-		pFunctionDecl->AddChild(__1084747680);
+		pFunctionDecl->AddChild(__3702925988);
 		if (pScope != 0)
 		{
-			NumbatLogic::Scope* __3242206956 = pScope;
+			NumbatLogic::Scope* __1530815332 = pScope;
 			pScope = 0;
-			pFunctionDecl->AddChild(__3242206956);
+			pFunctionDecl->AddChild(__1530815332);
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::FunctionDecl* __72691520 = pFunctionDecl;
+		NumbatLogic::FunctionDecl* __4280092330 = pFunctionDecl;
 		pFunctionDecl = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pTypeRef) delete pTypeRef;
 		if (pParamDecl) delete pParamDecl;
 		if (pScope) delete pScope;
-		return __72691520;
+		return __4280092330;
 	}
 
 	AST* FunctionDecl::FindByName(const char* sxName, AST* pCallingChild)

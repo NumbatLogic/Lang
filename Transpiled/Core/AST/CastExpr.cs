@@ -38,16 +38,16 @@ namespace NumbatLogic
 			pCastExpr.m_pFirstToken = pCastToken;
 			pCastExpr.m_pTypeRef = pTypeRef;
 			pCastExpr.m_pParamCall = pParamCall;
-			NumbatLogic.TypeRef __335701780 = pTypeRef;
+			NumbatLogic.TypeRef __2942570890 = pTypeRef;
 			pTypeRef = null;
-			pCastExpr.AddChild(__335701780);
-			NumbatLogic.ParamCall __1084719256 = pParamCall;
+			pCastExpr.AddChild(__2942570890);
+			NumbatLogic.ParamCall __1502782301 = pParamCall;
 			pParamCall = null;
-			pCastExpr.AddChild(__1084719256);
+			pCastExpr.AddChild(__1502782301);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.CastExpr __1361043236 = pCastExpr;
+			NumbatLogic.CastExpr __4190875401 = pCastExpr;
 			pCastExpr = null;
-			return __1361043236;
+			return __4190875401;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

@@ -72,23 +72,23 @@ namespace NumbatLogic
 		pTrinaryExpr->m_pFirstExpression = pFirstExpression;
 		pTrinaryExpr->m_pSecondExpression = pSecondExpression;
 		pTrinaryExpr->m_pThirdExpression = pThirdExpression;
-		NumbatLogic::AST* __1035412260 = pFirstExpression;
+		NumbatLogic::AST* __2029364893 = pFirstExpression;
 		pFirstExpression = 0;
-		pTrinaryExpr->AddChild(__1035412260);
-		NumbatLogic::AST* __3988202256 = pSecondExpression;
+		pTrinaryExpr->AddChild(__2029364893);
+		NumbatLogic::AST* __45120503 = pSecondExpression;
 		pSecondExpression = 0;
-		pTrinaryExpr->AddChild(__3988202256);
-		NumbatLogic::AST* __2914460436 = pThirdExpression;
+		pTrinaryExpr->AddChild(__45120503);
+		NumbatLogic::AST* __777254731 = pThirdExpression;
 		pThirdExpression = 0;
-		pTrinaryExpr->AddChild(__2914460436);
+		pTrinaryExpr->AddChild(__777254731);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::TrinaryExpr* __256745216 = pTrinaryExpr;
+		NumbatLogic::TrinaryExpr* __2348216585 = pTrinaryExpr;
 		pTrinaryExpr = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pFirstExpression) delete pFirstExpression;
 		if (pSecondExpression) delete pSecondExpression;
 		if (pThirdExpression) delete pThirdExpression;
-		return __256745216;
+		return __2348216585;
 	}
 
 	void TrinaryExpr::Validate(Validator* pValidator, OperatorExpr* pParent)

@@ -45,15 +45,15 @@ namespace NumbatLogic
 		ExpressionStmt* pExpressionStmt = new ExpressionStmt();
 		pExpressionStmt->m_pFirstToken = pExpression->m_pFirstToken;
 		pExpressionStmt->m_pExpression = pExpression;
-		NumbatLogic::AST* __297214788 = pExpression;
+		NumbatLogic::AST* __1929334319 = pExpression;
 		pExpression = 0;
-		pExpressionStmt->AddChild(__297214788);
+		pExpressionStmt->AddChild(__1929334319);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::ExpressionStmt* __3072594936 = pExpressionStmt;
+		NumbatLogic::ExpressionStmt* __490873359 = pExpressionStmt;
 		pExpressionStmt = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pExpression) delete pExpression;
-		return __3072594936;
+		return __490873359;
 	}
 
 	void ExpressionStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

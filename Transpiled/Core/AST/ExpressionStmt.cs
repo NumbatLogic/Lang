@@ -25,13 +25,13 @@ namespace NumbatLogic
 			ExpressionStmt pExpressionStmt = new ExpressionStmt();
 			pExpressionStmt.m_pFirstToken = pExpression.m_pFirstToken;
 			pExpressionStmt.m_pExpression = pExpression;
-			NumbatLogic.AST __297214788 = pExpression;
+			NumbatLogic.AST __1929334319 = pExpression;
 			pExpression = null;
-			pExpressionStmt.AddChild(__297214788);
+			pExpressionStmt.AddChild(__1929334319);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.ExpressionStmt __3072594936 = pExpressionStmt;
+			NumbatLogic.ExpressionStmt __490873359 = pExpressionStmt;
 			pExpressionStmt = null;
-			return __3072594936;
+			return __490873359;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

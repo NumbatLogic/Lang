@@ -60,9 +60,9 @@ namespace NumbatLogic
 		DelegateDecl* pDelegateDecl = new DelegateDecl();
 		pDelegateDecl->m_pFirstToken = pToken;
 		pDelegateDecl->m_pAccessLevel = pAccessLevel;
-		NumbatLogic::AccessLevel* __1211889092 = pAccessLevel;
+		NumbatLogic::AccessLevel* __98812055 = pAccessLevel;
 		pAccessLevel = 0;
-		pDelegateDecl->AddChild(__1211889092);
+		pDelegateDecl->AddChild(__98812055);
 		FunctionDecl* pFunctionDecl = FunctionDecl::TryCreate(pTokenContainer, pTempOffset, 0);
 		if (pFunctionDecl == 0)
 		{
@@ -85,16 +85,16 @@ namespace NumbatLogic
 			return 0;
 		}
 		pDelegateDecl->m_pFunctionDecl = pFunctionDecl;
-		NumbatLogic::FunctionDecl* __72691612 = pFunctionDecl;
+		NumbatLogic::FunctionDecl* __4279829941 = pFunctionDecl;
 		pFunctionDecl = 0;
-		pDelegateDecl->AddChild(__72691612);
+		pDelegateDecl->AddChild(__4279829941);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::DelegateDecl* __1725755280 = pDelegateDecl;
+		NumbatLogic::DelegateDecl* __305311194 = pDelegateDecl;
 		pDelegateDecl = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pAccessLevel) delete pAccessLevel;
 		if (pFunctionDecl) delete pFunctionDecl;
-		return __1725755280;
+		return __305311194;
 	}
 
 	AST* DelegateDecl::FindByName(const char* sxName, AST* pCallingChild)

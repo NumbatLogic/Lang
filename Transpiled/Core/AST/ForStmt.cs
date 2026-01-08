@@ -78,25 +78,25 @@ namespace NumbatLogic
 			}
 			ForStmt pForStmt = new ForStmt();
 			pForStmt.m_pFirstToken = pForToken;
-			NumbatLogic.AST __3480122444 = pBeforeStatement;
+			NumbatLogic.AST __2156020446 = pBeforeStatement;
 			pBeforeStatement = null;
-			pForStmt.AddChild(__3480122444);
-			NumbatLogic.AST __1349416048 = pConditionStatement;
+			pForStmt.AddChild(__2156020446);
+			NumbatLogic.AST __764111395 = pConditionStatement;
 			pConditionStatement = null;
-			pForStmt.AddChild(__1349416048);
+			pForStmt.AddChild(__764111395);
 			if (pLoopStatement != null)
 			{
-				NumbatLogic.AST __3115963264 = pLoopStatement;
+				NumbatLogic.AST __373112406 = pLoopStatement;
 				pLoopStatement = null;
-				pForStmt.AddChild(__3115963264);
+				pForStmt.AddChild(__373112406);
 			}
-			NumbatLogic.AST __96064388 = pStatement;
+			NumbatLogic.AST __3036777715 = pStatement;
 			pStatement = null;
-			pForStmt.AddChild(__96064388);
+			pForStmt.AddChild(__3036777715);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.ForStmt __1367101328 = pForStmt;
+			NumbatLogic.ForStmt __464585012 = pForStmt;
 			pForStmt = null;
-			return __1367101328;
+			return __464585012;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

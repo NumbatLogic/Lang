@@ -51,9 +51,9 @@ namespace NumbatLogic
 					NumbatLogic.Assert.Plz(false);
 				}
 				pEnumDecl.m_pEnumDeclValueVector.PushBack(pEnumDeclValue);
-				NumbatLogic.EnumDeclValue __262295524 = pEnumDeclValue;
+				NumbatLogic.EnumDeclValue __478630801 = pEnumDeclValue;
 				pEnumDeclValue = null;
-				pEnumDecl.AddChild(__262295524);
+				pEnumDecl.AddChild(__478630801);
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_CURLY_BRACE_RIGHT) != null)
 				{
 					continue;
@@ -67,9 +67,9 @@ namespace NumbatLogic
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.EnumDecl __1363406760 = pEnumDecl;
+			NumbatLogic.EnumDecl __4282209082 = pEnumDecl;
 			pEnumDecl = null;
-			return __1363406760;
+			return __4282209082;
 		}
 
 		public override AST FindByName(string sxName, AST pCallingChild)

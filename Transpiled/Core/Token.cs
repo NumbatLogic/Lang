@@ -608,9 +608,9 @@ namespace NumbatLogic
 			pToken.m_nColumn = m_nColumn;
 			if (m_sValue != null)
 				pToken.m_sValue = new InternalString(m_sValue.GetExternalString());
-			NumbatLogic.Token __84182368 = pToken;
+			NumbatLogic.Token __3778855882 = pToken;
 			pToken = null;
-			return __84182368;
+			return __3778855882;
 		}
 
 		public Token()

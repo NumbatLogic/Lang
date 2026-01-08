@@ -51,10 +51,10 @@ namespace NumbatLogic
 		pBreakStmt->m_eType = AST::Type::AST_BREAK_STMT;
 		pBreakStmt->m_pFirstToken = pBreakToken;
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::BreakStmt* __1162564604 = pBreakStmt;
+		NumbatLogic::BreakStmt* __3206362871 = pBreakStmt;
 		pBreakStmt = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __1162564604;
+		return __3206362871;
 	}
 
 	void BreakStmt::Validate(Validator* pValidator, OperatorExpr* pParent)

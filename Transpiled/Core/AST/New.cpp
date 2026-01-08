@@ -70,19 +70,19 @@ namespace NumbatLogic
 		pNew->m_pFirstToken = pNewToken;
 		pNew->m_pTypeRef = pTypeRef;
 		pNew->m_pParamCall = pParamCall;
-		NumbatLogic::TypeRef* __335701768 = pTypeRef;
+		NumbatLogic::TypeRef* __2942570887 = pTypeRef;
 		pTypeRef = 0;
-		pNew->AddChild(__335701768);
-		NumbatLogic::ParamCall* __1084719244 = pParamCall;
+		pNew->AddChild(__2942570887);
+		NumbatLogic::ParamCall* __1502782298 = pParamCall;
 		pParamCall = 0;
-		pNew->AddChild(__1084719244);
+		pNew->AddChild(__1502782298);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::New* __3155456856 = pNew;
+		NumbatLogic::New* __4218231602 = pNew;
 		pNew = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pTypeRef) delete pTypeRef;
 		if (pParamCall) delete pParamCall;
-		return __3155456856;
+		return __4218231602;
 	}
 
 	void New::Validate(Validator* pValidator, OperatorExpr* pParent)

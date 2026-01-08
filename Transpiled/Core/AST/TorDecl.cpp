@@ -110,9 +110,9 @@ namespace NumbatLogic
 					return 0;
 				}
 				pTorDecl->m_pBaseParamCall = pParamCall;
-				NumbatLogic::ParamCall* __1084719236 = pParamCall;
+				NumbatLogic::ParamCall* __1502913502 = pParamCall;
 				pParamCall = 0;
-				pTorDecl->AddChild(__1084719236);
+				pTorDecl->AddChild(__1502913502);
 				if (pParamCall) delete pParamCall;
 			}
 			pScope = Scope::TryCreate(pTokenContainer, pTempOffset, false);
@@ -132,26 +132,26 @@ namespace NumbatLogic
 		pTorDecl->m_pParamDecl = pParamDecl;
 		pTorDecl->m_pScope = pScope;
 		pTorDecl->m_sDisambiguate = "";
-		NumbatLogic::AccessLevel* __1211888980 = pAccessLevel;
+		NumbatLogic::AccessLevel* __99271240 = pAccessLevel;
 		pAccessLevel = 0;
-		pTorDecl->AddChild(__1211888980);
-		NumbatLogic::ParamDecl* __1084747608 = pParamDecl;
+		pTorDecl->AddChild(__99271240);
+		NumbatLogic::ParamDecl* __3703057184 = pParamDecl;
 		pParamDecl = 0;
-		pTorDecl->AddChild(__1084747608);
+		pTorDecl->AddChild(__3703057184);
 		if (pScope != 0)
 		{
-			NumbatLogic::Scope* __3242206720 = pScope;
+			NumbatLogic::Scope* __1530946527 = pScope;
 			pScope = 0;
-			pTorDecl->AddChild(__3242206720);
+			pTorDecl->AddChild(__1530946527);
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::TorDecl* __336998220 = pTorDecl;
+		NumbatLogic::TorDecl* __3519495631 = pTorDecl;
 		pTorDecl = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pAccessLevel) delete pAccessLevel;
 		if (pParamDecl) delete pParamDecl;
 		if (pScope) delete pScope;
-		return __336998220;
+		return __3519495631;
 	}
 
 	void TorDecl::Validate(Validator* pValidator, OperatorExpr* pParent)

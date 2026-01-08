@@ -83,9 +83,9 @@ namespace NumbatLogic
 				NumbatLogic::Assert::Plz(false);
 			}
 			pEnumDecl->m_pEnumDeclValueVector->PushBack(pEnumDeclValue);
-			NumbatLogic::EnumDeclValue* __262295524 = pEnumDeclValue;
+			NumbatLogic::EnumDeclValue* __478630801 = pEnumDeclValue;
 			pEnumDeclValue = 0;
-			pEnumDecl->AddChild(__262295524);
+			pEnumDecl->AddChild(__478630801);
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_RIGHT) != 0)
 			{
 				if (pEnumDeclValue) delete pEnumDeclValue;
@@ -101,10 +101,10 @@ namespace NumbatLogic
 			if (pEnumDeclValue) delete pEnumDeclValue;
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::EnumDecl* __1363406760 = pEnumDecl;
+		NumbatLogic::EnumDecl* __4282209082 = pEnumDecl;
 		pEnumDecl = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __1363406760;
+		return __4282209082;
 	}
 
 	AST* EnumDecl::FindByName(const char* sxName, AST* pCallingChild)

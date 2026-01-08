@@ -55,15 +55,15 @@ namespace NumbatLogic
 					pScope = new Scope();
 					pScope->m_pFirstToken = pChild->m_pFirstToken;
 					pScope->m_bPseudo = true;
-					NumbatLogic::AST* __3242496756 = pChild;
+					NumbatLogic::AST* __356897802 = pChild;
 					pChild = 0;
-					pScope->AddChild(__3242496756);
+					pScope->AddChild(__356897802);
 					pOffsetDatum->Set(pTempOffset);
-					NumbatLogic::Scope* __3242206908 = pScope;
+					NumbatLogic::Scope* __1530552932 = pScope;
 					pScope = 0;
 					if (pChild) delete pChild;
 					if (pTempOffset) delete pTempOffset;
-					return __3242206908;
+					return __1530552932;
 				}
 				if (pChild) delete pChild;
 			}
@@ -93,16 +93,16 @@ namespace NumbatLogic
 				if (pTempOffset) delete pTempOffset;
 				return 0;
 			}
-			NumbatLogic::AST* __3242496684 = pChild;
+			NumbatLogic::AST* __357094601 = pChild;
 			pChild = 0;
-			pScope->AddChild(__3242496684);
+			pScope->AddChild(__357094601);
 			if (pChild) delete pChild;
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::Scope* __3242206972 = pScope;
+		NumbatLogic::Scope* __1530749733 = pScope;
 		pScope = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __3242206972;
+		return __1530749733;
 	}
 
 	void Scope::Validate(Validator* pValidator, OperatorExpr* pParent)

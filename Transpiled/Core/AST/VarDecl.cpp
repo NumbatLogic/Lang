@@ -100,9 +100,9 @@ namespace NumbatLogic
 			}
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 			pVarDecl->m_pArraySizeVector->PushBack(pArraySize);
-			NumbatLogic::AST* __1171502320 = pArraySize;
+			NumbatLogic::AST* __830257000 = pArraySize;
 			pArraySize = 0;
-			pVarDecl->AddChild(__1171502320);
+			pVarDecl->AddChild(__830257000);
 			pSquareBracketLeftToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_LEFT);
 			if (pArraySize) delete pArraySize;
 		}
@@ -142,22 +142,22 @@ namespace NumbatLogic
 		pVarDecl->m_pNameToken = pNameToken;
 		pVarDecl->m_pAssignment = pAssignment;
 		pVarDecl->m_bInline = bInline;
-		NumbatLogic::TypeRef* __1342807428 = pTypeRef;
+		NumbatLogic::TypeRef* __967516521 = pTypeRef;
 		pTypeRef = 0;
-		pVarDecl->AddChild(__1342807428);
+		pVarDecl->AddChild(__967516521);
 		if (pAssignment != 0)
 		{
-			NumbatLogic::AST* __1556009868 = pAssignment;
+			NumbatLogic::AST* __183753559 = pAssignment;
 			pAssignment = 0;
-			pVarDecl->AddChild(__1556009868);
+			pVarDecl->AddChild(__183753559);
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::VarDecl* __1346420632 = pVarDecl;
+		NumbatLogic::VarDecl* __2971982038 = pVarDecl;
 		pVarDecl = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pTypeRef) delete pTypeRef;
 		if (pAssignment) delete pAssignment;
-		return __1346420632;
+		return __2971982038;
 	}
 
 	AST* VarDecl::FindByName(const char* sxName, AST* pCallingChild)

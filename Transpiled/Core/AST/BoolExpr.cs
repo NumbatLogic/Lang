@@ -11,9 +11,9 @@ namespace NumbatLogic
 			BoolExpr pBoolExpr = new BoolExpr();
 			pBoolExpr.m_eType = AST.Type.AST_BOOL_EXPR;
 			pBoolExpr.m_pFirstToken = pToken;
-			NumbatLogic.BoolExpr __1361960776 = pBoolExpr;
+			NumbatLogic.BoolExpr __2520519956 = pBoolExpr;
 			pBoolExpr = null;
-			return __1361960776;
+			return __2520519956;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

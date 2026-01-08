@@ -64,22 +64,22 @@ namespace NumbatLogic
 			IfStmt pIfStmt = new IfStmt();
 			pIfStmt.m_eType = AST.Type.AST_IF_STMT;
 			pIfStmt.m_pFirstToken = pIfToken;
-			NumbatLogic.AST __1156633376 = pCondition;
+			NumbatLogic.AST __86400392 = pCondition;
 			pCondition = null;
-			pIfStmt.AddChild(__1156633376);
-			NumbatLogic.Scope __1097410276 = pThenScope;
+			pIfStmt.AddChild(__86400392);
+			NumbatLogic.Scope __3484778949 = pThenScope;
 			pThenScope = null;
-			pIfStmt.AddChild(__1097410276);
+			pIfStmt.AddChild(__3484778949);
 			if (pElseScope != null)
 			{
-				NumbatLogic.Scope __1161438956 = pElseScope;
+				NumbatLogic.Scope __1642439819 = pElseScope;
 				pElseScope = null;
-				pIfStmt.AddChild(__1161438956);
+				pIfStmt.AddChild(__1642439819);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.IfStmt __85463872 = pIfStmt;
+			NumbatLogic.IfStmt __816210157 = pIfStmt;
 			pIfStmt = null;
-			return __85463872;
+			return __816210157;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
