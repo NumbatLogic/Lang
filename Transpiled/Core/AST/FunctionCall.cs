@@ -31,13 +31,13 @@ namespace NumbatLogic
 			pFunctionCall.m_pFirstToken = pNameToken;
 			pFunctionCall.m_sMangledName = pNameToken.GetString();
 			pFunctionCall.m_pParamCall = pParamCall;
-			NumbatLogic.ParamCall __1084719340 = pParamCall;
+			NumbatLogic.ParamCall __1502716703 = pParamCall;
 			pParamCall = null;
-			pFunctionCall.AddChild(__1084719340);
+			pFunctionCall.AddChild(__1502716703);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.FunctionCall __72695940 = pFunctionCall;
+			NumbatLogic.FunctionCall __2079883043 = pFunctionCall;
 			pFunctionCall = null;
-			return __72695940;
+			return __2079883043;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
@@ -139,9 +139,9 @@ namespace NumbatLogic
 						GenericTypeDecl pGenericTypeDecl = pLeftValueType.m_pClassDecl.m_pGenericTypeDeclVector.Get(i);
 						if (ExternalString.Equal(pGenericTypeDecl.m_pFirstToken.GetString(), pFunctionDecl.m_pTypeRef.m_pTypeToken.GetString()))
 						{
-							NumbatLogic.ValueType __3575790280 = pGenericValueType;
+							NumbatLogic.ValueType __2149621486 = pGenericValueType;
 							pGenericValueType = null;
-							m_pValueType = __3575790280;
+							m_pValueType = __2149621486;
 							m_pValueType.m_ePointerType = pFunctionDecl.m_pTypeRef.m_ePointerType;
 						}
 					}

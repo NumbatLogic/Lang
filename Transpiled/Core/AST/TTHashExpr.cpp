@@ -76,15 +76,15 @@ namespace NumbatLogic
 		TTHashExpr* pTTHashExpr = new TTHashExpr();
 		pTTHashExpr->m_pFirstToken = pTTHashToken;
 		pTTHashExpr->m_pStringExpr = pStringExpr;
-		NumbatLogic::StringExpr* __83238656 = pStringExpr;
+		NumbatLogic::StringExpr* __1742876149 = pStringExpr;
 		pStringExpr = 0;
-		pTTHashExpr->AddChild(__83238656);
+		pTTHashExpr->AddChild(__1742876149);
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::TTHashExpr* __141090572 = pTTHashExpr;
+		NumbatLogic::TTHashExpr* __4133333365 = pTTHashExpr;
 		pTTHashExpr = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pStringExpr) delete pStringExpr;
-		return __141090572;
+		return __4133333365;
 	}
 
 	void TTHashExpr::Validate(Validator* pValidator, OperatorExpr* pParent)

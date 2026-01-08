@@ -31,13 +31,13 @@ namespace NumbatLogic
 			DeleteStmt pDelete = new DeleteStmt();
 			pDelete.m_pFirstToken = pDeleteToken;
 			pDelete.m_pExpression = pExpression;
-			NumbatLogic.AST __297214820 = pExpression;
+			NumbatLogic.AST __1929399914 = pExpression;
 			pExpression = null;
-			pDelete.AddChild(__297214820);
+			pDelete.AddChild(__1929399914);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.DeleteStmt __85359248 = pDelete;
+			NumbatLogic.DeleteStmt __2565256000 = pDelete;
 			pDelete = null;
-			return __85359248;
+			return __2565256000;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

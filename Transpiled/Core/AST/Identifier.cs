@@ -17,9 +17,9 @@ namespace NumbatLogic
 			pIdentifier.m_pNameToken = pToken;
 			pIdentifier.m_pFirstToken = pToken;
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.Identifier __461504108 = pIdentifier;
+			NumbatLogic.Identifier __4180376026 = pIdentifier;
 			pIdentifier = null;
-			return __461504108;
+			return __4180376026;
 		}
 
 		public override AST BaseClone()
@@ -28,9 +28,9 @@ namespace NumbatLogic
 			pIdentifier.m_eType = m_eType;
 			pIdentifier.m_pNameToken = m_pNameToken;
 			pIdentifier.m_pFirstToken = m_pFirstToken;
-			NumbatLogic.Identifier __461504120 = pIdentifier;
+			NumbatLogic.Identifier __4180441624 = pIdentifier;
 			pIdentifier = null;
-			return __461504120;
+			return __4180441624;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
@@ -170,9 +170,9 @@ namespace NumbatLogic
 									if (pGenericValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 									{
 										ValueType pOldValueType;
-										NumbatLogic.ValueType __4179769932 = m_pValueType;
+										NumbatLogic.ValueType __857310024 = m_pValueType;
 										m_pValueType = null;
-										pOldValueType = __4179769932;
+										pOldValueType = __857310024;
 										m_pValueType = pGenericValueType.Clone();
 										m_pValueType.m_ePointerType = pOldValueType.m_ePointerType;
 									}

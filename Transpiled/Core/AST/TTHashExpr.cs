@@ -46,13 +46,13 @@ namespace NumbatLogic
 			TTHashExpr pTTHashExpr = new TTHashExpr();
 			pTTHashExpr.m_pFirstToken = pTTHashToken;
 			pTTHashExpr.m_pStringExpr = pStringExpr;
-			NumbatLogic.StringExpr __83238656 = pStringExpr;
+			NumbatLogic.StringExpr __1742876149 = pStringExpr;
 			pStringExpr = null;
-			pTTHashExpr.AddChild(__83238656);
+			pTTHashExpr.AddChild(__1742876149);
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.TTHashExpr __141090572 = pTTHashExpr;
+			NumbatLogic.TTHashExpr __4133333365 = pTTHashExpr;
 			pTTHashExpr = null;
-			return __141090572;
+			return __4133333365;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

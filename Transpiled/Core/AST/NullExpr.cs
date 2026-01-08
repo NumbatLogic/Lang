@@ -19,9 +19,9 @@ namespace NumbatLogic
 			NullExpr pNullExpr = new NullExpr();
 			pNullExpr.m_pFirstToken = pNullToken;
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.NullExpr __1367793516 = pNullExpr;
+			NumbatLogic.NullExpr __4021522189 = pNullExpr;
 			pNullExpr = null;
-			return __1367793516;
+			return __4021522189;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

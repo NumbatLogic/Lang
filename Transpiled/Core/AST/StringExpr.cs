@@ -11,9 +11,9 @@ namespace NumbatLogic
 			StringExpr pStringExpr = new StringExpr();
 			pStringExpr.m_eType = AST.Type.AST_STRING;
 			pStringExpr.m_pFirstToken = pToken;
-			NumbatLogic.StringExpr __83238724 = pStringExpr;
+			NumbatLogic.StringExpr __1742613754 = pStringExpr;
 			pStringExpr = null;
-			return __83238724;
+			return __1742613754;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

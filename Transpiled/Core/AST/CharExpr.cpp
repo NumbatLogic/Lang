@@ -25,9 +25,9 @@ namespace NumbatLogic
 		CharExpr* pCharExpr = new CharExpr();
 		pCharExpr->m_eType = AST::Type::AST_CHAR;
 		pCharExpr->m_pFirstToken = pToken;
-		NumbatLogic::CharExpr* __1361600324 = pCharExpr;
+		NumbatLogic::CharExpr* __2615706591 = pCharExpr;
 		pCharExpr = 0;
-		return __1361600324;
+		return __2615706591;
 	}
 
 	void CharExpr::Validate(Validator* pValidator, OperatorExpr* pParent)

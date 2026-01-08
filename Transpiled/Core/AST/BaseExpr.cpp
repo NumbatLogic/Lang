@@ -36,10 +36,10 @@ namespace NumbatLogic
 		pBaseExpr->m_eType = AST::Type::BASE_EXPR;
 		pBaseExpr->m_pFirstToken = pThisToken;
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::BaseExpr* __1359716200 = pBaseExpr;
+		NumbatLogic::BaseExpr* __3152999094 = pBaseExpr;
 		pBaseExpr = 0;
 		if (pTempOffset) delete pTempOffset;
-		return __1359716200;
+		return __3152999094;
 	}
 
 	void BaseExpr::Validate(Validator* pValidator, OperatorExpr* pParent)

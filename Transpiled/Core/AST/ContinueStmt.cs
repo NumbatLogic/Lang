@@ -27,9 +27,9 @@ namespace NumbatLogic
 			pContinueStmt.m_eType = AST.Type.AST_CONTINUE_STMT;
 			pContinueStmt.m_pFirstToken = pBreakToken;
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.ContinueStmt __943772668 = pContinueStmt;
+			NumbatLogic.ContinueStmt __2497879999 = pContinueStmt;
 			pContinueStmt = null;
-			return __943772668;
+			return __2497879999;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)

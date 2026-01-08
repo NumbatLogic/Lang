@@ -89,9 +89,9 @@ namespace NumbatLogic
 		SwitchStmt* pSwitchStmt = new SwitchStmt();
 		pSwitchStmt->m_pFirstToken = pSwitchToken;
 		pSwitchStmt->m_pExpression = pExpression;
-		NumbatLogic::AST* __297214772 = pExpression;
+		NumbatLogic::AST* __1929596711 = pExpression;
 		pExpression = 0;
-		pSwitchStmt->AddChild(__297214772);
+		pSwitchStmt->AddChild(__1929596711);
 		while (true)
 		{
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_RIGHT) != 0)
@@ -150,21 +150,21 @@ namespace NumbatLogic
 				AST* pScopedDefaultStatement = 0;
 				if (pDefaultStatement->m_eType == AST::Type::AST_SCOPE)
 				{
-					NumbatLogic::AST* __431608712 = pDefaultStatement;
+					NumbatLogic::AST* __2021738808 = pDefaultStatement;
 					pDefaultStatement = 0;
-					pScopedDefaultStatement = __431608712;
+					pScopedDefaultStatement = __2021738808;
 				}
 				else
 				{
 					pScopedDefaultStatement = new Scope();
-					NumbatLogic::AST* __431608736 = pDefaultStatement;
+					NumbatLogic::AST* __2021804401 = pDefaultStatement;
 					pDefaultStatement = 0;
-					pScopedDefaultStatement->AddChild(__431608736);
+					pScopedDefaultStatement->AddChild(__2021804401);
 				}
 				pSwitchStmt->m_pDefaultStatement = pScopedDefaultStatement;
-				NumbatLogic::AST* __431608752 = pScopedDefaultStatement;
+				NumbatLogic::AST* __4074538021 = pScopedDefaultStatement;
 				pScopedDefaultStatement = 0;
-				pSwitchStmt->AddChild(__431608752);
+				pSwitchStmt->AddChild(__4074538021);
 				if (pDefaultStatement) delete pDefaultStatement;
 				if (pScopedDefaultStatement) delete pScopedDefaultStatement;
 				continue;
@@ -182,9 +182,9 @@ namespace NumbatLogic
 				return 0;
 			}
 			pSwitchStmt->m_pExpressionVector->PushBack(pCaseExpression);
-			NumbatLogic::AST* __3873213868 = pCaseExpression;
+			NumbatLogic::AST* __155144765 = pCaseExpression;
 			pCaseExpression = 0;
-			pSwitchStmt->AddChild(__3873213868);
+			pSwitchStmt->AddChild(__155144765);
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_COLON) == 0)
 			{
 				Console::Log("expected colon B");
@@ -219,31 +219,31 @@ namespace NumbatLogic
 			AST* pScopedCaseStatement = 0;
 			if (pCaseStatement->m_eType == AST::Type::AST_SCOPE)
 			{
-				NumbatLogic::AST* __2914636792 = pCaseStatement;
+				NumbatLogic::AST* __2964786434 = pCaseStatement;
 				pCaseStatement = 0;
-				pScopedCaseStatement = __2914636792;
+				pScopedCaseStatement = __2964786434;
 			}
 			else
 			{
 				pScopedCaseStatement = new Scope();
-				NumbatLogic::AST* __2914636784 = pCaseStatement;
+				NumbatLogic::AST* __2964852027 = pCaseStatement;
 				pCaseStatement = 0;
-				pScopedCaseStatement->AddChild(__2914636784);
+				pScopedCaseStatement->AddChild(__2964852027);
 			}
 			pSwitchStmt->m_pStatementVector->PushBack(pScopedCaseStatement);
-			NumbatLogic::AST* __2914636768 = pScopedCaseStatement;
+			NumbatLogic::AST* __1629474447 = pScopedCaseStatement;
 			pScopedCaseStatement = 0;
-			pSwitchStmt->AddChild(__2914636768);
+			pSwitchStmt->AddChild(__1629474447);
 			if (pCaseExpression) delete pCaseExpression;
 			if (pCaseStatement) delete pCaseStatement;
 			if (pScopedCaseStatement) delete pScopedCaseStatement;
 		}
 		pOffsetDatum->Set(pTempOffset);
-		NumbatLogic::SwitchStmt* __402018256 = pSwitchStmt;
+		NumbatLogic::SwitchStmt* __1732082662 = pSwitchStmt;
 		pSwitchStmt = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pExpression) delete pExpression;
-		return __402018256;
+		return __1732082662;
 	}
 
 	void SwitchStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

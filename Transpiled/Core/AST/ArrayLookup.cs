@@ -25,9 +25,9 @@ namespace NumbatLogic
 			ArrayLookup pArrayLookup = new ArrayLookup();
 			pArrayLookup.m_pFirstToken = pExpression.m_pFirstToken;
 			pArrayLookup.m_pExpression = pExpression;
-			NumbatLogic.AST __297214836 = pExpression;
+			NumbatLogic.AST __1929399910 = pExpression;
 			pExpression = null;
-			pArrayLookup.AddChild(__297214836);
+			pArrayLookup.AddChild(__1929399910);
 			while (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SQUARE_BRACKET_LEFT) != null)
 			{
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
@@ -48,14 +48,14 @@ namespace NumbatLogic
 				}
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 				pArrayLookup.m_pIndexExpressionVector.PushBack(pIndexExpression);
-				NumbatLogic.AST __3988202248 = pIndexExpression;
+				NumbatLogic.AST __2936435995 = pIndexExpression;
 				pIndexExpression = null;
-				pArrayLookup.AddChild(__3988202248);
+				pArrayLookup.AddChild(__2936435995);
 			}
 			pOffsetDatum.Set(pTempOffset);
-			NumbatLogic.ArrayLookup __1562703520 = pArrayLookup;
+			NumbatLogic.ArrayLookup __1205754173 = pArrayLookup;
 			pArrayLookup = null;
-			return __1562703520;
+			return __1205754173;
 		}
 
 		public override AST BaseClone()
@@ -63,20 +63,20 @@ namespace NumbatLogic
 			ArrayLookup pArrayLookup = new ArrayLookup();
 			AST pExpression = m_pExpression.BaseClone();
 			pArrayLookup.m_pExpression = pExpression;
-			NumbatLogic.AST __297214724 = pExpression;
+			NumbatLogic.AST __1929596715 = pExpression;
 			pExpression = null;
-			pArrayLookup.AddChild(__297214724);
+			pArrayLookup.AddChild(__1929596715);
 			for (int i = 0; i < m_pIndexExpressionVector.GetSize(); i++)
 			{
 				AST pIndexExpression = m_pIndexExpressionVector.Get(i).BaseClone();
 				pArrayLookup.m_pIndexExpressionVector.PushBack(pIndexExpression);
-				NumbatLogic.AST __3988202276 = pIndexExpression;
+				NumbatLogic.AST __2936567192 = pIndexExpression;
 				pIndexExpression = null;
-				pArrayLookup.AddChild(__3988202276);
+				pArrayLookup.AddChild(__2936567192);
 			}
-			NumbatLogic.ArrayLookup __1562703508 = pArrayLookup;
+			NumbatLogic.ArrayLookup __1205819781 = pArrayLookup;
 			pArrayLookup = null;
-			return __1562703508;
+			return __1205819781;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
