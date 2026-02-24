@@ -81,7 +81,7 @@ namespace NumbatLogic
 				{
 					if (eLanguage == AST.Language.CS)
 					{
-						if (m_pVarDecl.m_pTypeRef.m_bConst == false || m_pVarDecl.m_pArraySizeVector != null)
+						if (m_pVarDecl.m_pTypeRef.m_bConst == false || !m_pVarDecl.m_pTypeRef.IsIntegral() || m_pVarDecl.m_pArraySizeVector != null)
 							sOut.AppendString("static ");
 					}
 					else
