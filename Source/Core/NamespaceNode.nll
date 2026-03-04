@@ -56,5 +56,16 @@ namespace NumbatLogic
 
 			return null;
 		}
+		public void AppendFullyQualifiedName(InternalString sOut)
+		{
+			if (m_pParent != null && m_pParent.m_sName != null)
+				m_pParent.AppendFullyQualifiedName(sOut);
+			if (m_sName != null)
+			{
+				if (m_pParent != null && m_pParent.m_sName != null)
+					sOut.Append("::");
+				sOut.Append(m_sName.GetExternalString());
+			}
+		}
 	}
 }

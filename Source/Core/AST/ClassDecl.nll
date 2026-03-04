@@ -384,6 +384,22 @@ namespace NumbatLogic
 			return null;
 		}
 
+		public void AppendFullyQualifiedName(InternalString sOut)
+		{
+			if (m_pParent != null && m_pParent.m_eType == AST::Type::AST_MEMBER_CLASS_DECL)
+			{
+				MemberClassDecl pMember = cast MemberClassDecl(m_pParent);
+				pMember.m_pParentClassDecl.AppendFullyQualifiedName(sOut);
+				sOut.Append("::");
+			}
+			else if (m_pNamespaceNode != null && m_pNamespaceNode.m_sName != null)
+			{
+				m_pNamespaceNode.AppendFullyQualifiedName(sOut);
+				sOut.Append("::");
+			}
+			sOut.Append(m_pNameToken.GetString());
+		}
+
 		public void StringifyTemplateThing(Language eLanguage, OutputFile eOutputFile, InternalString sOut)
 		{
 			sOut.AppendString("template <class ");
