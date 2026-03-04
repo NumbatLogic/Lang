@@ -38,6 +38,13 @@ namespace NumbatLogic
 
 			// todo validate that it's an identifier x or operator x.y
 
+			if (m_pExpression.m_pValueType == null)
+			{
+				InternalString* sTemp = own new InternalString("ref expression has no value type");
+				pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+				return;
+			}
+
 			m_pValueType = own m_pExpression.m_pValueType.Clone();
 		}
 
