@@ -81,6 +81,14 @@ namespace NumbatLogic
 			{
 				InternalString* sTemp = own new InternalString("Func Unbeknownst! ");
 				sTemp.Append(sName);
+				sTemp.Append(" parent is: ");
+				pBase.StringifyType(sTemp);
+				if (pBase.m_eType == AST::Type::AST_CLASS_DECL)
+				{
+					ClassDecl pClassDecl = cast ClassDecl(pBase);
+					sTemp.Append(" ");
+					pClassDecl.AppendFullyQualifiedName(sTemp);
+				}
 				pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 				return;
 			}
