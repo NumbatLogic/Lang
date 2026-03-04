@@ -58,7 +58,7 @@ namespace NumbatLogic
 		{
 			base.Validate(pValidator, pParent);
 
-			if (m_pThirdExpression.m_pValueType == null)
+			if (m_pSecondExpression.m_pValueType == null)
 			{
 				pValidator.AddError("Unknown ValueType of 2nd expression", m_pSecondExpression.m_pFirstToken.m_sFileName, m_pSecondExpression.m_pFirstToken.m_nLine, m_pSecondExpression.m_pFirstToken.m_nColumn);
 				return;
