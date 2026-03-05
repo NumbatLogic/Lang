@@ -1,0 +1,70 @@
+namespace NumbatLogic
+{
+	class SymbolScope
+	{
+		public enum Kind {
+			GLOBAL,
+			NAMESPACE,
+			CLASS,
+			STRUCT,
+			ENUM,
+			FUNCTION,
+			BLOCK,
+		}
+
+		public Kind m_eKind;
+
+		// Parent scope in lexical nesting chain
+		public SymbolScope m_pParent;
+
+		// Optional AST node that created this scope (namespace, class, function, etc.)
+		public AST m_pOwnerAST;
+
+		// All symbols declared directly in this scope, indexed by short name
+		public OwnedStringMap<Vector<Symbol> >* m_pSymbolMap;
+
+		public construct()
+		{
+			m_eKind = Kind::BLOCK;
+			m_pParent = null;
+			m_pOwnerAST = null;
+			m_pSymbolMap = own new OwnedStringMap<Vector<Symbol> >();
+		}
+
+		public void AddSymbol(Symbol pSymbol)
+		{
+			if (pSymbol == null)
+				return;
+
+			Vector<Symbol> pBucket;
+			if (m_pSymbolMap.Contains(pSymbol.m_sShortName))
+			{
+				pBucket = m_pSymbolMap.Get(pSymbol.m_sShortName);
+			}
+			else
+			{
+				Vector<Symbol>* pOwnedBucket = own new Vector<Symbol>();
+				pBucket = pOwnedBucket;
+				m_pSymbolMap.Set(pSymbol.m_sShortName, disown pOwnedBucket);
+			}
+
+			pBucket.PushBack(pSymbol);
+			pSymbol.m_pScope = this;
+		}
+
+		public void FindInThisScope(string sName, Vector<Symbol> pOut)
+		{
+			pOut.Clear();
+
+			if (m_pSymbolMap.Contains(sName))
+			{
+				Vector<Symbol> pBucket = m_pSymbolMap.Get(sName);
+				for (int i = 0; i < pBucket.GetSize(); i++)
+				{
+					pOut.PushBack(pBucket.Get(i));
+				}
+			}
+		}
+	}
+}
+

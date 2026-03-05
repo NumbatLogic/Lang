@@ -20,4 +20,4 @@ for sPackage in "${sPackages[@]}"; do
 	fi
 done
 
-${compiler} -debug:full -reference:System.IO.Compression.dll *.cs ../../../Transpiled/CLI/*.cs ../../../Transpiled/Core/*.cs ../../../Transpiled/Core/AST/*.cs ${sLangSharedFiles[@]}
+${compiler} -debug:full -reference:System.IO.Compression.dll *.cs ../../../Transpiled/CLI/*.cs ../../../Transpiled/Core/*.cs ../../../Transpiled/Core/AST/*.cs ../../../Transpiled/Core/Semantic/*.cs ${sLangSharedFiles[@]}

@@ -1,0 +1,44 @@
+namespace NumbatLogic
+{
+	class Symbol
+	{
+		public enum Kind {
+			NAMESPACE,
+			CLASS,
+			STRUCT,
+			ENUM,
+			TYPE_ALIAS,
+			GENERIC_PARAM,
+
+			FUNCTION,
+			METHOD,
+			VAR,
+			PARAM,
+			ENUM_VALUE,
+		}
+
+		public Kind m_eKind;
+
+		// Short, unqualified name (eg "Utils")
+		public string m_sShortName;
+
+		// Fully-qualified name (eg "NumbatLogic::KanboardApi::Utils")
+		public string m_sQualifiedName;
+
+		// Declaring AST node
+		public AST m_pDeclAST;
+
+		// Owning scope (set after scopes are built)
+		public SymbolScope m_pScope;
+
+		public construct()
+		{
+			m_eKind = Kind::VAR;
+			m_sShortName = "";
+			m_sQualifiedName = "";
+			m_pDeclAST = null;
+			m_pScope = null;
+		}
+	}
+}
+
