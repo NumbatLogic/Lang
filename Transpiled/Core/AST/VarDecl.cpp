@@ -7,13 +7,13 @@
 #include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
-#include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
 #include "../Util.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "ClassDecl.hpp"
 #include "MemberVarDecl.hpp"
+#include "../Project.hpp"
 
 namespace NumbatLogic
 {
@@ -27,13 +27,13 @@ namespace NumbatLogic
 	class Vector;
 	class Console;
 	class Assert;
-	class ExternalString;
 	class Validator;
 	class ValueType;
 	class Util;
 	class InternalString;
 	class ClassDecl;
 	class MemberVarDecl;
+	class Project;
 }
 namespace NumbatLogic
 {
@@ -79,7 +79,7 @@ namespace NumbatLogic
 			{
 				Console::Log("unable to parse array size...");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 				if (pArraySize) delete pArraySize;
 				if (pTempOffset) delete pTempOffset;
 				if (pTypeRef) delete pTypeRef;
@@ -91,7 +91,7 @@ namespace NumbatLogic
 			{
 				Console::Log("unable to parse closing square bracket");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 				if (pArraySize) delete pArraySize;
 				if (pTempOffset) delete pTempOffset;
 				if (pTypeRef) delete pTypeRef;
@@ -116,7 +116,7 @@ namespace NumbatLogic
 			{
 				Console::Log("expected to parse assignment...");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 				if (pTempOffset) delete pTempOffset;
 				if (pTypeRef) delete pTypeRef;
 				if (pVarDecl) delete pVarDecl;
@@ -160,19 +160,12 @@ namespace NumbatLogic
 		return __2971982038;
 	}
 
-	AST* VarDecl::FindByName(const char* sxName, AST* pCallingChild)
-	{
-		if (ExternalString::Equal(sxName, m_pNameToken->GetString()))
-			return this;
-		return AST::FindByName(sxName, pCallingChild);
-	}
-
 	void VarDecl::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
 		AST::Validate(pValidator, pParent);
 		if (m_pParent->m_eType != AST::Type::AST_MEMBER_VAR_DECL && m_pParent->m_eType != AST::Type::AST_PARAM_DECL)
 			pValidator->AddVarDecl(this);
-		ValueType* pValueType = m_pTypeRef->CreateValueType();
+		ValueType* pValueType = m_pTypeRef->CreateValueType(pValidator->m_pResolver);
 		if (pValueType == 0)
 		{
 			pValidator->AddError("Unknown ValueType for TypeRef", m_pTypeRef->m_pFirstToken->m_sFileName, m_pTypeRef->m_pFirstToken->m_nLine, m_pTypeRef->m_pFirstToken->m_nColumn);
@@ -260,7 +253,7 @@ namespace NumbatLogic
 			AST* pParentParent = m_pParent->m_pParent;
 			if (pParentParent == 0 || pParentParent->m_eType != AST::Type::AST_CLASS_DECL)
 			{
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 			}
 			ClassDecl* pClassDecl = (ClassDecl*)(pParentParent);
 			sOut->AppendString(pClassDecl->m_pNameToken->GetString());
@@ -345,7 +338,8 @@ namespace NumbatLogic
 					{
 						if (eOutputFile == AST::OutputFile::SOURCE)
 						{
-							ValueType* pValueType = m_pTypeRef->CreateValueType();
+							Project* pProject = GetProject();
+							ValueType* pValueType = m_pTypeRef->CreateValueType(pProject->m_pValidator->m_pResolver);
 							if (pValueType != 0 && pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE && m_pArraySizeVector == 0)
 								sOut->AppendString(" = 0");
 							if (bStatic && m_pTypeRef->IsIntegral())

@@ -6,10 +6,6 @@
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "../Validator.hpp"
-#include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
-#include "../NamespaceNode.hpp"
-#include "../../../../LangShared/Vector/CPP/Vector.hpp"
-#include "ClassDecl.hpp"
 #include "../Util.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
@@ -23,11 +19,6 @@ namespace NumbatLogic
 	class Console;
 	class Assert;
 	class Validator;
-	class ExternalString;
-	class NamespaceNode;
-	template <class T>
-	class Vector;
-	class ClassDecl;
 	class Util;
 	class InternalString;
 }
@@ -57,7 +48,7 @@ namespace NumbatLogic
 		{
 			Console::Log("expected namespace name");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pNamespaceDecl) delete pNamespaceDecl;
 			return 0;
@@ -67,7 +58,7 @@ namespace NumbatLogic
 		{
 			Console::Log("expected opening curly brace");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pNamespaceDecl) delete pNamespaceDecl;
 			return 0;
@@ -93,7 +84,7 @@ namespace NumbatLogic
 			}
 			Console::Log("expected to parse somethting within namespace...");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			if (pAST) delete pAST;
 		}
 		pOffsetDatum->Set(pTempOffset);
@@ -117,51 +108,6 @@ namespace NumbatLogic
 		pValidator->BeginNamespace(sxName);
 		AST::Validate(pValidator, pParent);
 		pValidator->EndNamespace(sxName);
-	}
-
-	NamespaceDecl* NamespaceDecl::FindNamespaceDecl(const char* sxName, AST* pCallingChild)
-	{
-		if (ExternalString::Equal(sxName, m_pNameToken->GetString()))
-			return this;
-		NamespaceDecl* pFound = AST::FindNamespaceDecl(sxName, pCallingChild);
-		if (pFound != 0)
-			return pFound;
-		NamespaceNode* pFoundNamespace = m_pNamespaceNode->FindByName(sxName, pCallingChild == 0);
-		if (pFoundNamespace != 0)
-			return pFoundNamespace->m_pNamespaceDeclVector->Get(0);
-		return 0;
-	}
-
-	AST* NamespaceDecl::SubFindByName(const char* sxName, AST* pCallingChild)
-	{
-		return AST::FindByName(sxName, pCallingChild);
-	}
-
-	AST* NamespaceDecl::FindByName(const char* sxName, AST* pCallingChild)
-	{
-		if (ExternalString::Equal(sxName, m_pNameToken->GetString()))
-			return this;
-		AST* pFound = SubFindByName(sxName, pCallingChild);
-		if (pFound != 0)
-			return pFound;
-		NamespaceNode* pFoundNamespace = m_pNamespaceNode->FindByName(sxName, pCallingChild == 0);
-		if (pFoundNamespace != 0)
-			return pFoundNamespace->m_pNamespaceDeclVector->Get(0);
-		for (int i = 0; i < m_pNamespaceNode->m_pNamespaceDeclVector->GetSize(); i++)
-		{
-			NamespaceDecl* pNamespaceDecl = m_pNamespaceNode->m_pNamespaceDeclVector->Get(i);
-			if (pNamespaceDecl != this)
-			{
-				ClassDecl* pClassDecl = pNamespaceDecl->FindClassDecl(sxName, 0);
-				if (pClassDecl != 0)
-				{
-					if (pClassDecl->m_pNameToken != 0)
-						return pClassDecl;
-					return pClassDecl;
-				}
-			}
-		}
-		return 0;
 	}
 
 	void NamespaceDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

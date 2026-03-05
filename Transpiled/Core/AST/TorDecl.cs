@@ -28,7 +28,7 @@ namespace NumbatLogic
 			{
 				Console.Log("expected ParamDecl");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic.Assert.Plz(false);
+				Assert.Plz(false);
 				return null;
 			}
 			TorDecl pTorDecl = new TorDecl();
@@ -47,7 +47,7 @@ namespace NumbatLogic
 					{
 						Console.Log("expected base!");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						NumbatLogic.Assert.Plz(false);
+						Assert.Plz(false);
 						return null;
 					}
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
@@ -57,7 +57,7 @@ namespace NumbatLogic
 						InternalString sTemp = new InternalString("expected ParamCall ");
 						sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
 						Console.Log(sTemp.GetExternalString());
-						NumbatLogic.Assert.Plz(false);
+						Assert.Plz(false);
 						return null;
 					}
 					pTorDecl.m_pBaseParamCall = pParamCall;
@@ -70,7 +70,7 @@ namespace NumbatLogic
 				{
 					Console.Log("expected scope");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					NumbatLogic.Assert.Plz(false);
+					Assert.Plz(false);
 				}
 			}
 			pTorDecl.m_eType = AST.Type.AST_TOR_DECL;
@@ -105,7 +105,7 @@ namespace NumbatLogic
 			base.Validate(pValidator, pParent);
 			if (m_pParentClassDecl != null && m_pBaseParamCall != null)
 			{
-				ClassDecl pBaseClass = m_pParentClassDecl.GetBaseClassDecl();
+				ClassDecl pBaseClass = m_pParentClassDecl.GetBaseClassDecl(pValidator);
 				if (pBaseClass == null)
 				{
 					pValidator.AddError("no base class??", m_pBaseParamCall.m_pFirstToken.m_sFileName, m_pBaseParamCall.m_pFirstToken.m_nLine, m_pBaseParamCall.m_pFirstToken.m_nColumn);
@@ -119,7 +119,7 @@ namespace NumbatLogic
 						TorDecl pTorDecl = (TorDecl)(pMember);
 						if (pTorDecl.m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_CONSTRUCT)
 						{
-							if (pTorDecl.m_pParamDecl.ValidateParamCall(m_pBaseParamCall, null))
+							if (pTorDecl.m_pParamDecl.ValidateParamCall(m_pBaseParamCall, pValidator, false))
 							{
 								break;
 							}

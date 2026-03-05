@@ -26,14 +26,14 @@ namespace NumbatLogic
 			if (pEnumDecl.m_pNameToken == null)
 			{
 				Console.Log("expected enum name");
-				NumbatLogic.Assert.Plz(false);
+				Assert.Plz(false);
 				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_CURLY_BRACE_LEFT) == null)
 			{
 				Console.Log("expected opening curly brace");
-				NumbatLogic.Assert.Plz(false);
+				Assert.Plz(false);
 				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
@@ -48,7 +48,7 @@ namespace NumbatLogic
 				if (pEnumDeclValue == null)
 				{
 					Console.Log("expected EnumDeclValue");
-					NumbatLogic.Assert.Plz(false);
+					Assert.Plz(false);
 				}
 				pEnumDecl.m_pEnumDeclValueVector.PushBack(pEnumDeclValue);
 				NumbatLogic.EnumDeclValue __478630801 = pEnumDeclValue;
@@ -62,7 +62,7 @@ namespace NumbatLogic
 				{
 					Console.Log("expected comma");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					NumbatLogic.Assert.Plz(false);
+					Assert.Plz(false);
 				}
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			}
@@ -70,13 +70,6 @@ namespace NumbatLogic
 			NumbatLogic.EnumDecl __4282209082 = pEnumDecl;
 			pEnumDecl = null;
 			return __4282209082;
-		}
-
-		public override AST FindByName(string sxName, AST pCallingChild)
-		{
-			if (ExternalString.Equal(sxName, m_pNameToken.GetString()))
-				return this;
-			return base.FindByName(sxName, pCallingChild);
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

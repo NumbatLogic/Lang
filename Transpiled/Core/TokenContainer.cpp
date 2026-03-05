@@ -67,7 +67,7 @@ namespace NumbatLogic
 						if (nChar == '\0')
 						{
 							Console::Log("End of #ifdef name not found");
-							NumbatLogic::Assert::Plz(false);
+							Assert::Plz(false);
 						}
 						if (nChar == ' ' || nChar == '\t' || nChar == '\n')
 							break;
@@ -97,7 +97,7 @@ namespace NumbatLogic
 						if (nChar == '\0')
 						{
 							Console::Log("End of #ifdef not found");
-							NumbatLogic::Assert::Plz(false);
+							Assert::Plz(false);
 						}
 						if (nChar == '#')
 						{
@@ -122,7 +122,7 @@ namespace NumbatLogic
 					{
 						Console::Log("#endif with no #ifdef???");
 						Console::Log(sFileName->GetExternalString());
-						NumbatLogic::Assert::Plz(false);
+						Assert::Plz(false);
 					}
 					nIfdefDepth--;
 					pParseDatum->m_sInput->SubStr(5, pParseDatum->m_sInput->GetLength() - 5);

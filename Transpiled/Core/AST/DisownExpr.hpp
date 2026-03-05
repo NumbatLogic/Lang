@@ -11,6 +11,11 @@ namespace NumbatLogic
 	class OffsetDatum;
 	class Validator;
 	class OperatorExpr;
+	class Token;
+	class TypeRef;
+	class VarDecl;
+	class NullExpr;
+	class ExpressionStmt;
 }
 namespace NumbatLogic
 {

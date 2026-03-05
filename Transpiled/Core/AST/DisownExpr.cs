@@ -22,7 +22,7 @@ namespace NumbatLogic
 			if (pExpression == null)
 			{
 				Console.Log("expected expresssion");
-				NumbatLogic.Assert.Plz(false);
+				Assert.Plz(false);
 				return null;
 			}
 			DisownExpr pDisownExpr = new DisownExpr();
@@ -107,9 +107,11 @@ namespace NumbatLogic
 				NumbatLogic.AST __183884754 = pAssignment;
 				pAssignment = null;
 				pTempVarDecl.AddChild(__183884754);
-				NumbatLogic.VarDecl __3774795556 = pTempVarDecl;
+				AST pInjectedVarDecl = pTempVarDecl;
+				NumbatLogic.VarDecl __3774795557 = pTempVarDecl;
 				pTempVarDecl = null;
-				pParentParent.AddChildBefore(__3774795556, pParentStatement);
+				pParentParent.AddChildBefore(__3774795557, pParentStatement);
+				pValidator.ValidateSubtree(pInjectedVarDecl);
 			}
 			{
 				AST pLeft = m_pExpression.BaseClone();
@@ -120,30 +122,32 @@ namespace NumbatLogic
 				pOperatorExpr.m_eType = AST.Type.AST_OPERATOR_EXPR;
 				pOperatorExpr.m_pFirstToken = pLeft.m_pFirstToken;
 				pOperatorExpr.m_pOperatorToken = pOperatorToken;
-				NumbatLogic.Token __3603719568 = pOperatorToken;
+				NumbatLogic.Token __3603719570 = pOperatorToken;
 				pOperatorToken = null;
-				pOperatorExpr.m_pOwnedOperatorToken = __3603719568;
+				pOperatorExpr.m_pOwnedOperatorToken = __3603719570;
 				pOperatorExpr.m_pLeft = pLeft;
 				pOperatorExpr.m_pRight = pRight;
-				NumbatLogic.AST __3919078743 = pLeft;
+				NumbatLogic.AST __3919078745 = pLeft;
 				pLeft = null;
-				pOperatorExpr.AddChild(__3919078743);
-				NumbatLogic.NullExpr __534197891 = pRight;
+				pOperatorExpr.AddChild(__3919078745);
+				NumbatLogic.NullExpr __534197893 = pRight;
 				pRight = null;
-				pOperatorExpr.AddChild(__534197891);
+				pOperatorExpr.AddChild(__534197893);
 				ExpressionStmt pExpressionStmt = new ExpressionStmt();
 				pExpressionStmt.m_pFirstToken = pOperatorExpr.m_pFirstToken;
 				pExpressionStmt.m_pExpression = pOperatorExpr;
-				NumbatLogic.OperatorExpr __2365778379 = pOperatorExpr;
+				NumbatLogic.OperatorExpr __2365778381 = pOperatorExpr;
 				pOperatorExpr = null;
-				pExpressionStmt.AddChild(__2365778379);
-				NumbatLogic.ExpressionStmt __1415267174 = pExpressionStmt;
+				pExpressionStmt.AddChild(__2365778381);
+				AST pInjectedStmt = pExpressionStmt;
+				NumbatLogic.ExpressionStmt __1415332766 = pExpressionStmt;
 				pExpressionStmt = null;
-				pParentParent.AddChildBefore(__1415267174, pParentStatement);
+				pParentParent.AddChildBefore(__1415332766, pParentStatement);
+				pValidator.ValidateSubtree(pInjectedStmt);
 			}
-			NumbatLogic.InternalString __3313827548 = sTempName;
+			NumbatLogic.InternalString __3313827552 = sTempName;
 			sTempName = null;
-			m_sTempVarName = __3313827548;
+			m_sTempVarName = __3313827552;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

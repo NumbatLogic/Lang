@@ -5,6 +5,7 @@
 #include "AST/Scope.hpp"
 #include "../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "Project.hpp"
+#include "Semantic/Resolver.hpp"
 #include "AST/AST.hpp"
 #include "NamespaceNode.hpp"
 #include "AST/TranslationUnit.hpp"
@@ -31,6 +32,7 @@ namespace NumbatLogic
 	class OwnedVector;
 	class ValidatorScope;
 	class Project;
+	class Resolver;
 	class AST;
 	class NamespaceDecl;
 	class NamespaceNode;
@@ -82,10 +84,12 @@ namespace NumbatLogic
 		m_pValidatorErrorVector = 0;
 		m_pValidatorScopeVector = 0;
 		m_pCurrentNamespaceNode = 0;
+		m_pResolver = 0;
 		m_pProject = pProject;
 		m_pValidatorErrorVector = new OwnedVector<ValidatorError*>();
 		m_pValidatorScopeVector = new OwnedVector<ValidatorScope*>();
 		m_pCurrentNamespaceNode = pProject->m_pRootNamespaceNode;
+		m_pResolver = new Resolver();
 	}
 
 	void Validator::PreparseNamespaces(NamespaceNode* pCurrentNode, AST* pAST)
@@ -110,6 +114,11 @@ namespace NumbatLogic
 		{
 			TranslationUnit* pTranslationUnit = m_pProject->m_pTranslationUnitVector->Get(i);
 			PreparseNamespaces(m_pProject->m_pRootNamespaceNode, pTranslationUnit);
+		}
+		for (int i = 0; i < m_pProject->m_pTranslationUnitVector->GetSize(); i++)
+		{
+			TranslationUnit* pTranslationUnit = m_pProject->m_pTranslationUnitVector->Get(i);
+			m_pResolver->BuildForRoot(pTranslationUnit);
 		}
 		for (int i = 0; i < m_pProject->m_pTranslationUnitVector->GetSize(); i++)
 		{
@@ -154,29 +163,35 @@ namespace NumbatLogic
 			pValidatorError->m_sFile = new InternalString(sFile->GetExternalString());
 		pValidatorError->m_nLine = nLine;
 		pValidatorError->m_nColumn = nColumn;
-		NumbatLogic::ValidatorError* __3001488363 = pValidatorError;
+		NumbatLogic::ValidatorError* __3001553964 = pValidatorError;
 		pValidatorError = 0;
-		m_pValidatorErrorVector->PushBack(__3001488363);
+		m_pValidatorErrorVector->PushBack(__3001553964);
 		if (pValidatorError) delete pValidatorError;
+	}
+
+	void Validator::ValidateSubtree(AST* pRoot)
+	{
+		pRoot->PreValidate(this, 0);
+		pRoot->Validate(this, 0);
 	}
 
 	void Validator::BeginScope(Scope* pScope)
 	{
 		ValidatorScope* pValidatorScope = new ValidatorScope(pScope);
-		NumbatLogic::ValidatorScope* __3051975781 = pValidatorScope;
+		NumbatLogic::ValidatorScope* __3052106978 = pValidatorScope;
 		pValidatorScope = 0;
-		m_pValidatorScopeVector->PushBack(__3051975781);
+		m_pValidatorScopeVector->PushBack(__3052106978);
 		if (pValidatorScope) delete pValidatorScope;
 	}
 
 	void Validator::AddVarDecl(VarDecl* pVarDecl)
 	{
-		ValueType* pValueType = pVarDecl->m_pTypeRef->CreateValueType();
+		ValueType* pValueType = pVarDecl->m_pTypeRef->CreateValueType(m_pResolver);
 		if (pValueType != 0)
 			if (pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE && pValueType->m_ePointerType == TypeRef::PointerType::OWNED)
 			{
 				int nIndex = m_pValidatorScopeVector->GetSize() - 1;
-				NumbatLogic::Assert::Plz(nIndex >= 0);
+				Assert::Plz(nIndex >= 0);
 				ValidatorScope* pValidatorScope = m_pValidatorScopeVector->Get(nIndex);
 				pValidatorScope->m_pVarDeclVector->PushBack(pVarDecl);
 			}
@@ -186,8 +201,8 @@ namespace NumbatLogic
 	void Validator::EndScope(Scope* pScope)
 	{
 		ValidatorScope* pValidatorScope = m_pValidatorScopeVector->PopBack();
-		NumbatLogic::Assert::Plz(pValidatorScope != 0);
-		NumbatLogic::Assert::Plz(pValidatorScope->m_pScope == pScope);
+		Assert::Plz(pValidatorScope != 0);
+		Assert::Plz(pValidatorScope->m_pScope == pScope);
 		AST* pCheck = pScope;
 		while (pCheck != 0 && pCheck->m_eType == AST::Type::AST_SCOPE)
 		{
@@ -207,9 +222,9 @@ namespace NumbatLogic
 				VarDecl* pVarDecl = pValidatorScope->m_pVarDeclVector->Get(i);
 				pVarDeclDescope->m_pVarDeclVector->PushBack(pVarDecl);
 			}
-			NumbatLogic::VarDeclDescope* __2690920449 = pVarDeclDescope;
+			NumbatLogic::VarDeclDescope* __2691051646 = pVarDeclDescope;
 			pVarDeclDescope = 0;
-			pScope->AddChild(__2690920449);
+			pScope->AddChild(__2691051646);
 			if (pVarDeclDescope) delete pVarDeclDescope;
 		}
 		if (pValidatorScope) delete pValidatorScope;
@@ -258,9 +273,9 @@ namespace NumbatLogic
 		if (pVarDeclDescope->m_pVarDeclVector->GetSize() > 0)
 		{
 			AST* pParent = pBreakOrContinueOrReturn->m_pParent;
-			NumbatLogic::VarDeclDescope* __2698919553 = pVarDeclDescope;
+			NumbatLogic::VarDeclDescope* __2699050750 = pVarDeclDescope;
 			pVarDeclDescope = 0;
-			pParent->AddChildBefore(__2698919553, pBreakOrContinueOrReturn);
+			pParent->AddChildBefore(__2699050750, pBreakOrContinueOrReturn);
 		}
 		if (pVarDeclDescope) delete pVarDeclDescope;
 	}
@@ -268,13 +283,13 @@ namespace NumbatLogic
 	void Validator::BeginNamespace(const char* sxName)
 	{
 		m_pCurrentNamespaceNode = m_pCurrentNamespaceNode->GetChild(sxName);
-		NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode != 0);
+		Assert::Plz(m_pCurrentNamespaceNode != 0);
 	}
 
 	void Validator::EndNamespace(const char* sxName)
 	{
-		NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode->m_sName->IsEqual(sxName));
-		NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode->m_pParent != 0);
+		Assert::Plz(m_pCurrentNamespaceNode->m_sName->IsEqual(sxName));
+		Assert::Plz(m_pCurrentNamespaceNode->m_pParent != 0);
 		m_pCurrentNamespaceNode = m_pCurrentNamespaceNode->m_pParent;
 	}
 
@@ -282,6 +297,7 @@ namespace NumbatLogic
 	{
 		if (m_pValidatorErrorVector) delete m_pValidatorErrorVector;
 		if (m_pValidatorScopeVector) delete m_pValidatorScopeVector;
+		if (m_pResolver) delete m_pResolver;
 	}
 
 }

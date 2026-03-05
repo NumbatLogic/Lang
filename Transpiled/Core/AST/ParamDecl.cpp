@@ -65,7 +65,7 @@ namespace NumbatLogic
 			{
 				Console::Log("expected param");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 			}
 			pParamDecl->m_pParamVector->PushBack(pParam);
 			NumbatLogic::VarDecl* __3258004093 = pParam;
@@ -80,7 +80,7 @@ namespace NumbatLogic
 			{
 				Console::Log("expected comma");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 			}
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 			if (pParam) delete pParam;
@@ -116,7 +116,7 @@ namespace NumbatLogic
 		}
 	}
 
-	bool ParamDecl::ValidateParamCall(ParamCall* pParamCall, Validator* pValidator)
+	bool ParamDecl::ValidateParamCall(ParamCall* pParamCall, Validator* pValidator, bool bReportErrors)
 	{
 		int nIndex = 0;
 		AST* pCallChild = pParamCall->m_pFirstChild;
@@ -137,20 +137,20 @@ namespace NumbatLogic
 						continue;
 					}
 				}
-				if (pValidator != 0)
+				if (bReportErrors && pValidator != 0)
 					pValidator->AddError("Param count mismatch (pCallChild == null)", pParamCall->m_pFirstToken->m_sFileName, pParamCall->m_pFirstToken->m_nLine, pParamCall->m_pFirstToken->m_nColumn);
 				return false;
 			}
 			else
 				if (pDeclChild == 0)
 				{
-					if (pValidator != 0)
+					if (bReportErrors && pValidator != 0)
 						pValidator->AddError("Param count mismatch (pDeclChild == null)", pParamCall->m_pFirstToken->m_sFileName, pParamCall->m_pFirstToken->m_nLine, pParamCall->m_pFirstToken->m_nColumn);
 					return false;
 				}
 			if (pCallChild->m_pValueType == 0)
 			{
-				if (pValidator != 0)
+				if (bReportErrors && pValidator != 0)
 				{
 					InternalString* sTemp = new InternalString("no value type for param at index: ");
 					sTemp->AppendInt(nIndex);
@@ -161,7 +161,7 @@ namespace NumbatLogic
 			}
 			if (pDeclChild->m_eType != AST::Type::AST_VAR_DECL)
 			{
-				if (pValidator != 0)
+				if (bReportErrors && pValidator != 0)
 				{
 					InternalString* sTemp = new InternalString("param expected to be var decl at index: ");
 					sTemp->AppendInt(nIndex);
@@ -171,24 +171,24 @@ namespace NumbatLogic
 				return false;
 			}
 			VarDecl* pVarDecl = (VarDecl*)(pDeclChild);
-			ValueType* pValueType = pVarDecl->m_pTypeRef->CreateValueType();
+			ValueType* pValueType = pVarDecl->m_pTypeRef->CreateValueType(pValidator->m_pResolver);
 			if (pValueType == 0)
 			{
-				if (pValidator != 0)
+				if (bReportErrors && pValidator != 0)
 					pValidator->AddError("Unknown decl valuetype???", pCallChild->m_pFirstToken->m_sFileName, pCallChild->m_pFirstToken->m_nLine, pCallChild->m_pFirstToken->m_nColumn);
 				if (pValueType) delete pValueType;
 				return false;
 			}
 			if (pValueType->m_ePointerType == TypeRef::PointerType::TRANSITON && pCallChild->m_pValueType->m_ePointerType != TypeRef::PointerType::TRANSITON && pCallChild->m_pValueType->m_eType != ValueType::Type::NULL_VALUE)
 			{
-				if (pValidator != 0)
+				if (bReportErrors && pValidator != 0)
 					pValidator->AddError("Must pass a transition pointer!", pCallChild->m_pFirstToken->m_sFileName, pCallChild->m_pFirstToken->m_nLine, pCallChild->m_pFirstToken->m_nColumn);
 				if (pValueType) delete pValueType;
 				return false;
 			}
 			if (pCallChild->m_pValueType->m_ePointerType == TypeRef::PointerType::TRANSITON && pValueType->m_ePointerType != TypeRef::PointerType::TRANSITON)
 			{
-				if (pValidator != 0)
+				if (bReportErrors && pValidator != 0)
 					pValidator->AddError("Was not expecting a transition pointer??", pCallChild->m_pFirstToken->m_sFileName, pCallChild->m_pFirstToken->m_nLine, pCallChild->m_pFirstToken->m_nColumn);
 				if (pValueType) delete pValueType;
 				return false;
@@ -197,7 +197,7 @@ namespace NumbatLogic
 			{
 				if (pValueType->m_eType != ValueType::Type::CLASS_DECL_VALUE && pValueType->m_eType != ValueType::Type::GENERIC_TYPE_DECL_VALUE && pValueType->m_eType != ValueType::Type::VOIDPTR)
 				{
-					if (pValidator != 0)
+					if (bReportErrors && pValidator != 0)
 					{
 						InternalString* sTemp = new InternalString("type mismatch ");
 						pCallChild->m_pValueType->StringifyType(sTemp);
@@ -214,7 +214,8 @@ namespace NumbatLogic
 			{
 				if (pCallChild->m_eType != AST::Type::AST_REF_EXPR)
 				{
-					pValidator->AddError("Must prefix ref parameter with ref!", pCallChild->m_pFirstToken->m_sFileName, pCallChild->m_pFirstToken->m_nLine, pCallChild->m_pFirstToken->m_nColumn);
+					if (bReportErrors && pValidator != 0)
+						pValidator->AddError("Must prefix ref parameter with ref!", pCallChild->m_pFirstToken->m_sFileName, pCallChild->m_pFirstToken->m_nLine, pCallChild->m_pFirstToken->m_nColumn);
 					if (pValueType) delete pValueType;
 					return false;
 				}

@@ -25,7 +25,7 @@ namespace NumbatLogic
 			{
 				Console.Log("expected namespace name");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic.Assert.Plz(false);
+				Assert.Plz(false);
 				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
@@ -33,7 +33,7 @@ namespace NumbatLogic
 			{
 				Console.Log("expected opening curly brace");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic.Assert.Plz(false);
+				Assert.Plz(false);
 				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
@@ -56,7 +56,7 @@ namespace NumbatLogic
 				}
 				Console.Log("expected to parse somethting within namespace...");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic.Assert.Plz(false);
+				Assert.Plz(false);
 			}
 			pOffsetDatum.Set(pTempOffset);
 			NumbatLogic.NamespaceDecl __1424002840 = pNamespaceDecl;
@@ -78,51 +78,6 @@ namespace NumbatLogic
 			pValidator.BeginNamespace(sxName);
 			base.Validate(pValidator, pParent);
 			pValidator.EndNamespace(sxName);
-		}
-
-		public override NamespaceDecl FindNamespaceDecl(string sxName, AST pCallingChild)
-		{
-			if (ExternalString.Equal(sxName, m_pNameToken.GetString()))
-				return this;
-			NamespaceDecl pFound = base.FindNamespaceDecl(sxName, pCallingChild);
-			if (pFound != null)
-				return pFound;
-			NamespaceNode pFoundNamespace = m_pNamespaceNode.FindByName(sxName, pCallingChild == null);
-			if (pFoundNamespace != null)
-				return pFoundNamespace.m_pNamespaceDeclVector.Get(0);
-			return null;
-		}
-
-		protected AST SubFindByName(string sxName, AST pCallingChild)
-		{
-			return base.FindByName(sxName, pCallingChild);
-		}
-
-		public override AST FindByName(string sxName, AST pCallingChild)
-		{
-			if (ExternalString.Equal(sxName, m_pNameToken.GetString()))
-				return this;
-			AST pFound = SubFindByName(sxName, pCallingChild);
-			if (pFound != null)
-				return pFound;
-			NamespaceNode pFoundNamespace = m_pNamespaceNode.FindByName(sxName, pCallingChild == null);
-			if (pFoundNamespace != null)
-				return pFoundNamespace.m_pNamespaceDeclVector.Get(0);
-			for (int i = 0; i < m_pNamespaceNode.m_pNamespaceDeclVector.GetSize(); i++)
-			{
-				NamespaceDecl pNamespaceDecl = m_pNamespaceNode.m_pNamespaceDeclVector.Get(i);
-				if (pNamespaceDecl != this)
-				{
-					ClassDecl pClassDecl = pNamespaceDecl.FindClassDecl(sxName, null);
-					if (pClassDecl != null)
-					{
-						if (pClassDecl.m_pNameToken != null)
-							return pClassDecl;
-						return pClassDecl;
-					}
-				}
-			}
-			return null;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

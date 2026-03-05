@@ -40,7 +40,7 @@ namespace NumbatLogic
 			{
 				Console.Log("expected class name");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic.Assert.Plz(false);
+				Assert.Plz(false);
 				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
@@ -59,7 +59,7 @@ namespace NumbatLogic
 					if (pGenericTypeDecl == null)
 					{
 						Console.Log("expected inner GenericTypeDecl");
-						NumbatLogic.Assert.Plz(false);
+						Assert.Plz(false);
 					}
 					NumbatLogic.GenericTypeDecl __977309417 = pGenericTypeDecl;
 					pGenericTypeDecl = null;
@@ -72,7 +72,7 @@ namespace NumbatLogic
 					{
 						Console.Log("expected comma");
 						Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-						NumbatLogic.Assert.Plz(false);
+						Assert.Plz(false);
 					}
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 				}
@@ -86,7 +86,7 @@ namespace NumbatLogic
 				{
 					Console.Log("expected base class");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					NumbatLogic.Assert.Plz(false);
+					Assert.Plz(false);
 					return null;
 				}
 			}
@@ -94,7 +94,7 @@ namespace NumbatLogic
 			{
 				Console.Log("expected opening curly brace");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic.Assert.Plz(false);
+				Assert.Plz(false);
 				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
@@ -165,7 +165,7 @@ namespace NumbatLogic
 				}
 				Console.Log("expected to parse somethting within class...");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic.Assert.Plz(false);
+				Assert.Plz(false);
 			}
 			pOffsetDatum.Set(pTempOffset);
 			NumbatLogic.ClassDecl __438903738 = pClassDecl;
@@ -183,7 +183,7 @@ namespace NumbatLogic
 			AddClassDeclReference(this, AST.OutputFile.SOURCE, false);
 			if (m_pBaseTypeRef != null)
 			{
-				ValueType pBaseValueType = m_pBaseTypeRef.CreateValueType();
+				ValueType pBaseValueType = m_pBaseTypeRef.CreateValueType(pValidator.m_pResolver);
 				if (pBaseValueType == null)
 				{
 					InternalString sTemp = new InternalString("Unknown base class: ");
@@ -309,45 +309,69 @@ namespace NumbatLogic
 			base.Validate(pValidator, pParent);
 		}
 
-		public override ClassDecl FindClassDecl(string sTypeName, AST pCallingChild)
-		{
-			if (ExternalString.Equal(sTypeName, m_pNameToken.GetString()))
-				return this;
-			return null;
-		}
-
-		public override AST FindByName(string sxName, AST pCallingChild)
-		{
-			if (ExternalString.Equal(sxName, m_pNameToken.GetString()))
-				return this;
-			ClassDecl pBaseClassDecl = GetBaseClassDecl();
-			if (pBaseClassDecl != null)
-			{
-				AST pResult = pBaseClassDecl.FindByName(sxName, null);
-				if (pResult != null)
-					return pResult;
-			}
-			if (pCallingChild != null)
-			{
-				for (int i = 0; i < m_pGenericTypeDeclVector.GetSize(); i++)
-				{
-					GenericTypeDecl pGenericTypeDecl = m_pGenericTypeDeclVector.Get(i);
-					if (ExternalString.Equal(pGenericTypeDecl.m_pFirstToken.GetString(), sxName))
-					{
-						return pGenericTypeDecl;
-					}
-				}
-			}
-			return base.FindByName(sxName, pCallingChild);
-		}
-
-		public ClassDecl GetBaseClassDecl()
+		public ClassDecl GetBaseClassDeclForScopeLookup(Resolver pResolver)
 		{
 			if (m_pBaseClassDecl != null)
 				return m_pBaseClassDecl;
-			if (m_pBaseTypeRef != null && m_pParent != null)
+			if (m_pBaseTypeRef == null)
+				return null;
+			ClassDecl pBase = m_pBaseTypeRef.GetFoundClassDecl();
+			if (pBase == null && m_pBaseTypeRef.m_pChildTypeRef != null)
+				pBase = m_pBaseTypeRef.m_pChildTypeRef.GetFoundClassDecl();
+			if (pBase != null)
 			{
-				ValueType pBaseValueType = m_pBaseTypeRef.CreateValueType();
+				m_pBaseClassDecl = pBase;
+				return m_pBaseClassDecl;
+			}
+			if (pResolver == null || m_pSymbolScope == null)
+				return null;
+			SymbolScope pParentScope = m_pSymbolScope.m_pParent;
+			if (pParentScope == null)
+				return null;
+			string sBaseName = m_pBaseTypeRef.m_pTypeToken.GetString();
+			Vector<Symbol> pCandidates = new Vector<Symbol>();
+			pResolver.ResolveInScopeChainNoBaseClasses(sBaseName, pParentScope, pCandidates);
+			if (pCandidates.GetSize() == 1)
+			{
+				Symbol pSym = pCandidates.Get(0);
+				if (pSym.m_eKind == Symbol.Kind.CLASS && pSym.m_pDeclAST != null && pSym.m_pDeclAST.m_eType == AST.Type.AST_CLASS_DECL)
+				{
+					m_pBaseClassDecl = (ClassDecl)(pSym.m_pDeclAST);
+					return m_pBaseClassDecl;
+				}
+				if (pSym.m_eKind == Symbol.Kind.NAMESPACE && pSym.m_pScope != null && m_pBaseTypeRef.m_pChildTypeRef != null)
+				{
+					string sChildName = m_pBaseTypeRef.m_pChildTypeRef.m_pTypeToken.GetString();
+					Vector<Symbol> pChildCandidates = new Vector<Symbol>();
+					pResolver.ResolveInScopeChainNoBaseClasses(sChildName, pSym.m_pScope, pChildCandidates);
+					if (pChildCandidates.GetSize() == 1)
+					{
+						Symbol pChildSym = pChildCandidates.Get(0);
+						if (pChildSym.m_eKind == Symbol.Kind.CLASS && pChildSym.m_pDeclAST != null && pChildSym.m_pDeclAST.m_eType == AST.Type.AST_CLASS_DECL)
+						{
+							m_pBaseClassDecl = (ClassDecl)(pChildSym.m_pDeclAST);
+							return m_pBaseClassDecl;
+						}
+					}
+				}
+			}
+			return null;
+		}
+
+		public ClassDecl GetBaseClassDecl(Validator pValidator)
+		{
+			if (m_pBaseClassDecl != null)
+				return m_pBaseClassDecl;
+			Validator pV = pValidator;
+			if (pV == null)
+			{
+				Project pProject = GetProject();
+				if (pProject != null)
+					pV = pProject.m_pValidator;
+			}
+			if (m_pBaseTypeRef != null && m_pParent != null && pV != null)
+			{
+				ValueType pBaseValueType = m_pBaseTypeRef.CreateValueType(pV.m_pResolver);
 				if (pBaseValueType != null)
 				{
 					m_pBaseClassDecl = pBaseValueType.m_pClassDecl;
@@ -355,6 +379,23 @@ namespace NumbatLogic
 				}
 			}
 			return null;
+		}
+
+		public void AppendFullyQualifiedName(InternalString sOut)
+		{
+			if (m_pParent != null && m_pParent.m_eType == AST.Type.AST_MEMBER_CLASS_DECL)
+			{
+				MemberClassDecl pMember = (MemberClassDecl)(m_pParent);
+				pMember.m_pParentClassDecl.AppendFullyQualifiedName(sOut);
+				sOut.Append("::");
+			}
+			else
+				if (m_pNamespaceNode != null && m_pNamespaceNode.m_sName != null)
+				{
+					m_pNamespaceNode.AppendFullyQualifiedName(sOut);
+					sOut.Append("::");
+				}
+			sOut.Append(m_pNameToken.GetString());
 		}
 
 		public void StringifyTemplateThing(Language eLanguage, OutputFile eOutputFile, InternalString sOut)

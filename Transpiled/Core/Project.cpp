@@ -1,4 +1,5 @@
 #include "Project.hpp"
+#include "AST/AST.hpp"
 #include "AST/TranslationUnit.hpp"
 #include "../../../LangShared/Vector/CPP/Vector.hpp"
 #include "NamespaceNode.hpp"
@@ -8,7 +9,6 @@
 #include "../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "../../../LangShared/File/CPP/File.hpp"
 #include "Validator.hpp"
-#include "AST/AST.hpp"
 #include "AST/NamespaceDecl.hpp"
 #include "Token.hpp"
 #include "TokenContainer.hpp"
@@ -38,9 +38,12 @@ namespace NumbatLogic
 	{
 		m_pTranslationUnitVector = 0;
 		m_pRootNamespaceNode = 0;
+		m_pValidator = 0;
+		m_eType = AST::Type::AST_PROJECT;
 		m_bCanDescend = true;
 		m_pTranslationUnitVector = new Vector<TranslationUnit*>();
 		m_pRootNamespaceNode = new NamespaceNode(0, 0);
+		m_pValidator = 0;
 	}
 
 	void Project::AddFile(const char* sFile, OwnedVector<InternalString*>* sDefineVector)
@@ -58,14 +61,14 @@ namespace NumbatLogic
 		{
 			Console::Log("unable to parse file");
 			Console::Log(sFile);
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			if (pTranslationUnit) delete pTranslationUnit;
 			return;
 		}
 		m_pTranslationUnitVector->PushBack(pTranslationUnit);
-		NumbatLogic::TranslationUnit* __1500951787 = pTranslationUnit;
+		NumbatLogic::TranslationUnit* __1501017379 = pTranslationUnit;
 		pTranslationUnit = 0;
-		AddChild(__1500951787);
+		AddChild(__1501017379);
 		if (pTranslationUnit) delete pTranslationUnit;
 	}
 
@@ -95,18 +98,17 @@ namespace NumbatLogic
 					pTranslationUnit->m_sInFile->Replace("/Shared", "/Source/Shared");
 			}
 		}
-		Validator* pValidator = new Validator(this);
-		if (!pValidator->Validate())
+		m_pValidator = new Validator(this);
+		if (!m_pValidator->Validate())
 		{
 		}
-		if (pValidator) delete pValidator;
 	}
 
 	void Project::RecurseNamespaces(AST* pInAst, NamespaceDecl* pSecretNamespace, TranslationUnit* pSecretTranslationUnit)
 	{
 		if (pInAst->m_eType == AST::Type::AST_TRANSLATION_UNIT)
 		{
-			NumbatLogic::Assert::Plz(pSecretNamespace == 0);
+			Assert::Plz(pSecretNamespace == 0);
 		}
 		AST* pChild = pInAst->m_pFirstChild;
 		while (pChild != 0)
@@ -120,18 +122,18 @@ namespace NumbatLogic
 					pNextChild = pChild->m_pNextSibling;
 					AST* pOwnedChild = 0;
 					pOwnedChild = pInAst->RemoveChild(pChild);
-					NumbatLogic::Assert::Plz(pOwnedChild != 0);
+					Assert::Plz(pOwnedChild != 0);
 					if (pSecretNamespace == 0)
 					{
-						NumbatLogic::AST* __2227940684 = pOwnedChild;
+						NumbatLogic::AST* __2227940687 = pOwnedChild;
 						pOwnedChild = 0;
-						pSecretTranslationUnit->AddChild(__2227940684);
+						pSecretTranslationUnit->AddChild(__2227940687);
 					}
 					else
 					{
-						NumbatLogic::AST* __2227940688 = pOwnedChild;
+						NumbatLogic::AST* __2227940691 = pOwnedChild;
 						pOwnedChild = 0;
-						pSecretNamespace->AddChild(__2227940688);
+						pSecretNamespace->AddChild(__2227940691);
 					}
 					pChild = pNextChild;
 					if (pOwnedChild) delete pOwnedChild;
@@ -144,15 +146,15 @@ namespace NumbatLogic
 				NamespaceDecl* pTemp = pNextSecretNamespace;
 				if (pSecretNamespace == 0)
 				{
-					NumbatLogic::NamespaceDecl* __4258634953 = pNextSecretNamespace;
+					NumbatLogic::NamespaceDecl* __4258634956 = pNextSecretNamespace;
 					pNextSecretNamespace = 0;
-					pSecretTranslationUnit->AddChild(__4258634953);
+					pSecretTranslationUnit->AddChild(__4258634956);
 				}
 				else
 				{
-					NumbatLogic::NamespaceDecl* __4258634957 = pNextSecretNamespace;
+					NumbatLogic::NamespaceDecl* __4258634960 = pNextSecretNamespace;
 					pNextSecretNamespace = 0;
-					pSecretNamespace->AddChild(__4258634957);
+					pSecretNamespace->AddChild(__4258634960);
 				}
 				RecurseNamespaces(pNamespaceDecl, pTemp, pSecretTranslationUnit);
 				if (pNextSecretNamespace) delete pNextSecretNamespace;
@@ -181,25 +183,25 @@ namespace NumbatLogic
 						AST* pOwnedChild = 0;
 						pOwnedChild = pParentAST->RemoveChild(pChild);
 						AST* pSubChild = 0;
-						NumbatLogic::AST* __2552836162 = pOwnedChild->m_pFirstChild;
+						NumbatLogic::AST* __2552901754 = pOwnedChild->m_pFirstChild;
 						pOwnedChild->m_pFirstChild = 0;
-						pSubChild = __2552836162;
+						pSubChild = __2552901754;
 						pOwnedChild->m_pLastChild = 0;
 						if (pSubChild != 0)
 						{
 							pSubChild->m_pParent = pPreviousNamespace;
 							if (pPreviousNamespace->m_pFirstChild == 0)
 							{
-								NumbatLogic::AST* __2417707013 = pSubChild;
+								NumbatLogic::AST* __2417707016 = pSubChild;
 								pSubChild = 0;
-								pPreviousNamespace->m_pFirstChild = __2417707013;
+								pPreviousNamespace->m_pFirstChild = __2417707016;
 								pPreviousNamespace->m_pLastChild = pPreviousNamespace->m_pFirstChild;
 							}
 							else
 							{
-								NumbatLogic::AST* __2417772607 = pSubChild;
+								NumbatLogic::AST* __2417772610 = pSubChild;
 								pSubChild = 0;
-								pPreviousNamespace->m_pLastChild->m_pNextSibling = __2417772607;
+								pPreviousNamespace->m_pLastChild->m_pNextSibling = __2417772610;
 								pPreviousNamespace->m_pLastChild->m_pNextSibling->m_pPrevSibling = pPreviousNamespace->m_pLastChild;
 							}
 							while (pPreviousNamespace->m_pLastChild->m_pNextSibling != 0)
@@ -251,23 +253,23 @@ namespace NumbatLogic
 			{
 				Token* pToken = pTranslationUnit->m_pTokenContainer->m_pTokenVector->PopFront();
 				pToken->m_sFileName = pPublicTranslationUnit->m_sInFile;
-				NumbatLogic::Token* __3778855878 = pToken;
+				NumbatLogic::Token* __3778855881 = pToken;
 				pToken = 0;
-				pPublicTranslationUnit->m_pTokenContainer->m_pTokenVector->PushBack(__3778855878);
+				pPublicTranslationUnit->m_pTokenContainer->m_pTokenVector->PushBack(__3778855881);
 				if (pToken) delete pToken;
 			}
 			if (pPublicTranslationUnit->m_pFirstChild == 0)
 			{
-				NumbatLogic::AST* __4061733421 = pAST->m_pFirstChild;
+				NumbatLogic::AST* __4061733424 = pAST->m_pFirstChild;
 				pAST->m_pFirstChild = 0;
-				pPublicTranslationUnit->m_pFirstChild = __4061733421;
+				pPublicTranslationUnit->m_pFirstChild = __4061733424;
 				pPublicTranslationUnit->m_pLastChild = pPublicTranslationUnit->m_pFirstChild;
 			}
 			else
 			{
-				NumbatLogic::AST* __4061799015 = pAST->m_pFirstChild;
+				NumbatLogic::AST* __4061799018 = pAST->m_pFirstChild;
 				pAST->m_pFirstChild = 0;
-				pPublicTranslationUnit->m_pLastChild->m_pNextSibling = __4061799015;
+				pPublicTranslationUnit->m_pLastChild->m_pNextSibling = __4061799018;
 				pPublicTranslationUnit->m_pLastChild = pPublicTranslationUnit->m_pLastChild->m_pNextSibling;
 			}
 			while (true)
@@ -287,13 +289,13 @@ namespace NumbatLogic
 		NamespaceMerge(pPublicTranslationUnit);
 		RecurseNamespaces(pPublicTranslationUnit, 0, pSecretTranslationUnit);
 		m_pTranslationUnitVector->PushBack(pSecretTranslationUnit);
-		NumbatLogic::TranslationUnit* __1635193662 = pSecretTranslationUnit;
+		NumbatLogic::TranslationUnit* __1635259254 = pSecretTranslationUnit;
 		pSecretTranslationUnit = 0;
-		AddChild(__1635193662);
+		AddChild(__1635259254);
 		m_pTranslationUnitVector->PushBack(pPublicTranslationUnit);
-		NumbatLogic::TranslationUnit* __623321711 = pPublicTranslationUnit;
+		NumbatLogic::TranslationUnit* __623321714 = pPublicTranslationUnit;
 		pPublicTranslationUnit = 0;
-		AddChild(__623321711);
+		AddChild(__623321714);
 		if (sSecretFileName) delete sSecretFileName;
 		if (pSecretTranslationUnit) delete pSecretTranslationUnit;
 		if (pPublicTranslationUnit) delete pPublicTranslationUnit;
@@ -332,6 +334,7 @@ namespace NumbatLogic
 	{
 		if (m_pTranslationUnitVector) delete m_pTranslationUnitVector;
 		if (m_pRootNamespaceNode) delete m_pRootNamespaceNode;
+		if (m_pValidator) delete m_pValidator;
 	}
 
 }

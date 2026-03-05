@@ -63,6 +63,7 @@ namespace NumbatLogic
 		public: bool ValidateAssignable(ValueType* pTo, Validator* pValidator, Token* pToken);
 		public: TypeRef* CreateTypeRef();
 		public: virtual void StringifyType(InternalString* sOut);
+		public: static void StringifyPointerType(InternalString* sOut, TypeRef::PointerType ePointerType);
 		public: virtual ~ValueType();
 	};
 }

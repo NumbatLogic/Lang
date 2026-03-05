@@ -187,28 +187,88 @@ namespace NumbatLogic
 						{
 							if (m_pLeft->m_pValueType->m_ePointerType == TypeRef::PointerType::OWNED && m_pRight->m_pValueType->m_ePointerType != TypeRef::PointerType::OWNED_PREASSSIGN)
 							{
-								pValidator->AddError("Expected right side of = to be OWNED_PREASSSIGN (result of own)", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+								InternalString* sTemp = new InternalString("Expected right side of = to be OWNED_PREASSSIGN (result of own). FROM[");
+								m_pRight->m_pValueType->StringifyType(sTemp);
+								if (m_pRight->m_pValueType->m_pClassDecl != 0)
+								{
+									sTemp->Append(" name=");
+									sTemp->AppendString(m_pRight->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
+								}
+								sTemp->Append(" ptr=");
+								ValueType::StringifyPointerType(sTemp, m_pRight->m_pValueType->m_ePointerType);
+								sTemp->Append("] TO[");
+								m_pLeft->m_pValueType->StringifyType(sTemp);
+								if (m_pLeft->m_pValueType->m_pClassDecl != 0)
+								{
+									sTemp->Append(" name=");
+									sTemp->AppendString(m_pLeft->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
+								}
+								sTemp->Append(" ptr=");
+								ValueType::StringifyPointerType(sTemp, m_pLeft->m_pValueType->m_ePointerType);
+								sTemp->Append("]");
+								pValidator->AddError(sTemp->GetExternalString(), m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+								if (sTemp) delete sTemp;
 								return;
 							}
 							if (m_pLeft->m_pValueType->m_ePointerType == TypeRef::PointerType::SHARED && m_pRight->m_pValueType->m_ePointerType == TypeRef::PointerType::OWNED_PREASSSIGN)
 							{
-								pValidator->AddError("Can't store an owned pointer in a shared pointer", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+								InternalString* sTemp = new InternalString("Can't store an owned pointer in a shared pointer. FROM[");
+								m_pRight->m_pValueType->StringifyType(sTemp);
+								if (m_pRight->m_pValueType->m_pClassDecl != 0)
+								{
+									sTemp->Append(" name=");
+									sTemp->AppendString(m_pRight->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
+								}
+								sTemp->Append(" ptr=");
+								ValueType::StringifyPointerType(sTemp, m_pRight->m_pValueType->m_ePointerType);
+								sTemp->Append("] TO[");
+								m_pLeft->m_pValueType->StringifyType(sTemp);
+								if (m_pLeft->m_pValueType->m_pClassDecl != 0)
+								{
+									sTemp->Append(" name=");
+									sTemp->AppendString(m_pLeft->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
+								}
+								sTemp->Append(" ptr=");
+								ValueType::StringifyPointerType(sTemp, m_pLeft->m_pValueType->m_ePointerType);
+								sTemp->Append("]");
+								pValidator->AddError(sTemp->GetExternalString(), m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+								if (sTemp) delete sTemp;
 								return;
 							}
 							if (m_pRight->m_pValueType->m_ePointerType == TypeRef::PointerType::TRANSITON)
 							{
-								pValidator->AddError("Cannot store a TRANSITION pointer (need to `own` it)", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+								InternalString* sTemp = new InternalString("Cannot store a TRANSITION pointer (need to `own` it). FROM[");
+								m_pRight->m_pValueType->StringifyType(sTemp);
+								if (m_pRight->m_pValueType->m_pClassDecl != 0)
+								{
+									sTemp->Append(" name=");
+									sTemp->AppendString(m_pRight->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
+								}
+								sTemp->Append(" ptr=");
+								ValueType::StringifyPointerType(sTemp, m_pRight->m_pValueType->m_ePointerType);
+								sTemp->Append("] TO[");
+								m_pLeft->m_pValueType->StringifyType(sTemp);
+								if (m_pLeft->m_pValueType->m_pClassDecl != 0)
+								{
+									sTemp->Append(" name=");
+									sTemp->AppendString(m_pLeft->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
+								}
+								sTemp->Append(" ptr=");
+								ValueType::StringifyPointerType(sTemp, m_pLeft->m_pValueType->m_ePointerType);
+								sTemp->Append("]");
+								pValidator->AddError(sTemp->GetExternalString(), m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+								if (sTemp) delete sTemp;
 								return;
 							}
 							if (m_pLeft->m_pValueType->m_pClassDecl != m_pRight->m_pValueType->m_pClassDecl)
 							{
 								AddClassDeclReference(m_pRight->m_pValueType->m_pClassDecl, AST::OutputFile::SOURCE, false);
-								ClassDecl* pBaseClassDecl = m_pRight->m_pValueType->m_pClassDecl->GetBaseClassDecl();
+								ClassDecl* pBaseClassDecl = m_pRight->m_pValueType->m_pClassDecl->GetBaseClassDecl(pValidator);
 								while (pBaseClassDecl != 0)
 								{
 									if (pBaseClassDecl == m_pLeft->m_pValueType->m_pClassDecl)
 										break;
-									pBaseClassDecl = pBaseClassDecl->GetBaseClassDecl();
+									pBaseClassDecl = pBaseClassDecl->GetBaseClassDecl(pValidator);
 								}
 								if (pBaseClassDecl != m_pLeft->m_pValueType->m_pClassDecl)
 								{

@@ -4,6 +4,7 @@
 #include "../Token.hpp"
 #include "../Validator.hpp"
 #include "MemberVarDecl.hpp"
+#include "../Project.hpp"
 #include "VarDecl.hpp"
 #include "TypeRef.hpp"
 #include "../../../../LangShared/Vector/CPP/Vector.hpp"
@@ -21,6 +22,7 @@ namespace NumbatLogic
 	class Token;
 	class Validator;
 	class MemberVarDecl;
+	class Project;
 	class ValueType;
 	class VarDecl;
 	class TypeRef;
@@ -78,7 +80,10 @@ namespace NumbatLogic
 					MemberVarDecl* pMemberVarDecl = (MemberVarDecl*)(pChild);
 					if (!pMemberVarDecl->m_bStatic)
 					{
-						ValueType* pValueType = pMemberVarDecl->m_pVarDecl->m_pTypeRef->GetRecursiveValueType();
+						Project* pProject = GetProject();
+						if (pProject == 0 || pProject->m_pValidator == 0)
+							continue;
+						ValueType* pValueType = pMemberVarDecl->m_pVarDecl->m_pTypeRef->GetRecursiveValueType(pProject->m_pValidator->m_pResolver);
 						if (!pMemberVarDecl->m_pVarDecl->m_pTypeRef->m_bConst)
 						{
 							if (pMemberVarDecl->m_pVarDecl->m_pArraySizeVector != 0)

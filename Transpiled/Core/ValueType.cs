@@ -74,18 +74,45 @@ namespace NumbatLogic
 			}
 			if (pTo.m_ePointerType != TypeRef.PointerType.OWNED && m_ePointerType == TypeRef.PointerType.OWNED_PREASSSIGN)
 			{
-				pValidator.AddError("Can't assign an owned pointer to a non-owned variable", pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
+				InternalString sTemp = new InternalString("Can't assign an owned pointer to a non-owned variable. FROM[");
+				StringifyType(sTemp);
+				sTemp.Append(" ptr=");
+				StringifyPointerType(sTemp, m_ePointerType);
+				sTemp.Append("] TO[");
+				pTo.StringifyType(sTemp);
+				sTemp.Append(" ptr=");
+				StringifyPointerType(sTemp, pTo.m_ePointerType);
+				sTemp.Append("]");
+				pValidator.AddError(sTemp.GetExternalString(), pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
 				return false;
 			}
 			if (pTo.m_ePointerType == TypeRef.PointerType.OWNED && (m_ePointerType != TypeRef.PointerType.OWNED_PREASSSIGN && m_eType != ValueType.Type.NULL_VALUE))
 			{
-				pValidator.AddError("Expected right side of = to be OWNED_PREASSSIGN (result of own)", pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
+				InternalString sTemp = new InternalString("Expected right side of = to be OWNED_PREASSSIGN (result of own). FROM[");
+				StringifyType(sTemp);
+				sTemp.Append(" ptr=");
+				StringifyPointerType(sTemp, m_ePointerType);
+				sTemp.Append("] TO[");
+				pTo.StringifyType(sTemp);
+				sTemp.Append(" ptr=");
+				StringifyPointerType(sTemp, pTo.m_ePointerType);
+				sTemp.Append("]");
+				pValidator.AddError(sTemp.GetExternalString(), pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
 				return false;
 			}
 			else
 				if (m_ePointerType == TypeRef.PointerType.TRANSITON)
 				{
-					pValidator.AddError("Cannot store a TRANSITION pointer (need to `own` it)", pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
+					InternalString sTemp = new InternalString("Cannot store a TRANSITION pointer (need to `own` it). FROM[");
+					StringifyType(sTemp);
+					sTemp.Append(" ptr=");
+					StringifyPointerType(sTemp, m_ePointerType);
+					sTemp.Append("] TO[");
+					pTo.StringifyType(sTemp);
+					sTemp.Append(" ptr=");
+					StringifyPointerType(sTemp, pTo.m_ePointerType);
+					sTemp.Append("]");
+					pValidator.AddError(sTemp.GetExternalString(), pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
 					return false;
 				}
 			if ((m_pGenericValueTypeVector == null) != (pTo.m_pGenericValueTypeVector == null))
@@ -133,9 +160,9 @@ namespace NumbatLogic
 						{
 							TypeRef pGenericTypeRef = m_pGenericValueTypeVector.Get(i).CreateTypeRef();
 							pTypeRef.m_pGenericTypeRefVector.PushBack(pGenericTypeRef);
-							NumbatLogic.TypeRef __3744907352 = pGenericTypeRef;
+							NumbatLogic.TypeRef __3752644072 = pGenericTypeRef;
 							pGenericTypeRef = null;
-							pTypeRef.AddChild(__3744907352);
+							pTypeRef.AddChild(__3752644072);
 						}
 					}
 					NamespaceNode pNamespaceNode = m_pClassDecl.m_pNamespaceNode;
@@ -147,17 +174,17 @@ namespace NumbatLogic
 						pNamespaceTypeRef.m_pCloneToken.m_sValue = new InternalString(pNamespaceNode.m_sName.GetExternalString());
 						pNamespaceTypeRef.m_pTypeToken = pNamespaceTypeRef.m_pCloneToken;
 						pNamespaceTypeRef.m_pChildTypeRef = pTypeRef;
-						NumbatLogic.TypeRef __975778034 = pTypeRef;
+						NumbatLogic.TypeRef __975974828 = pTypeRef;
 						pTypeRef = null;
-						pNamespaceTypeRef.AddChild(__975778034);
-						NumbatLogic.TypeRef __2554669796 = pNamespaceTypeRef;
+						pNamespaceTypeRef.AddChild(__975974828);
+						NumbatLogic.TypeRef __2554801001 = pNamespaceTypeRef;
 						pNamespaceTypeRef = null;
-						pTypeRef = __2554669796;
+						pTypeRef = __2554801001;
 						pNamespaceNode = pNamespaceNode.m_pParent;
 					}
-					NumbatLogic.TypeRef __975843630 = pTypeRef;
+					NumbatLogic.TypeRef __976040424 = pTypeRef;
 					pTypeRef = null;
-					return __975843630;
+					return __976040424;
 				}
 
 				case Type.GENERIC_TYPE_DECL_VALUE:
@@ -166,13 +193,13 @@ namespace NumbatLogic
 					pTypeRef.m_pCloneToken.m_eType = Token.Type.TOKEN_IDENTIFIER;
 					pTypeRef.m_pCloneToken.m_sValue = new InternalString(m_pGenericTypeDecl.m_pFirstToken.m_sValue.GetExternalString());
 					pTypeRef.m_pTypeToken = pTypeRef.m_pCloneToken;
-					NumbatLogic.TypeRef __975909227 = pTypeRef;
+					NumbatLogic.TypeRef __976106021 = pTypeRef;
 					pTypeRef = null;
-					return __975909227;
+					return __976106021;
 				}
 
 			}
-			NumbatLogic.Assert.Plz(false);
+			Assert.Plz(false);
 			return null;
 		}
 
@@ -290,6 +317,38 @@ namespace NumbatLogic
 
 			}
 			sOut.Append("???");
+		}
+
+		public static void StringifyPointerType(InternalString sOut, TypeRef.PointerType ePointerType)
+		{
+			switch (ePointerType)
+			{
+				case TypeRef.PointerType.SHARED:
+				{
+					sOut.Append("SHARED");
+					return;
+				}
+
+				case TypeRef.PointerType.OWNED:
+				{
+					sOut.Append("OWNED");
+					return;
+				}
+
+				case TypeRef.PointerType.TRANSITON:
+				{
+					sOut.Append("TRANSITON");
+					return;
+				}
+
+				case TypeRef.PointerType.OWNED_PREASSSIGN:
+				{
+					sOut.Append("OWNED_PREASSSIGN");
+					return;
+				}
+
+			}
+			sOut.Append("UNKNOWN_PTR");
 		}
 
 		~ValueType()

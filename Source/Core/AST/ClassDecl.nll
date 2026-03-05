@@ -46,7 +46,7 @@ namespace NumbatLogic
 			{
 				Console::Log("expected class name");
 				Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 				return null;
 			}	
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
@@ -69,7 +69,7 @@ namespace NumbatLogic
 					if (pGenericTypeDecl == null)
 					{
 						Console::Log("expected inner GenericTypeDecl");
-						NumbatLogic::Assert::Plz(false);
+						Assert::Plz(false);
 					}
 
 					pClassDecl.m_pGenericTypeDeclVector.PushBack(disown pGenericTypeDecl);
@@ -82,7 +82,7 @@ namespace NumbatLogic
 					{
 						Console::Log("expected comma");
 						Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-						NumbatLogic::Assert::Plz(false);
+						Assert::Plz(false);
 					}
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 				}
@@ -98,7 +98,7 @@ namespace NumbatLogic
 				{
 					Console::Log("expected base class");
 					Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-					NumbatLogic::Assert::Plz(false);
+					Assert::Plz(false);
 					return null;
 				}
 			}
@@ -107,7 +107,7 @@ namespace NumbatLogic
 			{
 				Console::Log("expected opening curly brace");
 				Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
@@ -175,7 +175,7 @@ namespace NumbatLogic
 
 				Console::Log("expected to parse somethting within class...");
 				Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 			}
 
 
@@ -194,7 +194,7 @@ namespace NumbatLogic
 
 			if (m_pBaseTypeRef != null)
 			{
-				ValueType* pBaseValueType = own m_pBaseTypeRef.CreateValueType();
+				ValueType* pBaseValueType = own m_pBaseTypeRef.CreateValueType(pValidator.m_pResolver);
 				if (pBaseValueType == null)
 				{
 					InternalString* sTemp = own new InternalString("Unknown base class: ");
@@ -330,51 +330,75 @@ namespace NumbatLogic
 			base.Validate(pValidator, pParent);
 		}
 
-		public override ClassDecl FindClassDecl(string sTypeName, AST pCallingChild)
+		// Returns base class without calling CreateValueType (avoids infinite loop during resolution).
+		// First uses m_pBaseTypeRef.GetFoundClassDecl() or the child TypeRef for qualified bases (e.g. NetObject::ObjectInfo);
+		// if that is null, resolves the base type name from this class's parent scope without following base classes.
+		public ClassDecl GetBaseClassDeclForScopeLookup(Resolver pResolver)
 		{
-			if (ExternalString::Equal(sTypeName, m_pNameToken.GetString()))
-				return this;
+			if (m_pBaseClassDecl != null)
+				return m_pBaseClassDecl;
+			if (m_pBaseTypeRef == null)
+				return null;
+			ClassDecl pBase = m_pBaseTypeRef.GetFoundClassDecl();
+			if (pBase == null && m_pBaseTypeRef.m_pChildTypeRef != null)
+				pBase = m_pBaseTypeRef.m_pChildTypeRef.GetFoundClassDecl();
+			if (pBase != null)
+			{
+				m_pBaseClassDecl = pBase;
+				return m_pBaseClassDecl;
+			}
+			// Base TypeRef not resolved yet: resolve base type name from enclosing scope without following bases.
+			if (pResolver == null || m_pSymbolScope == null)
+				return null;
+			SymbolScope pParentScope = m_pSymbolScope.m_pParent;
+			if (pParentScope == null)
+				return null;
+			string sBaseName = m_pBaseTypeRef.m_pTypeToken.GetString();
+			Vector<Symbol>* pCandidates = own new Vector<Symbol>();
+			pResolver.ResolveInScopeChainNoBaseClasses(sBaseName, pParentScope, pCandidates);
+			if (pCandidates.GetSize() == 1)
+			{
+				Symbol pSym = pCandidates.Get(0);
+				if (pSym.m_eKind == Symbol::Kind::CLASS && pSym.m_pDeclAST != null && pSym.m_pDeclAST.m_eType == AST::Type::AST_CLASS_DECL)
+				{
+					m_pBaseClassDecl = cast ClassDecl(pSym.m_pDeclAST);
+					return m_pBaseClassDecl;
+				}
+				// Qualified base (e.g. NetObject::ObjectInfo): first part is namespace, resolve child in its scope.
+				if (pSym.m_eKind == Symbol::Kind::NAMESPACE && pSym.m_pScope != null && m_pBaseTypeRef.m_pChildTypeRef != null)
+				{
+					string sChildName = m_pBaseTypeRef.m_pChildTypeRef.m_pTypeToken.GetString();
+					Vector<Symbol>* pChildCandidates = own new Vector<Symbol>();
+					pResolver.ResolveInScopeChainNoBaseClasses(sChildName, pSym.m_pScope, pChildCandidates);
+					if (pChildCandidates.GetSize() == 1)
+					{
+						Symbol pChildSym = pChildCandidates.Get(0);
+						if (pChildSym.m_eKind == Symbol::Kind::CLASS && pChildSym.m_pDeclAST != null && pChildSym.m_pDeclAST.m_eType == AST::Type::AST_CLASS_DECL)
+						{
+							m_pBaseClassDecl = cast ClassDecl(pChildSym.m_pDeclAST);
+							return m_pBaseClassDecl;
+						}
+					}
+				}
+			}
 			return null;
 		}
 
-		public override AST FindByName(string sxName, AST pCallingChild)
-		{
-			if (ExternalString::Equal(sxName, m_pNameToken.GetString()))
-				return this;
-
-			ClassDecl pBaseClassDecl = GetBaseClassDecl();
-			if (pBaseClassDecl != null)
-			{
-				AST pResult = pBaseClassDecl.FindByName(sxName, null);
-				if (pResult != null)
-					return pResult;
-			}
-
-			if (pCallingChild != null)
-			{
-				for (int i = 0; i < m_pGenericTypeDeclVector.GetSize(); i++)
-	   			{
-	   				GenericTypeDecl pGenericTypeDecl = m_pGenericTypeDeclVector.Get(i);
-	   				if (ExternalString::Equal(pGenericTypeDecl.m_pFirstToken.GetString(), sxName))
-	   				{
-	   					//Console::Log(pGenericTypeDecl.m_pFirstToken.GetString());
-	   					return pGenericTypeDecl;
-	   				}
-				}
-			}
-
-			return base.FindByName(sxName, pCallingChild);
-		}
-
-		public ClassDecl GetBaseClassDecl()
+		public ClassDecl GetBaseClassDecl(Validator pValidator)
 		{
 			if (m_pBaseClassDecl != null)
 				return m_pBaseClassDecl;
 
-
-			if (m_pBaseTypeRef != null && m_pParent != null)
+			Validator pV = pValidator;
+			if (pV == null)
 			{
-				ValueType* pBaseValueType = own m_pBaseTypeRef.CreateValueType();
+				Project pProject = GetProject();
+				if (pProject != null)
+					pV = pProject.m_pValidator;
+			}
+			if (m_pBaseTypeRef != null && m_pParent != null && pV != null)
+			{
+				ValueType* pBaseValueType = own m_pBaseTypeRef.CreateValueType(pV.m_pResolver);
 				if (pBaseValueType != null)
 				{
 					m_pBaseClassDecl = pBaseValueType.m_pClassDecl;

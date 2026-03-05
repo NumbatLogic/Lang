@@ -3,19 +3,25 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "AST.hpp"
+#include "ArrayLookup.hpp"
 #include "OperatorExpr.hpp"
 #include "../ValueType.hpp"
 #include "ClassDecl.hpp"
 #include "EnumDecl.hpp"
 #include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "../NamespaceNode.hpp"
-#include "NamespaceDecl.hpp"
+#include "../Semantic/Symbol.hpp"
 #include "../Validator.hpp"
+#include "../Semantic/Resolver.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "VarDecl.hpp"
 #include "MemberVarDecl.hpp"
+#include "MemberClassDecl.hpp"
+#include "MemberEnumDecl.hpp"
 #include "TypeRef.hpp"
 #include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
+#include "MemberFunctionDecl.hpp"
+#include "NamespaceDecl.hpp"
 
 namespace NumbatLogic
 {
@@ -24,23 +30,29 @@ namespace NumbatLogic
 	class Token;
 	class TokenContainer;
 	class Identifier;
+	class ArrayLookup;
 	class OperatorExpr;
 	template <class T>
 	class Vector;
 	class NamespaceDecl;
 	class NamespaceNode;
+	class Symbol;
 	class Validator;
+	class Resolver;
 	class InternalString;
 	class ClassDecl;
 	class VarDecl;
 	class MemberVarDecl;
+	class MemberClassDecl;
 	class EnumDecl;
+	class MemberEnumDecl;
 	class EnumDeclValue;
 	class TypeRef;
 	template <class T>
 	class OwnedVector;
 	class ValueType;
 	class FunctionDecl;
+	class MemberFunctionDecl;
 }
 namespace NumbatLogic
 {
@@ -79,63 +91,168 @@ namespace NumbatLogic
 	void Identifier::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
 		const char* sName = m_pNameToken->GetString();
+		AST* pContextParent = (pParent != 0) ? (AST*)(pParent) : m_pParent;
 		AST* pAST = 0;
 		AST* pBase = this;
 		AST* pChild = this;
-		if (pParent != 0)
+		bool bResolverAmbiguous = false;
+		if (pContextParent != 0)
 		{
-			if (pParent->m_pOperatorToken->m_eType == Token::Type::TOKEN_DOT && pParent->m_pLeft->m_pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
+			if (pContextParent->m_eType == AST::Type::AST_ARRAY_LOOKUP)
 			{
-				AddClassDeclReference(pParent->m_pLeft->m_pValueType->m_pClassDecl, AST::OutputFile::SOURCE, false);
-				pBase = pParent->m_pLeft->m_pValueType->m_pClassDecl;
-				pChild = 0;
-			}
-			else
-				if (pParent->m_pOperatorToken->m_eType == Token::Type::TOKEN_DOUBLE_COLON)
+				ArrayLookup* pAL = (ArrayLookup*)(pContextParent);
+				if (pAL->m_pExpression == this)
 				{
-					if (pParent->m_pLeft->m_pValueType->m_eType == ValueType::Type::CLASS_DECL)
+					AST* pWalk = pAL->m_pParent;
+					while (pWalk != 0 && pBase == this)
 					{
-						AddClassDeclReference(pParent->m_pLeft->m_pValueType->m_pClassDecl, AST::OutputFile::SOURCE, false);
-						pBase = pParent->m_pLeft->m_pValueType->m_pClassDecl;
-						pChild = 0;
-					}
-					else
-						if (pParent->m_pLeft->m_pValueType->m_eType == ValueType::Type::ENUM_DECL)
+						if (pWalk->m_eType == AST::Type::AST_OPERATOR_EXPR)
 						{
-							pBase = pParent->m_pLeft->m_pValueType->m_pEnumDecl;
+							OperatorExpr* pOpWalk = (OperatorExpr*)(pWalk);
+							bool bRightIsArrayLookupOrMulLeft = (pOpWalk->m_pRight == pAL);
+							if (!bRightIsArrayLookupOrMulLeft && pOpWalk->m_pRight != 0 && pOpWalk->m_pRight->m_eType == AST::Type::AST_OPERATOR_EXPR)
+							{
+								OperatorExpr* pRightOp = (OperatorExpr*)(pOpWalk->m_pRight);
+								bRightIsArrayLookupOrMulLeft = (pRightOp->m_pLeft == pAL);
+							}
+							if (pOpWalk->m_pOperatorToken != 0 && pOpWalk->m_pOperatorToken->m_eType == Token::Type::TOKEN_DOUBLE_COLON && pOpWalk->m_pLeft != 0 && bRightIsArrayLookupOrMulLeft)
+							{
+								if (pOpWalk->m_pLeft->m_pValueType == 0)
+									pOpWalk->m_pLeft->Validate(pValidator, pOpWalk);
+								if (pOpWalk->m_pLeft->m_pValueType != 0)
+								{
+									if (pOpWalk->m_pLeft->m_pValueType->m_eType == ValueType::Type::CLASS_DECL || pOpWalk->m_pLeft->m_pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
+									{
+										AddClassDeclReference(pOpWalk->m_pLeft->m_pValueType->m_pClassDecl, AST::OutputFile::SOURCE, false);
+										pBase = pOpWalk->m_pLeft->m_pValueType->m_pClassDecl;
+										pChild = 0;
+										break;
+									}
+									else
+										if (pOpWalk->m_pLeft->m_pValueType->m_eType == ValueType::Type::ENUM_DECL)
+										{
+											pBase = pOpWalk->m_pLeft->m_pValueType->m_pEnumDecl;
+											pChild = 0;
+											break;
+										}
+								}
+							}
+						}
+						pWalk = pWalk->m_pParent;
+					}
+				}
+			}
+			if (pContextParent->m_eType == AST::Type::AST_OPERATOR_EXPR)
+			{
+				OperatorExpr* pOpContext = (OperatorExpr*)(pContextParent);
+				if (pOpContext->m_pOperatorToken != 0 && pOpContext->m_pOperatorToken->m_eType == Token::Type::TOKEN_DOT && pOpContext->m_pLeft != 0 && pOpContext->m_pLeft->m_pValueType != 0 && pOpContext->m_pLeft->m_pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
+				{
+					AddClassDeclReference(pOpContext->m_pLeft->m_pValueType->m_pClassDecl, AST::OutputFile::SOURCE, false);
+					pBase = pOpContext->m_pLeft->m_pValueType->m_pClassDecl;
+					pChild = 0;
+				}
+				else
+					if (pOpContext->m_pOperatorToken != 0 && pOpContext->m_pOperatorToken->m_eType == Token::Type::TOKEN_DOUBLE_COLON && pOpContext->m_pLeft != 0 && pOpContext->m_pLeft->m_pValueType != 0)
+					{
+						if (pOpContext->m_pLeft->m_pValueType->m_eType == ValueType::Type::CLASS_DECL)
+						{
+							AddClassDeclReference(pOpContext->m_pLeft->m_pValueType->m_pClassDecl, AST::OutputFile::SOURCE, false);
+							pBase = pOpContext->m_pLeft->m_pValueType->m_pClassDecl;
 							pChild = 0;
 						}
 						else
-							if (pParent->m_pLeft->m_pValueType->m_eType == ValueType::Type::NAMESPACE_NODE)
+							if (pOpContext->m_pLeft->m_pValueType->m_eType == ValueType::Type::ENUM_DECL)
 							{
-								Vector<NamespaceDecl*>* pNamespaceDeclVector = pParent->m_pLeft->m_pValueType->m_pNamespaceNode->m_pNamespaceDeclVector;
-								for (int i = 0; i < pNamespaceDeclVector->GetSize(); i++)
-								{
-									NamespaceDecl* pNamespaceDecl = pNamespaceDeclVector->Get(i);
-									pAST = pNamespaceDecl->FindByName(sName, 0);
-									if (pAST != 0)
-										break;
-								}
+								pBase = pOpContext->m_pLeft->m_pValueType->m_pEnumDecl;
+								pChild = 0;
 							}
 							else
-							{
-								pValidator->AddError("Unexpected left of ::", m_pFirstToken->m_sFileName, m_pFirstToken->m_nLine, m_pFirstToken->m_nColumn);
-								return;
-							}
-				}
+								if (pOpContext->m_pLeft->m_pValueType->m_eType == ValueType::Type::NAMESPACE_NODE)
+								{
+									Vector<NamespaceDecl*>* pNamespaceDeclVector = pOpContext->m_pLeft->m_pValueType->m_pNamespaceNode->m_pNamespaceDeclVector;
+									Vector<Symbol*>* pCandidates = new Vector<Symbol*>();
+									Vector<Symbol*>* pRelevant = new Vector<Symbol*>();
+									for (int i = 0; i < pNamespaceDeclVector->GetSize(); i++)
+									{
+										NamespaceDecl* pNamespaceDecl = pNamespaceDeclVector->Get(i);
+										pCandidates->Clear();
+										pValidator->m_pResolver->ResolveFromNode(pNamespaceDecl, sName, pCandidates);
+										pRelevant->Clear();
+										for (int j = 0; j < pCandidates->GetSize(); j++)
+										{
+											Symbol* pSym = pCandidates->Get(j);
+											if (pSym->m_eKind == Symbol::Kind::CLASS || pSym->m_eKind == Symbol::Kind::ENUM || pSym->m_eKind == Symbol::Kind::VAR || pSym->m_eKind == Symbol::Kind::PARAM || pSym->m_eKind == Symbol::Kind::FUNCTION || pSym->m_eKind == Symbol::Kind::METHOD || pSym->m_eKind == Symbol::Kind::DELEGATE || pSym->m_eKind == Symbol::Kind::ENUM_VALUE || pSym->m_eKind == Symbol::Kind::NAMESPACE)
+											{
+												pRelevant->PushBack(pSym);
+											}
+										}
+										if (pRelevant->GetSize() == 1 && pRelevant->Get(0)->m_pDeclAST != 0)
+										{
+											pAST = pRelevant->Get(0)->m_pDeclAST;
+											break;
+										}
+										if (pRelevant->GetSize() > 1)
+										{
+											bResolverAmbiguous = true;
+											break;
+										}
+									}
+									if (pCandidates) delete pCandidates;
+									if (pRelevant) delete pRelevant;
+								}
+								else
+								{
+									pValidator->AddError("Unexpected left of ::", m_pFirstToken->m_sFileName, m_pFirstToken->m_nLine, m_pFirstToken->m_nColumn);
+									return;
+								}
+					}
+			}
 		}
 		if (pAST == 0)
-			pAST = pBase->FindByName(sName, pChild);
+		{
+			Vector<Symbol*>* pCandidates = new Vector<Symbol*>();
+			pValidator->m_pResolver->ResolveFromNode(pBase, sName, pCandidates);
+			Vector<Symbol*>* pRelevant = new Vector<Symbol*>();
+			for (int i = 0; i < pCandidates->GetSize(); i++)
+			{
+				Symbol* pSym = pCandidates->Get(i);
+				if (pSym->m_eKind == Symbol::Kind::CLASS || pSym->m_eKind == Symbol::Kind::ENUM || pSym->m_eKind == Symbol::Kind::VAR || pSym->m_eKind == Symbol::Kind::PARAM || pSym->m_eKind == Symbol::Kind::FUNCTION || pSym->m_eKind == Symbol::Kind::METHOD || pSym->m_eKind == Symbol::Kind::DELEGATE || pSym->m_eKind == Symbol::Kind::ENUM_VALUE || pSym->m_eKind == Symbol::Kind::NAMESPACE)
+				{
+					pRelevant->PushBack(pSym);
+				}
+			}
+			if (pRelevant->GetSize() == 1)
+			{
+				Symbol* pSymbol = pRelevant->Get(0);
+				if (pSymbol->m_pDeclAST != 0)
+					pAST = pSymbol->m_pDeclAST;
+			}
+			else
+				if (pRelevant->GetSize() > 1)
+					bResolverAmbiguous = true;
+			if (pCandidates) delete pCandidates;
+			if (pRelevant) delete pRelevant;
+		}
 		if (pAST == 0)
 		{
-			InternalString* sTemp = new InternalString("Identifier Unbeknownst! ");
-			sTemp->Append(sName);
-			if (pParent != 0)
-				sTemp->Append(" has parent");
-			sTemp->Append(" base: ");
-			pBase->StringifyType(sTemp);
-			pValidator->AddError(sTemp->GetExternalString(), m_pFirstToken->m_sFileName, m_pFirstToken->m_nLine, m_pFirstToken->m_nColumn);
-			if (sTemp) delete sTemp;
+			if (bResolverAmbiguous)
+			{
+				InternalString* sAmbiguous = new InternalString("Ambiguous identifier (multiple declarations in scope): ");
+				sAmbiguous->Append(sName);
+				pValidator->AddError(sAmbiguous->GetExternalString(), m_pFirstToken->m_sFileName, m_pFirstToken->m_nLine, m_pFirstToken->m_nColumn);
+				if (sAmbiguous) delete sAmbiguous;
+			}
+			else
+			{
+				InternalString* sTemp = new InternalString("Identifier Unbeknownst! ");
+				sTemp->Append(sName);
+				if (pContextParent != 0)
+					sTemp->Append(" has parent");
+				sTemp->Append(" base: ");
+				pBase->StringifyType(sTemp);
+				pValidator->AddError(sTemp->GetExternalString(), m_pFirstToken->m_sFileName, m_pFirstToken->m_nLine, m_pFirstToken->m_nColumn);
+				if (sTemp) delete sTemp;
+			}
 			return;
 		}
 		if (pAST->m_eType == AST::Type::AST_CLASS_DECL)
@@ -179,12 +296,35 @@ namespace NumbatLogic
 			}
 			return;
 		}
+		else
+			if (pAST->m_eType == AST::Type::AST_MEMBER_CLASS_DECL)
+			{
+				MemberClassDecl* pMemberClassDecl = (MemberClassDecl*)(pAST);
+				if (pMemberClassDecl->m_pClassDecl != 0)
+				{
+					m_pValueType = new ValueType(ValueType::Type::CLASS_DECL);
+					m_pValueType->m_pClassDecl = pMemberClassDecl->m_pClassDecl;
+					AddClassDeclReference(m_pValueType->m_pClassDecl, AST::OutputFile::SOURCE, false);
+				}
+				return;
+			}
 		if (pAST->m_eType == AST::Type::AST_ENUM_DECL)
 		{
 			m_pValueType = new ValueType(ValueType::Type::ENUM_DECL);
 			m_pValueType->m_pEnumDecl = (EnumDecl*)(pAST);
 			return;
 		}
+		else
+			if (pAST->m_eType == AST::Type::AST_MEMBER_ENUM_DECL)
+			{
+				MemberEnumDecl* pMemberEnum = (MemberEnumDecl*)(pAST);
+				if (pMemberEnum->m_pEnumDecl != 0)
+				{
+					m_pValueType = new ValueType(ValueType::Type::ENUM_DECL);
+					m_pValueType->m_pEnumDecl = pMemberEnum->m_pEnumDecl;
+					return;
+				}
+			}
 		if (pAST->m_eType == AST::Type::ENUM_DECL_VALUE)
 		{
 			m_pValueType = new ValueType(ValueType::Type::ENUM_DECL_VALUE);
@@ -194,7 +334,7 @@ namespace NumbatLogic
 		if (pAST->m_eType == AST::Type::AST_VAR_DECL)
 		{
 			VarDecl* pVarDecl = (VarDecl*)(pAST);
-			m_pValueType = pVarDecl->m_pTypeRef->CreateValueType();
+			m_pValueType = pVarDecl->m_pTypeRef->CreateValueType(pValidator->m_pResolver);
 			if (m_pValueType == 0)
 			{
 				pValidator->AddError("Could not create ValueType for VarDecl", m_pFirstToken->m_sFileName, m_pFirstToken->m_nLine, m_pFirstToken->m_nColumn);
@@ -214,9 +354,9 @@ namespace NumbatLogic
 								if (pGenericValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
 								{
 									ValueType* pOldValueType = 0;
-									NumbatLogic::ValueType* __857310024 = m_pValueType;
+									NumbatLogic::ValueType* __865768328 = m_pValueType;
 									m_pValueType = 0;
-									pOldValueType = __857310024;
+									pOldValueType = __865768328;
 									m_pValueType = pGenericValueType->Clone();
 									m_pValueType->m_ePointerType = pOldValueType->m_ePointerType;
 									if (pOldValueType) delete pOldValueType;
@@ -228,12 +368,65 @@ namespace NumbatLogic
 			}
 			return;
 		}
+		else
+			if (pAST->m_eType == AST::Type::AST_MEMBER_VAR_DECL)
+			{
+				MemberVarDecl* pMemberVarDecl = (MemberVarDecl*)(pAST);
+				if (pMemberVarDecl->m_pVarDecl != 0)
+				{
+					VarDecl* pVarDecl = pMemberVarDecl->m_pVarDecl;
+					m_pValueType = pVarDecl->m_pTypeRef->CreateValueType(pValidator->m_pResolver);
+					if (m_pValueType == 0)
+					{
+						pValidator->AddError("Could not create ValueType for MemberVarDecl", m_pFirstToken->m_sFileName, m_pFirstToken->m_nLine, m_pFirstToken->m_nColumn);
+						return;
+					}
+					if (m_pValueType->m_eType == ValueType::Type::GENERIC_TYPE_DECL_VALUE)
+					{
+						if (pParent != 0)
+						{
+							if (pParent->m_pOperatorToken->m_eType == Token::Type::TOKEN_DOT && pParent->m_pLeft->m_pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
+							{
+								if (pParent->m_pLeft->m_pValueType->m_pGenericValueTypeVector != 0)
+								{
+									if (pParent->m_pLeft->m_pValueType->m_pGenericValueTypeVector->GetSize() > 0)
+									{
+										ValueType* pGenericValueType = pParent->m_pLeft->m_pValueType->m_pGenericValueTypeVector->Get(0);
+										if (pGenericValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
+										{
+											ValueType* pOldValueType = 0;
+											NumbatLogic::ValueType* __866030726 = m_pValueType;
+											m_pValueType = 0;
+											pOldValueType = __866030726;
+											m_pValueType = pGenericValueType->Clone();
+											m_pValueType->m_ePointerType = pOldValueType->m_ePointerType;
+											if (pOldValueType) delete pOldValueType;
+										}
+									}
+								}
+							}
+						}
+					}
+					return;
+				}
+			}
 		if (pAST->m_eType == AST::Type::AST_FUNCTION_DECL)
 		{
 			m_pValueType = new ValueType(ValueType::Type::FUNCTION_DECL);
 			m_pValueType->m_pFunctionDecl = (FunctionDecl*)(pAST);
 			return;
 		}
+		else
+			if (pAST->m_eType == AST::Type::AST_MEMBER_FUNCTION_DECL)
+			{
+				MemberFunctionDecl* pMFD = (MemberFunctionDecl*)(pAST);
+				if (pMFD->m_pFunctionDecl != 0)
+				{
+					m_pValueType = new ValueType(ValueType::Type::FUNCTION_DECL);
+					m_pValueType->m_pFunctionDecl = pMFD->m_pFunctionDecl;
+					return;
+				}
+			}
 		if (pAST->m_eType == AST::Type::NAMESPACE_DECL)
 		{
 			m_pValueType = new ValueType(ValueType::Type::NAMESPACE_NODE);

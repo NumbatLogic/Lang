@@ -12,6 +12,8 @@ namespace NumbatLogic
 	class Validator;
 	class OperatorExpr;
 	class NamespaceDecl;
+	class Symbol;
+	class ValueType;
 	class InternalString;
 }
 namespace NumbatLogic

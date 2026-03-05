@@ -5,12 +5,11 @@ namespace NumbatLogic
 		public enum Kind {
 			NAMESPACE,
 			CLASS,
-			STRUCT,
 			ENUM,
-			TYPE_ALIAS,
 			GENERIC_PARAM,
 
 			FUNCTION,
+			DELEGATE,
 			METHOD,
 			VAR,
 			PARAM,

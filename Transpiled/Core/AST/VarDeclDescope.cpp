@@ -6,6 +6,8 @@
 #include "../Util.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "TypeRef.hpp"
+#include "../Project.hpp"
+#include "../Validator.hpp"
 #include "../ValueType.hpp"
 #include "ClassDecl.hpp"
 
@@ -19,8 +21,10 @@ namespace NumbatLogic
 	class Token;
 	class Util;
 	class InternalString;
+	class Project;
 	class ValueType;
 	class TypeRef;
+	class Validator;
 	class ClassDecl;
 }
 namespace NumbatLogic
@@ -83,7 +87,8 @@ namespace NumbatLogic
 				else
 					if (eLanguage == AST::Language::CS)
 					{
-						ValueType* pValueType = pVarDecl->m_pTypeRef->CreateValueType();
+						Project* pProject = GetProject();
+						ValueType* pValueType = pVarDecl->m_pTypeRef->CreateValueType(pProject->m_pValidator->m_pResolver);
 						if (pValueType != 0 && pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
 						{
 							if (pValueType->m_pClassDecl != 0 && pValueType->m_pClassDecl->m_bDisposable)

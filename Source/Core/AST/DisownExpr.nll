@@ -23,7 +23,7 @@ namespace NumbatLogic
 			if (pExpression == null)
 			{
 				Console::Log("expected expresssion");
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 				return null;
 			}
 
@@ -118,8 +118,10 @@ namespace NumbatLogic
 				pTempVarDecl.m_pAssignment = pAssignment;
 				pTempVarDecl.AddChild(disown pTypeRef);
 				pTempVarDecl.AddChild(disown pAssignment);
-				
+
+				AST pInjectedVarDecl = pTempVarDecl;
 				pParentParent.AddChildBefore(disown pTempVarDecl, pParentStatement);
+				pValidator.ValidateSubtree(pInjectedVarDecl);
 			}
 
 			{
@@ -146,7 +148,9 @@ namespace NumbatLogic
 				pExpressionStmt.m_pExpression = pOperatorExpr;
 				pExpressionStmt.AddChild(disown pOperatorExpr);
 
+				AST pInjectedStmt = pExpressionStmt;
 				pParentParent.AddChildBefore(disown pExpressionStmt, pParentStatement);
+				pValidator.ValidateSubtree(pInjectedStmt);
 			}
 
 			m_sTempVarName = own disown sTempName;

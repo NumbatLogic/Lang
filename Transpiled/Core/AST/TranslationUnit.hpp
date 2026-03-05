@@ -8,7 +8,6 @@
 namespace NumbatLogic
 {
 	class ClassDecl;
-	class AST;
 	class InternalString;
 	template <class T>
 	class OwnedVector;
@@ -18,6 +17,7 @@ namespace NumbatLogic
 	class ClassDeclReference;
 	class TokenContainer;
 	class TranslationUnit;
+	class AST;
 }
 namespace NumbatLogic
 {

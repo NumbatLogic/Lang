@@ -4,12 +4,15 @@ namespace NumbatLogic
 	{
 		public Vector<TranslationUnit>* m_pTranslationUnitVector; // can just use existing child stuff for this...
 		public NamespaceNode* m_pRootNamespaceNode;
+		public Validator* m_pValidator;
 
 		public construct()
 		{
+			m_eType = AST::Type::AST_PROJECT;
 			m_bCanDescend = true;
 			m_pTranslationUnitVector = own new Vector<TranslationUnit>();
 			m_pRootNamespaceNode = own new NamespaceNode(null, null);
+			m_pValidator = null;
 		}
 
 		public void AddFile(string sFile, OwnedVector<InternalString> sDefineVector)
@@ -31,7 +34,7 @@ namespace NumbatLogic
 			{
 				Console::Log("unable to parse file");
 				Console::Log(sFile);
-	   			NumbatLogic::Assert::Plz(false);
+	   			Assert::Plz(false);
 	   			return;
 			}
 
@@ -66,9 +69,9 @@ namespace NumbatLogic
 				}
 			}
 
-			//need to put namespace node in Project or keep validator alive for stringify...
-			Validator* pValidator = own new Validator(this);
-			if (!pValidator.Validate())
+			// Keep validator alive so Stringify/codegen can use it (passed via GetProject().m_pValidator).
+			m_pValidator = own new Validator(this);
+			if (!m_pValidator.Validate())
 			{
 
 			}
@@ -78,7 +81,7 @@ namespace NumbatLogic
 		{
 			if (pInAst.m_eType == AST::Type::AST_TRANSLATION_UNIT)
 			{
-				NumbatLogic::Assert::Plz(pSecretNamespace == null);
+				Assert::Plz(pSecretNamespace == null);
 			}
 
 			AST pChild = pInAst.m_pFirstChild;
@@ -95,7 +98,7 @@ namespace NumbatLogic
 						AST* pOwnedChild;
 						pOwnedChild = own pInAst.RemoveChild(pChild);
 
-						NumbatLogic::Assert::Plz(pOwnedChild != null);
+						Assert::Plz(pOwnedChild != null);
 
 						if (pSecretNamespace == null)
 						{

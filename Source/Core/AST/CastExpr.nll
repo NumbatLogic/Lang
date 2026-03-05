@@ -24,7 +24,7 @@ namespace NumbatLogic
 			{
 				Console::Log("expected TypeRef...");
 				Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 				return null;
 			}
 
@@ -33,7 +33,7 @@ namespace NumbatLogic
 			{
 				Console::Log("expected ParamCall");
 				Console::Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 				return null;
 			}
 
@@ -52,7 +52,7 @@ namespace NumbatLogic
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
 			base.Validate(pValidator, pParent);
-			m_pValueType = own m_pTypeRef.CreateValueType();
+			m_pValueType = own m_pTypeRef.CreateValueType(pValidator.m_pResolver);
 
 			if (m_pValueType == null)
 			{

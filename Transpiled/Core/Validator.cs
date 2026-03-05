@@ -36,12 +36,14 @@ namespace NumbatLogic
 		protected OwnedVector<ValidatorError> m_pValidatorErrorVector;
 		protected OwnedVector<ValidatorScope> m_pValidatorScopeVector;
 		public NamespaceNode m_pCurrentNamespaceNode;
+		public Resolver m_pResolver;
 		public Validator(Project pProject)
 		{
 			m_pProject = pProject;
 			m_pValidatorErrorVector = new OwnedVector<ValidatorError>();
 			m_pValidatorScopeVector = new OwnedVector<ValidatorScope>();
 			m_pCurrentNamespaceNode = pProject.m_pRootNamespaceNode;
+			m_pResolver = new Resolver();
 		}
 
 		protected void PreparseNamespaces(NamespaceNode pCurrentNode, AST pAST)
@@ -66,6 +68,11 @@ namespace NumbatLogic
 			{
 				TranslationUnit pTranslationUnit = m_pProject.m_pTranslationUnitVector.Get(i);
 				PreparseNamespaces(m_pProject.m_pRootNamespaceNode, pTranslationUnit);
+			}
+			for (int i = 0; i < m_pProject.m_pTranslationUnitVector.GetSize(); i++)
+			{
+				TranslationUnit pTranslationUnit = m_pProject.m_pTranslationUnitVector.Get(i);
+				m_pResolver.BuildForRoot(pTranslationUnit);
 			}
 			for (int i = 0; i < m_pProject.m_pTranslationUnitVector.GetSize(); i++)
 			{
@@ -109,27 +116,33 @@ namespace NumbatLogic
 				pValidatorError.m_sFile = new InternalString(sFile.GetExternalString());
 			pValidatorError.m_nLine = nLine;
 			pValidatorError.m_nColumn = nColumn;
-			NumbatLogic.ValidatorError __3001488363 = pValidatorError;
+			NumbatLogic.ValidatorError __3001553964 = pValidatorError;
 			pValidatorError = null;
-			m_pValidatorErrorVector.PushBack(__3001488363);
+			m_pValidatorErrorVector.PushBack(__3001553964);
+		}
+
+		public void ValidateSubtree(AST pRoot)
+		{
+			pRoot.PreValidate(this, null);
+			pRoot.Validate(this, null);
 		}
 
 		public void BeginScope(Scope pScope)
 		{
 			ValidatorScope pValidatorScope = new ValidatorScope(pScope);
-			NumbatLogic.ValidatorScope __3051975781 = pValidatorScope;
+			NumbatLogic.ValidatorScope __3052106978 = pValidatorScope;
 			pValidatorScope = null;
-			m_pValidatorScopeVector.PushBack(__3051975781);
+			m_pValidatorScopeVector.PushBack(__3052106978);
 		}
 
 		public void AddVarDecl(VarDecl pVarDecl)
 		{
-			ValueType pValueType = pVarDecl.m_pTypeRef.CreateValueType();
+			ValueType pValueType = pVarDecl.m_pTypeRef.CreateValueType(m_pResolver);
 			if (pValueType != null)
 				if (pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE && pValueType.m_ePointerType == TypeRef.PointerType.OWNED)
 				{
 					int nIndex = m_pValidatorScopeVector.GetSize() - 1;
-					NumbatLogic.Assert.Plz(nIndex >= 0);
+					Assert.Plz(nIndex >= 0);
 					ValidatorScope pValidatorScope = m_pValidatorScopeVector.Get(nIndex);
 					pValidatorScope.m_pVarDeclVector.PushBack(pVarDecl);
 				}
@@ -138,8 +151,8 @@ namespace NumbatLogic
 		public void EndScope(Scope pScope)
 		{
 			ValidatorScope pValidatorScope = m_pValidatorScopeVector.PopBack();
-			NumbatLogic.Assert.Plz(pValidatorScope != null);
-			NumbatLogic.Assert.Plz(pValidatorScope.m_pScope == pScope);
+			Assert.Plz(pValidatorScope != null);
+			Assert.Plz(pValidatorScope.m_pScope == pScope);
 			AST pCheck = pScope;
 			while (pCheck != null && pCheck.m_eType == AST.Type.AST_SCOPE)
 			{
@@ -158,9 +171,9 @@ namespace NumbatLogic
 					VarDecl pVarDecl = pValidatorScope.m_pVarDeclVector.Get(i);
 					pVarDeclDescope.m_pVarDeclVector.PushBack(pVarDecl);
 				}
-				NumbatLogic.VarDeclDescope __2690920449 = pVarDeclDescope;
+				NumbatLogic.VarDeclDescope __2691051646 = pVarDeclDescope;
 				pVarDeclDescope = null;
-				pScope.AddChild(__2690920449);
+				pScope.AddChild(__2691051646);
 			}
 		}
 
@@ -207,22 +220,22 @@ namespace NumbatLogic
 			if (pVarDeclDescope.m_pVarDeclVector.GetSize() > 0)
 			{
 				AST pParent = pBreakOrContinueOrReturn.m_pParent;
-				NumbatLogic.VarDeclDescope __2698919553 = pVarDeclDescope;
+				NumbatLogic.VarDeclDescope __2699050750 = pVarDeclDescope;
 				pVarDeclDescope = null;
-				pParent.AddChildBefore(__2698919553, pBreakOrContinueOrReturn);
+				pParent.AddChildBefore(__2699050750, pBreakOrContinueOrReturn);
 			}
 		}
 
 		public void BeginNamespace(string sxName)
 		{
 			m_pCurrentNamespaceNode = m_pCurrentNamespaceNode.GetChild(sxName);
-			NumbatLogic.Assert.Plz(m_pCurrentNamespaceNode != null);
+			Assert.Plz(m_pCurrentNamespaceNode != null);
 		}
 
 		public void EndNamespace(string sxName)
 		{
-			NumbatLogic.Assert.Plz(m_pCurrentNamespaceNode.m_sName.IsEqual(sxName));
-			NumbatLogic.Assert.Plz(m_pCurrentNamespaceNode.m_pParent != null);
+			Assert.Plz(m_pCurrentNamespaceNode.m_sName.IsEqual(sxName));
+			Assert.Plz(m_pCurrentNamespaceNode.m_pParent != null);
 			m_pCurrentNamespaceNode = m_pCurrentNamespaceNode.m_pParent;
 		}
 

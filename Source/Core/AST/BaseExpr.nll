@@ -42,7 +42,7 @@ namespace NumbatLogic
 			}
 
 			ClassDecl pClassDecl = cast ClassDecl(pTestParent);
-			ClassDecl pBaseClassDecl = pClassDecl.GetBaseClassDecl();
+			ClassDecl pBaseClassDecl = pClassDecl.GetBaseClassDecl(pValidator);
 
 			if (pBaseClassDecl == null)
 			{

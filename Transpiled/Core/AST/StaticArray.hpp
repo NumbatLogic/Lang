@@ -4,10 +4,10 @@
 
 namespace NumbatLogic
 {
-	class AST;
 	class StaticArray;
 	class TokenContainer;
 	class OffsetDatum;
+	class AST;
 	class Validator;
 	class OperatorExpr;
 	class InternalString;

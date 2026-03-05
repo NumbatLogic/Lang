@@ -22,9 +22,13 @@
 #include "MemberVarsSetDefaultStmt.hpp"
 #include "AccessLevel.hpp"
 #include "ParamDecl.hpp"
-#include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
-#include "../Util.hpp"
+#include "../Semantic/SymbolScope.hpp"
+#include "../../../../LangShared/Vector/CPP/Vector.hpp"
+#include "../Semantic/Symbol.hpp"
+#include "../Semantic/Resolver.hpp"
+#include "../Project.hpp"
 #include "../NamespaceNode.hpp"
+#include "../Util.hpp"
 
 namespace NumbatLogic
 {
@@ -40,10 +44,8 @@ namespace NumbatLogic
 	class Assert;
 	class TypeRef;
 	class MemberFunctionDecl;
-	class MemberClassDecl;
 	class MemberEnumDecl;
 	class DelegateDecl;
-	class Validator;
 	class ValueType;
 	class InternalString;
 	class MemberVarDecl;
@@ -53,9 +55,16 @@ namespace NumbatLogic
 	class AccessLevel;
 	class ParamDecl;
 	class Scope;
-	class ExternalString;
-	class Util;
+	class SymbolScope;
+	template <class T>
+	class Vector;
+	class Symbol;
+	class Resolver;
+	class Validator;
+	class Project;
+	class MemberClassDecl;
 	class NamespaceNode;
+	class Util;
 }
 namespace NumbatLogic
 {
@@ -98,7 +107,7 @@ namespace NumbatLogic
 		{
 			Console::Log("expected class name");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pClassDecl) delete pClassDecl;
 			return 0;
@@ -119,7 +128,7 @@ namespace NumbatLogic
 				if (pGenericTypeDecl == 0)
 				{
 					Console::Log("expected inner GenericTypeDecl");
-					NumbatLogic::Assert::Plz(false);
+					Assert::Plz(false);
 				}
 				NumbatLogic::GenericTypeDecl* __977309417 = pGenericTypeDecl;
 				pGenericTypeDecl = 0;
@@ -133,7 +142,7 @@ namespace NumbatLogic
 				{
 					Console::Log("expected comma");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					NumbatLogic::Assert::Plz(false);
+					Assert::Plz(false);
 				}
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 				if (pGenericTypeDecl) delete pGenericTypeDecl;
@@ -148,7 +157,7 @@ namespace NumbatLogic
 			{
 				Console::Log("expected base class");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 				if (pTempOffset) delete pTempOffset;
 				if (pClassDecl) delete pClassDecl;
 				if (pBaseTypeRef) delete pBaseTypeRef;
@@ -159,7 +168,7 @@ namespace NumbatLogic
 		{
 			Console::Log("expected opening curly brace");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pClassDecl) delete pClassDecl;
 			if (pBaseTypeRef) delete pBaseTypeRef;
@@ -239,7 +248,7 @@ namespace NumbatLogic
 			}
 			Console::Log("expected to parse somethting within class...");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			if (pAST) delete pAST;
 		}
 		pOffsetDatum->Set(pTempOffset);
@@ -260,7 +269,7 @@ namespace NumbatLogic
 		AddClassDeclReference(this, AST::OutputFile::SOURCE, false);
 		if (m_pBaseTypeRef != 0)
 		{
-			ValueType* pBaseValueType = m_pBaseTypeRef->CreateValueType();
+			ValueType* pBaseValueType = m_pBaseTypeRef->CreateValueType(pValidator->m_pResolver);
 			if (pBaseValueType == 0)
 			{
 				InternalString* sTemp = new InternalString("Unknown base class: ");
@@ -398,45 +407,74 @@ namespace NumbatLogic
 		AST::Validate(pValidator, pParent);
 	}
 
-	ClassDecl* ClassDecl::FindClassDecl(const char* sTypeName, AST* pCallingChild)
-	{
-		if (ExternalString::Equal(sTypeName, m_pNameToken->GetString()))
-			return this;
-		return 0;
-	}
-
-	AST* ClassDecl::FindByName(const char* sxName, AST* pCallingChild)
-	{
-		if (ExternalString::Equal(sxName, m_pNameToken->GetString()))
-			return this;
-		ClassDecl* pBaseClassDecl = GetBaseClassDecl();
-		if (pBaseClassDecl != 0)
-		{
-			AST* pResult = pBaseClassDecl->FindByName(sxName, 0);
-			if (pResult != 0)
-				return pResult;
-		}
-		if (pCallingChild != 0)
-		{
-			for (int i = 0; i < m_pGenericTypeDeclVector->GetSize(); i++)
-			{
-				GenericTypeDecl* pGenericTypeDecl = m_pGenericTypeDeclVector->Get(i);
-				if (ExternalString::Equal(pGenericTypeDecl->m_pFirstToken->GetString(), sxName))
-				{
-					return pGenericTypeDecl;
-				}
-			}
-		}
-		return AST::FindByName(sxName, pCallingChild);
-	}
-
-	ClassDecl* ClassDecl::GetBaseClassDecl()
+	ClassDecl* ClassDecl::GetBaseClassDeclForScopeLookup(Resolver* pResolver)
 	{
 		if (m_pBaseClassDecl != 0)
 			return m_pBaseClassDecl;
-		if (m_pBaseTypeRef != 0 && m_pParent != 0)
+		if (m_pBaseTypeRef == 0)
+			return 0;
+		ClassDecl* pBase = m_pBaseTypeRef->GetFoundClassDecl();
+		if (pBase == 0 && m_pBaseTypeRef->m_pChildTypeRef != 0)
+			pBase = m_pBaseTypeRef->m_pChildTypeRef->GetFoundClassDecl();
+		if (pBase != 0)
 		{
-			ValueType* pBaseValueType = m_pBaseTypeRef->CreateValueType();
+			m_pBaseClassDecl = pBase;
+			return m_pBaseClassDecl;
+		}
+		if (pResolver == 0 || m_pSymbolScope == 0)
+			return 0;
+		SymbolScope* pParentScope = m_pSymbolScope->m_pParent;
+		if (pParentScope == 0)
+			return 0;
+		const char* sBaseName = m_pBaseTypeRef->m_pTypeToken->GetString();
+		Vector<Symbol*>* pCandidates = new Vector<Symbol*>();
+		pResolver->ResolveInScopeChainNoBaseClasses(sBaseName, pParentScope, pCandidates);
+		if (pCandidates->GetSize() == 1)
+		{
+			Symbol* pSym = pCandidates->Get(0);
+			if (pSym->m_eKind == Symbol::Kind::CLASS && pSym->m_pDeclAST != 0 && pSym->m_pDeclAST->m_eType == AST::Type::AST_CLASS_DECL)
+			{
+				m_pBaseClassDecl = (ClassDecl*)(pSym->m_pDeclAST);
+				if (pCandidates) delete pCandidates;
+				return m_pBaseClassDecl;
+			}
+			if (pSym->m_eKind == Symbol::Kind::NAMESPACE && pSym->m_pScope != 0 && m_pBaseTypeRef->m_pChildTypeRef != 0)
+			{
+				const char* sChildName = m_pBaseTypeRef->m_pChildTypeRef->m_pTypeToken->GetString();
+				Vector<Symbol*>* pChildCandidates = new Vector<Symbol*>();
+				pResolver->ResolveInScopeChainNoBaseClasses(sChildName, pSym->m_pScope, pChildCandidates);
+				if (pChildCandidates->GetSize() == 1)
+				{
+					Symbol* pChildSym = pChildCandidates->Get(0);
+					if (pChildSym->m_eKind == Symbol::Kind::CLASS && pChildSym->m_pDeclAST != 0 && pChildSym->m_pDeclAST->m_eType == AST::Type::AST_CLASS_DECL)
+					{
+						m_pBaseClassDecl = (ClassDecl*)(pChildSym->m_pDeclAST);
+						if (pChildCandidates) delete pChildCandidates;
+						if (pCandidates) delete pCandidates;
+						return m_pBaseClassDecl;
+					}
+				}
+				if (pChildCandidates) delete pChildCandidates;
+			}
+		}
+		if (pCandidates) delete pCandidates;
+		return 0;
+	}
+
+	ClassDecl* ClassDecl::GetBaseClassDecl(Validator* pValidator)
+	{
+		if (m_pBaseClassDecl != 0)
+			return m_pBaseClassDecl;
+		Validator* pV = pValidator;
+		if (pV == 0)
+		{
+			Project* pProject = GetProject();
+			if (pProject != 0)
+				pV = pProject->m_pValidator;
+		}
+		if (m_pBaseTypeRef != 0 && m_pParent != 0 && pV != 0)
+		{
+			ValueType* pBaseValueType = m_pBaseTypeRef->CreateValueType(pV->m_pResolver);
 			if (pBaseValueType != 0)
 			{
 				m_pBaseClassDecl = pBaseValueType->m_pClassDecl;
@@ -446,6 +484,23 @@ namespace NumbatLogic
 			if (pBaseValueType) delete pBaseValueType;
 		}
 		return 0;
+	}
+
+	void ClassDecl::AppendFullyQualifiedName(InternalString* sOut)
+	{
+		if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_MEMBER_CLASS_DECL)
+		{
+			MemberClassDecl* pMember = (MemberClassDecl*)(m_pParent);
+			pMember->m_pParentClassDecl->AppendFullyQualifiedName(sOut);
+			sOut->Append("::");
+		}
+		else
+			if (m_pNamespaceNode != 0 && m_pNamespaceNode->m_sName != 0)
+			{
+				m_pNamespaceNode->AppendFullyQualifiedName(sOut);
+				sOut->Append("::");
+			}
+		sOut->Append(m_pNameToken->GetString());
 	}
 
 	void ClassDecl::StringifyTemplateThing(Language eLanguage, OutputFile eOutputFile, InternalString* sOut)

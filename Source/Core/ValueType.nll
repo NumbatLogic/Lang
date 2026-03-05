@@ -108,18 +108,45 @@ namespace NumbatLogic
 
 			if (pTo.m_ePointerType != TypeRef::PointerType::OWNED && m_ePointerType == TypeRef::PointerType::OWNED_PREASSSIGN)
 			{
-				pValidator.AddError("Can't assign an owned pointer to a non-owned variable", pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
+				InternalString* sTemp = own new InternalString("Can't assign an owned pointer to a non-owned variable. FROM[");
+				StringifyType(sTemp);
+				sTemp.Append(" ptr=");
+				StringifyPointerType(sTemp, m_ePointerType);
+				sTemp.Append("] TO[");
+				pTo.StringifyType(sTemp);
+				sTemp.Append(" ptr=");
+				StringifyPointerType(sTemp, pTo.m_ePointerType);
+				sTemp.Append("]");
+				pValidator.AddError(sTemp.GetExternalString(), pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
 				return false;
 			}
 
 			if (pTo.m_ePointerType == TypeRef::PointerType::OWNED && (m_ePointerType != TypeRef::PointerType::OWNED_PREASSSIGN && m_eType != ValueType::Type::NULL_VALUE))
 			{
-				pValidator.AddError("Expected right side of = to be OWNED_PREASSSIGN (result of own)", pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
+				InternalString* sTemp = own new InternalString("Expected right side of = to be OWNED_PREASSSIGN (result of own). FROM[");
+				StringifyType(sTemp);
+				sTemp.Append(" ptr=");
+				StringifyPointerType(sTemp, m_ePointerType);
+				sTemp.Append("] TO[");
+				pTo.StringifyType(sTemp);
+				sTemp.Append(" ptr=");
+				StringifyPointerType(sTemp, pTo.m_ePointerType);
+				sTemp.Append("]");
+				pValidator.AddError(sTemp.GetExternalString(), pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
 				return false;
 			}
 			else if (m_ePointerType == TypeRef::PointerType::TRANSITON)
 			{
-				pValidator.AddError("Cannot store a TRANSITION pointer (need to `own` it)", pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
+				InternalString* sTemp = own new InternalString("Cannot store a TRANSITION pointer (need to `own` it). FROM[");
+				StringifyType(sTemp);
+				sTemp.Append(" ptr=");
+				StringifyPointerType(sTemp, m_ePointerType);
+				sTemp.Append("] TO[");
+				pTo.StringifyType(sTemp);
+				sTemp.Append(" ptr=");
+				StringifyPointerType(sTemp, pTo.m_ePointerType);
+				sTemp.Append("]");
+				pValidator.AddError(sTemp.GetExternalString(), pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
 				return false;
 			}
 
@@ -225,7 +252,7 @@ namespace NumbatLogic
 				}
 			}
 
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			return null;
 		}
 
@@ -253,6 +280,18 @@ namespace NumbatLogic
 				case Type::NAMESPACE_NODE: { sOut.Append("NAMESPACE_NODE"); return; }
 			}
 			sOut.Append("???");
+		}
+
+		public static void StringifyPointerType(InternalString sOut, TypeRef::PointerType ePointerType)
+		{
+			switch (ePointerType)
+			{
+				case TypeRef::PointerType::SHARED: { sOut.Append("SHARED"); return; }
+				case TypeRef::PointerType::OWNED: { sOut.Append("OWNED"); return; }
+				case TypeRef::PointerType::TRANSITON: { sOut.Append("TRANSITON"); return; }
+				case TypeRef::PointerType::OWNED_PREASSSIGN: { sOut.Append("OWNED_PREASSSIGN"); return; }
+			}
+			sOut.Append("UNKNOWN_PTR");
 		}
 	}
 }

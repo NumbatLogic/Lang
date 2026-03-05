@@ -19,8 +19,7 @@ namespace NumbatLogic
 
 		public Token* m_pCloneToken;
 
-		private bool m_bAttemptedToFindType;
-		private AST m_pFoundType;
+		public AST m_pFoundType;
 
 		public construct()
 		{
@@ -104,7 +103,7 @@ namespace NumbatLogic
 						if (pGenericTypeRef == null)
 						{
 							Console::Log("expected inner TypeRef");
-							NumbatLogic::Assert::Plz(false);
+							Assert::Plz(false);
 						}
 
 						pTypeRef.m_pGenericTypeRefVector.PushBack(pGenericTypeRef);
@@ -118,7 +117,7 @@ namespace NumbatLogic
 							InternalString* sTemp = own new InternalString("expected comma ");
 							sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
 							Console::Log(sTemp.GetExternalString());
-							NumbatLogic::Assert::Plz(false);
+							Assert::Plz(false);
 						}
 						pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 					}
@@ -135,7 +134,7 @@ namespace NumbatLogic
 					InternalString* sTemp = own new InternalString("expected child TypeRef... ");
 					sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
 					Console::Log(sTemp.GetExternalString());
-					NumbatLogic::Assert::Plz(false);
+					Assert::Plz(false);
 					return null;
 				}
 
@@ -165,49 +164,12 @@ namespace NumbatLogic
 			return disown pTypeRef;
 		}
 
-
-		private AST FindType()
+		// Returns the resolved class when m_pFoundType is a ClassDecl; for use during scope lookup without CreateValueType.
+		public ClassDecl GetFoundClassDecl()
 		{
-			if (m_bAttemptedToFindType)
-				return m_pFoundType;
-
-			m_bAttemptedToFindType = true;
-
-			TypeRef pParentTypeRef = null;
-			if (m_pParent.m_eType == AST::Type::AST_TYPE_REF)
-			{
-				pParentTypeRef = cast TypeRef(m_pParent);
-				if (pParentTypeRef.m_pChildTypeRef != this)
-					pParentTypeRef = null;
-			}
-			
-			if (m_pTypeToken.m_eType == Token::Type::TOKEN_IDENTIFIER)
-			{
-				string sTypeName = m_pTypeToken.GetString();
-
-				if (pParentTypeRef != null)
-				{
-					if (pParentTypeRef.m_pFoundType != null)
-						m_pFoundType = pParentTypeRef.m_pFoundType.FindByName(sTypeName, null);
-				}
-				else
-				{
-					// hax to avoid infinte loop
-					if (m_pParent != null && m_pParent.m_eType == AST::Type::AST_CLASS_DECL && (cast ClassDecl(m_pParent)).m_pBaseTypeRef == this)
-					{
-						if (m_pParent.m_pParent != null)
-							m_pFoundType = m_pParent.m_pParent.FindClassDecl(sTypeName, m_pParent);
-						if (m_pFoundType == null)
-							m_pFoundType = FindNamespaceDecl(sTypeName, this);
-					}
-					else
-					{
-						m_pFoundType = FindByName(sTypeName, this);
-					}
-				}
-			}
-
-			return m_pFoundType;
+			if (m_pFoundType != null && m_pFoundType.m_eType == AST::Type::AST_CLASS_DECL)
+				return cast ClassDecl(m_pFoundType);
+			return null;
 		}
 
 		private void ValidateClassDecl(Validator pValidator, ClassDecl pClassDecl, TypeRef pThisOrChild)
@@ -223,13 +185,13 @@ namespace NumbatLogic
 				}
 				else if (m_pParent.m_eType == AST::Type::AST_TYPE_REF)
 				{
-					TypeRef pParentTypeRef = cast TypeRef(m_pParent);
+					TypeRef pSubParentTypeRef = cast TypeRef(m_pParent);
 
 					// should check first if it's membervardecl...
 					AddClassDeclReference(pClassDecl, AST::OutputFile::HEADER, true);
 
 					// ie: generics
-					if (pParentTypeRef.m_pChildTypeRef != this)
+					if (pSubParentTypeRef.m_pChildTypeRef != this)
 					{
 						AST pParentParent = m_pParent.m_pParent;
 						if (pParentParent != null)
@@ -288,23 +250,80 @@ namespace NumbatLogic
 		{
 			if (m_pTypeToken.m_eType == Token::Type::TOKEN_IDENTIFIER)
 			{
-				AST pType = FindType();
+				AST pType = null;
+				bool bResolverTypeAmbiguous = false;
+				string sTypeName = m_pTypeToken.GetString();
+
+				// If this TypeRef is part of a qualified chain A::B::C, and the
+				// parent TypeRef has already been resolved (m_pFoundType set),
+				// treat that parent AST as the starting point for resolution of
+				// this segment. This gives us resolver-based qualified lookup
+				// Resolve base type from class's parent scope (no CreateValueType to avoid re-entrancy).
+				TypeRef pParentTypeRef = null;
+				if (m_pParent != null && m_pParent.m_eType == AST::Type::AST_TYPE_REF)
+				{
+					pParentTypeRef = cast TypeRef(m_pParent);
+					if (pParentTypeRef.m_pChildTypeRef != this)
+						pParentTypeRef = null;
+				}
+
+				Vector<Symbol>* pCandidates = own new Vector<Symbol>();
+				AST pResolverBase = this;
+				if (pParentTypeRef != null && pParentTypeRef.m_pFoundType != null)
+					pResolverBase = pParentTypeRef.m_pFoundType;
+				pValidator.m_pResolver.ResolveFromNode(pResolverBase, sTypeName, pCandidates);
+
+				Vector<Symbol>* pTypeLike = own new Vector<Symbol>();
+				for (int i = 0; i < pCandidates.GetSize(); i++)
+				{
+					Symbol pSym = pCandidates.Get(i);
+					if (pSym.m_eKind == Symbol::Kind::CLASS ||
+						pSym.m_eKind == Symbol::Kind::ENUM ||
+						pSym.m_eKind == Symbol::Kind::GENERIC_PARAM ||
+						pSym.m_eKind == Symbol::Kind::DELEGATE ||
+						pSym.m_eKind == Symbol::Kind::NAMESPACE)
+					{
+						pTypeLike.PushBack(pSym);
+					}
+				}
+
+				if (pTypeLike.GetSize() == 1)
+				{
+					Symbol pSymbol = pTypeLike.Get(0);
+					if (pSymbol.m_pDeclAST != null)
+					{
+						pType = pSymbol.m_pDeclAST;
+						m_pFoundType = pType;
+					}
+				}
+				else if (pTypeLike.GetSize() > 1)
+					bResolverTypeAmbiguous = true;
+
 				if (pType == null)
 				{
-					InternalString* sTemp = own new InternalString("Unknown type: ");
-					sTemp.Append(m_pTypeToken.GetString());
-
-					TypeRef pParentTypeRef = null;
-					if (m_pParent.m_eType == AST::Type::AST_TYPE_REF)
+					if (bResolverTypeAmbiguous)
 					{
-						pParentTypeRef = cast TypeRef(m_pParent);
-						if (pParentTypeRef.m_pChildTypeRef != this)
-							pParentTypeRef = null;
+						InternalString* sAmbiguous = own new InternalString("Ambiguous type (multiple declarations in scope): ");
+						sAmbiguous.Append(sTypeName);
+						pValidator.AddError(sAmbiguous.GetExternalString(), m_pTypeToken.m_sFileName, m_pTypeToken.m_nLine, m_pTypeToken.m_nColumn);
 					}
-					if (pParentTypeRef != null && pParentTypeRef.m_pFoundType != null)
-						sTemp.Append(" -- had parent");
+					else
+					{
+						InternalString* sTemp = own new InternalString("Unknown type: ");
+						sTemp.Append(sTypeName);
 
-					pValidator.AddError(sTemp.GetExternalString(), m_pTypeToken.m_sFileName, m_pTypeToken.m_nLine, m_pTypeToken.m_nColumn);
+						TypeRef pSubParentTypeRef = null;
+						if (m_pParent.m_eType == AST::Type::AST_TYPE_REF)
+						{
+							pSubParentTypeRef = cast TypeRef(m_pParent);
+							if (pSubParentTypeRef.m_pChildTypeRef != this)
+								pSubParentTypeRef = null;
+						}
+						if (pSubParentTypeRef != null && pSubParentTypeRef.m_pFoundType != null)
+							sTemp.Append(" -- had parent");
+
+						pValidator.AddError(sTemp.GetExternalString(), m_pTypeToken.m_sFileName, m_pTypeToken.m_nLine, m_pTypeToken.m_nColumn);
+					}
 					return;
 				}
 				if (pType.m_eType == AST::Type::AST_CLASS_DECL)
@@ -337,32 +356,19 @@ namespace NumbatLogic
 
 					m_pChildTypeRef.Validate(pValidator, null);
 
-					/*string sChildTypeName = m_pChildTypeRef.m_pTypeToken.GetString();
-					AST pChildType = FindByName(sChildTypeName, m_pChildTypeRef);
-					if (pChildType == null)
-					{
-						InternalString* sTemp = own new InternalString("Unknown *CHILD* type: ");
-						sTemp.Append(sChildTypeName);
-						pValidator.AddError(sTemp.GetExternalString(), m_pChildTypeRef.m_pTypeToken.m_sFileName, m_pChildTypeRef.m_pTypeToken.m_nLine, m_pChildTypeRef.m_pTypeToken.m_nColumn);
-						return;
-					}
-
-					if (pChildType.m_eType != AST::Type::AST_CLASS_DECL)
-					{
-						pValidator.AddError("child must be CLASS_DECL", m_pChildTypeRef.m_pTypeToken.m_sFileName, m_pChildTypeRef.m_pTypeToken.m_nLine, m_pChildTypeRef.m_pTypeToken.m_nColumn);
-						return;
-					}
-
-					ClassDecl pClassDecl = cast ClassDecl(pChildType);
-					ValidateClassDecl(pValidator, pClassDecl, m_pChildTypeRef);
-					*/
-
-
-					//m_pTypeDecl = pType;
 				}
 				else if (pType.m_eType == AST::Type::AST_ENUM_DECL)
 				{
 					//m_pTypeDecl = pType;
+				}
+				else if (pType.m_eType == AST::Type::AST_MEMBER_CLASS_DECL)
+				{
+					// Nested/member class: accepted as a type. The inner
+					// ClassDecl is used later when creating the ValueType.
+				}
+				else if (pType.m_eType == AST::Type::AST_MEMBER_ENUM_DECL)
+				{
+					// Member enum: accepted as type; inner EnumDecl used in CreateValueType.
 				}
 				else if (pType.m_eType == AST::Type::AST_GENERIC_TYPE_DECL)
 				{
@@ -374,7 +380,7 @@ namespace NumbatLogic
 				}
 				else
 				{
-					InternalString* sTemp = own new InternalString("Found type, but it's not a AST_CLASS_DECL, AST_ENUM_DECL, AST_GENERIC_TYPE_DECL or TOKEN_KEYWORD_DELEGATE! Got: ");
+					InternalString* sTemp = own new InternalString("Found type, but it's not a AST_CLASS_DECL, AST_MEMBER_CLASS_DECL, NAMESPACE_DECL, AST_ENUM_DECL, AST_MEMBER_ENUM_DECL, AST_GENERIC_TYPE_DECL or DELEGATE_DECL! Got: ");
 					pType.StringifyType(sTemp);
 
 					pValidator.AddError(sTemp.GetExternalString(), m_pTypeToken.m_sFileName, m_pTypeToken.m_nLine, m_pTypeToken.m_nColumn);
@@ -411,6 +417,7 @@ namespace NumbatLogic
 			pTypeRef.m_bConst = m_bConst;
 			pTypeRef.m_pFirstToken = pTypeRef.m_pCloneToken;
 			pTypeRef.m_pTypeToken = pTypeRef.m_pCloneToken;
+			pTypeRef.m_pFoundType = m_pFoundType;
 
 			for (int i = 0; i < m_pGenericTypeRefVector.GetSize(); i++)
 			{
@@ -447,7 +454,10 @@ namespace NumbatLogic
 				if (eLanguage == AST::Language::CS)
 				{
 					bOutput = false;
-				 	ValueType pValueType = GetRecursiveValueType();
+					Project pProject = GetProject();
+					if (pProject != null && pProject.m_pValidator != null)
+					{
+						ValueType pValueType = GetRecursiveValueType(pProject.m_pValidator.m_pResolver);
 
 					switch (pValueType.m_eType)
 					{
@@ -461,6 +471,7 @@ namespace NumbatLogic
 							bOutput = true;
 							break;
 						}
+					}
 					}
 				}
 
@@ -583,8 +594,6 @@ namespace NumbatLogic
 			{
 				string sTypeName = pFinalChildTypeRef.m_pTypeToken.GetString();
 				AST pType = pFinalChildTypeRef.m_pFoundType;
-				if (pType == null) // this is probably due to injected code not being validated (eg disown)
-					pType = FindByName(sTypeName, pFinalChildTypeRef);
 
 				// maybe also cast...
 				string sxAppendString = "";
@@ -624,25 +633,25 @@ namespace NumbatLogic
 			}
 		}
 
-		public ValueType GetRecursiveValueType()
+		public ValueType GetRecursiveValueType(Resolver pResolver)
 		{
 			if (m_pValueType == null)
-				SetValueType();
+				SetValueType(pResolver);
 
 			if (m_pChildTypeRef != null)
-				return m_pChildTypeRef.GetRecursiveValueType();
+				return m_pChildTypeRef.GetRecursiveValueType(pResolver);
 
 			return m_pValueType;
 		}
 
 
-		public ValueType** CreateValueType()
+		public ValueType** CreateValueType(Resolver pResolver)
 		{
 			if (m_pValueType == null)
-				SetValueType();
+				SetValueType(pResolver);
 
 			if (m_pChildTypeRef != null)
-				return m_pChildTypeRef.CreateValueType();
+				return m_pChildTypeRef.CreateValueType(pResolver);
 
 			if (m_pValueType != null)
 				return m_pValueType.Clone();
@@ -650,7 +659,7 @@ namespace NumbatLogic
 			return null;
 		}
 
-		private ValueType SetValueType()
+		private ValueType SetValueType(Resolver pResolver)
 		{
 			// todo: conssst!
 
@@ -658,7 +667,47 @@ namespace NumbatLogic
 			{
 				case Token::Type::TOKEN_IDENTIFIER:
 				{
-					AST pType = FindType();
+					// Validation should have resolved the type; use m_pFoundType first.
+					AST pType = m_pFoundType;
+					if (pType == null && pResolver != null)
+					{
+						// On-demand resolve via resolver (same logic as TypeRef.Validate).
+						string sTypeName = m_pTypeToken.GetString();
+						TypeRef pParentTypeRef = null;
+						if (m_pParent != null && m_pParent.m_eType == AST::Type::AST_TYPE_REF)
+						{
+							pParentTypeRef = cast TypeRef(m_pParent);
+							if (pParentTypeRef.m_pChildTypeRef != this)
+								pParentTypeRef = null;
+						}
+						Vector<Symbol>* pCandidates = own new Vector<Symbol>();
+						AST pResolverBase = this;
+						if (pParentTypeRef != null && pParentTypeRef.m_pFoundType != null)
+							pResolverBase = pParentTypeRef.m_pFoundType;
+						pResolver.ResolveFromNode(pResolverBase, sTypeName, pCandidates);
+						Vector<Symbol>* pTypeLike = own new Vector<Symbol>();
+						for (int i = 0; i < pCandidates.GetSize(); i++)
+						{
+							Symbol pSym = pCandidates.Get(i);
+							if (pSym.m_eKind == Symbol::Kind::CLASS ||
+								pSym.m_eKind == Symbol::Kind::ENUM ||
+								pSym.m_eKind == Symbol::Kind::GENERIC_PARAM ||
+								pSym.m_eKind == Symbol::Kind::DELEGATE ||
+								pSym.m_eKind == Symbol::Kind::NAMESPACE)
+							{
+								pTypeLike.PushBack(pSym);
+							}
+						}
+						if (pTypeLike.GetSize() == 1)
+						{
+							Symbol pSymbol = pTypeLike.Get(0);
+							if (pSymbol.m_pDeclAST != null)
+							{
+								pType = pSymbol.m_pDeclAST;
+								m_pFoundType = pType;
+							}
+						}
+					}
 
 					if (pType != null)
 					{
@@ -675,13 +724,36 @@ namespace NumbatLogic
 							{
 								TypeRef pGenericTypeRef = m_pGenericTypeRefVector.Get(i);
 
-								ValueType* pGenericValueType = own pGenericTypeRef.CreateValueType();
+								ValueType* pGenericValueType = own pGenericTypeRef.CreateValueType(pResolver);
 								if (pGenericValueType == null)
 									return null;
 								m_pValueType.m_pGenericValueTypeVector.PushBack(disown pGenericValueType);
 							}
 
 							return m_pValueType;
+						}
+
+						if (pType.m_eType == AST::Type::AST_MEMBER_CLASS_DECL)
+						{
+							MemberClassDecl pMemberClass = cast MemberClassDecl(pType);
+							if (pMemberClass.m_pClassDecl != null)
+							{
+								m_pValueType = own new ValueType(ValueType::Type::CLASS_DECL_VALUE);
+								m_pValueType.m_bConst = m_bConst;
+								m_pValueType.m_pClassDecl = pMemberClass.m_pClassDecl;
+								m_pValueType.m_ePointerType = m_ePointerType;
+
+								for (int i = 0; i < m_pGenericTypeRefVector.GetSize(); i++)
+								{
+									TypeRef pGenericTypeRef = m_pGenericTypeRefVector.Get(i);
+									ValueType* pGenericValueType = own pGenericTypeRef.CreateValueType(pResolver);
+									if (pGenericValueType == null)
+										return null;
+									m_pValueType.m_pGenericValueTypeVector.PushBack(disown pGenericValueType);
+								}
+
+								return m_pValueType;
+							}
 						}
 
 						if (pType.m_eType == AST::Type::AST_GENERIC_TYPE_DECL)
@@ -699,6 +771,19 @@ namespace NumbatLogic
 							m_pValueType.m_bConst = m_bConst;
 							m_pValueType.m_pEnumDecl = cast EnumDecl(pType);
 							return m_pValueType;
+						}
+
+						if (pType.m_eType == AST::Type::AST_MEMBER_ENUM_DECL)
+						{
+							MemberEnumDecl pMemberEnum = cast MemberEnumDecl(pType);
+							if (pMemberEnum.m_pEnumDecl != null)
+							{
+								m_pValueType = own new ValueType(ValueType::Type::ENUM_DECL_VALUE);
+								m_pValueType.m_bConst = m_bConst;
+								m_pValueType.m_pEnumDecl = pMemberEnum.m_pEnumDecl;
+								m_pValueType.m_ePointerType = m_ePointerType;
+								return m_pValueType;
+							}
 						}
 
 						if (pType.m_eType == AST::Type::ENUM_DECL_VALUE)
@@ -772,11 +857,12 @@ namespace NumbatLogic
 
 		public bool IsIntegral()
 		{
-			// todo: we should be able to use ValueType for everything, but there is not a float type yet....
-			ValueType pValueType = GetRecursiveValueType();
+			Project pProject = GetProject();
+			if (pProject == null || pProject.m_pValidator == null)
+				return IsInt() || IsBool() || m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_UNICHAR;
+			ValueType pValueType = GetRecursiveValueType(pProject.m_pValidator.m_pResolver);
 			if (pValueType.m_eType == ValueType::Type::ENUM_DECL_VALUE)
 				return true;
-			
 			return IsInt() || IsBool() ||
 				m_pTypeToken.m_eType ==Token::Type::TOKEN_KEYWORD_UNICHAR;
 		}

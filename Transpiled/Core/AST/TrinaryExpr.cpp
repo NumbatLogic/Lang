@@ -94,7 +94,7 @@ namespace NumbatLogic
 	void TrinaryExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
 		AST::Validate(pValidator, pParent);
-		if (m_pThirdExpression->m_pValueType == 0)
+		if (m_pSecondExpression->m_pValueType == 0)
 		{
 			pValidator->AddError("Unknown ValueType of 2nd expression", m_pSecondExpression->m_pFirstToken->m_sFileName, m_pSecondExpression->m_pFirstToken->m_nLine, m_pSecondExpression->m_pFirstToken->m_nColumn);
 			return;

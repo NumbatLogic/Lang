@@ -4,13 +4,14 @@ namespace NumbatLogic
 {
 	class Token;
 	class AST;
+	class SymbolScope;
 	class ValueType;
 	class TokenContainer;
 	class OffsetDatum;
 	class Validator;
 	class OperatorExpr;
 	class ClassDecl;
-	class NamespaceDecl;
+	class Project;
 	class InternalString;
 }
 namespace NumbatLogic
@@ -62,6 +63,7 @@ namespace NumbatLogic
 			AST_VAR_DECL_DESCOPE,
 			AST_VAR_DECL,
 			AST_WHILE_STMT,
+			AST_PROJECT,
 			BASE_EXPR,
 			DELEGATE_DECL,
 			ENUM_DECL_VALUE,
@@ -95,6 +97,7 @@ namespace NumbatLogic
 		public: AST* m_pLastChild;
 		public: AST* m_pPrevSibling;
 		public: AST* m_pNextSibling;
+		public: SymbolScope* m_pSymbolScope;
 		public: bool m_bCanDescend;
 		public: ValueType* m_pValueType;
 		public: bool m_bStatement;
@@ -107,14 +110,12 @@ namespace NumbatLogic
 		public: static AST* TryCreateExpression(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 		public: virtual void PreValidate(Validator* pValidator, OperatorExpr* pParent);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-		public: virtual ClassDecl* FindClassDecl(const char* sTypeName, AST* pCallingChild);
-		public: virtual NamespaceDecl* FindNamespaceDecl(const char* sTypeName, AST* pCallingChild);
-		public: virtual AST* FindByName(const char* sName, AST* pCallingChild);
 		public: void AddChild(AST* pAst);
 		public: void AddChildFront(AST* pAst);
 		public: void AddChildBefore(AST* pAst, AST* pBefore);
 		public: AST* RemoveChild(AST* pChild);
 		public: virtual void AddClassDeclReference(ClassDecl* pClassDecl, OutputFile eOutputFile, bool bForwardReference);
+		public: Project* GetProject();
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
 		public: virtual AST* BaseClone();
 		public: AST* GetParentStatement();

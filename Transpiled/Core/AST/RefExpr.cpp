@@ -5,8 +5,9 @@
 #include "AST.hpp"
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
-#include "../ValueType.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
+#include "../Validator.hpp"
+#include "../ValueType.hpp"
 
 namespace NumbatLogic
 {
@@ -17,8 +18,9 @@ namespace NumbatLogic
 	class Console;
 	class Assert;
 	class RefExpr;
-	class ValueType;
 	class InternalString;
+	class Validator;
+	class ValueType;
 }
 namespace NumbatLogic
 {
@@ -36,7 +38,7 @@ namespace NumbatLogic
 		if (pExpression == 0)
 		{
 			Console::Log("expected expresssion");
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pExpression) delete pExpression;
 			return 0;
@@ -59,6 +61,13 @@ namespace NumbatLogic
 	void RefExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
 		AST::Validate(pValidator, pParent);
+		if (m_pExpression->m_pValueType == 0)
+		{
+			InternalString* sTemp = new InternalString("ref expression has no value type");
+			pValidator->AddError(sTemp->GetExternalString(), m_pFirstToken->m_sFileName, m_pFirstToken->m_nLine, m_pFirstToken->m_nColumn);
+			if (sTemp) delete sTemp;
+			return;
+		}
 		m_pValueType = m_pExpression->m_pValueType->Clone();
 	}
 
