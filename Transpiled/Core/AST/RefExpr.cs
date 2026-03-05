@@ -16,7 +16,7 @@ namespace NumbatLogic
 			if (pExpression == null)
 			{
 				Console.Log("expected expresssion");
-				NumbatLogic.Assert.Plz(false);
+				Assert.Plz(false);
 				return null;
 			}
 			RefExpr pRefExpr = new RefExpr();
@@ -35,6 +35,12 @@ namespace NumbatLogic
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
 			base.Validate(pValidator, pParent);
+			if (m_pExpression.m_pValueType == null)
+			{
+				InternalString sTemp = new InternalString("ref expression has no value type");
+				pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+				return;
+			}
 			m_pValueType = m_pExpression.m_pValueType.Clone();
 		}
 

@@ -27,7 +27,7 @@ namespace NumbatLogic
 				if (pEnumDeclValue.m_pForceValue == null)
 				{
 					Console.Log("expected to parse something...");
-					NumbatLogic.Assert.Plz(false);
+					Assert.Plz(false);
 					return null;
 				}
 			}
@@ -35,13 +35,6 @@ namespace NumbatLogic
 			NumbatLogic.EnumDeclValue __478499602 = pEnumDeclValue;
 			pEnumDeclValue = null;
 			return __478499602;
-		}
-
-		public override AST FindByName(string sxName, AST pCallingChild)
-		{
-			if (ExternalString.Equal(sxName, m_pFirstToken.GetString()))
-				return this;
-			return base.FindByName(sxName, pCallingChild);
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

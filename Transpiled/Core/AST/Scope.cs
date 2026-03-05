@@ -51,7 +51,7 @@ namespace NumbatLogic
 				{
 					Console.Log("expected to parse somethting within scope...");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					NumbatLogic.Assert.Plz(false);
+					Assert.Plz(false);
 					return null;
 				}
 				NumbatLogic.AST __357094601 = pChild;
@@ -88,8 +88,11 @@ namespace NumbatLogic
 								pValidator.AddVarDecl(pMemberVarDecl.m_pVarDecl);
 								if (pMemberVarDecl.m_pVarDecl.m_pTypeRef.m_pTypeToken.m_eType == Token.Type.TOKEN_IDENTIFIER)
 								{
-									string sTypeName = pMemberVarDecl.m_pVarDecl.m_pTypeRef.m_pTypeToken.GetString();
-									AST pType = FindByName(sTypeName, this);
+									AST pType = null;
+									Vector<Symbol> pCandidates = new Vector<Symbol>();
+									pValidator.m_pResolver.ResolveFromNode(this, pMemberVarDecl.m_pVarDecl.m_pTypeRef.m_pTypeToken.GetString(), pCandidates);
+									if (pCandidates.GetSize() == 1 && pCandidates.Get(0).m_pDeclAST != null && pCandidates.Get(0).m_pDeclAST.m_eType == AST.Type.AST_CLASS_DECL)
+										pType = pCandidates.Get(0).m_pDeclAST;
 									if (pType != null && pType.m_eType == AST.Type.AST_CLASS_DECL)
 									{
 										ClassDecl pClassDecl = (ClassDecl)(pType);

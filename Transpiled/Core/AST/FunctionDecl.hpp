@@ -27,7 +27,6 @@ namespace NumbatLogic
 		public: bool m_bConst;
 		public: Scope* m_pScope;
 		public: static FunctionDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, AST* pParent);
-		public: virtual AST* FindByName(const char* sxName, AST* pCallingChild);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
 		public: FunctionDecl();

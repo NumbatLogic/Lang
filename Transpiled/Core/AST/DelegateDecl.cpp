@@ -7,7 +7,6 @@
 #include "FunctionDecl.hpp"
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
-#include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
 #include "../Util.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "TypeRef.hpp"
@@ -24,7 +23,6 @@ namespace NumbatLogic
 	class FunctionDecl;
 	class Console;
 	class Assert;
-	class ExternalString;
 	class Util;
 	class InternalString;
 	class TypeRef;
@@ -67,7 +65,7 @@ namespace NumbatLogic
 		if (pFunctionDecl == 0)
 		{
 			Console::Log("expected function decl");
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pAccessLevel) delete pAccessLevel;
 			if (pDelegateDecl) delete pDelegateDecl;
@@ -77,7 +75,7 @@ namespace NumbatLogic
 		if (pFunctionDecl->m_pScope != 0)
 		{
 			Console::Log("function def can't have scope!");
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pAccessLevel) delete pAccessLevel;
 			if (pDelegateDecl) delete pDelegateDecl;
@@ -95,13 +93,6 @@ namespace NumbatLogic
 		if (pAccessLevel) delete pAccessLevel;
 		if (pFunctionDecl) delete pFunctionDecl;
 		return __305311194;
-	}
-
-	AST* DelegateDecl::FindByName(const char* sxName, AST* pCallingChild)
-	{
-		if (ExternalString::Equal(sxName, m_pFunctionDecl->m_pNameToken->GetString()))
-			return this;
-		return AST::FindByName(sxName, pCallingChild);
 	}
 
 	void DelegateDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

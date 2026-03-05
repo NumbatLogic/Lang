@@ -33,13 +33,13 @@ namespace NumbatLogic
 			if (pFunctionDecl == null)
 			{
 				Console.Log("expected function decl");
-				NumbatLogic.Assert.Plz(false);
+				Assert.Plz(false);
 				return null;
 			}
 			if (pFunctionDecl.m_pScope != null)
 			{
 				Console.Log("function def can't have scope!");
-				NumbatLogic.Assert.Plz(false);
+				Assert.Plz(false);
 				return null;
 			}
 			pDelegateDecl.m_pFunctionDecl = pFunctionDecl;
@@ -50,13 +50,6 @@ namespace NumbatLogic
 			NumbatLogic.DelegateDecl __305311194 = pDelegateDecl;
 			pDelegateDecl = null;
 			return __305311194;
-		}
-
-		public override AST FindByName(string sxName, AST pCallingChild)
-		{
-			if (ExternalString.Equal(sxName, m_pFunctionDecl.m_pNameToken.GetString()))
-				return this;
-			return base.FindByName(sxName, pCallingChild);
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

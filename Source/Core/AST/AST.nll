@@ -46,6 +46,7 @@ namespace NumbatLogic
 			AST_VAR_DECL_DESCOPE,
 			AST_VAR_DECL,
 			AST_WHILE_STMT,
+			AST_PROJECT,
 			BASE_EXPR,
 			DELEGATE_DECL,
 			ENUM_DECL_VALUE,
@@ -78,6 +79,9 @@ namespace NumbatLogic
 		public AST m_pLastChild;
 		public AST m_pPrevSibling;
 		public AST* m_pNextSibling;
+
+		// Optional semantic symbol scope that begins at this node (namespace, class, function, block, etc.)
+		public SymbolScope m_pSymbolScope;
 
 		public bool m_bCanDescend;
 
@@ -352,102 +356,6 @@ namespace NumbatLogic
 			}
 		}
 
-		public virtual ClassDecl FindClassDecl(string sTypeName, AST pCallingChild)
-		{
-			if (pCallingChild != null)
-			{
-				AST pChild = m_pFirstChild;
-				while (pChild != null)
-				{
-					if (pChild != pCallingChild)
-					{
-						ClassDecl pResult = pChild.FindClassDecl(sTypeName, null);
-						if (pResult != null)
-							return pResult;
-					}
-					pChild = pChild.m_pNextSibling;
-				}
-
-				if (m_pParent != null)
-					return m_pParent.FindClassDecl(sTypeName, this);
-			}
-			else
-			{
-				if (m_bCanDescend)
-				{
-					AST pChild = m_pFirstChild;
-					while (pChild != null)
-					{
-						ClassDecl pResult = pChild.FindClassDecl(sTypeName, null);
-						if (pResult != null)
-							return pResult;
-						pChild = pChild.m_pNextSibling;
-					}
-				}
-			}
-			
-			return null;
-		}
-
-		public virtual NamespaceDecl FindNamespaceDecl(string sTypeName, AST pCallingChild)
-		{
-			if (pCallingChild != null)
-			{
-				AST pChild = m_pFirstChild;
-				while (pChild != null)
-				{
-					if (pChild != pCallingChild)
-					{
-						NamespaceDecl pResult = pChild.FindNamespaceDecl(sTypeName, null);
-						if (pResult != null)
-							return pResult;
-					}
-					pChild = pChild.m_pNextSibling;
-				}
-
-				if (m_pParent != null)
-					return m_pParent.FindNamespaceDecl(sTypeName, this);
-			}
-			return null;
-		}
-
-		public virtual AST FindByName(string sName, AST pCallingChild)
-		{
-			if (pCallingChild != null)
-			{
-				AST pChild = m_pFirstChild;
-				while (pChild != null)
-				{
-					if (pChild != pCallingChild)
-					{
-						AST pResult = pChild.FindByName(sName, null);
-						if (pResult != null)
-							return pResult;
-					}
-					pChild = pChild.m_pNextSibling;
-				}
-
-				if (m_pParent != null)
-					return m_pParent.FindByName(sName, this);
-			}
-			else
-			{
-				if (m_bCanDescend)
-				{
-					AST pChild = m_pFirstChild;
-					while (pChild != null)
-					{
-						AST pResult = pChild.FindByName(sName, null);
-						if (pResult != null)
-							return pResult;
-						pChild = pChild.m_pNextSibling;
-					}
-				}
-			}
-			
-			return null;
-		}
-
 		public void AddChild(AST** pAst)
 		{
 			pAst.m_pParent = this;
@@ -481,7 +389,7 @@ namespace NumbatLogic
 
 		public void AddChildBefore(AST** pAst, AST pBefore)
 		{
-			NumbatLogic::Assert::Plz(pBefore.m_pParent == this);
+			Assert::Plz(pBefore.m_pParent == this);
 			
 			pAst.m_pParent = this;
 
@@ -542,6 +450,15 @@ namespace NumbatLogic
 				m_pParent.AddClassDeclReference(pClassDecl, eOutputFile, bForwardReference);
 		}
 
+		// Walk up to the Project root (caller must ensure tree root is Project).
+		public Project GetProject()
+		{
+			AST p = this;
+			while (p != null && p.m_eType != AST::Type::AST_PROJECT)
+				p = p.m_pParent;
+			return p != null ? cast Project(p) : null;
+		}
+
 		public virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
 		{
 			sOut.Append("???");
@@ -552,7 +469,7 @@ namespace NumbatLogic
 			InternalString* sTemp = own new InternalString("BaseClone() not setup for ");
 			StringifyType(sTemp);
 			Console::Log(sTemp.GetExternalString());
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			return null;
 		}
 
@@ -615,6 +532,7 @@ namespace NumbatLogic
 				case Type::AST_VAR_DECL_DESCOPE: { sOut.Append("AST_VAR_DECL_DESCOPE"); return; }
 				case Type::AST_VAR_DECL: { sOut.Append("AST_VAR_DECL"); return; }
 				case Type::AST_WHILE_STMT: { sOut.Append("AST_WHILE_STMT"); return; }
+				case Type::AST_PROJECT: { sOut.Append("AST_PROJECT"); return; }
 				case Type::BASE_EXPR: { sOut.Append("BASE_EXPR"); return; }
 				case Type::DELEGATE_DECL: { sOut.Append("DELEGATE_DECL"); return; }
 				case Type::ENUM_DECL_VALUE: { sOut.Append("ENUM_DECL_VALUE"); return; }

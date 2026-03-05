@@ -29,7 +29,6 @@ namespace NumbatLogic
 		public: Token* m_pOwnedNameToken;
 		public: VarDecl();
 		public: static VarDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, bool bInline);
-		public: virtual AST* FindByName(const char* sxName, AST* pCallingChild);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
 		public: virtual ~VarDecl();

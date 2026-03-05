@@ -26,7 +26,7 @@ namespace NumbatLogic
 		public: NamespaceNode(InternalString* sName, NamespaceNode* pParent);
 		public: NamespaceNode* GetOrCreateChild(NamespaceDecl* pNamespaceDecl);
 		public: NamespaceNode* GetChild(const char* sxName);
-		public: NamespaceNode* FindByName(const char* sxName, bool bCanAscend);
+		public: void AppendFullyQualifiedName(InternalString* sOut);
 		public: virtual ~NamespaceNode();
 	};
 }

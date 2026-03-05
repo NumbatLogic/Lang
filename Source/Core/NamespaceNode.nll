@@ -42,20 +42,6 @@ namespace NumbatLogic
 			return null;
 		}
 
-		public NamespaceNode FindByName(string sxName, bool bCanAscend)
-		{
-			for (int i = 0; i < m_pChildVector.GetSize(); i++)
-			{
-				NamespaceNode pChild = m_pChildVector.Get(i);
-				if (ExternalString::Equal(sxName, pChild.m_sName.GetExternalString()))
-					return pChild;
-			}
-
-			if (bCanAscend && m_pParent != null)
-				return m_pParent.FindByName(sxName, bCanAscend);
-
-			return null;
-		}
 		public void AppendFullyQualifiedName(InternalString sOut)
 		{
 			if (m_pParent != null && m_pParent.m_sName != null)

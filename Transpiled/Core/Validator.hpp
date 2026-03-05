@@ -18,7 +18,9 @@ namespace NumbatLogic
 	class ValidatorError;
 	class ValidatorScope;
 	class NamespaceNode;
+	class Resolver;
 	class AST;
+	class VarDeclDescope;
 }
 namespace NumbatLogic
 {
@@ -44,10 +46,12 @@ namespace NumbatLogic
 		protected: OwnedVector<ValidatorError*>* m_pValidatorErrorVector;
 		protected: OwnedVector<ValidatorScope*>* m_pValidatorScopeVector;
 		public: NamespaceNode* m_pCurrentNamespaceNode;
+		public: Resolver* m_pResolver;
 		public: Validator(Project* pProject);
 		protected: void PreparseNamespaces(NamespaceNode* pCurrentNode, AST* pAST);
 		public: bool Validate();
 		public: void AddError(const char* sError, InternalString* sFile, int nLine, int nColumn);
+		public: void ValidateSubtree(AST* pRoot);
 		public: void BeginScope(Scope* pScope);
 		public: void AddVarDecl(VarDecl* pVarDecl);
 		public: void EndScope(Scope* pScope);

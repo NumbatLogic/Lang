@@ -10,6 +10,9 @@
 #include "MemberVarDecl.hpp"
 #include "VarDecl.hpp"
 #include "TypeRef.hpp"
+#include "../../../../LangShared/Vector/CPP/Vector.hpp"
+#include "../Semantic/Symbol.hpp"
+#include "../Semantic/Resolver.hpp"
 #include "../Util.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
@@ -27,6 +30,10 @@ namespace NumbatLogic
 	class MemberVarDecl;
 	class VarDecl;
 	class TypeRef;
+	template <class T>
+	class Vector;
+	class Symbol;
+	class Resolver;
 	class ClassDecl;
 	class Util;
 	class InternalString;
@@ -87,7 +94,7 @@ namespace NumbatLogic
 			{
 				Console::Log("expected to parse somethting within scope...");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 				if (pChild) delete pChild;
 				if (pScope) delete pScope;
 				if (pTempOffset) delete pTempOffset;
@@ -129,13 +136,17 @@ namespace NumbatLogic
 							pValidator->AddVarDecl(pMemberVarDecl->m_pVarDecl);
 							if (pMemberVarDecl->m_pVarDecl->m_pTypeRef->m_pTypeToken->m_eType == Token::Type::TOKEN_IDENTIFIER)
 							{
-								const char* sTypeName = pMemberVarDecl->m_pVarDecl->m_pTypeRef->m_pTypeToken->GetString();
-								AST* pType = FindByName(sTypeName, this);
+								AST* pType = 0;
+								Vector<Symbol*>* pCandidates = new Vector<Symbol*>();
+								pValidator->m_pResolver->ResolveFromNode(this, pMemberVarDecl->m_pVarDecl->m_pTypeRef->m_pTypeToken->GetString(), pCandidates);
+								if (pCandidates->GetSize() == 1 && pCandidates->Get(0)->m_pDeclAST != 0 && pCandidates->Get(0)->m_pDeclAST->m_eType == AST::Type::AST_CLASS_DECL)
+									pType = pCandidates->Get(0)->m_pDeclAST;
 								if (pType != 0 && pType->m_eType == AST::Type::AST_CLASS_DECL)
 								{
 									ClassDecl* pClassDecl = (ClassDecl*)(pType);
 									AddClassDeclReference(pClassDecl, AST::OutputFile::SOURCE, false);
 								}
+								if (pCandidates) delete pCandidates;
 							}
 						}
 					}

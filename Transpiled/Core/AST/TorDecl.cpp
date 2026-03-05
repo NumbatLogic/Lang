@@ -62,7 +62,7 @@ namespace NumbatLogic
 		{
 			Console::Log("expected ParamDecl");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pAccessLevel) delete pAccessLevel;
 			if (pParamDecl) delete pParamDecl;
@@ -84,7 +84,7 @@ namespace NumbatLogic
 				{
 					Console::Log("expected base!");
 					Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-					NumbatLogic::Assert::Plz(false);
+					Assert::Plz(false);
 					if (pTempOffset) delete pTempOffset;
 					if (pAccessLevel) delete pAccessLevel;
 					if (pParamDecl) delete pParamDecl;
@@ -99,7 +99,7 @@ namespace NumbatLogic
 					InternalString* sTemp = new InternalString("expected ParamCall ");
 					sTemp->Append(pTokenContainer->StringifyOffset(pTempOffset));
 					Console::Log(sTemp->GetExternalString());
-					NumbatLogic::Assert::Plz(false);
+					Assert::Plz(false);
 					if (sTemp) delete sTemp;
 					if (pParamCall) delete pParamCall;
 					if (pTempOffset) delete pTempOffset;
@@ -120,7 +120,7 @@ namespace NumbatLogic
 			{
 				Console::Log("expected scope");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 			}
 		}
 		pTorDecl->m_eType = AST::Type::AST_TOR_DECL;
@@ -159,7 +159,7 @@ namespace NumbatLogic
 		AST::Validate(pValidator, pParent);
 		if (m_pParentClassDecl != 0 && m_pBaseParamCall != 0)
 		{
-			ClassDecl* pBaseClass = m_pParentClassDecl->GetBaseClassDecl();
+			ClassDecl* pBaseClass = m_pParentClassDecl->GetBaseClassDecl(pValidator);
 			if (pBaseClass == 0)
 			{
 				pValidator->AddError("no base class??", m_pBaseParamCall->m_pFirstToken->m_sFileName, m_pBaseParamCall->m_pFirstToken->m_nLine, m_pBaseParamCall->m_pFirstToken->m_nColumn);
@@ -173,7 +173,7 @@ namespace NumbatLogic
 					TorDecl* pTorDecl = (TorDecl*)(pMember);
 					if (pTorDecl->m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_CONSTRUCT)
 					{
-						if (pTorDecl->m_pParamDecl->ValidateParamCall(m_pBaseParamCall, 0))
+						if (pTorDecl->m_pParamDecl->ValidateParamCall(m_pBaseParamCall, pValidator, false))
 						{
 							break;
 						}

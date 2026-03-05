@@ -6,6 +6,7 @@
 
 namespace NumbatLogic
 {
+	class AST;
 	class Token;
 	template <class T>
 	class Vector;
@@ -13,7 +14,6 @@ namespace NumbatLogic
 	class EnumDecl;
 	class TokenContainer;
 	class OffsetDatum;
-	class AST;
 	class InternalString;
 }
 namespace NumbatLogic
@@ -24,7 +24,6 @@ namespace NumbatLogic
 		public: Vector<EnumDeclValue*>* m_pEnumDeclValueVector;
 		public: EnumDecl();
 		public: static EnumDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-		public: virtual AST* FindByName(const char* sxName, AST* pCallingChild);
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
 		public: virtual ~EnumDecl();
 	};

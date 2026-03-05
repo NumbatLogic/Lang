@@ -8,12 +8,12 @@
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "Scope.hpp"
 #include "AST.hpp"
-#include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
 #include "MemberFunctionDecl.hpp"
 #include "ClassDecl.hpp"
 #include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
+#include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -28,12 +28,12 @@ namespace NumbatLogic
 	class Assert;
 	class Scope;
 	class FunctionDecl;
-	class ExternalString;
 	class Validator;
 	class ValueType;
 	class MemberFunctionDecl;
 	template <class T>
 	class OwnedVector;
+	class ExternalString;
 	class InternalString;
 	class ClassDecl;
 }
@@ -68,7 +68,7 @@ namespace NumbatLogic
 		{
 			Console::Log("expected ParamDecl");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pTypeRef) delete pTypeRef;
 			if (pParamDecl) delete pParamDecl;
@@ -92,7 +92,7 @@ namespace NumbatLogic
 			{
 				Console::Log("expected scope");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 			}
 		}
 		FunctionDecl* pFunctionDecl = new FunctionDecl();
@@ -127,13 +127,6 @@ namespace NumbatLogic
 		return __4280092330;
 	}
 
-	AST* FunctionDecl::FindByName(const char* sxName, AST* pCallingChild)
-	{
-		if (ExternalString::Equal(sxName, m_pNameToken->GetString()))
-			return this;
-		return AST::FindByName(sxName, pCallingChild);
-	}
-
 	void FunctionDecl::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
 		AST::Validate(pValidator, pParent);
@@ -145,7 +138,7 @@ namespace NumbatLogic
 				return;
 			}
 		}
-		ValueType* pValueType = m_pTypeRef->CreateValueType();
+		ValueType* pValueType = m_pTypeRef->CreateValueType(pValidator->m_pResolver);
 		if (pValueType == 0)
 		{
 			pValidator->AddError("Unable to compute value type of function result", m_pFirstToken->m_sFileName, m_pFirstToken->m_nLine, m_pFirstToken->m_nColumn);

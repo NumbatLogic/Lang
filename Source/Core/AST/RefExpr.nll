@@ -17,7 +17,7 @@ namespace NumbatLogic
 			if (pExpression == null)
 			{
 				Console::Log("expected expresssion");
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 				return null;
 			}
 

@@ -47,7 +47,10 @@ namespace NumbatLogic
 						MemberVarDecl pMemberVarDecl = (MemberVarDecl)(pChild);
 						if (!pMemberVarDecl.m_bStatic)
 						{
-							ValueType pValueType = pMemberVarDecl.m_pVarDecl.m_pTypeRef.GetRecursiveValueType();
+							Project pProject = GetProject();
+							if (pProject == null || pProject.m_pValidator == null)
+								continue;
+							ValueType pValueType = pMemberVarDecl.m_pVarDecl.m_pTypeRef.GetRecursiveValueType(pProject.m_pValidator.m_pResolver);
 							if (!pMemberVarDecl.m_pVarDecl.m_pTypeRef.m_bConst)
 							{
 								if (pMemberVarDecl.m_pVarDecl.m_pArraySizeVector != null)

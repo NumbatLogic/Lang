@@ -23,7 +23,7 @@ namespace NumbatLogic
 				InternalString* sTemp = own new InternalString("expected ParamCall ");
 				sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
 				Console::Log(sTemp.GetExternalString());
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 				return null;
 			}
 
@@ -76,20 +76,346 @@ namespace NumbatLogic
 				}
 			}
 
-			AST pAST = pBase.FindByName(sName, pChild);
+			// Validate argument expressions (and any other children) first so
+			// overload resolution can rely on their ValueType information.
+			base.Validate(pValidator, pParent);
+
+			AST pResolverAST = null;
+
+			bool bResolverCallableAmbiguous = false;
+			int nCallableCandidatesFromResolver = 0;
+
+			Vector<Symbol>* pCandidates = own new Vector<Symbol>();
+			pValidator.m_pResolver.ResolveFromNode(pBase, sName, pCandidates);
+
+			Vector<Symbol>* pCallable = own new Vector<Symbol>();
+			for (int i = 0; i < pCandidates.GetSize(); i++)
+			{
+				Symbol pSym = pCandidates.Get(i);
+				if (pSym.m_eKind == Symbol::Kind::FUNCTION ||
+					pSym.m_eKind == Symbol::Kind::METHOD ||
+					pSym.m_eKind == Symbol::Kind::DELEGATE)
+				{
+					pCallable.PushBack(pSym);
+					nCallableCandidatesFromResolver = nCallableCandidatesFromResolver+1;
+				}
+				else if (pSym.m_eKind == Symbol::Kind::VAR && pSym.m_pDeclAST != null &&
+					pSym.m_pDeclAST.m_eType == AST::Type::AST_MEMBER_VAR_DECL)
+				{
+					MemberVarDecl pMVD = cast MemberVarDecl(pSym.m_pDeclAST);
+					if (pMVD.m_pVarDecl != null && pMVD.m_pVarDecl.m_pTypeRef != null)
+					{
+						ValueType* pVT = own pMVD.m_pVarDecl.m_pTypeRef.CreateValueType(pValidator.m_pResolver);
+						if (pVT != null && pVT.m_eType == ValueType::Type::DELEGATE_DECL_VALUE)
+						{
+							pCallable.PushBack(pSym);
+							nCallableCandidatesFromResolver = nCallableCandidatesFromResolver+1;
+						}
+					}
+				}
+			}
+
+			// If we have multiple callable symbols, try a simple overload
+			// resolution by parameter count (respecting defaulted params).
+			if (pCallable.GetSize() > 1 && m_pParamCall != null)
+			{
+				int nArgCount = 0;
+				AST pArg = m_pParamCall.m_pFirstChild;
+				while (pArg != null)
+				{
+					nArgCount++;
+					pArg = pArg.m_pNextSibling;
+				}
+
+				Vector<Symbol>* pFiltered = own new Vector<Symbol>();
+				for (int i = 0; i < pCallable.GetSize(); i++)
+				{
+					Symbol pSym = pCallable.Get(i);
+					AST pDeclAST = pSym.m_pDeclAST;
+					FunctionDecl pFD = null;
+
+					if (pDeclAST != null)
+					{
+						if (pDeclAST.m_eType == AST::Type::AST_FUNCTION_DECL)
+						{
+							pFD = cast FunctionDecl(pDeclAST);
+						}
+						else if (pDeclAST.m_eType == AST::Type::AST_MEMBER_FUNCTION_DECL)
+						{
+							MemberFunctionDecl pMFD = cast MemberFunctionDecl(pDeclAST);
+							if (pMFD.m_pFunctionDecl != null)
+								pFD = pMFD.m_pFunctionDecl;
+						}
+						else if (pDeclAST.m_eType == AST::Type::DELEGATE_DECL)
+						{
+							DelegateDecl pDD = cast DelegateDecl(pDeclAST);
+							if (pDD.m_pFunctionDecl != null)
+								pFD = pDD.m_pFunctionDecl;
+						}
+						else if (pDeclAST.m_eType == AST::Type::AST_MEMBER_VAR_DECL)
+						{
+							MemberVarDecl pMVD = cast MemberVarDecl(pDeclAST);
+							if (pMVD.m_pVarDecl != null && pMVD.m_pVarDecl.m_pTypeRef != null)
+							{
+								ValueType* pVT = own pMVD.m_pVarDecl.m_pTypeRef.CreateValueType(pValidator.m_pResolver);
+								if (pVT != null && pVT.m_eType == ValueType::Type::DELEGATE_DECL_VALUE && pVT.m_pDelegateDecl != null)
+									pFD = pVT.m_pDelegateDecl.m_pFunctionDecl;
+							}
+						}
+					}
+
+					int nMinParams = 0;
+					int nMaxParams = 0;
+
+					if (pFD != null && pFD.m_pParamDecl != null)
+					{
+						AST pDeclChild = pFD.m_pParamDecl.m_pFirstChild;
+						while (pDeclChild != null)
+						{
+							if (pDeclChild.m_eType == AST::Type::AST_VAR_DECL)
+							{
+								nMaxParams++;
+								VarDecl pVarDecl = cast VarDecl(pDeclChild);
+								if (pVarDecl.m_pAssignment == null)
+									nMinParams++;
+							}
+
+							pDeclChild = pDeclChild.m_pNextSibling;
+						}
+					}
+
+					// If there is no ParamDecl, treat it as taking zero params.
+					if (pFD == null || pFD.m_pParamDecl == null)
+					{
+						nMinParams = 0;
+						nMaxParams = 0;
+					}
+
+					if (nArgCount >= nMinParams && nArgCount <= nMaxParams)
+						pFiltered.PushBack(pSym);
+				}
+
+				if (pFiltered.GetSize() == 1)
+				{
+					Symbol pSymbol = pFiltered.Get(0);
+					if (pSymbol.m_pDeclAST != null)
+						pResolverAST = pSymbol.m_pDeclAST;
+				}
+				else if (pFiltered.GetSize() > 1)
+				{
+					// Further refine by parameter types using the same logic
+					// as ParamDecl.ValidateParamCall, but in a read-only
+					// mode (no new errors) and with a simple specificity
+					// score so we can choose between multiple compatible
+					// overloads (e.g. prefer exact class matches over base
+					// class matches).
+					Vector<Symbol>* pBest = own new Vector<Symbol>();
+					int nBestScore = -1;
+
+					for (int i = 0; i < pFiltered.GetSize(); i++)
+					{
+						Symbol pSym = pFiltered.Get(i);
+						AST pDeclAST = pSym.m_pDeclAST;
+						FunctionDecl pFD = null;
+
+						if (pDeclAST != null)
+						{
+							if (pDeclAST.m_eType == AST::Type::AST_FUNCTION_DECL)
+							{
+								pFD = cast FunctionDecl(pDeclAST);
+							}
+							else if (pDeclAST.m_eType == AST::Type::AST_MEMBER_FUNCTION_DECL)
+							{
+								MemberFunctionDecl pMFD = cast MemberFunctionDecl(pDeclAST);
+								if (pMFD.m_pFunctionDecl != null)
+									pFD = pMFD.m_pFunctionDecl;
+							}
+							else if (pDeclAST.m_eType == AST::Type::DELEGATE_DECL)
+							{
+								DelegateDecl pDD = cast DelegateDecl(pDeclAST);
+								if (pDD.m_pFunctionDecl != null)
+									pFD = pDD.m_pFunctionDecl;
+							}
+							else if (pDeclAST.m_eType == AST::Type::AST_MEMBER_VAR_DECL)
+							{
+								MemberVarDecl pMVD = cast MemberVarDecl(pDeclAST);
+								if (pMVD.m_pVarDecl != null && pMVD.m_pVarDecl.m_pTypeRef != null)
+								{
+									ValueType* pVT = own pMVD.m_pVarDecl.m_pTypeRef.CreateValueType(pValidator.m_pResolver);
+									if (pVT != null && pVT.m_eType == ValueType::Type::DELEGATE_DECL_VALUE && pVT.m_pDelegateDecl != null)
+										pFD = pVT.m_pDelegateDecl.m_pFunctionDecl;
+								}
+							}
+						}
+
+						// If there is a ParamDecl, require that the call is
+						// type-compatible; otherwise (no ParamDecl) we already
+						// know from the count filter that this is a 0-arg
+						// overload and the call has 0 args, so treat it as
+						// compatible.
+						bool bTypeOk = true;
+						if (pFD != null && pFD.m_pParamDecl != null)
+							bTypeOk = pFD.m_pParamDecl.ValidateParamCall(m_pParamCall, pValidator, true);
+
+						if (!bTypeOk)
+							continue;
+
+						// Compute a simple specificity score: exact type
+						// matches (including same class) score higher than
+						// base-class matches.
+						int nScore = 0;
+						if (pFD != null && pFD.m_pParamDecl != null)
+						{
+							int nIndex = 0;
+							AST pCallChild = m_pParamCall.m_pFirstChild;
+							AST pDeclChild = pFD.m_pParamDecl.m_pFirstChild;
+
+							while (true)
+							{
+								if (pCallChild == null || pDeclChild == null)
+									break;
+
+								if (pDeclChild.m_eType != AST::Type::AST_VAR_DECL)
+									break;
+
+								VarDecl pVarDecl = cast VarDecl(pDeclChild);
+								ValueType* pValueType = own pVarDecl.m_pTypeRef.CreateValueType(pValidator.m_pResolver);
+								if (pValueType == null || pCallChild.m_pValueType == null)
+									break;
+
+								ValueType pArgVT = pCallChild.m_pValueType;
+
+								// Exact non-class type (INT, STRING, etc.) and pointer match.
+								if (pArgVT.m_eType == pValueType.m_eType &&
+									pArgVT.m_eType != ValueType::Type::CLASS_DECL_VALUE &&
+									pArgVT.m_ePointerType == pValueType.m_ePointerType)
+								{
+									nScore += 2;
+								}
+								else if (pArgVT.m_eType == ValueType::Type::CLASS_DECL_VALUE &&
+											pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE)
+								{
+									ClassDecl pFromClass = pArgVT.m_pClassDecl;
+									ClassDecl pToClass = pValueType.m_pClassDecl;
+
+									// Exact same class and pointer.
+									if (pFromClass == pToClass &&
+										pArgVT.m_ePointerType == pValueType.m_ePointerType)
+									{
+										nScore += 3;
+									}
+									else
+									{
+										// Walk up the inheritance chain to see if the
+										// argument class derives from the parameter
+										// class. Closer bases get a higher score.
+										int nDistance = -1;
+										int nWalk = 0;
+										ClassDecl pWalk = pFromClass;
+										while (pWalk != null)
+										{
+											if (pWalk == pToClass)
+											{
+												nDistance = nWalk;
+												break;
+											}
+
+											if (pWalk.m_pBaseTypeRef == null)
+												break;
+
+											AST pBaseAST = pWalk.m_pBaseTypeRef.m_pFoundType;
+											if (pBaseAST == null || pBaseAST.m_eType != AST::Type::AST_CLASS_DECL)
+												break;
+
+											pWalk = cast ClassDecl(pBaseAST);
+											nWalk++;
+										}
+
+										if (nDistance >= 0)
+										{
+											// Prefer closer bases; add 2 for direct
+											// base, 1 for further up, etc.
+											if (nDistance == 0)
+												nScore += 3;
+											else if (nDistance == 1)
+												nScore += 2;
+											else
+												nScore += 1;
+										}
+									}
+								}
+
+								nIndex++;
+								pCallChild = pCallChild.m_pNextSibling;
+								pDeclChild = pDeclChild.m_pNextSibling;
+							}
+						}
+
+						if (nScore > nBestScore)
+						{
+							pBest.Clear();
+							pBest.PushBack(pSym);
+							nBestScore = nScore;
+						}
+						else if (nScore == nBestScore)
+						{
+							pBest.PushBack(pSym);
+						}
+					}
+
+					if (pBest.GetSize() == 1 && nBestScore >= 0)
+					{
+						Symbol pSymbol = pBest.Get(0);
+						if (pSymbol.m_pDeclAST != null)
+							pResolverAST = pSymbol.m_pDeclAST;
+					}
+					else if (pBest.GetSize() > 1 && nBestScore >= 0)
+					{
+						// Still ambiguous after type scoring; keep the
+						// remaining set for logging below.
+						pCallable.Clear();
+						for (int i = 0; i < pBest.GetSize(); i++)
+						{
+							pCallable.PushBack(pBest.Get(i));
+						}
+					}
+					// If no best candidate (all had score < 0), fall through
+					// to error reporting below.
+				}
+			}
+
+			if (pCallable.GetSize() == 1 && pResolverAST == null)
+			{
+				Symbol pSymbol = pCallable.Get(0);
+				if (pSymbol.m_pDeclAST != null)
+					pResolverAST = pSymbol.m_pDeclAST;
+			}
+			else if (pCallable.GetSize() > 1 && pResolverAST == null)
+				bResolverCallableAmbiguous = true;
+
+			AST pAST = pResolverAST;
 			if (pAST == null)
 			{
-				InternalString* sTemp = own new InternalString("Func Unbeknownst! ");
-				sTemp.Append(sName);
-				sTemp.Append(" parent is: ");
-				pBase.StringifyType(sTemp);
-				if (pBase.m_eType == AST::Type::AST_CLASS_DECL)
+				if (bResolverCallableAmbiguous)
 				{
-					ClassDecl pClassDecl = cast ClassDecl(pBase);
-					sTemp.Append(" ");
-					pClassDecl.AppendFullyQualifiedName(sTemp);
+					InternalString* sAmbiguous = own new InternalString("Ambiguous function call (multiple overloads in scope): ");
+					sAmbiguous.Append(sName);
+					pValidator.AddError(sAmbiguous.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 				}
-				pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+				else
+				{
+					InternalString* sTemp = own new InternalString("Func Unbeknownst! ");
+					sTemp.Append(sName);
+					sTemp.Append(" parent is: ");
+					pBase.StringifyType(sTemp);
+					if (pBase.m_eType == AST::Type::AST_CLASS_DECL)
+					{
+						ClassDecl pClassDecl = cast ClassDecl(pBase);
+						sTemp.Append(" ");
+						pClassDecl.AppendFullyQualifiedName(sTemp);
+					}
+					pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+				}
 				return;
 			}
 
@@ -99,7 +425,7 @@ namespace NumbatLogic
 			if (pAST.m_eType == AST::Type::AST_VAR_DECL)
 			{
 				VarDecl pVarDecl = cast VarDecl(pAST);
-				ValueType* pValueType = own pVarDecl.m_pTypeRef.CreateValueType();
+				ValueType* pValueType = own pVarDecl.m_pTypeRef.CreateValueType(pValidator.m_pResolver);
 				if (pValueType != null)
 				{
 					if (pValueType.m_eType == ValueType::Type::DELEGATE_DECL_VALUE)
@@ -115,13 +441,35 @@ namespace NumbatLogic
 					}
 				}
 			}
+			else if (pAST.m_eType == AST::Type::AST_MEMBER_VAR_DECL)
+			{
+				MemberVarDecl pMVD = cast MemberVarDecl(pAST);
+				if (pMVD.m_pVarDecl != null && pMVD.m_pVarDecl.m_pTypeRef != null)
+				{
+					ValueType* pValueType = own pMVD.m_pVarDecl.m_pTypeRef.CreateValueType(pValidator.m_pResolver);
+					if (pValueType != null && pValueType.m_eType == ValueType::Type::DELEGATE_DECL_VALUE)
+					{
+						if (pValueType.m_pDelegateDecl == null)
+						{
+							InternalString* sTemp = own new InternalString("DELEGATE_DECL_VALUE does not have m_pDelegateDecl set???");
+							pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+							return;
+						}
+						pFunctionDecl = pValueType.m_pDelegateDecl.m_pFunctionDecl;
+					}
+				}
+			}
 
 			if (pAST.m_eType == AST::Type::AST_FUNCTION_DECL)
 			{
 				pFunctionDecl = cast FunctionDecl(pAST);
 			}
-
-			
+			else if (pAST.m_eType == AST::Type::AST_MEMBER_FUNCTION_DECL)
+			{
+				MemberFunctionDecl pMFD = cast MemberFunctionDecl(pAST);
+				if (pMFD.m_pFunctionDecl != null)
+					pFunctionDecl = pMFD.m_pFunctionDecl;
+			}
 
 			if (pFunctionDecl == null)
 			{
@@ -170,7 +518,7 @@ namespace NumbatLogic
 
 			if (m_pValueType == null)
 			{
-				m_pValueType = own pFunctionDecl.m_pTypeRef.CreateValueType();
+				m_pValueType = own pFunctionDecl.m_pTypeRef.CreateValueType(pValidator.m_pResolver);
 			}
 
 
@@ -185,8 +533,6 @@ namespace NumbatLogic
 				pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 			}
 
-			base.Validate(pValidator, pParent);
-
 
 			// validate params
 			if (m_pParamCall.m_pFirstChild == null)
@@ -199,7 +545,7 @@ namespace NumbatLogic
 			}
 			else
 			{
-				if (!pFunctionDecl.m_pParamDecl.ValidateParamCall(m_pParamCall, pValidator))
+				if (!pFunctionDecl.m_pParamDecl.ValidateParamCall(m_pParamCall, pValidator, true))
 					return;
 			}
 		}

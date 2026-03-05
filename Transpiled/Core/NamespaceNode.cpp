@@ -59,17 +59,16 @@ namespace NumbatLogic
 		return 0;
 	}
 
-	NamespaceNode* NamespaceNode::FindByName(const char* sxName, bool bCanAscend)
+	void NamespaceNode::AppendFullyQualifiedName(InternalString* sOut)
 	{
-		for (int i = 0; i < m_pChildVector->GetSize(); i++)
+		if (m_pParent != 0 && m_pParent->m_sName != 0)
+			m_pParent->AppendFullyQualifiedName(sOut);
+		if (m_sName != 0)
 		{
-			NamespaceNode* pChild = m_pChildVector->Get(i);
-			if (ExternalString::Equal(sxName, pChild->m_sName->GetExternalString()))
-				return pChild;
+			if (m_pParent != 0 && m_pParent->m_sName != 0)
+				sOut->Append("::");
+			sOut->Append(m_sName->GetExternalString());
 		}
-		if (bCanAscend && m_pParent != 0)
-			return m_pParent->FindByName(sxName, bCanAscend);
-		return 0;
 	}
 
 	NamespaceNode::~NamespaceNode()

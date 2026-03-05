@@ -40,7 +40,7 @@ namespace NumbatLogic
 				{
 					Console.Log("unable to parse array size...");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					NumbatLogic.Assert.Plz(false);
+					Assert.Plz(false);
 					return null;
 				}
 				Token pSquareBracketRightToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SQUARE_BRACKET_RIGHT);
@@ -48,7 +48,7 @@ namespace NumbatLogic
 				{
 					Console.Log("unable to parse closing square bracket");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					NumbatLogic.Assert.Plz(false);
+					Assert.Plz(false);
 					return null;
 				}
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
@@ -68,7 +68,7 @@ namespace NumbatLogic
 				{
 					Console.Log("expected to parse assignment...");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					NumbatLogic.Assert.Plz(false);
+					Assert.Plz(false);
 					return null;
 				}
 			}
@@ -101,19 +101,12 @@ namespace NumbatLogic
 			return __2971982038;
 		}
 
-		public override AST FindByName(string sxName, AST pCallingChild)
-		{
-			if (ExternalString.Equal(sxName, m_pNameToken.GetString()))
-				return this;
-			return base.FindByName(sxName, pCallingChild);
-		}
-
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
 			base.Validate(pValidator, pParent);
 			if (m_pParent.m_eType != AST.Type.AST_MEMBER_VAR_DECL && m_pParent.m_eType != AST.Type.AST_PARAM_DECL)
 				pValidator.AddVarDecl(this);
-			ValueType pValueType = m_pTypeRef.CreateValueType();
+			ValueType pValueType = m_pTypeRef.CreateValueType(pValidator.m_pResolver);
 			if (pValueType == null)
 			{
 				pValidator.AddError("Unknown ValueType for TypeRef", m_pTypeRef.m_pFirstToken.m_sFileName, m_pTypeRef.m_pFirstToken.m_nLine, m_pTypeRef.m_pFirstToken.m_nColumn);
@@ -193,7 +186,7 @@ namespace NumbatLogic
 				AST pParentParent = m_pParent.m_pParent;
 				if (pParentParent == null || pParentParent.m_eType != AST.Type.AST_CLASS_DECL)
 				{
-					NumbatLogic.Assert.Plz(false);
+					Assert.Plz(false);
 				}
 				ClassDecl pClassDecl = (ClassDecl)(pParentParent);
 				sOut.AppendString(pClassDecl.m_pNameToken.GetString());
@@ -278,7 +271,8 @@ namespace NumbatLogic
 						{
 							if (eOutputFile == AST.OutputFile.SOURCE)
 							{
-								ValueType pValueType = m_pTypeRef.CreateValueType();
+								Project pProject = GetProject();
+								ValueType pValueType = m_pTypeRef.CreateValueType(pProject.m_pValidator.m_pResolver);
 								if (pValueType != null && pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE && m_pArraySizeVector == null)
 									sOut.AppendString(" = 0");
 								if (bStatic && m_pTypeRef.IsIntegral())

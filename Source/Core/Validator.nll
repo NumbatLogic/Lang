@@ -28,12 +28,17 @@ namespace NumbatLogic
 		
 		public NamespaceNode m_pCurrentNamespaceNode;
 
+		// New semantic resolver for symbol tables / scopes.
+		public Resolver* m_pResolver;
+
 		public construct(Project pProject)
 		{
 			m_pProject = pProject;
 			m_pValidatorErrorVector = own new OwnedVector<ValidatorError>();
 			m_pValidatorScopeVector = own new OwnedVector<ValidatorScope>();
 			m_pCurrentNamespaceNode = pProject.m_pRootNamespaceNode;
+
+			m_pResolver = own new Resolver();
 		}
 
 		private void PreparseNamespaces(NamespaceNode pCurrentNode, AST pAST)
@@ -60,6 +65,13 @@ namespace NumbatLogic
 			{
 				TranslationUnit pTranslationUnit = m_pProject.m_pTranslationUnitVector.Get(i);
 				PreparseNamespaces(m_pProject.m_pRootNamespaceNode, pTranslationUnit);
+			}
+
+			// Build semantic scopes/symbols for every translation unit.
+			for (int i = 0; i < m_pProject.m_pTranslationUnitVector.GetSize(); i++)
+			{
+				TranslationUnit pTranslationUnit = m_pProject.m_pTranslationUnitVector.Get(i);
+				m_pResolver.BuildForRoot(pTranslationUnit);
 			}
 
 			for (int i = 0; i < m_pProject.m_pTranslationUnitVector.GetSize(); i++)
@@ -111,6 +123,13 @@ namespace NumbatLogic
 			m_pValidatorErrorVector.PushBack(disown pValidatorError);
 		}
 
+		// Run PreValidate + Validate on an injected subtree so TypeRefs get m_pFoundType set.
+		public void ValidateSubtree(AST pRoot)
+		{
+			pRoot.PreValidate(this, null);
+			pRoot.Validate(this, null);
+		}
+
 		public void BeginScope(Scope pScope)
 		{
 			ValidatorScope* pValidatorScope = own new ValidatorScope(pScope);
@@ -119,12 +138,12 @@ namespace NumbatLogic
 
 		public void AddVarDecl(VarDecl pVarDecl)
 		{
-			ValueType* pValueType = own pVarDecl.m_pTypeRef.CreateValueType();
+			ValueType* pValueType = own pVarDecl.m_pTypeRef.CreateValueType(m_pResolver);
 			if (pValueType != null) // may be null for unbeknownst types
 			if (pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE && pValueType.m_ePointerType == TypeRef::PointerType::OWNED)
 			{
 				int nIndex = m_pValidatorScopeVector.GetSize()-1;
-				NumbatLogic::Assert::Plz(nIndex >= 0);
+				Assert::Plz(nIndex >= 0);
 
 				ValidatorScope pValidatorScope = m_pValidatorScopeVector.Get(nIndex);
 				pValidatorScope.m_pVarDeclVector.PushBack(pVarDecl);
@@ -134,8 +153,8 @@ namespace NumbatLogic
 		public void EndScope(Scope pScope)
 		{
 			ValidatorScope* pValidatorScope = own m_pValidatorScopeVector.PopBack();
-			NumbatLogic::Assert::Plz(pValidatorScope != null);
-			NumbatLogic::Assert::Plz(pValidatorScope.m_pScope == pScope);
+			Assert::Plz(pValidatorScope != null);
+			Assert::Plz(pValidatorScope.m_pScope == pScope);
 
 			AST pCheck = pScope;
 			while (pCheck != null && pCheck.m_eType == AST::Type::AST_SCOPE)
@@ -220,13 +239,13 @@ namespace NumbatLogic
 		public void BeginNamespace(string sxName)
 		{
 			m_pCurrentNamespaceNode = m_pCurrentNamespaceNode.GetChild(sxName);
-			NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode != null);
+			Assert::Plz(m_pCurrentNamespaceNode != null);
 		}
 
 		public void EndNamespace(string sxName)
 		{
-			NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode.m_sName.IsEqual(sxName));
-			NumbatLogic::Assert::Plz(m_pCurrentNamespaceNode.m_pParent != null);
+			Assert::Plz(m_pCurrentNamespaceNode.m_sName.IsEqual(sxName));
+			Assert::Plz(m_pCurrentNamespaceNode.m_pParent != null);
 			m_pCurrentNamespaceNode = m_pCurrentNamespaceNode.m_pParent;
 		}
 	}

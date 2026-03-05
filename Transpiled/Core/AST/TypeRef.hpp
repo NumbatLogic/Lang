@@ -13,11 +13,13 @@ namespace NumbatLogic
 	class AST;
 	class TokenContainer;
 	class OffsetDatum;
-	class Validator;
 	class ClassDecl;
+	class Validator;
 	class OperatorExpr;
+	class Symbol;
 	class InternalString;
 	class ValueType;
+	class Resolver;
 }
 namespace NumbatLogic
 {
@@ -38,19 +40,18 @@ namespace NumbatLogic
 		public: TypeRef* m_pChildTypeRef;
 		public: PointerType m_ePointerType;
 		public: Token* m_pCloneToken;
-		protected: bool m_bAttemptedToFindType;
-		protected: AST* m_pFoundType;
+		public: AST* m_pFoundType;
 		public: TypeRef();
 		public: static TypeRef* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-		protected: AST* FindType();
+		public: ClassDecl* GetFoundClassDecl();
 		protected: void ValidateClassDecl(Validator* pValidator, ClassDecl* pClassDecl, TypeRef* pThisOrChild);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
 		public: TypeRef* Clone();
 		public: virtual AST* BaseClone();
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
-		public: ValueType* GetRecursiveValueType();
-		public: ValueType* CreateValueType();
-		protected: ValueType* SetValueType();
+		public: ValueType* GetRecursiveValueType(Resolver* pResolver);
+		public: ValueType* CreateValueType(Resolver* pResolver);
+		protected: ValueType* SetValueType(Resolver* pResolver);
 		public: bool IsIntegral();
 		public: bool IsInt();
 		public: bool IsBool();

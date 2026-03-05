@@ -37,7 +37,7 @@ namespace NumbatLogic
 				pTestParent = pTestParent.m_pParent;
 			}
 			ClassDecl pClassDecl = (ClassDecl)(pTestParent);
-			ClassDecl pBaseClassDecl = pClassDecl.GetBaseClassDecl();
+			ClassDecl pBaseClassDecl = pClassDecl.GetBaseClassDecl(pValidator);
 			if (pBaseClassDecl == null)
 			{
 				pValidator.AddError("class does not have a base class!", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);

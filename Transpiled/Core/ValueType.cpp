@@ -3,8 +3,8 @@
 #include "AST/TypeRef.hpp"
 #include "Validator.hpp"
 #include "Token.hpp"
-#include "AST/ClassDecl.hpp"
 #include "../../../LangShared/InternalString/CPP/InternalString.hpp"
+#include "AST/ClassDecl.hpp"
 #include "../../../LangShared/Vector/CPP/Vector.hpp"
 #include "NamespaceNode.hpp"
 #include "AST/GenericTypeDecl.hpp"
@@ -21,9 +21,9 @@ namespace NumbatLogic
 	class OwnedVector;
 	class Validator;
 	class Token;
+	class InternalString;
 	class TypeRef;
 	class ClassDecl;
-	class InternalString;
 	template <class T>
 	class Vector;
 	class NamespaceNode;
@@ -86,18 +86,48 @@ namespace NumbatLogic
 		}
 		if (pTo->m_ePointerType != TypeRef::PointerType::OWNED && m_ePointerType == TypeRef::PointerType::OWNED_PREASSSIGN)
 		{
-			pValidator->AddError("Can't assign an owned pointer to a non-owned variable", pToken->m_sFileName, pToken->m_nLine, pToken->m_nColumn);
+			InternalString* sTemp = new InternalString("Can't assign an owned pointer to a non-owned variable. FROM[");
+			StringifyType(sTemp);
+			sTemp->Append(" ptr=");
+			StringifyPointerType(sTemp, m_ePointerType);
+			sTemp->Append("] TO[");
+			pTo->StringifyType(sTemp);
+			sTemp->Append(" ptr=");
+			StringifyPointerType(sTemp, pTo->m_ePointerType);
+			sTemp->Append("]");
+			pValidator->AddError(sTemp->GetExternalString(), pToken->m_sFileName, pToken->m_nLine, pToken->m_nColumn);
+			if (sTemp) delete sTemp;
 			return false;
 		}
 		if (pTo->m_ePointerType == TypeRef::PointerType::OWNED && (m_ePointerType != TypeRef::PointerType::OWNED_PREASSSIGN && m_eType != ValueType::Type::NULL_VALUE))
 		{
-			pValidator->AddError("Expected right side of = to be OWNED_PREASSSIGN (result of own)", pToken->m_sFileName, pToken->m_nLine, pToken->m_nColumn);
+			InternalString* sTemp = new InternalString("Expected right side of = to be OWNED_PREASSSIGN (result of own). FROM[");
+			StringifyType(sTemp);
+			sTemp->Append(" ptr=");
+			StringifyPointerType(sTemp, m_ePointerType);
+			sTemp->Append("] TO[");
+			pTo->StringifyType(sTemp);
+			sTemp->Append(" ptr=");
+			StringifyPointerType(sTemp, pTo->m_ePointerType);
+			sTemp->Append("]");
+			pValidator->AddError(sTemp->GetExternalString(), pToken->m_sFileName, pToken->m_nLine, pToken->m_nColumn);
+			if (sTemp) delete sTemp;
 			return false;
 		}
 		else
 			if (m_ePointerType == TypeRef::PointerType::TRANSITON)
 			{
-				pValidator->AddError("Cannot store a TRANSITION pointer (need to `own` it)", pToken->m_sFileName, pToken->m_nLine, pToken->m_nColumn);
+				InternalString* sTemp = new InternalString("Cannot store a TRANSITION pointer (need to `own` it). FROM[");
+				StringifyType(sTemp);
+				sTemp->Append(" ptr=");
+				StringifyPointerType(sTemp, m_ePointerType);
+				sTemp->Append("] TO[");
+				pTo->StringifyType(sTemp);
+				sTemp->Append(" ptr=");
+				StringifyPointerType(sTemp, pTo->m_ePointerType);
+				sTemp->Append("]");
+				pValidator->AddError(sTemp->GetExternalString(), pToken->m_sFileName, pToken->m_nLine, pToken->m_nColumn);
+				if (sTemp) delete sTemp;
 				return false;
 			}
 		if ((m_pGenericValueTypeVector == 0) != (pTo->m_pGenericValueTypeVector == 0))
@@ -145,9 +175,9 @@ namespace NumbatLogic
 					{
 						TypeRef* pGenericTypeRef = m_pGenericValueTypeVector->Get(i)->CreateTypeRef();
 						pTypeRef->m_pGenericTypeRefVector->PushBack(pGenericTypeRef);
-						NumbatLogic::TypeRef* __3744907352 = pGenericTypeRef;
+						NumbatLogic::TypeRef* __3752644072 = pGenericTypeRef;
 						pGenericTypeRef = 0;
-						pTypeRef->AddChild(__3744907352);
+						pTypeRef->AddChild(__3752644072);
 						if (pGenericTypeRef) delete pGenericTypeRef;
 					}
 				}
@@ -160,18 +190,18 @@ namespace NumbatLogic
 					pNamespaceTypeRef->m_pCloneToken->m_sValue = new InternalString(pNamespaceNode->m_sName->GetExternalString());
 					pNamespaceTypeRef->m_pTypeToken = pNamespaceTypeRef->m_pCloneToken;
 					pNamespaceTypeRef->m_pChildTypeRef = pTypeRef;
-					NumbatLogic::TypeRef* __975778034 = pTypeRef;
+					NumbatLogic::TypeRef* __975974828 = pTypeRef;
 					pTypeRef = 0;
-					pNamespaceTypeRef->AddChild(__975778034);
-					NumbatLogic::TypeRef* __2554669796 = pNamespaceTypeRef;
+					pNamespaceTypeRef->AddChild(__975974828);
+					NumbatLogic::TypeRef* __2554801001 = pNamespaceTypeRef;
 					pNamespaceTypeRef = 0;
-					pTypeRef = __2554669796;
+					pTypeRef = __2554801001;
 					pNamespaceNode = pNamespaceNode->m_pParent;
 					if (pNamespaceTypeRef) delete pNamespaceTypeRef;
 				}
-				NumbatLogic::TypeRef* __975843630 = pTypeRef;
+				NumbatLogic::TypeRef* __976040424 = pTypeRef;
 				pTypeRef = 0;
-				return __975843630;
+				return __976040424;
 			}
 
 			case Type::GENERIC_TYPE_DECL_VALUE:
@@ -180,13 +210,13 @@ namespace NumbatLogic
 				pTypeRef->m_pCloneToken->m_eType = Token::Type::TOKEN_IDENTIFIER;
 				pTypeRef->m_pCloneToken->m_sValue = new InternalString(m_pGenericTypeDecl->m_pFirstToken->m_sValue->GetExternalString());
 				pTypeRef->m_pTypeToken = pTypeRef->m_pCloneToken;
-				NumbatLogic::TypeRef* __975909227 = pTypeRef;
+				NumbatLogic::TypeRef* __976106021 = pTypeRef;
 				pTypeRef = 0;
-				return __975909227;
+				return __976106021;
 			}
 
 		}
-		NumbatLogic::Assert::Plz(false);
+		Assert::Plz(false);
 		if (pTypeRef) delete pTypeRef;
 		return 0;
 	}
@@ -305,6 +335,38 @@ namespace NumbatLogic
 
 		}
 		sOut->Append("???");
+	}
+
+	void ValueType::StringifyPointerType(InternalString* sOut, TypeRef::PointerType ePointerType)
+	{
+		switch (ePointerType)
+		{
+			case TypeRef::PointerType::SHARED:
+			{
+				sOut->Append("SHARED");
+				return;
+			}
+
+			case TypeRef::PointerType::OWNED:
+			{
+				sOut->Append("OWNED");
+				return;
+			}
+
+			case TypeRef::PointerType::TRANSITON:
+			{
+				sOut->Append("TRANSITON");
+				return;
+			}
+
+			case TypeRef::PointerType::OWNED_PREASSSIGN:
+			{
+				sOut->Append("OWNED_PREASSSIGN");
+				return;
+			}
+
+		}
+		sOut->Append("UNKNOWN_PTR");
 	}
 
 	ValueType::~ValueType()

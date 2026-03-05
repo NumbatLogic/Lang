@@ -31,7 +31,7 @@ namespace NumbatLogic
 			{
 				Console.Log("expected ParamDecl");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic.Assert.Plz(false);
+				Assert.Plz(false);
 				return null;
 			}
 			bool bConst = false;
@@ -52,7 +52,7 @@ namespace NumbatLogic
 				{
 					Console.Log("expected scope");
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-					NumbatLogic.Assert.Plz(false);
+					Assert.Plz(false);
 				}
 			}
 			FunctionDecl pFunctionDecl = new FunctionDecl();
@@ -83,13 +83,6 @@ namespace NumbatLogic
 			return __4280092330;
 		}
 
-		public override AST FindByName(string sxName, AST pCallingChild)
-		{
-			if (ExternalString.Equal(sxName, m_pNameToken.GetString()))
-				return this;
-			return base.FindByName(sxName, pCallingChild);
-		}
-
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
 			base.Validate(pValidator, pParent);
@@ -101,7 +94,7 @@ namespace NumbatLogic
 					return;
 				}
 			}
-			ValueType pValueType = m_pTypeRef.CreateValueType();
+			ValueType pValueType = m_pTypeRef.CreateValueType(pValidator.m_pResolver);
 			if (pValueType == null)
 			{
 				pValidator.AddError("Unable to compute value type of function result", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);

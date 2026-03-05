@@ -11,11 +11,13 @@ namespace NumbatLogic
 	class Vector;
 	class TranslationUnit;
 	class NamespaceNode;
+	class Validator;
 	template <class T>
 	class OwnedVector;
 	class InternalString;
 	class AST;
 	class NamespaceDecl;
+	class Token;
 }
 namespace NumbatLogic
 {
@@ -23,6 +25,7 @@ namespace NumbatLogic
 	{
 		public: Vector<TranslationUnit*>* m_pTranslationUnitVector;
 		public: NamespaceNode* m_pRootNamespaceNode;
+		public: Validator* m_pValidator;
 		public: Project();
 		public: void AddFile(const char* sFile, OwnedVector<InternalString*>* sDefineVector);
 		public: void AddDirectory(const char* sDirectory, OwnedVector<InternalString*>* sDefineVector);

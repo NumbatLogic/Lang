@@ -32,14 +32,14 @@ namespace NumbatLogic
 			if (pFunctionDecl == null)
 			{
 				Console::Log("expected function decl");
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 				return null;
 			}
 
 			if (pFunctionDecl.m_pScope != null)
 			{
 				Console::Log("function def can't have scope!");
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 				return null;
 			}
 
@@ -48,14 +48,6 @@ namespace NumbatLogic
 
 			pOffsetDatum.Set(pTempOffset);
 			return disown pDelegateDecl;
-		}
-
-		public override AST FindByName(string sxName, AST pCallingChild)
-		{
-			if (ExternalString::Equal(sxName, m_pFunctionDecl.m_pNameToken.GetString()))
-				return this;
-
-			return base.FindByName(sxName, pCallingChild);
 		}
 
 		/*public override void Validate(Validator pValidator, OperatorExpr pParent)

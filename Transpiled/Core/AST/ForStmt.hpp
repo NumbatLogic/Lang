@@ -4,10 +4,10 @@
 
 namespace NumbatLogic
 {
-	class AST;
 	class ForStmt;
 	class TokenContainer;
 	class OffsetDatum;
+	class AST;
 	class InternalString;
 }
 namespace NumbatLogic

@@ -7,7 +7,6 @@
 #include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
-#include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../Util.hpp"
 
@@ -23,7 +22,6 @@ namespace NumbatLogic
 	class Vector;
 	class Console;
 	class Assert;
-	class ExternalString;
 	class InternalString;
 	class Util;
 }
@@ -54,7 +52,7 @@ namespace NumbatLogic
 		if (pEnumDecl->m_pNameToken == 0)
 		{
 			Console::Log("expected enum name");
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pEnumDecl) delete pEnumDecl;
 			return 0;
@@ -63,7 +61,7 @@ namespace NumbatLogic
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_LEFT) == 0)
 		{
 			Console::Log("expected opening curly brace");
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pEnumDecl) delete pEnumDecl;
 			return 0;
@@ -80,7 +78,7 @@ namespace NumbatLogic
 			if (pEnumDeclValue == 0)
 			{
 				Console::Log("expected EnumDeclValue");
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 			}
 			pEnumDecl->m_pEnumDeclValueVector->PushBack(pEnumDeclValue);
 			NumbatLogic::EnumDeclValue* __478630801 = pEnumDeclValue;
@@ -95,7 +93,7 @@ namespace NumbatLogic
 			{
 				Console::Log("expected comma");
 				Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 			}
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 			if (pEnumDeclValue) delete pEnumDeclValue;
@@ -105,13 +103,6 @@ namespace NumbatLogic
 		pEnumDecl = 0;
 		if (pTempOffset) delete pTempOffset;
 		return __4282209082;
-	}
-
-	AST* EnumDecl::FindByName(const char* sxName, AST* pCallingChild)
-	{
-		if (ExternalString::Equal(sxName, m_pNameToken->GetString()))
-			return this;
-		return AST::FindByName(sxName, pCallingChild);
 	}
 
 	void EnumDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

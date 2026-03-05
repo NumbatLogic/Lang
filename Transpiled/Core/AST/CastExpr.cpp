@@ -50,7 +50,7 @@ namespace NumbatLogic
 		{
 			Console::Log("expected TypeRef...");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pTypeRef) delete pTypeRef;
 			return 0;
@@ -60,7 +60,7 @@ namespace NumbatLogic
 		{
 			Console::Log("expected ParamCall");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-			NumbatLogic::Assert::Plz(false);
+			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pTypeRef) delete pTypeRef;
 			if (pParamCall) delete pParamCall;
@@ -88,7 +88,7 @@ namespace NumbatLogic
 	void CastExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
 		AST::Validate(pValidator, pParent);
-		m_pValueType = m_pTypeRef->CreateValueType();
+		m_pValueType = m_pTypeRef->CreateValueType(pValidator->m_pResolver);
 		if (m_pValueType == 0)
 		{
 			pValidator->AddError("unable to determine what to cast TO", m_pTypeRef->m_pFirstToken->m_sFileName, m_pTypeRef->m_pFirstToken->m_nLine, m_pTypeRef->m_pFirstToken->m_nColumn);

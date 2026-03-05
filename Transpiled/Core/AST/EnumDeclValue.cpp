@@ -5,7 +5,6 @@
 #include "../Token.hpp"
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
-#include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -17,7 +16,6 @@ namespace NumbatLogic
 	class EnumDeclValue;
 	class Console;
 	class Assert;
-	class ExternalString;
 	class InternalString;
 }
 namespace NumbatLogic
@@ -48,7 +46,7 @@ namespace NumbatLogic
 			if (pEnumDeclValue->m_pForceValue == 0)
 			{
 				Console::Log("expected to parse something...");
-				NumbatLogic::Assert::Plz(false);
+				Assert::Plz(false);
 				if (pTempOffset) delete pTempOffset;
 				if (pEnumDeclValue) delete pEnumDeclValue;
 				return 0;
@@ -59,13 +57,6 @@ namespace NumbatLogic
 		pEnumDeclValue = 0;
 		if (pTempOffset) delete pTempOffset;
 		return __478499602;
-	}
-
-	AST* EnumDeclValue::FindByName(const char* sxName, AST* pCallingChild)
-	{
-		if (ExternalString::Equal(sxName, m_pFirstToken->GetString()))
-			return this;
-		return AST::FindByName(sxName, pCallingChild);
 	}
 
 	void EnumDeclValue::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)

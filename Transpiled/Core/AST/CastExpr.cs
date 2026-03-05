@@ -23,7 +23,7 @@ namespace NumbatLogic
 			{
 				Console.Log("expected TypeRef...");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic.Assert.Plz(false);
+				Assert.Plz(false);
 				return null;
 			}
 			ParamCall pParamCall = ParamCall.TryCreate(pTokenContainer, pTempOffset);
@@ -31,7 +31,7 @@ namespace NumbatLogic
 			{
 				Console.Log("expected ParamCall");
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-				NumbatLogic.Assert.Plz(false);
+				Assert.Plz(false);
 				return null;
 			}
 			CastExpr pCastExpr = new CastExpr();
@@ -53,7 +53,7 @@ namespace NumbatLogic
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
 			base.Validate(pValidator, pParent);
-			m_pValueType = m_pTypeRef.CreateValueType();
+			m_pValueType = m_pTypeRef.CreateValueType(pValidator.m_pResolver);
 			if (m_pValueType == null)
 			{
 				pValidator.AddError("unable to determine what to cast TO", m_pTypeRef.m_pFirstToken.m_sFileName, m_pTypeRef.m_pFirstToken.m_nLine, m_pTypeRef.m_pFirstToken.m_nColumn);
