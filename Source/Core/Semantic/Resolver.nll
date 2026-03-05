@@ -1,0 +1,61 @@
+namespace NumbatLogic
+{
+	// High-level entry point for building and querying symbols.
+	class Resolver
+	{
+		// Root/global scope for a compilation unit.
+		public SymbolScope* m_pGlobalScope;
+
+		public construct()
+		{
+			m_pGlobalScope = own new SymbolScope();
+			m_pGlobalScope.m_eKind = SymbolScope::Kind::GLOBAL;
+			m_pGlobalScope.m_pParent = null;
+			m_pGlobalScope.m_pOwnerAST = null;
+		}
+
+		// Build scopes/symbols for an entire AST (eg a translation unit / root file).
+		public void BuildForRoot(AST pRoot)
+		{
+			if (pRoot == null)
+				return;
+
+			BuildForNode(pRoot, m_pGlobalScope);
+		}
+
+		private void BuildForNode(AST pNode, SymbolScope pScope)
+		{
+			if (pNode == null || pScope == null)
+				return;
+
+			// TODO: As we wire this in, switch on pNode.m_eType and
+			// create scopes/symbols for namespaces, classes, functions, vars, etc.
+
+			// For now, just recurse to children so the traversal structure is in place.
+			AST pChild = pNode.m_pFirstChild;
+			while (pChild != null)
+			{
+				AST pNext = pChild.m_pNextSibling;
+				BuildForNode(pChild, pScope);
+				pChild = pNext;
+			}
+		}
+
+		// Resolve by short name in the current lexical scope chain, returning all candidates.
+		public void ResolveInScopeChain(string sName, SymbolScope pStartScope, Vector<Symbol> pOut)
+		{
+			pOut.Clear();
+
+			SymbolScope pScope = pStartScope;
+			while (pScope != null)
+			{
+				pScope.FindInThisScope(sName, pOut);
+				if (pOut.GetSize() > 0)
+					return;
+
+				pScope = pScope.m_pParent;
+			}
+		}
+	}
+}
+

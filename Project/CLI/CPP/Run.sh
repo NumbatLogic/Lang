@@ -9,4 +9,4 @@ done
 
 gdb -ex "set confirm off" -ex run -ex backtrace -ex quit --args ../../../Bin/CLI -f ../../../Source "${sLangSharedArgs[@]}"
 
-#valgrind ../../../Bin/CLI -f ../../../Source "${sLangSharedArgs[@]}"
+# valgrind --trace-children=yes --track-fds=yes --log-file=valgrind.txt --error-limit=no --leak-check=full --show-possibly-lost=yes --track-origins=yes --show-reachable=yes ../../../Bin/CLI -f ../../../Source "${sLangSharedArgs[@]}"
