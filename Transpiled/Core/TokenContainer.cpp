@@ -432,24 +432,6 @@ namespace NumbatLogic
 					if (m_pTokenVector->GetSize() > 0)
 					{
 						Token* pPreviousToken = m_pTokenVector->Get(m_pTokenVector->GetSize() - 1);
-						if (pPreviousToken->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT && eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT)
-						{
-							pPreviousToken->m_eType = Token::Type::TOKEN_DOUBLE_ANGLE_BRACKET_LEFT;
-							pParseDatum->ClearCurrentRead();
-							return;
-						}
-						if (pPreviousToken->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT && eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT)
-						{
-							pPreviousToken->m_eType = Token::Type::TOKEN_DOUBLE_ANGLE_BRACKET_RIGHT;
-							pParseDatum->ClearCurrentRead();
-							return;
-						}
-						if (pPreviousToken->m_eType == Token::Type::TOKEN_BANG && eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT)
-						{
-							pPreviousToken->m_eType = Token::Type::TOKEN_ANGLE_BRACKET_RIGHT;
-							pParseDatum->ClearCurrentRead();
-							return;
-						}
 						if (pPreviousToken->m_eType == Token::Type::TOKEN_COLON && eType == Token::Type::TOKEN_COLON)
 						{
 							pPreviousToken->m_eType = Token::Type::TOKEN_DOUBLE_COLON;
@@ -891,9 +873,9 @@ namespace NumbatLogic
 		if (bCopyString)
 			pToken->m_sValue = new InternalString(pParseDatum->m_sCurrentRead->GetExternalString());
 		pParseDatum->ClearCurrentRead();
-		NumbatLogic::Token* __3820491407 = pToken;
+		NumbatLogic::Token* __3820360207 = pToken;
 		pToken = 0;
-		m_pTokenVector->PushBack(__3820491407);
+		m_pTokenVector->PushBack(__3820360207);
 		if (pToken) delete pToken;
 	}
 

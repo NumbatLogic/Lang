@@ -1,7 +1,9 @@
 #include "OperatorExpr.hpp"
 #include "AST.hpp"
-#include "../Validator.hpp"
+#include "../../../../LangShared/Assert/CPP/Assert.hpp"
+#include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "../Token.hpp"
+#include "../Validator.hpp"
 #include "../ValueType.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "TypeRef.hpp"
@@ -10,9 +12,12 @@
 namespace NumbatLogic
 {
 	class AST;
+	class Assert;
+	template <class T>
+	class Vector;
+	class Token;
 	class OperatorExpr;
 	class Validator;
-	class Token;
 	class ValueType;
 	class InternalString;
 	class TypeRef;
@@ -22,39 +27,46 @@ namespace NumbatLogic
 {
 	OperatorExpr::OperatorExpr()
 	{
-		m_pOperatorToken = 0;
+		m_pOperatorTokenVector = 0;
+		m_pOwnedOperatorToken = 0;
 		m_pLeft = 0;
 		m_pRight = 0;
-		m_pOwnedOperatorToken = 0;
 		m_eType = AST::Type::AST_OPERATOR_EXPR;
+		m_pOwnedOperatorToken = 0;
 	}
 
-	OperatorExpr* OperatorExpr::Create(Token* pOperatorToken, AST* pLeft, AST* pRight)
+	Token* OperatorExpr::GetFirstOperatorToken()
+	{
+		Assert::Plz(m_pOperatorTokenVector != 0 && m_pOperatorTokenVector->GetSize() > 0);
+		return m_pOperatorTokenVector->Get(0);
+	}
+
+	OperatorExpr* OperatorExpr::Create(Vector<Token*>* pOperatorTokenVector, AST* pLeft, AST* pRight)
 	{
 		OperatorExpr* pOperatorExpr = new OperatorExpr();
 		AST* pOwnedLeft = pLeft;
 		AST* pOwnedRight = pRight;
 		pOperatorExpr->m_pFirstToken = pLeft->m_pFirstToken;
-		pOperatorExpr->m_pOperatorToken = pOperatorToken;
+		pOperatorExpr->m_pOperatorTokenVector = pOperatorTokenVector;
 		pOperatorExpr->m_pLeft = pOwnedLeft;
 		pOperatorExpr->m_pRight = pOwnedRight;
 		if (pLeft != 0)
 		{
-			NumbatLogic::AST* __2899472899 = pOwnedLeft;
+			NumbatLogic::AST* __2899538494 = pOwnedLeft;
 			pOwnedLeft = 0;
-			pOperatorExpr->AddChild(__2899472899);
+			pOperatorExpr->AddChild(__2899538494);
 		}
 		if (pRight != 0)
 		{
-			NumbatLogic::AST* __2375335622 = pOwnedRight;
+			NumbatLogic::AST* __2375335628 = pOwnedRight;
 			pOwnedRight = 0;
-			pOperatorExpr->AddChild(__2375335622);
+			pOperatorExpr->AddChild(__2375335628);
 		}
-		NumbatLogic::OperatorExpr* __1439134186 = pOperatorExpr;
+		NumbatLogic::OperatorExpr* __1439199781 = pOperatorExpr;
 		pOperatorExpr = 0;
 		if (pOwnedLeft) delete pOwnedLeft;
 		if (pOwnedRight) delete pOwnedRight;
-		return __1439134186;
+		return __1439199781;
 	}
 
 	AST* OperatorExpr::BaseClone()
@@ -65,13 +77,38 @@ namespace NumbatLogic
 			pLeft = m_pLeft->BaseClone();
 		if (m_pRight != 0)
 			pRight = m_pRight->BaseClone();
-		NumbatLogic::AST* __3611357723 = pLeft;
+		Vector<Token*>* pOpTokens = new Vector<Token*>();
+		Token* pOwnedClone = 0;
+		for (int i = 0; i < m_pOperatorTokenVector->GetSize(); i = i + 1)
+		{
+			if (i == 0 && m_pOwnedOperatorToken != 0)
+			{
+				pOwnedClone = m_pOwnedOperatorToken->Clone();
+				pOpTokens->PushBack(pOwnedClone);
+			}
+			else
+				pOpTokens->PushBack(m_pOperatorTokenVector->Get(i));
+		}
+		NumbatLogic::Vector<NumbatLogic::Token*>* __2648804907 = pOpTokens;
+		pOpTokens = 0;
+		NumbatLogic::AST* __3611488919 = pLeft;
 		pLeft = 0;
-		NumbatLogic::AST* __2112103984 = pRight;
+		NumbatLogic::AST* __2112235180 = pRight;
 		pRight = 0;
+		OperatorExpr* pResult = OperatorExpr::Create(__2648804907, __3611488919, __2112235180);
+		if (pOwnedClone != 0)
+		{
+			NumbatLogic::Token* __1925307818 = pOwnedClone;
+			pOwnedClone = 0;
+			pResult->m_pOwnedOperatorToken = __1925307818;
+		}
+		NumbatLogic::OperatorExpr* __4043990992 = pResult;
+		pResult = 0;
 		if (pLeft) delete pLeft;
 		if (pRight) delete pRight;
-		return Create(m_pOperatorToken, __3611357723, __2112103984);
+		if (pOpTokens) delete pOpTokens;
+		if (pOwnedClone) delete pOwnedClone;
+		return __4043990992;
 	}
 
 	void OperatorExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
@@ -88,21 +125,22 @@ namespace NumbatLogic
 			{
 				if (m_pLeft->m_pValueType->m_eType == ValueType::Type::CLASS_DECL || m_pLeft->m_pValueType->m_eType == ValueType::Type::ENUM_DECL || m_pLeft->m_pValueType->m_eType == ValueType::Type::NAMESPACE_NODE)
 				{
-					if (m_pOperatorToken->m_eType != Token::Type::TOKEN_DOUBLE_COLON)
+					Token* pOpToken = GetFirstOperatorToken();
+					if (pOpToken->m_eType != Token::Type::TOKEN_DOUBLE_COLON)
 					{
-						pValidator->AddError("Expected TOKEN_DOUBLE_COLON ", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+						pValidator->AddError("Expected TOKEN_DOUBLE_COLON ", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 						return;
 					}
 					if (m_pRight == 0)
 					{
-						pValidator->AddError("Expected right side of TOKEN_DOUBLE_COLON operator", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+						pValidator->AddError("Expected right side of TOKEN_DOUBLE_COLON operator", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 						return;
 					}
 					if (m_pRight->m_eType != AST::Type::AST_IDENTIFIER && m_pRight->m_eType != AST::Type::AST_OPERATOR_EXPR && m_pRight->m_eType != AST::Type::AST_FUNCTION_CALL && m_pRight->m_eType != AST::Type::AST_ARRAY_LOOKUP)
 					{
 						InternalString* sTemp = new InternalString("Unexpected right side of TOKEN_DOUBLE_COLON operator: ");
 						m_pRight->StringifyType(sTemp);
-						pValidator->AddError(sTemp->GetExternalString(), m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+						pValidator->AddError(sTemp->GetExternalString(), pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 						if (sTemp) delete sTemp;
 						return;
 					}
@@ -115,13 +153,14 @@ namespace NumbatLogic
 					m_pValueType = m_pRight->m_pValueType->Clone();
 					return;
 				}
-				if (m_pOperatorToken->m_eType == Token::Type::TOKEN_DOT)
+				Token* pOpToken = GetFirstOperatorToken();
+				if (pOpToken->m_eType == Token::Type::TOKEN_DOT)
 				{
 					if (m_pLeft->m_pValueType->m_eType == ValueType::Type::GENERIC_TYPE_DECL_VALUE)
 					{
 						if (m_pLeft->m_pValueType->m_pGenericTypeDecl == 0)
 						{
-							pValidator->AddError(" set but m_pGenericTypeDecl is null???", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+							pValidator->AddError(" set but m_pGenericTypeDecl is null???", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 							return;
 						}
 					}
@@ -130,13 +169,13 @@ namespace NumbatLogic
 						{
 							if (m_pLeft->m_pValueType->m_pClassDecl == 0)
 							{
-								pValidator->AddError(" set but m_pClassDecl is null???", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+								pValidator->AddError(" set but m_pClassDecl is null???", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 								return;
 							}
 						}
 						else
 						{
-							pValidator->AddError("Expected ValueType::Type::CLASS_DECL_VALUE or ValueType::Type::GENERIC_TYPE_DECL_VALUE on left of TOKEN_DOT operator", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+							pValidator->AddError("Expected ValueType::Type::CLASS_DECL_VALUE or ValueType::Type::GENERIC_TYPE_DECL_VALUE on left of TOKEN_DOT operator", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 							return;
 						}
 					m_pRight->Validate(pValidator, this);
@@ -148,25 +187,25 @@ namespace NumbatLogic
 					m_pValueType = m_pRight->m_pValueType->Clone();
 					return;
 				}
-				if (m_pOperatorToken->m_eType == Token::Type::TOKEN_PLUS)
+				if (pOpToken->m_eType == Token::Type::TOKEN_PLUS)
 				{
 					if (m_pLeft->m_pValueType->m_eType == ValueType::Type::STRING)
 					{
-						pValidator->AddError("Cannot concat strings with +", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+						pValidator->AddError("Cannot concat strings with +", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 						return;
 					}
 				}
-				if (m_pOperatorToken->m_eType == Token::Type::TOKEN_DOUBLE_EQUALS || m_pOperatorToken->m_eType == Token::Type::TOKEN_NOT_EQUALS)
+				if (pOpToken->m_eType == Token::Type::TOKEN_DOUBLE_EQUALS || pOpToken->m_eType == Token::Type::TOKEN_NOT_EQUALS)
 				{
 					if (m_pRight == 0)
 					{
-						pValidator->AddError("Nohing on right side to compare?", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+						pValidator->AddError("Nohing on right side to compare?", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 						return;
 					}
 					m_pRight->Validate(pValidator, this);
 					if (m_pLeft->m_pValueType->m_eType == ValueType::Type::STRING && m_pRight->m_pValueType->m_eType == ValueType::Type::STRING)
 					{
-						pValidator->AddError("Cannot == or != strings use ExternalString::Equal", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+						pValidator->AddError("Cannot == or != strings use ExternalString::Equal", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 						return;
 					}
 					m_pValueType = new ValueType(ValueType::Type::BOOL);
@@ -174,7 +213,7 @@ namespace NumbatLogic
 				}
 				if (m_pRight != 0)
 					m_pRight->Validate(pValidator, this);
-				if (m_pOperatorToken->m_eType == Token::Type::TOKEN_EQUALS)
+				if (pOpToken->m_eType == Token::Type::TOKEN_EQUALS)
 				{
 					if (m_pRight->m_pValueType == 0)
 					{
@@ -206,7 +245,7 @@ namespace NumbatLogic
 								sTemp->Append(" ptr=");
 								ValueType::StringifyPointerType(sTemp, m_pLeft->m_pValueType->m_ePointerType);
 								sTemp->Append("]");
-								pValidator->AddError(sTemp->GetExternalString(), m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+								pValidator->AddError(sTemp->GetExternalString(), pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 								if (sTemp) delete sTemp;
 								return;
 							}
@@ -231,7 +270,7 @@ namespace NumbatLogic
 								sTemp->Append(" ptr=");
 								ValueType::StringifyPointerType(sTemp, m_pLeft->m_pValueType->m_ePointerType);
 								sTemp->Append("]");
-								pValidator->AddError(sTemp->GetExternalString(), m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+								pValidator->AddError(sTemp->GetExternalString(), pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 								if (sTemp) delete sTemp;
 								return;
 							}
@@ -256,7 +295,7 @@ namespace NumbatLogic
 								sTemp->Append(" ptr=");
 								ValueType::StringifyPointerType(sTemp, m_pLeft->m_pValueType->m_ePointerType);
 								sTemp->Append("]");
-								pValidator->AddError(sTemp->GetExternalString(), m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+								pValidator->AddError(sTemp->GetExternalString(), pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 								if (sTemp) delete sTemp;
 								return;
 							}
@@ -276,7 +315,7 @@ namespace NumbatLogic
 									sTemp->AppendString(m_pRight->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
 									sTemp->AppendString(" to ");
 									sTemp->AppendString(m_pLeft->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
-									pValidator->AddError(sTemp->GetExternalString(), m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+									pValidator->AddError(sTemp->GetExternalString(), pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 									if (sTemp) delete sTemp;
 									return;
 								}
@@ -292,7 +331,7 @@ namespace NumbatLogic
 								}
 								else
 								{
-									pValidator->AddError("Expected right side of = to also be CLASS_DECL_VALUE or NULL_VALUE\n", m_pOperatorToken->m_sFileName, m_pOperatorToken->m_nLine, m_pOperatorToken->m_nColumn);
+									pValidator->AddError("Expected right side of = to also be CLASS_DECL_VALUE or NULL_VALUE\n", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 									return;
 								}
 					}
@@ -317,13 +356,20 @@ namespace NumbatLogic
 
 	void OperatorExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
 	{
+		Token* pOpToken = GetFirstOperatorToken();
 		const char* sPad = " ";
-		if (m_pOperatorToken->m_eType == Token::Type::TOKEN_MINUS_MINUS || m_pOperatorToken->m_eType == Token::Type::TOKEN_PLUS_PLUS || m_pOperatorToken->m_eType == Token::Type::TOKEN_DOT || m_pOperatorToken->m_eType == Token::Type::TOKEN_DOUBLE_COLON)
+		if (pOpToken->m_eType == Token::Type::TOKEN_MINUS_MINUS || pOpToken->m_eType == Token::Type::TOKEN_PLUS_PLUS || pOpToken->m_eType == Token::Type::TOKEN_DOT || pOpToken->m_eType == Token::Type::TOKEN_DOUBLE_COLON)
 			sPad = "";
-		const char* sOperator = m_pOperatorToken->GetString();
-		if (eLanguage == AST::Language::CS && m_pOperatorToken->m_eType == Token::Type::TOKEN_DOUBLE_COLON)
+		InternalString* sOperatorTemp = new InternalString("");
+		if (m_pOperatorTokenVector != 0)
+		{
+			for (int i = 0; i < m_pOperatorTokenVector->GetSize(); i = i + 1)
+				sOperatorTemp->Append(m_pOperatorTokenVector->Get(i)->GetString());
+		}
+		const char* sOperator = sOperatorTemp->GetExternalString();
+		if (eLanguage == AST::Language::CS && pOpToken->m_eType == Token::Type::TOKEN_DOUBLE_COLON)
 			sOperator = ".";
-		if (eLanguage == AST::Language::CPP && m_pOperatorToken->m_eType == Token::Type::TOKEN_DOT)
+		if (eLanguage == AST::Language::CPP && pOpToken->m_eType == Token::Type::TOKEN_DOT)
 		{
 			sOperator = "->";
 			if (m_pLeft != 0 && m_pLeft->m_eType == AST::Type::BASE_EXPR)
@@ -337,10 +383,12 @@ namespace NumbatLogic
 			sOut->Append(sPad);
 			m_pRight->Stringify(eLanguage, eOutputFile, 0, sOut);
 		}
+		if (sOperatorTemp) delete sOperatorTemp;
 	}
 
 	OperatorExpr::~OperatorExpr()
 	{
+		if (m_pOperatorTokenVector) delete m_pOperatorTokenVector;
 		if (m_pOwnedOperatorToken) delete m_pOwnedOperatorToken;
 	}
 

@@ -12,6 +12,7 @@
 #include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
 #include "VarDecl.hpp"
 #include "NullExpr.hpp"
+#include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "OperatorExpr.hpp"
 #include "ExpressionStmt.hpp"
 
@@ -31,6 +32,8 @@ namespace NumbatLogic
 	class TypeRef;
 	class VarDecl;
 	class NullExpr;
+	template <class T>
+	class Vector;
 	class OperatorExpr;
 	class ExpressionStmt;
 }
@@ -161,41 +164,39 @@ namespace NumbatLogic
 			NullExpr* pRight = new NullExpr();
 			Token* pOperatorToken = new Token();
 			pOperatorToken->m_eType = Token::Type::TOKEN_EQUALS;
-			OperatorExpr* pOperatorExpr = new OperatorExpr();
-			pOperatorExpr->m_eType = AST::Type::AST_OPERATOR_EXPR;
-			pOperatorExpr->m_pFirstToken = pLeft->m_pFirstToken;
-			pOperatorExpr->m_pOperatorToken = pOperatorToken;
+			Vector<Token*>* pOpTokenVector = new Vector<Token*>();
+			pOpTokenVector->PushBack(pOperatorToken);
+			NumbatLogic::Vector<NumbatLogic::Token*>* __2176442827 = pOpTokenVector;
+			pOpTokenVector = 0;
+			NumbatLogic::AST* __3919013151 = pLeft;
+			pLeft = 0;
+			NumbatLogic::NullExpr* __534132298 = pRight;
+			pRight = 0;
+			OperatorExpr* pOperatorExpr = OperatorExpr::Create(__2176442827, __3919013151, __534132298);
 			NumbatLogic::Token* __3603719570 = pOperatorToken;
 			pOperatorToken = 0;
 			pOperatorExpr->m_pOwnedOperatorToken = __3603719570;
-			pOperatorExpr->m_pLeft = pLeft;
-			pOperatorExpr->m_pRight = pRight;
-			NumbatLogic::AST* __3919078745 = pLeft;
-			pLeft = 0;
-			pOperatorExpr->AddChild(__3919078745);
-			NumbatLogic::NullExpr* __534197893 = pRight;
-			pRight = 0;
-			pOperatorExpr->AddChild(__534197893);
 			ExpressionStmt* pExpressionStmt = new ExpressionStmt();
 			pExpressionStmt->m_pFirstToken = pOperatorExpr->m_pFirstToken;
 			pExpressionStmt->m_pExpression = pOperatorExpr;
-			NumbatLogic::OperatorExpr* __2365778381 = pOperatorExpr;
+			NumbatLogic::OperatorExpr* __2365778376 = pOperatorExpr;
 			pOperatorExpr = 0;
-			pExpressionStmt->AddChild(__2365778381);
+			pExpressionStmt->AddChild(__2365778376);
 			AST* pInjectedStmt = pExpressionStmt;
-			NumbatLogic::ExpressionStmt* __1415332766 = pExpressionStmt;
+			NumbatLogic::ExpressionStmt* __1415267172 = pExpressionStmt;
 			pExpressionStmt = 0;
-			pParentParent->AddChildBefore(__1415332766, pParentStatement);
+			pParentParent->AddChildBefore(__1415267172, pParentStatement);
 			pValidator->ValidateSubtree(pInjectedStmt);
 			if (pLeft) delete pLeft;
 			if (pRight) delete pRight;
 			if (pOperatorToken) delete pOperatorToken;
+			if (pOpTokenVector) delete pOpTokenVector;
 			if (pOperatorExpr) delete pOperatorExpr;
 			if (pExpressionStmt) delete pExpressionStmt;
 		}
-		NumbatLogic::InternalString* __3313827552 = sTempName;
+		NumbatLogic::InternalString* __3313827547 = sTempName;
 		sTempName = 0;
-		m_sTempVarName = __3313827552;
+		m_sTempVarName = __3313827547;
 		if (sTempName) delete sTempName;
 	}
 

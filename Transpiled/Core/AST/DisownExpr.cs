@@ -118,36 +118,33 @@ namespace NumbatLogic
 				NullExpr pRight = new NullExpr();
 				Token pOperatorToken = new Token();
 				pOperatorToken.m_eType = Token.Type.TOKEN_EQUALS;
-				OperatorExpr pOperatorExpr = new OperatorExpr();
-				pOperatorExpr.m_eType = AST.Type.AST_OPERATOR_EXPR;
-				pOperatorExpr.m_pFirstToken = pLeft.m_pFirstToken;
-				pOperatorExpr.m_pOperatorToken = pOperatorToken;
+				Vector<Token> pOpTokenVector = new Vector<Token>();
+				pOpTokenVector.PushBack(pOperatorToken);
+				NumbatLogic.Vector<NumbatLogic.Token> __2176442827 = pOpTokenVector;
+				pOpTokenVector = null;
+				NumbatLogic.AST __3919013151 = pLeft;
+				pLeft = null;
+				NumbatLogic.NullExpr __534132298 = pRight;
+				pRight = null;
+				OperatorExpr pOperatorExpr = OperatorExpr.Create(__2176442827, __3919013151, __534132298);
 				NumbatLogic.Token __3603719570 = pOperatorToken;
 				pOperatorToken = null;
 				pOperatorExpr.m_pOwnedOperatorToken = __3603719570;
-				pOperatorExpr.m_pLeft = pLeft;
-				pOperatorExpr.m_pRight = pRight;
-				NumbatLogic.AST __3919078745 = pLeft;
-				pLeft = null;
-				pOperatorExpr.AddChild(__3919078745);
-				NumbatLogic.NullExpr __534197893 = pRight;
-				pRight = null;
-				pOperatorExpr.AddChild(__534197893);
 				ExpressionStmt pExpressionStmt = new ExpressionStmt();
 				pExpressionStmt.m_pFirstToken = pOperatorExpr.m_pFirstToken;
 				pExpressionStmt.m_pExpression = pOperatorExpr;
-				NumbatLogic.OperatorExpr __2365778381 = pOperatorExpr;
+				NumbatLogic.OperatorExpr __2365778376 = pOperatorExpr;
 				pOperatorExpr = null;
-				pExpressionStmt.AddChild(__2365778381);
+				pExpressionStmt.AddChild(__2365778376);
 				AST pInjectedStmt = pExpressionStmt;
-				NumbatLogic.ExpressionStmt __1415332766 = pExpressionStmt;
+				NumbatLogic.ExpressionStmt __1415267172 = pExpressionStmt;
 				pExpressionStmt = null;
-				pParentParent.AddChildBefore(__1415332766, pParentStatement);
+				pParentParent.AddChildBefore(__1415267172, pParentStatement);
 				pValidator.ValidateSubtree(pInjectedStmt);
 			}
-			NumbatLogic.InternalString __3313827552 = sTempName;
+			NumbatLogic.InternalString __3313827547 = sTempName;
 			sTempName = null;
-			m_sTempVarName = __3313827552;
+			m_sTempVarName = __3313827547;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
