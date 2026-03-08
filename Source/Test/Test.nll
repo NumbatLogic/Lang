@@ -113,22 +113,22 @@ namespace NumbatLogic
 				return;
 			}
 
-			InternalString* sOut = own new InternalString("");
-			pAST.Stringify(AST::Language::NLL, AST::OutputFile::SOURCE, 0, sOut);
-			sOut.Replace(" ", "");
-			sOut.Replace("\n", "");
-			sOut.Replace("\t", "");
+			OutputBuilder* pOutputBuilder = own new OutputBuilder();
+			pAST.Stringify(AST::Language::NLL, AST::OutputFile::SOURCE, 0, pOutputBuilder);
+			pOutputBuilder.m_sOut.Replace(" ", "");
+			pOutputBuilder.m_sOut.Replace("\n", "");
+			pOutputBuilder.m_sOut.Replace("\t", "");
 
 			sTokenized.Set("");
 			pTokenContainer.Stringify(sTokenized);
 			sxTokenized = sTokenized.GetExternalString();
 
-			if (!sOut.IsEqual(sxTokenized))
+			if (!pOutputBuilder.m_sOut.IsEqual(sxTokenized))
 			{
 				Console::Log("Stringify failed!\n'");
 				Console::Log(sxTokenized);
 				Console::Log("'\n->\n'");
-				Console::Log(sOut.GetExternalString());
+				Console::Log(pOutputBuilder.m_sOut.GetExternalString());
 				Console::Log("'");
 				return;
 			}

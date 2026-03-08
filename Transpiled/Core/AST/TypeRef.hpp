@@ -17,10 +17,11 @@ namespace NumbatLogic
 	class Validator;
 	class OperatorExpr;
 	class Symbol;
-	class InternalString;
+	class OutputBuilder;
 	class ValueType;
 	class Resolver;
 }
+#line 1 "../../../Source/Core/AST/TypeRef.nll"
 namespace NumbatLogic
 {
 	class TypeRef : public AST
@@ -48,7 +49,7 @@ namespace NumbatLogic
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
 		public: TypeRef* Clone();
 		public: virtual AST* BaseClone();
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 		public: ValueType* GetRecursiveValueType(Resolver* pResolver);
 		public: ValueType* CreateValueType(Resolver* pResolver);
 		protected: ValueType* SetValueType(Resolver* pResolver);

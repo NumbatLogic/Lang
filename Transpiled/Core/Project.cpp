@@ -12,6 +12,7 @@
 #include "AST/NamespaceDecl.hpp"
 #include "Token.hpp"
 #include "TokenContainer.hpp"
+#include "OutputBuilder.hpp"
 
 namespace NumbatLogic
 {
@@ -31,7 +32,9 @@ namespace NumbatLogic
 	class NamespaceDecl;
 	class TokenContainer;
 	class Token;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/Project.nll"
 namespace NumbatLogic
 {
 	Project::Project()
@@ -304,7 +307,7 @@ namespace NumbatLogic
 	void Project::Output(AST::Language eLanguage, OutputFile eOutputFile)
 	{
 		InternalString* sOutFile = new InternalString("");
-		InternalString* sOut = new InternalString("");
+		OutputBuilder* out = new OutputBuilder();
 		for (int i = 0; i < m_pTranslationUnitVector->GetSize(); i++)
 		{
 			TranslationUnit* pTranslationUnit = m_pTranslationUnitVector->Get(i);
@@ -313,21 +316,21 @@ namespace NumbatLogic
 			{
 				TranslationUnit::ConvertFilePath(eLanguage, eOutputFile, sOutFile);
 				const char* sxOutFile = sOutFile->GetExternalString();
-				sOut->Set("");
-				pTranslationUnit->Stringify(eLanguage, eOutputFile, 0, sOut);
+				out->m_sOut->Set("");
+				pTranslationUnit->Stringify(eLanguage, eOutputFile, 0, out);
 				InternalString* sDirectory = File::GetFileDirectory(sxOutFile);
 				File::CreateDirectory(sDirectory->GetExternalString());
 				InternalString* sTestFile = File::GetContents(sxOutFile);
-				if (sTestFile == 0 || !sOut->IsEqual(sTestFile->GetExternalString()))
+				if (sTestFile == 0 || !out->m_sOut->IsEqual(sTestFile->GetExternalString()))
 				{
-					File::PutContents(sxOutFile, sOut->GetExternalString());
+					File::PutContents(sxOutFile, out->m_sOut->GetExternalString());
 				}
 				if (sDirectory) delete sDirectory;
 				if (sTestFile) delete sTestFile;
 			}
 		}
 		if (sOutFile) delete sOutFile;
-		if (sOut) delete sOut;
+		if (out) delete out;
 	}
 
 	Project::~Project()

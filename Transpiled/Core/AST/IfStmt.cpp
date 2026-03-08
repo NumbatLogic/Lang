@@ -6,6 +6,7 @@
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "AST.hpp"
 #include "Scope.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../Util.hpp"
 
@@ -19,9 +20,11 @@ namespace NumbatLogic
 	class Assert;
 	class Scope;
 	class IfStmt;
+	class OutputBuilder;
 	class InternalString;
 	class Util;
 }
+#line 1 "../../../Source/Core/AST/IfStmt.nll"
 namespace NumbatLogic
 {
 	IfStmt::IfStmt()
@@ -121,7 +124,7 @@ namespace NumbatLogic
 		return __816210157;
 	}
 
-	void IfStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void IfStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		AST* pCondition = m_pFirstChild;
 		AST* pThen = pCondition->m_pNextSibling;
@@ -130,25 +133,25 @@ namespace NumbatLogic
 		if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_IF_STMT)
 			pParentIfStmt = (IfStmt*)(m_pParent);
 		if (pParentIfStmt != 0 && pParentIfStmt->m_pFirstChild->m_pNextSibling->m_pNextSibling == this)
-			sOut->Append(" ");
+			out->m_sOut->Append(" ");
 		else
-			Util::Pad(nDepth, sOut);
-		sOut->Append("if (");
-		pCondition->Stringify(eLanguage, eOutputFile, 0, sOut);
-		sOut->Append(")\n");
-		pThen->Stringify(eLanguage, eOutputFile, nDepth, sOut);
+			Util::Pad(nDepth, out->m_sOut);
+		out->m_sOut->Append("if (");
+		pCondition->Stringify(eLanguage, eOutputFile, 0, out);
+		out->m_sOut->Append(")\n");
+		pThen->Stringify(eLanguage, eOutputFile, nDepth, out);
 		if (pElse != 0)
 		{
-			Util::Pad(nDepth, sOut);
+			Util::Pad(nDepth, out->m_sOut);
 			if (pElse->m_eType == AST::Type::AST_IF_STMT)
 			{
-				sOut->Append("else");
-				pElse->Stringify(eLanguage, eOutputFile, nDepth, sOut);
+				out->m_sOut->Append("else");
+				pElse->Stringify(eLanguage, eOutputFile, nDepth, out);
 			}
 			else
 			{
-				sOut->Append("else\n");
-				pElse->Stringify(eLanguage, eOutputFile, nDepth, sOut);
+				out->m_sOut->Append("else\n");
+				pElse->Stringify(eLanguage, eOutputFile, nDepth, out);
 			}
 		}
 	}

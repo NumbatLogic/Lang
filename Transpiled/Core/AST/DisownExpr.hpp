@@ -16,7 +16,9 @@ namespace NumbatLogic
 	class VarDecl;
 	class NullExpr;
 	class ExpressionStmt;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/DisownExpr.nll"
 namespace NumbatLogic
 {
 	class DisownExpr : public AST
@@ -26,7 +28,7 @@ namespace NumbatLogic
 		public: DisownExpr();
 		public: static DisownExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 		public: virtual ~DisownExpr();
 	};
 }

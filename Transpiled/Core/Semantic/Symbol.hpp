@@ -5,6 +5,7 @@ namespace NumbatLogic
 	class AST;
 	class SymbolScope;
 }
+#line 1 "../../../Source/Core/Semantic/Symbol.nll"
 namespace NumbatLogic
 {
 	class Symbol

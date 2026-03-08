@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/TTHashExpr.nll"
 namespace NumbatLogic
 {
 	class TTHashExpr : AST
@@ -60,19 +61,19 @@ namespace NumbatLogic
 			m_pValueType = new ValueType(ValueType.Type.INT);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
 			if (eLanguage == AST.Language.NLL || eLanguage == AST.Language.NLL_DEF)
 			{
-				sOut.Append("tthash(");
-				m_pStringExpr.Stringify(eLanguage, eOutputFile, 0, sOut);
-				sOut.AppendChar(')');
+				out.m_sOut.Append("tthash(");
+				m_pStringExpr.Stringify(eLanguage, eOutputFile, 0, out);
+				out.m_sOut.AppendChar(')');
 			}
 			else
 			{
 				InternalString sTemp = new InternalString(m_pStringExpr.m_pFirstToken.m_sValue.GetExternalString());
 				sTemp.Crop(1, sTemp.GetLength() - 2);
-				sOut.AppendUint32(ExternalString.GetChecksum(sTemp.GetExternalString()));
+				out.m_sOut.AppendUint32(ExternalString.GetChecksum(sTemp.GetExternalString()));
 			}
 		}
 

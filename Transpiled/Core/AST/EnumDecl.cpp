@@ -7,6 +7,7 @@
 #include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../Util.hpp"
 
@@ -22,9 +23,11 @@ namespace NumbatLogic
 	class Vector;
 	class Console;
 	class Assert;
+	class OutputBuilder;
 	class InternalString;
 	class Util;
 }
+#line 1 "../../../Source/Core/AST/EnumDecl.nll"
 namespace NumbatLogic
 {
 	EnumDecl::EnumDecl()
@@ -105,25 +108,25 @@ namespace NumbatLogic
 		return __4282209082;
 	}
 
-	void EnumDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void EnumDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		sOut->Append("enum ");
-		m_pNameToken->Stringify(sOut);
-		sOut->AppendChar('\n');
-		Util::Pad(nDepth, sOut);
-		sOut->Append("{\n");
+		out->m_sOut->Append("enum ");
+		m_pNameToken->Stringify(out->m_sOut);
+		out->m_sOut->AppendChar('\n');
+		Util::Pad(nDepth, out->m_sOut);
+		out->m_sOut->Append("{\n");
 		for (int i = 0; i < m_pEnumDeclValueVector->GetSize(); i++)
 		{
-			Util::Pad(nDepth + 1, sOut);
+			Util::Pad(nDepth + 1, out->m_sOut);
 			EnumDeclValue* pEnumDeclValue = m_pEnumDeclValueVector->Get(i);
-			pEnumDeclValue->Stringify(eLanguage, eOutputFile, 0, sOut);
-			sOut->Append(",\n");
+			pEnumDeclValue->Stringify(eLanguage, eOutputFile, 0, out);
+			out->m_sOut->Append(",\n");
 		}
-		Util::Pad(nDepth, sOut);
+		Util::Pad(nDepth, out->m_sOut);
 		if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::HEADER)
-			sOut->Append("};\n");
+			out->m_sOut->Append("};\n");
 		else
-			sOut->Append("}\n");
+			out->m_sOut->Append("}\n");
 	}
 
 	EnumDecl::~EnumDecl()

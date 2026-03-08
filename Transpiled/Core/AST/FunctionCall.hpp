@@ -13,8 +13,9 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class Symbol;
 	class ValueType;
-	class InternalString;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/FunctionCall.nll"
 namespace NumbatLogic
 {
 	class FunctionCall : public AST
@@ -23,7 +24,7 @@ namespace NumbatLogic
 		public: ParamCall* m_pParamCall;
 		public: static FunctionCall* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 		public: FunctionCall();
 	};
 }

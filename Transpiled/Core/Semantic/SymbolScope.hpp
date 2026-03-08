@@ -16,6 +16,7 @@ namespace NumbatLogic
 	template <class T>
 	class Vector;
 }
+#line 1 "../../../Source/Core/Semantic/SymbolScope.nll"
 namespace NumbatLogic
 {
 	class SymbolScope

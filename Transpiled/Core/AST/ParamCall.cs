@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/ParamCall.nll"
 namespace NumbatLogic
 {
 	class ParamCall : AST
@@ -52,18 +53,18 @@ namespace NumbatLogic
 			return __1502847900;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			sOut.AppendChar('(');
+			out.m_sOut.AppendChar('(');
 			AST pParam = m_pFirstChild;
 			while (pParam != null)
 			{
 				if (pParam != m_pFirstChild)
-					sOut.Append(", ");
-				pParam.Stringify(eLanguage, eOutputFile, 0, sOut);
+					out.m_sOut.Append(", ");
+				pParam.Stringify(eLanguage, eOutputFile, 0, out);
 				pParam = pParam.m_pNextSibling;
 			}
-			sOut.AppendChar(')');
+			out.m_sOut.AppendChar(')');
 		}
 
 	}

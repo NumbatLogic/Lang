@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/TypeRef.nll"
 namespace NumbatLogic
 {
 	class TypeRef : AST
@@ -369,7 +370,7 @@ namespace NumbatLogic
 			return Clone();
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
 			if (m_bConst)
 			{
@@ -397,122 +398,122 @@ namespace NumbatLogic
 					}
 				}
 				if (bOutput)
-					sOut.AppendString("const ");
+					out.m_sOut.AppendString("const ");
 			}
 			if (eLanguage == AST.Language.CPP)
 			{
 				if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UNICHAR)
-					sOut.Append("unsigned short");
+					out.m_sOut.Append("unsigned short");
 				else
 					if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_STRING)
 					{
 						if (m_bConst)
-							sOut.Append("char*");
+							out.m_sOut.Append("char*");
 						else
-							sOut.Append("const char*");
+							out.m_sOut.Append("const char*");
 					}
 					else
 						if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT)
-							sOut.Append("unsigned int");
+							out.m_sOut.Append("unsigned int");
 						else
 							if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT8)
-								sOut.Append("unsigned char");
+								out.m_sOut.Append("unsigned char");
 							else
 								if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT16)
-									sOut.Append("unsigned short");
+									out.m_sOut.Append("unsigned short");
 								else
 									if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT32)
-										sOut.Append("unsigned int");
+										out.m_sOut.Append("unsigned int");
 									else
 										if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT64)
-											sOut.Append("unsigned long long");
+											out.m_sOut.Append("unsigned long long");
 										else
 											if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_INT32)
-												sOut.Append("int");
+												out.m_sOut.Append("int");
 											else
 												if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_INT16)
-													sOut.Append("short");
+													out.m_sOut.Append("short");
 												else
 													if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_INT8)
-														sOut.Append("signed char");
+														out.m_sOut.Append("signed char");
 													else
 														if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_VOIDPTR)
-															sOut.Append("void*");
+															out.m_sOut.Append("void*");
 														else
-															m_pTypeToken.Stringify(sOut);
+															m_pTypeToken.Stringify(out.m_sOut);
 				if (m_bRef)
-					sOut.AppendString("&");
+					out.m_sOut.AppendString("&");
 			}
 			else
 				if (eLanguage == AST.Language.CS)
 				{
 					if (m_bRef && eLanguage == AST.Language.CS)
-						sOut.AppendString("ref ");
+						out.m_sOut.AppendString("ref ");
 					switch (m_pTypeToken.m_eType)
 					{
 						case Token.Type.TOKEN_KEYWORD_UNICHAR:
 						{
-							sOut.Append("char");
+							out.m_sOut.Append("char");
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_STRING:
 						{
-							sOut.Append("string");
+							out.m_sOut.Append("string");
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_VOIDPTR:
 						{
-							sOut.Append("object");
+							out.m_sOut.Append("object");
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_UINT8:
 						{
-							sOut.Append("byte");
+							out.m_sOut.Append("byte");
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_UINT16:
 						{
-							sOut.Append("ushort");
+							out.m_sOut.Append("ushort");
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_UINT32:
 						{
-							sOut.Append("uint");
+							out.m_sOut.Append("uint");
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_UINT64:
 						{
-							sOut.Append("ulong");
+							out.m_sOut.Append("ulong");
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_INT8:
 						{
-							sOut.Append("sbyte");
+							out.m_sOut.Append("sbyte");
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_INT16:
 						{
-							sOut.Append("short");
+							out.m_sOut.Append("short");
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_INT32:
 						{
-							sOut.Append("int");
+							out.m_sOut.Append("int");
 							break;
 						}
 
 						default:
 						{
-							m_pTypeToken.Stringify(sOut);
+							m_pTypeToken.Stringify(out.m_sOut);
 							break;
 						}
 
@@ -520,21 +521,21 @@ namespace NumbatLogic
 				}
 				else
 				{
-					m_pTypeToken.Stringify(sOut);
+					m_pTypeToken.Stringify(out.m_sOut);
 				}
 			if (m_pGenericTypeRefVector.GetSize() > 0)
 			{
-				sOut.AppendChar('<');
+				out.m_sOut.AppendChar('<');
 				for (int i = 0; i < m_pGenericTypeRefVector.GetSize(); i++)
 				{
 					if (i > 0)
-						sOut.Append(", ");
+						out.m_sOut.Append(", ");
 					TypeRef pGenericTypeRef = m_pGenericTypeRefVector.Get(i);
-					pGenericTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
+					pGenericTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
 				}
 				if (eLanguage == AST.Language.NLL_DEF)
-					sOut.AppendChar('!');
-				sOut.AppendChar('>');
+					out.m_sOut.AppendChar('!');
+				out.m_sOut.AppendChar('>');
 			}
 			if (m_pChildTypeRef != null)
 			{
@@ -544,18 +545,18 @@ namespace NumbatLogic
 					case AST.Language.NLL_DEF:
 					case AST.Language.CPP:
 					{
-						sOut.Append("::");
+						out.m_sOut.Append("::");
 						break;
 					}
 
 					case AST.Language.CS:
 					{
-						sOut.AppendChar('.');
+						out.m_sOut.AppendChar('.');
 						break;
 					}
 
 				}
-				m_pChildTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
+				m_pChildTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
 			}
 			TypeRef pFinalChildTypeRef = this;
 			while (pFinalChildTypeRef.m_pChildTypeRef != null)
@@ -587,7 +588,7 @@ namespace NumbatLogic
 						if (pParentClassDecl.m_pBaseTypeRef == this)
 							sxAppendString = "";
 					}
-					sOut.AppendString(sxAppendString);
+					out.m_sOut.AppendString(sxAppendString);
 				}
 			}
 		}

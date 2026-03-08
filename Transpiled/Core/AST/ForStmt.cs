@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/ForStmt.nll"
 namespace NumbatLogic
 {
 	class ForStmt : AST
@@ -99,24 +100,24 @@ namespace NumbatLogic
 			return __464585012;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
 			AST pBeforeStatement = m_pFirstChild;
 			AST pConditionStatement = pBeforeStatement.m_pNextSibling;
 			AST pLoopStatement = pConditionStatement.m_pNextSibling;
 			AST pStatement = pLoopStatement.m_pNextSibling;
-			Util.Pad(nDepth, sOut);
-			sOut.Append("for (");
-			pBeforeStatement.Stringify(eLanguage, eOutputFile, 0, sOut);
-			sOut.Append("; ");
-			pConditionStatement.Stringify(eLanguage, eOutputFile, 0, sOut);
-			sOut.Append("; ");
+			Util.Pad(nDepth, out.m_sOut);
+			out.m_sOut.Append("for (");
+			pBeforeStatement.Stringify(eLanguage, eOutputFile, 0, out);
+			out.m_sOut.Append("; ");
+			pConditionStatement.Stringify(eLanguage, eOutputFile, 0, out);
+			out.m_sOut.Append("; ");
 			if (pStatement != null)
-				pLoopStatement.Stringify(eLanguage, eOutputFile, 0, sOut);
-			sOut.Append(")\n");
+				pLoopStatement.Stringify(eLanguage, eOutputFile, 0, out);
+			out.m_sOut.Append(")\n");
 			if (pStatement == null)
 				pStatement = pLoopStatement;
-			pStatement.Stringify(eLanguage, eOutputFile, nDepth, sOut);
+			pStatement.Stringify(eLanguage, eOutputFile, nDepth, out);
 		}
 
 	}

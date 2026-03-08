@@ -9,6 +9,7 @@
 #include "TypeRef.hpp"
 #include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "../Util.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../ValueType.hpp"
 #include "EnumDecl.hpp"
@@ -29,10 +30,12 @@ namespace NumbatLogic
 	template <class T>
 	class Vector;
 	class Util;
+	class OutputBuilder;
 	class InternalString;
 	class EnumDeclValue;
 	class EnumDecl;
 }
+#line 1 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 namespace NumbatLogic
 {
 	MemberVarsSetDefaultStmt::MemberVarsSetDefaultStmt()
@@ -68,7 +71,7 @@ namespace NumbatLogic
 		pValidator->AddError("Expected parent to be constructor", 0, 0, 0);
 	}
 
-	void MemberVarsSetDefaultStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void MemberVarsSetDefaultStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		if (eLanguage == AST::Language::CPP)
 		{
@@ -92,44 +95,44 @@ namespace NumbatLogic
 								for (int i = 0; i < nArraySizeSize; i++)
 								{
 									AST* pArraySize = pMemberVarDecl->m_pVarDecl->m_pArraySizeVector->Get(i);
-									Util::Pad(nDepth + i, sOut);
-									sOut->Append("for (int _x");
-									sOut->AppendInt(i);
-									sOut->Append(" = 0; _x");
-									sOut->AppendInt(i);
-									sOut->Append(" < ");
-									pArraySize->Stringify(eLanguage, eOutputFile, 0, sOut);
-									sOut->Append("; _x");
-									sOut->AppendInt(i);
-									sOut->Append("++)\n");
+									Util::Pad(nDepth + i, out->m_sOut);
+									out->m_sOut->Append("for (int _x");
+									out->m_sOut->AppendInt(i);
+									out->m_sOut->Append(" = 0; _x");
+									out->m_sOut->AppendInt(i);
+									out->m_sOut->Append(" < ");
+									pArraySize->Stringify(eLanguage, eOutputFile, 0, out);
+									out->m_sOut->Append("; _x");
+									out->m_sOut->AppendInt(i);
+									out->m_sOut->Append("++)\n");
 								}
-								Util::Pad(nDepth + nArraySizeSize, sOut);
-								sOut->AppendString(pMemberVarDecl->m_pVarDecl->m_pNameToken->GetString());
+								Util::Pad(nDepth + nArraySizeSize, out->m_sOut);
+								out->m_sOut->AppendString(pMemberVarDecl->m_pVarDecl->m_pNameToken->GetString());
 								for (int i = 0; i < nArraySizeSize; i++)
 								{
-									sOut->Append("[_x");
-									sOut->AppendInt(i);
-									sOut->Append("]");
+									out->m_sOut->Append("[_x");
+									out->m_sOut->AppendInt(i);
+									out->m_sOut->Append("]");
 								}
-								sOut->Append(" = ");
+								out->m_sOut->Append(" = ");
 								switch (pValueType->m_eType)
 								{
 									case ValueType::Type::INT:
 									{
-										sOut->Append("0");
+										out->m_sOut->Append("0");
 										break;
 									}
 
 									case ValueType::Type::BOOL:
 									{
-										sOut->Append("false");
+										out->m_sOut->Append("false");
 										break;
 									}
 
 									case ValueType::Type::CHAR:
 									case ValueType::Type::UNICHAR:
 									{
-										sOut->Append("'0'");
+										out->m_sOut->Append("'0'");
 										break;
 									}
 
@@ -139,56 +142,56 @@ namespace NumbatLogic
 									case ValueType::Type::VOIDPTR:
 									case ValueType::Type::STRING:
 									{
-										sOut->Append("0");
+										out->m_sOut->Append("0");
 										break;
 									}
 
 									case ValueType::Type::ENUM_DECL_VALUE:
 									{
 										if (pValueType->m_pEnumDecl == 0)
-											sOut->Append("no_m_pEnumDecl");
+											out->m_sOut->Append("no_m_pEnumDecl");
 										EnumDeclValue* pEnumDeclValue = pValueType->m_pEnumDecl->m_pEnumDeclValueVector->Get(0);
 										if (pValueType->m_pEnumDecl == 0)
-											sOut->Append("no_pEnumDeclValue");
-										pMemberVarDecl->m_pVarDecl->m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
-										sOut->Append("::");
-										pEnumDeclValue->m_pFirstToken->Stringify(sOut);
+											out->m_sOut->Append("no_pEnumDeclValue");
+										pMemberVarDecl->m_pVarDecl->m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, out);
+										out->m_sOut->Append("::");
+										pEnumDeclValue->m_pFirstToken->Stringify(out->m_sOut);
 										break;
 									}
 
 									default:
 									{
-										sOut->Append("???");
-										pValueType->StringifyType(sOut);
+										out->m_sOut->Append("???");
+										pValueType->StringifyType(out->m_sOut);
 										break;
 									}
 
 								}
-								sOut->Append(";\n");
+								out->m_sOut->Append(";\n");
 							}
 							else
 							{
-								Util::Pad(nDepth, sOut);
-								sOut->AppendString(pMemberVarDecl->m_pVarDecl->m_pNameToken->GetString());
-								sOut->Append(" = ");
+								Util::Pad(nDepth, out->m_sOut);
+								out->m_sOut->AppendString(pMemberVarDecl->m_pVarDecl->m_pNameToken->GetString());
+								out->m_sOut->Append(" = ");
 								switch (pValueType->m_eType)
 								{
 									case ValueType::Type::INT:
 									{
-										sOut->Append("0");
+										out->m_sOut->Append("0");
 										break;
 									}
 
 									case ValueType::Type::BOOL:
 									{
-										sOut->Append("false");
+										out->m_sOut->Append("false");
 										break;
 									}
 
 									case ValueType::Type::CHAR:
 									case ValueType::Type::UNICHAR:
 									{
-										sOut->Append("'0'");
+										out->m_sOut->Append("'0'");
 										break;
 									}
 
@@ -198,32 +201,32 @@ namespace NumbatLogic
 									case ValueType::Type::VOIDPTR:
 									case ValueType::Type::STRING:
 									{
-										sOut->Append("0");
+										out->m_sOut->Append("0");
 										break;
 									}
 
 									case ValueType::Type::ENUM_DECL_VALUE:
 									{
 										if (pValueType->m_pEnumDecl == 0)
-											sOut->Append("no_m_pEnumDecl");
+											out->m_sOut->Append("no_m_pEnumDecl");
 										EnumDeclValue* pEnumDeclValue = pValueType->m_pEnumDecl->m_pEnumDeclValueVector->Get(0);
 										if (pValueType->m_pEnumDecl == 0)
-											sOut->Append("no_pEnumDeclValue");
-										pMemberVarDecl->m_pVarDecl->m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
-										sOut->Append("::");
-										pEnumDeclValue->m_pFirstToken->Stringify(sOut);
+											out->m_sOut->Append("no_pEnumDeclValue");
+										pMemberVarDecl->m_pVarDecl->m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, out);
+										out->m_sOut->Append("::");
+										pEnumDeclValue->m_pFirstToken->Stringify(out->m_sOut);
 										break;
 									}
 
 									default:
 									{
-										sOut->Append("???");
-										pValueType->StringifyType(sOut);
+										out->m_sOut->Append("???");
+										pValueType->StringifyType(out->m_sOut);
 										break;
 									}
 
 								}
-								sOut->Append(";\n");
+								out->m_sOut->Append(";\n");
 							}
 						}
 					}

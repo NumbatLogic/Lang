@@ -5,6 +5,7 @@
 #include "AST.hpp"
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -16,8 +17,10 @@ namespace NumbatLogic
 	class Paren;
 	class Validator;
 	class ValueType;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/Paren.nll"
 namespace NumbatLogic
 {
 	Paren* Paren::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
@@ -70,11 +73,11 @@ namespace NumbatLogic
 		m_pValueType = m_pFirstChild->m_pValueType->Clone();
 	}
 
-	void Paren::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void Paren::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		sOut->AppendChar('(');
-		m_pFirstChild->Stringify(eLanguage, eOutputFile, 0, sOut);
-		sOut->AppendChar(')');
+		out->m_sOut->AppendChar('(');
+		m_pFirstChild->Stringify(eLanguage, eOutputFile, 0, out);
+		out->m_sOut->AppendChar(')');
 	}
 
 }

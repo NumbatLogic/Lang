@@ -7,6 +7,7 @@
 #include "../Token.hpp"
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -20,8 +21,10 @@ namespace NumbatLogic
 	class TrinaryExpr;
 	class Validator;
 	class ValueType;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/TrinaryExpr.nll"
 namespace NumbatLogic
 {
 	TrinaryExpr::TrinaryExpr()
@@ -107,13 +110,13 @@ namespace NumbatLogic
 		m_pValueType = m_pSecondExpression->m_pValueType->Clone();
 	}
 
-	void TrinaryExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void TrinaryExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		m_pFirstExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
-		sOut->Append(" ? ");
-		m_pSecondExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
-		sOut->Append(" : ");
-		m_pThirdExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
+		m_pFirstExpression->Stringify(eLanguage, eOutputFile, 0, out);
+		out->m_sOut->Append(" ? ");
+		m_pSecondExpression->Stringify(eLanguage, eOutputFile, 0, out);
+		out->m_sOut->Append(" : ");
+		m_pThirdExpression->Stringify(eLanguage, eOutputFile, 0, out);
 	}
 
 }

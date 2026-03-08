@@ -76,26 +76,26 @@ namespace NumbatLogic
 			return disown pEnumDecl;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			sOut.Append("enum ");
-			m_pNameToken.Stringify(sOut);
-			sOut.AppendChar('\n');
-			Util::Pad(nDepth, sOut);
-			sOut.Append("{\n");
+			out.m_sOut.Append("enum ");
+			m_pNameToken.Stringify(out.m_sOut);
+			out.m_sOut.AppendChar('\n');
+			Util::Pad(nDepth, out.m_sOut);
+			out.m_sOut.Append("{\n");
 			for (int i = 0; i < m_pEnumDeclValueVector.GetSize(); i++)
 			{
-				Util::Pad(nDepth+1, sOut);
+				Util::Pad(nDepth+1, out.m_sOut);
 				EnumDeclValue pEnumDeclValue = m_pEnumDeclValueVector.Get(i);
-				pEnumDeclValue.Stringify(eLanguage, eOutputFile, 0, sOut);
-				sOut.Append(",\n");
+				pEnumDeclValue.Stringify(eLanguage, eOutputFile, 0, out);
+				out.m_sOut.Append(",\n");
 			}
-			Util::Pad(nDepth, sOut);
+			Util::Pad(nDepth, out.m_sOut);
 			
 			if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::HEADER)
-				sOut.Append("};\n");
+				out.m_sOut.Append("};\n");
 			else
-				sOut.Append("}\n");
+				out.m_sOut.Append("}\n");
 		}
 	}
 }

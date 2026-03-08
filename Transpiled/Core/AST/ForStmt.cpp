@@ -8,6 +8,7 @@
 #include "VarDecl.hpp"
 #include "Scope.hpp"
 #include "../Util.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -22,8 +23,10 @@ namespace NumbatLogic
 	class Scope;
 	class ForStmt;
 	class Util;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/ForStmt.nll"
 namespace NumbatLogic
 {
 	ForStmt::ForStmt()
@@ -144,24 +147,24 @@ namespace NumbatLogic
 		return __464585012;
 	}
 
-	void ForStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void ForStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		AST* pBeforeStatement = m_pFirstChild;
 		AST* pConditionStatement = pBeforeStatement->m_pNextSibling;
 		AST* pLoopStatement = pConditionStatement->m_pNextSibling;
 		AST* pStatement = pLoopStatement->m_pNextSibling;
-		Util::Pad(nDepth, sOut);
-		sOut->Append("for (");
-		pBeforeStatement->Stringify(eLanguage, eOutputFile, 0, sOut);
-		sOut->Append("; ");
-		pConditionStatement->Stringify(eLanguage, eOutputFile, 0, sOut);
-		sOut->Append("; ");
+		Util::Pad(nDepth, out->m_sOut);
+		out->m_sOut->Append("for (");
+		pBeforeStatement->Stringify(eLanguage, eOutputFile, 0, out);
+		out->m_sOut->Append("; ");
+		pConditionStatement->Stringify(eLanguage, eOutputFile, 0, out);
+		out->m_sOut->Append("; ");
 		if (pStatement != 0)
-			pLoopStatement->Stringify(eLanguage, eOutputFile, 0, sOut);
-		sOut->Append(")\n");
+			pLoopStatement->Stringify(eLanguage, eOutputFile, 0, out);
+		out->m_sOut->Append(")\n");
 		if (pStatement == 0)
 			pStatement = pLoopStatement;
-		pStatement->Stringify(eLanguage, eOutputFile, nDepth, sOut);
+		pStatement->Stringify(eLanguage, eOutputFile, nDepth, out);
 	}
 
 }

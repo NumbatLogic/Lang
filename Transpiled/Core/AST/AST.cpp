@@ -42,6 +42,7 @@
 #include "OperatorExpr.hpp"
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -91,8 +92,10 @@ namespace NumbatLogic
 	class Console;
 	class Assert;
 	class Project;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/AST.nll"
 namespace NumbatLogic
 {
 	AST::AST()
@@ -590,9 +593,9 @@ namespace NumbatLogic
 		return p != 0 ? (Project*)(p) : 0;
 	}
 
-	void AST::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void AST::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		sOut->Append("???");
+		out->m_sOut->Append("???");
 	}
 
 	AST* AST::BaseClone()

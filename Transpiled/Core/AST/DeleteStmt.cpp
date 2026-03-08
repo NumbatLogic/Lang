@@ -6,6 +6,7 @@
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
 #include "../Util.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "ClassDecl.hpp"
 
@@ -19,9 +20,11 @@ namespace NumbatLogic
 	class Validator;
 	class ValueType;
 	class Util;
+	class OutputBuilder;
 	class InternalString;
 	class ClassDecl;
 }
+#line 1 "../../../Source/Core/AST/DeleteStmt.nll"
 namespace NumbatLogic
 {
 	DeleteStmt::DeleteStmt()
@@ -81,41 +84,41 @@ namespace NumbatLogic
 			AddClassDeclReference(m_pExpression->m_pValueType->m_pClassDecl, AST::OutputFile::SOURCE, false);
 	}
 
-	void DeleteStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void DeleteStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		Util::Pad(nDepth, sOut);
-		sOut->Append("{\n");
+		Util::Pad(nDepth, out->m_sOut);
+		out->m_sOut->Append("{\n");
 		nDepth++;
 		if (eLanguage == AST::Language::CPP)
 		{
-			Util::Pad(nDepth, sOut);
-			sOut->Append("delete ");
-			m_pExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
-			sOut->Append(";\n");
+			Util::Pad(nDepth, out->m_sOut);
+			out->m_sOut->Append("delete ");
+			m_pExpression->Stringify(eLanguage, eOutputFile, 0, out);
+			out->m_sOut->Append(";\n");
 		}
 		else
 			if (eLanguage == AST::Language::CS)
 			{
 				if (m_pExpression->m_pValueType->m_pClassDecl != 0 && m_pExpression->m_pValueType->m_pClassDecl->m_bDisposable)
 				{
-					Util::Pad(nDepth, sOut);
-					sOut->Append("(");
-					m_pExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
-					sOut->Append(").Dispose();\n");
+					Util::Pad(nDepth, out->m_sOut);
+					out->m_sOut->Append("(");
+					m_pExpression->Stringify(eLanguage, eOutputFile, 0, out);
+					out->m_sOut->Append(").Dispose();\n");
 				}
 			}
 		if (m_pExpression->m_eType == AST::Type::AST_IDENTIFIER)
 		{
-			Util::Pad(nDepth, sOut);
-			m_pExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
+			Util::Pad(nDepth, out->m_sOut);
+			m_pExpression->Stringify(eLanguage, eOutputFile, 0, out);
 			if (eLanguage == AST::Language::CPP)
-				sOut->Append(" = 0;\n");
+				out->m_sOut->Append(" = 0;\n");
 			else
-				sOut->Append(" = null;\n");
+				out->m_sOut->Append(" = null;\n");
 		}
 		nDepth--;
-		Util::Pad(nDepth, sOut);
-		sOut->Append("}\n");
+		Util::Pad(nDepth, out->m_sOut);
+		out->m_sOut->Append("}\n");
 	}
 
 }

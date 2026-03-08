@@ -42,9 +42,9 @@ namespace NumbatLogic
 			m_pValueType.m_pClassDecl = cast ClassDecl(pTestParent);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			sOut.Append("this");
+			out.m_sOut.Append("this");
 		}
 	}
 }

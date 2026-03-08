@@ -5,6 +5,7 @@
 #include "../Token.hpp"
 #include "../Validator.hpp"
 #include "../Util.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -16,8 +17,10 @@ namespace NumbatLogic
 	class ReturnStmt;
 	class Validator;
 	class Util;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/ReturnStmt.nll"
 namespace NumbatLogic
 {
 	ReturnStmt::ReturnStmt()
@@ -68,16 +71,16 @@ namespace NumbatLogic
 		pValidator->InjectCleanup(this);
 	}
 
-	void ReturnStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void ReturnStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		Util::Pad(nDepth, sOut);
-		sOut->AppendString("return");
+		Util::Pad(nDepth, out->m_sOut);
+		out->m_sOut->AppendString("return");
 		if (m_pExpression != 0)
 		{
-			sOut->AppendChar(' ');
-			m_pExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
+			out->m_sOut->AppendChar(' ');
+			m_pExpression->Stringify(eLanguage, eOutputFile, 0, out);
 		}
-		sOut->AppendString(";\n");
+		out->m_sOut->AppendString(";\n");
 	}
 
 }

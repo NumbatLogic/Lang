@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/ExpressionStmt.nll"
 namespace NumbatLogic
 {
 	class ExpressionStmt : AST
@@ -34,11 +35,11 @@ namespace NumbatLogic
 			return __490873359;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			Util.Pad(nDepth, sOut);
-			m_pExpression.Stringify(eLanguage, eOutputFile, nDepth, sOut);
-			sOut.Append(";\n");
+			Util.Pad(nDepth, out.m_sOut);
+			m_pExpression.Stringify(eLanguage, eOutputFile, nDepth, out);
+			out.m_sOut.Append(";\n");
 		}
 
 	}

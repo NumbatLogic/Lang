@@ -10,8 +10,9 @@ namespace NumbatLogic
 	class OffsetDatum;
 	class Validator;
 	class OperatorExpr;
-	class InternalString;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/BreakStmt.nll"
 namespace NumbatLogic
 {
 	class BreakStmt : public AST
@@ -19,7 +20,7 @@ namespace NumbatLogic
 		public: BreakStmt();
 		public: static BreakStmt* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 	};
 }
 

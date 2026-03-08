@@ -50,6 +50,7 @@ namespace NumbatLogic
 	class EnumDeclValue;
 	class Assert;
 }
+#line 1 "../../../Source/Core/Semantic/Resolver.nll"
 namespace NumbatLogic
 {
 	Resolver::Resolver()

@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/ValueType.nll"
 namespace NumbatLogic
 {
 	class ValueType

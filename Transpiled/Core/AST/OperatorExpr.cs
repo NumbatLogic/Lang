@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/OperatorExpr.nll"
 namespace NumbatLogic
 {
 	class OperatorExpr : AST
@@ -683,7 +684,7 @@ namespace NumbatLogic
 			}
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
 			OperatorType eOp = GetOperatorType();
 			string sPad = " ";
@@ -698,13 +699,13 @@ namespace NumbatLogic
 				if (m_pLeft.m_eType == AST.Type.BASE_EXPR)
 					sOperator = "::";
 			}
-			m_pLeft.Stringify(eLanguage, eOutputFile, 0, sOut);
-			sOut.Append(sPad);
-			sOut.Append(sOperator);
+			m_pLeft.Stringify(eLanguage, eOutputFile, 0, out);
+			out.m_sOut.Append(sPad);
+			out.m_sOut.Append(sOperator);
 			if (m_pRight != null)
 			{
-				sOut.Append(sPad);
-				m_pRight.Stringify(eLanguage, eOutputFile, 0, sOut);
+				out.m_sOut.Append(sPad);
+				m_pRight.Stringify(eLanguage, eOutputFile, 0, out);
 			}
 		}
 

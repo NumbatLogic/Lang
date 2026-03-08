@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/AST.nll"
 namespace NumbatLogic
 {
 	class AST
@@ -552,9 +553,9 @@ namespace NumbatLogic
 			return p != null ? (Project)(p) : null;
 		}
 
-		public virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			sOut.Append("???");
+			out.m_sOut.Append("???");
 		}
 
 		public virtual AST BaseClone()

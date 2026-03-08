@@ -10,8 +10,9 @@ namespace NumbatLogic
 	class AST;
 	class Validator;
 	class OperatorExpr;
-	class InternalString;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/StaticArray.nll"
 namespace NumbatLogic
 {
 	class StaticArray : public AST
@@ -19,7 +20,7 @@ namespace NumbatLogic
 		public: StaticArray();
 		public: static StaticArray* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 	};
 }
 

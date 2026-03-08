@@ -14,8 +14,9 @@ namespace NumbatLogic
 	class NamespaceDecl;
 	class Symbol;
 	class ValueType;
-	class InternalString;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/Identifier.nll"
 namespace NumbatLogic
 {
 	class Identifier : public AST
@@ -24,7 +25,7 @@ namespace NumbatLogic
 		public: static Identifier* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 		public: virtual AST* BaseClone();
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 		public: Identifier();
 	};
 }

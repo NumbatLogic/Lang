@@ -22,6 +22,7 @@
 #include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "MemberFunctionDecl.hpp"
 #include "NamespaceDecl.hpp"
+#include "../OutputBuilder.hpp"
 
 namespace NumbatLogic
 {
@@ -53,7 +54,9 @@ namespace NumbatLogic
 	class ValueType;
 	class FunctionDecl;
 	class MemberFunctionDecl;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/Identifier.nll"
 namespace NumbatLogic
 {
 	Identifier* Identifier::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
@@ -442,9 +445,9 @@ namespace NumbatLogic
 		AST::Validate(pValidator, pParent);
 	}
 
-	void Identifier::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void Identifier::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		m_pNameToken->Stringify(sOut);
+		m_pNameToken->Stringify(out->m_sOut);
 	}
 
 	Identifier::Identifier()

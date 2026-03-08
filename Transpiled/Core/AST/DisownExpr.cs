@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/DisownExpr.nll"
 namespace NumbatLogic
 {
 	class DisownExpr : AST
@@ -81,7 +82,9 @@ namespace NumbatLogic
 				return;
 			}
 			InternalString sTempName = new InternalString("");
-			m_pExpression.Stringify(AST.Language.CPP, AST.OutputFile.SOURCE, 0, sTempName);
+			OutputBuilder outTemp = new OutputBuilder();
+			m_pExpression.Stringify(AST.Language.CPP, AST.OutputFile.SOURCE, 0, outTemp);
+			sTempName.Append(outTemp.m_sOut.GetExternalString());
 			sTempName.AppendInt(pParentStatement.m_pFirstToken.m_nLine);
 			uint nHash = ExternalString.GetChecksum(sTempName.GetExternalString());
 			sTempName.Set("__");
@@ -97,20 +100,20 @@ namespace NumbatLogic
 				pTempVarDecl.m_pFirstToken = pTypeRef.m_pFirstToken;
 				pTempVarDecl.m_pTypeRef = pTypeRef;
 				pTempVarDecl.m_pNameToken = pNameToken;
-				NumbatLogic.Token __2859172633 = pNameToken;
+				NumbatLogic.Token __2859238226 = pNameToken;
 				pNameToken = null;
-				pTempVarDecl.m_pOwnedNameToken = __2859172633;
+				pTempVarDecl.m_pOwnedNameToken = __2859238226;
 				pTempVarDecl.m_pAssignment = pAssignment;
-				NumbatLogic.TypeRef __967582128 = pTypeRef;
+				NumbatLogic.TypeRef __967647721 = pTypeRef;
 				pTypeRef = null;
-				pTempVarDecl.AddChild(__967582128);
-				NumbatLogic.AST __183884754 = pAssignment;
+				pTempVarDecl.AddChild(__967647721);
+				NumbatLogic.AST __183884758 = pAssignment;
 				pAssignment = null;
-				pTempVarDecl.AddChild(__183884754);
+				pTempVarDecl.AddChild(__183884758);
 				AST pInjectedVarDecl = pTempVarDecl;
-				NumbatLogic.VarDecl __3774795557 = pTempVarDecl;
+				NumbatLogic.VarDecl __3774795561 = pTempVarDecl;
 				pTempVarDecl = null;
-				pParentParent.AddChildBefore(__3774795557, pParentStatement);
+				pParentParent.AddChildBefore(__3774795561, pParentStatement);
 				pValidator.ValidateSubtree(pInjectedVarDecl);
 			}
 			{
@@ -118,43 +121,43 @@ namespace NumbatLogic
 				NullExpr pRight = new NullExpr();
 				Token pOperatorToken = new Token();
 				pOperatorToken.m_eType = Token.Type.TOKEN_EQUALS;
-				NumbatLogic.AST __3919013148 = pLeft;
+				NumbatLogic.AST __3919013152 = pLeft;
 				pLeft = null;
-				NumbatLogic.NullExpr __534132295 = pRight;
+				NumbatLogic.NullExpr __534132299 = pRight;
 				pRight = null;
-				OperatorExpr pOperatorExpr = OperatorExpr.Create(OperatorExpr.OperatorType.ASSIGNMENT, pOperatorToken, __3919013148, __534132295);
-				NumbatLogic.Token __3603719567 = pOperatorToken;
+				OperatorExpr pOperatorExpr = OperatorExpr.Create(OperatorExpr.OperatorType.ASSIGNMENT, pOperatorToken, __3919013152, __534132299);
+				NumbatLogic.Token __3603785160 = pOperatorToken;
 				pOperatorToken = null;
-				pOperatorExpr.m_pOwnedOperatorToken = __3603719567;
+				pOperatorExpr.m_pOwnedOperatorToken = __3603785160;
 				ExpressionStmt pExpressionStmt = new ExpressionStmt();
 				pExpressionStmt.m_pFirstToken = pOperatorExpr.m_pFirstToken;
 				pExpressionStmt.m_pExpression = pOperatorExpr;
-				NumbatLogic.OperatorExpr __2365778373 = pOperatorExpr;
+				NumbatLogic.OperatorExpr __2365778377 = pOperatorExpr;
 				pOperatorExpr = null;
-				pExpressionStmt.AddChild(__2365778373);
+				pExpressionStmt.AddChild(__2365778377);
 				AST pInjectedStmt = pExpressionStmt;
-				NumbatLogic.ExpressionStmt __1415267169 = pExpressionStmt;
+				NumbatLogic.ExpressionStmt __1415267173 = pExpressionStmt;
 				pExpressionStmt = null;
-				pParentParent.AddChildBefore(__1415267169, pParentStatement);
+				pParentParent.AddChildBefore(__1415267173, pParentStatement);
 				pValidator.ValidateSubtree(pInjectedStmt);
 			}
-			NumbatLogic.InternalString __3313761955 = sTempName;
+			NumbatLogic.InternalString __3313827548 = sTempName;
 			sTempName = null;
-			m_sTempVarName = __3313761955;
+			m_sTempVarName = __3313827548;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
 			if (m_sTempVarName != null)
 			{
-				sOut.Append(m_sTempVarName.GetExternalString());
+				out.m_sOut.Append(m_sTempVarName.GetExternalString());
 				return;
 			}
 			if (eLanguage == AST.Language.NLL)
 			{
-				sOut.Append("disown ");
+				out.m_sOut.Append("disown ");
 			}
-			m_pExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
+			m_pExpression.Stringify(eLanguage, eOutputFile, 0, out);
 		}
 
 		~DisownExpr()

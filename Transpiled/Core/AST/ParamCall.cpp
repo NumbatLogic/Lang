@@ -5,6 +5,7 @@
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "AST.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -16,8 +17,10 @@ namespace NumbatLogic
 	class Console;
 	class Assert;
 	class ParamCall;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/ParamCall.nll"
 namespace NumbatLogic
 {
 	ParamCall* ParamCall::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
@@ -74,18 +77,18 @@ namespace NumbatLogic
 		return __1502847900;
 	}
 
-	void ParamCall::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void ParamCall::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		sOut->AppendChar('(');
+		out->m_sOut->AppendChar('(');
 		AST* pParam = m_pFirstChild;
 		while (pParam != 0)
 		{
 			if (pParam != m_pFirstChild)
-				sOut->Append(", ");
-			pParam->Stringify(eLanguage, eOutputFile, 0, sOut);
+				out->m_sOut->Append(", ");
+			pParam->Stringify(eLanguage, eOutputFile, 0, out);
 			pParam = pParam->m_pNextSibling;
 		}
-		sOut->AppendChar(')');
+		out->m_sOut->AppendChar(')');
 	}
 
 }

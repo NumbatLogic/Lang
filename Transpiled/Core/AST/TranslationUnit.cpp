@@ -3,6 +3,7 @@
 #include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "../../../../LangShared/Vector/CPP/Vector.hpp"
 #include "../Util.hpp"
+#include "../OutputBuilder.hpp"
 #include "ClassDecl.hpp"
 #include "../Token.hpp"
 #include "../TokenContainer.hpp"
@@ -20,6 +21,7 @@ namespace NumbatLogic
 	template <class T>
 	class Vector;
 	class Util;
+	class OutputBuilder;
 	class ClassDecl;
 	class Token;
 	class AST;
@@ -30,6 +32,7 @@ namespace NumbatLogic
 	class OffsetDatum;
 	class NamespaceNode;
 }
+#line 1 "../../../Source/Core/AST/TranslationUnit.nll"
 namespace NumbatLogic
 {
 	ClassDeclReference::ClassDeclReference()
@@ -67,42 +70,42 @@ namespace NumbatLogic
 		return pChild;
 	}
 
-	void ReferenceNode::Stringify(AST::Language eLanguage, AST::OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void ReferenceNode::Stringify(AST::Language eLanguage, AST::OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		if (!m_sName->IsEqual(""))
 		{
-			Util::Pad(nDepth, sOut);
-			sOut->Append("namespace ");
-			sOut->Append(m_sName->GetExternalString());
-			sOut->Append("\n");
-			Util::Pad(nDepth, sOut);
-			sOut->Append("{\n");
+			Util::Pad(nDepth, out->m_sOut);
+			out->m_sOut->Append("namespace ");
+			out->m_sOut->Append(m_sName->GetExternalString());
+			out->m_sOut->Append("\n");
+			Util::Pad(nDepth, out->m_sOut);
+			out->m_sOut->Append("{\n");
 			nDepth++;
 		}
 		for (int i = 0; i < m_pChildNodeVector->GetSize(); i++)
 		{
 			ReferenceNode* pChild = m_pChildNodeVector->Get(i);
-			pChild->Stringify(eLanguage, eOutputFile, nDepth, sOut);
+			pChild->Stringify(eLanguage, eOutputFile, nDepth, out);
 		}
 		for (int i = 0; i < m_pChildClassVector->GetSize(); i++)
 		{
 			ClassDeclReference* pChild = m_pChildClassVector->Get(i);
 			if (pChild->m_pClassDecl->m_pGenericTypeDeclVector->GetSize() > 0)
 			{
-				Util::Pad(nDepth, sOut);
-				pChild->m_pClassDecl->StringifyTemplateThing(eLanguage, eOutputFile, sOut);
-				sOut->Append("\n");
+				Util::Pad(nDepth, out->m_sOut);
+				pChild->m_pClassDecl->StringifyTemplateThing(eLanguage, eOutputFile, out);
+				out->m_sOut->Append("\n");
 			}
-			Util::Pad(nDepth, sOut);
-			sOut->Append("class ");
-			pChild->m_pClassDecl->m_pNameToken->Stringify(sOut);
-			sOut->Append(";\n");
+			Util::Pad(nDepth, out->m_sOut);
+			out->m_sOut->Append("class ");
+			pChild->m_pClassDecl->m_pNameToken->Stringify(out->m_sOut);
+			out->m_sOut->Append(";\n");
 		}
 		if (!m_sName->IsEqual(""))
 		{
 			nDepth--;
-			Util::Pad(nDepth, sOut);
-			sOut->Append("}\n");
+			Util::Pad(nDepth, out->m_sOut);
+			out->m_sOut->Append("}\n");
 		}
 	}
 
@@ -320,13 +323,13 @@ namespace NumbatLogic
 		return __1173437905;
 	}
 
-	void TranslationUnit::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void TranslationUnit::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		if (eLanguage == AST::Language::CPP)
 		{
 			if (eOutputFile == AST::OutputFile::HEADER)
 			{
-				sOut->Append("#pragma once\n\n");
+				out->m_sOut->Append("#pragma once\n\n");
 			}
 			OwnedVector<InternalString*>* sPreviousIncludes = new OwnedVector<InternalString*>();
 			ReferenceNode* pRootReferenceNode = new ReferenceNode("");
@@ -388,16 +391,16 @@ namespace NumbatLogic
 							continue;
 						sPreviousIncludes->PushBack(new InternalString(pClassDeclReference->m_pClassDecl->m_pNameToken->m_sFileName->GetExternalString()));
 						InternalString* sFixedPath = RetargetRelativePath(eLanguage, AST::OutputFile::HEADER, m_pFirstChild->m_pFirstToken->m_sFileName->GetExternalString(), pClassDeclReference->m_pClassDecl->m_pNameToken->m_sFileName->GetExternalString());
-						sOut->Append("#include \"");
-						sOut->Append(sFixedPath->GetExternalString());
-						sOut->Append("\"\n");
+						out->m_sOut->Append("#include \"");
+						out->m_sOut->Append(sFixedPath->GetExternalString());
+						out->m_sOut->Append("\"\n");
 						if (sFixedPath) delete sFixedPath;
 					}
 				}
 			}
 			if (sPreviousIncludes->GetSize() > 0)
-				sOut->Append("\n");
-			pRootReferenceNode->Stringify(eLanguage, eOutputFile, nDepth, sOut);
+				out->m_sOut->Append("\n");
+			pRootReferenceNode->Stringify(eLanguage, eOutputFile, nDepth, out);
 			if (sPreviousIncludes) delete sPreviousIncludes;
 			if (pRootReferenceNode) delete pRootReferenceNode;
 		}
@@ -406,8 +409,8 @@ namespace NumbatLogic
 		{
 			if (!pChild->m_bSkipOutput)
 			{
-				pChild->Stringify(eLanguage, eOutputFile, nDepth, sOut);
-				sOut->AppendChar('\n');
+				pChild->Stringify(eLanguage, eOutputFile, nDepth, out);
+				out->m_sOut->AppendChar('\n');
 			}
 			pChild = pChild->m_pNextSibling;
 		}

@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/ThisExpr.nll"
 namespace NumbatLogic
 {
 	class ThisExpr : AST
@@ -38,9 +39,9 @@ namespace NumbatLogic
 			m_pValueType.m_pClassDecl = (ClassDecl)(pTestParent);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			sOut.Append("this");
+			out.m_sOut.Append("this");
 		}
 
 	}

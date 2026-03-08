@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/Validator.nll"
 namespace NumbatLogic
 {
 	class ValidatorError

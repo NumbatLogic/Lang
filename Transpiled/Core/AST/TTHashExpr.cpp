@@ -7,6 +7,7 @@
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "StringExpr.hpp"
 #include "../ValueType.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
 
@@ -21,9 +22,11 @@ namespace NumbatLogic
 	class StringExpr;
 	class TTHashExpr;
 	class ValueType;
+	class OutputBuilder;
 	class InternalString;
 	class ExternalString;
 }
+#line 1 "../../../Source/Core/AST/TTHashExpr.nll"
 namespace NumbatLogic
 {
 	TTHashExpr::TTHashExpr()
@@ -92,19 +95,19 @@ namespace NumbatLogic
 		m_pValueType = new ValueType(ValueType::Type::INT);
 	}
 
-	void TTHashExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void TTHashExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		if (eLanguage == AST::Language::NLL || eLanguage == AST::Language::NLL_DEF)
 		{
-			sOut->Append("tthash(");
-			m_pStringExpr->Stringify(eLanguage, eOutputFile, 0, sOut);
-			sOut->AppendChar(')');
+			out->m_sOut->Append("tthash(");
+			m_pStringExpr->Stringify(eLanguage, eOutputFile, 0, out);
+			out->m_sOut->AppendChar(')');
 		}
 		else
 		{
 			InternalString* sTemp = new InternalString(m_pStringExpr->m_pFirstToken->m_sValue->GetExternalString());
 			sTemp->Crop(1, sTemp->GetLength() - 2);
-			sOut->AppendUint32(ExternalString::GetChecksum(sTemp->GetExternalString()));
+			out->m_sOut->AppendUint32(ExternalString::GetChecksum(sTemp->GetExternalString()));
 			if (sTemp) delete sTemp;
 		}
 	}

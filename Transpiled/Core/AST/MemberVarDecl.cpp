@@ -9,6 +9,7 @@
 #include "TypeRef.hpp"
 #include "../Validator.hpp"
 #include "../Util.hpp"
+#include "../OutputBuilder.hpp"
 
 namespace NumbatLogic
 {
@@ -23,7 +24,9 @@ namespace NumbatLogic
 	class TypeRef;
 	class Validator;
 	class Util;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/MemberVarDecl.nll"
 namespace NumbatLogic
 {
 	MemberVarDecl::MemberVarDecl()
@@ -90,7 +93,7 @@ namespace NumbatLogic
 		if (sTemp) delete sTemp;
 	}
 
-	void MemberVarDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void MemberVarDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		bool bArrayAssignment = m_pVarDecl->m_pArraySizeVector != 0 && m_pVarDecl->m_pAssignment != 0;
 		if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
@@ -103,27 +106,27 @@ namespace NumbatLogic
 			if (!bDoIt)
 				return;
 		}
-		Util::Pad(nDepth, sOut);
+		Util::Pad(nDepth, out->m_sOut);
 		if (!(eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE))
 		{
-			m_pAccessLevel->Stringify(eLanguage, eOutputFile, 0, sOut);
+			m_pAccessLevel->Stringify(eLanguage, eOutputFile, 0, out);
 			if (eLanguage == AST::Language::CPP)
-				sOut->AppendChar(':');
-			sOut->AppendChar(' ');
+				out->m_sOut->AppendChar(':');
+			out->m_sOut->AppendChar(' ');
 			if (m_bStatic)
 			{
 				if (eLanguage == AST::Language::CS)
 				{
 					if (m_pVarDecl->m_pTypeRef->m_bConst == false || !m_pVarDecl->m_pTypeRef->IsIntegral() || m_pVarDecl->m_pArraySizeVector != 0)
-						sOut->AppendString("static ");
+						out->m_sOut->AppendString("static ");
 				}
 				else
 				{
-					sOut->AppendString("static ");
+					out->m_sOut->AppendString("static ");
 				}
 			}
 		}
-		m_pVarDecl->Stringify(eLanguage, eOutputFile, 0, sOut);
+		m_pVarDecl->Stringify(eLanguage, eOutputFile, 0, out);
 	}
 
 }

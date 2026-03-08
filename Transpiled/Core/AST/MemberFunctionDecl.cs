@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 namespace NumbatLogic
 {
 	class MemberFunctionDecl : AST
@@ -85,7 +86,7 @@ namespace NumbatLogic
 			base.Validate(pValidator, pParent);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
 			bool bGeneric = m_pParentClassDecl.m_pGenericTypeDeclVector.GetSize() > 0;
 			if (bGeneric && eLanguage == AST.Language.CPP && eOutputFile == AST.OutputFile.SOURCE)
@@ -96,24 +97,24 @@ namespace NumbatLogic
 				{
 				}
 			}
-			Util.Pad(nDepth, sOut);
+			Util.Pad(nDepth, out.m_sOut);
 			if (!(eLanguage == AST.Language.CPP && eOutputFile == AST.OutputFile.SOURCE))
 			{
-				m_pAccessLevel.Stringify(eLanguage, eOutputFile, 0, sOut);
+				m_pAccessLevel.Stringify(eLanguage, eOutputFile, 0, out);
 				if (eLanguage == AST.Language.CPP)
-					sOut.AppendChar(':');
+					out.m_sOut.AppendChar(':');
 				if (m_bStatic)
-					sOut.Append(" static");
+					out.m_sOut.Append(" static");
 				if (m_bVirtual)
-					sOut.Append(" virtual");
+					out.m_sOut.Append(" virtual");
 				if (m_bOverride)
 					if (eLanguage == AST.Language.CPP)
-						sOut.Append(" virtual");
+						out.m_sOut.Append(" virtual");
 					else
-						sOut.Append(" override");
-				sOut.AppendChar(' ');
+						out.m_sOut.Append(" override");
+				out.m_sOut.AppendChar(' ');
 			}
-			m_pFunctionDecl.Stringify(eLanguage, eOutputFile, nDepth, sOut);
+			m_pFunctionDecl.Stringify(eLanguage, eOutputFile, nDepth, out);
 		}
 
 	}

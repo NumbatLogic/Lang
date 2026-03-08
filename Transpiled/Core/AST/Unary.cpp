@@ -6,6 +6,7 @@
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
+#include "../OutputBuilder.hpp"
 
 namespace NumbatLogic
 {
@@ -17,7 +18,9 @@ namespace NumbatLogic
 	class InternalString;
 	class Validator;
 	class ValueType;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/Unary.nll"
 namespace NumbatLogic
 {
 	Unary* Unary::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
@@ -60,10 +63,10 @@ namespace NumbatLogic
 		m_pValueType = m_pExpression->m_pValueType->Clone();
 	}
 
-	void Unary::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void Unary::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		m_pFirstToken->Stringify(sOut);
-		m_pExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
+		m_pFirstToken->Stringify(out->m_sOut);
+		m_pExpression->Stringify(eLanguage, eOutputFile, 0, out);
 	}
 
 	Unary::Unary()

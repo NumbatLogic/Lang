@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/DelegateDecl.nll"
 namespace NumbatLogic
 {
 	class DelegateDecl : AST
@@ -52,20 +53,20 @@ namespace NumbatLogic
 			return __305311194;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
 			if (eLanguage == AST.Language.CPP && eOutputFile == AST.OutputFile.SOURCE)
 				return;
-			Util.Pad(nDepth, sOut);
-			m_pAccessLevel.Stringify(eLanguage, eOutputFile, 0, sOut);
+			Util.Pad(nDepth, out.m_sOut);
+			m_pAccessLevel.Stringify(eLanguage, eOutputFile, 0, out);
 			if (eLanguage == AST.Language.CPP)
-				sOut.AppendChar(':');
-			sOut.AppendChar(' ');
+				out.m_sOut.AppendChar(':');
+			out.m_sOut.AppendChar(' ');
 			switch (eLanguage)
 			{
 				case AST.Language.CPP:
 				{
-					sOut.Append("typedef ");
+					out.m_sOut.Append("typedef ");
 					break;
 				}
 
@@ -73,20 +74,20 @@ namespace NumbatLogic
 				case AST.Language.NLL:
 				case AST.Language.NLL_DEF:
 				{
-					sOut.Append("delegate ");
+					out.m_sOut.Append("delegate ");
 					break;
 				}
 
 			}
-			m_pFunctionDecl.m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
-			sOut.AppendChar(' ');
+			m_pFunctionDecl.m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
+			out.m_sOut.AppendChar(' ');
 			if (eLanguage == AST.Language.CPP)
-				sOut.AppendChar('(');
-			sOut.Append(m_pFunctionDecl.m_pNameToken.GetString());
+				out.m_sOut.AppendChar('(');
+			out.m_sOut.Append(m_pFunctionDecl.m_pNameToken.GetString());
 			if (eLanguage == AST.Language.CPP)
-				sOut.AppendChar(')');
-			m_pFunctionDecl.m_pParamDecl.Stringify(eLanguage, eOutputFile, 0, sOut);
-			sOut.Append(";\n");
+				out.m_sOut.AppendChar(')');
+			m_pFunctionDecl.m_pParamDecl.Stringify(eLanguage, eOutputFile, 0, out);
+			out.m_sOut.Append(";\n");
 		}
 
 	}

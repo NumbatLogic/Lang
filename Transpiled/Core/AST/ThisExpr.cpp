@@ -5,6 +5,7 @@
 #include "AST.hpp"
 #include "../ValueType.hpp"
 #include "../Validator.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -17,8 +18,10 @@ namespace NumbatLogic
 	class ValueType;
 	class Validator;
 	class ClassDecl;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/ThisExpr.nll"
 namespace NumbatLogic
 {
 	ThisExpr* ThisExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
@@ -59,9 +62,9 @@ namespace NumbatLogic
 		m_pValueType->m_pClassDecl = (ClassDecl*)(pTestParent);
 	}
 
-	void ThisExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void ThisExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		sOut->Append("this");
+		out->m_sOut->Append("this");
 	}
 
 }

@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/GenericTypeDecl.nll"
 namespace NumbatLogic
 {
 	class GenericTypeDecl : AST
@@ -20,9 +21,9 @@ namespace NumbatLogic
 			return __976981417;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			m_pFirstToken.Stringify(sOut);
+			m_pFirstToken.Stringify(out.m_sOut);
 		}
 
 	}

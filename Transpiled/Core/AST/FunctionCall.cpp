@@ -25,6 +25,7 @@
 #include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
 #include "GenericTypeDecl.hpp"
+#include "../OutputBuilder.hpp"
 
 namespace NumbatLogic
 {
@@ -57,7 +58,9 @@ namespace NumbatLogic
 	class OwnedVector;
 	class GenericTypeDecl;
 	class ExternalString;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/FunctionCall.nll"
 namespace NumbatLogic
 {
 	FunctionCall* FunctionCall::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
@@ -577,10 +580,10 @@ namespace NumbatLogic
 		if (pCallable) delete pCallable;
 	}
 
-	void FunctionCall::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void FunctionCall::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		sOut->Append(m_sMangledName);
-		m_pParamCall->Stringify(eLanguage, eOutputFile, 0, sOut);
+		out->m_sOut->Append(m_sMangledName);
+		m_pParamCall->Stringify(eLanguage, eOutputFile, 0, out);
 	}
 
 	FunctionCall::FunctionCall()

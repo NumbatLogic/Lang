@@ -8,6 +8,7 @@
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
+#include "../OutputBuilder.hpp"
 
 namespace NumbatLogic
 {
@@ -21,7 +22,9 @@ namespace NumbatLogic
 	class InternalString;
 	class Validator;
 	class ValueType;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/RefExpr.nll"
 namespace NumbatLogic
 {
 	RefExpr* RefExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
@@ -71,13 +74,13 @@ namespace NumbatLogic
 		m_pValueType = m_pExpression->m_pValueType->Clone();
 	}
 
-	void RefExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void RefExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		if (eLanguage == AST::Language::NLL || eLanguage == AST::Language::CS)
 		{
-			sOut->Append("ref ");
+			out->m_sOut->Append("ref ");
 		}
-		m_pExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
+		m_pExpression->Stringify(eLanguage, eOutputFile, 0, out);
 	}
 
 	RefExpr::RefExpr()

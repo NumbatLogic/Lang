@@ -9,6 +9,7 @@
 #include "../ValueType.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "TypeRef.hpp"
+#include "../OutputBuilder.hpp"
 
 namespace NumbatLogic
 {
@@ -23,7 +24,9 @@ namespace NumbatLogic
 	class ValueType;
 	class InternalString;
 	class TypeRef;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/OwnExpr.nll"
 namespace NumbatLogic
 {
 	OwnExpr* OwnExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
@@ -85,13 +88,13 @@ namespace NumbatLogic
 		m_pValueType->m_ePointerType = TypeRef::PointerType::OWNED_PREASSSIGN;
 	}
 
-	void OwnExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void OwnExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		if (eLanguage == AST::Language::NLL)
 		{
-			sOut->Append("own ");
+			out->m_sOut->Append("own ");
 		}
-		m_pExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
+		m_pExpression->Stringify(eLanguage, eOutputFile, 0, out);
 	}
 
 	OwnExpr::OwnExpr()

@@ -6,6 +6,7 @@
 #include "../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../Core/TokenContainer.hpp"
 #include "../Core/OffsetDatum.hpp"
+#include "../Core/OutputBuilder.hpp"
 
 namespace NumbatLogic
 {
@@ -18,7 +19,9 @@ namespace NumbatLogic
 	class TokenContainer;
 	class OffsetDatum;
 	class AST;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Test/Test.nll"
 namespace NumbatLogic
 {
 	void Test::Run()
@@ -121,20 +124,20 @@ namespace NumbatLogic
 			if (pAST) delete pAST;
 			return;
 		}
-		InternalString* sOut = new InternalString("");
-		pAST->Stringify(AST::Language::NLL, AST::OutputFile::SOURCE, 0, sOut);
-		sOut->Replace(" ", "");
-		sOut->Replace("\n", "");
-		sOut->Replace("\t", "");
+		OutputBuilder* pOutputBuilder = new OutputBuilder();
+		pAST->Stringify(AST::Language::NLL, AST::OutputFile::SOURCE, 0, pOutputBuilder);
+		pOutputBuilder->m_sOut->Replace(" ", "");
+		pOutputBuilder->m_sOut->Replace("\n", "");
+		pOutputBuilder->m_sOut->Replace("\t", "");
 		sTokenized->Set("");
 		pTokenContainer->Stringify(sTokenized);
 		sxTokenized = sTokenized->GetExternalString();
-		if (!sOut->IsEqual(sxTokenized))
+		if (!pOutputBuilder->m_sOut->IsEqual(sxTokenized))
 		{
 			Console::Log("Stringify failed!\n'");
 			Console::Log(sxTokenized);
 			Console::Log("'\n->\n'");
-			Console::Log(sOut->GetExternalString());
+			Console::Log(pOutputBuilder->m_sOut->GetExternalString());
 			Console::Log("'");
 			if (sDefineVector) delete sDefineVector;
 			if (pTokenContainer) delete pTokenContainer;
@@ -142,7 +145,7 @@ namespace NumbatLogic
 			if (sTokenized) delete sTokenized;
 			if (pOffsetDatum) delete pOffsetDatum;
 			if (pAST) delete pAST;
-			if (sOut) delete sOut;
+			if (pOutputBuilder) delete pOutputBuilder;
 			return;
 		}
 		if (sDefineVector) delete sDefineVector;
@@ -151,7 +154,7 @@ namespace NumbatLogic
 		if (sTokenized) delete sTokenized;
 		if (pOffsetDatum) delete pOffsetDatum;
 		if (pAST) delete pAST;
-		if (sOut) delete sOut;
+		if (pOutputBuilder) delete pOutputBuilder;
 	}
 
 }

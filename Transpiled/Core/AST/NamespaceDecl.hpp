@@ -12,8 +12,9 @@ namespace NumbatLogic
 	class AST;
 	class Validator;
 	class OperatorExpr;
-	class InternalString;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/NamespaceDecl.nll"
 namespace NumbatLogic
 {
 	class NamespaceDecl : public AST
@@ -24,7 +25,7 @@ namespace NumbatLogic
 		public: static NamespaceDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 		public: virtual void PreValidate(Validator* pValidator, OperatorExpr* pParent);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 	};
 }
 

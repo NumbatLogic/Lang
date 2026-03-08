@@ -25,7 +25,9 @@ namespace NumbatLogic
 	class Resolver;
 	class Symbol;
 	class InternalString;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/ClassDecl.nll"
 namespace NumbatLogic
 {
 	class ClassDecl : public AST
@@ -47,8 +49,8 @@ namespace NumbatLogic
 		public: ClassDecl* GetBaseClassDeclForScopeLookup(Resolver* pResolver);
 		public: ClassDecl* GetBaseClassDecl(Validator* pValidator);
 		public: void AppendFullyQualifiedName(InternalString* sOut);
-		public: void StringifyTemplateThing(Language eLanguage, OutputFile eOutputFile, InternalString* sOut);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: void StringifyTemplateThing(Language eLanguage, OutputFile eOutputFile, OutputBuilder* out);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 		public: virtual ~ClassDecl();
 	};
 }

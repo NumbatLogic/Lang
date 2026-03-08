@@ -49,6 +49,7 @@ namespace NumbatLogic
 	class ExternalString;
 	class Token;
 }
+#line 1 "../../../Source/Core/Validator.nll"
 namespace NumbatLogic
 {
 	ValidatorError::ValidatorError()

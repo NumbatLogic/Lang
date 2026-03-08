@@ -11,8 +11,9 @@ namespace NumbatLogic
 	class Validator;
 	class OperatorExpr;
 	class Symbol;
-	class InternalString;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/Scope.nll"
 namespace NumbatLogic
 {
 	class Scope : public AST
@@ -21,7 +22,7 @@ namespace NumbatLogic
 		public: Scope();
 		public: static Scope* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, bool bPseudoScope);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 	};
 }
 

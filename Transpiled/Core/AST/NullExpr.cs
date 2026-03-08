@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/NullExpr.nll"
 namespace NumbatLogic
 {
 	class NullExpr : AST
@@ -29,12 +30,12 @@ namespace NumbatLogic
 			m_pValueType = new ValueType(ValueType.Type.NULL_VALUE);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
 			if (eLanguage == AST.Language.CPP)
-				sOut.Append("0");
+				out.m_sOut.Append("0");
 			else
-				sOut.Append("null");
+				out.m_sOut.Append("null");
 		}
 
 	}

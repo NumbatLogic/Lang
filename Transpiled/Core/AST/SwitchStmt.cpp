@@ -8,6 +8,7 @@
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "Scope.hpp"
 #include "../Util.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -23,8 +24,10 @@ namespace NumbatLogic
 	class SwitchStmt;
 	class Scope;
 	class Util;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/SwitchStmt.nll"
 namespace NumbatLogic
 {
 	SwitchStmt::SwitchStmt()
@@ -246,39 +249,39 @@ namespace NumbatLogic
 		return __1732082662;
 	}
 
-	void SwitchStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void SwitchStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		Util::Pad(nDepth, sOut);
-		sOut->Append("switch (");
-		m_pExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
-		sOut->Append(")\n");
-		Util::Pad(nDepth, sOut);
-		sOut->Append("{\n");
+		Util::Pad(nDepth, out->m_sOut);
+		out->m_sOut->Append("switch (");
+		m_pExpression->Stringify(eLanguage, eOutputFile, 0, out);
+		out->m_sOut->Append(")\n");
+		Util::Pad(nDepth, out->m_sOut);
+		out->m_sOut->Append("{\n");
 		nDepth++;
 		for (int i = 0; i < m_pExpressionVector->GetSize(); i++)
 		{
 			AST* pCaseExpression = m_pExpressionVector->Get(i);
 			AST* pCaseStatement = m_pStatementVector->Get(i);
-			Util::Pad(nDepth, sOut);
-			sOut->Append("case ");
-			pCaseExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
-			sOut->Append(":\n");
+			Util::Pad(nDepth, out->m_sOut);
+			out->m_sOut->Append("case ");
+			pCaseExpression->Stringify(eLanguage, eOutputFile, 0, out);
+			out->m_sOut->Append(":\n");
 			if (pCaseStatement != 0)
 			{
-				pCaseStatement->Stringify(eLanguage, eOutputFile, nDepth, sOut);
-				sOut->Append("\n");
+				pCaseStatement->Stringify(eLanguage, eOutputFile, nDepth, out);
+				out->m_sOut->Append("\n");
 			}
 		}
 		if (m_pDefaultStatement != 0)
 		{
-			Util::Pad(nDepth, sOut);
-			sOut->Append("default:\n");
-			m_pDefaultStatement->Stringify(eLanguage, eOutputFile, nDepth, sOut);
-			sOut->Append("\n");
+			Util::Pad(nDepth, out->m_sOut);
+			out->m_sOut->Append("default:\n");
+			m_pDefaultStatement->Stringify(eLanguage, eOutputFile, nDepth, out);
+			out->m_sOut->Append("\n");
 		}
 		nDepth--;
-		Util::Pad(nDepth, sOut);
-		sOut->AppendString("}\n");
+		Util::Pad(nDepth, out->m_sOut);
+		out->m_sOut->AppendString("}\n");
 	}
 
 	SwitchStmt::~SwitchStmt()

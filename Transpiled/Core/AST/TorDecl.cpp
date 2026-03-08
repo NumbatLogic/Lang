@@ -14,6 +14,7 @@
 #include "../Validator.hpp"
 #include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "../Util.hpp"
+#include "../OutputBuilder.hpp"
 #include "TypeRef.hpp"
 
 namespace NumbatLogic
@@ -35,8 +36,10 @@ namespace NumbatLogic
 	template <class T>
 	class OwnedVector;
 	class Util;
+	class OutputBuilder;
 	class TypeRef;
 }
+#line 1 "../../../Source/Core/AST/TorDecl.nll"
 namespace NumbatLogic
 {
 	TorDecl* TorDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, ClassDecl* pParentClassDecl)
@@ -192,7 +195,7 @@ namespace NumbatLogic
 		}
 	}
 
-	void TorDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void TorDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		bool bGeneric = m_pParentClassDecl != 0 && m_pParentClassDecl->m_pGenericTypeDeclVector->GetSize() > 0;
 		if (bGeneric && eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
@@ -203,91 +206,91 @@ namespace NumbatLogic
 			{
 				if (m_pParentClassDecl->m_bDisposable)
 				{
-					Util::Pad(nDepth, sOut);
-					sOut->AppendChar('~');
-					m_pParentClassDecl->m_pNameToken->Stringify(sOut);
-					sOut->Append(m_sDisambiguate);
-					m_pParamDecl->Stringify(eLanguage, eOutputFile, 0, sOut);
-					sOut->AppendChar('\n');
-					Util::Pad(nDepth, sOut);
-					sOut->Append("{\n");
-					Util::Pad(nDepth + 1, sOut);
-					sOut->Append("Dispose();\n");
-					Util::Pad(nDepth, sOut);
-					sOut->Append("}\n");
-					sOut->AppendChar('\n');
-					Util::Pad(nDepth, sOut);
-					sOut->Append("public void Dispose()\n");
-					Util::Pad(nDepth, sOut);
-					sOut->Append("{\n");
+					Util::Pad(nDepth, out->m_sOut);
+					out->m_sOut->AppendChar('~');
+					m_pParentClassDecl->m_pNameToken->Stringify(out->m_sOut);
+					out->m_sOut->Append(m_sDisambiguate);
+					m_pParamDecl->Stringify(eLanguage, eOutputFile, 0, out);
+					out->m_sOut->AppendChar('\n');
+					Util::Pad(nDepth, out->m_sOut);
+					out->m_sOut->Append("{\n");
+					Util::Pad(nDepth + 1, out->m_sOut);
+					out->m_sOut->Append("Dispose();\n");
+					Util::Pad(nDepth, out->m_sOut);
+					out->m_sOut->Append("}\n");
+					out->m_sOut->AppendChar('\n');
+					Util::Pad(nDepth, out->m_sOut);
+					out->m_sOut->Append("public void Dispose()\n");
+					Util::Pad(nDepth, out->m_sOut);
+					out->m_sOut->Append("{\n");
 					nDepth++;
-					m_pScope->Stringify(eLanguage, eOutputFile, nDepth, sOut);
-					Util::Pad(nDepth, sOut);
-					sOut->Append("System.GC.SuppressFinalize(this);\n");
+					m_pScope->Stringify(eLanguage, eOutputFile, nDepth, out);
+					Util::Pad(nDepth, out->m_sOut);
+					out->m_sOut->Append("System.GC.SuppressFinalize(this);\n");
 					nDepth--;
-					Util::Pad(nDepth, sOut);
-					sOut->Append("}\n");
-					sOut->AppendChar('\n');
+					Util::Pad(nDepth, out->m_sOut);
+					out->m_sOut->Append("}\n");
+					out->m_sOut->AppendChar('\n');
 					return;
 				}
 			}
 		}
-		Util::Pad(nDepth, sOut);
+		Util::Pad(nDepth, out->m_sOut);
 		if (!(eLanguage == AST::Language::CS && m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_DESTRUCT))
 			if (!(eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE))
 			{
-				m_pAccessLevel->Stringify(eLanguage, eOutputFile, 0, sOut);
+				m_pAccessLevel->Stringify(eLanguage, eOutputFile, 0, out);
 				if (eLanguage == AST::Language::CPP)
-					sOut->AppendChar(':');
-				sOut->AppendChar(' ');
+					out->m_sOut->AppendChar(':');
+				out->m_sOut->AppendChar(' ');
 			}
 		if (eLanguage == AST::Language::NLL_DEF)
 		{
 			if (m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_DESTRUCT)
-				sOut->Append("destruct");
+				out->m_sOut->Append("destruct");
 			else
-				sOut->Append("construct");
+				out->m_sOut->Append("construct");
 		}
 		else
 		{
 			if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
 			{
-				m_pParentClassDecl->m_pNameToken->Stringify(sOut);
-				sOut->Append("::");
+				m_pParentClassDecl->m_pNameToken->Stringify(out->m_sOut);
+				out->m_sOut->Append("::");
 			}
 			if (m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_DESTRUCT)
 			{
 				if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::HEADER)
-					sOut->Append("virtual ");
-				sOut->Append("~");
+					out->m_sOut->Append("virtual ");
+				out->m_sOut->Append("~");
 			}
-			m_pParentClassDecl->m_pNameToken->Stringify(sOut);
+			m_pParentClassDecl->m_pNameToken->Stringify(out->m_sOut);
 		}
-		sOut->Append(m_sDisambiguate);
-		m_pParamDecl->Stringify(eLanguage, eOutputFile, 0, sOut);
+		out->m_sOut->Append(m_sDisambiguate);
+		m_pParamDecl->Stringify(eLanguage, eOutputFile, 0, out);
 		if ((!bGeneric && eOutputFile == AST::OutputFile::HEADER) || eLanguage == AST::Language::NLL_DEF)
 		{
-			sOut->Append(";\n");
+			out->m_sOut->Append(";\n");
 			return;
 		}
 		if (m_pScope == 0)
 		{
-			sOut->AppendString(";\n");
+			out->m_sOut->AppendString(";\n");
 		}
 		else
 		{
 			if (m_pBaseParamCall != 0)
 			{
-				sOut->Append(" : ");
+				out->m_sOut->Append(" : ");
 				if (eLanguage == AST::Language::CPP)
-					m_pParentClassDecl->m_pBaseTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
+					m_pParentClassDecl->m_pBaseTypeRef->Stringify(eLanguage, eOutputFile, 0, out);
 				else
-					sOut->Append("base");
-				m_pBaseParamCall->Stringify(eLanguage, eOutputFile, 0, sOut);
+					out->m_sOut->Append("base");
+				m_pBaseParamCall->Stringify(eLanguage, eOutputFile, 0, out);
 			}
-			sOut->AppendChar('\n');
-			m_pScope->Stringify(eLanguage, eOutputFile, nDepth, sOut);
-			sOut->AppendChar('\n');
+			out->m_sOut->AppendChar('\n');
+			m_pScope->Stringify(eLanguage, eOutputFile, nDepth, out);
+			out->m_sOut->AppendChar('\n');
 		}
 	}
 

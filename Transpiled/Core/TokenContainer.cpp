@@ -19,6 +19,7 @@ namespace NumbatLogic
 	class Assert;
 	class OffsetDatum;
 }
+#line 1 "../../../Source/Core/TokenContainer.nll"
 namespace NumbatLogic
 {
 	TokenContainer::TokenContainer()

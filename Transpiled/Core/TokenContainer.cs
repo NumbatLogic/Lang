@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/TokenContainer.nll"
 namespace NumbatLogic
 {
 	class TokenContainer

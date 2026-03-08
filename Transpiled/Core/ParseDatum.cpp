@@ -6,6 +6,7 @@ namespace NumbatLogic
 	class ParseDatum;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/ParseDatum.nll"
 namespace NumbatLogic
 {
 	ParseDatum::ParseDatum()
