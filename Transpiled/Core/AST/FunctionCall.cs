@@ -47,15 +47,14 @@ namespace NumbatLogic
 			AST pChild = this;
 			if (pParent != null)
 			{
-				Token pParentOpToken = pParent.GetFirstOperatorToken();
-				if (pParentOpToken.m_eType == Token.Type.TOKEN_DOT && pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
+				if (pParent.GetOperatorType() == OperatorExpr.OperatorType.MEMBER_ACCESS && pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 				{
 					AddClassDeclReference(pParent.m_pLeft.m_pValueType.m_pClassDecl, AST.OutputFile.SOURCE, false);
 					pBase = pParent.m_pLeft.m_pValueType.m_pClassDecl;
 					pChild = null;
 				}
 				else
-					if (pParentOpToken.m_eType == Token.Type.TOKEN_DOUBLE_COLON)
+					if (pParent.GetOperatorType() == OperatorExpr.OperatorType.SCOPE_RESOLUTION)
 					{
 						if (pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL)
 						{
@@ -445,9 +444,9 @@ namespace NumbatLogic
 						GenericTypeDecl pGenericTypeDecl = pLeftValueType.m_pClassDecl.m_pGenericTypeDeclVector.Get(i);
 						if (ExternalString.Equal(pGenericTypeDecl.m_pFirstToken.GetString(), pFunctionDecl.m_pTypeRef.m_pTypeToken.GetString()))
 						{
-							NumbatLogic.ValueType __2182405107 = pGenericValueType;
+							NumbatLogic.ValueType __2182405106 = pGenericValueType;
 							pGenericValueType = null;
-							m_pValueType = __2182405107;
+							m_pValueType = __2182405106;
 							m_pValueType.m_ePointerType = pFunctionDecl.m_pTypeRef.m_ePointerType;
 						}
 					}

@@ -2,6 +2,35 @@ namespace NumbatLogic
 {
 	class OperatorExpr : AST
 	{
+		public enum OperatorType {
+			LOGICAL_AND,
+			LESS_THAN,
+			LESS_THAN_OR_EQUAL,
+			GREATER_THAN,
+			GREATER_THAN_OR_EQUAL,
+			BITWISE_AND,
+			BITWISE_OR,
+			BITWISE_XOR,
+			DIVISION,
+			MEMBER_ACCESS,
+			LEFT_SHIFT,
+			RIGHT_SHIFT,
+			SCOPE_RESOLUTION,
+			EQUALITY,
+			ASSIGNMENT,
+			SUBTRACTION,
+			SUBTRACT_ASSIGN,
+			DECREMENT,
+			MODULO,
+			INEQUALITY,
+			LOGICAL_OR,
+			ADDITION,
+			ADD_ASSIGN,
+			INCREMENT,
+			MULTIPLICATION,
+			UNKNOWN,
+		}
+
 		public Vector<Token>* m_pOperatorTokenVector;
 		public Token* m_pOwnedOperatorToken;
 		public AST m_pLeft;
@@ -18,7 +47,49 @@ namespace NumbatLogic
 			Assert::Plz(m_pOperatorTokenVector != null && m_pOperatorTokenVector.GetSize() > 0);
 			return m_pOperatorTokenVector.Get(0);
 		}
-		
+
+		public OperatorExpr::OperatorType GetOperatorType()
+		{
+			Token pOp = GetFirstOperatorToken();
+			if (m_pOperatorTokenVector.GetSize() >= 2)
+			{
+				Token pSecond = m_pOperatorTokenVector.Get(1);
+				if (pOp.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT && pSecond.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT)
+					return OperatorType::LEFT_SHIFT;
+				if (pOp.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT && pSecond.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT)
+					return OperatorType::RIGHT_SHIFT;
+			}
+			switch (pOp.m_eType)
+			{
+				case Token::Type::TOKEN_AND: return OperatorType::LOGICAL_AND;
+				case Token::Type::TOKEN_ANGLE_BRACKET_LEFT: return OperatorType::LESS_THAN;
+				case Token::Type::TOKEN_ANGLE_BRACKET_LEFT_EQUALS: return OperatorType::LESS_THAN_OR_EQUAL;
+				case Token::Type::TOKEN_ANGLE_BRACKET_RIGHT: return OperatorType::GREATER_THAN;
+				case Token::Type::TOKEN_ANGLE_BRACKET_RIGHT_EQUALS: return OperatorType::GREATER_THAN_OR_EQUAL;
+				case Token::Type::TOKEN_BITWISE_AND: return OperatorType::BITWISE_AND;
+				case Token::Type::TOKEN_BITWISE_OR: return OperatorType::BITWISE_OR;
+				case Token::Type::TOKEN_CARET: return OperatorType::BITWISE_XOR;
+				case Token::Type::TOKEN_DIVIDE: return OperatorType::DIVISION;
+				case Token::Type::TOKEN_DOT: return OperatorType::MEMBER_ACCESS;
+				case Token::Type::TOKEN_DOUBLE_ANGLE_BRACKET_LEFT: return OperatorType::LEFT_SHIFT;
+				case Token::Type::TOKEN_DOUBLE_ANGLE_BRACKET_RIGHT: return OperatorType::RIGHT_SHIFT;
+				case Token::Type::TOKEN_DOUBLE_COLON: return OperatorType::SCOPE_RESOLUTION;
+				case Token::Type::TOKEN_DOUBLE_EQUALS: return OperatorType::EQUALITY;
+				case Token::Type::TOKEN_EQUALS: return OperatorType::ASSIGNMENT;
+				case Token::Type::TOKEN_MINUS: return OperatorType::SUBTRACTION;
+				case Token::Type::TOKEN_MINUS_EQUALS: return OperatorType::SUBTRACT_ASSIGN;
+				case Token::Type::TOKEN_MINUS_MINUS: return OperatorType::DECREMENT;
+				case Token::Type::TOKEN_MODULUS: return OperatorType::MODULO;
+				case Token::Type::TOKEN_NOT_EQUALS: return OperatorType::INEQUALITY;
+				case Token::Type::TOKEN_OR: return OperatorType::LOGICAL_OR;
+				case Token::Type::TOKEN_PLUS: return OperatorType::ADDITION;
+				case Token::Type::TOKEN_PLUS_EQUALS: return OperatorType::ADD_ASSIGN;
+				case Token::Type::TOKEN_PLUS_PLUS: return OperatorType::INCREMENT;
+				case Token::Type::TOKEN_STAR: return OperatorType::MULTIPLICATION;
+				default: return OperatorType::UNKNOWN;
+			}
+		}
+
 		public static OperatorExpr** Create(Vector<Token>** pOperatorTokenVector, AST** pLeft, AST** pRight)
 		{
 			OperatorExpr* pOperatorExpr = own new OperatorExpr();
