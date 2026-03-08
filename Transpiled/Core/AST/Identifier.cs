@@ -60,8 +60,7 @@ namespace NumbatLogic
 									OperatorExpr pRightOp = (OperatorExpr)(pOpWalk.m_pRight);
 									bRightIsArrayLookupOrMulLeft = (pRightOp.m_pLeft == pAL);
 								}
-								Token pOpWalkToken = pOpWalk.GetFirstOperatorToken();
-								if (pOpWalkToken != null && pOpWalkToken.m_eType == Token.Type.TOKEN_DOUBLE_COLON && pOpWalk.m_pLeft != null && bRightIsArrayLookupOrMulLeft)
+								if (pOpWalk.GetOperatorType() == OperatorExpr.OperatorType.SCOPE_RESOLUTION && pOpWalk.m_pLeft != null && bRightIsArrayLookupOrMulLeft)
 								{
 									if (pOpWalk.m_pLeft.m_pValueType == null)
 										pOpWalk.m_pLeft.Validate(pValidator, pOpWalk);
@@ -91,15 +90,14 @@ namespace NumbatLogic
 				if (pContextParent.m_eType == AST.Type.AST_OPERATOR_EXPR)
 				{
 					OperatorExpr pOpContext = (OperatorExpr)(pContextParent);
-					Token pOpContextToken = pOpContext.GetFirstOperatorToken();
-					if (pOpContextToken != null && pOpContextToken.m_eType == Token.Type.TOKEN_DOT && pOpContext.m_pLeft != null && pOpContext.m_pLeft.m_pValueType != null && pOpContext.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
+					if (pOpContext.GetOperatorType() == OperatorExpr.OperatorType.MEMBER_ACCESS && pOpContext.m_pLeft != null && pOpContext.m_pLeft.m_pValueType != null && pOpContext.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 					{
 						AddClassDeclReference(pOpContext.m_pLeft.m_pValueType.m_pClassDecl, AST.OutputFile.SOURCE, false);
 						pBase = pOpContext.m_pLeft.m_pValueType.m_pClassDecl;
 						pChild = null;
 					}
 					else
-						if (pOpContextToken != null && pOpContextToken.m_eType == Token.Type.TOKEN_DOUBLE_COLON && pOpContext.m_pLeft != null && pOpContext.m_pLeft.m_pValueType != null)
+						if (pOpContext.GetOperatorType() == OperatorExpr.OperatorType.SCOPE_RESOLUTION && pOpContext.m_pLeft != null && pOpContext.m_pLeft.m_pValueType != null)
 						{
 							if (pOpContext.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL)
 							{
@@ -285,8 +283,7 @@ namespace NumbatLogic
 				{
 					if (pParent != null)
 					{
-						Token pParentOpToken = pParent.GetFirstOperatorToken();
-						if (pParentOpToken.m_eType == Token.Type.TOKEN_DOT && pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
+						if (pParent.GetOperatorType() == OperatorExpr.OperatorType.MEMBER_ACCESS && pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 						{
 							if (pParent.m_pLeft.m_pValueType.m_pGenericValueTypeVector != null)
 							{
@@ -296,9 +293,9 @@ namespace NumbatLogic
 									if (pGenericValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 									{
 										ValueType pOldValueType;
-										NumbatLogic.ValueType __865768331 = m_pValueType;
+										NumbatLogic.ValueType __865768328 = m_pValueType;
 										m_pValueType = null;
-										pOldValueType = __865768331;
+										pOldValueType = __865768328;
 										m_pValueType = pGenericValueType.Clone();
 										m_pValueType.m_ePointerType = pOldValueType.m_ePointerType;
 									}
@@ -326,8 +323,7 @@ namespace NumbatLogic
 						{
 							if (pParent != null)
 							{
-								Token pParentOpToken = pParent.GetFirstOperatorToken();
-								if (pParentOpToken.m_eType == Token.Type.TOKEN_DOT && pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
+								if (pParent.GetOperatorType() == OperatorExpr.OperatorType.MEMBER_ACCESS && pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 								{
 									if (pParent.m_pLeft.m_pValueType.m_pGenericValueTypeVector != null)
 									{
@@ -337,9 +333,9 @@ namespace NumbatLogic
 											if (pGenericValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 											{
 												ValueType pOldValueType;
-												NumbatLogic.ValueType __866096319 = m_pValueType;
+												NumbatLogic.ValueType __866030726 = m_pValueType;
 												m_pValueType = null;
-												pOldValueType = __866096319;
+												pOldValueType = __866030726;
 												m_pValueType = pGenericValueType.Clone();
 												m_pValueType.m_ePointerType = pOldValueType.m_ePointerType;
 											}

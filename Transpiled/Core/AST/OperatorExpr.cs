@@ -2,6 +2,36 @@ namespace NumbatLogic
 {
 	class OperatorExpr : AST
 	{
+		public enum OperatorType
+		{
+			LOGICAL_AND,
+			LESS_THAN,
+			LESS_THAN_OR_EQUAL,
+			GREATER_THAN,
+			GREATER_THAN_OR_EQUAL,
+			BITWISE_AND,
+			BITWISE_OR,
+			BITWISE_XOR,
+			DIVISION,
+			MEMBER_ACCESS,
+			LEFT_SHIFT,
+			RIGHT_SHIFT,
+			SCOPE_RESOLUTION,
+			EQUALITY,
+			ASSIGNMENT,
+			SUBTRACTION,
+			SUBTRACT_ASSIGN,
+			DECREMENT,
+			MODULO,
+			INEQUALITY,
+			LOGICAL_OR,
+			ADDITION,
+			ADD_ASSIGN,
+			INCREMENT,
+			MULTIPLICATION,
+			UNKNOWN,
+		}
+
 		public Vector<Token> m_pOperatorTokenVector;
 		public Token m_pOwnedOperatorToken;
 		public AST m_pLeft;
@@ -18,6 +48,152 @@ namespace NumbatLogic
 			return m_pOperatorTokenVector.Get(0);
 		}
 
+		public OperatorExpr.OperatorType GetOperatorType()
+		{
+			Token pOp = GetFirstOperatorToken();
+			if (m_pOperatorTokenVector.GetSize() >= 2)
+			{
+				Token pSecond = m_pOperatorTokenVector.Get(1);
+				if (pOp.m_eType == Token.Type.TOKEN_ANGLE_BRACKET_LEFT && pSecond.m_eType == Token.Type.TOKEN_ANGLE_BRACKET_LEFT)
+					return OperatorType.LEFT_SHIFT;
+				if (pOp.m_eType == Token.Type.TOKEN_ANGLE_BRACKET_RIGHT && pSecond.m_eType == Token.Type.TOKEN_ANGLE_BRACKET_RIGHT)
+					return OperatorType.RIGHT_SHIFT;
+			}
+			switch (pOp.m_eType)
+			{
+				case Token.Type.TOKEN_AND:
+				{
+					return OperatorType.LOGICAL_AND;
+				}
+
+				case Token.Type.TOKEN_ANGLE_BRACKET_LEFT:
+				{
+					return OperatorType.LESS_THAN;
+				}
+
+				case Token.Type.TOKEN_ANGLE_BRACKET_LEFT_EQUALS:
+				{
+					return OperatorType.LESS_THAN_OR_EQUAL;
+				}
+
+				case Token.Type.TOKEN_ANGLE_BRACKET_RIGHT:
+				{
+					return OperatorType.GREATER_THAN;
+				}
+
+				case Token.Type.TOKEN_ANGLE_BRACKET_RIGHT_EQUALS:
+				{
+					return OperatorType.GREATER_THAN_OR_EQUAL;
+				}
+
+				case Token.Type.TOKEN_BITWISE_AND:
+				{
+					return OperatorType.BITWISE_AND;
+				}
+
+				case Token.Type.TOKEN_BITWISE_OR:
+				{
+					return OperatorType.BITWISE_OR;
+				}
+
+				case Token.Type.TOKEN_CARET:
+				{
+					return OperatorType.BITWISE_XOR;
+				}
+
+				case Token.Type.TOKEN_DIVIDE:
+				{
+					return OperatorType.DIVISION;
+				}
+
+				case Token.Type.TOKEN_DOT:
+				{
+					return OperatorType.MEMBER_ACCESS;
+				}
+
+				case Token.Type.TOKEN_DOUBLE_ANGLE_BRACKET_LEFT:
+				{
+					return OperatorType.LEFT_SHIFT;
+				}
+
+				case Token.Type.TOKEN_DOUBLE_ANGLE_BRACKET_RIGHT:
+				{
+					return OperatorType.RIGHT_SHIFT;
+				}
+
+				case Token.Type.TOKEN_DOUBLE_COLON:
+				{
+					return OperatorType.SCOPE_RESOLUTION;
+				}
+
+				case Token.Type.TOKEN_DOUBLE_EQUALS:
+				{
+					return OperatorType.EQUALITY;
+				}
+
+				case Token.Type.TOKEN_EQUALS:
+				{
+					return OperatorType.ASSIGNMENT;
+				}
+
+				case Token.Type.TOKEN_MINUS:
+				{
+					return OperatorType.SUBTRACTION;
+				}
+
+				case Token.Type.TOKEN_MINUS_EQUALS:
+				{
+					return OperatorType.SUBTRACT_ASSIGN;
+				}
+
+				case Token.Type.TOKEN_MINUS_MINUS:
+				{
+					return OperatorType.DECREMENT;
+				}
+
+				case Token.Type.TOKEN_MODULUS:
+				{
+					return OperatorType.MODULO;
+				}
+
+				case Token.Type.TOKEN_NOT_EQUALS:
+				{
+					return OperatorType.INEQUALITY;
+				}
+
+				case Token.Type.TOKEN_OR:
+				{
+					return OperatorType.LOGICAL_OR;
+				}
+
+				case Token.Type.TOKEN_PLUS:
+				{
+					return OperatorType.ADDITION;
+				}
+
+				case Token.Type.TOKEN_PLUS_EQUALS:
+				{
+					return OperatorType.ADD_ASSIGN;
+				}
+
+				case Token.Type.TOKEN_PLUS_PLUS:
+				{
+					return OperatorType.INCREMENT;
+				}
+
+				case Token.Type.TOKEN_STAR:
+				{
+					return OperatorType.MULTIPLICATION;
+				}
+
+				default:
+				{
+					return OperatorType.UNKNOWN;
+				}
+
+			}
+		}
+
 		public static OperatorExpr Create(Vector<Token> pOperatorTokenVector, AST pLeft, AST pRight)
 		{
 			OperatorExpr pOperatorExpr = new OperatorExpr();
@@ -29,19 +205,19 @@ namespace NumbatLogic
 			pOperatorExpr.m_pRight = pOwnedRight;
 			if (pLeft != null)
 			{
-				NumbatLogic.AST __2899538494 = pOwnedLeft;
+				NumbatLogic.AST __4182113595 = pOwnedLeft;
 				pOwnedLeft = null;
-				pOperatorExpr.AddChild(__2899538494);
+				pOperatorExpr.AddChild(__4182113595);
 			}
 			if (pRight != null)
 			{
-				NumbatLogic.AST __2375335628 = pOwnedRight;
+				NumbatLogic.AST __2506281843 = pOwnedRight;
 				pOwnedRight = null;
-				pOperatorExpr.AddChild(__2375335628);
+				pOperatorExpr.AddChild(__2506281843);
 			}
-			NumbatLogic.OperatorExpr __1439199781 = pOperatorExpr;
+			NumbatLogic.OperatorExpr __2365581576 = pOperatorExpr;
 			pOperatorExpr = null;
-			return __1439199781;
+			return __2365581576;
 		}
 
 		public override AST BaseClone()
@@ -64,22 +240,22 @@ namespace NumbatLogic
 				else
 					pOpTokens.PushBack(m_pOperatorTokenVector.Get(i));
 			}
-			NumbatLogic.Vector<NumbatLogic.Token> __2648804907 = pOpTokens;
+			NumbatLogic.Vector<NumbatLogic.Token> __1714663050 = pOpTokens;
 			pOpTokens = null;
-			NumbatLogic.AST __3611488919 = pLeft;
+			NumbatLogic.AST __3919013150 = pLeft;
 			pLeft = null;
-			NumbatLogic.AST __2112235180 = pRight;
+			NumbatLogic.AST __534132297 = pRight;
 			pRight = null;
-			OperatorExpr pResult = OperatorExpr.Create(__2648804907, __3611488919, __2112235180);
+			OperatorExpr pResult = OperatorExpr.Create(__1714663050, __3919013150, __534132297);
 			if (pOwnedClone != null)
 			{
-				NumbatLogic.Token __1925307818 = pOwnedClone;
+				NumbatLogic.Token __417611343 = pOwnedClone;
 				pOwnedClone = null;
-				pResult.m_pOwnedOperatorToken = __1925307818;
+				pResult.m_pOwnedOperatorToken = __417611343;
 			}
-			NumbatLogic.OperatorExpr __4043990992 = pResult;
+			NumbatLogic.OperatorExpr __3068411296 = pResult;
 			pResult = null;
-			return __4043990992;
+			return __3068411296;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
