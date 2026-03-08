@@ -69,10 +69,18 @@ namespace NumbatLogic
 			case OperatorType::GREATER_THAN_OR_EQUAL:
 			case OperatorType::ADD_ASSIGN:
 			case OperatorType::SUBTRACT_ASSIGN:
+			case OperatorType::MULTIPLY_ASSIGN:
+			case OperatorType::DIVIDE_ASSIGN:
 			case OperatorType::LOGICAL_AND:
 			case OperatorType::LOGICAL_OR:
 			{
 				return 2;
+			}
+
+			case OperatorType::LEFT_SHIFT_ASSIGN:
+			case OperatorType::RIGHT_SHIFT_ASSIGN:
+			{
+				return 3;
 			}
 
 			default:
@@ -83,9 +91,17 @@ namespace NumbatLogic
 		}
 	}
 
-	OperatorExpr::OperatorType OperatorExpr::GetOperatorTypeFromTokens(Token* pFirst, Token* pSecond)
+	OperatorExpr::OperatorType OperatorExpr::GetOperatorTypeFromTokens(Token* pFirst, Token* pSecond, Token* pThird)
 	{
 		Assert::Plz(pFirst != 0);
+		if (pThird != 0)
+		{
+			Assert::Plz(pSecond != 0);
+			if (pFirst->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT && pSecond->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT && pThird->m_eType == Token::Type::TOKEN_EQUALS)
+				return OperatorType::LEFT_SHIFT_ASSIGN;
+			if (pFirst->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT && pSecond->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT && pThird->m_eType == Token::Type::TOKEN_EQUALS)
+				return OperatorType::RIGHT_SHIFT_ASSIGN;
+		}
 		if (pSecond != 0)
 		{
 			if (pFirst->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT && pSecond->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT)
@@ -104,6 +120,10 @@ namespace NumbatLogic
 				return OperatorType::ADD_ASSIGN;
 			if (pFirst->m_eType == Token::Type::TOKEN_MINUS && pSecond->m_eType == Token::Type::TOKEN_EQUALS)
 				return OperatorType::SUBTRACT_ASSIGN;
+			if (pFirst->m_eType == Token::Type::TOKEN_STAR && pSecond->m_eType == Token::Type::TOKEN_EQUALS)
+				return OperatorType::MULTIPLY_ASSIGN;
+			if (pFirst->m_eType == Token::Type::TOKEN_DIVIDE && pSecond->m_eType == Token::Type::TOKEN_EQUALS)
+				return OperatorType::DIVIDE_ASSIGN;
 			if (pFirst->m_eType == Token::Type::TOKEN_BITWISE_AND && pSecond->m_eType == Token::Type::TOKEN_BITWISE_AND)
 				return OperatorType::LOGICAL_AND;
 			if (pFirst->m_eType == Token::Type::TOKEN_BITWISE_OR && pSecond->m_eType == Token::Type::TOKEN_BITWISE_OR)
@@ -197,8 +217,10 @@ namespace NumbatLogic
 			return OperatorType::UNKNOWN;
 		pOffsetDatum->m_nOffset++;
 		Token* pSecond = pTokenContainer->Peek(pOffsetDatum);
-		pOffsetDatum->m_nOffset--;
-		OperatorType eType = GetOperatorTypeFromTokens(pFirst, pSecond);
+		pOffsetDatum->m_nOffset++;
+		Token* pThird = pTokenContainer->Peek(pOffsetDatum);
+		pOffsetDatum->m_nOffset -= 2;
+		OperatorType eType = GetOperatorTypeFromTokens(pFirst, pSecond, pThird);
 		if (eType == OperatorType::UNKNOWN)
 			return OperatorType::UNKNOWN;
 		pOffsetDatum->m_nOffset += GetOperatorTokenCount(eType);
@@ -220,21 +242,21 @@ namespace NumbatLogic
 		pOperatorExpr->m_pRight = pOwnedRight;
 		if (pLeft != 0)
 		{
-			NumbatLogic::AST* __4182507189 = pOwnedLeft;
+			NumbatLogic::AST* __4182703981 = pOwnedLeft;
 			pOwnedLeft = 0;
-			pOperatorExpr->AddChild(__4182507189);
+			pOperatorExpr->AddChild(__4182703981);
 		}
 		if (pRight != 0)
 		{
-			NumbatLogic::AST* __2506675437 = pOwnedRight;
+			NumbatLogic::AST* __2506872229 = pOwnedRight;
 			pOwnedRight = 0;
-			pOperatorExpr->AddChild(__2506675437);
+			pOperatorExpr->AddChild(__2506872229);
 		}
-		NumbatLogic::OperatorExpr* __2365975170 = pOperatorExpr;
+		NumbatLogic::OperatorExpr* __2366106373 = pOperatorExpr;
 		pOperatorExpr = 0;
 		if (pOwnedLeft) delete pOwnedLeft;
 		if (pOwnedRight) delete pOwnedRight;
-		return __2365975170;
+		return __2366106373;
 	}
 
 	AST* OperatorExpr::BaseClone()
@@ -246,20 +268,20 @@ namespace NumbatLogic
 		if (m_pRight != 0)
 			pRight = m_pRight->BaseClone();
 		Token* pOwnedClone = GetFirstOperatorToken()->Clone();
-		NumbatLogic::AST* __3919341144 = pLeft;
+		NumbatLogic::AST* __3927143451 = pLeft;
 		pLeft = 0;
-		NumbatLogic::AST* __534460291 = pRight;
+		NumbatLogic::AST* __542262598 = pRight;
 		pRight = 0;
-		OperatorExpr* pResult = OperatorExpr::Create(m_eOperatorType, pOwnedClone, __3919341144, __534460291);
-		NumbatLogic::Token* __417939336 = pOwnedClone;
+		OperatorExpr* pResult = OperatorExpr::Create(m_eOperatorType, pOwnedClone, __3927143451, __542262598);
+		NumbatLogic::Token* __425741643 = pOwnedClone;
 		pOwnedClone = 0;
-		pResult->m_pOwnedOperatorToken = __417939336;
-		NumbatLogic::OperatorExpr* __3068673700 = pResult;
+		pResult->m_pOwnedOperatorToken = __425741643;
+		NumbatLogic::OperatorExpr* __3076476007 = pResult;
 		pResult = 0;
 		if (pLeft) delete pLeft;
 		if (pRight) delete pRight;
 		if (pOwnedClone) delete pOwnedClone;
-		return __3068673700;
+		return __3076476007;
 	}
 
 	void OperatorExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
@@ -631,6 +653,26 @@ namespace NumbatLogic
 			case OperatorType::MULTIPLICATION:
 			{
 				return "*";
+			}
+
+			case OperatorType::MULTIPLY_ASSIGN:
+			{
+				return "*=";
+			}
+
+			case OperatorType::DIVIDE_ASSIGN:
+			{
+				return "/=";
+			}
+
+			case OperatorType::LEFT_SHIFT_ASSIGN:
+			{
+				return "<<=";
+			}
+
+			case OperatorType::RIGHT_SHIFT_ASSIGN:
+			{
+				return ">>=";
 			}
 
 			default:

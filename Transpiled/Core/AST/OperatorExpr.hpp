@@ -44,6 +44,10 @@ namespace NumbatLogic
 			ADD_ASSIGN,
 			INCREMENT,
 			MULTIPLICATION,
+			MULTIPLY_ASSIGN,
+			DIVIDE_ASSIGN,
+			LEFT_SHIFT_ASSIGN,
+			RIGHT_SHIFT_ASSIGN,
 			UNKNOWN,
 		};
 
@@ -57,7 +61,7 @@ namespace NumbatLogic
 		public: OperatorExpr::OperatorType GetOperatorType();
 		public: static bool IsPostfix(OperatorExpr::OperatorType eOperatorType);
 		protected: static int GetOperatorTokenCount(OperatorExpr::OperatorType eOp);
-		protected: static OperatorExpr::OperatorType GetOperatorTypeFromTokens(Token* pFirst, Token* pSecond);
+		protected: static OperatorExpr::OperatorType GetOperatorTypeFromTokens(Token* pFirst, Token* pSecond, Token* pThird);
 		public: static OperatorExpr::OperatorType PeekOperator(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 		public: static OperatorExpr* Create(OperatorExpr::OperatorType eOperatorType, Token* pFirstOperatorToken, AST* pLeft, AST* pRight);
 		public: virtual AST* BaseClone();
