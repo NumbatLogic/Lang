@@ -132,16 +132,11 @@ namespace NumbatLogic
 				Token* pOperatorToken = own new Token();
 				pOperatorToken.m_eType = Token::Type::TOKEN_EQUALS;
 
-				OperatorExpr* pOperatorExpr = own new OperatorExpr();
-				pOperatorExpr.m_eType = AST::Type::AST_OPERATOR_EXPR;
-				pOperatorExpr.m_pFirstToken = pLeft.m_pFirstToken;
-				pOperatorExpr.m_pOperatorToken = pOperatorToken;
-				pOperatorExpr.m_pOwnedOperatorToken = own disown pOperatorToken;
-				pOperatorExpr.m_pLeft = pLeft;
-				pOperatorExpr.m_pRight = pRight;
+				Vector<Token>* pOpTokenVector = own new Vector<Token>();
+				pOpTokenVector.PushBack(pOperatorToken);
 
-				pOperatorExpr.AddChild(disown pLeft);
-				pOperatorExpr.AddChild(disown pRight);
+				OperatorExpr* pOperatorExpr = own OperatorExpr::Create(disown pOpTokenVector, disown pLeft, disown pRight);
+				pOperatorExpr.m_pOwnedOperatorToken = own disown pOperatorToken;
 
 				ExpressionStmt* pExpressionStmt = own new ExpressionStmt();
 				pExpressionStmt.m_pFirstToken = pOperatorExpr.m_pFirstToken;

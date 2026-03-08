@@ -280,9 +280,11 @@ namespace NumbatLogic
 					if (pOperatorToken.m_eType == Token::Type::TOKEN_MINUS_MINUS ||
 						pOperatorToken.m_eType == Token::Type::TOKEN_PLUS_PLUS)
 					{
+						Vector<Token>* pOpTokenVector = own new Vector<Token>();
+						pOpTokenVector.PushBack(pOperatorToken);
 						pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 						pOffsetDatum.Set(pTempOffset);
-						return OperatorExpr::Create(pOperatorToken, disown pLeft, null);
+						return OperatorExpr::Create(disown pOpTokenVector, disown pLeft, null);
 					}
 
 					if (pOperatorToken.m_eType == Token::Type::TOKEN_QUESTION_MARK)
@@ -292,7 +294,36 @@ namespace NumbatLogic
 						return TrinaryExpr::Create(disown pLeft, pTokenContainer, pOffsetDatum);
 					}
 
-				
+					OffsetDatum* pOffsetPlus1 = own OffsetDatum::Create(pTempOffset);
+					pOffsetPlus1.m_nOffset = pTempOffset.m_nOffset+1;
+					Token pSecondToken = pTokenContainer.Peek(pOffsetPlus1);
+					if (pOperatorToken.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT && pSecondToken != null && pSecondToken.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT)
+					{
+						Vector<Token>* pOpTokenVector = own new Vector<Token>();
+						pOpTokenVector.PushBack(pOperatorToken);
+						pOpTokenVector.PushBack(pSecondToken);
+						pTempOffset.m_nOffset = pTempOffset.m_nOffset+2;
+						AST* pRight = own TryCreateExpression(pTokenContainer, pTempOffset);
+						if (pRight != null)
+						{
+							pOffsetDatum.Set(pTempOffset);
+							return OperatorExpr::Create(disown pOpTokenVector, disown pLeft, disown pRight);
+						}
+					}
+					if (pOperatorToken.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT && pSecondToken != null && pSecondToken.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT)
+					{
+						Vector<Token>* pOpTokenVector = own new Vector<Token>();
+						pOpTokenVector.PushBack(pOperatorToken);
+						pOpTokenVector.PushBack(pSecondToken);
+						pTempOffset.m_nOffset = pTempOffset.m_nOffset+2;
+						AST* pRight = own TryCreateExpression(pTokenContainer, pTempOffset);
+						if (pRight != null)
+						{
+							pOffsetDatum.Set(pTempOffset);
+							return OperatorExpr::Create(disown pOpTokenVector, disown pLeft, disown pRight);
+						}
+					}
+
 					if (pOperatorToken.m_eType == Token::Type::TOKEN_AND ||
 						pOperatorToken.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT ||
 						pOperatorToken.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT_EQUALS ||
@@ -303,8 +334,6 @@ namespace NumbatLogic
 						pOperatorToken.m_eType == Token::Type::TOKEN_CARET ||
 						pOperatorToken.m_eType == Token::Type::TOKEN_DIVIDE ||
 						pOperatorToken.m_eType == Token::Type::TOKEN_DOT ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_DOUBLE_ANGLE_BRACKET_LEFT ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_DOUBLE_ANGLE_BRACKET_RIGHT ||
 						pOperatorToken.m_eType == Token::Type::TOKEN_DOUBLE_COLON ||
 						pOperatorToken.m_eType == Token::Type::TOKEN_DOUBLE_EQUALS ||
 						pOperatorToken.m_eType == Token::Type::TOKEN_EQUALS ||
@@ -317,12 +346,14 @@ namespace NumbatLogic
 						pOperatorToken.m_eType == Token::Type::TOKEN_STAR ||
 						pOperatorToken.m_eType == Token::Type::TOKEN_MODULUS)
 					{
+						Vector<Token>* pOpTokenVector = own new Vector<Token>();
+						pOpTokenVector.PushBack(pOperatorToken);
 						pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 						AST* pRight = own TryCreateExpression(pTokenContainer, pTempOffset);
 						if (pRight != null)
 						{
 							pOffsetDatum.Set(pTempOffset);
-							return OperatorExpr::Create(pOperatorToken, disown pLeft, disown pRight);
+							return OperatorExpr::Create(disown pOpTokenVector, disown pLeft, disown pRight);
 						}
 					}
 				}

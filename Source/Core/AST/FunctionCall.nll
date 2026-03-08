@@ -49,13 +49,14 @@ namespace NumbatLogic
 			AST pChild = this;
 			if (pParent != null)
 			{
-				if (pParent.m_pOperatorToken.m_eType == Token::Type::TOKEN_DOT && pParent.m_pLeft.m_pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE)
+				Token pParentOpToken = pParent.GetFirstOperatorToken();
+				if (pParentOpToken.m_eType == Token::Type::TOKEN_DOT && pParent.m_pLeft.m_pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE)
 				{
 					AddClassDeclReference(pParent.m_pLeft.m_pValueType.m_pClassDecl, AST::OutputFile::SOURCE, false);
 					pBase = pParent.m_pLeft.m_pValueType.m_pClassDecl;
 					pChild = null;
 				}
-				else if (pParent.m_pOperatorToken.m_eType == Token::Type::TOKEN_DOUBLE_COLON)
+				else if (pParentOpToken.m_eType == Token::Type::TOKEN_DOUBLE_COLON)
 				{
 					if (pParent.m_pLeft.m_pValueType.m_eType == ValueType::Type::CLASS_DECL)
 					{

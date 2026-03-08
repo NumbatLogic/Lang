@@ -21,14 +21,14 @@ namespace NumbatLogic
 
 		// All symbols declared directly in this scope, indexed by short name.
 		// Each bucket owns the Symbol* instances it contains.
-		public OwnedStringMap<OwnedVector<Symbol> >* m_pSymbolMap;
+		public OwnedStringMap<OwnedVector<Symbol>>* m_pSymbolMap;
 
 		public construct()
 		{
 			m_eKind = Kind::BLOCK;
 			m_pParent = null;
 			m_pOwnerAST = null;
-			m_pSymbolMap = own new OwnedStringMap<OwnedVector<Symbol> >();
+			m_pSymbolMap = own new OwnedStringMap<OwnedVector<Symbol>>();
 		}
 
 		// Take ownership of a Symbol via transition pointer.
