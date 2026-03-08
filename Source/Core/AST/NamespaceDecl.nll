@@ -108,7 +108,6 @@ namespace NumbatLogic
 			nDepth--;
 			Util::Pad(nDepth, pOutputBuilder.m_sOut);
 			pOutputBuilder.m_sOut.Append("}\n");
-			asd -
 		}
 	}
 }
