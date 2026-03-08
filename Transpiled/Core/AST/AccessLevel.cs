@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/AccessLevel.nll"
 namespace NumbatLogic
 {
 	class AccessLevel : AST
@@ -20,27 +21,27 @@ namespace NumbatLogic
 			return __98812046;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
 			switch (m_pFirstToken.m_eType)
 			{
 				case Token.Type.TOKEN_KEYWORD_PRIVATE:
 				{
 					if (eLanguage == AST.Language.NLL_DEF)
-						sOut.AppendString("private");
+						out.m_sOut.AppendString("private");
 					else
-						sOut.AppendString("protected");
+						out.m_sOut.AppendString("protected");
 					return;
 				}
 
 				case Token.Type.TOKEN_KEYWORD_PUBLIC:
 				{
-					sOut.AppendString("public");
+					out.m_sOut.AppendString("public");
 					return;
 				}
 
 			}
-			sOut.AppendString("???");
+			out.m_sOut.AppendString("???");
 		}
 
 	}

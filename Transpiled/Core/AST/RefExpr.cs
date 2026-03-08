@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/RefExpr.nll"
 namespace NumbatLogic
 {
 	class RefExpr : AST
@@ -44,13 +45,13 @@ namespace NumbatLogic
 			m_pValueType = m_pExpression.m_pValueType.Clone();
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
 			if (eLanguage == AST.Language.NLL || eLanguage == AST.Language.CS)
 			{
-				sOut.Append("ref ");
+				out.m_sOut.Append("ref ");
 			}
-			m_pExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
+			m_pExpression.Stringify(eLanguage, eOutputFile, 0, out);
 		}
 
 		public RefExpr()

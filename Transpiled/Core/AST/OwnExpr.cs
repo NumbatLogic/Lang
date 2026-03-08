@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/OwnExpr.nll"
 namespace NumbatLogic
 {
 	class OwnExpr : AST
@@ -56,13 +57,13 @@ namespace NumbatLogic
 			m_pValueType.m_ePointerType = TypeRef.PointerType.OWNED_PREASSSIGN;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
 			if (eLanguage == AST.Language.NLL)
 			{
-				sOut.Append("own ");
+				out.m_sOut.Append("own ");
 			}
-			m_pExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
+			m_pExpression.Stringify(eLanguage, eOutputFile, 0, out);
 		}
 
 		public OwnExpr()

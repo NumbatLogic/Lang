@@ -4,6 +4,7 @@
 #include "EnumDecl.hpp"
 #include "AST.hpp"
 #include "../Util.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -14,8 +15,10 @@ namespace NumbatLogic
 	class EnumDecl;
 	class MemberEnumDecl;
 	class Util;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/MemberEnumDecl.nll"
 namespace NumbatLogic
 {
 	MemberEnumDecl::MemberEnumDecl()
@@ -62,17 +65,17 @@ namespace NumbatLogic
 		return __645533335;
 	}
 
-	void MemberEnumDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void MemberEnumDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
 			return;
-		Util::Pad(nDepth, sOut);
-		m_pAccessLevel->Stringify(eLanguage, eOutputFile, 0, sOut);
+		Util::Pad(nDepth, out->m_sOut);
+		m_pAccessLevel->Stringify(eLanguage, eOutputFile, 0, out);
 		if (eLanguage == AST::Language::CPP)
-			sOut->AppendChar(':');
-		sOut->AppendChar(' ');
-		m_pEnumDecl->Stringify(eLanguage, eOutputFile, nDepth, sOut);
-		sOut->AppendChar('\n');
+			out->m_sOut->AppendChar(':');
+		out->m_sOut->AppendChar(' ');
+		m_pEnumDecl->Stringify(eLanguage, eOutputFile, nDepth, out);
+		out->m_sOut->AppendChar('\n');
 	}
 
 }

@@ -28,6 +28,7 @@
 #include "../Semantic/Resolver.hpp"
 #include "../Project.hpp"
 #include "../NamespaceNode.hpp"
+#include "../OutputBuilder.hpp"
 #include "../Util.hpp"
 
 namespace NumbatLogic
@@ -64,8 +65,10 @@ namespace NumbatLogic
 	class Project;
 	class MemberClassDecl;
 	class NamespaceNode;
+	class OutputBuilder;
 	class Util;
 }
+#line 1 "../../../Source/Core/AST/ClassDecl.nll"
 namespace NumbatLogic
 {
 	ClassDecl::ClassDecl()
@@ -503,20 +506,20 @@ namespace NumbatLogic
 		sOut->Append(m_pNameToken->GetString());
 	}
 
-	void ClassDecl::StringifyTemplateThing(Language eLanguage, OutputFile eOutputFile, InternalString* sOut)
+	void ClassDecl::StringifyTemplateThing(Language eLanguage, OutputFile eOutputFile, OutputBuilder* out)
 	{
-		sOut->AppendString("template <class ");
+		out->m_sOut->AppendString("template <class ");
 		for (int i = 0; i < m_pGenericTypeDeclVector->GetSize(); i++)
 		{
 			if (i > 0)
-				sOut->Append(", ");
+				out->m_sOut->Append(", ");
 			GenericTypeDecl* pGenericTypeDecl = m_pGenericTypeDeclVector->Get(i);
-			pGenericTypeDecl->Stringify(eLanguage, eOutputFile, 0, sOut);
+			pGenericTypeDecl->Stringify(eLanguage, eOutputFile, 0, out);
 		}
-		sOut->AppendString(">");
+		out->m_sOut->AppendString(">");
 	}
 
-	void ClassDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void ClassDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		if (!(eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE))
 		{
@@ -524,43 +527,43 @@ namespace NumbatLogic
 			{
 				if (m_pGenericTypeDeclVector->GetSize() > 0)
 				{
-					Util::Pad(nDepth, sOut);
-					StringifyTemplateThing(eLanguage, eOutputFile, sOut);
-					sOut->AppendString("\n");
+					Util::Pad(nDepth, out->m_sOut);
+					StringifyTemplateThing(eLanguage, eOutputFile, out);
+					out->m_sOut->AppendString("\n");
 				}
 			}
-			Util::Pad(nDepth, sOut);
-			sOut->Append("class ");
-			m_pNameToken->Stringify(sOut);
+			Util::Pad(nDepth, out->m_sOut);
+			out->m_sOut->Append("class ");
+			m_pNameToken->Stringify(out->m_sOut);
 			if (eLanguage == AST::Language::CS || eLanguage == AST::Language::NLL_DEF)
 			{
 				if (m_pGenericTypeDeclVector->GetSize() > 0)
 				{
-					sOut->AppendChar('<');
+					out->m_sOut->AppendChar('<');
 					for (int i = 0; i < m_pGenericTypeDeclVector->GetSize(); i++)
 					{
 						if (i > 0)
-							sOut->Append(", ");
+							out->m_sOut->Append(", ");
 						GenericTypeDecl* pGenericTypeDecl = m_pGenericTypeDeclVector->Get(i);
-						pGenericTypeDecl->Stringify(eLanguage, eOutputFile, 0, sOut);
+						pGenericTypeDecl->Stringify(eLanguage, eOutputFile, 0, out);
 					}
-					sOut->AppendChar('>');
+					out->m_sOut->AppendChar('>');
 				}
 			}
 			if (m_pBaseTypeRef != 0)
 			{
-				sOut->Append(" : ");
+				out->m_sOut->Append(" : ");
 				if (eLanguage == AST::Language::CPP)
-					sOut->Append("public ");
-				m_pBaseTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
+					out->m_sOut->Append("public ");
+				m_pBaseTypeRef->Stringify(eLanguage, eOutputFile, 0, out);
 			}
 			if (eLanguage == AST::Language::CS && m_bDisposable)
 			{
 				if (m_pBaseTypeRef == 0)
-					sOut->Append(" : ");
+					out->m_sOut->Append(" : ");
 				else
-					sOut->Append(", ");
-				sOut->Append("System.IDisposable");
+					out->m_sOut->Append(", ");
+				out->m_sOut->Append("System.IDisposable");
 			}
 			if (eLanguage == AST::Language::CS && m_pGenericTypeDeclVector->GetSize() > 0)
 			{
@@ -568,39 +571,39 @@ namespace NumbatLogic
 				{
 					if (m_pGenericTypeDeclVector->GetSize() == 1)
 					{
-						sOut->AppendChar(' ');
+						out->m_sOut->AppendChar(' ');
 					}
 					else
 					{
-						sOut->Append("\n");
-						Util::Pad(nDepth + 1, sOut);
+						out->m_sOut->Append("\n");
+						Util::Pad(nDepth + 1, out->m_sOut);
 					}
-					sOut->Append("where ");
+					out->m_sOut->Append("where ");
 					GenericTypeDecl* pGenericTypeDecl = m_pGenericTypeDeclVector->Get(i);
-					pGenericTypeDecl->Stringify(eLanguage, eOutputFile, 0, sOut);
-					sOut->Append(" : class");
+					pGenericTypeDecl->Stringify(eLanguage, eOutputFile, 0, out);
+					out->m_sOut->Append(" : class");
 				}
 			}
-			sOut->Append("\n");
-			Util::Pad(nDepth, sOut);
-			sOut->Append("{\n");
+			out->m_sOut->Append("\n");
+			Util::Pad(nDepth, out->m_sOut);
+			out->m_sOut->Append("{\n");
 			nDepth++;
 		}
 		AST* pMember = m_pFirstChild;
 		while (pMember != 0)
 		{
 			if (pMember != m_pBaseTypeRef)
-				pMember->Stringify(eLanguage, eOutputFile, nDepth, sOut);
+				pMember->Stringify(eLanguage, eOutputFile, nDepth, out);
 			pMember = pMember->m_pNextSibling;
 		}
 		if (!(eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE))
 		{
 			nDepth--;
-			Util::Pad(nDepth, sOut);
+			Util::Pad(nDepth, out->m_sOut);
 			if (eLanguage == AST::Language::CPP)
-				sOut->Append("};\n");
+				out->m_sOut->Append("};\n");
 			else
-				sOut->Append("}\n");
+				out->m_sOut->Append("}\n");
 		}
 	}
 

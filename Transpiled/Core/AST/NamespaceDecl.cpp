@@ -6,6 +6,7 @@
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "../Validator.hpp"
+#include "../OutputBuilder.hpp"
 #include "../Util.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
@@ -19,9 +20,11 @@ namespace NumbatLogic
 	class Console;
 	class Assert;
 	class Validator;
+	class OutputBuilder;
 	class Util;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/NamespaceDecl.nll"
 namespace NumbatLogic
 {
 	NamespaceDecl::NamespaceDecl()
@@ -110,24 +113,25 @@ namespace NumbatLogic
 		pValidator->EndNamespace(sxName);
 	}
 
-	void NamespaceDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void NamespaceDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
-		Util::Pad(nDepth, sOut);
-		sOut->Append("namespace ");
-		m_pNameToken->Stringify(sOut);
-		sOut->Append("\n");
-		Util::Pad(nDepth, sOut);
-		sOut->Append("{\n");
+		pOutputBuilder->OutputSourceLocation(eLanguage, m_pNameToken);
+		Util::Pad(nDepth, pOutputBuilder->m_sOut);
+		pOutputBuilder->m_sOut->Append("namespace ");
+		m_pNameToken->Stringify(pOutputBuilder->m_sOut);
+		pOutputBuilder->m_sOut->Append("\n");
+		Util::Pad(nDepth, pOutputBuilder->m_sOut);
+		pOutputBuilder->m_sOut->Append("{\n");
 		nDepth++;
 		AST* pChild = m_pFirstChild;
 		while (pChild != 0)
 		{
-			pChild->Stringify(eLanguage, eOutputFile, nDepth, sOut);
+			pChild->Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 			pChild = pChild->m_pNextSibling;
 		}
 		nDepth--;
-		Util::Pad(nDepth, sOut);
-		sOut->Append("}\n");
+		Util::Pad(nDepth, pOutputBuilder->m_sOut);
+		pOutputBuilder->m_sOut->Append("}\n");
 	}
 
 }

@@ -7,6 +7,7 @@
 #include "AST.hpp"
 #include "../Validator.hpp"
 #include "../Util.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -20,8 +21,10 @@ namespace NumbatLogic
 	class BreakStmt;
 	class Validator;
 	class Util;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/BreakStmt.nll"
 namespace NumbatLogic
 {
 	BreakStmt::BreakStmt()
@@ -63,10 +66,10 @@ namespace NumbatLogic
 		pValidator->InjectCleanup(this);
 	}
 
-	void BreakStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void BreakStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		Util::Pad(nDepth, sOut);
-		sOut->Append("break;\n");
+		Util::Pad(nDepth, out->m_sOut);
+		out->m_sOut->Append("break;\n");
 	}
 
 }

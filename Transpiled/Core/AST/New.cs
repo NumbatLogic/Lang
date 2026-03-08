@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/New.nll"
 namespace NumbatLogic
 {
 	class New : AST
@@ -94,11 +95,11 @@ namespace NumbatLogic
 			AddClassDeclReference(m_pValueType.m_pClassDecl, AST.OutputFile.SOURCE, false);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			sOut.Append("new ");
-			m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
-			m_pParamCall.Stringify(eLanguage, eOutputFile, 0, sOut);
+			out.m_sOut.Append("new ");
+			m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
+			m_pParamCall.Stringify(eLanguage, eOutputFile, 0, out);
 		}
 
 		public New()

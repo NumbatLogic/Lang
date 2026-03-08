@@ -4,6 +4,7 @@ namespace NumbatLogic
 {
 	class Symbol;
 }
+#line 1 "../../../Source/Core/Semantic/Symbol.nll"
 namespace NumbatLogic
 {
 	Symbol::Symbol()

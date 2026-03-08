@@ -434,9 +434,9 @@ namespace NumbatLogic
 			return p != null ? cast Project(p) : null;
 		}
 
-		public virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			sOut.Append("???");
+			out.m_sOut.Append("???");
 		}
 
 		public virtual AST** BaseClone()

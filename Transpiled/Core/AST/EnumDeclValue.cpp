@@ -5,6 +5,7 @@
 #include "../Token.hpp"
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -16,8 +17,10 @@ namespace NumbatLogic
 	class EnumDeclValue;
 	class Console;
 	class Assert;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/EnumDeclValue.nll"
 namespace NumbatLogic
 {
 	EnumDeclValue::EnumDeclValue(Token* pFirstToken)
@@ -59,13 +62,13 @@ namespace NumbatLogic
 		return __478499602;
 	}
 
-	void EnumDeclValue::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void EnumDeclValue::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		m_pFirstToken->Stringify(sOut);
+		m_pFirstToken->Stringify(out->m_sOut);
 		if (m_pForceValue != 0)
 		{
-			sOut->AppendString(" = ");
-			m_pForceValue->Stringify(eLanguage, eOutputFile, 0, sOut);
+			out->m_sOut->AppendString(" = ");
+			m_pForceValue->Stringify(eLanguage, eOutputFile, 0, out);
 		}
 	}
 

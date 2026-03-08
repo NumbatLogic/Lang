@@ -1,3 +1,4 @@
+#line 1 "../../../Source/CLI/CLI.nll"
 namespace NumbatLogic
 {
 	class CLI

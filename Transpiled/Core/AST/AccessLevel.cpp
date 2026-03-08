@@ -3,6 +3,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "AST.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -12,8 +13,10 @@ namespace NumbatLogic
 	class Token;
 	class TokenContainer;
 	class AccessLevel;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/AccessLevel.nll"
 namespace NumbatLogic
 {
 	AccessLevel* AccessLevel::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
@@ -36,27 +39,27 @@ namespace NumbatLogic
 		return __98812046;
 	}
 
-	void AccessLevel::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void AccessLevel::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		switch (m_pFirstToken->m_eType)
 		{
 			case Token::Type::TOKEN_KEYWORD_PRIVATE:
 			{
 				if (eLanguage == AST::Language::NLL_DEF)
-					sOut->AppendString("private");
+					out->m_sOut->AppendString("private");
 				else
-					sOut->AppendString("protected");
+					out->m_sOut->AppendString("protected");
 				return;
 			}
 
 			case Token::Type::TOKEN_KEYWORD_PUBLIC:
 			{
-				sOut->AppendString("public");
+				out->m_sOut->AppendString("public");
 				return;
 			}
 
 		}
-		sOut->AppendString("???");
+		out->m_sOut->AppendString("???");
 	}
 
 }

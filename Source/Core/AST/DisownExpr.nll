@@ -88,7 +88,11 @@ namespace NumbatLogic
 			}
 
 			InternalString* sTempName = own new InternalString("");
-			m_pExpression.Stringify(AST::Language::CPP, AST::OutputFile::SOURCE, 0, sTempName);
+			OutputBuilder* outTemp = own new OutputBuilder();
+			m_pExpression.Stringify(AST::Language::CPP, AST::OutputFile::SOURCE, 0, outTemp);
+
+			sTempName.Append(outTemp.m_sOut.GetExternalString());
+
 			sTempName.AppendInt(pParentStatement.m_pFirstToken.m_nLine); // hax, but avoids name collisions eg: { { return disown x; } return disown x; }
 			Uint32 nHash = ExternalString::GetChecksum(sTempName.GetExternalString());
 
@@ -148,20 +152,20 @@ namespace NumbatLogic
 			m_sTempVarName = own disown sTempName;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
 			if (m_sTempVarName != null)
 			{
-				sOut.Append(m_sTempVarName.GetExternalString());
+				out.m_sOut.Append(m_sTempVarName.GetExternalString());
 				return;
 			}
 
 			if (eLanguage == AST::Language::NLL)
 			{
-				sOut.Append("disown ");
+				out.m_sOut.Append("disown ");
 			}
 
-			m_pExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
+			m_pExpression.Stringify(eLanguage, eOutputFile, 0, out);
 		}
 	}
 }

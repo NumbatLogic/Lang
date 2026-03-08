@@ -15,8 +15,9 @@ namespace NumbatLogic
 	class OffsetDatum;
 	class Validator;
 	class OperatorExpr;
-	class InternalString;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/VarDecl.nll"
 namespace NumbatLogic
 {
 	class VarDecl : public AST
@@ -30,7 +31,7 @@ namespace NumbatLogic
 		public: VarDecl();
 		public: static VarDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, bool bInline);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 		public: virtual ~VarDecl();
 	};
 }

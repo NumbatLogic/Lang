@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/Semantic/Symbol.nll"
 namespace NumbatLogic
 {
 	class Symbol

@@ -4,6 +4,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../Util.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -14,8 +15,10 @@ namespace NumbatLogic
 	class Token;
 	class ExpressionStmt;
 	class Util;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/ExpressionStmt.nll"
 namespace NumbatLogic
 {
 	ExpressionStmt::ExpressionStmt()
@@ -56,11 +59,11 @@ namespace NumbatLogic
 		return __490873359;
 	}
 
-	void ExpressionStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void ExpressionStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		Util::Pad(nDepth, sOut);
-		m_pExpression->Stringify(eLanguage, eOutputFile, nDepth, sOut);
-		sOut->Append(";\n");
+		Util::Pad(nDepth, out->m_sOut);
+		m_pExpression->Stringify(eLanguage, eOutputFile, nDepth, out);
+		out->m_sOut->Append(";\n");
 	}
 
 }

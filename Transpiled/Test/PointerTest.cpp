@@ -7,6 +7,7 @@ namespace NumbatLogic
 	class Console;
 	class Thing;
 }
+#line 1 "../../../Source/Test/PointerTest.nll"
 namespace NumbatLogic
 {
 	Thing::Thing()

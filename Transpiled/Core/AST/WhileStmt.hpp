@@ -9,8 +9,9 @@ namespace NumbatLogic
 	class WhileStmt;
 	class TokenContainer;
 	class OffsetDatum;
-	class InternalString;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/WhileStmt.nll"
 namespace NumbatLogic
 {
 	class WhileStmt : public AST
@@ -19,7 +20,7 @@ namespace NumbatLogic
 		public: Scope* m_pScope;
 		public: WhileStmt();
 		public: static WhileStmt* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 	};
 }
 

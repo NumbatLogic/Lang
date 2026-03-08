@@ -4,6 +4,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "../ValueType.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -14,8 +15,10 @@ namespace NumbatLogic
 	class TokenContainer;
 	class NullExpr;
 	class ValueType;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/NullExpr.nll"
 namespace NumbatLogic
 {
 	NullExpr::NullExpr()
@@ -47,12 +50,12 @@ namespace NumbatLogic
 		m_pValueType = new ValueType(ValueType::Type::NULL_VALUE);
 	}
 
-	void NullExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void NullExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		if (eLanguage == AST::Language::CPP)
-			sOut->Append("0");
+			out->m_sOut->Append("0");
 		else
-			sOut->Append("null");
+			out->m_sOut->Append("null");
 	}
 
 }

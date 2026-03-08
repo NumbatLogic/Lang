@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/NamespaceNode.nll"
 namespace NumbatLogic
 {
 	class NamespaceNode

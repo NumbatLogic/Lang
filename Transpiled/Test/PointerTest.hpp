@@ -1,5 +1,6 @@
 #pragma once
 
+#line 1 "../../../Source/Test/PointerTest.nll"
 namespace NumbatLogic
 {
 	class Thing

@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/VarDecl.nll"
 namespace NumbatLogic
 {
 	class VarDecl : AST
@@ -147,16 +148,16 @@ namespace NumbatLogic
 			}
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			Util.Pad(nDepth, sOut);
+			Util.Pad(nDepth, out.m_sOut);
 			if (eLanguage == AST.Language.CS)
 			{
 				if (m_pParent != null && m_pParent.m_eType == AST.Type.AST_PARAM_DECL)
 				{
 					bool bBefore = m_pTypeRef.m_bConst;
 					m_pTypeRef.m_bConst = false;
-					m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
+					m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
 					m_pTypeRef.m_bConst = bBefore;
 				}
 				else
@@ -165,22 +166,22 @@ namespace NumbatLogic
 					if (m_pArraySizeVector != null && bBefore)
 					{
 						m_pTypeRef.m_bConst = false;
-						sOut.Append("readonly ");
+						out.m_sOut.Append("readonly ");
 					}
-					m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
+					m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
 					m_pTypeRef.m_bConst = bBefore;
 				}
 				if (m_pArraySizeVector != null)
 				{
-					sOut.AppendChar('[');
-					sOut.AppendChar(']');
+					out.m_sOut.AppendChar('[');
+					out.m_sOut.AppendChar(']');
 				}
 			}
 			else
 			{
-				m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
+				m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
 			}
-			sOut.AppendChar(' ');
+			out.m_sOut.AppendChar(' ');
 			if (m_pParent != null && m_pParent.m_eType == AST.Type.AST_MEMBER_VAR_DECL && eLanguage == AST.Language.CPP && eOutputFile == AST.OutputFile.SOURCE)
 			{
 				AST pParentParent = m_pParent.m_pParent;
@@ -189,18 +190,18 @@ namespace NumbatLogic
 					Assert.Plz(false);
 				}
 				ClassDecl pClassDecl = (ClassDecl)(pParentParent);
-				sOut.AppendString(pClassDecl.m_pNameToken.GetString());
-				sOut.AppendString("::");
+				out.m_sOut.AppendString(pClassDecl.m_pNameToken.GetString());
+				out.m_sOut.AppendString("::");
 			}
-			sOut.AppendString(m_pNameToken.GetString());
+			out.m_sOut.AppendString(m_pNameToken.GetString());
 			if (m_pArraySizeVector != null && eLanguage != AST.Language.CS)
 			{
 				for (int i = 0; i < m_pArraySizeVector.GetSize(); i++)
 				{
 					AST pArraySize = m_pArraySizeVector.Get(i);
-					sOut.AppendChar('[');
-					pArraySize.Stringify(eLanguage, eOutputFile, 0, sOut);
-					sOut.AppendChar(']');
+					out.m_sOut.AppendChar('[');
+					pArraySize.Stringify(eLanguage, eOutputFile, 0, out);
+					out.m_sOut.AppendChar(']');
 				}
 			}
 			MemberVarDecl pMemberVarDecl = (m_pParent != null && m_pParent.m_eType == AST.Type.AST_MEMBER_VAR_DECL) ? (MemberVarDecl)(m_pParent) : null;
@@ -232,8 +233,8 @@ namespace NumbatLogic
 				}
 				if (bDoIt)
 				{
-					sOut.AppendString(" = ");
-					m_pAssignment.Stringify(eLanguage, eOutputFile, 0, sOut);
+					out.m_sOut.AppendString(" = ");
+					m_pAssignment.Stringify(eLanguage, eOutputFile, 0, out);
 				}
 			}
 			else
@@ -263,7 +264,7 @@ namespace NumbatLogic
 					}
 					if (sxToAppend != null)
 					{
-						sOut.AppendString(sxToAppend);
+						out.m_sOut.AppendString(sxToAppend);
 					}
 					else
 					{
@@ -274,28 +275,28 @@ namespace NumbatLogic
 								Project pProject = GetProject();
 								ValueType pValueType = m_pTypeRef.CreateValueType(pProject.m_pValidator.m_pResolver);
 								if (pValueType != null && pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE && m_pArraySizeVector == null)
-									sOut.AppendString(" = 0");
+									out.m_sOut.AppendString(" = 0");
 								if (bStatic && m_pTypeRef.IsIntegral())
-									sOut.AppendString(" = 0");
+									out.m_sOut.AppendString(" = 0");
 							}
 						}
 						if (eLanguage == AST.Language.CS && m_pArraySizeVector != null)
 						{
-							sOut.AppendString(" = new ");
-							m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
+							out.m_sOut.AppendString(" = new ");
+							m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
 							for (int i = 0; i < m_pArraySizeVector.GetSize(); i++)
 							{
 								AST pArraySize = m_pArraySizeVector.Get(i);
-								sOut.AppendChar('[');
-								pArraySize.Stringify(eLanguage, eOutputFile, 0, sOut);
-								sOut.AppendChar(']');
+								out.m_sOut.AppendChar('[');
+								pArraySize.Stringify(eLanguage, eOutputFile, 0, out);
+								out.m_sOut.AppendChar(']');
 							}
 						}
 					}
 				}
 			}
 			if (!m_bInline)
-				sOut.AppendString(";\n");
+				out.m_sOut.AppendString(";\n");
 		}
 
 		~VarDecl()

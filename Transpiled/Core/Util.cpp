@@ -6,6 +6,7 @@ namespace NumbatLogic
 	class Util;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/Util.nll"
 namespace NumbatLogic
 {
 	void Util::Pad(int nDepth, InternalString* sOut)

@@ -14,8 +14,9 @@ namespace NumbatLogic
 	class EnumDecl;
 	class TokenContainer;
 	class OffsetDatum;
-	class InternalString;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/EnumDecl.nll"
 namespace NumbatLogic
 {
 	class EnumDecl : public AST
@@ -24,7 +25,7 @@ namespace NumbatLogic
 		public: Vector<EnumDeclValue*>* m_pEnumDeclValueVector;
 		public: EnumDecl();
 		public: static EnumDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 		public: virtual ~EnumDecl();
 	};
 }

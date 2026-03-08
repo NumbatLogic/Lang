@@ -18,6 +18,7 @@ namespace NumbatLogic
 	class InternalString;
 	class ExternalString;
 }
+#line 1 "../../../Source/Core/NamespaceNode.nll"
 namespace NumbatLogic
 {
 	NamespaceNode::NamespaceNode(InternalString* sName, NamespaceNode* pParent)

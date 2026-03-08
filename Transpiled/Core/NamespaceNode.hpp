@@ -15,6 +15,7 @@ namespace NumbatLogic
 	class Vector;
 	class NamespaceDecl;
 }
+#line 1 "../../../Source/Core/NamespaceNode.nll"
 namespace NumbatLogic
 {
 	class NamespaceNode

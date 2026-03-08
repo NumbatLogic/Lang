@@ -16,8 +16,9 @@ namespace NumbatLogic
 	class Validator;
 	class OperatorExpr;
 	class ParamCall;
-	class InternalString;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/ParamDecl.nll"
 namespace NumbatLogic
 {
 	class ParamDecl : public AST
@@ -27,7 +28,7 @@ namespace NumbatLogic
 		public: static ParamDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
 		public: bool ValidateParamCall(ParamCall* pParamCall, Validator* pValidator, bool bReportErrors);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 		public: virtual ~ParamDecl();
 	};
 }

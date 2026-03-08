@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/CastExpr.nll"
 namespace NumbatLogic
 {
 	class CastExpr : AST
@@ -87,20 +88,20 @@ namespace NumbatLogic
 			}
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
 			if (eLanguage == AST.Language.NLL_DEF)
 			{
-				sOut.Append("cast ");
-				m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
-				m_pParamCall.Stringify(eLanguage, eOutputFile, 0, sOut);
+				out.m_sOut.Append("cast ");
+				m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
+				m_pParamCall.Stringify(eLanguage, eOutputFile, 0, out);
 			}
 			else
 			{
-				sOut.AppendChar('(');
-				m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
-				sOut.AppendChar(')');
-				m_pParamCall.Stringify(eLanguage, eOutputFile, 0, sOut);
+				out.m_sOut.AppendChar('(');
+				m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
+				out.m_sOut.AppendChar(')');
+				m_pParamCall.Stringify(eLanguage, eOutputFile, 0, out);
 			}
 		}
 

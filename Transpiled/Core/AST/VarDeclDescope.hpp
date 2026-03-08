@@ -10,15 +10,16 @@ namespace NumbatLogic
 	template <class T>
 	class Vector;
 	class VarDecl;
-	class InternalString;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/VarDeclDescope.nll"
 namespace NumbatLogic
 {
 	class VarDeclDescope : public AST
 	{
 		public: Vector<VarDecl*>* m_pVarDeclVector;
 		public: VarDeclDescope();
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 		public: virtual ~VarDeclDescope();
 	};
 }

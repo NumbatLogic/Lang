@@ -22,6 +22,7 @@ namespace NumbatLogic
 	class AST;
 	class VarDeclDescope;
 }
+#line 1 "../../../Source/Core/Validator.nll"
 namespace NumbatLogic
 {
 	class ValidatorError

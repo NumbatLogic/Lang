@@ -8,6 +8,7 @@ namespace NumbatLogic
 	class Vector;
 	class InternalString;
 }
+#line 1 "../../../Source/CLI/CLI.nll"
 namespace NumbatLogic
 {
 	class CLI

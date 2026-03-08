@@ -19,6 +19,7 @@ namespace NumbatLogic
 	class NamespaceDecl;
 	class Token;
 }
+#line 1 "../../../Source/Core/Project.nll"
 namespace NumbatLogic
 {
 	class Project : public AST

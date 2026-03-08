@@ -14,6 +14,7 @@
 #include "ClassDecl.hpp"
 #include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -34,9 +35,11 @@ namespace NumbatLogic
 	template <class T>
 	class OwnedVector;
 	class ExternalString;
+	class OutputBuilder;
 	class InternalString;
 	class ClassDecl;
 }
+#line 1 "../../../Source/Core/AST/FunctionDecl.nll"
 namespace NumbatLogic
 {
 	FunctionDecl* FunctionDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, AST* pParent)
@@ -150,7 +153,7 @@ namespace NumbatLogic
 		if (pValueType) delete pValueType;
 	}
 
-	void FunctionDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void FunctionDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		MemberFunctionDecl* pMemberFunctionDecl = 0;
 		if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_MEMBER_FUNCTION_DECL)
@@ -158,10 +161,10 @@ namespace NumbatLogic
 		bool bGeneric = pMemberFunctionDecl != 0 && pMemberFunctionDecl->m_pParentClassDecl->m_pGenericTypeDeclVector->GetSize() > 0;
 		if (pMemberFunctionDecl != 0 && eLanguage == AST::Language::CS && ExternalString::Equal("GetType", m_pNameToken->GetString()))
 		{
-			sOut->Append("new ");
+			out->m_sOut->Append("new ");
 		}
-		m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
-		sOut->AppendChar(' ');
+		m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, out);
+		out->m_sOut->AppendChar(' ');
 		if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
 		{
 			if (pMemberFunctionDecl != 0)
@@ -181,29 +184,29 @@ namespace NumbatLogic
 					}
 					pPrefixParent = pPrefixParent->m_pParent;
 				}
-				sOut->Append(sPrefix->GetExternalString());
+				out->m_sOut->Append(sPrefix->GetExternalString());
 				if (sPrefix) delete sPrefix;
 				if (sTemp) delete sTemp;
 			}
 		}
-		sOut->Append(m_sMangledName);
-		m_pParamDecl->Stringify(eLanguage, eOutputFile, 0, sOut);
+		out->m_sOut->Append(m_sMangledName);
+		m_pParamDecl->Stringify(eLanguage, eOutputFile, 0, out);
 		if (m_bConst && eLanguage == AST::Language::CPP)
-			sOut->Append(" const");
+			out->m_sOut->Append(" const");
 		if ((eOutputFile == AST::OutputFile::HEADER && !bGeneric) || eLanguage == AST::Language::NLL_DEF)
 		{
-			sOut->Append(";\n");
+			out->m_sOut->Append(";\n");
 			return;
 		}
 		if (m_pScope == 0)
 		{
-			sOut->Append(";\n");
+			out->m_sOut->Append(";\n");
 		}
 		else
 		{
-			sOut->AppendChar('\n');
-			m_pScope->Stringify(eLanguage, eOutputFile, nDepth, sOut);
-			sOut->AppendChar('\n');
+			out->m_sOut->AppendChar('\n');
+			m_pScope->Stringify(eLanguage, eOutputFile, nDepth, out);
+			out->m_sOut->AppendChar('\n');
 		}
 	}
 

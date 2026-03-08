@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/Util.nll"
 namespace NumbatLogic
 {
 	class Util

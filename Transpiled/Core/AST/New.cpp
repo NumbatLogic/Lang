@@ -13,6 +13,7 @@
 #include "ClassDecl.hpp"
 #include "TorDecl.hpp"
 #include "ParamDecl.hpp"
+#include "../OutputBuilder.hpp"
 
 namespace NumbatLogic
 {
@@ -31,7 +32,9 @@ namespace NumbatLogic
 	class ClassDecl;
 	class TorDecl;
 	class ParamDecl;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/New.nll"
 namespace NumbatLogic
 {
 	New* New::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
@@ -134,11 +137,11 @@ namespace NumbatLogic
 		AddClassDeclReference(m_pValueType->m_pClassDecl, AST::OutputFile::SOURCE, false);
 	}
 
-	void New::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void New::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		sOut->Append("new ");
-		m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
-		m_pParamCall->Stringify(eLanguage, eOutputFile, 0, sOut);
+		out->m_sOut->Append("new ");
+		m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, out);
+		m_pParamCall->Stringify(eLanguage, eOutputFile, 0, out);
 	}
 
 	New::New()

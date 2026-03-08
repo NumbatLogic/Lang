@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/Semantic/Resolver.nll"
 namespace NumbatLogic
 {
 	class Resolver

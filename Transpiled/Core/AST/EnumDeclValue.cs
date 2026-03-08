@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/EnumDeclValue.nll"
 namespace NumbatLogic
 {
 	class EnumDeclValue : AST
@@ -37,13 +38,13 @@ namespace NumbatLogic
 			return __478499602;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			m_pFirstToken.Stringify(sOut);
+			m_pFirstToken.Stringify(out.m_sOut);
 			if (m_pForceValue != null)
 			{
-				sOut.AppendString(" = ");
-				m_pForceValue.Stringify(eLanguage, eOutputFile, 0, sOut);
+				out.m_sOut.AppendString(" = ");
+				m_pForceValue.Stringify(eLanguage, eOutputFile, 0, out);
 			}
 		}
 

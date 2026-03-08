@@ -34,6 +34,7 @@ namespace NumbatLogic
 	class DelegateDecl;
 	class FunctionDecl;
 }
+#line 1 "../../../Source/Core/ValueType.nll"
 namespace NumbatLogic
 {
 	ValueType::ValueType(Type eType)

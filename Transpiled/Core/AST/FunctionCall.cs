@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/FunctionCall.nll"
 namespace NumbatLogic
 {
 	class FunctionCall : AST
@@ -479,10 +480,10 @@ namespace NumbatLogic
 			}
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			sOut.Append(m_sMangledName);
-			m_pParamCall.Stringify(eLanguage, eOutputFile, 0, sOut);
+			out.m_sOut.Append(m_sMangledName);
+			m_pParamCall.Stringify(eLanguage, eOutputFile, 0, out);
 		}
 
 		public FunctionCall()

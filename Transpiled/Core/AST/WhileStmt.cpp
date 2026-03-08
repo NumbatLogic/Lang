@@ -7,6 +7,7 @@
 #include "AST.hpp"
 #include "Scope.hpp"
 #include "../Util.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -20,8 +21,10 @@ namespace NumbatLogic
 	class Scope;
 	class WhileStmt;
 	class Util;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/WhileStmt.nll"
 namespace NumbatLogic
 {
 	WhileStmt::WhileStmt()
@@ -95,13 +98,13 @@ namespace NumbatLogic
 		return __2238546185;
 	}
 
-	void WhileStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void WhileStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		Util::Pad(nDepth, sOut);
-		sOut->Append("while (");
-		m_pExpression->Stringify(eLanguage, eOutputFile, 0, sOut);
-		sOut->Append(")\n");
-		m_pScope->Stringify(eLanguage, eOutputFile, nDepth, sOut);
+		Util::Pad(nDepth, out->m_sOut);
+		out->m_sOut->Append("while (");
+		m_pExpression->Stringify(eLanguage, eOutputFile, 0, out);
+		out->m_sOut->Append(")\n");
+		m_pScope->Stringify(eLanguage, eOutputFile, nDepth, out);
 	}
 
 }

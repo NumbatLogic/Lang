@@ -4,6 +4,7 @@
 #include "../Token.hpp"
 #include "../OffsetDatum.hpp"
 #include "../ValueType.hpp"
+#include "../OutputBuilder.hpp"
 
 namespace NumbatLogic
 {
@@ -13,7 +14,9 @@ namespace NumbatLogic
 	class OffsetDatum;
 	class NumberExpr;
 	class ValueType;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/NumberExpr.nll"
 namespace NumbatLogic
 {
 	NumberExpr::NumberExpr(Token* pFirstToken)
@@ -47,9 +50,9 @@ namespace NumbatLogic
 		m_pValueType = new ValueType(ValueType::Type::INT);
 	}
 
-	void NumberExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void NumberExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		m_pFirstToken->Stringify(sOut);
+		m_pFirstToken->Stringify(out->m_sOut);
 	}
 
 }

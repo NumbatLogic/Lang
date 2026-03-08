@@ -19,6 +19,7 @@ namespace NumbatLogic
 	class Vector;
 	class AST;
 }
+#line 1 "../../../Source/Core/Semantic/SymbolScope.nll"
 namespace NumbatLogic
 {
 	SymbolScope::SymbolScope()

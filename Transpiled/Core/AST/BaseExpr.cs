@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/BaseExpr.nll"
 namespace NumbatLogic
 {
 	class BaseExpr : AST
@@ -47,12 +48,12 @@ namespace NumbatLogic
 			m_pBaseClassDecl = pBaseClassDecl;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
 			if (eLanguage == AST.Language.CPP)
-				m_pBaseClassDecl.m_pNameToken.Stringify(sOut);
+				m_pBaseClassDecl.m_pNameToken.Stringify(out.m_sOut);
 			else
-				sOut.Append("base");
+				out.m_sOut.Append("base");
 		}
 
 		public BaseExpr()

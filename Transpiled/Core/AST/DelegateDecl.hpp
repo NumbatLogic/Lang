@@ -11,8 +11,9 @@ namespace NumbatLogic
 	class TokenContainer;
 	class OffsetDatum;
 	class ClassDecl;
-	class InternalString;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/DelegateDecl.nll"
 namespace NumbatLogic
 {
 	class DelegateDecl : public AST
@@ -21,7 +22,7 @@ namespace NumbatLogic
 		public: FunctionDecl* m_pFunctionDecl;
 		public: DelegateDecl();
 		public: static DelegateDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, ClassDecl* pParentClassDecl);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 	};
 }
 

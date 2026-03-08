@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/Identifier.nll"
 namespace NumbatLogic
 {
 	class Identifier : AST
@@ -378,9 +379,9 @@ namespace NumbatLogic
 			base.Validate(pValidator, pParent);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			m_pNameToken.Stringify(sOut);
+			m_pNameToken.Stringify(out.m_sOut);
 		}
 
 		public Identifier()

@@ -14,6 +14,7 @@
 #include "../Semantic/Symbol.hpp"
 #include "../Semantic/Resolver.hpp"
 #include "../Util.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -36,8 +37,10 @@ namespace NumbatLogic
 	class Resolver;
 	class ClassDecl;
 	class Util;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/Scope.nll"
 namespace NumbatLogic
 {
 	Scope::Scope()
@@ -158,23 +161,23 @@ namespace NumbatLogic
 		pValidator->EndScope(this);
 	}
 
-	void Scope::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void Scope::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		if (!m_bPseudo || m_pFirstChild == 0 || m_pFirstChild != m_pLastChild)
 		{
-			Util::Pad(nDepth, sOut);
-			sOut->Append("{\n");
+			Util::Pad(nDepth, out->m_sOut);
+			out->m_sOut->Append("{\n");
 		}
 		AST* pChild = m_pFirstChild;
 		while (pChild != 0)
 		{
-			pChild->Stringify(eLanguage, eOutputFile, nDepth + 1, sOut);
+			pChild->Stringify(eLanguage, eOutputFile, nDepth + 1, out);
 			pChild = pChild->m_pNextSibling;
 		}
 		if (!m_bPseudo || m_pFirstChild == 0 || m_pFirstChild != m_pLastChild)
 		{
-			Util::Pad(nDepth, sOut);
-			sOut->Append("}\n");
+			Util::Pad(nDepth, out->m_sOut);
+			out->m_sOut->Append("}\n");
 		}
 	}
 

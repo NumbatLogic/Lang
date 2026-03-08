@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/Paren.nll"
 namespace NumbatLogic
 {
 	class Paren : AST
@@ -45,11 +46,11 @@ namespace NumbatLogic
 			m_pValueType = m_pFirstChild.m_pValueType.Clone();
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			sOut.AppendChar('(');
-			m_pFirstChild.Stringify(eLanguage, eOutputFile, 0, sOut);
-			sOut.AppendChar(')');
+			out.m_sOut.AppendChar('(');
+			m_pFirstChild.Stringify(eLanguage, eOutputFile, 0, out);
+			out.m_sOut.AppendChar(')');
 		}
 
 	}

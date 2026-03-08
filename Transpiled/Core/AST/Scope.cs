@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/Scope.nll"
 namespace NumbatLogic
 {
 	class Scope : AST
@@ -109,23 +110,23 @@ namespace NumbatLogic
 			pValidator.EndScope(this);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
 			if (!m_bPseudo || m_pFirstChild == null || m_pFirstChild != m_pLastChild)
 			{
-				Util.Pad(nDepth, sOut);
-				sOut.Append("{\n");
+				Util.Pad(nDepth, out.m_sOut);
+				out.m_sOut.Append("{\n");
 			}
 			AST pChild = m_pFirstChild;
 			while (pChild != null)
 			{
-				pChild.Stringify(eLanguage, eOutputFile, nDepth + 1, sOut);
+				pChild.Stringify(eLanguage, eOutputFile, nDepth + 1, out);
 				pChild = pChild.m_pNextSibling;
 			}
 			if (!m_bPseudo || m_pFirstChild == null || m_pFirstChild != m_pLastChild)
 			{
-				Util.Pad(nDepth, sOut);
-				sOut.Append("}\n");
+				Util.Pad(nDepth, out.m_sOut);
+				out.m_sOut.Append("}\n");
 			}
 		}
 

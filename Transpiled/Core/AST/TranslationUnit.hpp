@@ -15,10 +15,12 @@ namespace NumbatLogic
 	template <class T>
 	class Vector;
 	class ClassDeclReference;
+	class OutputBuilder;
 	class TokenContainer;
 	class TranslationUnit;
 	class AST;
 }
+#line 1 "../../../Source/Core/AST/TranslationUnit.nll"
 namespace NumbatLogic
 {
 	class ClassDeclReference
@@ -35,7 +37,7 @@ namespace NumbatLogic
 		public: Vector<ClassDeclReference*>* m_pChildClassVector;
 		public: ReferenceNode(const char* sxName);
 		public: ReferenceNode* GetOrCreateChildNode(const char* sxName);
-		public: void Stringify(AST::Language eLanguage, AST::OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: void Stringify(AST::Language eLanguage, AST::OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 		public: virtual ~ReferenceNode();
 	};
 	class TranslationUnit : public AST
@@ -48,7 +50,7 @@ namespace NumbatLogic
 		public: virtual void AddClassDeclReference(ClassDecl* pClassDecl, OutputFile eOutputFile, bool bForwardReference);
 		public: static void ConvertFilePath(Language eLanguage, OutputFile eOutputFile, InternalString* sPath);
 		public: InternalString* RetargetRelativePath(Language eLanguage, OutputFile eOutputFile, const char* sxFrom, const char* sxTo);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 		public: virtual ~TranslationUnit();
 	};
 }

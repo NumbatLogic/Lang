@@ -11,8 +11,9 @@ namespace NumbatLogic
 	class OffsetDatum;
 	class OperatorExpr;
 	class Validator;
-	class InternalString;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/OperatorExpr.nll"
 namespace NumbatLogic
 {
 	class OperatorExpr : public AST
@@ -67,7 +68,7 @@ namespace NumbatLogic
 		public: virtual AST* BaseClone();
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
 		protected: static const char* GetOperatorString(OperatorExpr::OperatorType eOperatorType);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 		public: virtual ~OperatorExpr();
 	};
 }

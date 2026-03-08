@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/ArrayLookup.nll"
 namespace NumbatLogic
 {
 	class ArrayLookup : AST
@@ -90,14 +91,14 @@ namespace NumbatLogic
 			m_pValueType = m_pExpression.m_pValueType.Clone();
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			m_pExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
+			m_pExpression.Stringify(eLanguage, eOutputFile, 0, out);
 			for (int i = 0; i < m_pIndexExpressionVector.GetSize(); i++)
 			{
-				sOut.AppendChar('[');
-				m_pIndexExpressionVector.Get(i).Stringify(eLanguage, eOutputFile, 0, sOut);
-				sOut.AppendChar(']');
+				out.m_sOut.AppendChar('[');
+				m_pIndexExpressionVector.Get(i).Stringify(eLanguage, eOutputFile, 0, out);
+				out.m_sOut.AppendChar(']');
 			}
 		}
 

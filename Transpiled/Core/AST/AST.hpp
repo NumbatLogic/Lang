@@ -12,8 +12,10 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class ClassDecl;
 	class Project;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/AST.nll"
 namespace NumbatLogic
 {
 	class AST
@@ -116,7 +118,7 @@ namespace NumbatLogic
 		public: AST* RemoveChild(AST* pChild);
 		public: virtual void AddClassDeclReference(ClassDecl* pClassDecl, OutputFile eOutputFile, bool bForwardReference);
 		public: Project* GetProject();
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 		public: virtual AST* BaseClone();
 		public: AST* GetParentStatement();
 		public: virtual void StringifyType(InternalString* sOut);

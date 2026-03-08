@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/Project.nll"
 namespace NumbatLogic
 {
 	class Project : AST
@@ -258,7 +259,7 @@ namespace NumbatLogic
 		public void Output(AST.Language eLanguage, OutputFile eOutputFile)
 		{
 			InternalString sOutFile = new InternalString("");
-			InternalString sOut = new InternalString("");
+			OutputBuilder out = new OutputBuilder();
 			for (int i = 0; i < m_pTranslationUnitVector.GetSize(); i++)
 			{
 				TranslationUnit pTranslationUnit = m_pTranslationUnitVector.Get(i);
@@ -267,14 +268,14 @@ namespace NumbatLogic
 				{
 					TranslationUnit.ConvertFilePath(eLanguage, eOutputFile, sOutFile);
 					string sxOutFile = sOutFile.GetExternalString();
-					sOut.Set("");
-					pTranslationUnit.Stringify(eLanguage, eOutputFile, 0, sOut);
+					out.m_sOut.Set("");
+					pTranslationUnit.Stringify(eLanguage, eOutputFile, 0, out);
 					InternalString sDirectory = File.GetFileDirectory(sxOutFile);
 					File.CreateDirectory(sDirectory.GetExternalString());
 					InternalString sTestFile = File.GetContents(sxOutFile);
-					if (sTestFile == null || !sOut.IsEqual(sTestFile.GetExternalString()))
+					if (sTestFile == null || !out.m_sOut.IsEqual(sTestFile.GetExternalString()))
 					{
-						File.PutContents(sxOutFile, sOut.GetExternalString());
+						File.PutContents(sxOutFile, out.m_sOut.GetExternalString());
 					}
 				}
 			}

@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/StringExpr.nll"
 namespace NumbatLogic
 {
 	class StringExpr : AST
@@ -21,9 +22,9 @@ namespace NumbatLogic
 			m_pValueType = new ValueType(ValueType.Type.STRING);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			m_pFirstToken.Stringify(sOut);
+			m_pFirstToken.Stringify(out.m_sOut);
 		}
 
 	}

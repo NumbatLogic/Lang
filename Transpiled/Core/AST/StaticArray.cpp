@@ -6,6 +6,7 @@
 #include "../../../../LangShared/Console/CPP/Console.hpp"
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "../ValueType.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -18,8 +19,10 @@ namespace NumbatLogic
 	class Console;
 	class Assert;
 	class ValueType;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/StaticArray.nll"
 namespace NumbatLogic
 {
 	StaticArray::StaticArray()
@@ -87,24 +90,24 @@ namespace NumbatLogic
 		m_pValueType = new ValueType(ValueType::Type::STATIC_ARRAY);
 	}
 
-	void StaticArray::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void StaticArray::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		if (eLanguage == AST::Language::CPP || eLanguage == AST::Language::CS)
-			sOut->AppendChar('{');
+			out->m_sOut->AppendChar('{');
 		else
-			sOut->AppendChar('[');
+			out->m_sOut->AppendChar('[');
 		AST* pParam = m_pFirstChild;
 		while (pParam != 0)
 		{
 			if (pParam != m_pFirstChild)
-				sOut->Append(", ");
-			pParam->Stringify(eLanguage, eOutputFile, 0, sOut);
+				out->m_sOut->Append(", ");
+			pParam->Stringify(eLanguage, eOutputFile, 0, out);
 			pParam = pParam->m_pNextSibling;
 		}
 		if (eLanguage == AST::Language::CPP || eLanguage == AST::Language::CS)
-			sOut->AppendChar('}');
+			out->m_sOut->AppendChar('}');
 		else
-			sOut->AppendChar(']');
+			out->m_sOut->AppendChar(']');
 	}
 
 }

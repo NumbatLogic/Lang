@@ -10,6 +10,7 @@
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
 #include "../Util.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "ClassDecl.hpp"
 #include "MemberVarDecl.hpp"
@@ -30,11 +31,13 @@ namespace NumbatLogic
 	class Validator;
 	class ValueType;
 	class Util;
+	class OutputBuilder;
 	class InternalString;
 	class ClassDecl;
 	class MemberVarDecl;
 	class Project;
 }
+#line 1 "../../../Source/Core/AST/VarDecl.nll"
 namespace NumbatLogic
 {
 	VarDecl::VarDecl()
@@ -214,16 +217,16 @@ namespace NumbatLogic
 		if (pValueType) delete pValueType;
 	}
 
-	void VarDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void VarDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		Util::Pad(nDepth, sOut);
+		Util::Pad(nDepth, out->m_sOut);
 		if (eLanguage == AST::Language::CS)
 		{
 			if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_PARAM_DECL)
 			{
 				bool bBefore = m_pTypeRef->m_bConst;
 				m_pTypeRef->m_bConst = false;
-				m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
+				m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, out);
 				m_pTypeRef->m_bConst = bBefore;
 			}
 			else
@@ -232,22 +235,22 @@ namespace NumbatLogic
 				if (m_pArraySizeVector != 0 && bBefore)
 				{
 					m_pTypeRef->m_bConst = false;
-					sOut->Append("readonly ");
+					out->m_sOut->Append("readonly ");
 				}
-				m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
+				m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, out);
 				m_pTypeRef->m_bConst = bBefore;
 			}
 			if (m_pArraySizeVector != 0)
 			{
-				sOut->AppendChar('[');
-				sOut->AppendChar(']');
+				out->m_sOut->AppendChar('[');
+				out->m_sOut->AppendChar(']');
 			}
 		}
 		else
 		{
-			m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
+			m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, out);
 		}
-		sOut->AppendChar(' ');
+		out->m_sOut->AppendChar(' ');
 		if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_MEMBER_VAR_DECL && eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
 		{
 			AST* pParentParent = m_pParent->m_pParent;
@@ -256,18 +259,18 @@ namespace NumbatLogic
 				Assert::Plz(false);
 			}
 			ClassDecl* pClassDecl = (ClassDecl*)(pParentParent);
-			sOut->AppendString(pClassDecl->m_pNameToken->GetString());
-			sOut->AppendString("::");
+			out->m_sOut->AppendString(pClassDecl->m_pNameToken->GetString());
+			out->m_sOut->AppendString("::");
 		}
-		sOut->AppendString(m_pNameToken->GetString());
+		out->m_sOut->AppendString(m_pNameToken->GetString());
 		if (m_pArraySizeVector != 0 && eLanguage != AST::Language::CS)
 		{
 			for (int i = 0; i < m_pArraySizeVector->GetSize(); i++)
 			{
 				AST* pArraySize = m_pArraySizeVector->Get(i);
-				sOut->AppendChar('[');
-				pArraySize->Stringify(eLanguage, eOutputFile, 0, sOut);
-				sOut->AppendChar(']');
+				out->m_sOut->AppendChar('[');
+				pArraySize->Stringify(eLanguage, eOutputFile, 0, out);
+				out->m_sOut->AppendChar(']');
 			}
 		}
 		MemberVarDecl* pMemberVarDecl = (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_MEMBER_VAR_DECL) ? (MemberVarDecl*)(m_pParent) : 0;
@@ -299,8 +302,8 @@ namespace NumbatLogic
 			}
 			if (bDoIt)
 			{
-				sOut->AppendString(" = ");
-				m_pAssignment->Stringify(eLanguage, eOutputFile, 0, sOut);
+				out->m_sOut->AppendString(" = ");
+				m_pAssignment->Stringify(eLanguage, eOutputFile, 0, out);
 			}
 		}
 		else
@@ -330,7 +333,7 @@ namespace NumbatLogic
 				}
 				if (sxToAppend != 0)
 				{
-					sOut->AppendString(sxToAppend);
+					out->m_sOut->AppendString(sxToAppend);
 				}
 				else
 				{
@@ -341,29 +344,29 @@ namespace NumbatLogic
 							Project* pProject = GetProject();
 							ValueType* pValueType = m_pTypeRef->CreateValueType(pProject->m_pValidator->m_pResolver);
 							if (pValueType != 0 && pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE && m_pArraySizeVector == 0)
-								sOut->AppendString(" = 0");
+								out->m_sOut->AppendString(" = 0");
 							if (bStatic && m_pTypeRef->IsIntegral())
-								sOut->AppendString(" = 0");
+								out->m_sOut->AppendString(" = 0");
 							if (pValueType) delete pValueType;
 						}
 					}
 					if (eLanguage == AST::Language::CS && m_pArraySizeVector != 0)
 					{
-						sOut->AppendString(" = new ");
-						m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, sOut);
+						out->m_sOut->AppendString(" = new ");
+						m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, out);
 						for (int i = 0; i < m_pArraySizeVector->GetSize(); i++)
 						{
 							AST* pArraySize = m_pArraySizeVector->Get(i);
-							sOut->AppendChar('[');
-							pArraySize->Stringify(eLanguage, eOutputFile, 0, sOut);
-							sOut->AppendChar(']');
+							out->m_sOut->AppendChar('[');
+							pArraySize->Stringify(eLanguage, eOutputFile, 0, out);
+							out->m_sOut->AppendChar(']');
 						}
 					}
 				}
 			}
 		}
 		if (!m_bInline)
-			sOut->AppendString(";\n");
+			out->m_sOut->AppendString(";\n");
 	}
 
 	VarDecl::~VarDecl()

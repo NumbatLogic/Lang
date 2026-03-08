@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/Unary.nll"
 namespace NumbatLogic
 {
 	class Unary : AST
@@ -39,10 +40,10 @@ namespace NumbatLogic
 			m_pValueType = m_pExpression.m_pValueType.Clone();
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			m_pFirstToken.Stringify(sOut);
-			m_pExpression.Stringify(eLanguage, eOutputFile, 0, sOut);
+			m_pFirstToken.Stringify(out.m_sOut);
+			m_pExpression.Stringify(eLanguage, eOutputFile, 0, out);
 		}
 
 		public Unary()

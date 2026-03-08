@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/BreakStmt.nll"
 namespace NumbatLogic
 {
 	class BreakStmt : AST
@@ -38,10 +39,10 @@ namespace NumbatLogic
 			pValidator.InjectCleanup(this);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
-			Util.Pad(nDepth, sOut);
-			sOut.Append("break;\n");
+			Util.Pad(nDepth, out.m_sOut);
+			out.m_sOut.Append("break;\n");
 		}
 
 	}

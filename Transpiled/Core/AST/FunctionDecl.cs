@@ -1,3 +1,4 @@
+#line 1 "../../../Source/Core/AST/FunctionDecl.nll"
 namespace NumbatLogic
 {
 	class FunctionDecl : AST
@@ -104,7 +105,7 @@ namespace NumbatLogic
 				AddClassDeclReference(pValueType.m_pClassDecl, AST.OutputFile.HEADER, true);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
 		{
 			MemberFunctionDecl pMemberFunctionDecl = null;
 			if (m_pParent != null && m_pParent.m_eType == AST.Type.AST_MEMBER_FUNCTION_DECL)
@@ -112,10 +113,10 @@ namespace NumbatLogic
 			bool bGeneric = pMemberFunctionDecl != null && pMemberFunctionDecl.m_pParentClassDecl.m_pGenericTypeDeclVector.GetSize() > 0;
 			if (pMemberFunctionDecl != null && eLanguage == AST.Language.CS && ExternalString.Equal("GetType", m_pNameToken.GetString()))
 			{
-				sOut.Append("new ");
+				out.m_sOut.Append("new ");
 			}
-			m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, sOut);
-			sOut.AppendChar(' ');
+			m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
+			out.m_sOut.AppendChar(' ');
 			if (eLanguage == AST.Language.CPP && eOutputFile == AST.OutputFile.SOURCE)
 			{
 				if (pMemberFunctionDecl != null)
@@ -135,27 +136,27 @@ namespace NumbatLogic
 						}
 						pPrefixParent = pPrefixParent.m_pParent;
 					}
-					sOut.Append(sPrefix.GetExternalString());
+					out.m_sOut.Append(sPrefix.GetExternalString());
 				}
 			}
-			sOut.Append(m_sMangledName);
-			m_pParamDecl.Stringify(eLanguage, eOutputFile, 0, sOut);
+			out.m_sOut.Append(m_sMangledName);
+			m_pParamDecl.Stringify(eLanguage, eOutputFile, 0, out);
 			if (m_bConst && eLanguage == AST.Language.CPP)
-				sOut.Append(" const");
+				out.m_sOut.Append(" const");
 			if ((eOutputFile == AST.OutputFile.HEADER && !bGeneric) || eLanguage == AST.Language.NLL_DEF)
 			{
-				sOut.Append(";\n");
+				out.m_sOut.Append(";\n");
 				return;
 			}
 			if (m_pScope == null)
 			{
-				sOut.Append(";\n");
+				out.m_sOut.Append(";\n");
 			}
 			else
 			{
-				sOut.AppendChar('\n');
-				m_pScope.Stringify(eLanguage, eOutputFile, nDepth, sOut);
-				sOut.AppendChar('\n');
+				out.m_sOut.AppendChar('\n');
+				m_pScope.Stringify(eLanguage, eOutputFile, nDepth, out);
+				out.m_sOut.AppendChar('\n');
 			}
 		}
 

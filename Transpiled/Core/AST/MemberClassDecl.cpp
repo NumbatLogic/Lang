@@ -4,6 +4,7 @@
 #include "AccessLevel.hpp"
 #include "ClassDecl.hpp"
 #include "../Util.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -14,8 +15,10 @@ namespace NumbatLogic
 	class MemberClassDecl;
 	class ClassDecl;
 	class Util;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/MemberClassDecl.nll"
 namespace NumbatLogic
 {
 	MemberClassDecl::MemberClassDecl()
@@ -71,17 +74,17 @@ namespace NumbatLogic
 		AST::Validate(pValidator, pParent);
 	}
 
-	void MemberClassDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void MemberClassDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		Util::Pad(nDepth, sOut);
+		Util::Pad(nDepth, out->m_sOut);
 		if (!(eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE))
 		{
-			m_pAccessLevel->Stringify(eLanguage, eOutputFile, 0, sOut);
+			m_pAccessLevel->Stringify(eLanguage, eOutputFile, 0, out);
 			if (eLanguage == AST::Language::CPP)
-				sOut->AppendChar(':');
-			sOut->AppendChar(' ');
+				out->m_sOut->AppendChar(':');
+			out->m_sOut->AppendChar(' ');
 		}
-		m_pClassDecl->Stringify(eLanguage, eOutputFile, nDepth, sOut);
+		m_pClassDecl->Stringify(eLanguage, eOutputFile, nDepth, out);
 	}
 
 }

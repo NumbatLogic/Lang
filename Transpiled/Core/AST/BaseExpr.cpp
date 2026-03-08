@@ -6,6 +6,7 @@
 #include "../ValueType.hpp"
 #include "../Validator.hpp"
 #include "ClassDecl.hpp"
+#include "../OutputBuilder.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
@@ -18,8 +19,10 @@ namespace NumbatLogic
 	class ValueType;
 	class Validator;
 	class ClassDecl;
+	class OutputBuilder;
 	class InternalString;
 }
+#line 1 "../../../Source/Core/AST/BaseExpr.nll"
 namespace NumbatLogic
 {
 	BaseExpr* BaseExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
@@ -68,12 +71,12 @@ namespace NumbatLogic
 		m_pBaseClassDecl = pBaseClassDecl;
 	}
 
-	void BaseExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void BaseExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		if (eLanguage == AST::Language::CPP)
-			m_pBaseClassDecl->m_pNameToken->Stringify(sOut);
+			m_pBaseClassDecl->m_pNameToken->Stringify(out->m_sOut);
 		else
-			sOut->Append("base");
+			out->m_sOut->Append("base");
 	}
 
 	BaseExpr::BaseExpr()

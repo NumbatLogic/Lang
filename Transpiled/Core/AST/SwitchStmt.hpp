@@ -11,8 +11,9 @@ namespace NumbatLogic
 	class SwitchStmt;
 	class TokenContainer;
 	class OffsetDatum;
-	class InternalString;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/SwitchStmt.nll"
 namespace NumbatLogic
 {
 	class SwitchStmt : public AST
@@ -23,7 +24,7 @@ namespace NumbatLogic
 		public: AST* m_pDefaultStatement;
 		public: SwitchStmt();
 		public: static SwitchStmt* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 		public: virtual ~SwitchStmt();
 	};
 }

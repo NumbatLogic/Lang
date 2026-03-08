@@ -6,6 +6,7 @@ namespace NumbatLogic
 	class InternalString;
 	class Token;
 }
+#line 1 "../../../Source/Core/Token.nll"
 namespace NumbatLogic
 {
 	void Token::Stringify(InternalString* sOut)

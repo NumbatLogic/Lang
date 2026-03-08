@@ -3,6 +3,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "AST.hpp"
+#include "../OutputBuilder.hpp"
 
 namespace NumbatLogic
 {
@@ -11,7 +12,9 @@ namespace NumbatLogic
 	class Token;
 	class TokenContainer;
 	class GenericTypeDecl;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/GenericTypeDecl.nll"
 namespace NumbatLogic
 {
 	GenericTypeDecl* GenericTypeDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
@@ -34,9 +37,9 @@ namespace NumbatLogic
 		return __976981417;
 	}
 
-	void GenericTypeDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void GenericTypeDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
-		m_pFirstToken->Stringify(sOut);
+		m_pFirstToken->Stringify(out->m_sOut);
 	}
 
 }

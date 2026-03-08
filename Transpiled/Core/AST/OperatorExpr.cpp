@@ -9,6 +9,7 @@
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "TypeRef.hpp"
 #include "ClassDecl.hpp"
+#include "../OutputBuilder.hpp"
 
 namespace NumbatLogic
 {
@@ -23,7 +24,9 @@ namespace NumbatLogic
 	class InternalString;
 	class TypeRef;
 	class ClassDecl;
+	class OutputBuilder;
 }
+#line 1 "../../../Source/Core/AST/OperatorExpr.nll"
 namespace NumbatLogic
 {
 	OperatorExpr::OperatorExpr()
@@ -683,7 +686,7 @@ namespace NumbatLogic
 		}
 	}
 
-	void OperatorExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut)
+	void OperatorExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
 	{
 		OperatorType eOp = GetOperatorType();
 		const char* sPad = " ";
@@ -698,13 +701,13 @@ namespace NumbatLogic
 			if (m_pLeft->m_eType == AST::Type::BASE_EXPR)
 				sOperator = "::";
 		}
-		m_pLeft->Stringify(eLanguage, eOutputFile, 0, sOut);
-		sOut->Append(sPad);
-		sOut->Append(sOperator);
+		m_pLeft->Stringify(eLanguage, eOutputFile, 0, out);
+		out->m_sOut->Append(sPad);
+		out->m_sOut->Append(sOperator);
 		if (m_pRight != 0)
 		{
-			sOut->Append(sPad);
-			m_pRight->Stringify(eLanguage, eOutputFile, 0, sOut);
+			out->m_sOut->Append(sPad);
+			m_pRight->Stringify(eLanguage, eOutputFile, 0, out);
 		}
 	}
 
