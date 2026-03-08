@@ -2,18 +2,24 @@ namespace NumbatLogic
 {
 	class OperatorExpr : AST
 	{
-		public Token m_pOperatorToken;
+		public Vector<Token>* m_pOperatorTokenVector;
+		public Token* m_pOwnedOperatorToken;
 		public AST m_pLeft;
 		public AST m_pRight;
-
-		public Token* m_pOwnedOperatorToken;
 
 		public construct()
 		{
 			m_eType = AST::Type::AST_OPERATOR_EXPR;
+			m_pOwnedOperatorToken = null;
+		}
+
+		public Token GetFirstOperatorToken()
+		{
+			Assert::Plz(m_pOperatorTokenVector != null && m_pOperatorTokenVector.GetSize() > 0);
+			return m_pOperatorTokenVector.Get(0);
 		}
 		
-		public static OperatorExpr** Create(Token pOperatorToken, AST** pLeft, AST** pRight)
+		public static OperatorExpr** Create(Vector<Token>** pOperatorTokenVector, AST** pLeft, AST** pRight)
 		{
 			OperatorExpr* pOperatorExpr = own new OperatorExpr();
 
@@ -21,7 +27,7 @@ namespace NumbatLogic
 			AST* pOwnedRight = own pRight;
 
 			pOperatorExpr.m_pFirstToken = pLeft.m_pFirstToken;
-			pOperatorExpr.m_pOperatorToken = pOperatorToken;
+			pOperatorExpr.m_pOperatorTokenVector = own pOperatorTokenVector;
 			pOperatorExpr.m_pLeft = pOwnedLeft;
 			pOperatorExpr.m_pRight = pOwnedRight;
 
@@ -45,7 +51,22 @@ namespace NumbatLogic
 			if (m_pRight != null)
 				pRight = own m_pRight.BaseClone();
 
-			return Create(m_pOperatorToken, disown pLeft, disown pRight);
+			Vector<Token>* pOpTokens = own new Vector<Token>();
+			Token* pOwnedClone = null;
+			for (int i = 0; i < m_pOperatorTokenVector.GetSize(); i = i + 1)
+			{
+				if (i == 0 && m_pOwnedOperatorToken != null)
+				{
+					pOwnedClone = own m_pOwnedOperatorToken.Clone();
+					pOpTokens.PushBack(pOwnedClone);
+				}
+				else
+					pOpTokens.PushBack(m_pOperatorTokenVector.Get(i));
+			}
+			OperatorExpr* pResult = own OperatorExpr::Create(disown pOpTokens, disown pLeft, disown pRight);
+			if (pOwnedClone != null)
+				pResult.m_pOwnedOperatorToken = own disown pOwnedClone;
+			return disown pResult;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
@@ -79,14 +100,15 @@ namespace NumbatLogic
 				{
 					if (m_pLeft.m_pValueType.m_eType == ValueType::Type::CLASS_DECL || m_pLeft.m_pValueType.m_eType == ValueType::Type::ENUM_DECL || m_pLeft.m_pValueType.m_eType == ValueType::Type::NAMESPACE_NODE)
 					{
-						if (m_pOperatorToken.m_eType != Token::Type::TOKEN_DOUBLE_COLON)
+						Token pOpToken = GetFirstOperatorToken();
+						if (pOpToken.m_eType != Token::Type::TOKEN_DOUBLE_COLON)
 						{
-							pValidator.AddError("Expected TOKEN_DOUBLE_COLON " /*operator after " + m_pLeft.m_pValueType.m_eType + ", got " + m_pOperatorToken.eType + " - "*/, m_pOperatorToken.m_sFileName, m_pOperatorToken.m_nLine, m_pOperatorToken.m_nColumn);
+							pValidator.AddError("Expected TOKEN_DOUBLE_COLON " /*operator after " + m_pLeft.m_pValueType.m_eType + ", got " + m_pOperatorToken.eType + " - "*/, pOpToken.m_sFileName, pOpToken.m_nLine, pOpToken.m_nColumn);
 							return;
 						}
 						if (m_pRight == null)
 						{
-							pValidator.AddError("Expected right side of TOKEN_DOUBLE_COLON operator", m_pOperatorToken.m_sFileName, m_pOperatorToken.m_nLine, m_pOperatorToken.m_nColumn);
+							pValidator.AddError("Expected right side of TOKEN_DOUBLE_COLON operator", pOpToken.m_sFileName, pOpToken.m_nLine, pOpToken.m_nColumn);
 							return;
 						}
 
@@ -95,7 +117,7 @@ namespace NumbatLogic
 							InternalString* sTemp = own new InternalString("Unexpected right side of TOKEN_DOUBLE_COLON operator: ");
 							m_pRight.StringifyType(sTemp);
 
-							pValidator.AddError(sTemp.GetExternalString(), m_pOperatorToken.m_sFileName, m_pOperatorToken.m_nLine, m_pOperatorToken.m_nColumn);
+							pValidator.AddError(sTemp.GetExternalString(), pOpToken.m_sFileName, pOpToken.m_nLine, pOpToken.m_nColumn);
 							return;
 						}
 						
@@ -111,14 +133,14 @@ namespace NumbatLogic
 						return;
 					}
 
-
-					if (m_pOperatorToken.m_eType == Token::Type::TOKEN_DOT)
+					Token pOpToken = GetFirstOperatorToken();
+					if (pOpToken.m_eType == Token::Type::TOKEN_DOT)
 					{
 						if (m_pLeft.m_pValueType.m_eType == ValueType::Type::GENERIC_TYPE_DECL_VALUE)
 						{	
 							if (m_pLeft.m_pValueType.m_pGenericTypeDecl == null)
 							{
-								pValidator.AddError(/*m_pLeft.m_pValueType.m_eType +*/ " set but m_pGenericTypeDecl is null???", m_pOperatorToken.m_sFileName, m_pOperatorToken.m_nLine, m_pOperatorToken.m_nColumn);
+								pValidator.AddError(/*m_pLeft.m_pValueType.m_eType +*/ " set but m_pGenericTypeDecl is null???", pOpToken.m_sFileName, pOpToken.m_nLine, pOpToken.m_nColumn);
 								return;
 							}
 						}
@@ -126,13 +148,13 @@ namespace NumbatLogic
 						{
 							if (m_pLeft.m_pValueType.m_pClassDecl == null)
 							{
-								pValidator.AddError(/*m_pLeft.m_pValueType.m_eType +*/ " set but m_pClassDecl is null???", m_pOperatorToken.m_sFileName, m_pOperatorToken.m_nLine, m_pOperatorToken.m_nColumn);
+								pValidator.AddError(/*m_pLeft.m_pValueType.m_eType +*/ " set but m_pClassDecl is null???", pOpToken.m_sFileName, pOpToken.m_nLine, pOpToken.m_nColumn);
 								return;
 							}
 						}
 						else
 						{
-							pValidator.AddError("Expected ValueType::Type::CLASS_DECL_VALUE or ValueType::Type::GENERIC_TYPE_DECL_VALUE on left of TOKEN_DOT operator", m_pOperatorToken.m_sFileName, m_pOperatorToken.m_nLine, m_pOperatorToken.m_nColumn);
+							pValidator.AddError("Expected ValueType::Type::CLASS_DECL_VALUE or ValueType::Type::GENERIC_TYPE_DECL_VALUE on left of TOKEN_DOT operator", pOpToken.m_sFileName, pOpToken.m_nLine, pOpToken.m_nColumn);
 							return;
 						}
 
@@ -151,20 +173,20 @@ namespace NumbatLogic
 						return;
 					}
 
-					if (m_pOperatorToken.m_eType == Token::Type::TOKEN_PLUS)
+					if (pOpToken.m_eType == Token::Type::TOKEN_PLUS)
 					{
 						if (m_pLeft.m_pValueType.m_eType == ValueType::Type::STRING)
 						{
-							pValidator.AddError("Cannot concat strings with +", m_pOperatorToken.m_sFileName, m_pOperatorToken.m_nLine, m_pOperatorToken.m_nColumn);
+							pValidator.AddError("Cannot concat strings with +", pOpToken.m_sFileName, pOpToken.m_nLine, pOpToken.m_nColumn);
 							return;
 						}
 					}
 
-					if (m_pOperatorToken.m_eType == Token::Type::TOKEN_DOUBLE_EQUALS || m_pOperatorToken.m_eType == Token::Type::TOKEN_NOT_EQUALS)
+					if (pOpToken.m_eType == Token::Type::TOKEN_DOUBLE_EQUALS || pOpToken.m_eType == Token::Type::TOKEN_NOT_EQUALS)
 					{
 						if (m_pRight == null)
 						{
-							pValidator.AddError("Nohing on right side to compare?", m_pOperatorToken.m_sFileName, m_pOperatorToken.m_nLine, m_pOperatorToken.m_nColumn);
+							pValidator.AddError("Nohing on right side to compare?", pOpToken.m_sFileName, pOpToken.m_nLine, pOpToken.m_nColumn);
 							return;
 						}
 
@@ -172,7 +194,7 @@ namespace NumbatLogic
 
 						if (m_pLeft.m_pValueType.m_eType == ValueType::Type::STRING && m_pRight.m_pValueType.m_eType == ValueType::Type::STRING)
 						{
-							pValidator.AddError("Cannot == or != strings use ExternalString::Equal", m_pOperatorToken.m_sFileName, m_pOperatorToken.m_nLine, m_pOperatorToken.m_nColumn);
+							pValidator.AddError("Cannot == or != strings use ExternalString::Equal", pOpToken.m_sFileName, pOpToken.m_nLine, pOpToken.m_nColumn);
 							return;
 						}
 
@@ -183,7 +205,7 @@ namespace NumbatLogic
 					if (m_pRight != null)
 						m_pRight.Validate(pValidator, this);
 
-					if (m_pOperatorToken.m_eType == Token::Type::TOKEN_EQUALS)
+					if (pOpToken.m_eType == Token::Type::TOKEN_EQUALS)
 					{
 						if (m_pRight.m_pValueType == null)
 						{
@@ -220,7 +242,7 @@ namespace NumbatLogic
 									sTemp.Append(" ptr=");
 									ValueType::StringifyPointerType(sTemp, m_pLeft.m_pValueType.m_ePointerType);
 									sTemp.Append("]");
-									pValidator.AddError(sTemp.GetExternalString(), m_pOperatorToken.m_sFileName, m_pOperatorToken.m_nLine, m_pOperatorToken.m_nColumn);
+									pValidator.AddError(sTemp.GetExternalString(), pOpToken.m_sFileName, pOpToken.m_nLine, pOpToken.m_nColumn);
 									return;
 								}
 
@@ -245,7 +267,7 @@ namespace NumbatLogic
 									sTemp.Append(" ptr=");
 									ValueType::StringifyPointerType(sTemp, m_pLeft.m_pValueType.m_ePointerType);
 									sTemp.Append("]");
-									pValidator.AddError(sTemp.GetExternalString(), m_pOperatorToken.m_sFileName, m_pOperatorToken.m_nLine, m_pOperatorToken.m_nColumn);
+									pValidator.AddError(sTemp.GetExternalString(), pOpToken.m_sFileName, pOpToken.m_nLine, pOpToken.m_nColumn);
 									return;
 								}
 
@@ -270,7 +292,7 @@ namespace NumbatLogic
 									sTemp.Append(" ptr=");
 									ValueType::StringifyPointerType(sTemp, m_pLeft.m_pValueType.m_ePointerType);
 									sTemp.Append("]");
-									pValidator.AddError(sTemp.GetExternalString(), m_pOperatorToken.m_sFileName, m_pOperatorToken.m_nLine, m_pOperatorToken.m_nColumn);
+									pValidator.AddError(sTemp.GetExternalString(), pOpToken.m_sFileName, pOpToken.m_nLine, pOpToken.m_nColumn);
 									return;
 								}
 
@@ -297,7 +319,7 @@ namespace NumbatLogic
 										sTemp.AppendString(" to ");
 										sTemp.AppendString(m_pLeft.m_pValueType.m_pClassDecl.m_pNameToken.GetString());
 
-										pValidator.AddError(sTemp.GetExternalString(), m_pOperatorToken.m_sFileName, m_pOperatorToken.m_nLine, m_pOperatorToken.m_nColumn);
+										pValidator.AddError(sTemp.GetExternalString(), pOpToken.m_sFileName, pOpToken.m_nLine, pOpToken.m_nColumn);
 										return;
 									}
 								}
@@ -313,7 +335,7 @@ namespace NumbatLogic
 							}
 							else 
 							{
-								pValidator.AddError("Expected right side of = to also be CLASS_DECL_VALUE or NULL_VALUE\n"/* + m_pLeft.m_pValueType.m_eType + " != " +m_pRight.m_pValueType.m_eType*/, m_pOperatorToken.m_sFileName, m_pOperatorToken.m_nLine, m_pOperatorToken.m_nColumn);
+								pValidator.AddError("Expected right side of = to also be CLASS_DECL_VALUE or NULL_VALUE\n"/* + m_pLeft.m_pValueType.m_eType + " != " +m_pRight.m_pValueType.m_eType*/, pOpToken.m_sFileName, pOpToken.m_nLine, pOpToken.m_nColumn);
 								return;
 							}
 						}
@@ -343,28 +365,30 @@ namespace NumbatLogic
 				//Console::Log(m_pParent.eType);
 
 			}
-
-			//Console::Log(Stringify(Language.NLL, 0));
-
-			//base.Validate(pValidator, pParent);
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)
 		{
+			Token pOpToken = GetFirstOperatorToken();
 			string sPad = " ";
-			if (m_pOperatorToken.m_eType == Token::Type::TOKEN_MINUS_MINUS || m_pOperatorToken.m_eType == Token::Type::TOKEN_PLUS_PLUS || m_pOperatorToken.m_eType == Token::Type::TOKEN_DOT || m_pOperatorToken.m_eType == Token::Type::TOKEN_DOUBLE_COLON)
+			if (pOpToken.m_eType == Token::Type::TOKEN_MINUS_MINUS || pOpToken.m_eType == Token::Type::TOKEN_PLUS_PLUS || pOpToken.m_eType == Token::Type::TOKEN_DOT || pOpToken.m_eType == Token::Type::TOKEN_DOUBLE_COLON)
 				sPad = "";
 
-			string sOperator = m_pOperatorToken.GetString();
-			if (eLanguage == AST::Language::CS && m_pOperatorToken.m_eType == Token::Type::TOKEN_DOUBLE_COLON)
+			InternalString* sOperatorTemp = own new InternalString("");
+			if (m_pOperatorTokenVector != null)
+			{
+				for (int i = 0; i < m_pOperatorTokenVector.GetSize(); i = i + 1)
+					sOperatorTemp.Append(m_pOperatorTokenVector.Get(i).GetString());
+			}
+			string sOperator = sOperatorTemp.GetExternalString();
+			if (eLanguage == AST::Language::CS && pOpToken.m_eType == Token::Type::TOKEN_DOUBLE_COLON)
 				sOperator = ".";
-			if (eLanguage == AST::Language::CPP && m_pOperatorToken.m_eType == Token::Type::TOKEN_DOT)
+			if (eLanguage == AST::Language::CPP && pOpToken.m_eType == Token::Type::TOKEN_DOT)
 			{
 				sOperator = "->";
 				if (m_pLeft != null && m_pLeft.m_eType == AST::Type::BASE_EXPR)
 					sOperator = "::";
 			}
-
 
 			m_pLeft.Stringify(eLanguage, eOutputFile, 0, sOut);
 			sOut.Append(sPad);

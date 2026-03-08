@@ -305,28 +305,6 @@ namespace NumbatLogic
 						{
 							Token pPreviousToken = m_pTokenVector.Get(m_pTokenVector.GetSize()-1);
 
-							if (pPreviousToken.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT && eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT)
-							{
-								pPreviousToken.m_eType = Token::Type::TOKEN_DOUBLE_ANGLE_BRACKET_LEFT;
-								pParseDatum.ClearCurrentRead();
-								return;
-							}
-
-							if (pPreviousToken.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT && eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT)
-							{
-								pPreviousToken.m_eType = Token::Type::TOKEN_DOUBLE_ANGLE_BRACKET_RIGHT;
-								pParseDatum.ClearCurrentRead();
-								return;
-							}
-
-							// hax to stop generics becomming shift down A<B>>
-							if (pPreviousToken.m_eType == Token::Type::TOKEN_BANG && eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT)
-							{
-								pPreviousToken.m_eType = Token::Type::TOKEN_ANGLE_BRACKET_RIGHT;
-								pParseDatum.ClearCurrentRead();
-								return;
-							}
-
 							if (pPreviousToken.m_eType == Token::Type::TOKEN_COLON && eType == Token::Type::TOKEN_COLON)
 							{
 								pPreviousToken.m_eType = Token::Type::TOKEN_DOUBLE_COLON;
