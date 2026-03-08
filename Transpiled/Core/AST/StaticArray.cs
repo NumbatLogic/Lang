@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/StaticArray.nll"
+#line 0 "../../../Source/Core/AST/StaticArray.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/StaticArray.nll"
 	class StaticArray : AST
 	{
 		public StaticArray()
@@ -24,6 +25,7 @@ namespace NumbatLogic
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SQUARE_BRACKET_RIGHT) != null)
 				{
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 27 "../../../Source/Core/AST/StaticArray.nll"
 					break;
 				}
 				AST pElement = AST.TryCreateExpression(pTokenContainer, pTempOffset);

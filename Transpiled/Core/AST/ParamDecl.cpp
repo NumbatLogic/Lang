@@ -33,9 +33,10 @@ namespace NumbatLogic
 	class ValueType;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/ParamDecl.nll"
+#line 0 "../../../Source/Core/AST/ParamDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/ParamDecl.nll"
 	ParamDecl::ParamDecl()
 	{
 		m_pParamVector = 0;
@@ -61,6 +62,7 @@ namespace NumbatLogic
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT) != 0)
 			{
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 32 "../../../Source/Core/AST/ParamDecl.nll"
 				break;
 			}
 			VarDecl* pParam = VarDecl::TryCreate(pTokenContainer, pTempOffset, true);
@@ -129,6 +131,7 @@ namespace NumbatLogic
 			if (pCallChild == 0)
 			{
 				if (pDeclChild == 0)
+#line 102 "../../../Source/Core/AST/ParamDecl.nll"
 					break;
 				if (pDeclChild->m_eType == AST::Type::AST_VAR_DECL)
 				{

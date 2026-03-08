@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/TrinaryExpr.nll"
+#line 0 "../../../Source/Core/AST/TrinaryExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/TrinaryExpr.nll"
 	class TrinaryExpr : AST
 	{
 		public AST m_pFirstExpression;

@@ -26,9 +26,10 @@ namespace NumbatLogic
 	class TypeRef;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/OwnExpr.nll"
+#line 0 "../../../Source/Core/AST/OwnExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/OwnExpr.nll"
 	OwnExpr* OwnExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);

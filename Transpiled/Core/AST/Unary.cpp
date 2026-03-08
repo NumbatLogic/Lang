@@ -20,9 +20,10 @@ namespace NumbatLogic
 	class ValueType;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/Unary.nll"
+#line 0 "../../../Source/Core/AST/Unary.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/Unary.nll"
 	Unary* Unary::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);

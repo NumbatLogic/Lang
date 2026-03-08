@@ -281,24 +281,30 @@ namespace NumbatLogic
 					return TrinaryExpr::Create(disown pLeft, pTokenContainer, pOffsetDatum);
 				}
 
-				Token pFirstOpToken = pTokenContainer.Peek(pTempOffset);
 				OperatorExpr::OperatorType eOperatorType = OperatorExpr::PeekOperator(pTokenContainer, pTempOffset);
 				if (eOperatorType != OperatorExpr::OperatorType::UNKNOWN)
 				{
 					if (OperatorExpr::IsPostfix(eOperatorType))
 					{
 						pOffsetDatum.Set(pTempOffset);
-						return OperatorExpr::Create(eOperatorType, pFirstOpToken, disown pLeft, null);
+						return OperatorExpr::Create(eOperatorType, pOperatorToken, disown pLeft, null);
 					}
 
 					AST* pRight = own TryCreateExpression(pTokenContainer, pTempOffset);
 					if (pRight != null)
 					{
 						pOffsetDatum.Set(pTempOffset);
-						return OperatorExpr::Create(eOperatorType, pFirstOpToken, disown pLeft, disown pRight);
+						return OperatorExpr::Create(eOperatorType, pOperatorToken, disown pLeft, disown pRight);
 					}
 					
-					Console::Log("Probably should have something after the operator???");
+					
+					InternalString* sTemp = own new InternalString("Probably should have something after the operator??? ");
+					sTemp.Append(pOperatorToken.m_sFileName.GetExternalString());
+					sTemp.Append(":");
+					sTemp.AppendInt(pOperatorToken.m_nLine);
+					sTemp.Append(":");
+					sTemp.AppendInt(pOperatorToken.m_nColumn);
+					Console::Log(sTemp.GetExternalString());
 					Assert::Plz(false);
 				}
 				pOffsetDatum.Set(pTempOffset);

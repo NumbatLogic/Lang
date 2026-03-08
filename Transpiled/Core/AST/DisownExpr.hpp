@@ -18,9 +18,10 @@ namespace NumbatLogic
 	class ExpressionStmt;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/DisownExpr.nll"
+#line 0 "../../../Source/Core/AST/DisownExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/DisownExpr.nll"
 	class DisownExpr : public AST
 	{
 		public: AST* m_pExpression;

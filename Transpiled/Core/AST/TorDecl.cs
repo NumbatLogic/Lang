@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/TorDecl.nll"
+#line 0 "../../../Source/Core/AST/TorDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/TorDecl.nll"
 	class TorDecl : AST
 	{
 		public ClassDecl m_pParentClassDecl;
@@ -122,6 +123,7 @@ namespace NumbatLogic
 						{
 							if (pTorDecl.m_pParamDecl.ValidateParamCall(m_pBaseParamCall, pValidator, false))
 							{
+#line 127 "../../../Source/Core/AST/TorDecl.nll"
 								break;
 							}
 						}

@@ -12,9 +12,10 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/ContinueStmt.nll"
+#line 0 "../../../Source/Core/AST/ContinueStmt.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/ContinueStmt.nll"
 	class ContinueStmt : public AST
 	{
 		public: ContinueStmt();

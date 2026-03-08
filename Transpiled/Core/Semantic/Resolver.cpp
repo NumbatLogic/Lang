@@ -50,9 +50,10 @@ namespace NumbatLogic
 	class EnumDeclValue;
 	class Assert;
 }
-#line 1 "../../../Source/Core/Semantic/Resolver.nll"
+#line 0 "../../../Source/Core/Semantic/Resolver.nll"
 namespace NumbatLogic
 {
+#line 4 "../../../Source/Core/Semantic/Resolver.nll"
 	Resolver::Resolver()
 	{
 		m_pGlobalScope = 0;
@@ -149,6 +150,7 @@ namespace NumbatLogic
 			if (pWalk->m_pSymbolScope != 0)
 			{
 				pEnclosing = pWalk->m_pSymbolScope;
+#line 114 "../../../Source/Core/Semantic/Resolver.nll"
 				break;
 			}
 			pWalk = pWalk->m_pParent;
@@ -245,6 +247,7 @@ namespace NumbatLogic
 				{
 					pNode->m_pSymbolScope = pNamespaceScope;
 					pCurrentScope = pNamespaceScope;
+#line 218 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
 				const char* sQual = sName;
@@ -265,6 +268,7 @@ namespace NumbatLogic
 					Symbol* pLast = m_pBuildTempSymbolVector->Get(m_pBuildTempSymbolVector->GetSize() - 1);
 					pLast->m_pScope = pNamespaceScope;
 				}
+#line 243 "../../../Source/Core/Semantic/Resolver.nll"
 				break;
 			}
 
@@ -283,6 +287,7 @@ namespace NumbatLogic
 				pCurrentScope = CreateChildScope(pNode, pScope, SymbolScope::Kind::CLASS);
 				SymbolScope* pClassScope = pCurrentScope;
 				AddGenericParamsToScope(pClassDecl, pClassScope);
+#line 265 "../../../Source/Core/Semantic/Resolver.nll"
 				break;
 			}
 
@@ -290,8 +295,10 @@ namespace NumbatLogic
 			{
 				EnumDecl* pEnumDecl = (EnumDecl*)(pNode);
 				if (pEnumDecl->m_pParent != 0 && pEnumDecl->m_pParent->m_eType == AST::Type::AST_MEMBER_ENUM_DECL)
+#line 275 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				AddSymbolToScope(pScope, pEnumDecl->m_pNameToken->GetString(), Symbol::Kind::ENUM, pNode, 0);
+#line 277 "../../../Source/Core/Semantic/Resolver.nll"
 				break;
 			}
 
@@ -299,6 +306,7 @@ namespace NumbatLogic
 			{
 				GenericTypeDecl* pGenericTypeDecl = (GenericTypeDecl*)(pNode);
 				AddSymbolToScope(pScope, pGenericTypeDecl->m_pFirstToken->GetString(), Symbol::Kind::GENERIC_PARAM, pNode, 0);
+#line 287 "../../../Source/Core/Semantic/Resolver.nll"
 				break;
 			}
 
@@ -306,11 +314,13 @@ namespace NumbatLogic
 			{
 				FunctionDecl* pFunctionDecl = (FunctionDecl*)(pNode);
 				if (pFunctionDecl->m_pParent != 0 && (pFunctionDecl->m_pParent->m_eType == AST::Type::DELEGATE_DECL || pFunctionDecl->m_pParent->m_eType == AST::Type::AST_TOR_DECL))
+#line 298 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				bool bIsInnerOfMember = (pFunctionDecl->m_pParent != 0 && pFunctionDecl->m_pParent->m_eType == AST::Type::AST_MEMBER_FUNCTION_DECL);
 				if (!bIsInnerOfMember)
 					AddSymbolToScope(pScope, pFunctionDecl->m_pNameToken->GetString(), Symbol::Kind::FUNCTION, pNode, 0);
 				pCurrentScope = CreateChildScope(pNode, pScope, SymbolScope::Kind::FUNCTION);
+#line 310 "../../../Source/Core/Semantic/Resolver.nll"
 				break;
 			}
 
@@ -318,8 +328,10 @@ namespace NumbatLogic
 			{
 				VarDecl* pVarDecl = (VarDecl*)(pNode);
 				if (pVarDecl->m_pParent != 0 && pVarDecl->m_pParent->m_eType == AST::Type::AST_MEMBER_VAR_DECL)
+#line 322 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				AddSymbolToScope(pScope, pVarDecl->m_pNameToken->GetString(), Symbol::Kind::VAR, pNode, 0);
+#line 325 "../../../Source/Core/Semantic/Resolver.nll"
 				break;
 			}
 
@@ -328,18 +340,21 @@ namespace NumbatLogic
 				DelegateDecl* pDelegate = (DelegateDecl*)(pNode);
 				if (pDelegate->m_pFunctionDecl != 0)
 					AddSymbolToScope(pScope, pDelegate->m_pFunctionDecl->m_pNameToken->GetString(), Symbol::Kind::DELEGATE, pNode, 0);
+#line 332 "../../../Source/Core/Semantic/Resolver.nll"
 				break;
 			}
 
 			case AST::Type::AST_MEMBER_FUNCTION_DECL:
 			{
 				AddMemberSymbolToScope(pNode, pCurrentScope);
+#line 337 "../../../Source/Core/Semantic/Resolver.nll"
 				break;
 			}
 
 			case AST::Type::AST_MEMBER_VAR_DECL:
 			{
 				AddMemberSymbolToScope(pNode, pCurrentScope);
+#line 342 "../../../Source/Core/Semantic/Resolver.nll"
 				break;
 			}
 
@@ -351,12 +366,14 @@ namespace NumbatLogic
 					AddMemberSymbolToScope(pNode, pCurrentScope);
 					pCurrentScope = CreateChildScope(pNode, pScope, SymbolScope::Kind::CLASS);
 				}
+#line 352 "../../../Source/Core/Semantic/Resolver.nll"
 				break;
 			}
 
 			case AST::Type::AST_MEMBER_ENUM_DECL:
 			{
 				AddMemberSymbolToScope(pNode, pCurrentScope);
+#line 357 "../../../Source/Core/Semantic/Resolver.nll"
 				break;
 			}
 
@@ -364,24 +381,28 @@ namespace NumbatLogic
 			{
 				EnumDeclValue* pEnumValue = (EnumDeclValue*)(pNode);
 				AddSymbolToScope(pScope, pEnumValue->m_pFirstToken->GetString(), Symbol::Kind::ENUM_VALUE, pNode, 0);
+#line 363 "../../../Source/Core/Semantic/Resolver.nll"
 				break;
 			}
 
 			case AST::Type::AST_SCOPE:
 			{
 				pCurrentScope = CreateChildScope(pNode, pScope, SymbolScope::Kind::BLOCK);
+#line 368 "../../../Source/Core/Semantic/Resolver.nll"
 				break;
 			}
 
 			case AST::Type::AST_FOR_STMT:
 			{
 				pCurrentScope = CreateChildScope(pNode, pScope, SymbolScope::Kind::BLOCK);
+#line 374 "../../../Source/Core/Semantic/Resolver.nll"
 				break;
 			}
 
 			case AST::Type::AST_TOR_DECL:
 			{
 				pCurrentScope = CreateChildScope(pNode, pScope, SymbolScope::Kind::FUNCTION);
+#line 380 "../../../Source/Core/Semantic/Resolver.nll"
 				break;
 			}
 

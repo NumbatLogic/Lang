@@ -29,9 +29,10 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/ArrayLookup.nll"
+#line 0 "../../../Source/Core/AST/ArrayLookup.nll"
 namespace NumbatLogic
 {
+#line 5 "../../../Source/Core/AST/ArrayLookup.nll"
 	ArrayLookup::ArrayLookup()
 	{
 		m_pExpression = 0;

@@ -22,9 +22,10 @@ namespace NumbatLogic
 	class AST;
 	class VarDeclDescope;
 }
-#line 1 "../../../Source/Core/Validator.nll"
+#line 0 "../../../Source/Core/Validator.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/Validator.nll"
 	class ValidatorError
 	{
 		public: InternalString* m_sError;
@@ -34,6 +35,7 @@ namespace NumbatLogic
 		public: ValidatorError();
 		public: virtual ~ValidatorError();
 	};
+#line 11 "../../../Source/Core/Validator.nll"
 	class ValidatorScope
 	{
 		public: Scope* m_pScope;
@@ -41,6 +43,7 @@ namespace NumbatLogic
 		public: ValidatorScope(Scope* pScope);
 		public: virtual ~ValidatorScope();
 	};
+#line 23 "../../../Source/Core/Validator.nll"
 	class Validator
 	{
 		protected: Project* m_pProject;

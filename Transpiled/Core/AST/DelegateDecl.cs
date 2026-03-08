@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 0 "../../../Source/Core/AST/DelegateDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/DelegateDecl.nll"
 	class DelegateDecl : AST
 	{
 		public AccessLevel m_pAccessLevel;
@@ -67,6 +68,7 @@ namespace NumbatLogic
 				case AST.Language.CPP:
 				{
 					out.m_sOut.Append("typedef ");
+#line 77 "../../../Source/Core/AST/DelegateDecl.nll"
 					break;
 				}
 
@@ -75,6 +77,7 @@ namespace NumbatLogic
 				case AST.Language.NLL_DEF:
 				{
 					out.m_sOut.Append("delegate ");
+#line 84 "../../../Source/Core/AST/DelegateDecl.nll"
 					break;
 				}
 

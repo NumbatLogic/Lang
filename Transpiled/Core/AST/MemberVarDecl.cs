@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/MemberVarDecl.nll"
+#line 0 "../../../Source/Core/AST/MemberVarDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/MemberVarDecl.nll"
 	class MemberVarDecl : AST
 	{
 		public AccessLevel m_pAccessLevel;

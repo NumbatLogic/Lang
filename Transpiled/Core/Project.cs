@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/Project.nll"
+#line 0 "../../../Source/Core/Project.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/Project.nll"
 	class Project : AST
 	{
 		public Vector<TranslationUnit> m_pTranslationUnitVector;
@@ -174,6 +175,7 @@ namespace NumbatLogic
 								}
 							}
 							pChild = pNextSibling;
+#line 186 "../../../Source/Core/Project.nll"
 							break;
 						}
 					}
@@ -236,6 +238,7 @@ namespace NumbatLogic
 					pPublicTranslationUnit.m_pLastChild.m_pParent = pPublicTranslationUnit;
 					pPublicTranslationUnit.m_pLastChild.m_bSkipOutput = bSkipOutput;
 					if (pPublicTranslationUnit.m_pLastChild.m_pNextSibling == null)
+#line 253 "../../../Source/Core/Project.nll"
 						break;
 					pPublicTranslationUnit.m_pLastChild = pPublicTranslationUnit.m_pLastChild.m_pNextSibling;
 				}

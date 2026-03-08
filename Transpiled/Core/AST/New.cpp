@@ -34,9 +34,10 @@ namespace NumbatLogic
 	class ParamDecl;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/New.nll"
+#line 0 "../../../Source/Core/AST/New.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/New.nll"
 	New* New::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
@@ -121,6 +122,7 @@ namespace NumbatLogic
 					{
 						if (pTorDecl->m_pParamDecl->ValidateParamCall(m_pParamCall, pValidator, false))
 						{
+#line 87 "../../../Source/Core/AST/New.nll"
 							break;
 						}
 					}

@@ -17,9 +17,10 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/VarDecl.nll"
+#line 0 "../../../Source/Core/AST/VarDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/VarDecl.nll"
 	class VarDecl : public AST
 	{
 		public: TypeRef* m_pTypeRef;

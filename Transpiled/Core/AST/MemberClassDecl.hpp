@@ -14,9 +14,10 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 0 "../../../Source/Core/AST/MemberClassDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/MemberClassDecl.nll"
 	class MemberClassDecl : public AST
 	{
 		public: ClassDecl* m_pParentClassDecl;

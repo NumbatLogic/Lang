@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 0 "../../../Source/Core/AST/FunctionDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/FunctionDecl.nll"
 	class FunctionDecl : AST
 	{
 		public TypeRef m_pTypeRef;

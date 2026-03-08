@@ -27,9 +27,10 @@ namespace NumbatLogic
 	class InternalString;
 	class Util;
 }
-#line 1 "../../../Source/Core/AST/EnumDecl.nll"
+#line 0 "../../../Source/Core/AST/EnumDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/EnumDecl.nll"
 	EnumDecl::EnumDecl()
 	{
 		m_pNameToken = 0;
@@ -75,6 +76,7 @@ namespace NumbatLogic
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_RIGHT) != 0)
 			{
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 51 "../../../Source/Core/AST/EnumDecl.nll"
 				break;
 			}
 			EnumDeclValue* pEnumDeclValue = EnumDeclValue::TryCreate(pTokenContainer, pTempOffset);

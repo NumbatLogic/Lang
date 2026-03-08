@@ -39,9 +39,10 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class TypeRef;
 }
-#line 1 "../../../Source/Core/AST/TorDecl.nll"
+#line 0 "../../../Source/Core/AST/TorDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/TorDecl.nll"
 	TorDecl* TorDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, ClassDecl* pParentClassDecl)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
@@ -178,6 +179,7 @@ namespace NumbatLogic
 					{
 						if (pTorDecl->m_pParamDecl->ValidateParamCall(m_pBaseParamCall, pValidator, false))
 						{
+#line 127 "../../../Source/Core/AST/TorDecl.nll"
 							break;
 						}
 					}

@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/ArrayLookup.nll"
+#line 0 "../../../Source/Core/AST/ArrayLookup.nll"
 namespace NumbatLogic
 {
+#line 5 "../../../Source/Core/AST/ArrayLookup.nll"
 	class ArrayLookup : AST
 	{
 		public AST m_pExpression;

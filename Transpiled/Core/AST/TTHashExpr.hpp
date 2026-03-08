@@ -13,9 +13,10 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 0 "../../../Source/Core/AST/TTHashExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/TTHashExpr.nll"
 	class TTHashExpr : public AST
 	{
 		protected: StringExpr* m_pStringExpr;

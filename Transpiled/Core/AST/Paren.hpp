@@ -12,9 +12,10 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/Paren.nll"
+#line 0 "../../../Source/Core/AST/Paren.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/Paren.nll"
 	class Paren : public AST
 	{
 		public: static Paren* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);

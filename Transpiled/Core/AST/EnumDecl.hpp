@@ -16,9 +16,10 @@ namespace NumbatLogic
 	class OffsetDatum;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/EnumDecl.nll"
+#line 0 "../../../Source/Core/AST/EnumDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/EnumDecl.nll"
 	class EnumDecl : public AST
 	{
 		public: Token* m_pNameToken;

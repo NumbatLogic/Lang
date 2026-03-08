@@ -87,7 +87,7 @@ namespace NumbatLogic
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-			pOutputBuilder.OutputSourceLocation(eLanguage, m_pNameToken);
+			pOutputBuilder.OutputSourceLocation(eLanguage, m_pFirstToken);
 
 			Util::Pad(nDepth, pOutputBuilder.m_sOut);
 			pOutputBuilder.m_sOut.Append("namespace ");

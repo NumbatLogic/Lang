@@ -26,9 +26,10 @@ namespace NumbatLogic
 	class InternalString;
 	class ExternalString;
 }
-#line 1 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 0 "../../../Source/Core/AST/TTHashExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/TTHashExpr.nll"
 	TTHashExpr::TTHashExpr()
 	{
 		m_pStringExpr = 0;

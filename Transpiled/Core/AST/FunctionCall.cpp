@@ -60,9 +60,10 @@ namespace NumbatLogic
 	class ExternalString;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/FunctionCall.nll"
+#line 0 "../../../Source/Core/AST/FunctionCall.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/FunctionCall.nll"
 	FunctionCall* FunctionCall::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
@@ -308,14 +309,17 @@ namespace NumbatLogic
 							while (true)
 							{
 								if (pCallChild == 0 || pDeclChild == 0)
+#line 276 "../../../Source/Core/AST/FunctionCall.nll"
 									break;
 								if (pDeclChild->m_eType != AST::Type::AST_VAR_DECL)
+#line 279 "../../../Source/Core/AST/FunctionCall.nll"
 									break;
 								VarDecl* pVarDecl = (VarDecl*)(pDeclChild);
 								ValueType* pValueType = pVarDecl->m_pTypeRef->CreateValueType(pValidator->m_pResolver);
 								if (pValueType == 0 || pCallChild->m_pValueType == 0)
 								{
 									if (pValueType) delete pValueType;
+#line 284 "../../../Source/Core/AST/FunctionCall.nll"
 									break;
 								}
 								ValueType* pArgVT = pCallChild->m_pValueType;
@@ -342,12 +346,15 @@ namespace NumbatLogic
 												if (pWalk == pToClass)
 												{
 													nDistance = nWalk;
+#line 320 "../../../Source/Core/AST/FunctionCall.nll"
 													break;
 												}
 												if (pWalk->m_pBaseTypeRef == 0)
+#line 324 "../../../Source/Core/AST/FunctionCall.nll"
 													break;
 												AST* pBaseAST = pWalk->m_pBaseTypeRef->m_pFoundType;
 												if (pBaseAST == 0 || pBaseAST->m_eType != AST::Type::AST_CLASS_DECL)
+#line 328 "../../../Source/Core/AST/FunctionCall.nll"
 													break;
 												pWalk = (ClassDecl*)(pBaseAST);
 												nWalk++;

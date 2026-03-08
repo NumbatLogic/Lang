@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/NamespaceDecl.nll"
+#line 0 "../../../Source/Core/AST/NamespaceDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/NamespaceDecl.nll"
 	class NamespaceDecl : AST
 	{
 		public Token m_pNameToken;
@@ -45,6 +46,7 @@ namespace NumbatLogic
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_CURLY_BRACE_RIGHT) != null)
 				{
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 52 "../../../Source/Core/AST/NamespaceDecl.nll"
 					break;
 				}
 				AST pAST = AST.CreateFromTokenContainer(pTokenContainer, pTempOffset);
@@ -83,7 +85,7 @@ namespace NumbatLogic
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-			pOutputBuilder.OutputSourceLocation(eLanguage, m_pNameToken);
+			pOutputBuilder.OutputSourceLocation(eLanguage, m_pFirstToken);
 			Util.Pad(nDepth, pOutputBuilder.m_sOut);
 			pOutputBuilder.m_sOut.Append("namespace ");
 			m_pNameToken.Stringify(pOutputBuilder.m_sOut);

@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/ParamDecl.nll"
+#line 0 "../../../Source/Core/AST/ParamDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/ParamDecl.nll"
 	class ParamDecl : AST
 	{
 		public Vector<VarDecl> m_pParamVector;
@@ -27,6 +28,7 @@ namespace NumbatLogic
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_RIGHT) != null)
 				{
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 32 "../../../Source/Core/AST/ParamDecl.nll"
 					break;
 				}
 				VarDecl pParam = VarDecl.TryCreate(pTokenContainer, pTempOffset, true);
@@ -92,6 +94,7 @@ namespace NumbatLogic
 				if (pCallChild == null)
 				{
 					if (pDeclChild == null)
+#line 102 "../../../Source/Core/AST/ParamDecl.nll"
 						break;
 					if (pDeclChild.m_eType == AST.Type.AST_VAR_DECL)
 					{

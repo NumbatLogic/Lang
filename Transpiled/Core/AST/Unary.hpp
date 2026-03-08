@@ -12,9 +12,10 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/Unary.nll"
+#line 0 "../../../Source/Core/AST/Unary.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/Unary.nll"
 	class Unary : public AST
 	{
 		public: AST* m_pExpression;

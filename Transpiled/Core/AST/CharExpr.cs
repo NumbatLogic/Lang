@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/CharExpr.nll"
+#line 0 "../../../Source/Core/AST/CharExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/CharExpr.nll"
 	class CharExpr : AST
 	{
 		public static CharExpr TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)

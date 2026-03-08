@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/FunctionCall.nll"
+#line 0 "../../../Source/Core/AST/FunctionCall.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/FunctionCall.nll"
 	class FunctionCall : AST
 	{
 		public string m_sMangledName;
@@ -240,13 +241,16 @@ namespace NumbatLogic
 								while (true)
 								{
 									if (pCallChild == null || pDeclChild == null)
+#line 276 "../../../Source/Core/AST/FunctionCall.nll"
 										break;
 									if (pDeclChild.m_eType != AST.Type.AST_VAR_DECL)
+#line 279 "../../../Source/Core/AST/FunctionCall.nll"
 										break;
 									VarDecl pVarDecl = (VarDecl)(pDeclChild);
 									ValueType pValueType = pVarDecl.m_pTypeRef.CreateValueType(pValidator.m_pResolver);
 									if (pValueType == null || pCallChild.m_pValueType == null)
 									{
+#line 284 "../../../Source/Core/AST/FunctionCall.nll"
 										break;
 									}
 									ValueType pArgVT = pCallChild.m_pValueType;
@@ -273,12 +277,15 @@ namespace NumbatLogic
 													if (pWalk == pToClass)
 													{
 														nDistance = nWalk;
+#line 320 "../../../Source/Core/AST/FunctionCall.nll"
 														break;
 													}
 													if (pWalk.m_pBaseTypeRef == null)
+#line 324 "../../../Source/Core/AST/FunctionCall.nll"
 														break;
 													AST pBaseAST = pWalk.m_pBaseTypeRef.m_pFoundType;
 													if (pBaseAST == null || pBaseAST.m_eType != AST.Type.AST_CLASS_DECL)
+#line 328 "../../../Source/Core/AST/FunctionCall.nll"
 														break;
 													pWalk = (ClassDecl)(pBaseAST);
 													nWalk++;

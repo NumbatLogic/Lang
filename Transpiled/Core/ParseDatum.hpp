@@ -4,9 +4,10 @@ namespace NumbatLogic
 {
 	class InternalString;
 }
-#line 1 "../../../Source/Core/ParseDatum.nll"
+#line 0 "../../../Source/Core/ParseDatum.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/ParseDatum.nll"
 	class ParseDatum
 	{
 		public: InternalString* m_sInput;

@@ -34,9 +34,10 @@ namespace NumbatLogic
 	class Token;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/Project.nll"
+#line 0 "../../../Source/Core/Project.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/Project.nll"
 	Project::Project()
 	{
 		m_pTranslationUnitVector = 0;
@@ -216,6 +217,7 @@ namespace NumbatLogic
 						pChild = pNextSibling;
 						if (pOwnedChild) delete pOwnedChild;
 						if (pSubChild) delete pSubChild;
+#line 186 "../../../Source/Core/Project.nll"
 						break;
 					}
 				}
@@ -280,6 +282,7 @@ namespace NumbatLogic
 				pPublicTranslationUnit->m_pLastChild->m_pParent = pPublicTranslationUnit;
 				pPublicTranslationUnit->m_pLastChild->m_bSkipOutput = bSkipOutput;
 				if (pPublicTranslationUnit->m_pLastChild->m_pNextSibling == 0)
+#line 253 "../../../Source/Core/Project.nll"
 					break;
 				pPublicTranslationUnit->m_pLastChild = pPublicTranslationUnit->m_pLastChild->m_pNextSibling;
 			}

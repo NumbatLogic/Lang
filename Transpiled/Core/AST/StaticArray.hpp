@@ -12,9 +12,10 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/StaticArray.nll"
+#line 0 "../../../Source/Core/AST/StaticArray.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/StaticArray.nll"
 	class StaticArray : public AST
 	{
 		public: StaticArray();

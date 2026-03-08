@@ -32,9 +32,10 @@ namespace NumbatLogic
 	class OffsetDatum;
 	class NamespaceNode;
 }
-#line 1 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 0 "../../../Source/Core/AST/TranslationUnit.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/TranslationUnit.nll"
 	ClassDeclReference::ClassDeclReference()
 	{
 		m_pClassDecl = 0;
@@ -42,6 +43,7 @@ namespace NumbatLogic
 		m_bForwardReference = false;
 	}
 
+#line 10 "../../../Source/Core/AST/TranslationUnit.nll"
 	ReferenceNode::ReferenceNode(const char* sxName)
 	{
 		m_sName = 0;
@@ -116,6 +118,7 @@ namespace NumbatLogic
 		if (m_pChildClassVector) delete m_pChildClassVector;
 	}
 
+#line 83 "../../../Source/Core/AST/TranslationUnit.nll"
 	TranslationUnit::TranslationUnit(const char* sInFile)
 	{
 		m_sInFile = 0;
@@ -141,6 +144,7 @@ namespace NumbatLogic
 			if (pAST == 0)
 			{
 				if (pAST) delete pAST;
+#line 116 "../../../Source/Core/AST/TranslationUnit.nll"
 				break;
 			}
 			NumbatLogic::AST* __3057539430 = pAST;
@@ -190,6 +194,7 @@ namespace NumbatLogic
 			{
 				int nIndex = sFile->FindChar('/');
 				if (nIndex == -1)
+#line 166 "../../../Source/Core/AST/TranslationUnit.nll"
 					break;
 				InternalString* sTemp = sFile->CreateClone();
 				sTemp->SubStr(0, nIndex + 1);
@@ -203,6 +208,7 @@ namespace NumbatLogic
 				{
 					sFolder->Append("CS/");
 					sFile->Replace(".nll.def", ".cs");
+#line 180 "../../../Source/Core/AST/TranslationUnit.nll"
 					break;
 				}
 
@@ -213,16 +219,19 @@ namespace NumbatLogic
 						sFile->Replace(".nll.def", ".cpp");
 					else
 						sFile->Replace(".nll.def", ".hpp");
+#line 189 "../../../Source/Core/AST/TranslationUnit.nll"
 					break;
 				}
 
 				case AST::Language::NLL:
 				{
+#line 193 "../../../Source/Core/AST/TranslationUnit.nll"
 					break;
 				}
 
 				case AST::Language::NLL_DEF:
 				{
+#line 197 "../../../Source/Core/AST/TranslationUnit.nll"
 					break;
 				}
 
@@ -239,6 +248,7 @@ namespace NumbatLogic
 			case AST::Language::CS:
 			{
 				sPath->Replace(".nll", ".cs");
+#line 215 "../../../Source/Core/AST/TranslationUnit.nll"
 				break;
 			}
 
@@ -248,17 +258,20 @@ namespace NumbatLogic
 					sPath->Replace(".nll", ".cpp");
 				else
 					sPath->Replace(".nll", ".hpp");
+#line 223 "../../../Source/Core/AST/TranslationUnit.nll"
 				break;
 			}
 
 			case AST::Language::NLL:
 			{
+#line 227 "../../../Source/Core/AST/TranslationUnit.nll"
 				break;
 			}
 
 			case AST::Language::NLL_DEF:
 			{
 				sPath->Replace(".nll", ".nll.def");
+#line 232 "../../../Source/Core/AST/TranslationUnit.nll"
 				break;
 			}
 
@@ -277,6 +290,7 @@ namespace NumbatLogic
 		{
 			int nIndex = sFrom->FindChar('/');
 			if (nIndex == -1)
+#line 252 "../../../Source/Core/AST/TranslationUnit.nll"
 				break;
 			InternalString* sTemp = sFrom->CreateClone();
 			sTemp->SubStr(0, nIndex + 1);
@@ -290,6 +304,7 @@ namespace NumbatLogic
 		{
 			int nIndex = sTo->FindChar('/');
 			if (nIndex == -1)
+#line 264 "../../../Source/Core/AST/TranslationUnit.nll"
 				break;
 			InternalString* sTemp = sTo->CreateClone();
 			sTemp->SubStr(0, nIndex + 1);
@@ -302,8 +317,10 @@ namespace NumbatLogic
 		while (true)
 		{
 			if (sFromVector->GetSize() == 0 || sToVector->GetSize() == 0)
+#line 276 "../../../Source/Core/AST/TranslationUnit.nll"
 				break;
 			if (!sFromVector->Get(0)->IsEqual(sToVector->Get(0)->GetExternalString()))
+#line 279 "../../../Source/Core/AST/TranslationUnit.nll"
 				break;
 			sFromVector->Erase(0);
 			sToVector->Erase(0);
@@ -351,6 +368,7 @@ namespace NumbatLogic
 									if (pTestClassDeclReference->m_bForwardReference)
 									{
 										bOnlyInclude = false;
+#line 330 "../../../Source/Core/AST/TranslationUnit.nll"
 										break;
 									}
 								}
@@ -384,6 +402,7 @@ namespace NumbatLogic
 							if (sTemp->IsEqual(pClassDeclReference->m_pClassDecl->m_pNameToken->m_sFileName->GetExternalString()))
 							{
 								bFound = true;
+#line 367 "../../../Source/Core/AST/TranslationUnit.nll"
 								break;
 							}
 						}

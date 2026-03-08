@@ -7,9 +7,10 @@ namespace NumbatLogic
 	class AST;
 	class InternalString;
 }
-#line 1 "../../../Source/Test/Test.nll"
+#line 0 "../../../Source/Test/Test.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Test/Test.nll"
 	class Test
 	{
 		public: static void Run();

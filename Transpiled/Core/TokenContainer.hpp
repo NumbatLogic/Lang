@@ -12,9 +12,10 @@ namespace NumbatLogic
 	class ParseDatum;
 	class OffsetDatum;
 }
-#line 1 "../../../Source/Core/TokenContainer.nll"
+#line 0 "../../../Source/Core/TokenContainer.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/TokenContainer.nll"
 	class TokenContainer
 	{
 		public: OwnedVector<Token*>* m_pTokenVector;

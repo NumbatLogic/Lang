@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 0 "../../../Source/Core/AST/TranslationUnit.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/TranslationUnit.nll"
 	class ClassDeclReference
 	{
 		public ClassDecl m_pClassDecl;
@@ -11,6 +12,7 @@ namespace NumbatLogic
 		}
 
 	}
+#line 10 "../../../Source/Core/AST/TranslationUnit.nll"
 	class ReferenceNode
 	{
 		public InternalString m_sName;
@@ -84,6 +86,7 @@ namespace NumbatLogic
 		}
 
 	}
+#line 83 "../../../Source/Core/AST/TranslationUnit.nll"
 	class TranslationUnit : AST
 	{
 		public InternalString m_sInFile;
@@ -110,6 +113,7 @@ namespace NumbatLogic
 				AST pAST = AST.CreateFromTokenContainer(pThis.m_pTokenContainer, pOffsetDatum);
 				if (pAST == null)
 				{
+#line 116 "../../../Source/Core/AST/TranslationUnit.nll"
 					break;
 				}
 				NumbatLogic.AST __3057539430 = pAST;
@@ -155,6 +159,7 @@ namespace NumbatLogic
 				{
 					int nIndex = sFile.FindChar('/');
 					if (nIndex == -1)
+#line 166 "../../../Source/Core/AST/TranslationUnit.nll"
 						break;
 					InternalString sTemp = sFile.CreateClone();
 					sTemp.SubStr(0, nIndex + 1);
@@ -167,6 +172,7 @@ namespace NumbatLogic
 					{
 						sFolder.Append("CS/");
 						sFile.Replace(".nll.def", ".cs");
+#line 180 "../../../Source/Core/AST/TranslationUnit.nll"
 						break;
 					}
 
@@ -177,16 +183,19 @@ namespace NumbatLogic
 							sFile.Replace(".nll.def", ".cpp");
 						else
 							sFile.Replace(".nll.def", ".hpp");
+#line 189 "../../../Source/Core/AST/TranslationUnit.nll"
 						break;
 					}
 
 					case AST.Language.NLL:
 					{
+#line 193 "../../../Source/Core/AST/TranslationUnit.nll"
 						break;
 					}
 
 					case AST.Language.NLL_DEF:
 					{
+#line 197 "../../../Source/Core/AST/TranslationUnit.nll"
 						break;
 					}
 
@@ -201,6 +210,7 @@ namespace NumbatLogic
 				case AST.Language.CS:
 				{
 					sPath.Replace(".nll", ".cs");
+#line 215 "../../../Source/Core/AST/TranslationUnit.nll"
 					break;
 				}
 
@@ -210,17 +220,20 @@ namespace NumbatLogic
 						sPath.Replace(".nll", ".cpp");
 					else
 						sPath.Replace(".nll", ".hpp");
+#line 223 "../../../Source/Core/AST/TranslationUnit.nll"
 					break;
 				}
 
 				case AST.Language.NLL:
 				{
+#line 227 "../../../Source/Core/AST/TranslationUnit.nll"
 					break;
 				}
 
 				case AST.Language.NLL_DEF:
 				{
 					sPath.Replace(".nll", ".nll.def");
+#line 232 "../../../Source/Core/AST/TranslationUnit.nll"
 					break;
 				}
 
@@ -239,6 +252,7 @@ namespace NumbatLogic
 			{
 				int nIndex = sFrom.FindChar('/');
 				if (nIndex == -1)
+#line 252 "../../../Source/Core/AST/TranslationUnit.nll"
 					break;
 				InternalString sTemp = sFrom.CreateClone();
 				sTemp.SubStr(0, nIndex + 1);
@@ -251,6 +265,7 @@ namespace NumbatLogic
 			{
 				int nIndex = sTo.FindChar('/');
 				if (nIndex == -1)
+#line 264 "../../../Source/Core/AST/TranslationUnit.nll"
 					break;
 				InternalString sTemp = sTo.CreateClone();
 				sTemp.SubStr(0, nIndex + 1);
@@ -262,8 +277,10 @@ namespace NumbatLogic
 			while (true)
 			{
 				if (sFromVector.GetSize() == 0 || sToVector.GetSize() == 0)
+#line 276 "../../../Source/Core/AST/TranslationUnit.nll"
 					break;
 				if (!sFromVector.Get(0).IsEqual(sToVector.Get(0).GetExternalString()))
+#line 279 "../../../Source/Core/AST/TranslationUnit.nll"
 					break;
 				sFromVector.Erase(0);
 				sToVector.Erase(0);
@@ -307,6 +324,7 @@ namespace NumbatLogic
 										if (pTestClassDeclReference.m_bForwardReference)
 										{
 											bOnlyInclude = false;
+#line 330 "../../../Source/Core/AST/TranslationUnit.nll"
 											break;
 										}
 									}
@@ -339,6 +357,7 @@ namespace NumbatLogic
 								if (sTemp.IsEqual(pClassDeclReference.m_pClassDecl.m_pNameToken.m_sFileName.GetExternalString()))
 								{
 									bFound = true;
+#line 367 "../../../Source/Core/AST/TranslationUnit.nll"
 									break;
 								}
 							}

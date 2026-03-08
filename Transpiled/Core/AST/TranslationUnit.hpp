@@ -20,9 +20,10 @@ namespace NumbatLogic
 	class TranslationUnit;
 	class AST;
 }
-#line 1 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 0 "../../../Source/Core/AST/TranslationUnit.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/TranslationUnit.nll"
 	class ClassDeclReference
 	{
 		public: ClassDecl* m_pClassDecl;
@@ -30,6 +31,7 @@ namespace NumbatLogic
 		public: bool m_bForwardReference;
 		public: ClassDeclReference();
 	};
+#line 10 "../../../Source/Core/AST/TranslationUnit.nll"
 	class ReferenceNode
 	{
 		public: InternalString* m_sName;
@@ -40,6 +42,7 @@ namespace NumbatLogic
 		public: void Stringify(AST::Language eLanguage, AST::OutputFile eOutputFile, int nDepth, OutputBuilder* out);
 		public: virtual ~ReferenceNode();
 	};
+#line 83 "../../../Source/Core/AST/TranslationUnit.nll"
 	class TranslationUnit : public AST
 	{
 		public: InternalString* m_sInFile;

@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/CastExpr.nll"
+#line 0 "../../../Source/Core/AST/CastExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/CastExpr.nll"
 	class CastExpr : AST
 	{
 		public TypeRef m_pTypeRef;

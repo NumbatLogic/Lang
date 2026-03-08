@@ -16,9 +16,10 @@ namespace NumbatLogic
 	class ValueType;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/StringExpr.nll"
+#line 0 "../../../Source/Core/AST/StringExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/StringExpr.nll"
 	StringExpr* StringExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		Token* pToken = pTokenContainer->PeekExpect(pOffsetDatum, Token::Type::TOKEN_STRING);

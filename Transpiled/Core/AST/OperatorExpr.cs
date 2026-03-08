@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 0 "../../../Source/Core/AST/OperatorExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/OperatorExpr.nll"
 	class OperatorExpr : AST
 	{
 		public enum OperatorType
@@ -480,6 +481,7 @@ namespace NumbatLogic
 									while (pBaseClassDecl != null)
 									{
 										if (pBaseClassDecl == m_pLeft.m_pValueType.m_pClassDecl)
+#line 449 "../../../Source/Core/AST/OperatorExpr.nll"
 											break;
 										pBaseClassDecl = pBaseClassDecl.GetBaseClassDecl(pValidator);
 									}

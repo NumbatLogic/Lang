@@ -12,9 +12,10 @@ namespace NumbatLogic
 	class OffsetDatum;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/MemberEnumDecl.nll"
+#line 0 "../../../Source/Core/AST/MemberEnumDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/MemberEnumDecl.nll"
 	class MemberEnumDecl : public AST
 	{
 		public: AccessLevel* m_pAccessLevel;

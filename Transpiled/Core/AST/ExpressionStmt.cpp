@@ -18,9 +18,10 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/ExpressionStmt.nll"
+#line 0 "../../../Source/Core/AST/ExpressionStmt.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/ExpressionStmt.nll"
 	ExpressionStmt::ExpressionStmt()
 	{
 		m_pExpression = 0;

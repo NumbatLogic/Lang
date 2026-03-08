@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 0 "../../../Source/Core/AST/ReturnStmt.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/ReturnStmt.nll"
 	class ReturnStmt : AST
 	{
 		public AST m_pExpression;

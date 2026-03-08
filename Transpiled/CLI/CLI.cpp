@@ -22,9 +22,10 @@ namespace NumbatLogic
 	class AST;
 	class File;
 }
-#line 1 "../../../Source/CLI/CLI.nll"
+#line 0 "../../../Source/CLI/CLI.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/CLI/CLI.nll"
 	void CLI::Run(Vector<const char*>* sArgVector)
 	{
 		Console::Log("CLI");

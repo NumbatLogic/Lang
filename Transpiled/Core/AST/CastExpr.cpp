@@ -28,9 +28,10 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/CastExpr.nll"
+#line 0 "../../../Source/Core/AST/CastExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/CastExpr.nll"
 	CastExpr::CastExpr()
 	{
 		m_pTypeRef = 0;

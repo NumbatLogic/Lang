@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/Scope.nll"
+#line 0 "../../../Source/Core/AST/Scope.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/Scope.nll"
 	class Scope : AST
 	{
 		public bool m_bPseudo;
@@ -45,6 +46,7 @@ namespace NumbatLogic
 				if (pClosingToken != null)
 				{
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 51 "../../../Source/Core/AST/Scope.nll"
 					break;
 				}
 				AST pChild = AST.CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);

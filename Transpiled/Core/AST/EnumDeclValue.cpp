@@ -20,9 +20,10 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/EnumDeclValue.nll"
+#line 0 "../../../Source/Core/AST/EnumDeclValue.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/EnumDeclValue.nll"
 	EnumDeclValue::EnumDeclValue(Token* pFirstToken)
 	{
 		m_pForceValue = 0;

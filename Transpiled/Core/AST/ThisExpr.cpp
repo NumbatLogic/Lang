@@ -21,9 +21,10 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/ThisExpr.nll"
+#line 0 "../../../Source/Core/AST/ThisExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/ThisExpr.nll"
 	ThisExpr* ThisExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
@@ -56,6 +57,7 @@ namespace NumbatLogic
 				return;
 			}
 			if (pTestParent->m_eType == AST::Type::AST_CLASS_DECL)
+#line 37 "../../../Source/Core/AST/ThisExpr.nll"
 				break;
 			pTestParent = pTestParent->m_pParent;
 		}

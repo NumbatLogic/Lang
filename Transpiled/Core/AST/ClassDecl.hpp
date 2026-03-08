@@ -27,9 +27,10 @@ namespace NumbatLogic
 	class InternalString;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/ClassDecl.nll"
+#line 0 "../../../Source/Core/AST/ClassDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/ClassDecl.nll"
 	class ClassDecl : public AST
 	{
 		public: Token* m_pNameToken;
@@ -50,7 +51,7 @@ namespace NumbatLogic
 		public: ClassDecl* GetBaseClassDecl(Validator* pValidator);
 		public: void AppendFullyQualifiedName(InternalString* sOut);
 		public: void StringifyTemplateThing(Language eLanguage, OutputFile eOutputFile, OutputBuilder* out);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 		public: virtual ~ClassDecl();
 	};
 }

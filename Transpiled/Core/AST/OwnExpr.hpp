@@ -12,9 +12,10 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/OwnExpr.nll"
+#line 0 "../../../Source/Core/AST/OwnExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/OwnExpr.nll"
 	class OwnExpr : public AST
 	{
 		public: AST* m_pExpression;

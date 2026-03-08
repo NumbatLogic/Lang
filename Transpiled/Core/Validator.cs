@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/Validator.nll"
+#line 0 "../../../Source/Core/Validator.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/Validator.nll"
 	class ValidatorError
 	{
 		public InternalString m_sError;
@@ -16,6 +17,7 @@ namespace NumbatLogic
 		}
 
 	}
+#line 11 "../../../Source/Core/Validator.nll"
 	class ValidatorScope
 	{
 		public Scope m_pScope;
@@ -31,6 +33,7 @@ namespace NumbatLogic
 		}
 
 	}
+#line 23 "../../../Source/Core/Validator.nll"
 	class Validator
 	{
 		protected Project m_pProject;
@@ -210,11 +213,13 @@ namespace NumbatLogic
 				if (pBreakOrContinueOrReturn.m_eType == AST.Type.AST_RETURN_STMT)
 				{
 					if (pValidatorScope.m_pScope.m_pParent.m_eType == AST.Type.AST_FUNCTION_DECL)
+#line 217 "../../../Source/Core/Validator.nll"
 						break;
 				}
 				else
 				{
 					if (pValidatorScope.m_pScope.m_pParent.m_eType == AST.Type.AST_FOR_STMT || pValidatorScope.m_pScope.m_pParent.m_eType == AST.Type.AST_WHILE_STMT || pValidatorScope.m_pScope.m_pParent.m_eType == AST.Type.AST_SWITCH_STMT)
+#line 224 "../../../Source/Core/Validator.nll"
 						break;
 				}
 			}
