@@ -274,88 +274,32 @@ namespace NumbatLogic
 			if (pLeft != null)
 			{
 				Token pOperatorToken = pTokenContainer.Peek(pTempOffset);
-
-				if (pOperatorToken != null)
+				if (pOperatorToken != null && pOperatorToken.m_eType == Token::Type::TOKEN_QUESTION_MARK)
 				{
-					if (pOperatorToken.m_eType == Token::Type::TOKEN_MINUS_MINUS ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_PLUS_PLUS)
+					pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
+					pOffsetDatum.Set(pTempOffset);
+					return TrinaryExpr::Create(disown pLeft, pTokenContainer, pOffsetDatum);
+				}
+
+				Token pFirstOpToken = pTokenContainer.Peek(pTempOffset);
+				OperatorExpr::OperatorType eOperatorType = OperatorExpr::PeekOperator(pTokenContainer, pTempOffset);
+				if (eOperatorType != OperatorExpr::OperatorType::UNKNOWN)
+				{
+					if (OperatorExpr::IsPostfix(eOperatorType))
 					{
-						Vector<Token>* pOpTokenVector = own new Vector<Token>();
-						pOpTokenVector.PushBack(pOperatorToken);
-						pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 						pOffsetDatum.Set(pTempOffset);
-						return OperatorExpr::Create(disown pOpTokenVector, disown pLeft, null);
+						return OperatorExpr::Create(eOperatorType, pFirstOpToken, disown pLeft, null);
 					}
 
-					if (pOperatorToken.m_eType == Token::Type::TOKEN_QUESTION_MARK)
+					AST* pRight = own TryCreateExpression(pTokenContainer, pTempOffset);
+					if (pRight != null)
 					{
-						pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
 						pOffsetDatum.Set(pTempOffset);
-						return TrinaryExpr::Create(disown pLeft, pTokenContainer, pOffsetDatum);
+						return OperatorExpr::Create(eOperatorType, pFirstOpToken, disown pLeft, disown pRight);
 					}
-
-					OffsetDatum* pOffsetPlus1 = own OffsetDatum::Create(pTempOffset);
-					pOffsetPlus1.m_nOffset = pTempOffset.m_nOffset+1;
-					Token pSecondToken = pTokenContainer.Peek(pOffsetPlus1);
-					if (pOperatorToken.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT && pSecondToken != null && pSecondToken.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT)
-					{
-						Vector<Token>* pOpTokenVector = own new Vector<Token>();
-						pOpTokenVector.PushBack(pOperatorToken);
-						pOpTokenVector.PushBack(pSecondToken);
-						pTempOffset.m_nOffset = pTempOffset.m_nOffset+2;
-						AST* pRight = own TryCreateExpression(pTokenContainer, pTempOffset);
-						if (pRight != null)
-						{
-							pOffsetDatum.Set(pTempOffset);
-							return OperatorExpr::Create(disown pOpTokenVector, disown pLeft, disown pRight);
-						}
-					}
-					if (pOperatorToken.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT && pSecondToken != null && pSecondToken.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT)
-					{
-						Vector<Token>* pOpTokenVector = own new Vector<Token>();
-						pOpTokenVector.PushBack(pOperatorToken);
-						pOpTokenVector.PushBack(pSecondToken);
-						pTempOffset.m_nOffset = pTempOffset.m_nOffset+2;
-						AST* pRight = own TryCreateExpression(pTokenContainer, pTempOffset);
-						if (pRight != null)
-						{
-							pOffsetDatum.Set(pTempOffset);
-							return OperatorExpr::Create(disown pOpTokenVector, disown pLeft, disown pRight);
-						}
-					}
-
-					if (pOperatorToken.m_eType == Token::Type::TOKEN_AND ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT_EQUALS ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT_EQUALS ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_BITWISE_AND ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_BITWISE_OR ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_CARET ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_DIVIDE ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_DOT ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_DOUBLE_COLON ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_DOUBLE_EQUALS ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_EQUALS ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_MINUS ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_MINUS_EQUALS ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_NOT_EQUALS ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_OR ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_PLUS ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_PLUS_EQUALS ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_STAR ||
-						pOperatorToken.m_eType == Token::Type::TOKEN_MODULUS)
-					{
-						Vector<Token>* pOpTokenVector = own new Vector<Token>();
-						pOpTokenVector.PushBack(pOperatorToken);
-						pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
-						AST* pRight = own TryCreateExpression(pTokenContainer, pTempOffset);
-						if (pRight != null)
-						{
-							pOffsetDatum.Set(pTempOffset);
-							return OperatorExpr::Create(disown pOpTokenVector, disown pLeft, disown pRight);
-						}
-					}
+					
+					Console::Log("Probably should have something after the operator???");
+					Assert::Plz(false);
 				}
 				pOffsetDatum.Set(pTempOffset);
 				return disown pLeft;

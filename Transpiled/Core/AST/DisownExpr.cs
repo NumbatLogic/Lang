@@ -118,33 +118,29 @@ namespace NumbatLogic
 				NullExpr pRight = new NullExpr();
 				Token pOperatorToken = new Token();
 				pOperatorToken.m_eType = Token.Type.TOKEN_EQUALS;
-				Vector<Token> pOpTokenVector = new Vector<Token>();
-				pOpTokenVector.PushBack(pOperatorToken);
-				NumbatLogic.Vector<NumbatLogic.Token> __2176442827 = pOpTokenVector;
-				pOpTokenVector = null;
-				NumbatLogic.AST __3919013151 = pLeft;
+				NumbatLogic.AST __3919013148 = pLeft;
 				pLeft = null;
-				NumbatLogic.NullExpr __534132298 = pRight;
+				NumbatLogic.NullExpr __534132295 = pRight;
 				pRight = null;
-				OperatorExpr pOperatorExpr = OperatorExpr.Create(__2176442827, __3919013151, __534132298);
-				NumbatLogic.Token __3603719570 = pOperatorToken;
+				OperatorExpr pOperatorExpr = OperatorExpr.Create(OperatorExpr.OperatorType.ASSIGNMENT, pOperatorToken, __3919013148, __534132295);
+				NumbatLogic.Token __3603719567 = pOperatorToken;
 				pOperatorToken = null;
-				pOperatorExpr.m_pOwnedOperatorToken = __3603719570;
+				pOperatorExpr.m_pOwnedOperatorToken = __3603719567;
 				ExpressionStmt pExpressionStmt = new ExpressionStmt();
 				pExpressionStmt.m_pFirstToken = pOperatorExpr.m_pFirstToken;
 				pExpressionStmt.m_pExpression = pOperatorExpr;
-				NumbatLogic.OperatorExpr __2365778376 = pOperatorExpr;
+				NumbatLogic.OperatorExpr __2365778373 = pOperatorExpr;
 				pOperatorExpr = null;
-				pExpressionStmt.AddChild(__2365778376);
+				pExpressionStmt.AddChild(__2365778373);
 				AST pInjectedStmt = pExpressionStmt;
-				NumbatLogic.ExpressionStmt __1415267172 = pExpressionStmt;
+				NumbatLogic.ExpressionStmt __1415267169 = pExpressionStmt;
 				pExpressionStmt = null;
-				pParentParent.AddChildBefore(__1415267172, pParentStatement);
+				pParentParent.AddChildBefore(__1415267169, pParentStatement);
 				pValidator.ValidateSubtree(pInjectedStmt);
 			}
-			NumbatLogic.InternalString __3313827547 = sTempName;
+			NumbatLogic.InternalString __3313761955 = sTempName;
 			sTempName = null;
-			m_sTempVarName = __3313827547;
+			m_sTempVarName = __3313761955;
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString sOut)

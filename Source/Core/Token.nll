@@ -3,10 +3,7 @@ namespace NumbatLogic
 	class Token
 	{
 		public enum Type {
-			TOKEN_AND,
-			TOKEN_ANGLE_BRACKET_LEFT_EQUALS,
 			TOKEN_ANGLE_BRACKET_LEFT,
-			TOKEN_ANGLE_BRACKET_RIGHT_EQUALS,
 			TOKEN_ANGLE_BRACKET_RIGHT,
 			TOKEN_BANG,
 			TOKEN_BITWISE_AND,
@@ -21,10 +18,7 @@ namespace NumbatLogic
 			TOKEN_CURLY_BRACE_RIGHT,
 			TOKEN_DIVIDE,
 			TOKEN_DOT,
-			TOKEN_DOUBLE_ANGLE_BRACKET_LEFT,
-			TOKEN_DOUBLE_ANGLE_BRACKET_RIGHT,
 			TOKEN_DOUBLE_COLON,
-			TOKEN_DOUBLE_EQUALS,
 			TOKEN_EQUALS,
 			TOKEN_IDENTIFIER,
 			TOKEN_KEYWORD_BASE,
@@ -79,26 +73,22 @@ namespace NumbatLogic
 			TOKEN_KEYWORD_VOID,
 			TOKEN_KEYWORD_VOIDPTR,
 			TOKEN_KEYWORD_WHILE,
-			TOKEN_MINUS_EQUALS,
-			TOKEN_MINUS_MINUS,
 			TOKEN_MINUS,
+			TOKEN_MINUS_MINUS,
 			TOKEN_MODULUS,
 			TOKEN_NEW_LINE,
-			TOKEN_NOT_EQUALS,
 			TOKEN_NUMBER,
-			TOKEN_OR,
 			TOKEN_PARENTHESIS_LEFT,
 			TOKEN_PARENTHESIS_RIGHT,
-			TOKEN_PLUS_EQUALS,
-			TOKEN_PLUS_PLUS,
 			TOKEN_PLUS,
+			TOKEN_PLUS_PLUS,
 			TOKEN_QUESTION_MARK,
 			TOKEN_SEMICOLON,
 			TOKEN_SPACE,
 			TOKEN_SQUARE_BRACKET_LEFT,
 			TOKEN_SQUARE_BRACKET_RIGHT,
-			TOKEN_STAR_DOUBLE,
 			TOKEN_STAR,
+			TOKEN_STAR_DOUBLE,
 			TOKEN_STRING_UNTERMINATED,
 			TOKEN_STRING,
 			TOKEN_TAB,
@@ -120,10 +110,7 @@ namespace NumbatLogic
 		{
 			switch (m_eType)
 			{
-				case Type::TOKEN_AND: return "&&";
-				case Type::TOKEN_ANGLE_BRACKET_LEFT_EQUALS: return "<=";
 				case Type::TOKEN_ANGLE_BRACKET_LEFT: return "<";
-				case Type::TOKEN_ANGLE_BRACKET_RIGHT_EQUALS: return ">=";
 				case Type::TOKEN_ANGLE_BRACKET_RIGHT: return ">";
 				case Type::TOKEN_BANG: return "!";
 				case Type::TOKEN_BITWISE_AND: return "&";
@@ -136,10 +123,7 @@ namespace NumbatLogic
 				case Type::TOKEN_CURLY_BRACE_RIGHT: return "}";
 				case Type::TOKEN_DIVIDE: return "/";
 				case Type::TOKEN_DOT: return ".";
-				case Type::TOKEN_DOUBLE_ANGLE_BRACKET_LEFT: return "<<";
-				case Type::TOKEN_DOUBLE_ANGLE_BRACKET_RIGHT: return ">>";
 				case Type::TOKEN_DOUBLE_COLON: return "::";
-				case Type::TOKEN_DOUBLE_EQUALS: return "==";
 				case Type::TOKEN_EQUALS: return "=";
 				case Type::TOKEN_KEYWORD_BASE: return "base";
 				case Type::TOKEN_KEYWORD_BOOL: return "bool";
@@ -188,18 +172,14 @@ namespace NumbatLogic
 				case Type::TOKEN_KEYWORD_VOID: return "void";
 				case Type::TOKEN_KEYWORD_VOIDPTR: return "voidptr";
 				case Type::TOKEN_KEYWORD_WHILE: return "while";
-				case Type::TOKEN_MINUS_EQUALS: return "-=";
-				case Type::TOKEN_MINUS_MINUS: return "--";
 				case Type::TOKEN_MINUS: return "-";
+				case Type::TOKEN_MINUS_MINUS: return "--";
 				case Type::TOKEN_MODULUS: return "%";
 				case Type::TOKEN_NEW_LINE: return "\n";
-				case Type::TOKEN_NOT_EQUALS: return "!=";
-				case Type::TOKEN_OR: return "||";
 				case Type::TOKEN_PARENTHESIS_LEFT: return "(";
 				case Type::TOKEN_PARENTHESIS_RIGHT: return ")";
-				case Type::TOKEN_PLUS_EQUALS: return "+=";
-				case Type::TOKEN_PLUS_PLUS: return "++";
 				case Type::TOKEN_PLUS: return "+";
+				case Type::TOKEN_PLUS_PLUS: return "++";
 				case Type::TOKEN_QUESTION_MARK: return "?";
 				case Type::TOKEN_SEMICOLON: return ";";
 				case Type::TOKEN_SPACE: return " ";

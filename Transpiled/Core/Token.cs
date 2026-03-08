@@ -4,10 +4,7 @@ namespace NumbatLogic
 	{
 		public enum Type
 		{
-			TOKEN_AND,
-			TOKEN_ANGLE_BRACKET_LEFT_EQUALS,
 			TOKEN_ANGLE_BRACKET_LEFT,
-			TOKEN_ANGLE_BRACKET_RIGHT_EQUALS,
 			TOKEN_ANGLE_BRACKET_RIGHT,
 			TOKEN_BANG,
 			TOKEN_BITWISE_AND,
@@ -22,10 +19,7 @@ namespace NumbatLogic
 			TOKEN_CURLY_BRACE_RIGHT,
 			TOKEN_DIVIDE,
 			TOKEN_DOT,
-			TOKEN_DOUBLE_ANGLE_BRACKET_LEFT,
-			TOKEN_DOUBLE_ANGLE_BRACKET_RIGHT,
 			TOKEN_DOUBLE_COLON,
-			TOKEN_DOUBLE_EQUALS,
 			TOKEN_EQUALS,
 			TOKEN_IDENTIFIER,
 			TOKEN_KEYWORD_BASE,
@@ -80,26 +74,22 @@ namespace NumbatLogic
 			TOKEN_KEYWORD_VOID,
 			TOKEN_KEYWORD_VOIDPTR,
 			TOKEN_KEYWORD_WHILE,
-			TOKEN_MINUS_EQUALS,
-			TOKEN_MINUS_MINUS,
 			TOKEN_MINUS,
+			TOKEN_MINUS_MINUS,
 			TOKEN_MODULUS,
 			TOKEN_NEW_LINE,
-			TOKEN_NOT_EQUALS,
 			TOKEN_NUMBER,
-			TOKEN_OR,
 			TOKEN_PARENTHESIS_LEFT,
 			TOKEN_PARENTHESIS_RIGHT,
-			TOKEN_PLUS_EQUALS,
-			TOKEN_PLUS_PLUS,
 			TOKEN_PLUS,
+			TOKEN_PLUS_PLUS,
 			TOKEN_QUESTION_MARK,
 			TOKEN_SEMICOLON,
 			TOKEN_SPACE,
 			TOKEN_SQUARE_BRACKET_LEFT,
 			TOKEN_SQUARE_BRACKET_RIGHT,
-			TOKEN_STAR_DOUBLE,
 			TOKEN_STAR,
+			TOKEN_STAR_DOUBLE,
 			TOKEN_STRING_UNTERMINATED,
 			TOKEN_STRING,
 			TOKEN_TAB,
@@ -120,24 +110,9 @@ namespace NumbatLogic
 		{
 			switch (m_eType)
 			{
-				case Type.TOKEN_AND:
-				{
-					return "&&";
-				}
-
-				case Type.TOKEN_ANGLE_BRACKET_LEFT_EQUALS:
-				{
-					return "<=";
-				}
-
 				case Type.TOKEN_ANGLE_BRACKET_LEFT:
 				{
 					return "<";
-				}
-
-				case Type.TOKEN_ANGLE_BRACKET_RIGHT_EQUALS:
-				{
-					return ">=";
 				}
 
 				case Type.TOKEN_ANGLE_BRACKET_RIGHT:
@@ -200,24 +175,9 @@ namespace NumbatLogic
 					return ".";
 				}
 
-				case Type.TOKEN_DOUBLE_ANGLE_BRACKET_LEFT:
-				{
-					return "<<";
-				}
-
-				case Type.TOKEN_DOUBLE_ANGLE_BRACKET_RIGHT:
-				{
-					return ">>";
-				}
-
 				case Type.TOKEN_DOUBLE_COLON:
 				{
 					return "::";
-				}
-
-				case Type.TOKEN_DOUBLE_EQUALS:
-				{
-					return "==";
 				}
 
 				case Type.TOKEN_EQUALS:
@@ -460,19 +420,14 @@ namespace NumbatLogic
 					return "while";
 				}
 
-				case Type.TOKEN_MINUS_EQUALS:
+				case Type.TOKEN_MINUS:
 				{
-					return "-=";
+					return "-";
 				}
 
 				case Type.TOKEN_MINUS_MINUS:
 				{
 					return "--";
-				}
-
-				case Type.TOKEN_MINUS:
-				{
-					return "-";
 				}
 
 				case Type.TOKEN_MODULUS:
@@ -485,16 +440,6 @@ namespace NumbatLogic
 					return "\n";
 				}
 
-				case Type.TOKEN_NOT_EQUALS:
-				{
-					return "!=";
-				}
-
-				case Type.TOKEN_OR:
-				{
-					return "||";
-				}
-
 				case Type.TOKEN_PARENTHESIS_LEFT:
 				{
 					return "(";
@@ -505,19 +450,14 @@ namespace NumbatLogic
 					return ")";
 				}
 
-				case Type.TOKEN_PLUS_EQUALS:
+				case Type.TOKEN_PLUS:
 				{
-					return "+=";
+					return "+";
 				}
 
 				case Type.TOKEN_PLUS_PLUS:
 				{
 					return "++";
-				}
-
-				case Type.TOKEN_PLUS:
-				{
-					return "+";
 				}
 
 				case Type.TOKEN_QUESTION_MARK:
@@ -608,9 +548,9 @@ namespace NumbatLogic
 			pToken.m_nColumn = m_nColumn;
 			if (m_sValue != null)
 				pToken.m_sValue = new InternalString(m_sValue.GetExternalString());
-			NumbatLogic.Token __3778855882 = pToken;
+			NumbatLogic.Token __3778724684 = pToken;
 			pToken = null;
-			return __3778855882;
+			return __3778724684;
 		}
 
 		public Token()

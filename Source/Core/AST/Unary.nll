@@ -3,7 +3,7 @@ namespace NumbatLogic
 	class Unary : AST
 	{
 		public AST m_pExpression;
-		
+
 		public static Unary** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
 		{
 			OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);

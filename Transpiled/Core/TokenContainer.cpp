@@ -438,63 +438,15 @@ namespace NumbatLogic
 							pParseDatum->ClearCurrentRead();
 							return;
 						}
-						if (pPreviousToken->m_eType == Token::Type::TOKEN_EQUALS && eType == Token::Type::TOKEN_EQUALS)
-						{
-							pPreviousToken->m_eType = Token::Type::TOKEN_DOUBLE_EQUALS;
-							pParseDatum->ClearCurrentRead();
-							return;
-						}
-						if (pPreviousToken->m_eType == Token::Type::TOKEN_PLUS && eType == Token::Type::TOKEN_EQUALS)
-						{
-							pPreviousToken->m_eType = Token::Type::TOKEN_PLUS_EQUALS;
-							pParseDatum->ClearCurrentRead();
-							return;
-						}
 						if (pPreviousToken->m_eType == Token::Type::TOKEN_PLUS && eType == Token::Type::TOKEN_PLUS)
 						{
 							pPreviousToken->m_eType = Token::Type::TOKEN_PLUS_PLUS;
 							pParseDatum->ClearCurrentRead();
 							return;
 						}
-						if (pPreviousToken->m_eType == Token::Type::TOKEN_MINUS && eType == Token::Type::TOKEN_EQUALS)
-						{
-							pPreviousToken->m_eType = Token::Type::TOKEN_MINUS_EQUALS;
-							pParseDatum->ClearCurrentRead();
-							return;
-						}
 						if (pPreviousToken->m_eType == Token::Type::TOKEN_MINUS && eType == Token::Type::TOKEN_MINUS)
 						{
 							pPreviousToken->m_eType = Token::Type::TOKEN_MINUS_MINUS;
-							pParseDatum->ClearCurrentRead();
-							return;
-						}
-						if (pPreviousToken->m_eType == Token::Type::TOKEN_BANG && eType == Token::Type::TOKEN_EQUALS)
-						{
-							pPreviousToken->m_eType = Token::Type::TOKEN_NOT_EQUALS;
-							pParseDatum->ClearCurrentRead();
-							return;
-						}
-						if (pPreviousToken->m_eType == Token::Type::TOKEN_BITWISE_OR && eType == Token::Type::TOKEN_BITWISE_OR)
-						{
-							pPreviousToken->m_eType = Token::Type::TOKEN_OR;
-							pParseDatum->ClearCurrentRead();
-							return;
-						}
-						if (pPreviousToken->m_eType == Token::Type::TOKEN_BITWISE_AND && eType == Token::Type::TOKEN_BITWISE_AND)
-						{
-							pPreviousToken->m_eType = Token::Type::TOKEN_AND;
-							pParseDatum->ClearCurrentRead();
-							return;
-						}
-						if (pPreviousToken->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT && eType == Token::Type::TOKEN_EQUALS)
-						{
-							pPreviousToken->m_eType = Token::Type::TOKEN_ANGLE_BRACKET_LEFT_EQUALS;
-							pParseDatum->ClearCurrentRead();
-							return;
-						}
-						if (pPreviousToken->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT && eType == Token::Type::TOKEN_EQUALS)
-						{
-							pPreviousToken->m_eType = Token::Type::TOKEN_ANGLE_BRACKET_RIGHT_EQUALS;
 							pParseDatum->ClearCurrentRead();
 							return;
 						}
@@ -873,9 +825,9 @@ namespace NumbatLogic
 		if (bCopyString)
 			pToken->m_sValue = new InternalString(pParseDatum->m_sCurrentRead->GetExternalString());
 		pParseDatum->ClearCurrentRead();
-		NumbatLogic::Token* __3820360207 = pToken;
+		NumbatLogic::Token* __3820032206 = pToken;
 		pToken = 0;
-		m_pTokenVector->PushBack(__3820360207);
+		m_pTokenVector->PushBack(__3820032206);
 		if (pToken) delete pToken;
 	}
 
