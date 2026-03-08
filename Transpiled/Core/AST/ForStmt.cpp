@@ -26,9 +26,10 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/ForStmt.nll"
+#line 0 "../../../Source/Core/AST/ForStmt.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/ForStmt.nll"
 	ForStmt::ForStmt()
 	{
 		m_eType = AST::Type::AST_FOR_STMT;

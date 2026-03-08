@@ -1,6 +1,7 @@
-#line 1 "../../../Source/CLI/CLI.nll"
+#line 0 "../../../Source/CLI/CLI.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/CLI/CLI.nll"
 	class CLI
 	{
 		public static void Run(Vector<string> sArgVector)

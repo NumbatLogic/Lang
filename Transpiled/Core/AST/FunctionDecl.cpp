@@ -39,9 +39,10 @@ namespace NumbatLogic
 	class InternalString;
 	class ClassDecl;
 }
-#line 1 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 0 "../../../Source/Core/AST/FunctionDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/FunctionDecl.nll"
 	FunctionDecl* FunctionDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, AST* pParent)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);

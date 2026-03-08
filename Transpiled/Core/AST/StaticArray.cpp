@@ -22,9 +22,10 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/StaticArray.nll"
+#line 0 "../../../Source/Core/AST/StaticArray.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/StaticArray.nll"
 	StaticArray::StaticArray()
 	{
 		m_eType = AST::Type::AST_STATIC_ARRAY;
@@ -47,6 +48,7 @@ namespace NumbatLogic
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_RIGHT) != 0)
 			{
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 27 "../../../Source/Core/AST/StaticArray.nll"
 				break;
 			}
 			AST* pElement = AST::TryCreateExpression(pTokenContainer, pTempOffset);

@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/TypeRef.nll"
+#line 0 "../../../Source/Core/AST/TypeRef.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/TypeRef.nll"
 	class TypeRef : AST
 	{
 		public enum PointerType
@@ -70,6 +71,7 @@ namespace NumbatLogic
 						if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_ANGLE_BRACKET_RIGHT) != null)
 						{
 							pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 99 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 						TypeRef pGenericTypeRef = TypeRef.TryCreate(pTokenContainer, pTempOffset);
@@ -391,6 +393,7 @@ namespace NumbatLogic
 							case ValueType.Type.ENUM_DECL_VALUE:
 							{
 								bOutput = true;
+#line 472 "../../../Source/Core/AST/TypeRef.nll"
 								break;
 							}
 
@@ -454,66 +457,77 @@ namespace NumbatLogic
 						case Token.Type.TOKEN_KEYWORD_UNICHAR:
 						{
 							out.m_sOut.Append("char");
+#line 526 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_STRING:
 						{
 							out.m_sOut.Append("string");
+#line 527 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_VOIDPTR:
 						{
 							out.m_sOut.Append("object");
+#line 528 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_UINT8:
 						{
 							out.m_sOut.Append("byte");
+#line 529 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_UINT16:
 						{
 							out.m_sOut.Append("ushort");
+#line 530 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_UINT32:
 						{
 							out.m_sOut.Append("uint");
+#line 531 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_UINT64:
 						{
 							out.m_sOut.Append("ulong");
+#line 532 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_INT8:
 						{
 							out.m_sOut.Append("sbyte");
+#line 533 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_INT16:
 						{
 							out.m_sOut.Append("short");
+#line 534 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_INT32:
 						{
 							out.m_sOut.Append("int");
+#line 535 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						default:
 						{
 							m_pTypeToken.Stringify(out.m_sOut);
+#line 540 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
@@ -546,12 +560,14 @@ namespace NumbatLogic
 					case AST.Language.CPP:
 					{
 						out.m_sOut.Append("::");
+#line 576 "../../../Source/Core/AST/TypeRef.nll"
 						break;
 					}
 
 					case AST.Language.CS:
 					{
 						out.m_sOut.AppendChar('.');
+#line 581 "../../../Source/Core/AST/TypeRef.nll"
 						break;
 					}
 

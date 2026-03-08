@@ -27,9 +27,10 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/SwitchStmt.nll"
+#line 0 "../../../Source/Core/AST/SwitchStmt.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/SwitchStmt.nll"
 	SwitchStmt::SwitchStmt()
 	{
 		m_pExpression = 0;
@@ -100,6 +101,7 @@ namespace NumbatLogic
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_RIGHT) != 0)
 			{
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 72 "../../../Source/Core/AST/SwitchStmt.nll"
 				break;
 			}
 			if (pSwitchStmt->m_pDefaultStatement != 0)

@@ -29,9 +29,10 @@ namespace NumbatLogic
 	class Validator;
 	class ClassDecl;
 }
-#line 1 "../../../Source/Core/AST/VarDeclDescope.nll"
+#line 0 "../../../Source/Core/AST/VarDeclDescope.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/VarDeclDescope.nll"
 	VarDeclDescope::VarDeclDescope()
 	{
 		m_pVarDeclVector = 0;

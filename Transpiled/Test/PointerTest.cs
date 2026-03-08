@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Test/PointerTest.nll"
+#line 0 "../../../Source/Test/PointerTest.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Test/PointerTest.nll"
 	class Thing
 	{
 		public int m_ff;
@@ -9,6 +10,7 @@ namespace NumbatLogic
 		}
 
 	}
+#line 8 "../../../Source/Test/PointerTest.nll"
 	class PointerTest
 	{
 		public static void Run()

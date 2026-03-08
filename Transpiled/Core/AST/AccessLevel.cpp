@@ -16,9 +16,10 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/AccessLevel.nll"
+#line 0 "../../../Source/Core/AST/AccessLevel.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/AccessLevel.nll"
 	AccessLevel* AccessLevel::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
@@ -39,27 +40,27 @@ namespace NumbatLogic
 		return __98812046;
 	}
 
-	void AccessLevel::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
+	void AccessLevel::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
 		switch (m_pFirstToken->m_eType)
 		{
 			case Token::Type::TOKEN_KEYWORD_PRIVATE:
 			{
 				if (eLanguage == AST::Language::NLL_DEF)
-					out->m_sOut->AppendString("private");
+					pOutputBuilder->m_sOut->AppendString("private");
 				else
-					out->m_sOut->AppendString("protected");
+					pOutputBuilder->m_sOut->AppendString("protected");
 				return;
 			}
 
 			case Token::Type::TOKEN_KEYWORD_PUBLIC:
 			{
-				out->m_sOut->AppendString("public");
+				pOutputBuilder->m_sOut->AppendString("public");
 				return;
 			}
 
 		}
-		out->m_sOut->AppendString("???");
+		pOutputBuilder->m_sOut->AppendString("???");
 	}
 
 }

@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/NumberExpr.nll"
+#line 0 "../../../Source/Core/AST/NumberExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/NumberExpr.nll"
 	class NumberExpr : AST
 	{
 		public NumberExpr(Token pFirstToken)

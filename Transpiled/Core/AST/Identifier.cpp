@@ -56,9 +56,10 @@ namespace NumbatLogic
 	class MemberFunctionDecl;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/Identifier.nll"
+#line 0 "../../../Source/Core/AST/Identifier.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/Identifier.nll"
 	Identifier* Identifier::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
@@ -129,6 +130,7 @@ namespace NumbatLogic
 										AddClassDeclReference(pOpWalk->m_pLeft->m_pValueType->m_pClassDecl, AST::OutputFile::SOURCE, false);
 										pBase = pOpWalk->m_pLeft->m_pValueType->m_pClassDecl;
 										pChild = 0;
+#line 81 "../../../Source/Core/AST/Identifier.nll"
 										break;
 									}
 									else
@@ -136,6 +138,7 @@ namespace NumbatLogic
 										{
 											pBase = pOpWalk->m_pLeft->m_pValueType->m_pEnumDecl;
 											pChild = 0;
+#line 87 "../../../Source/Core/AST/Identifier.nll"
 											break;
 										}
 								}
@@ -192,11 +195,13 @@ namespace NumbatLogic
 										if (pRelevant->GetSize() == 1 && pRelevant->Get(0)->m_pDeclAST != 0)
 										{
 											pAST = pRelevant->Get(0)->m_pDeclAST;
+#line 148 "../../../Source/Core/AST/Identifier.nll"
 											break;
 										}
 										if (pRelevant->GetSize() > 1)
 										{
 											bResolverAmbiguous = true;
+#line 153 "../../../Source/Core/AST/Identifier.nll"
 											break;
 										}
 									}
@@ -268,6 +273,7 @@ namespace NumbatLogic
 			for (int i = 0; i < 5; i++)
 			{
 				if (pCheckParent == 0)
+#line 234 "../../../Source/Core/AST/Identifier.nll"
 					break;
 				if (pCheckParent->m_eType == AST::Type::AST_VAR_DECL)
 				{
@@ -280,6 +286,7 @@ namespace NumbatLogic
 							if (pCurrent == pVarDecl->m_pArraySizeVector->Get(j))
 							{
 								bInArraySize = true;
+#line 247 "../../../Source/Core/AST/Identifier.nll"
 								break;
 							}
 						}
@@ -292,6 +299,7 @@ namespace NumbatLogic
 						if (pMemberVarDecl->m_bStatic)
 							AddClassDeclReference(m_pValueType->m_pClassDecl, AST::OutputFile::HEADER, false);
 					}
+#line 264 "../../../Source/Core/AST/Identifier.nll"
 					break;
 				}
 				pCurrent = pCheckParent;

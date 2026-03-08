@@ -19,9 +19,10 @@ namespace NumbatLogic
 	class NamespaceDecl;
 	class Token;
 }
-#line 1 "../../../Source/Core/Project.nll"
+#line 0 "../../../Source/Core/Project.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/Project.nll"
 	class Project : public AST
 	{
 		public: Vector<TranslationUnit*>* m_pTranslationUnitVector;

@@ -16,9 +16,10 @@ namespace NumbatLogic
 	class ClassDecl;
 	class AST;
 }
-#line 1 "../../../Source/Core/Semantic/Resolver.nll"
+#line 0 "../../../Source/Core/Semantic/Resolver.nll"
 namespace NumbatLogic
 {
+#line 4 "../../../Source/Core/Semantic/Resolver.nll"
 	class Resolver
 	{
 		public: SymbolScope* m_pGlobalScope;

@@ -18,9 +18,10 @@ namespace NumbatLogic
 	class ParamCall;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/ParamDecl.nll"
+#line 0 "../../../Source/Core/AST/ParamDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/ParamDecl.nll"
 	class ParamDecl : public AST
 	{
 		public: Vector<VarDecl*>* m_pParamVector;

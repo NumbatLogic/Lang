@@ -16,9 +16,10 @@ namespace NumbatLogic
 	class ValueType;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/Identifier.nll"
+#line 0 "../../../Source/Core/AST/Identifier.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/Identifier.nll"
 	class Identifier : public AST
 	{
 		public: Token* m_pNameToken;

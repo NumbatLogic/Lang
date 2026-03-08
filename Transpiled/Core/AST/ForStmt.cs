@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/ForStmt.nll"
+#line 0 "../../../Source/Core/AST/ForStmt.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/ForStmt.nll"
 	class ForStmt : AST
 	{
 		public ForStmt()

@@ -18,9 +18,10 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 0 "../../../Source/Core/AST/MemberClassDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/MemberClassDecl.nll"
 	MemberClassDecl::MemberClassDecl()
 	{
 		m_pParentClassDecl = 0;

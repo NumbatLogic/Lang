@@ -35,9 +35,10 @@ namespace NumbatLogic
 	class EnumDeclValue;
 	class EnumDecl;
 }
-#line 1 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 0 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 	MemberVarsSetDefaultStmt::MemberVarsSetDefaultStmt()
 	{
 		m_eType = AST::Type::MEMBER_VARS_SET_DEFAULT_STMT;
@@ -120,12 +121,14 @@ namespace NumbatLogic
 									case ValueType::Type::INT:
 									{
 										out->m_sOut->Append("0");
+#line 99 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										break;
 									}
 
 									case ValueType::Type::BOOL:
 									{
 										out->m_sOut->Append("false");
+#line 104 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										break;
 									}
 
@@ -133,6 +136,7 @@ namespace NumbatLogic
 									case ValueType::Type::UNICHAR:
 									{
 										out->m_sOut->Append("'0'");
+#line 110 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										break;
 									}
 
@@ -143,6 +147,7 @@ namespace NumbatLogic
 									case ValueType::Type::STRING:
 									{
 										out->m_sOut->Append("0");
+#line 119 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										break;
 									}
 
@@ -156,6 +161,7 @@ namespace NumbatLogic
 										pMemberVarDecl->m_pVarDecl->m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, out);
 										out->m_sOut->Append("::");
 										pEnumDeclValue->m_pFirstToken->Stringify(out->m_sOut);
+#line 132 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										break;
 									}
 
@@ -163,6 +169,7 @@ namespace NumbatLogic
 									{
 										out->m_sOut->Append("???");
 										pValueType->StringifyType(out->m_sOut);
+#line 138 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										break;
 									}
 
@@ -179,12 +186,14 @@ namespace NumbatLogic
 									case ValueType::Type::INT:
 									{
 										out->m_sOut->Append("0");
+#line 154 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										break;
 									}
 
 									case ValueType::Type::BOOL:
 									{
 										out->m_sOut->Append("false");
+#line 159 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										break;
 									}
 
@@ -192,6 +201,7 @@ namespace NumbatLogic
 									case ValueType::Type::UNICHAR:
 									{
 										out->m_sOut->Append("'0'");
+#line 165 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										break;
 									}
 
@@ -202,6 +212,7 @@ namespace NumbatLogic
 									case ValueType::Type::STRING:
 									{
 										out->m_sOut->Append("0");
+#line 174 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										break;
 									}
 
@@ -215,6 +226,7 @@ namespace NumbatLogic
 										pMemberVarDecl->m_pVarDecl->m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, out);
 										out->m_sOut->Append("::");
 										pEnumDeclValue->m_pFirstToken->Stringify(out->m_sOut);
+#line 187 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										break;
 									}
 
@@ -222,6 +234,7 @@ namespace NumbatLogic
 									{
 										out->m_sOut->Append("???");
 										pValueType->StringifyType(out->m_sOut);
+#line 193 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										break;
 									}
 

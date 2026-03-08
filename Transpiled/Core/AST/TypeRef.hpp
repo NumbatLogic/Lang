@@ -21,9 +21,10 @@ namespace NumbatLogic
 	class ValueType;
 	class Resolver;
 }
-#line 1 "../../../Source/Core/AST/TypeRef.nll"
+#line 0 "../../../Source/Core/AST/TypeRef.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/TypeRef.nll"
 	class TypeRef : public AST
 	{
 		public: enum PointerType

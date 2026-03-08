@@ -24,9 +24,10 @@ namespace NumbatLogic
 	class InternalString;
 	class ClassDecl;
 }
-#line 1 "../../../Source/Core/AST/DeleteStmt.nll"
+#line 0 "../../../Source/Core/AST/DeleteStmt.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/DeleteStmt.nll"
 	DeleteStmt::DeleteStmt()
 	{
 		m_pExpression = 0;

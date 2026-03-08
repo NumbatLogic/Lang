@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/NamespaceNode.nll"
+#line 0 "../../../Source/Core/NamespaceNode.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/NamespaceNode.nll"
 	class NamespaceNode
 	{
 		public InternalString m_sName;

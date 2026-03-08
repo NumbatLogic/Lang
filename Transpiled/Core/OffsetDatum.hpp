@@ -4,9 +4,10 @@ namespace NumbatLogic
 {
 	class OffsetDatum;
 }
-#line 1 "../../../Source/Core/OffsetDatum.nll"
+#line 0 "../../../Source/Core/OffsetDatum.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/OffsetDatum.nll"
 	class OffsetDatum
 	{
 		public: int m_nOffset;

@@ -15,9 +15,10 @@ namespace NumbatLogic
 	class ValueType;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/FunctionCall.nll"
+#line 0 "../../../Source/Core/AST/FunctionCall.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/FunctionCall.nll"
 	class FunctionCall : public AST
 	{
 		public: const char* m_sMangledName;

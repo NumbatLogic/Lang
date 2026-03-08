@@ -49,9 +49,10 @@ namespace NumbatLogic
 	class ExternalString;
 	class Token;
 }
-#line 1 "../../../Source/Core/Validator.nll"
+#line 0 "../../../Source/Core/Validator.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/Validator.nll"
 	ValidatorError::ValidatorError()
 	{
 		m_sError = 0;
@@ -66,6 +67,7 @@ namespace NumbatLogic
 		if (m_sFile) delete m_sFile;
 	}
 
+#line 11 "../../../Source/Core/Validator.nll"
 	ValidatorScope::ValidatorScope(Scope* pScope)
 	{
 		m_pScope = 0;
@@ -79,6 +81,7 @@ namespace NumbatLogic
 		if (m_pVarDeclVector) delete m_pVarDeclVector;
 	}
 
+#line 23 "../../../Source/Core/Validator.nll"
 	Validator::Validator(Project* pProject)
 	{
 		m_pProject = 0;
@@ -263,11 +266,13 @@ namespace NumbatLogic
 			if (pBreakOrContinueOrReturn->m_eType == AST::Type::AST_RETURN_STMT)
 			{
 				if (pValidatorScope->m_pScope->m_pParent->m_eType == AST::Type::AST_FUNCTION_DECL)
+#line 217 "../../../Source/Core/Validator.nll"
 					break;
 			}
 			else
 			{
 				if (pValidatorScope->m_pScope->m_pParent->m_eType == AST::Type::AST_FOR_STMT || pValidatorScope->m_pScope->m_pParent->m_eType == AST::Type::AST_WHILE_STMT || pValidatorScope->m_pScope->m_pParent->m_eType == AST::Type::AST_SWITCH_STMT)
+#line 224 "../../../Source/Core/Validator.nll"
 					break;
 			}
 		}

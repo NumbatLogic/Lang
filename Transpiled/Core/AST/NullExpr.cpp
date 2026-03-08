@@ -18,9 +18,10 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/NullExpr.nll"
+#line 0 "../../../Source/Core/AST/NullExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/NullExpr.nll"
 	NullExpr::NullExpr()
 	{
 		m_eType = AST::Type::NULL_EXPR;

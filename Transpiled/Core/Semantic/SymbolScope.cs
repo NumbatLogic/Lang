@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 0 "../../../Source/Core/Semantic/SymbolScope.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/Semantic/SymbolScope.nll"
 	class SymbolScope
 	{
 		public enum Kind

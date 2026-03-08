@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/ClassDecl.nll"
+#line 0 "../../../Source/Core/AST/ClassDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/ClassDecl.nll"
 	class ClassDecl : AST
 	{
 		public Token m_pNameToken;
@@ -54,6 +55,7 @@ namespace NumbatLogic
 					if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_ANGLE_BRACKET_RIGHT) != null)
 					{
 						pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 65 "../../../Source/Core/AST/ClassDecl.nll"
 						break;
 					}
 					GenericTypeDecl pGenericTypeDecl = GenericTypeDecl.TryCreate(pTokenContainer, pTempOffset);
@@ -113,6 +115,7 @@ namespace NumbatLogic
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_CURLY_BRACE_RIGHT) != null)
 				{
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 129 "../../../Source/Core/AST/ClassDecl.nll"
 					break;
 				}
 				AST pAST;
@@ -412,51 +415,52 @@ namespace NumbatLogic
 			out.m_sOut.AppendString(">");
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
+			pOutputBuilder.OutputSourceLocation(eLanguage, m_pFirstToken);
 			if (!(eLanguage == AST.Language.CPP && eOutputFile == AST.OutputFile.SOURCE))
 			{
 				if (eLanguage == AST.Language.CPP)
 				{
 					if (m_pGenericTypeDeclVector.GetSize() > 0)
 					{
-						Util.Pad(nDepth, out.m_sOut);
-						StringifyTemplateThing(eLanguage, eOutputFile, out);
-						out.m_sOut.AppendString("\n");
+						Util.Pad(nDepth, pOutputBuilder.m_sOut);
+						StringifyTemplateThing(eLanguage, eOutputFile, pOutputBuilder);
+						pOutputBuilder.m_sOut.AppendString("\n");
 					}
 				}
-				Util.Pad(nDepth, out.m_sOut);
-				out.m_sOut.Append("class ");
-				m_pNameToken.Stringify(out.m_sOut);
+				Util.Pad(nDepth, pOutputBuilder.m_sOut);
+				pOutputBuilder.m_sOut.Append("class ");
+				m_pNameToken.Stringify(pOutputBuilder.m_sOut);
 				if (eLanguage == AST.Language.CS || eLanguage == AST.Language.NLL_DEF)
 				{
 					if (m_pGenericTypeDeclVector.GetSize() > 0)
 					{
-						out.m_sOut.AppendChar('<');
+						pOutputBuilder.m_sOut.AppendChar('<');
 						for (int i = 0; i < m_pGenericTypeDeclVector.GetSize(); i++)
 						{
 							if (i > 0)
-								out.m_sOut.Append(", ");
+								pOutputBuilder.m_sOut.Append(", ");
 							GenericTypeDecl pGenericTypeDecl = m_pGenericTypeDeclVector.Get(i);
-							pGenericTypeDecl.Stringify(eLanguage, eOutputFile, 0, out);
+							pGenericTypeDecl.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 						}
-						out.m_sOut.AppendChar('>');
+						pOutputBuilder.m_sOut.AppendChar('>');
 					}
 				}
 				if (m_pBaseTypeRef != null)
 				{
-					out.m_sOut.Append(" : ");
+					pOutputBuilder.m_sOut.Append(" : ");
 					if (eLanguage == AST.Language.CPP)
-						out.m_sOut.Append("public ");
-					m_pBaseTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
+						pOutputBuilder.m_sOut.Append("public ");
+					m_pBaseTypeRef.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 				}
 				if (eLanguage == AST.Language.CS && m_bDisposable)
 				{
 					if (m_pBaseTypeRef == null)
-						out.m_sOut.Append(" : ");
+						pOutputBuilder.m_sOut.Append(" : ");
 					else
-						out.m_sOut.Append(", ");
-					out.m_sOut.Append("System.IDisposable");
+						pOutputBuilder.m_sOut.Append(", ");
+					pOutputBuilder.m_sOut.Append("System.IDisposable");
 				}
 				if (eLanguage == AST.Language.CS && m_pGenericTypeDeclVector.GetSize() > 0)
 				{
@@ -464,39 +468,39 @@ namespace NumbatLogic
 					{
 						if (m_pGenericTypeDeclVector.GetSize() == 1)
 						{
-							out.m_sOut.AppendChar(' ');
+							pOutputBuilder.m_sOut.AppendChar(' ');
 						}
 						else
 						{
-							out.m_sOut.Append("\n");
-							Util.Pad(nDepth + 1, out.m_sOut);
+							pOutputBuilder.m_sOut.Append("\n");
+							Util.Pad(nDepth + 1, pOutputBuilder.m_sOut);
 						}
-						out.m_sOut.Append("where ");
+						pOutputBuilder.m_sOut.Append("where ");
 						GenericTypeDecl pGenericTypeDecl = m_pGenericTypeDeclVector.Get(i);
-						pGenericTypeDecl.Stringify(eLanguage, eOutputFile, 0, out);
-						out.m_sOut.Append(" : class");
+						pGenericTypeDecl.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+						pOutputBuilder.m_sOut.Append(" : class");
 					}
 				}
-				out.m_sOut.Append("\n");
-				Util.Pad(nDepth, out.m_sOut);
-				out.m_sOut.Append("{\n");
+				pOutputBuilder.m_sOut.Append("\n");
+				Util.Pad(nDepth, pOutputBuilder.m_sOut);
+				pOutputBuilder.m_sOut.Append("{\n");
 				nDepth++;
 			}
 			AST pMember = m_pFirstChild;
 			while (pMember != null)
 			{
 				if (pMember != m_pBaseTypeRef)
-					pMember.Stringify(eLanguage, eOutputFile, nDepth, out);
+					pMember.Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 				pMember = pMember.m_pNextSibling;
 			}
 			if (!(eLanguage == AST.Language.CPP && eOutputFile == AST.OutputFile.SOURCE))
 			{
 				nDepth--;
-				Util.Pad(nDepth, out.m_sOut);
+				Util.Pad(nDepth, pOutputBuilder.m_sOut);
 				if (eLanguage == AST.Language.CPP)
-					out.m_sOut.Append("};\n");
+					pOutputBuilder.m_sOut.Append("};\n");
 				else
-					out.m_sOut.Append("}\n");
+					pOutputBuilder.m_sOut.Append("}\n");
 			}
 		}
 

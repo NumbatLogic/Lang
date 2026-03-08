@@ -12,15 +12,16 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/BreakStmt.nll"
+#line 0 "../../../Source/Core/AST/BreakStmt.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/BreakStmt.nll"
 	class BreakStmt : public AST
 	{
 		public: BreakStmt();
 		public: static BreakStmt* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 	};
 }
 

@@ -10,9 +10,10 @@ namespace NumbatLogic
 	class AST;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/ParamCall.nll"
+#line 0 "../../../Source/Core/AST/ParamCall.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/ParamCall.nll"
 	class ParamCall : public AST
 	{
 		public: static ParamCall* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);

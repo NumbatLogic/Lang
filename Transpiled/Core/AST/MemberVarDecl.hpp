@@ -14,9 +14,10 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/MemberVarDecl.nll"
+#line 0 "../../../Source/Core/AST/MemberVarDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/MemberVarDecl.nll"
 	class MemberVarDecl : public AST
 	{
 		public: AccessLevel* m_pAccessLevel;

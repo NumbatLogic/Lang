@@ -27,9 +27,10 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/MemberFunctionDecl.nll"
+#line 0 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 	MemberFunctionDecl::MemberFunctionDecl()
 	{
 		m_pParentClassDecl = 0;
@@ -68,6 +69,7 @@ namespace NumbatLogic
 			{
 				bStatic = true;
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 39 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 				break;
 			}
 
@@ -75,6 +77,7 @@ namespace NumbatLogic
 			{
 				bVirtual = true;
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 45 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 				break;
 			}
 
@@ -82,6 +85,7 @@ namespace NumbatLogic
 			{
 				bOverride = true;
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 51 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 				break;
 			}
 

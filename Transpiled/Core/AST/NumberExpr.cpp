@@ -16,9 +16,10 @@ namespace NumbatLogic
 	class ValueType;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/NumberExpr.nll"
+#line 0 "../../../Source/Core/AST/NumberExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/NumberExpr.nll"
 	NumberExpr::NumberExpr(Token* pFirstToken)
 	{
 		m_eType = AST::Type::AST_NUMBER;

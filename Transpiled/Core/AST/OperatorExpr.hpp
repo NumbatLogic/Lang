@@ -13,9 +13,10 @@ namespace NumbatLogic
 	class Validator;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 0 "../../../Source/Core/AST/OperatorExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/OperatorExpr.nll"
 	class OperatorExpr : public AST
 	{
 		public: enum OperatorType

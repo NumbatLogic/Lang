@@ -12,9 +12,10 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/StringExpr.nll"
+#line 0 "../../../Source/Core/AST/StringExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/StringExpr.nll"
 	class StringExpr : public AST
 	{
 		public: static StringExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);

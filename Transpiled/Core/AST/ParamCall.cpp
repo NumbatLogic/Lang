@@ -20,9 +20,10 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/ParamCall.nll"
+#line 0 "../../../Source/Core/AST/ParamCall.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/ParamCall.nll"
 	ParamCall* ParamCall::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
@@ -44,6 +45,7 @@ namespace NumbatLogic
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT) != 0)
 			{
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 30 "../../../Source/Core/AST/ParamCall.nll"
 				break;
 			}
 			AST* pParam = AST::TryCreateExpression(pTokenContainer, pTempOffset);

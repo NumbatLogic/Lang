@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/New.nll"
+#line 0 "../../../Source/Core/AST/New.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/New.nll"
 	class New : AST
 	{
 		public TypeRef m_pTypeRef;
@@ -79,6 +80,7 @@ namespace NumbatLogic
 						{
 							if (pTorDecl.m_pParamDecl.ValidateParamCall(m_pParamCall, pValidator, false))
 							{
+#line 87 "../../../Source/Core/AST/New.nll"
 								break;
 							}
 						}

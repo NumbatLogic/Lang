@@ -36,9 +36,10 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class ExpressionStmt;
 }
-#line 1 "../../../Source/Core/AST/DisownExpr.nll"
+#line 0 "../../../Source/Core/AST/DisownExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/DisownExpr.nll"
 	DisownExpr::DisownExpr()
 	{
 		m_pExpression = 0;

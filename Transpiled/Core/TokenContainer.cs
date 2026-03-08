@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/TokenContainer.nll"
+#line 0 "../../../Source/Core/TokenContainer.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/TokenContainer.nll"
 	class TokenContainer
 	{
 		public OwnedVector<Token> m_pTokenVector;
@@ -35,6 +36,7 @@ namespace NumbatLogic
 				if (nChar == 0 || nChar < 0)
 				{
 					ProcessCurrentRead(pParseDatum);
+#line 40 "../../../Source/Core/TokenContainer.nll"
 					break;
 				}
 				if (nChar == '#')
@@ -52,6 +54,7 @@ namespace NumbatLogic
 								Assert.Plz(false);
 							}
 							if (nChar == ' ' || nChar == '\t' || nChar == '\n')
+#line 60 "../../../Source/Core/TokenContainer.nll"
 								break;
 							sName.AppendChar(nChar);
 						}
@@ -64,6 +67,7 @@ namespace NumbatLogic
 							if (sDefineVector.Get(i).IsEqual(sxName))
 							{
 								bFound = true;
+#line 74 "../../../Source/Core/TokenContainer.nll"
 								break;
 							}
 						}
@@ -85,6 +89,7 @@ namespace NumbatLogic
 								if (pParseDatum.m_sInput.StartsWith("endif"))
 								{
 									pParseDatum.m_sInput.SubStr(5, pParseDatum.m_sInput.GetLength() - 5);
+#line 101 "../../../Source/Core/TokenContainer.nll"
 									break;
 								}
 							}
@@ -120,8 +125,10 @@ namespace NumbatLogic
 							{
 								char nNextNextChar = ReadChar(pParseDatum, false);
 								if (nNextNextChar == 0 || nNextNextChar < 0)
+#line 143 "../../../Source/Core/TokenContainer.nll"
 									break;
 								if (nNextNextChar == '\n')
+#line 146 "../../../Source/Core/TokenContainer.nll"
 									break;
 							}
 							pParseDatum.m_nLine = pParseDatum.m_nLine + 1;
@@ -136,6 +143,7 @@ namespace NumbatLogic
 								{
 									char nNextNextChar = ReadChar(pParseDatum, false);
 									if (nNextNextChar == 0 || nNextNextChar < 0)
+#line 163 "../../../Source/Core/TokenContainer.nll"
 										break;
 									pParseDatum.m_nColumn = pParseDatum.m_nColumn + 1;
 									if (nNextNextChar == '\n')
@@ -144,6 +152,7 @@ namespace NumbatLogic
 										pParseDatum.m_nColumn = 0;
 									}
 									if (nNextNextChar == '/' && nLastChar == '*')
+#line 173 "../../../Source/Core/TokenContainer.nll"
 										break;
 									nLastChar = nNextNextChar;
 								}
@@ -189,9 +198,11 @@ namespace NumbatLogic
 								hax++;
 								int nTestChar = pParseDatum.m_sCurrentRead.GetChar(i);
 								if (nTestChar < '0' || nTestChar > '9')
+#line 220 "../../../Source/Core/TokenContainer.nll"
 									break;
 							}
 							if (i == nLength)
+#line 224 "../../../Source/Core/TokenContainer.nll"
 								break;
 						}
 						ProcessCurrentRead(pParseDatum);
@@ -240,168 +251,196 @@ namespace NumbatLogic
 						case ' ':
 						{
 							eType = Token.Type.TOKEN_SPACE;
+#line 273 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '!':
 						{
 							eType = Token.Type.TOKEN_BANG;
+#line 274 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '%':
 						{
 							eType = Token.Type.TOKEN_MODULUS;
+#line 275 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '&':
 						{
 							eType = Token.Type.TOKEN_BITWISE_AND;
+#line 276 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '(':
 						{
 							eType = Token.Type.TOKEN_PARENTHESIS_LEFT;
+#line 277 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case ')':
 						{
 							eType = Token.Type.TOKEN_PARENTHESIS_RIGHT;
+#line 278 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '*':
 						{
 							eType = Token.Type.TOKEN_STAR;
+#line 279 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '+':
 						{
 							eType = Token.Type.TOKEN_PLUS;
+#line 280 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case ',':
 						{
 							eType = Token.Type.TOKEN_COMMA;
+#line 281 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '-':
 						{
 							eType = Token.Type.TOKEN_MINUS;
+#line 282 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '.':
 						{
 							eType = Token.Type.TOKEN_DOT;
+#line 283 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '/':
 						{
 							eType = Token.Type.TOKEN_DIVIDE;
+#line 284 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case ':':
 						{
 							eType = Token.Type.TOKEN_COLON;
+#line 285 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case ';':
 						{
 							eType = Token.Type.TOKEN_SEMICOLON;
+#line 286 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '<':
 						{
 							eType = Token.Type.TOKEN_ANGLE_BRACKET_LEFT;
+#line 287 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '=':
 						{
 							eType = Token.Type.TOKEN_EQUALS;
+#line 288 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '>':
 						{
 							eType = Token.Type.TOKEN_ANGLE_BRACKET_RIGHT;
+#line 289 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '?':
 						{
 							eType = Token.Type.TOKEN_QUESTION_MARK;
+#line 290 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '[':
 						{
 							eType = Token.Type.TOKEN_SQUARE_BRACKET_LEFT;
+#line 291 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '\n':
 						{
 							eType = Token.Type.TOKEN_NEW_LINE;
+#line 292 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '\r':
 						{
 							eType = Token.Type.TOKEN_CARRIGE_RETURN;
+#line 293 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '\t':
 						{
 							eType = Token.Type.TOKEN_TAB;
+#line 294 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case ']':
 						{
 							eType = Token.Type.TOKEN_SQUARE_BRACKET_RIGHT;
+#line 295 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '^':
 						{
 							eType = Token.Type.TOKEN_CARET;
+#line 296 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '{':
 						{
 							eType = Token.Type.TOKEN_CURLY_BRACE_LEFT;
+#line 297 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '|':
 						{
 							eType = Token.Type.TOKEN_BITWISE_OR;
+#line 298 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '}':
 						{
 							eType = Token.Type.TOKEN_CURLY_BRACE_RIGHT;
+#line 299 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
 						case '~':
 						{
 							eType = Token.Type.TOKEN_TILDE;
+#line 300 "../../../Source/Core/TokenContainer.nll"
 							break;
 						}
 
@@ -439,6 +478,7 @@ namespace NumbatLogic
 						PushToken(eType, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
 						return;
 					}
+#line 340 "../../../Source/Core/TokenContainer.nll"
 					break;
 				}
 
@@ -449,6 +489,7 @@ namespace NumbatLogic
 						PushToken(Token.Type.TOKEN_KEYWORD_IF, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
 						return;
 					}
+#line 349 "../../../Source/Core/TokenContainer.nll"
 					break;
 				}
 
@@ -479,6 +520,7 @@ namespace NumbatLogic
 						PushToken(Token.Type.TOKEN_KEYWORD_REF, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
 						return;
 					}
+#line 378 "../../../Source/Core/TokenContainer.nll"
 					break;
 				}
 
@@ -544,6 +586,7 @@ namespace NumbatLogic
 						PushToken(Token.Type.TOKEN_KEYWORD_VOID, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
 						return;
 					}
+#line 442 "../../../Source/Core/TokenContainer.nll"
 					break;
 				}
 
@@ -599,6 +642,7 @@ namespace NumbatLogic
 						PushToken(Token.Type.TOKEN_KEYWORD_WHILE, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
 						return;
 					}
+#line 496 "../../../Source/Core/TokenContainer.nll"
 					break;
 				}
 
@@ -664,6 +708,7 @@ namespace NumbatLogic
 						PushToken(Token.Type.TOKEN_KEYWORD_UINT64, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
 						return;
 					}
+#line 561 "../../../Source/Core/TokenContainer.nll"
 					break;
 				}
 
@@ -694,6 +739,7 @@ namespace NumbatLogic
 						PushToken(Token.Type.TOKEN_KEYWORD_VOIDPTR, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
 						return;
 					}
+#line 590 "../../../Source/Core/TokenContainer.nll"
 					break;
 				}
 
@@ -719,6 +765,7 @@ namespace NumbatLogic
 						PushToken(Token.Type.TOKEN_KEYWORD_OVERRIDE, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
 						return;
 					}
+#line 614 "../../../Source/Core/TokenContainer.nll"
 					break;
 				}
 
@@ -734,6 +781,7 @@ namespace NumbatLogic
 						PushToken(Token.Type.TOKEN_KEYWORD_NAMESPACE, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
 						return;
 					}
+#line 629 "../../../Source/Core/TokenContainer.nll"
 					break;
 				}
 
@@ -744,6 +792,7 @@ namespace NumbatLogic
 						PushToken(Token.Type.TOKEN_KEYWORD_DISPOSABLE, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
 						return;
 					}
+#line 638 "../../../Source/Core/TokenContainer.nll"
 					break;
 				}
 
@@ -783,6 +832,7 @@ namespace NumbatLogic
 						if (i == nLength - 1 && nChar == 'f')
 							continue;
 					}
+#line 683 "../../../Source/Core/TokenContainer.nll"
 					break;
 				}
 				if (i == nLength)

@@ -11,9 +11,10 @@ namespace NumbatLogic
 	class OffsetDatum;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/WhileStmt.nll"
+#line 0 "../../../Source/Core/AST/WhileStmt.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/WhileStmt.nll"
 	class WhileStmt : public AST
 	{
 		public: AST* m_pExpression;

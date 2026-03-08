@@ -26,9 +26,10 @@ namespace NumbatLogic
 	class ClassDecl;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 0 "../../../Source/Core/AST/OperatorExpr.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/OperatorExpr.nll"
 	OperatorExpr::OperatorExpr()
 	{
 		m_eOperatorType = OperatorExpr::OperatorType::LOGICAL_AND;
@@ -481,6 +482,7 @@ namespace NumbatLogic
 								while (pBaseClassDecl != 0)
 								{
 									if (pBaseClassDecl == m_pLeft->m_pValueType->m_pClassDecl)
+#line 449 "../../../Source/Core/AST/OperatorExpr.nll"
 										break;
 									pBaseClassDecl = pBaseClassDecl->GetBaseClassDecl(pValidator);
 								}

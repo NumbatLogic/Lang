@@ -24,9 +24,10 @@ namespace NumbatLogic
 	class Util;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/NamespaceDecl.nll"
+#line 0 "../../../Source/Core/AST/NamespaceDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/NamespaceDecl.nll"
 	NamespaceDecl::NamespaceDecl()
 	{
 		m_pNameToken = 0;
@@ -74,6 +75,7 @@ namespace NumbatLogic
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_RIGHT) != 0)
 			{
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 52 "../../../Source/Core/AST/NamespaceDecl.nll"
 				break;
 			}
 			AST* pAST = AST::CreateFromTokenContainer(pTokenContainer, pTempOffset);
@@ -115,7 +117,7 @@ namespace NumbatLogic
 
 	void NamespaceDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
-		pOutputBuilder->OutputSourceLocation(eLanguage, m_pNameToken);
+		pOutputBuilder->OutputSourceLocation(eLanguage, m_pFirstToken);
 		Util::Pad(nDepth, pOutputBuilder->m_sOut);
 		pOutputBuilder->m_sOut->Append("namespace ");
 		m_pNameToken->Stringify(pOutputBuilder->m_sOut);

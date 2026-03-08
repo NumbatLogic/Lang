@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/IfStmt.nll"
+#line 0 "../../../Source/Core/AST/IfStmt.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/IfStmt.nll"
 	class IfStmt : AST
 	{
 		public IfStmt()

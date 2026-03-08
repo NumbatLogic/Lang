@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/SwitchStmt.nll"
+#line 0 "../../../Source/Core/AST/SwitchStmt.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/SwitchStmt.nll"
 	class SwitchStmt : AST
 	{
 		public AST m_pExpression;
@@ -65,6 +66,7 @@ namespace NumbatLogic
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_CURLY_BRACE_RIGHT) != null)
 				{
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 72 "../../../Source/Core/AST/SwitchStmt.nll"
 					break;
 				}
 				if (pSwitchStmt.m_pDefaultStatement != null)

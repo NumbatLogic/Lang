@@ -18,9 +18,10 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/MemberEnumDecl.nll"
+#line 0 "../../../Source/Core/AST/MemberEnumDecl.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/MemberEnumDecl.nll"
 	MemberEnumDecl::MemberEnumDecl()
 	{
 		m_pAccessLevel = 0;

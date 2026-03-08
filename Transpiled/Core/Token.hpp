@@ -5,9 +5,10 @@ namespace NumbatLogic
 	class InternalString;
 	class Token;
 }
-#line 1 "../../../Source/Core/Token.nll"
+#line 0 "../../../Source/Core/Token.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/Token.nll"
 	class Token
 	{
 		public: enum Type

@@ -21,9 +21,10 @@ namespace NumbatLogic
 	class TypeRef;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/ValueType.nll"
+#line 0 "../../../Source/Core/ValueType.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/ValueType.nll"
 	class ValueType
 	{
 		public: enum Type

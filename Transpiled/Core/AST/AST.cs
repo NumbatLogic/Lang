@@ -1,6 +1,7 @@
-#line 1 "../../../Source/Core/AST/AST.nll"
+#line 0 "../../../Source/Core/AST/AST.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/AST.nll"
 	class AST
 	{
 		public enum Type
@@ -382,34 +383,39 @@ namespace NumbatLogic
 					pLeft = null;
 					return TrinaryExpr.Create(__3927602644, pTokenContainer, pOffsetDatum);
 				}
-				Token pFirstOpToken = pTokenContainer.Peek(pTempOffset);
 				OperatorExpr.OperatorType eOperatorType = OperatorExpr.PeekOperator(pTokenContainer, pTempOffset);
 				if (eOperatorType != OperatorExpr.OperatorType.UNKNOWN)
 				{
 					if (OperatorExpr.IsPostfix(eOperatorType))
 					{
 						pOffsetDatum.Set(pTempOffset);
-						NumbatLogic.AST __3927668243 = pLeft;
+						NumbatLogic.AST __3927668242 = pLeft;
 						pLeft = null;
-						return OperatorExpr.Create(eOperatorType, pFirstOpToken, __3927668243, null);
+						return OperatorExpr.Create(eOperatorType, pOperatorToken, __3927668242, null);
 					}
 					AST pRight = TryCreateExpression(pTokenContainer, pTempOffset);
 					if (pRight != null)
 					{
 						pOffsetDatum.Set(pTempOffset);
-						NumbatLogic.AST __3927668250 = pLeft;
+						NumbatLogic.AST __3927668249 = pLeft;
 						pLeft = null;
-						NumbatLogic.AST __542787397 = pRight;
+						NumbatLogic.AST __542787396 = pRight;
 						pRight = null;
-						return OperatorExpr.Create(eOperatorType, pFirstOpToken, __3927668250, __542787397);
+						return OperatorExpr.Create(eOperatorType, pOperatorToken, __3927668249, __542787396);
 					}
-					Console.Log("Probably should have something after the operator???");
+					InternalString sTemp = new InternalString("Probably should have something after the operator??? ");
+					sTemp.Append(pOperatorToken.m_sFileName.GetExternalString());
+					sTemp.Append(":");
+					sTemp.AppendInt(pOperatorToken.m_nLine);
+					sTemp.Append(":");
+					sTemp.AppendInt(pOperatorToken.m_nColumn);
+					Console.Log(sTemp.GetExternalString());
 					Assert.Plz(false);
 				}
 				pOffsetDatum.Set(pTempOffset);
-				NumbatLogic.AST __3935339361 = pLeft;
+				NumbatLogic.AST __3935404956 = pLeft;
 				pLeft = null;
-				return __3935339361;
+				return __3935404956;
 			}
 			return null;
 		}
@@ -460,9 +466,9 @@ namespace NumbatLogic
 				return;
 			}
 			pAst.m_pParent = this;
-			NumbatLogic.AST __1700709379 = m_pFirstChild;
+			NumbatLogic.AST __1700709385 = m_pFirstChild;
 			m_pFirstChild = null;
-			pAst.m_pNextSibling = __1700709379;
+			pAst.m_pNextSibling = __1700709385;
 			m_pFirstChild = pAst;
 			pAst.m_pNextSibling.m_pPrevSibling = m_pFirstChild;
 		}
@@ -473,17 +479,17 @@ namespace NumbatLogic
 			pAst.m_pParent = this;
 			if (m_pFirstChild == pBefore)
 			{
-				NumbatLogic.AST __1700774981 = m_pFirstChild;
+				NumbatLogic.AST __1700774987 = m_pFirstChild;
 				m_pFirstChild = null;
-				pAst.m_pNextSibling = __1700774981;
+				pAst.m_pNextSibling = __1700774987;
 				m_pFirstChild = pAst;
 				pBefore.m_pPrevSibling = m_pFirstChild;
 			}
 			else
 			{
-				NumbatLogic.AST __96391170 = pBefore.m_pPrevSibling.m_pNextSibling;
+				NumbatLogic.AST __96456765 = pBefore.m_pPrevSibling.m_pNextSibling;
 				pBefore.m_pPrevSibling.m_pNextSibling = null;
-				pAst.m_pNextSibling = __96391170;
+				pAst.m_pNextSibling = __96456765;
 				pAst.m_pPrevSibling = pBefore.m_pPrevSibling;
 				pBefore.m_pPrevSibling = (AST)(pAst);
 				pAst.m_pPrevSibling.m_pNextSibling = pAst;
@@ -494,21 +500,21 @@ namespace NumbatLogic
 		{
 			if (m_pFirstChild == pChild)
 			{
-				NumbatLogic.AST __1700906176 = m_pFirstChild;
+				NumbatLogic.AST __1700906182 = m_pFirstChild;
 				m_pFirstChild = null;
-				AST pOwnedChild = __1700906176;
+				AST pOwnedChild = __1700906182;
 				if (m_pLastChild == pOwnedChild)
 					m_pLastChild = null;
 				else
 				{
-					NumbatLogic.AST __392760133 = pOwnedChild.m_pNextSibling;
+					NumbatLogic.AST __400431243 = pOwnedChild.m_pNextSibling;
 					pOwnedChild.m_pNextSibling = null;
-					m_pFirstChild = __392760133;
+					m_pFirstChild = __400431243;
 				}
 				pOwnedChild.m_pParent = null;
-				NumbatLogic.AST __2245054089 = pOwnedChild;
+				NumbatLogic.AST __2252725199 = pOwnedChild;
 				pOwnedChild = null;
-				return __2245054089;
+				return __2252725199;
 			}
 			else
 			{
@@ -517,21 +523,21 @@ namespace NumbatLogic
 				{
 					if (pFindChild.m_pNextSibling == pChild)
 					{
-						NumbatLogic.AST __326849604 = pFindChild.m_pNextSibling;
+						NumbatLogic.AST __326915199 = pFindChild.m_pNextSibling;
 						pFindChild.m_pNextSibling = null;
-						AST pOwnedChild = __326849604;
+						AST pOwnedChild = __326915199;
 						if (m_pLastChild == pOwnedChild)
 							m_pLastChild = pFindChild;
 						else
 						{
-							NumbatLogic.AST __400431252 = pOwnedChild.m_pNextSibling;
+							NumbatLogic.AST __400496847 = pOwnedChild.m_pNextSibling;
 							pOwnedChild.m_pNextSibling = null;
-							pFindChild.m_pNextSibling = __400431252;
+							pFindChild.m_pNextSibling = __400496847;
 						}
 						pOwnedChild.m_pParent = null;
-						NumbatLogic.AST __2252790797 = pOwnedChild;
+						NumbatLogic.AST __2252790803 = pOwnedChild;
 						pOwnedChild = null;
-						return __2252790797;
+						return __2252790803;
 					}
 					pFindChild = pFindChild.m_pNextSibling;
 				}
@@ -573,6 +579,7 @@ namespace NumbatLogic
 			while (pParent != null)
 			{
 				if (pParent.m_bStatement)
+#line 463 "../../../Source/Core/AST/AST.nll"
 					break;
 				pParent = pParent.m_pParent;
 			}

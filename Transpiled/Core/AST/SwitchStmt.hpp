@@ -13,9 +13,10 @@ namespace NumbatLogic
 	class OffsetDatum;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/SwitchStmt.nll"
+#line 0 "../../../Source/Core/AST/SwitchStmt.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/AST/SwitchStmt.nll"
 	class SwitchStmt : public AST
 	{
 		public: AST* m_pExpression;

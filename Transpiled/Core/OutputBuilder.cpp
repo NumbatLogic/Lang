@@ -10,9 +10,10 @@ namespace NumbatLogic
 	class AST;
 	class Token;
 }
-#line 1 "../../../Source/Core/OutputBuilder.nll"
+#line 0 "../../../Source/Core/OutputBuilder.nll"
 namespace NumbatLogic
 {
+#line 3 "../../../Source/Core/OutputBuilder.nll"
 	OutputBuilder::OutputBuilder()
 	{
 		m_sOut = 0;
