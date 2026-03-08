@@ -14,6 +14,8 @@ namespace NumbatLogic
 	class Token;
 	class TypeRef;
 	class VarDecl;
+	template <class T>
+	class Vector;
 	class NullExpr;
 	class ExpressionStmt;
 }
