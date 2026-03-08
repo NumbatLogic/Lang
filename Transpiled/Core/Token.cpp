@@ -17,24 +17,9 @@ namespace NumbatLogic
 	{
 		switch (m_eType)
 		{
-			case Type::TOKEN_AND:
-			{
-				return "&&";
-			}
-
-			case Type::TOKEN_ANGLE_BRACKET_LEFT_EQUALS:
-			{
-				return "<=";
-			}
-
 			case Type::TOKEN_ANGLE_BRACKET_LEFT:
 			{
 				return "<";
-			}
-
-			case Type::TOKEN_ANGLE_BRACKET_RIGHT_EQUALS:
-			{
-				return ">=";
 			}
 
 			case Type::TOKEN_ANGLE_BRACKET_RIGHT:
@@ -97,24 +82,9 @@ namespace NumbatLogic
 				return ".";
 			}
 
-			case Type::TOKEN_DOUBLE_ANGLE_BRACKET_LEFT:
-			{
-				return "<<";
-			}
-
-			case Type::TOKEN_DOUBLE_ANGLE_BRACKET_RIGHT:
-			{
-				return ">>";
-			}
-
 			case Type::TOKEN_DOUBLE_COLON:
 			{
 				return "::";
-			}
-
-			case Type::TOKEN_DOUBLE_EQUALS:
-			{
-				return "==";
 			}
 
 			case Type::TOKEN_EQUALS:
@@ -357,19 +327,14 @@ namespace NumbatLogic
 				return "while";
 			}
 
-			case Type::TOKEN_MINUS_EQUALS:
+			case Type::TOKEN_MINUS:
 			{
-				return "-=";
+				return "-";
 			}
 
 			case Type::TOKEN_MINUS_MINUS:
 			{
 				return "--";
-			}
-
-			case Type::TOKEN_MINUS:
-			{
-				return "-";
 			}
 
 			case Type::TOKEN_MODULUS:
@@ -382,16 +347,6 @@ namespace NumbatLogic
 				return "\n";
 			}
 
-			case Type::TOKEN_NOT_EQUALS:
-			{
-				return "!=";
-			}
-
-			case Type::TOKEN_OR:
-			{
-				return "||";
-			}
-
 			case Type::TOKEN_PARENTHESIS_LEFT:
 			{
 				return "(";
@@ -402,19 +357,14 @@ namespace NumbatLogic
 				return ")";
 			}
 
-			case Type::TOKEN_PLUS_EQUALS:
+			case Type::TOKEN_PLUS:
 			{
-				return "+=";
+				return "+";
 			}
 
 			case Type::TOKEN_PLUS_PLUS:
 			{
 				return "++";
-			}
-
-			case Type::TOKEN_PLUS:
-			{
-				return "+";
 			}
 
 			case Type::TOKEN_QUESTION_MARK:
@@ -505,14 +455,14 @@ namespace NumbatLogic
 		pToken->m_nColumn = m_nColumn;
 		if (m_sValue != 0)
 			pToken->m_sValue = new InternalString(m_sValue->GetExternalString());
-		NumbatLogic::Token* __3778855882 = pToken;
+		NumbatLogic::Token* __3778724684 = pToken;
 		pToken = 0;
-		return __3778855882;
+		return __3778724684;
 	}
 
 	Token::Token()
 	{
-		m_eType = Type::TOKEN_AND;
+		m_eType = Type::TOKEN_ANGLE_BRACKET_LEFT;
 		m_sFileName = 0;
 		m_nLine = 0;
 		m_nColumn = 0;

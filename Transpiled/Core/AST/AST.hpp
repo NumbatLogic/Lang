@@ -8,8 +8,6 @@ namespace NumbatLogic
 	class ValueType;
 	class TokenContainer;
 	class OffsetDatum;
-	template <class T>
-	class Vector;
 	class Validator;
 	class OperatorExpr;
 	class ClassDecl;

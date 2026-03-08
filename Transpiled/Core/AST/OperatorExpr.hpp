@@ -1,17 +1,15 @@
 #pragma once
 
 #include "AST.hpp"
-#include "../../../../LangShared/Vector/CPP/Vector.hpp"
-#include "../Token.hpp"
 #include "OperatorExpr.hpp"
 
 namespace NumbatLogic
 {
 	class Token;
 	class AST;
+	class TokenContainer;
+	class OffsetDatum;
 	class OperatorExpr;
-	template <class T>
-	class Vector;
 	class Validator;
 	class InternalString;
 }
@@ -49,16 +47,22 @@ namespace NumbatLogic
 			UNKNOWN,
 		};
 
-		public: Vector<Token*>* m_pOperatorTokenVector;
+		public: OperatorExpr::OperatorType m_eOperatorType;
+		public: Token* m_pFirstOperatorToken;
 		public: Token* m_pOwnedOperatorToken;
 		public: AST* m_pLeft;
 		public: AST* m_pRight;
 		public: OperatorExpr();
 		public: Token* GetFirstOperatorToken();
 		public: OperatorExpr::OperatorType GetOperatorType();
-		public: static OperatorExpr* Create(Vector<Token*>* pOperatorTokenVector, AST* pLeft, AST* pRight);
+		public: static bool IsPostfix(OperatorExpr::OperatorType eOperatorType);
+		protected: static int GetOperatorTokenCount(OperatorExpr::OperatorType eOp);
+		protected: static OperatorExpr::OperatorType GetOperatorTypeFromTokens(Token* pFirst, Token* pSecond);
+		public: static OperatorExpr::OperatorType PeekOperator(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
+		public: static OperatorExpr* Create(OperatorExpr::OperatorType eOperatorType, Token* pFirstOperatorToken, AST* pLeft, AST* pRight);
 		public: virtual AST* BaseClone();
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
+		protected: static const char* GetOperatorString(OperatorExpr::OperatorType eOperatorType);
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, InternalString* sOut);
 		public: virtual ~OperatorExpr();
 	};
