@@ -28,6 +28,10 @@ namespace NumbatLogic
 			ADD_ASSIGN,
 			INCREMENT,
 			MULTIPLICATION,
+			MULTIPLY_ASSIGN,
+			DIVIDE_ASSIGN,
+			LEFT_SHIFT_ASSIGN,
+			RIGHT_SHIFT_ASSIGN,
 			UNKNOWN,
 		}
 
@@ -72,18 +76,33 @@ namespace NumbatLogic
 				case OperatorType::GREATER_THAN_OR_EQUAL:
 				case OperatorType::ADD_ASSIGN:
 				case OperatorType::SUBTRACT_ASSIGN:
+				case OperatorType::MULTIPLY_ASSIGN:
+				case OperatorType::DIVIDE_ASSIGN:
 				case OperatorType::LOGICAL_AND:
 				case OperatorType::LOGICAL_OR:
 					return 2;
+				case OperatorType::LEFT_SHIFT_ASSIGN:
+				case OperatorType::RIGHT_SHIFT_ASSIGN:
+					return 3;
 				default:
 					return 1;
 			}
 		}
 
-		private static OperatorExpr::OperatorType GetOperatorTypeFromTokens(Token pFirst, Token pSecond)
+		private static OperatorExpr::OperatorType GetOperatorTypeFromTokens(Token pFirst, Token pSecond, Token pThird)
 		{
 			Assert::Plz(pFirst != null);
 			
+			if ( pThird != null)
+			{
+				Assert::Plz(pSecond != null);
+
+				if (pFirst.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT && pSecond.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT && pThird.m_eType == Token::Type::TOKEN_EQUALS)
+					return OperatorType::LEFT_SHIFT_ASSIGN;
+				if (pFirst.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT && pSecond.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT && pThird.m_eType == Token::Type::TOKEN_EQUALS)
+					return OperatorType::RIGHT_SHIFT_ASSIGN;
+			}
+
 			if (pSecond != null)
 			{
 				if (pFirst.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT && pSecond.m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT)
@@ -102,6 +121,10 @@ namespace NumbatLogic
 					return OperatorType::ADD_ASSIGN;
 				if (pFirst.m_eType == Token::Type::TOKEN_MINUS && pSecond.m_eType == Token::Type::TOKEN_EQUALS)
 					return OperatorType::SUBTRACT_ASSIGN;
+				if (pFirst.m_eType == Token::Type::TOKEN_STAR && pSecond.m_eType == Token::Type::TOKEN_EQUALS)
+					return OperatorType::MULTIPLY_ASSIGN;
+				if (pFirst.m_eType == Token::Type::TOKEN_DIVIDE && pSecond.m_eType == Token::Type::TOKEN_EQUALS)
+					return OperatorType::DIVIDE_ASSIGN;
 				if (pFirst.m_eType == Token::Type::TOKEN_BITWISE_AND && pSecond.m_eType == Token::Type::TOKEN_BITWISE_AND)
 					return OperatorType::LOGICAL_AND;
 				if (pFirst.m_eType == Token::Type::TOKEN_BITWISE_OR && pSecond.m_eType == Token::Type::TOKEN_BITWISE_OR)
@@ -136,9 +159,11 @@ namespace NumbatLogic
 				return OperatorType::UNKNOWN;
 			pOffsetDatum.m_nOffset++;
 			Token pSecond = pTokenContainer.Peek(pOffsetDatum);
-			pOffsetDatum.m_nOffset--;
+			pOffsetDatum.m_nOffset++;
+			Token pThird = pTokenContainer.Peek(pOffsetDatum);
+			pOffsetDatum.m_nOffset -= 2;
 
-			OperatorType eType = GetOperatorTypeFromTokens(pFirst, pSecond);
+			OperatorType eType = GetOperatorTypeFromTokens(pFirst, pSecond, pThird);
 			if (eType == OperatorType::UNKNOWN)
 				return OperatorType::UNKNOWN;
 			pOffsetDatum.m_nOffset += GetOperatorTokenCount(eType);
@@ -509,6 +534,10 @@ namespace NumbatLogic
 				case OperatorType::ADD_ASSIGN: return "+=";
 				case OperatorType::INCREMENT: return "++";
 				case OperatorType::MULTIPLICATION: return "*";
+				case OperatorType::MULTIPLY_ASSIGN: return "*=";
+				case OperatorType::DIVIDE_ASSIGN: return "/=";
+				case OperatorType::LEFT_SHIFT_ASSIGN: return "<<=";
+				case OperatorType::RIGHT_SHIFT_ASSIGN: return ">>=";
 				default: return "?";
 			}
 		}
