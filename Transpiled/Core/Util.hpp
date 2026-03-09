@@ -4,12 +4,13 @@ namespace NumbatLogic
 {
 	class InternalString;
 }
-#line 0 "../../../Source/Core/Util.nll"
+#line 1 "../../../Source/Core/Util.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/Util.nll"
+#line 4 "../../../Source/Core/Util.nll"
 	class Util
 	{
+#line 6 "../../../Source/Core/Util.nll"
 		public: static void Pad(int nDepth, InternalString* sOut);
 	};
 }

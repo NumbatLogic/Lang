@@ -10,7 +10,7 @@ namespace NumbatLogic
 			m_pVarDeclVector = own new Vector<VarDecl>();
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			for (int j = 0; j < m_pVarDeclVector.GetSize(); j++)
 			{
@@ -25,40 +25,40 @@ namespace NumbatLogic
 						for (int i = 0; i < nArraySizeSize; i++)
 						{
 							AST pArraySize = pVarDecl.m_pArraySizeVector.Get(i);
-							Util::Pad(nDepth + i, out.m_sOut);
-							out.m_sOut.Append("for (int _x");
-							out.m_sOut.AppendInt(i);
-							out.m_sOut.Append(" = 0; _x");
-							out.m_sOut.AppendInt(i);
-							out.m_sOut.Append(" < ");
-							pArraySize.Stringify(eLanguage, eOutputFile, 0, out);
-							out.m_sOut.Append("; _x");
-							out.m_sOut.AppendInt(i);
-							out.m_sOut.Append("++)\n");
+							Util::Pad(nDepth + i, pOutputBuilder.m_sOut);
+							pOutputBuilder.m_sOut.Append("for (int _x");
+							pOutputBuilder.m_sOut.AppendInt(i);
+							pOutputBuilder.m_sOut.Append(" = 0; _x");
+							pOutputBuilder.m_sOut.AppendInt(i);
+							pOutputBuilder.m_sOut.Append(" < ");
+							pArraySize.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+							pOutputBuilder.m_sOut.Append("; _x");
+							pOutputBuilder.m_sOut.AppendInt(i);
+							pOutputBuilder.m_sOut.Append("++)\n");
 						}
 
-						Util::Pad(nDepth + nArraySizeSize, out.m_sOut);
-						out.m_sOut.Append("delete ");
-						out.m_sOut.Append(sxName);
+						Util::Pad(nDepth + nArraySizeSize, pOutputBuilder.m_sOut);
+						pOutputBuilder.m_sOut.Append("delete ");
+						pOutputBuilder.m_sOut.Append(sxName);
 						for (int i = 0; i < nArraySizeSize; i++)
 						{
-							out.m_sOut.Append("[_x");
-							out.m_sOut.AppendInt(i);
-							out.m_sOut.Append("]");
+							pOutputBuilder.m_sOut.Append("[_x");
+							pOutputBuilder.m_sOut.AppendInt(i);
+							pOutputBuilder.m_sOut.Append("]");
 						}
-						out.m_sOut.Append(";\n");
+						pOutputBuilder.m_sOut.Append(";\n");
 					}
 				}
 				else
 				{
 					if (eLanguage == AST::Language::CPP)
 					{
-						Util::Pad(nDepth, out.m_sOut);
-						out.m_sOut.Append("if (");
-						out.m_sOut.Append(sxName);
-						out.m_sOut.Append(") delete ");
-						out.m_sOut.Append(sxName);
-						out.m_sOut.Append(";\n");
+						Util::Pad(nDepth, pOutputBuilder.m_sOut);
+						pOutputBuilder.m_sOut.Append("if (");
+						pOutputBuilder.m_sOut.Append(sxName);
+						pOutputBuilder.m_sOut.Append(") delete ");
+						pOutputBuilder.m_sOut.Append(sxName);
+						pOutputBuilder.m_sOut.Append(";\n");
 					}
 					else if (eLanguage == AST::Language::CS)
 					{
@@ -68,12 +68,12 @@ namespace NumbatLogic
 						{
 							if (pValueType.m_pClassDecl != null && pValueType.m_pClassDecl.m_bDisposable)
 							{
-								Util::Pad(nDepth, out.m_sOut);
-								out.m_sOut.Append("if (");
-								out.m_sOut.Append(sxName);
-								out.m_sOut.Append(" != null) ");
-								out.m_sOut.Append(sxName);
-								out.m_sOut.Append(".Dispose();\n");
+								Util::Pad(nDepth, pOutputBuilder.m_sOut);
+								pOutputBuilder.m_sOut.Append("if (");
+								pOutputBuilder.m_sOut.Append(sxName);
+								pOutputBuilder.m_sOut.Append(" != null) ");
+								pOutputBuilder.m_sOut.Append(sxName);
+								pOutputBuilder.m_sOut.Append(".Dispose();\n");
 							}
 						}
 					}

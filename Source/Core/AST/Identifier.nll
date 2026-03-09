@@ -421,9 +421,9 @@ namespace NumbatLogic
 			base.Validate(pValidator, pParent);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-			m_pNameToken.Stringify(out.m_sOut);
+			m_pNameToken.Stringify(pOutputBuilder.m_sOut);
 		}
 	}
 }

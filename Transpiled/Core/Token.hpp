@@ -5,12 +5,13 @@ namespace NumbatLogic
 	class InternalString;
 	class Token;
 }
-#line 0 "../../../Source/Core/Token.nll"
+#line 1 "../../../Source/Core/Token.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/Token.nll"
+#line 4 "../../../Source/Core/Token.nll"
 	class Token
 	{
+#line 6 "../../../Source/Core/Token.nll"
 		public: enum Type
 		{
 			TOKEN_ANGLE_BRACKET_LEFT,
@@ -105,15 +106,25 @@ namespace NumbatLogic
 			TOKEN_TILDE,
 		};
 
+#line 99 "../../../Source/Core/Token.nll"
 		public: Type m_eType;
+#line 100 "../../../Source/Core/Token.nll"
 		public: InternalString* m_sFileName;
+#line 101 "../../../Source/Core/Token.nll"
 		public: int m_nLine;
+#line 102 "../../../Source/Core/Token.nll"
 		public: int m_nColumn;
+#line 103 "../../../Source/Core/Token.nll"
 		public: InternalString* m_sValue;
+#line 105 "../../../Source/Core/Token.nll"
 		public: void Stringify(InternalString* sOut);
+#line 110 "../../../Source/Core/Token.nll"
 		public: const char* GetString();
+#line 205 "../../../Source/Core/Token.nll"
 		public: Token* Clone();
+#line 4 "../../../Source/Core/Token.nll"
 		public: Token();
+#line 4 "../../../Source/Core/Token.nll"
 		public: virtual ~Token();
 	};
 }

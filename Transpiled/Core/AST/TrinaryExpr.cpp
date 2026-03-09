@@ -24,100 +24,143 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 0 "../../../Source/Core/AST/TrinaryExpr.nll"
+#line 1 "../../../Source/Core/AST/TrinaryExpr.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/TrinaryExpr.nll"
+#line 4 "../../../Source/Core/AST/TrinaryExpr.nll"
+#line 10 "../../../Source/Core/AST/TrinaryExpr.nll"
 	TrinaryExpr::TrinaryExpr()
 	{
 		m_pFirstExpression = 0;
 		m_pSecondExpression = 0;
 		m_pThirdExpression = 0;
+#line 12 "../../../Source/Core/AST/TrinaryExpr.nll"
 		m_eType = AST::Type::AST_DISOWN_EXP;
 	}
 
+#line 15 "../../../Source/Core/AST/TrinaryExpr.nll"
 	TrinaryExpr* TrinaryExpr::Create(AST* pFirstExpressionTransition, TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
 		AST* pFirstExpression = pFirstExpressionTransition;
 		AST* pSecondExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
+#line 22 "../../../Source/Core/AST/TrinaryExpr.nll"
 		if (pSecondExpression == 0)
 		{
+#line 24 "../../../Source/Core/AST/TrinaryExpr.nll"
 			Console::Log("expected second expresssion");
+#line 25 "../../../Source/Core/AST/TrinaryExpr.nll"
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
+#line 26 "../../../Source/Core/AST/TrinaryExpr.nll"
 			NumbatLogic::Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pFirstExpression) delete pFirstExpression;
 			if (pSecondExpression) delete pSecondExpression;
+#line 27 "../../../Source/Core/AST/TrinaryExpr.nll"
 			return 0;
 		}
 		Token* pColonToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_COLON);
+#line 31 "../../../Source/Core/AST/TrinaryExpr.nll"
 		if (pColonToken == 0)
 		{
 			if (pTempOffset) delete pTempOffset;
 			if (pFirstExpression) delete pFirstExpression;
 			if (pSecondExpression) delete pSecondExpression;
+#line 32 "../../../Source/Core/AST/TrinaryExpr.nll"
 			return 0;
 		}
+#line 33 "../../../Source/Core/AST/TrinaryExpr.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		AST* pThirdExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
+#line 36 "../../../Source/Core/AST/TrinaryExpr.nll"
 		if (pThirdExpression == 0)
 		{
+#line 38 "../../../Source/Core/AST/TrinaryExpr.nll"
 			Console::Log("expected second expresssion");
+#line 39 "../../../Source/Core/AST/TrinaryExpr.nll"
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
+#line 40 "../../../Source/Core/AST/TrinaryExpr.nll"
 			NumbatLogic::Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pFirstExpression) delete pFirstExpression;
 			if (pSecondExpression) delete pSecondExpression;
 			if (pThirdExpression) delete pThirdExpression;
+#line 41 "../../../Source/Core/AST/TrinaryExpr.nll"
 			return 0;
 		}
 		TrinaryExpr* pTrinaryExpr = new TrinaryExpr();
+#line 46 "../../../Source/Core/AST/TrinaryExpr.nll"
 		pTrinaryExpr->m_pFirstExpression = pFirstExpression;
+#line 47 "../../../Source/Core/AST/TrinaryExpr.nll"
 		pTrinaryExpr->m_pSecondExpression = pSecondExpression;
+#line 48 "../../../Source/Core/AST/TrinaryExpr.nll"
 		pTrinaryExpr->m_pThirdExpression = pThirdExpression;
 		NumbatLogic::AST* __2029364893 = pFirstExpression;
+#line 50 "../../../Source/Core/AST/TrinaryExpr.nll"
 		pFirstExpression = 0;
+#line 50 "../../../Source/Core/AST/TrinaryExpr.nll"
 		pTrinaryExpr->AddChild(__2029364893);
 		NumbatLogic::AST* __45120503 = pSecondExpression;
+#line 51 "../../../Source/Core/AST/TrinaryExpr.nll"
 		pSecondExpression = 0;
+#line 51 "../../../Source/Core/AST/TrinaryExpr.nll"
 		pTrinaryExpr->AddChild(__45120503);
 		NumbatLogic::AST* __777254731 = pThirdExpression;
+#line 52 "../../../Source/Core/AST/TrinaryExpr.nll"
 		pThirdExpression = 0;
+#line 52 "../../../Source/Core/AST/TrinaryExpr.nll"
 		pTrinaryExpr->AddChild(__777254731);
+#line 54 "../../../Source/Core/AST/TrinaryExpr.nll"
 		pOffsetDatum->Set(pTempOffset);
 		NumbatLogic::TrinaryExpr* __2348216585 = pTrinaryExpr;
+#line 55 "../../../Source/Core/AST/TrinaryExpr.nll"
 		pTrinaryExpr = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pFirstExpression) delete pFirstExpression;
 		if (pSecondExpression) delete pSecondExpression;
 		if (pThirdExpression) delete pThirdExpression;
+#line 55 "../../../Source/Core/AST/TrinaryExpr.nll"
 		return __2348216585;
 	}
 
+#line 58 "../../../Source/Core/AST/TrinaryExpr.nll"
 	void TrinaryExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
+#line 60 "../../../Source/Core/AST/TrinaryExpr.nll"
 		AST::Validate(pValidator, pParent);
+#line 62 "../../../Source/Core/AST/TrinaryExpr.nll"
 		if (m_pSecondExpression->m_pValueType == 0)
 		{
+#line 64 "../../../Source/Core/AST/TrinaryExpr.nll"
 			pValidator->AddError("Unknown ValueType of 2nd expression", m_pSecondExpression->m_pFirstToken->m_sFileName, m_pSecondExpression->m_pFirstToken->m_nLine, m_pSecondExpression->m_pFirstToken->m_nColumn);
+#line 65 "../../../Source/Core/AST/TrinaryExpr.nll"
 			return;
 		}
+#line 68 "../../../Source/Core/AST/TrinaryExpr.nll"
 		if (m_pThirdExpression->m_pValueType == 0)
 		{
+#line 70 "../../../Source/Core/AST/TrinaryExpr.nll"
 			pValidator->AddError("Unknown ValueType of 3rd expression", m_pThirdExpression->m_pFirstToken->m_sFileName, m_pThirdExpression->m_pFirstToken->m_nLine, m_pThirdExpression->m_pFirstToken->m_nColumn);
+#line 71 "../../../Source/Core/AST/TrinaryExpr.nll"
 			return;
 		}
+#line 74 "../../../Source/Core/AST/TrinaryExpr.nll"
 		m_pValueType = m_pSecondExpression->m_pValueType->Clone();
 	}
 
-	void TrinaryExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
+#line 77 "../../../Source/Core/AST/TrinaryExpr.nll"
+	void TrinaryExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
-		m_pFirstExpression->Stringify(eLanguage, eOutputFile, 0, out);
-		out->m_sOut->Append(" ? ");
-		m_pSecondExpression->Stringify(eLanguage, eOutputFile, 0, out);
-		out->m_sOut->Append(" : ");
-		m_pThirdExpression->Stringify(eLanguage, eOutputFile, 0, out);
+#line 79 "../../../Source/Core/AST/TrinaryExpr.nll"
+		m_pFirstExpression->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+#line 80 "../../../Source/Core/AST/TrinaryExpr.nll"
+		pOutputBuilder->m_sOut->Append(" ? ");
+#line 81 "../../../Source/Core/AST/TrinaryExpr.nll"
+		m_pSecondExpression->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+#line 82 "../../../Source/Core/AST/TrinaryExpr.nll"
+		pOutputBuilder->m_sOut->Append(" : ");
+#line 83 "../../../Source/Core/AST/TrinaryExpr.nll"
+		m_pThirdExpression->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 	}
 
 }

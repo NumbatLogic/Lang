@@ -40,13 +40,13 @@ namespace NumbatLogic
 			return disown pEnumDeclValue;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-			m_pFirstToken.Stringify(out.m_sOut);
+			m_pFirstToken.Stringify(pOutputBuilder.m_sOut);
 			if (m_pForceValue != null)
 			{
-				out.m_sOut.AppendString(" = ");
-				m_pForceValue.Stringify(eLanguage, eOutputFile, 0, out);
+				pOutputBuilder.m_sOut.AppendString(" = ");
+				m_pForceValue.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 			}
 		}
 	}

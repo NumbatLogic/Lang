@@ -104,29 +104,31 @@ namespace NumbatLogic
 			return disown pForStmt;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			AST pBeforeStatement = m_pFirstChild;
 			AST pConditionStatement = pBeforeStatement.m_pNextSibling;
 			AST pLoopStatement = pConditionStatement.m_pNextSibling;
 			AST pStatement = pLoopStatement.m_pNextSibling;
 
-			Util::Pad(nDepth, out.m_sOut);
-			out.m_sOut.Append("for (");
-			pBeforeStatement.Stringify(eLanguage, eOutputFile, 0, out);
-			out.m_sOut.Append("; ");
-			pConditionStatement.Stringify(eLanguage, eOutputFile, 0, out);
-			out.m_sOut.Append("; ");
+			pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
+
+			Util::Pad(nDepth, pOutputBuilder.m_sOut);
+			pOutputBuilder.m_sOut.Append("for (");
+			pBeforeStatement.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+			pOutputBuilder.m_sOut.Append("; ");
+			pConditionStatement.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+			pOutputBuilder.m_sOut.Append("; ");
 
 			if (pStatement != null)
-				pLoopStatement.Stringify(eLanguage, eOutputFile, 0, out);
+				pLoopStatement.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 			
-			out.m_sOut.Append(")\n");
+			pOutputBuilder.m_sOut.Append(")\n");
 
 			if (pStatement == null)
 				pStatement = pLoopStatement;
 			
-			pStatement.Stringify(eLanguage, eOutputFile, nDepth, out);
+			pStatement.Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 		}
 	}
 }

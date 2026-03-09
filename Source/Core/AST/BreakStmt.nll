@@ -41,7 +41,7 @@ namespace NumbatLogic
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-			pOutputBuilder.OutputSourceLocation(eLanguage, m_pFirstToken);
+			pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
 
 			Util::Pad(nDepth, pOutputBuilder.m_sOut);
 			pOutputBuilder.m_sOut.Append("break;\n");

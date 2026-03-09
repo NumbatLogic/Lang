@@ -48,13 +48,13 @@ namespace NumbatLogic
 			m_pValueType = own m_pExpression.m_pValueType.Clone();
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			if (eLanguage == AST::Language::NLL || eLanguage == AST::Language::CS)
 			{
-				out.m_sOut.Append("ref ");
+				pOutputBuilder.m_sOut.Append("ref ");
 			}
-			m_pExpression.Stringify(eLanguage, eOutputFile, 0, out);
+			m_pExpression.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		}
 	}
 }

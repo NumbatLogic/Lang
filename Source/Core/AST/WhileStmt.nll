@@ -66,13 +66,15 @@ namespace NumbatLogic
 			return disown pWhileStmt;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-			Util::Pad(nDepth, out.m_sOut);
-			out.m_sOut.Append("while (");
-			m_pExpression.Stringify(eLanguage, eOutputFile, 0, out);
-			out.m_sOut.Append(")\n");
-			m_pScope.Stringify(eLanguage, eOutputFile, nDepth, out);
+			pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
+			Util::Pad(nDepth, pOutputBuilder.m_sOut);
+			
+			pOutputBuilder.m_sOut.Append("while (");
+			m_pExpression.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+			pOutputBuilder.m_sOut.Append(")\n");
+			m_pScope.Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 		}
 	}
 }

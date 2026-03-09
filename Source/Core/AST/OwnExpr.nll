@@ -60,13 +60,13 @@ namespace NumbatLogic
 			m_pValueType.m_ePointerType = TypeRef::PointerType::OWNED_PREASSSIGN;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			if (eLanguage == AST::Language::NLL)
 			{
-				out.m_sOut.Append("own ");
+				pOutputBuilder.m_sOut.Append("own ");
 			}
-			m_pExpression.Stringify(eLanguage, eOutputFile, 0, out);
+			m_pExpression.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		}
 	}
 }

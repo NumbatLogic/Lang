@@ -32,11 +32,13 @@ namespace NumbatLogic
 			return disown pExpressionStmt;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-			Util::Pad(nDepth, out.m_sOut);
-			m_pExpression.Stringify(eLanguage, eOutputFile, nDepth, out);
-			out.m_sOut.Append(";\n");
+			pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
+			
+			Util::Pad(nDepth, pOutputBuilder.m_sOut);
+			m_pExpression.Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
+			pOutputBuilder.m_sOut.Append(";\n");
 		}
 	}
 }

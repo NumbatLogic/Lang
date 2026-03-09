@@ -104,11 +104,11 @@ namespace NumbatLogic
 			AddClassDeclReference(m_pValueType.m_pClassDecl, AST::OutputFile::SOURCE, false);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-			out.m_sOut.Append("new ");
-			m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
-			m_pParamCall.Stringify(eLanguage, eOutputFile, 0, out);
+			pOutputBuilder.m_sOut.Append("new ");
+			m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+			m_pParamCall.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		}
 	}
 }

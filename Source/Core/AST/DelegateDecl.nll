@@ -55,7 +55,7 @@ namespace NumbatLogic
 			base.Validate(pValidator, pParent);
 		}*/
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			// public delegate int ComparisonCallback(object param0, object param1);
 			// typedef int (ComparisonCallback)(const void* pObjectA, const void* pObjectB);
@@ -63,40 +63,40 @@ namespace NumbatLogic
 			if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
 				return;
 
-			Util::Pad(nDepth, out.m_sOut);
-			m_pAccessLevel.Stringify(eLanguage, eOutputFile, 0, out);
+			Util::Pad(nDepth, pOutputBuilder.m_sOut);
+			m_pAccessLevel.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 			if (eLanguage == AST::Language::CPP)
-				out.m_sOut.AppendChar(':');
-			out.m_sOut.AppendChar(' ');
+				pOutputBuilder.m_sOut.AppendChar(':');
+			pOutputBuilder.m_sOut.AppendChar(' ');
 
 			switch (eLanguage)
 			{
 				case AST::Language::CPP:
 				{
-					out.m_sOut.Append("typedef ");
+					pOutputBuilder.m_sOut.Append("typedef ");
 					break;
 				}
 				case AST::Language::CS:
 				case AST::Language::NLL:
 				case AST::Language::NLL_DEF:
 				{
-					out.m_sOut.Append("delegate ");
+					pOutputBuilder.m_sOut.Append("delegate ");
 					break;
 				}
 			}
 
-			m_pFunctionDecl.m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
-			out.m_sOut.AppendChar(' ');
+			m_pFunctionDecl.m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+			pOutputBuilder.m_sOut.AppendChar(' ');
 
 			if (eLanguage == AST::Language::CPP)
-				out.m_sOut.AppendChar('(');
-			out.m_sOut.Append(m_pFunctionDecl.m_pNameToken.GetString());
+				pOutputBuilder.m_sOut.AppendChar('(');
+			pOutputBuilder.m_sOut.Append(m_pFunctionDecl.m_pNameToken.GetString());
 			if (eLanguage == AST::Language::CPP)
-				out.m_sOut.AppendChar(')');
+				pOutputBuilder.m_sOut.AppendChar(')');
 
-			m_pFunctionDecl.m_pParamDecl.Stringify(eLanguage, eOutputFile, 0, out);
+			m_pFunctionDecl.m_pParamDecl.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 
-			out.m_sOut.Append(";\n");
+			pOutputBuilder.m_sOut.Append(";\n");
 		}
 	}
 }

@@ -550,10 +550,10 @@ namespace NumbatLogic
 			}
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-			out.m_sOut.Append(m_sMangledName);
-			m_pParamCall.Stringify(eLanguage, eOutputFile, 0, out);
+			pOutputBuilder.m_sOut.Append(m_sMangledName);
+			m_pParamCall.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		}
 	}
 }

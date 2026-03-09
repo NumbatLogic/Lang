@@ -79,7 +79,7 @@ namespace NumbatLogic
 			base.Validate(pValidator, pParent);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			bool bGeneric = m_pParentClassDecl.m_pGenericTypeDeclVector.GetSize() > 0;
 			if (bGeneric && eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
@@ -90,35 +90,36 @@ namespace NumbatLogic
 				if (m_pParentClassDecl.m_pGenericTypeDeclVector.GetSize() > 0)
 				{
 					// is function generic?
-					//		out.m_sOut.AppendChar(':');
+					//		pOutputBuilder.m_sOut.AppendChar(':');
 
 				}
 			}
 
-			Util::Pad(nDepth, out.m_sOut);
+			pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
+			Util::Pad(nDepth, pOutputBuilder.m_sOut);
 
 			if (!(eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE))
 			{
-				m_pAccessLevel.Stringify(eLanguage, eOutputFile, 0, out);
+				m_pAccessLevel.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 				if (eLanguage == AST::Language::CPP)
-					out.m_sOut.AppendChar(':');
+					pOutputBuilder.m_sOut.AppendChar(':');
 
 				if (m_bStatic)
-					out.m_sOut.Append(" static");
+					pOutputBuilder.m_sOut.Append(" static");
 
 				if (m_bVirtual)
-					out.m_sOut.Append(" virtual");
+					pOutputBuilder.m_sOut.Append(" virtual");
 
 				if (m_bOverride)
 					if (eLanguage == AST::Language::CPP)
-						out.m_sOut.Append(" virtual");
+						pOutputBuilder.m_sOut.Append(" virtual");
 					else
-						out.m_sOut.Append(" override");
+						pOutputBuilder.m_sOut.Append(" override");
 
-				out.m_sOut.AppendChar(' ');
+				pOutputBuilder.m_sOut.AppendChar(' ');
 			}
 
-			m_pFunctionDecl.Stringify(eLanguage, eOutputFile, nDepth, out);
+			m_pFunctionDecl.Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 		}
 	}
 }

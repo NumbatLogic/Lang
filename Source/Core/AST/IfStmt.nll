@@ -80,7 +80,7 @@ namespace NumbatLogic
 			return disown pIfStmt;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			AST pCondition = m_pFirstChild;
 			AST pThen = pCondition.m_pNextSibling;
@@ -91,26 +91,30 @@ namespace NumbatLogic
 				pParentIfStmt = cast IfStmt(m_pParent);
 
 			if (pParentIfStmt != null && pParentIfStmt.m_pFirstChild.m_pNextSibling.m_pNextSibling == this)
-				out.m_sOut.Append(" ");
+				pOutputBuilder.m_sOut.Append(" ");
 			else
-				Util::Pad(nDepth, out.m_sOut);
-			out.m_sOut.Append("if (");
-			pCondition.Stringify(eLanguage, eOutputFile, 0, out);
-			out.m_sOut.Append(")\n");
-			pThen.Stringify(eLanguage, eOutputFile, nDepth, out);
+			{
+				pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
+				Util::Pad(nDepth, pOutputBuilder.m_sOut);
+			}
+
+			pOutputBuilder.m_sOut.Append("if (");
+			pCondition.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+			pOutputBuilder.m_sOut.Append(")\n");
+			pThen.Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 			if (pElse != null)
 			{
-				Util::Pad(nDepth, out.m_sOut);
+				Util::Pad(nDepth, pOutputBuilder.m_sOut);
 				if (pElse.m_eType == AST::Type::AST_IF_STMT)
 				{
-					out.m_sOut.Append("else");
-					pElse.Stringify(eLanguage, eOutputFile, nDepth, out);
+					pOutputBuilder.m_sOut.Append("else");
+					pElse.Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 				}
 				else
 				{
 					
-					out.m_sOut.Append("else\n");
-					pElse.Stringify(eLanguage, eOutputFile, nDepth, out);
+					pOutputBuilder.m_sOut.Append("else\n");
+					pElse.Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 				}
 			}
 		}

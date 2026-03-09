@@ -28,12 +28,12 @@ namespace NumbatLogic
 			m_pValueType = own new ValueType(ValueType::Type::NULL_VALUE);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			if (eLanguage == AST::Language::CPP)
-				out.m_sOut.Append("0");
+				pOutputBuilder.m_sOut.Append("0");
 			else
-				out.m_sOut.Append("null");
+				pOutputBuilder.m_sOut.Append("null");
 		}
 	}
 }

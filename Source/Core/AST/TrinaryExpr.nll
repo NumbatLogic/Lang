@@ -73,13 +73,13 @@ namespace NumbatLogic
 			m_pValueType = own m_pSecondExpression.m_pValueType.Clone();
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-			m_pFirstExpression.Stringify(eLanguage, eOutputFile, 0, out);
-			out.m_sOut.Append(" ? ");
-			m_pSecondExpression.Stringify(eLanguage, eOutputFile, 0, out);
-			out.m_sOut.Append(" : ");
-			m_pThirdExpression.Stringify(eLanguage, eOutputFile, 0, out);
+			m_pFirstExpression.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+			pOutputBuilder.m_sOut.Append(" ? ");
+			m_pSecondExpression.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+			pOutputBuilder.m_sOut.Append(" : ");
+			m_pThirdExpression.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		}
 	}
 }

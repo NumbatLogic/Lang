@@ -159,9 +159,9 @@ namespace NumbatLogic
 
 		// todo: validate expression
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-			Util::Pad(nDepth, out.m_sOut);
+			Util::Pad(nDepth, pOutputBuilder.m_sOut);
 
 			// drop const from params
 			if (eLanguage == AST::Language::CS)
@@ -170,7 +170,7 @@ namespace NumbatLogic
 				{
 					bool bBefore = m_pTypeRef.m_bConst;
 					m_pTypeRef.m_bConst = false;
-					m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
+					m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 					m_pTypeRef.m_bConst = bBefore;
 				}
 				else
@@ -179,25 +179,25 @@ namespace NumbatLogic
 					if (m_pArraySizeVector != null && bBefore)
 					{
 						m_pTypeRef.m_bConst = false;
-						out.m_sOut.Append("readonly ");
+						pOutputBuilder.m_sOut.Append("readonly ");
 					}
-					m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
+					m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 					m_pTypeRef.m_bConst = bBefore;
 				}
 
 				if (m_pArraySizeVector != null)
 				{
-					out.m_sOut.AppendChar('[');
+					pOutputBuilder.m_sOut.AppendChar('[');
 					// no size on static c# arrays, size comes form assignment
-					//m_pArraySize.Stringify(eLanguage, eOutputFile, 0, out);
-					out.m_sOut.AppendChar(']');
+					//m_pArraySize.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+					pOutputBuilder.m_sOut.AppendChar(']');
 				}
 			}
 			else
 			{
-				m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
+				m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 			}
-			out.m_sOut.AppendChar(' ');
+			pOutputBuilder.m_sOut.AppendChar(' ');
 
 			// if cpp and source and member var decl, we need to fully qualify the name
 			if (m_pParent != null && m_pParent.m_eType == AST::Type::AST_MEMBER_VAR_DECL && eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
@@ -209,20 +209,20 @@ namespace NumbatLogic
 				}
 
 				ClassDecl pClassDecl = cast ClassDecl(pParentParent);
-				out.m_sOut.AppendString(pClassDecl.m_pNameToken.GetString());
-				out.m_sOut.AppendString("::");
+				pOutputBuilder.m_sOut.AppendString(pClassDecl.m_pNameToken.GetString());
+				pOutputBuilder.m_sOut.AppendString("::");
 			}
 
-			out.m_sOut.AppendString(m_pNameToken.GetString());
+			pOutputBuilder.m_sOut.AppendString(m_pNameToken.GetString());
 
 			if (m_pArraySizeVector != null && eLanguage != AST::Language::CS)
 			{
 				for (int i = 0; i < m_pArraySizeVector.GetSize(); i++)
 				{
 					AST pArraySize = m_pArraySizeVector.Get(i);
-					out.m_sOut.AppendChar('[');
-					pArraySize.Stringify(eLanguage, eOutputFile, 0, out);
-					out.m_sOut.AppendChar(']');
+					pOutputBuilder.m_sOut.AppendChar('[');
+					pArraySize.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+					pOutputBuilder.m_sOut.AppendChar(']');
 				}
 			}
 
@@ -261,8 +261,8 @@ namespace NumbatLogic
 
 				if (bDoIt)
 				{
-					out.m_sOut.AppendString(" = ");
-					m_pAssignment.Stringify(eLanguage, eOutputFile, 0, out);
+					pOutputBuilder.m_sOut.AppendString(" = ");
+					m_pAssignment.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 				}
 			}
 			else
@@ -290,7 +290,7 @@ namespace NumbatLogic
 
 					if (sxToAppend != null)
 					{
-						out.m_sOut.AppendString(sxToAppend);
+						pOutputBuilder.m_sOut.AppendString(sxToAppend);
 					}
 					else
 					{
@@ -302,24 +302,24 @@ namespace NumbatLogic
 								ValueType* pValueType = own m_pTypeRef.CreateValueType(pProject.m_pValidator.m_pResolver);
 								// todo: this could me more complete like MemberVarsSetDefaultStmt
 								if (pValueType != null && pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE && m_pArraySizeVector == null)
-									out.m_sOut.AppendString(" = 0");
+									pOutputBuilder.m_sOut.AppendString(" = 0");
 
 								if (bStatic && m_pTypeRef.IsIntegral())
-									out.m_sOut.AppendString(" = 0");
+									pOutputBuilder.m_sOut.AppendString(" = 0");
 							}
 						}
 
 						if (eLanguage == AST::Language::CS && m_pArraySizeVector != null)
 						{
-							out.m_sOut.AppendString(" = new ");
-							m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
+							pOutputBuilder.m_sOut.AppendString(" = new ");
+							m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 							// probably wrong?
 							for (int i = 0; i < m_pArraySizeVector.GetSize(); i++)
 							{
 								AST pArraySize = m_pArraySizeVector.Get(i);
-								out.m_sOut.AppendChar('[');
-								pArraySize.Stringify(eLanguage, eOutputFile, 0, out);
-								out.m_sOut.AppendChar(']');
+								pOutputBuilder.m_sOut.AppendChar('[');
+								pArraySize.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+								pOutputBuilder.m_sOut.AppendChar(']');
 							}
 						}
 					}
@@ -327,7 +327,7 @@ namespace NumbatLogic
 			}
 
 			if (!m_bInline)
-				out.m_sOut.AppendString(";\n");
+				pOutputBuilder.m_sOut.AppendString(";\n");
 		}
 	}
 }

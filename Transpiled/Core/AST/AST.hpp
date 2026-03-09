@@ -15,12 +15,13 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 0 "../../../Source/Core/AST/AST.nll"
+#line 1 "../../../Source/Core/AST/AST.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/AST.nll"
+#line 4 "../../../Source/Core/AST/AST.nll"
 	class AST
 	{
+#line 6 "../../../Source/Core/AST/AST.nll"
 		public: enum Type
 		{
 			AST_ACCESS_LEVEL,
@@ -76,6 +77,7 @@ namespace NumbatLogic
 			THIS_EXPR,
 		};
 
+#line 60 "../../../Source/Core/AST/AST.nll"
 		public: enum Language
 		{
 			NLL,
@@ -87,41 +89,72 @@ namespace NumbatLogic
 			PHP,
 		};
 
+#line 70 "../../../Source/Core/AST/AST.nll"
 		public: enum OutputFile
 		{
 			SOURCE,
 			HEADER,
 		};
 
+#line 75 "../../../Source/Core/AST/AST.nll"
 		public: Type m_eType;
+#line 76 "../../../Source/Core/AST/AST.nll"
 		public: Token* m_pFirstToken;
+#line 78 "../../../Source/Core/AST/AST.nll"
 		public: AST* m_pParent;
+#line 79 "../../../Source/Core/AST/AST.nll"
 		public: AST* m_pFirstChild;
+#line 80 "../../../Source/Core/AST/AST.nll"
 		public: AST* m_pLastChild;
+#line 81 "../../../Source/Core/AST/AST.nll"
 		public: AST* m_pPrevSibling;
+#line 82 "../../../Source/Core/AST/AST.nll"
 		public: AST* m_pNextSibling;
+#line 85 "../../../Source/Core/AST/AST.nll"
 		public: SymbolScope* m_pSymbolScope;
+#line 87 "../../../Source/Core/AST/AST.nll"
 		public: bool m_bCanDescend;
+#line 89 "../../../Source/Core/AST/AST.nll"
 		public: ValueType* m_pValueType;
+#line 91 "../../../Source/Core/AST/AST.nll"
 		public: bool m_bStatement;
+#line 94 "../../../Source/Core/AST/AST.nll"
 		public: bool m_bSkipOutput;
+#line 96 "../../../Source/Core/AST/AST.nll"
 		public: AST();
+#line 102 "../../../Source/Core/AST/AST.nll"
 		public: virtual ~AST();
+#line 106 "../../../Source/Core/AST/AST.nll"
 		public: static AST* CreateFromTokenContainer(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
+#line 133 "../../../Source/Core/AST/AST.nll"
 		public: static AST* CreateStatementFromTokenContainer(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
+#line 188 "../../../Source/Core/AST/AST.nll"
 		protected: static AST* TryCreateInnerExpression(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
+#line 271 "../../../Source/Core/AST/AST.nll"
 		public: static AST* TryCreateExpression(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
+#line 317 "../../../Source/Core/AST/AST.nll"
 		public: virtual void PreValidate(Validator* pValidator, OperatorExpr* pParent);
+#line 329 "../../../Source/Core/AST/AST.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
+#line 341 "../../../Source/Core/AST/AST.nll"
 		public: void AddChild(AST* pAst);
+#line 358 "../../../Source/Core/AST/AST.nll"
 		public: void AddChildFront(AST* pAst);
+#line 372 "../../../Source/Core/AST/AST.nll"
 		public: void AddChildBefore(AST* pAst, AST* pBefore);
+#line 393 "../../../Source/Core/AST/AST.nll"
 		public: AST* RemoveChild(AST* pChild);
+#line 429 "../../../Source/Core/AST/AST.nll"
 		public: virtual void AddClassDeclReference(ClassDecl* pClassDecl, OutputFile eOutputFile, bool bForwardReference);
+#line 436 "../../../Source/Core/AST/AST.nll"
 		public: Project* GetProject();
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
+#line 444 "../../../Source/Core/AST/AST.nll"
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
+#line 449 "../../../Source/Core/AST/AST.nll"
 		public: virtual AST* BaseClone();
+#line 458 "../../../Source/Core/AST/AST.nll"
 		public: AST* GetParentStatement();
+#line 471 "../../../Source/Core/AST/AST.nll"
 		public: virtual void StringifyType(InternalString* sOut);
 	};
 }

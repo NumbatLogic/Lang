@@ -39,10 +39,11 @@ namespace NumbatLogic
 			pValidator.InjectCleanup(this);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-			Util::Pad(nDepth, out.m_sOut);
-			out.m_sOut.Append("continue;\n");
+			pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
+			Util::Pad(nDepth, pOutputBuilder.m_sOut);
+			pOutputBuilder.m_sOut.Append("continue;\n");
 		}
 	}
 }
