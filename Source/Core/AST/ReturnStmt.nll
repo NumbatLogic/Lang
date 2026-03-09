@@ -43,16 +43,18 @@ namespace NumbatLogic
 			pValidator.InjectCleanup(this);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-			Util::Pad(nDepth, out.m_sOut);
-			out.m_sOut.AppendString("return");
+			pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
+			Util::Pad(nDepth, pOutputBuilder.m_sOut);
+
+			pOutputBuilder.m_sOut.AppendString("return");
 			if (m_pExpression != null)
 			{
-				out.m_sOut.AppendChar(' ');
-				m_pExpression.Stringify(eLanguage, eOutputFile, 0, out);
+				pOutputBuilder.m_sOut.AppendChar(' ');
+				m_pExpression.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 			}
-			out.m_sOut.AppendString(";\n");
+			pOutputBuilder.m_sOut.AppendString(";\n");
 		}
 	}
 }

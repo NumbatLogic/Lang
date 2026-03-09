@@ -12,15 +12,18 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/CharExpr.nll"
+#line 1 "../../../Source/Core/AST/CharExpr.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/CharExpr.nll"
+#line 4 "../../../Source/Core/AST/CharExpr.nll"
 	class CharExpr : public AST
 	{
+#line 6 "../../../Source/Core/AST/CharExpr.nll"
 		public: static CharExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
+#line 19 "../../../Source/Core/AST/CharExpr.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
+#line 24 "../../../Source/Core/AST/CharExpr.nll"
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 	};
 }
 

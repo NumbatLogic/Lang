@@ -41,7 +41,7 @@ namespace NumbatLogic
 			pValidator.AddError("Expected parent to be constructor", null, 0, 0);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			if (eLanguage == AST::Language::CPP)
 			{
@@ -67,46 +67,46 @@ namespace NumbatLogic
 									for (int i = 0; i < nArraySizeSize; i++)
 									{
 										AST pArraySize = pMemberVarDecl.m_pVarDecl.m_pArraySizeVector.Get(i);
-										Util::Pad(nDepth + i, out.m_sOut);
-										out.m_sOut.Append("for (int _x");
-										out.m_sOut.AppendInt(i);
-										out.m_sOut.Append(" = 0; _x");
-										out.m_sOut.AppendInt(i);
-										out.m_sOut.Append(" < ");
-										pArraySize.Stringify(eLanguage, eOutputFile, 0, out);
-										out.m_sOut.Append("; _x");
-										out.m_sOut.AppendInt(i);
-										out.m_sOut.Append("++)\n");
+										Util::Pad(nDepth + i, pOutputBuilder.m_sOut);
+										pOutputBuilder.m_sOut.Append("for (int _x");
+										pOutputBuilder.m_sOut.AppendInt(i);
+										pOutputBuilder.m_sOut.Append(" = 0; _x");
+										pOutputBuilder.m_sOut.AppendInt(i);
+										pOutputBuilder.m_sOut.Append(" < ");
+										pArraySize.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+										pOutputBuilder.m_sOut.Append("; _x");
+										pOutputBuilder.m_sOut.AppendInt(i);
+										pOutputBuilder.m_sOut.Append("++)\n");
 									}
 
-									Util::Pad(nDepth + nArraySizeSize, out.m_sOut);
-									out.m_sOut.AppendString(pMemberVarDecl.m_pVarDecl.m_pNameToken.GetString());
+									Util::Pad(nDepth + nArraySizeSize, pOutputBuilder.m_sOut);
+									pOutputBuilder.m_sOut.AppendString(pMemberVarDecl.m_pVarDecl.m_pNameToken.GetString());
 
 									for (int i = 0; i < nArraySizeSize; i++)
 									{
-										out.m_sOut.Append("[_x");
-										out.m_sOut.AppendInt(i);
-										out.m_sOut.Append("]");
+										pOutputBuilder.m_sOut.Append("[_x");
+										pOutputBuilder.m_sOut.AppendInt(i);
+										pOutputBuilder.m_sOut.Append("]");
 									}
-									out.m_sOut.Append(" = ");
+									pOutputBuilder.m_sOut.Append(" = ");
 
 									// COPY PASTA!
 									switch (pValueType.m_eType)
 									{
 										case ValueType::Type::INT:
 										{
-											out.m_sOut.Append("0");
+											pOutputBuilder.m_sOut.Append("0");
 											break;
 										}
 										case ValueType::Type::BOOL:
 										{
-											out.m_sOut.Append("false");
+											pOutputBuilder.m_sOut.Append("false");
 											break;
 										}
 										case ValueType::Type::CHAR:
 										case ValueType::Type::UNICHAR:
 										{
-											out.m_sOut.Append("'0'");
+											pOutputBuilder.m_sOut.Append("'0'");
 											break;
 										}
 										case ValueType::Type::CLASS_DECL_VALUE:
@@ -115,53 +115,53 @@ namespace NumbatLogic
 										case ValueType::Type::VOIDPTR:
 										case ValueType::Type::STRING:
 										{
-											out.m_sOut.Append("0");
+											pOutputBuilder.m_sOut.Append("0");
 											break;
 										}
 										case ValueType::Type::ENUM_DECL_VALUE:
 										{
 											if (pValueType.m_pEnumDecl == null)
-												out.m_sOut.Append("no_m_pEnumDecl");
+												pOutputBuilder.m_sOut.Append("no_m_pEnumDecl");
 											EnumDeclValue pEnumDeclValue = pValueType.m_pEnumDecl.m_pEnumDeclValueVector.Get(0);
 											if (pValueType.m_pEnumDecl == null)
-												out.m_sOut.Append("no_pEnumDeclValue");
+												pOutputBuilder.m_sOut.Append("no_pEnumDeclValue");
 
-											pMemberVarDecl.m_pVarDecl.m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
-											out.m_sOut.Append("::");
-											pEnumDeclValue.m_pFirstToken.Stringify(out.m_sOut);
+											pMemberVarDecl.m_pVarDecl.m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+											pOutputBuilder.m_sOut.Append("::");
+											pEnumDeclValue.m_pFirstToken.Stringify(pOutputBuilder.m_sOut);
 											break;
 										}
 										default:
 										{
-											out.m_sOut.Append("???");
-											pValueType.StringifyType(out.m_sOut);
+											pOutputBuilder.m_sOut.Append("???");
+											pValueType.StringifyType(pOutputBuilder.m_sOut);
 											break;
 										}
 									}
-									out.m_sOut.Append(";\n");
+									pOutputBuilder.m_sOut.Append(";\n");
 								
 								}
 								else
 								{
-									Util::Pad(nDepth, out.m_sOut);
-									out.m_sOut.AppendString(pMemberVarDecl.m_pVarDecl.m_pNameToken.GetString());
-									out.m_sOut.Append(" = ");
+									Util::Pad(nDepth, pOutputBuilder.m_sOut);
+									pOutputBuilder.m_sOut.AppendString(pMemberVarDecl.m_pVarDecl.m_pNameToken.GetString());
+									pOutputBuilder.m_sOut.Append(" = ");
 									switch (pValueType.m_eType)
 									{
 										case ValueType::Type::INT:
 										{
-											out.m_sOut.Append("0");
+											pOutputBuilder.m_sOut.Append("0");
 											break;
 										}
 										case ValueType::Type::BOOL:
 										{
-											out.m_sOut.Append("false");
+											pOutputBuilder.m_sOut.Append("false");
 											break;
 										}
 										case ValueType::Type::CHAR:
 										case ValueType::Type::UNICHAR:
 										{
-											out.m_sOut.Append("'0'");
+											pOutputBuilder.m_sOut.Append("'0'");
 											break;
 										}
 										case ValueType::Type::CLASS_DECL_VALUE:
@@ -170,30 +170,30 @@ namespace NumbatLogic
 										case ValueType::Type::VOIDPTR:
 										case ValueType::Type::STRING:
 										{
-											out.m_sOut.Append("0");
+											pOutputBuilder.m_sOut.Append("0");
 											break;
 										}
 										case ValueType::Type::ENUM_DECL_VALUE:
 										{
 											if (pValueType.m_pEnumDecl == null)
-												out.m_sOut.Append("no_m_pEnumDecl");
+												pOutputBuilder.m_sOut.Append("no_m_pEnumDecl");
 											EnumDeclValue pEnumDeclValue = pValueType.m_pEnumDecl.m_pEnumDeclValueVector.Get(0);
 											if (pValueType.m_pEnumDecl == null)
-												out.m_sOut.Append("no_pEnumDeclValue");
+												pOutputBuilder.m_sOut.Append("no_pEnumDeclValue");
 
-											pMemberVarDecl.m_pVarDecl.m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, out);
-											out.m_sOut.Append("::");
-											pEnumDeclValue.m_pFirstToken.Stringify(out.m_sOut);
+											pMemberVarDecl.m_pVarDecl.m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+											pOutputBuilder.m_sOut.Append("::");
+											pEnumDeclValue.m_pFirstToken.Stringify(pOutputBuilder.m_sOut);
 											break;
 										}
 										default:
 										{
-											out.m_sOut.Append("???");
-											pValueType.StringifyType(out.m_sOut);
+											pOutputBuilder.m_sOut.Append("???");
+											pValueType.StringifyType(pOutputBuilder.m_sOut);
 											break;
 										}
 									}
-									out.m_sOut.Append(";\n");
+									pOutputBuilder.m_sOut.Append(";\n");
 								}
 							}
 						}

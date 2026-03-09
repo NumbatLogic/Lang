@@ -16,17 +16,23 @@ namespace NumbatLogic
 	class OffsetDatum;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/EnumDecl.nll"
+#line 1 "../../../Source/Core/AST/EnumDecl.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/EnumDecl.nll"
+#line 4 "../../../Source/Core/AST/EnumDecl.nll"
 	class EnumDecl : public AST
 	{
+#line 6 "../../../Source/Core/AST/EnumDecl.nll"
 		public: Token* m_pNameToken;
+#line 7 "../../../Source/Core/AST/EnumDecl.nll"
 		public: Vector<EnumDeclValue*>* m_pEnumDeclValueVector;
+#line 9 "../../../Source/Core/AST/EnumDecl.nll"
 		public: EnumDecl();
+#line 14 "../../../Source/Core/AST/EnumDecl.nll"
 		public: static EnumDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
+#line 80 "../../../Source/Core/AST/EnumDecl.nll"
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
+#line 4 "../../../Source/Core/AST/EnumDecl.nll"
 		public: virtual ~EnumDecl();
 	};
 }

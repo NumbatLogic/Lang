@@ -44,10 +44,10 @@ namespace NumbatLogic
 		}
 
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-			m_pFirstToken.Stringify(out.m_sOut);
-			m_pExpression.Stringify(eLanguage, eOutputFile, 0, out);
+			m_pFirstToken.Stringify(pOutputBuilder.m_sOut);
+			m_pExpression.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		}
 	}
 }

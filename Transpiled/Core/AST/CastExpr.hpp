@@ -14,18 +14,24 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/CastExpr.nll"
+#line 1 "../../../Source/Core/AST/CastExpr.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/CastExpr.nll"
+#line 4 "../../../Source/Core/AST/CastExpr.nll"
 	class CastExpr : public AST
 	{
+#line 6 "../../../Source/Core/AST/CastExpr.nll"
 		public: TypeRef* m_pTypeRef;
+#line 7 "../../../Source/Core/AST/CastExpr.nll"
 		public: ParamCall* m_pParamCall;
+#line 9 "../../../Source/Core/AST/CastExpr.nll"
 		public: CastExpr();
+#line 14 "../../../Source/Core/AST/CastExpr.nll"
 		public: static CastExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
+#line 53 "../../../Source/Core/AST/CastExpr.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
+#line 98 "../../../Source/Core/AST/CastExpr.nll"
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 	};
 }
 

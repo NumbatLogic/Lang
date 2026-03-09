@@ -7,13 +7,15 @@ namespace NumbatLogic
 	class AST;
 	class InternalString;
 }
-#line 0 "../../../Source/Test/Test.nll"
+#line 1 "../../../Source/Test/Test.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Test/Test.nll"
+#line 4 "../../../Source/Test/Test.nll"
 	class Test
 	{
+#line 13 "../../../Source/Test/Test.nll"
 		public: static void Run();
+#line 74 "../../../Source/Test/Test.nll"
 		public: static void FullCheck(const char* sInput, AST::Type eAstType);
 	};
 }

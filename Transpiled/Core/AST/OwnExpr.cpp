@@ -26,78 +26,113 @@ namespace NumbatLogic
 	class TypeRef;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/OwnExpr.nll"
+#line 1 "../../../Source/Core/AST/OwnExpr.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/OwnExpr.nll"
+#line 4 "../../../Source/Core/AST/OwnExpr.nll"
+#line 8 "../../../Source/Core/AST/OwnExpr.nll"
 	OwnExpr* OwnExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
 		Token* pOwnToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_OWN);
+#line 13 "../../../Source/Core/AST/OwnExpr.nll"
 		if (pOwnToken == 0)
 		{
 			if (pTempOffset) delete pTempOffset;
+#line 14 "../../../Source/Core/AST/OwnExpr.nll"
 			return 0;
 		}
+#line 15 "../../../Source/Core/AST/OwnExpr.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		AST* pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
+#line 18 "../../../Source/Core/AST/OwnExpr.nll"
 		if (pExpression == 0)
 		{
+#line 20 "../../../Source/Core/AST/OwnExpr.nll"
 			Console::Log("expected expresssion");
+#line 21 "../../../Source/Core/AST/OwnExpr.nll"
 			NumbatLogic::Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pExpression) delete pExpression;
+#line 22 "../../../Source/Core/AST/OwnExpr.nll"
 			return 0;
 		}
 		OwnExpr* pOwnExpr = new OwnExpr();
+#line 27 "../../../Source/Core/AST/OwnExpr.nll"
 		pOwnExpr->m_eType = AST::Type::AST_OWN_EXP;
+#line 28 "../../../Source/Core/AST/OwnExpr.nll"
 		pOwnExpr->m_pFirstToken = pOwnToken;
+#line 29 "../../../Source/Core/AST/OwnExpr.nll"
 		pOwnExpr->m_pExpression = pExpression;
 		NumbatLogic::AST* __1929334319 = pExpression;
+#line 30 "../../../Source/Core/AST/OwnExpr.nll"
 		pExpression = 0;
+#line 30 "../../../Source/Core/AST/OwnExpr.nll"
 		pOwnExpr->AddChild(__1929334319);
+#line 32 "../../../Source/Core/AST/OwnExpr.nll"
 		pOffsetDatum->Set(pTempOffset);
 		NumbatLogic::OwnExpr* __4071014218 = pOwnExpr;
+#line 33 "../../../Source/Core/AST/OwnExpr.nll"
 		pOwnExpr = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pExpression) delete pExpression;
+#line 33 "../../../Source/Core/AST/OwnExpr.nll"
 		return __4071014218;
 	}
 
+#line 36 "../../../Source/Core/AST/OwnExpr.nll"
 	void OwnExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
+#line 38 "../../../Source/Core/AST/OwnExpr.nll"
 		AST::Validate(pValidator, pParent);
+#line 40 "../../../Source/Core/AST/OwnExpr.nll"
 		if (m_pExpression->m_pValueType == 0)
 		{
+#line 42 "../../../Source/Core/AST/OwnExpr.nll"
 			pValidator->AddError("Unable to determine right side of own", m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
+#line 43 "../../../Source/Core/AST/OwnExpr.nll"
 			return;
 		}
+#line 46 "../../../Source/Core/AST/OwnExpr.nll"
 		if (m_pExpression->m_pValueType->m_eType != ValueType::Type::CLASS_DECL_VALUE && m_pExpression->m_pValueType->m_eType != ValueType::Type::GENERIC_TYPE_DECL_VALUE)
 		{
 			InternalString* sError = new InternalString("Expected right side of own to be a CLASS_DECL_VALUE or GENERIC_TYPE_DECL_VALUE, got: ");
+#line 49 "../../../Source/Core/AST/OwnExpr.nll"
 			m_pExpression->m_pValueType->StringifyType(sError);
+#line 50 "../../../Source/Core/AST/OwnExpr.nll"
 			pValidator->AddError(sError->GetExternalString(), m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
 			if (sError) delete sError;
+#line 51 "../../../Source/Core/AST/OwnExpr.nll"
 			return;
 		}
+#line 54 "../../../Source/Core/AST/OwnExpr.nll"
 		if (m_pExpression->m_pValueType->m_ePointerType != TypeRef::PointerType::TRANSITON)
 		{
+#line 56 "../../../Source/Core/AST/OwnExpr.nll"
 			pValidator->AddError("Expected right side of own to be a TRANSITON type", m_pExpression->m_pFirstToken->m_sFileName, m_pExpression->m_pFirstToken->m_nLine, m_pExpression->m_pFirstToken->m_nColumn);
+#line 57 "../../../Source/Core/AST/OwnExpr.nll"
 			return;
 		}
+#line 60 "../../../Source/Core/AST/OwnExpr.nll"
 		m_pValueType = m_pExpression->m_pValueType->Clone();
+#line 61 "../../../Source/Core/AST/OwnExpr.nll"
 		m_pValueType->m_ePointerType = TypeRef::PointerType::OWNED_PREASSSIGN;
 	}
 
-	void OwnExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out)
+#line 64 "../../../Source/Core/AST/OwnExpr.nll"
+	void OwnExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
+#line 66 "../../../Source/Core/AST/OwnExpr.nll"
 		if (eLanguage == AST::Language::NLL)
 		{
-			out->m_sOut->Append("own ");
+#line 68 "../../../Source/Core/AST/OwnExpr.nll"
+			pOutputBuilder->m_sOut->Append("own ");
 		}
-		m_pExpression->Stringify(eLanguage, eOutputFile, 0, out);
+#line 70 "../../../Source/Core/AST/OwnExpr.nll"
+		m_pExpression->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 	}
 
+#line 4 "../../../Source/Core/AST/OwnExpr.nll"
 	OwnExpr::OwnExpr()
 	{
 		m_pExpression = 0;

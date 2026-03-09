@@ -424,22 +424,22 @@ namespace NumbatLogic
 			sOut.Append(m_pNameToken.GetString());
 		}
 
-		public void StringifyTemplateThing(Language eLanguage, OutputFile eOutputFile, OutputBuilder out)
+		public void StringifyTemplateThing(Language eLanguage, OutputFile eOutputFile, OutputBuilder pOutputBuilder)
 		{
-			out.m_sOut.AppendString("template <class ");
+			pOutputBuilder.m_sOut.AppendString("template <class ");
 			for (int i = 0; i < m_pGenericTypeDeclVector.GetSize(); i++)
 			{
 				if (i > 0)
-					out.m_sOut.Append(", ");
+					pOutputBuilder.m_sOut.Append(", ");
 				GenericTypeDecl pGenericTypeDecl = m_pGenericTypeDeclVector.Get(i);
-				pGenericTypeDecl.Stringify(eLanguage, eOutputFile, 0, out);
+				pGenericTypeDecl.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 			}
-			out.m_sOut.AppendString(">");
+			pOutputBuilder.m_sOut.AppendString(">");
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-			pOutputBuilder.OutputSourceLocation(eLanguage, m_pFirstToken);
+			pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
 
 			if (!(eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE))
 			{

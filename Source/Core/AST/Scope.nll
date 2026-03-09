@@ -122,25 +122,25 @@ namespace NumbatLogic
 			pValidator.EndScope(this);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			if (!m_bPseudo || m_pFirstChild == null || m_pFirstChild != m_pLastChild)
 			{
-				Util::Pad(nDepth, out.m_sOut);
-				out.m_sOut.Append("{\n");
+				Util::Pad(nDepth, pOutputBuilder.m_sOut);
+				pOutputBuilder.m_sOut.Append("{\n");
 			}
 
 			AST pChild = m_pFirstChild;
 			while (pChild != null)
 			{
-				pChild.Stringify(eLanguage, eOutputFile, nDepth+1, out);
+				pChild.Stringify(eLanguage, eOutputFile, nDepth+1, pOutputBuilder);
 				pChild = pChild.m_pNextSibling;
 			}
 
 			if (!m_bPseudo || m_pFirstChild == null || m_pFirstChild != m_pLastChild)
 			{
-				Util::Pad(nDepth, out.m_sOut);
-				out.m_sOut.Append("}\n");
+				Util::Pad(nDepth, pOutputBuilder.m_sOut);
+				pOutputBuilder.m_sOut.Append("}\n");
 			}
 		}
 	}

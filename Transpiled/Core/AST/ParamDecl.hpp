@@ -18,18 +18,25 @@ namespace NumbatLogic
 	class ParamCall;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/ParamDecl.nll"
+#line 1 "../../../Source/Core/AST/ParamDecl.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/ParamDecl.nll"
+#line 4 "../../../Source/Core/AST/ParamDecl.nll"
 	class ParamDecl : public AST
 	{
+#line 6 "../../../Source/Core/AST/ParamDecl.nll"
 		public: Vector<VarDecl*>* m_pParamVector;
+#line 8 "../../../Source/Core/AST/ParamDecl.nll"
 		public: ParamDecl();
+#line 15 "../../../Source/Core/AST/ParamDecl.nll"
 		public: static ParamDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
+#line 63 "../../../Source/Core/AST/ParamDecl.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
+#line 92 "../../../Source/Core/AST/ParamDecl.nll"
 		public: bool ValidateParamCall(ParamCall* pParamCall, Validator* pValidator, bool bReportErrors);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
+#line 213 "../../../Source/Core/AST/ParamDecl.nll"
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
+#line 4 "../../../Source/Core/AST/ParamDecl.nll"
 		public: virtual ~ParamDecl();
 	};
 }

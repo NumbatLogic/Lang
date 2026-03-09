@@ -14,17 +14,23 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/New.nll"
+#line 1 "../../../Source/Core/AST/New.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/New.nll"
+#line 4 "../../../Source/Core/AST/New.nll"
 	class New : public AST
 	{
+#line 6 "../../../Source/Core/AST/New.nll"
 		public: TypeRef* m_pTypeRef;
+#line 7 "../../../Source/Core/AST/New.nll"
 		public: ParamCall* m_pParamCall;
+#line 9 "../../../Source/Core/AST/New.nll"
 		public: static New* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
+#line 50 "../../../Source/Core/AST/New.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* out);
+#line 108 "../../../Source/Core/AST/New.nll"
+		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
+#line 4 "../../../Source/Core/AST/New.nll"
 		public: New();
 	};
 }

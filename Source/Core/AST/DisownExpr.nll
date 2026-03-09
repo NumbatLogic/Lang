@@ -152,20 +152,20 @@ namespace NumbatLogic
 			m_sTempVarName = own disown sTempName;
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			if (m_sTempVarName != null)
 			{
-				out.m_sOut.Append(m_sTempVarName.GetExternalString());
+				pOutputBuilder.m_sOut.Append(m_sTempVarName.GetExternalString());
 				return;
 			}
 
 			if (eLanguage == AST::Language::NLL)
 			{
-				out.m_sOut.Append("disown ");
+				pOutputBuilder.m_sOut.Append("disown ");
 			}
 
-			m_pExpression.Stringify(eLanguage, eOutputFile, 0, out);
+			m_pExpression.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		}
 	}
 }

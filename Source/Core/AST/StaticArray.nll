@@ -59,24 +59,24 @@ namespace NumbatLogic
 			m_pValueType = own new ValueType(ValueType::Type::STATIC_ARRAY);
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			if (eLanguage == AST::Language::CPP || eLanguage == AST::Language::CS)
-				out.m_sOut.AppendChar('{');
+				pOutputBuilder.m_sOut.AppendChar('{');
 			else
-				out.m_sOut.AppendChar('[');
+				pOutputBuilder.m_sOut.AppendChar('[');
 			AST pParam = m_pFirstChild;
 			while (pParam != null)
 			{
 				if (pParam != m_pFirstChild)
-					out.m_sOut.Append(", ");
-				pParam.Stringify(eLanguage, eOutputFile, 0, out);
+					pOutputBuilder.m_sOut.Append(", ");
+				pParam.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 				pParam = pParam.m_pNextSibling;
 			}
 			if (eLanguage == AST::Language::CPP || eLanguage == AST::Language::CS)
-				out.m_sOut.AppendChar('}');
+				pOutputBuilder.m_sOut.AppendChar('}');
 			else
-				out.m_sOut.AppendChar(']');
+				pOutputBuilder.m_sOut.AppendChar(']');
 		}
 	}
 }

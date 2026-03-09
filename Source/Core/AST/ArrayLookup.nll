@@ -90,14 +90,14 @@ namespace NumbatLogic
 			m_pValueType = own m_pExpression.m_pValueType.Clone();
 		}
 
-		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder out)
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-			m_pExpression.Stringify(eLanguage, eOutputFile, 0, out);
+			m_pExpression.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 			for (int i = 0; i < m_pIndexExpressionVector.GetSize(); i++)
 			{
-				out.m_sOut.AppendChar('[');
-				m_pIndexExpressionVector.Get(i).Stringify(eLanguage, eOutputFile, 0, out);
-				out.m_sOut.AppendChar(']');
+				pOutputBuilder.m_sOut.AppendChar('[');
+				m_pIndexExpressionVector.Get(i).Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+				pOutputBuilder.m_sOut.AppendChar(']');
 			}
 		}
 	}
