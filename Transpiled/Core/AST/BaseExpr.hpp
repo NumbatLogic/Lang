@@ -13,21 +13,21 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/BaseExpr.nll"
+#line 0 "../../../Source/Core/AST/BaseExpr.nll"
 namespace NumbatLogic
 {
-#line 4 "../../../Source/Core/AST/BaseExpr.nll"
+#line 3 "../../../Source/Core/AST/BaseExpr.nll"
 	class BaseExpr : public AST
 	{
-#line 6 "../../../Source/Core/AST/BaseExpr.nll"
+#line 5 "../../../Source/Core/AST/BaseExpr.nll"
 		public: ClassDecl* m_pBaseClassDecl;
-#line 8 "../../../Source/Core/AST/BaseExpr.nll"
+#line 7 "../../../Source/Core/AST/BaseExpr.nll"
 		public: static BaseExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 26 "../../../Source/Core/AST/BaseExpr.nll"
+#line 25 "../../../Source/Core/AST/BaseExpr.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 61 "../../../Source/Core/AST/BaseExpr.nll"
+#line 60 "../../../Source/Core/AST/BaseExpr.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 4 "../../../Source/Core/AST/BaseExpr.nll"
+#line 3 "../../../Source/Core/AST/BaseExpr.nll"
 		public: BaseExpr();
 	};
 }

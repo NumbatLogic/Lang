@@ -28,173 +28,173 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/CastExpr.nll"
+#line 0 "../../../Source/Core/AST/CastExpr.nll"
 namespace NumbatLogic
 {
-#line 4 "../../../Source/Core/AST/CastExpr.nll"
-#line 9 "../../../Source/Core/AST/CastExpr.nll"
+#line 3 "../../../Source/Core/AST/CastExpr.nll"
+#line 8 "../../../Source/Core/AST/CastExpr.nll"
 	CastExpr::CastExpr()
 	{
 		m_pTypeRef = 0;
 		m_pParamCall = 0;
-#line 11 "../../../Source/Core/AST/CastExpr.nll"
+#line 10 "../../../Source/Core/AST/CastExpr.nll"
 		m_eType = AST::Type::AST_CAST_EXP;
 	}
 
-#line 14 "../../../Source/Core/AST/CastExpr.nll"
+#line 13 "../../../Source/Core/AST/CastExpr.nll"
 	CastExpr* CastExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
 		Token* pCastToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_CAST);
-#line 19 "../../../Source/Core/AST/CastExpr.nll"
+#line 18 "../../../Source/Core/AST/CastExpr.nll"
 		if (pCastToken == 0)
 		{
 			if (pTempOffset) delete pTempOffset;
-#line 20 "../../../Source/Core/AST/CastExpr.nll"
+#line 19 "../../../Source/Core/AST/CastExpr.nll"
 			return 0;
 		}
-#line 21 "../../../Source/Core/AST/CastExpr.nll"
+#line 20 "../../../Source/Core/AST/CastExpr.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		TypeRef* pTypeRef = TypeRef::TryCreate(pTokenContainer, pTempOffset);
-#line 24 "../../../Source/Core/AST/CastExpr.nll"
+#line 23 "../../../Source/Core/AST/CastExpr.nll"
 		if (pTypeRef == 0)
 		{
-#line 26 "../../../Source/Core/AST/CastExpr.nll"
+#line 25 "../../../Source/Core/AST/CastExpr.nll"
 			Console::Log("expected TypeRef...");
-#line 27 "../../../Source/Core/AST/CastExpr.nll"
+#line 26 "../../../Source/Core/AST/CastExpr.nll"
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-#line 28 "../../../Source/Core/AST/CastExpr.nll"
+#line 27 "../../../Source/Core/AST/CastExpr.nll"
 			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pTypeRef) delete pTypeRef;
-#line 29 "../../../Source/Core/AST/CastExpr.nll"
+#line 28 "../../../Source/Core/AST/CastExpr.nll"
 			return 0;
 		}
 		ParamCall* pParamCall = ParamCall::TryCreate(pTokenContainer, pTempOffset);
-#line 33 "../../../Source/Core/AST/CastExpr.nll"
+#line 32 "../../../Source/Core/AST/CastExpr.nll"
 		if (pParamCall == 0)
 		{
-#line 35 "../../../Source/Core/AST/CastExpr.nll"
+#line 34 "../../../Source/Core/AST/CastExpr.nll"
 			Console::Log("expected ParamCall");
-#line 36 "../../../Source/Core/AST/CastExpr.nll"
+#line 35 "../../../Source/Core/AST/CastExpr.nll"
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-#line 37 "../../../Source/Core/AST/CastExpr.nll"
+#line 36 "../../../Source/Core/AST/CastExpr.nll"
 			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pTypeRef) delete pTypeRef;
 			if (pParamCall) delete pParamCall;
-#line 38 "../../../Source/Core/AST/CastExpr.nll"
+#line 37 "../../../Source/Core/AST/CastExpr.nll"
 			return 0;
 		}
 		CastExpr* pCastExpr = new CastExpr();
-#line 42 "../../../Source/Core/AST/CastExpr.nll"
+#line 41 "../../../Source/Core/AST/CastExpr.nll"
 		pCastExpr->m_pFirstToken = pCastToken;
-#line 43 "../../../Source/Core/AST/CastExpr.nll"
+#line 42 "../../../Source/Core/AST/CastExpr.nll"
 		pCastExpr->m_pTypeRef = pTypeRef;
-#line 44 "../../../Source/Core/AST/CastExpr.nll"
+#line 43 "../../../Source/Core/AST/CastExpr.nll"
 		pCastExpr->m_pParamCall = pParamCall;
 		NumbatLogic::TypeRef* __2942570890 = pTypeRef;
-#line 46 "../../../Source/Core/AST/CastExpr.nll"
+#line 45 "../../../Source/Core/AST/CastExpr.nll"
 		pTypeRef = 0;
-#line 46 "../../../Source/Core/AST/CastExpr.nll"
+#line 45 "../../../Source/Core/AST/CastExpr.nll"
 		pCastExpr->AddChild(__2942570890);
 		NumbatLogic::ParamCall* __1502782301 = pParamCall;
-#line 47 "../../../Source/Core/AST/CastExpr.nll"
+#line 46 "../../../Source/Core/AST/CastExpr.nll"
 		pParamCall = 0;
-#line 47 "../../../Source/Core/AST/CastExpr.nll"
+#line 46 "../../../Source/Core/AST/CastExpr.nll"
 		pCastExpr->AddChild(__1502782301);
-#line 49 "../../../Source/Core/AST/CastExpr.nll"
+#line 48 "../../../Source/Core/AST/CastExpr.nll"
 		pOffsetDatum->Set(pTempOffset);
 		NumbatLogic::CastExpr* __4190875401 = pCastExpr;
-#line 50 "../../../Source/Core/AST/CastExpr.nll"
+#line 49 "../../../Source/Core/AST/CastExpr.nll"
 		pCastExpr = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pTypeRef) delete pTypeRef;
 		if (pParamCall) delete pParamCall;
-#line 50 "../../../Source/Core/AST/CastExpr.nll"
+#line 49 "../../../Source/Core/AST/CastExpr.nll"
 		return __4190875401;
 	}
 
-#line 53 "../../../Source/Core/AST/CastExpr.nll"
+#line 52 "../../../Source/Core/AST/CastExpr.nll"
 	void CastExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
-#line 55 "../../../Source/Core/AST/CastExpr.nll"
+#line 54 "../../../Source/Core/AST/CastExpr.nll"
 		AST::Validate(pValidator, pParent);
-#line 56 "../../../Source/Core/AST/CastExpr.nll"
+#line 55 "../../../Source/Core/AST/CastExpr.nll"
 		m_pValueType = m_pTypeRef->CreateValueType(pValidator->m_pResolver);
-#line 58 "../../../Source/Core/AST/CastExpr.nll"
+#line 57 "../../../Source/Core/AST/CastExpr.nll"
 		if (m_pValueType == 0)
 		{
-#line 60 "../../../Source/Core/AST/CastExpr.nll"
+#line 59 "../../../Source/Core/AST/CastExpr.nll"
 			pValidator->AddError("unable to determine what to cast TO", m_pTypeRef->m_pFirstToken->m_sFileName, m_pTypeRef->m_pFirstToken->m_nLine, m_pTypeRef->m_pFirstToken->m_nColumn);
-#line 61 "../../../Source/Core/AST/CastExpr.nll"
+#line 60 "../../../Source/Core/AST/CastExpr.nll"
 			return;
 		}
 		AST* pFirstChild = m_pParamCall->m_pFirstChild;
-#line 65 "../../../Source/Core/AST/CastExpr.nll"
+#line 64 "../../../Source/Core/AST/CastExpr.nll"
 		if (pFirstChild == 0)
 		{
-#line 67 "../../../Source/Core/AST/CastExpr.nll"
+#line 66 "../../../Source/Core/AST/CastExpr.nll"
 			pValidator->AddError("no FROM param?", m_pParamCall->m_pFirstToken->m_sFileName, m_pParamCall->m_pFirstToken->m_nLine, m_pParamCall->m_pFirstToken->m_nColumn);
-#line 68 "../../../Source/Core/AST/CastExpr.nll"
+#line 67 "../../../Source/Core/AST/CastExpr.nll"
 			return;
 		}
-#line 71 "../../../Source/Core/AST/CastExpr.nll"
+#line 70 "../../../Source/Core/AST/CastExpr.nll"
 		if (pFirstChild->m_pNextSibling != 0)
 		{
-#line 73 "../../../Source/Core/AST/CastExpr.nll"
+#line 72 "../../../Source/Core/AST/CastExpr.nll"
 			pValidator->AddError("too many no FROM params?", pFirstChild->m_pFirstToken->m_sFileName, pFirstChild->m_pFirstToken->m_nLine, pFirstChild->m_pFirstToken->m_nColumn);
-#line 74 "../../../Source/Core/AST/CastExpr.nll"
+#line 73 "../../../Source/Core/AST/CastExpr.nll"
 			return;
 		}
-#line 77 "../../../Source/Core/AST/CastExpr.nll"
+#line 76 "../../../Source/Core/AST/CastExpr.nll"
 		if (pFirstChild->m_pValueType == 0)
 		{
-#line 79 "../../../Source/Core/AST/CastExpr.nll"
+#line 78 "../../../Source/Core/AST/CastExpr.nll"
 			pValidator->AddError("unable to determine what to cast FROM", m_pParamCall->m_pFirstToken->m_sFileName, m_pParamCall->m_pFirstToken->m_nLine, m_pParamCall->m_pFirstToken->m_nColumn);
-#line 80 "../../../Source/Core/AST/CastExpr.nll"
+#line 79 "../../../Source/Core/AST/CastExpr.nll"
 			return;
 		}
-#line 83 "../../../Source/Core/AST/CastExpr.nll"
+#line 82 "../../../Source/Core/AST/CastExpr.nll"
 		if (m_pValueType->m_ePointerType == TypeRef::PointerType::OWNED)
 		{
-#line 85 "../../../Source/Core/AST/CastExpr.nll"
+#line 84 "../../../Source/Core/AST/CastExpr.nll"
 			pValidator->AddError("cannot cast to an owned pointer", m_pTypeRef->m_pFirstToken->m_sFileName, m_pTypeRef->m_pFirstToken->m_nLine, m_pTypeRef->m_pFirstToken->m_nColumn);
-#line 86 "../../../Source/Core/AST/CastExpr.nll"
+#line 85 "../../../Source/Core/AST/CastExpr.nll"
 			return;
 		}
-#line 89 "../../../Source/Core/AST/CastExpr.nll"
+#line 88 "../../../Source/Core/AST/CastExpr.nll"
 		if (pFirstChild->m_pValueType->m_ePointerType != m_pValueType->m_ePointerType && m_pValueType->m_ePointerType != TypeRef::PointerType::SHARED)
 		{
-#line 91 "../../../Source/Core/AST/CastExpr.nll"
+#line 90 "../../../Source/Core/AST/CastExpr.nll"
 			pValidator->AddError("must cast to/from the same pointer type (or to shared)", m_pTypeRef->m_pFirstToken->m_sFileName, m_pTypeRef->m_pFirstToken->m_nLine, m_pTypeRef->m_pFirstToken->m_nColumn);
-#line 92 "../../../Source/Core/AST/CastExpr.nll"
+#line 91 "../../../Source/Core/AST/CastExpr.nll"
 			return;
 		}
 	}
 
-#line 98 "../../../Source/Core/AST/CastExpr.nll"
+#line 97 "../../../Source/Core/AST/CastExpr.nll"
 	void CastExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
-#line 100 "../../../Source/Core/AST/CastExpr.nll"
+#line 99 "../../../Source/Core/AST/CastExpr.nll"
 		if (eLanguage == AST::Language::NLL_DEF)
 		{
-#line 102 "../../../Source/Core/AST/CastExpr.nll"
+#line 101 "../../../Source/Core/AST/CastExpr.nll"
 			pOutputBuilder->m_sOut->Append("cast ");
-#line 103 "../../../Source/Core/AST/CastExpr.nll"
+#line 102 "../../../Source/Core/AST/CastExpr.nll"
 			m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-#line 104 "../../../Source/Core/AST/CastExpr.nll"
+#line 103 "../../../Source/Core/AST/CastExpr.nll"
 			m_pParamCall->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		}
 		else
 		{
-#line 108 "../../../Source/Core/AST/CastExpr.nll"
+#line 107 "../../../Source/Core/AST/CastExpr.nll"
 			pOutputBuilder->m_sOut->AppendChar('(');
-#line 109 "../../../Source/Core/AST/CastExpr.nll"
+#line 108 "../../../Source/Core/AST/CastExpr.nll"
 			m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-#line 110 "../../../Source/Core/AST/CastExpr.nll"
+#line 109 "../../../Source/Core/AST/CastExpr.nll"
 			pOutputBuilder->m_sOut->AppendChar(')');
-#line 111 "../../../Source/Core/AST/CastExpr.nll"
+#line 110 "../../../Source/Core/AST/CastExpr.nll"
 			m_pParamCall->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		}
 	}

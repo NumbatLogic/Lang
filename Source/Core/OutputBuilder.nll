@@ -14,7 +14,10 @@ namespace NumbatLogic
 			if (eLanguage == AST::Language::CPP || eLanguage == AST::Language::C || eLanguage == AST::Language::H || eLanguage == AST::Language::CS)
 			{
 				m_sOut.Append("#line ");
-				m_sOut.AppendInt(pToken.m_nLine+1);
+				if (eLanguage == AST::Language::CS)
+					m_sOut.AppendInt(pToken.m_nLine+1);
+				else
+					m_sOut.AppendInt(pToken.m_nLine);
 				m_sOut.Append(" \"");
 				m_sOut.Append(pToken.m_sFileName.GetExternalString());
 				m_sOut.Append("\"\n");

@@ -12,17 +12,17 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/StringExpr.nll"
+#line 0 "../../../Source/Core/AST/StringExpr.nll"
 namespace NumbatLogic
 {
-#line 4 "../../../Source/Core/AST/StringExpr.nll"
+#line 3 "../../../Source/Core/AST/StringExpr.nll"
 	class StringExpr : public AST
 	{
-#line 6 "../../../Source/Core/AST/StringExpr.nll"
+#line 5 "../../../Source/Core/AST/StringExpr.nll"
 		public: static StringExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 19 "../../../Source/Core/AST/StringExpr.nll"
+#line 18 "../../../Source/Core/AST/StringExpr.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 24 "../../../Source/Core/AST/StringExpr.nll"
+#line 23 "../../../Source/Core/AST/StringExpr.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 	};
 }

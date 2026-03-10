@@ -19,35 +19,35 @@ namespace NumbatLogic
 	class NamespaceDecl;
 	class Token;
 }
-#line 1 "../../../Source/Core/Project.nll"
+#line 0 "../../../Source/Core/Project.nll"
 namespace NumbatLogic
 {
-#line 4 "../../../Source/Core/Project.nll"
+#line 3 "../../../Source/Core/Project.nll"
 	class Project : public AST
 	{
-#line 6 "../../../Source/Core/Project.nll"
+#line 5 "../../../Source/Core/Project.nll"
 		public: Vector<TranslationUnit*>* m_pTranslationUnitVector;
-#line 7 "../../../Source/Core/Project.nll"
+#line 6 "../../../Source/Core/Project.nll"
 		public: NamespaceNode* m_pRootNamespaceNode;
-#line 8 "../../../Source/Core/Project.nll"
+#line 7 "../../../Source/Core/Project.nll"
 		public: Validator* m_pValidator;
-#line 10 "../../../Source/Core/Project.nll"
+#line 9 "../../../Source/Core/Project.nll"
 		public: Project();
-#line 19 "../../../Source/Core/Project.nll"
+#line 18 "../../../Source/Core/Project.nll"
 		public: void AddFile(const char* sFile, OwnedVector<InternalString*>* sDefineVector);
-#line 46 "../../../Source/Core/Project.nll"
+#line 45 "../../../Source/Core/Project.nll"
 		public: void AddDirectory(const char* sDirectory, OwnedVector<InternalString*>* sDefineVector);
-#line 57 "../../../Source/Core/Project.nll"
+#line 56 "../../../Source/Core/Project.nll"
 		public: void FullValidate();
-#line 81 "../../../Source/Core/Project.nll"
+#line 80 "../../../Source/Core/Project.nll"
 		protected: void RecurseNamespaces(AST* pInAst, NamespaceDecl* pSecretNamespace, TranslationUnit* pSecretTranslationUnit);
-#line 140 "../../../Source/Core/Project.nll"
+#line 139 "../../../Source/Core/Project.nll"
 		protected: void NamespaceMerge(AST* pParentAST);
-#line 213 "../../../Source/Core/Project.nll"
+#line 212 "../../../Source/Core/Project.nll"
 		public: void Amalgamate(const char* sAmalgamateFileName);
-#line 277 "../../../Source/Core/Project.nll"
+#line 276 "../../../Source/Core/Project.nll"
 		public: void Output(AST::Language eLanguage, OutputFile eOutputFile);
-#line 4 "../../../Source/Core/Project.nll"
+#line 3 "../../../Source/Core/Project.nll"
 		public: virtual ~Project();
 	};
 }

@@ -16,13 +16,13 @@ namespace NumbatLogic
 	template <class T>
 	class Vector;
 }
-#line 1 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 0 "../../../Source/Core/Semantic/SymbolScope.nll"
 namespace NumbatLogic
 {
-#line 4 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 3 "../../../Source/Core/Semantic/SymbolScope.nll"
 	class SymbolScope
 	{
-#line 6 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 5 "../../../Source/Core/Semantic/SymbolScope.nll"
 		public: enum Kind
 		{
 			GLOBAL,
@@ -33,23 +33,23 @@ namespace NumbatLogic
 			BLOCK,
 		};
 
-#line 15 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 14 "../../../Source/Core/Semantic/SymbolScope.nll"
 		public: Kind m_eKind;
-#line 18 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 17 "../../../Source/Core/Semantic/SymbolScope.nll"
 		public: SymbolScope* m_pParent;
-#line 21 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 20 "../../../Source/Core/Semantic/SymbolScope.nll"
 		public: AST* m_pOwnerAST;
-#line 25 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 24 "../../../Source/Core/Semantic/SymbolScope.nll"
 		public: OwnedStringMap<OwnedVector<Symbol*>*>* m_pSymbolMap;
-#line 27 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 26 "../../../Source/Core/Semantic/SymbolScope.nll"
 		public: SymbolScope();
-#line 36 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 35 "../../../Source/Core/Semantic/SymbolScope.nll"
 		public: void AddSymbol(const char* sName, Symbol* ppSymbol);
-#line 58 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 57 "../../../Source/Core/Semantic/SymbolScope.nll"
 		public: void FindInThisScope(const char* sName, Vector<Symbol*>* pOut);
-#line 77 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 76 "../../../Source/Core/Semantic/SymbolScope.nll"
 		public: SymbolScope* FindNamespaceScope(const char* sName);
-#line 4 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 3 "../../../Source/Core/Semantic/SymbolScope.nll"
 		public: virtual ~SymbolScope();
 	};
 }

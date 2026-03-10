@@ -18,25 +18,25 @@ namespace NumbatLogic
 	class ExpressionStmt;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/DisownExpr.nll"
+#line 0 "../../../Source/Core/AST/DisownExpr.nll"
 namespace NumbatLogic
 {
-#line 4 "../../../Source/Core/AST/DisownExpr.nll"
+#line 3 "../../../Source/Core/AST/DisownExpr.nll"
 	class DisownExpr : public AST
 	{
-#line 6 "../../../Source/Core/AST/DisownExpr.nll"
+#line 5 "../../../Source/Core/AST/DisownExpr.nll"
 		public: AST* m_pExpression;
-#line 7 "../../../Source/Core/AST/DisownExpr.nll"
+#line 6 "../../../Source/Core/AST/DisownExpr.nll"
 		public: InternalString* m_sTempVarName;
-#line 9 "../../../Source/Core/AST/DisownExpr.nll"
+#line 8 "../../../Source/Core/AST/DisownExpr.nll"
 		public: DisownExpr();
-#line 14 "../../../Source/Core/AST/DisownExpr.nll"
+#line 13 "../../../Source/Core/AST/DisownExpr.nll"
 		public: static DisownExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 41 "../../../Source/Core/AST/DisownExpr.nll"
+#line 40 "../../../Source/Core/AST/DisownExpr.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 156 "../../../Source/Core/AST/DisownExpr.nll"
+#line 155 "../../../Source/Core/AST/DisownExpr.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 4 "../../../Source/Core/AST/DisownExpr.nll"
+#line 3 "../../../Source/Core/AST/DisownExpr.nll"
 		public: virtual ~DisownExpr();
 	};
 }
