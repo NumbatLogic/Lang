@@ -52,7 +52,9 @@ namespace NumbatLogic
 #line 13 "../../../Source/Core/AST/DisownExpr.nll"
 	DisownExpr* DisownExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 15 "../../../Source/Core/AST/DisownExpr.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 17 "../../../Source/Core/AST/DisownExpr.nll"
 		Token* pDisownToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_DISOWN);
 #line 18 "../../../Source/Core/AST/DisownExpr.nll"
 		if (pDisownToken == 0)
@@ -63,6 +65,7 @@ namespace NumbatLogic
 		}
 #line 20 "../../../Source/Core/AST/DisownExpr.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 22 "../../../Source/Core/AST/DisownExpr.nll"
 		AST* pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 23 "../../../Source/Core/AST/DisownExpr.nll"
 		if (pExpression == 0)
@@ -76,6 +79,7 @@ namespace NumbatLogic
 #line 27 "../../../Source/Core/AST/DisownExpr.nll"
 			return 0;
 		}
+#line 30 "../../../Source/Core/AST/DisownExpr.nll"
 		DisownExpr* pDisownExpr = new DisownExpr();
 #line 32 "../../../Source/Core/AST/DisownExpr.nll"
 		pDisownExpr->m_pFirstToken = pDisownToken;
@@ -155,6 +159,7 @@ namespace NumbatLogic
 					return;
 				}
 			}
+#line 83 "../../../Source/Core/AST/DisownExpr.nll"
 		AST* pParentStatement = GetParentStatement();
 #line 84 "../../../Source/Core/AST/DisownExpr.nll"
 		if (pParentStatement == 0)
@@ -164,7 +169,9 @@ namespace NumbatLogic
 #line 87 "../../../Source/Core/AST/DisownExpr.nll"
 			return;
 		}
+#line 90 "../../../Source/Core/AST/DisownExpr.nll"
 		InternalString* sTempName = new InternalString("");
+#line 91 "../../../Source/Core/AST/DisownExpr.nll"
 		OutputBuilder* outTemp = new OutputBuilder();
 #line 92 "../../../Source/Core/AST/DisownExpr.nll"
 		m_pExpression->Stringify(AST::Language::CPP, AST::OutputFile::SOURCE, 0, outTemp);
@@ -172,20 +179,26 @@ namespace NumbatLogic
 		sTempName->Append(outTemp->m_sOut->GetExternalString());
 #line 96 "../../../Source/Core/AST/DisownExpr.nll"
 		sTempName->AppendInt(pParentStatement->m_pFirstToken->m_nLine);
+#line 97 "../../../Source/Core/AST/DisownExpr.nll"
 		unsigned int nHash = ExternalString::GetChecksum(sTempName->GetExternalString());
 #line 99 "../../../Source/Core/AST/DisownExpr.nll"
 		sTempName->Set("__");
 #line 100 "../../../Source/Core/AST/DisownExpr.nll"
 		sTempName->AppendUint32(nHash);
+#line 105 "../../../Source/Core/AST/DisownExpr.nll"
 		AST* pParentParent = pParentStatement->m_pParent;
 		{
+#line 108 "../../../Source/Core/AST/DisownExpr.nll"
 			TypeRef* pTypeRef = m_pValueType->CreateTypeRef();
+#line 109 "../../../Source/Core/AST/DisownExpr.nll"
 			Token* pNameToken = new Token();
 #line 110 "../../../Source/Core/AST/DisownExpr.nll"
 			pNameToken->m_eType = Token::Type::TOKEN_IDENTIFIER;
 #line 111 "../../../Source/Core/AST/DisownExpr.nll"
 			pNameToken->m_sValue = new InternalString(sTempName->GetExternalString());
+#line 115 "../../../Source/Core/AST/DisownExpr.nll"
 			AST* pAssignment = m_pExpression->BaseClone();
+#line 117 "../../../Source/Core/AST/DisownExpr.nll"
 			VarDecl* pTempVarDecl = new VarDecl();
 #line 118 "../../../Source/Core/AST/DisownExpr.nll"
 			pTempVarDecl->m_pFirstToken = pTypeRef->m_pFirstToken;
@@ -210,6 +223,7 @@ namespace NumbatLogic
 			pAssignment = 0;
 #line 124 "../../../Source/Core/AST/DisownExpr.nll"
 			pTempVarDecl->AddChild(__183884758);
+#line 126 "../../../Source/Core/AST/DisownExpr.nll"
 			AST* pInjectedVarDecl = pTempVarDecl;
 			NumbatLogic::VarDecl* __3774795561 = pTempVarDecl;
 #line 127 "../../../Source/Core/AST/DisownExpr.nll"
@@ -224,8 +238,11 @@ namespace NumbatLogic
 			if (pTempVarDecl) delete pTempVarDecl;
 		}
 		{
+#line 132 "../../../Source/Core/AST/DisownExpr.nll"
 			AST* pLeft = m_pExpression->BaseClone();
+#line 134 "../../../Source/Core/AST/DisownExpr.nll"
 			NullExpr* pRight = new NullExpr();
+#line 136 "../../../Source/Core/AST/DisownExpr.nll"
 			Token* pOperatorToken = new Token();
 #line 137 "../../../Source/Core/AST/DisownExpr.nll"
 			pOperatorToken->m_eType = Token::Type::TOKEN_EQUALS;
@@ -235,12 +252,14 @@ namespace NumbatLogic
 			NumbatLogic::NullExpr* __534132299 = pRight;
 #line 139 "../../../Source/Core/AST/DisownExpr.nll"
 			pRight = 0;
+#line 139 "../../../Source/Core/AST/DisownExpr.nll"
 			OperatorExpr* pOperatorExpr = OperatorExpr::Create(OperatorExpr::OperatorType::ASSIGNMENT, pOperatorToken, __3919013152, __534132299);
 			NumbatLogic::Token* __3603785160 = pOperatorToken;
 #line 140 "../../../Source/Core/AST/DisownExpr.nll"
 			pOperatorToken = 0;
 #line 140 "../../../Source/Core/AST/DisownExpr.nll"
 			pOperatorExpr->m_pOwnedOperatorToken = __3603785160;
+#line 142 "../../../Source/Core/AST/DisownExpr.nll"
 			ExpressionStmt* pExpressionStmt = new ExpressionStmt();
 #line 143 "../../../Source/Core/AST/DisownExpr.nll"
 			pExpressionStmt->m_pFirstToken = pOperatorExpr->m_pFirstToken;
@@ -251,6 +270,7 @@ namespace NumbatLogic
 			pOperatorExpr = 0;
 #line 145 "../../../Source/Core/AST/DisownExpr.nll"
 			pExpressionStmt->AddChild(__2365778377);
+#line 147 "../../../Source/Core/AST/DisownExpr.nll"
 			AST* pInjectedStmt = pExpressionStmt;
 			NumbatLogic::ExpressionStmt* __1415267173 = pExpressionStmt;
 #line 148 "../../../Source/Core/AST/DisownExpr.nll"

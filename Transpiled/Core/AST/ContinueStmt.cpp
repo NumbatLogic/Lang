@@ -38,7 +38,9 @@ namespace NumbatLogic
 #line 10 "../../../Source/Core/AST/ContinueStmt.nll"
 	ContinueStmt* ContinueStmt::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 12 "../../../Source/Core/AST/ContinueStmt.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 14 "../../../Source/Core/AST/ContinueStmt.nll"
 		Token* pBreakToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_CONTINUE);
 #line 15 "../../../Source/Core/AST/ContinueStmt.nll"
 		if (pBreakToken == 0)
@@ -62,6 +64,7 @@ namespace NumbatLogic
 		}
 #line 25 "../../../Source/Core/AST/ContinueStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 27 "../../../Source/Core/AST/ContinueStmt.nll"
 		ContinueStmt* pContinueStmt = new ContinueStmt();
 #line 29 "../../../Source/Core/AST/ContinueStmt.nll"
 		pContinueStmt->m_eType = AST::Type::AST_CONTINUE_STMT;

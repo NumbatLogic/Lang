@@ -592,7 +592,6 @@ namespace NumbatLogic
 			
 			if (pFinalChildTypeRef.m_pTypeToken.m_eType == Token::Type::TOKEN_IDENTIFIER)
 			{
-				string sTypeName = pFinalChildTypeRef.m_pTypeToken.GetString();
 				AST pType = pFinalChildTypeRef.m_pFoundType;
 
 				// maybe also cast...

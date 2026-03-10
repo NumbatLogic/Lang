@@ -282,6 +282,7 @@ namespace NumbatLogic
 #line 155 "../../../Source/Core/AST/OperatorExpr.nll"
 	OperatorExpr::OperatorType OperatorExpr::PeekOperator(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 157 "../../../Source/Core/AST/OperatorExpr.nll"
 		Token* pFirst = pTokenContainer->Peek(pOffsetDatum);
 #line 158 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (pFirst == 0)
@@ -289,12 +290,15 @@ namespace NumbatLogic
 			return OperatorType::UNKNOWN;
 #line 160 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOffsetDatum->m_nOffset++;
+#line 161 "../../../Source/Core/AST/OperatorExpr.nll"
 		Token* pSecond = pTokenContainer->Peek(pOffsetDatum);
 #line 162 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOffsetDatum->m_nOffset++;
+#line 163 "../../../Source/Core/AST/OperatorExpr.nll"
 		Token* pThird = pTokenContainer->Peek(pOffsetDatum);
 #line 164 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOffsetDatum->m_nOffset -= 2;
+#line 166 "../../../Source/Core/AST/OperatorExpr.nll"
 		OperatorType eType = GetOperatorTypeFromTokens(pFirst, pSecond, pThird);
 #line 167 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (eType == OperatorType::UNKNOWN)
@@ -315,8 +319,11 @@ namespace NumbatLogic
 		if (IsPostfix(eOperatorType))
 #line 177 "../../../Source/Core/AST/OperatorExpr.nll"
 			Assert::Plz(pRight == 0);
+#line 179 "../../../Source/Core/AST/OperatorExpr.nll"
 		OperatorExpr* pOperatorExpr = new OperatorExpr();
+#line 181 "../../../Source/Core/AST/OperatorExpr.nll"
 		AST* pOwnedLeft = pLeft;
+#line 182 "../../../Source/Core/AST/OperatorExpr.nll"
 		AST* pOwnedRight = pRight;
 #line 184 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOperatorExpr->m_pFirstToken = pLeft->m_pFirstToken;
@@ -358,7 +365,9 @@ namespace NumbatLogic
 #line 199 "../../../Source/Core/AST/OperatorExpr.nll"
 	AST* OperatorExpr::BaseClone()
 	{
+#line 201 "../../../Source/Core/AST/OperatorExpr.nll"
 		AST* pLeft = 0;
+#line 202 "../../../Source/Core/AST/OperatorExpr.nll"
 		AST* pRight = 0;
 #line 204 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (m_pLeft != 0)
@@ -368,6 +377,7 @@ namespace NumbatLogic
 		if (m_pRight != 0)
 #line 208 "../../../Source/Core/AST/OperatorExpr.nll"
 			pRight = m_pRight->BaseClone();
+#line 210 "../../../Source/Core/AST/OperatorExpr.nll"
 		Token* pOwnedClone = GetFirstOperatorToken()->Clone();
 		NumbatLogic::AST* __3927143451 = pLeft;
 #line 211 "../../../Source/Core/AST/OperatorExpr.nll"
@@ -375,6 +385,7 @@ namespace NumbatLogic
 		NumbatLogic::AST* __542262598 = pRight;
 #line 211 "../../../Source/Core/AST/OperatorExpr.nll"
 		pRight = 0;
+#line 211 "../../../Source/Core/AST/OperatorExpr.nll"
 		OperatorExpr* pResult = OperatorExpr::Create(m_eOperatorType, pOwnedClone, __3927143451, __542262598);
 		NumbatLogic::Token* __425741643 = pOwnedClone;
 #line 212 "../../../Source/Core/AST/OperatorExpr.nll"
@@ -409,6 +420,7 @@ namespace NumbatLogic
 			}
 			else
 			{
+#line 244 "../../../Source/Core/AST/OperatorExpr.nll"
 				Token* pOpToken = GetFirstOperatorToken();
 #line 245 "../../../Source/Core/AST/OperatorExpr.nll"
 				if (m_pLeft->m_pValueType->m_eType == ValueType::Type::CLASS_DECL || m_pLeft->m_pValueType->m_eType == ValueType::Type::ENUM_DECL || m_pLeft->m_pValueType->m_eType == ValueType::Type::NAMESPACE_NODE)
@@ -432,6 +444,7 @@ namespace NumbatLogic
 #line 258 "../../../Source/Core/AST/OperatorExpr.nll"
 					if (m_pRight->m_eType != AST::Type::AST_IDENTIFIER && m_pRight->m_eType != AST::Type::AST_OPERATOR_EXPR && m_pRight->m_eType != AST::Type::AST_FUNCTION_CALL && m_pRight->m_eType != AST::Type::AST_ARRAY_LOOKUP)
 					{
+#line 260 "../../../Source/Core/AST/OperatorExpr.nll"
 						InternalString* sTemp = new InternalString("Unexpected right side of :: operator: ");
 #line 261 "../../../Source/Core/AST/OperatorExpr.nll"
 						m_pRight->StringifyType(sTemp);
@@ -568,6 +581,7 @@ namespace NumbatLogic
 #line 362 "../../../Source/Core/AST/OperatorExpr.nll"
 							if (m_pLeft->m_pValueType->m_ePointerType == TypeRef::PointerType::OWNED && m_pRight->m_pValueType->m_ePointerType != TypeRef::PointerType::OWNED_PREASSSIGN)
 							{
+#line 364 "../../../Source/Core/AST/OperatorExpr.nll"
 								InternalString* sTemp = new InternalString("Expected right side of = to be OWNED_PREASSSIGN (result of own). FROM[");
 #line 365 "../../../Source/Core/AST/OperatorExpr.nll"
 								m_pRight->m_pValueType->StringifyType(sTemp);
@@ -610,6 +624,7 @@ namespace NumbatLogic
 #line 387 "../../../Source/Core/AST/OperatorExpr.nll"
 							if (m_pLeft->m_pValueType->m_ePointerType == TypeRef::PointerType::SHARED && m_pRight->m_pValueType->m_ePointerType == TypeRef::PointerType::OWNED_PREASSSIGN)
 							{
+#line 389 "../../../Source/Core/AST/OperatorExpr.nll"
 								InternalString* sTemp = new InternalString("Can't store an owned pointer in a shared pointer. FROM[");
 #line 390 "../../../Source/Core/AST/OperatorExpr.nll"
 								m_pRight->m_pValueType->StringifyType(sTemp);
@@ -652,6 +667,7 @@ namespace NumbatLogic
 #line 412 "../../../Source/Core/AST/OperatorExpr.nll"
 							if (m_pRight->m_pValueType->m_ePointerType == TypeRef::PointerType::TRANSITON)
 							{
+#line 414 "../../../Source/Core/AST/OperatorExpr.nll"
 								InternalString* sTemp = new InternalString("Cannot store a TRANSITION pointer (need to `own` it). FROM[");
 #line 415 "../../../Source/Core/AST/OperatorExpr.nll"
 								m_pRight->m_pValueType->StringifyType(sTemp);
@@ -696,6 +712,7 @@ namespace NumbatLogic
 							{
 #line 442 "../../../Source/Core/AST/OperatorExpr.nll"
 								AddClassDeclReference(m_pRight->m_pValueType->m_pClassDecl, AST::OutputFile::SOURCE, false);
+#line 445 "../../../Source/Core/AST/OperatorExpr.nll"
 								ClassDecl* pBaseClassDecl = m_pRight->m_pValueType->m_pClassDecl->GetBaseClassDecl(pValidator);
 #line 446 "../../../Source/Core/AST/OperatorExpr.nll"
 								while (pBaseClassDecl != 0)
@@ -710,6 +727,7 @@ namespace NumbatLogic
 #line 453 "../../../Source/Core/AST/OperatorExpr.nll"
 								if (pBaseClassDecl != m_pLeft->m_pValueType->m_pClassDecl)
 								{
+#line 455 "../../../Source/Core/AST/OperatorExpr.nll"
 									InternalString* sTemp = new InternalString("Can't assign ");
 #line 456 "../../../Source/Core/AST/OperatorExpr.nll"
 									sTemp->AppendString(m_pRight->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
@@ -962,12 +980,15 @@ namespace NumbatLogic
 #line 545 "../../../Source/Core/AST/OperatorExpr.nll"
 	void OperatorExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
+#line 547 "../../../Source/Core/AST/OperatorExpr.nll"
 		OperatorType eOp = GetOperatorType();
+#line 548 "../../../Source/Core/AST/OperatorExpr.nll"
 		const char* sPad = " ";
 #line 549 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (eOp == OperatorType::DECREMENT || eOp == OperatorType::INCREMENT || eOp == OperatorType::MEMBER_ACCESS || eOp == OperatorType::SCOPE_RESOLUTION)
 #line 550 "../../../Source/Core/AST/OperatorExpr.nll"
 			sPad = "";
+#line 552 "../../../Source/Core/AST/OperatorExpr.nll"
 		const char* sOperator = GetOperatorString(eOp);
 #line 553 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (eLanguage == AST::Language::CS && eOp == OperatorType::SCOPE_RESOLUTION)

@@ -34,7 +34,9 @@ namespace NumbatLogic
 #line 13 "../../../Source/Core/AST/MemberEnumDecl.nll"
 	MemberEnumDecl* MemberEnumDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 15 "../../../Source/Core/AST/MemberEnumDecl.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 17 "../../../Source/Core/AST/MemberEnumDecl.nll"
 		AccessLevel* pAccessLevel = AccessLevel::TryCreate(pTokenContainer, pTempOffset);
 #line 18 "../../../Source/Core/AST/MemberEnumDecl.nll"
 		if (pAccessLevel == 0)
@@ -44,6 +46,7 @@ namespace NumbatLogic
 #line 19 "../../../Source/Core/AST/MemberEnumDecl.nll"
 			return 0;
 		}
+#line 21 "../../../Source/Core/AST/MemberEnumDecl.nll"
 		EnumDecl* pEnumDecl = EnumDecl::TryCreate(pTokenContainer, pTempOffset);
 #line 22 "../../../Source/Core/AST/MemberEnumDecl.nll"
 		if (pEnumDecl == 0)
@@ -54,6 +57,7 @@ namespace NumbatLogic
 #line 23 "../../../Source/Core/AST/MemberEnumDecl.nll"
 			return 0;
 		}
+#line 25 "../../../Source/Core/AST/MemberEnumDecl.nll"
 		MemberEnumDecl* pMemberEnumDecl = new MemberEnumDecl();
 #line 27 "../../../Source/Core/AST/MemberEnumDecl.nll"
 		pMemberEnumDecl->m_eType = AST::Type::AST_MEMBER_ENUM_DECL;

@@ -100,7 +100,9 @@ namespace NumbatLogic
 #line 28 "../../../Source/Core/AST/ClassDecl.nll"
 	ClassDecl* ClassDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, AST* pParent)
 	{
+#line 30 "../../../Source/Core/AST/ClassDecl.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 32 "../../../Source/Core/AST/ClassDecl.nll"
 		Token* pClassToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_CLASS);
 #line 33 "../../../Source/Core/AST/ClassDecl.nll"
 		if (pClassToken == 0)
@@ -111,14 +113,17 @@ namespace NumbatLogic
 		}
 #line 35 "../../../Source/Core/AST/ClassDecl.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 37 "../../../Source/Core/AST/ClassDecl.nll"
 		Token* pDisposableToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_DISPOSABLE);
 #line 38 "../../../Source/Core/AST/ClassDecl.nll"
 		if (pDisposableToken != 0)
 #line 39 "../../../Source/Core/AST/ClassDecl.nll"
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 41 "../../../Source/Core/AST/ClassDecl.nll"
 		ClassDecl* pClassDecl = new ClassDecl();
 #line 42 "../../../Source/Core/AST/ClassDecl.nll"
 		pClassDecl->m_bDisposable = pDisposableToken != 0;
+#line 44 "../../../Source/Core/AST/ClassDecl.nll"
 		Token* pNameToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
 #line 45 "../../../Source/Core/AST/ClassDecl.nll"
 		if (pNameToken == 0)
@@ -136,6 +141,7 @@ namespace NumbatLogic
 		}
 #line 52 "../../../Source/Core/AST/ClassDecl.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 55 "../../../Source/Core/AST/ClassDecl.nll"
 		Token* pAngleBracketLeft = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_ANGLE_BRACKET_LEFT);
 #line 56 "../../../Source/Core/AST/ClassDecl.nll"
 		if (pAngleBracketLeft != 0)
@@ -153,6 +159,7 @@ namespace NumbatLogic
 #line 65 "../../../Source/Core/AST/ClassDecl.nll"
 					break;
 				}
+#line 68 "../../../Source/Core/AST/ClassDecl.nll"
 				GenericTypeDecl* pGenericTypeDecl = GenericTypeDecl::TryCreate(pTokenContainer, pTempOffset);
 #line 69 "../../../Source/Core/AST/ClassDecl.nll"
 				if (pGenericTypeDecl == 0)
@@ -189,6 +196,7 @@ namespace NumbatLogic
 				if (pGenericTypeDecl) delete pGenericTypeDecl;
 			}
 		}
+#line 92 "../../../Source/Core/AST/ClassDecl.nll"
 		TypeRef* pBaseTypeRef = 0;
 #line 93 "../../../Source/Core/AST/ClassDecl.nll"
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_COLON) != 0)
@@ -256,6 +264,7 @@ namespace NumbatLogic
 #line 129 "../../../Source/Core/AST/ClassDecl.nll"
 				break;
 			}
+#line 132 "../../../Source/Core/AST/ClassDecl.nll"
 			AST* pAST = 0;
 #line 134 "../../../Source/Core/AST/ClassDecl.nll"
 			pAST = MemberVarDecl::TryCreate(pTokenContainer, pTempOffset);
@@ -375,10 +384,12 @@ namespace NumbatLogic
 #line 195 "../../../Source/Core/AST/ClassDecl.nll"
 		if (m_pBaseTypeRef != 0)
 		{
+#line 197 "../../../Source/Core/AST/ClassDecl.nll"
 			ValueType* pBaseValueType = m_pBaseTypeRef->CreateValueType(pValidator->m_pResolver);
 #line 198 "../../../Source/Core/AST/ClassDecl.nll"
 			if (pBaseValueType == 0)
 			{
+#line 200 "../../../Source/Core/AST/ClassDecl.nll"
 				InternalString* sTemp = new InternalString("Unknown base class: ");
 #line 201 "../../../Source/Core/AST/ClassDecl.nll"
 				sTemp->Append(m_pBaseTypeRef->m_pTypeToken->GetString());
@@ -392,6 +403,7 @@ namespace NumbatLogic
 #line 206 "../../../Source/Core/AST/ClassDecl.nll"
 			if (pBaseValueType->m_eType != ValueType::Type::CLASS_DECL_VALUE)
 			{
+#line 208 "../../../Source/Core/AST/ClassDecl.nll"
 				InternalString* sTemp = new InternalString("Unknown base class is not a class: ");
 #line 209 "../../../Source/Core/AST/ClassDecl.nll"
 				sTemp->Append(m_pBaseTypeRef->m_pTypeToken->GetString());
@@ -406,10 +418,15 @@ namespace NumbatLogic
 			if (pBaseValueType) delete pBaseValueType;
 		}
 		{
+#line 220 "../../../Source/Core/AST/ClassDecl.nll"
 			bool bHasOwnedPointer = false;
+#line 221 "../../../Source/Core/AST/ClassDecl.nll"
 			bool bHasDefaultableVariable = false;
+#line 222 "../../../Source/Core/AST/ClassDecl.nll"
 			bool bHasConstructor = false;
+#line 223 "../../../Source/Core/AST/ClassDecl.nll"
 			bool bHasDestructor = false;
+#line 224 "../../../Source/Core/AST/ClassDecl.nll"
 			AST* pChild = m_pFirstChild;
 #line 225 "../../../Source/Core/AST/ClassDecl.nll"
 			while (pChild != 0)
@@ -417,7 +434,9 @@ namespace NumbatLogic
 #line 227 "../../../Source/Core/AST/ClassDecl.nll"
 				if (pChild->m_eType == AST::Type::AST_MEMBER_VAR_DECL)
 				{
+#line 229 "../../../Source/Core/AST/ClassDecl.nll"
 					MemberVarDecl* pMemberVarDecl = (MemberVarDecl*)(pChild);
+#line 230 "../../../Source/Core/AST/ClassDecl.nll"
 					TypeRef* pTypeRef = pMemberVarDecl->m_pVarDecl->m_pTypeRef;
 #line 231 "../../../Source/Core/AST/ClassDecl.nll"
 					while (pTypeRef->m_pChildTypeRef != 0)
@@ -435,6 +454,7 @@ namespace NumbatLogic
 #line 242 "../../../Source/Core/AST/ClassDecl.nll"
 				if (pChild->m_eType == AST::Type::AST_TOR_DECL)
 				{
+#line 244 "../../../Source/Core/AST/ClassDecl.nll"
 					TorDecl* pTorDecl = (TorDecl*)(pChild);
 #line 245 "../../../Source/Core/AST/ClassDecl.nll"
 					if (pTorDecl->m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_DESTRUCT)
@@ -461,6 +481,7 @@ namespace NumbatLogic
 				m_pConstructorAccessLevelToken = new Token();
 #line 261 "../../../Source/Core/AST/ClassDecl.nll"
 				m_pConstructorAccessLevelToken->m_eType = Token::Type::TOKEN_KEYWORD_PUBLIC;
+#line 263 "../../../Source/Core/AST/ClassDecl.nll"
 				AccessLevel* pAccessLevel = new AccessLevel();
 #line 264 "../../../Source/Core/AST/ClassDecl.nll"
 				pAccessLevel->m_eType = AST::Type::AST_ACCESS_LEVEL;
@@ -470,12 +491,15 @@ namespace NumbatLogic
 				m_pConstructorTypeToken = new Token();
 #line 268 "../../../Source/Core/AST/ClassDecl.nll"
 				m_pConstructorTypeToken->m_eType = Token::Type::TOKEN_KEYWORD_CONSTRUCT;
+#line 270 "../../../Source/Core/AST/ClassDecl.nll"
 				ParamDecl* pParamDecl = new ParamDecl();
 #line 271 "../../../Source/Core/AST/ClassDecl.nll"
 				pParamDecl->m_pFirstToken = m_pFirstToken;
+#line 273 "../../../Source/Core/AST/ClassDecl.nll"
 				Scope* pScope = new Scope();
 #line 274 "../../../Source/Core/AST/ClassDecl.nll"
 				pScope->AddChild(new MemberVarsSetDefaultStmt());
+#line 276 "../../../Source/Core/AST/ClassDecl.nll"
 				TorDecl* pTorDecl = new TorDecl();
 #line 277 "../../../Source/Core/AST/ClassDecl.nll"
 				pTorDecl->m_eType = AST::Type::AST_TOR_DECL;
@@ -527,6 +551,7 @@ namespace NumbatLogic
 				m_pAccessLevelToken = new Token();
 #line 297 "../../../Source/Core/AST/ClassDecl.nll"
 				m_pAccessLevelToken->m_eType = Token::Type::TOKEN_KEYWORD_PUBLIC;
+#line 299 "../../../Source/Core/AST/ClassDecl.nll"
 				AccessLevel* pAccessLevel = new AccessLevel();
 #line 300 "../../../Source/Core/AST/ClassDecl.nll"
 				pAccessLevel->m_eType = AST::Type::AST_ACCESS_LEVEL;
@@ -536,10 +561,13 @@ namespace NumbatLogic
 				m_pTypeToken = new Token();
 #line 304 "../../../Source/Core/AST/ClassDecl.nll"
 				m_pTypeToken->m_eType = Token::Type::TOKEN_KEYWORD_DESTRUCT;
+#line 306 "../../../Source/Core/AST/ClassDecl.nll"
 				ParamDecl* pParamDecl = new ParamDecl();
 #line 307 "../../../Source/Core/AST/ClassDecl.nll"
 				pParamDecl->m_pFirstToken = m_pFirstToken;
+#line 309 "../../../Source/Core/AST/ClassDecl.nll"
 				Scope* pScope = new Scope();
+#line 311 "../../../Source/Core/AST/ClassDecl.nll"
 				TorDecl* pTorDecl = new TorDecl();
 #line 312 "../../../Source/Core/AST/ClassDecl.nll"
 				pTorDecl->m_eType = AST::Type::AST_TOR_DECL;
@@ -600,6 +628,7 @@ namespace NumbatLogic
 		if (m_pBaseTypeRef == 0)
 #line 341 "../../../Source/Core/AST/ClassDecl.nll"
 			return 0;
+#line 342 "../../../Source/Core/AST/ClassDecl.nll"
 		ClassDecl* pBase = m_pBaseTypeRef->GetFoundClassDecl();
 #line 343 "../../../Source/Core/AST/ClassDecl.nll"
 		if (pBase == 0 && m_pBaseTypeRef->m_pChildTypeRef != 0)
@@ -617,18 +646,22 @@ namespace NumbatLogic
 		if (pResolver == 0 || m_pSymbolScope == 0)
 #line 352 "../../../Source/Core/AST/ClassDecl.nll"
 			return 0;
+#line 353 "../../../Source/Core/AST/ClassDecl.nll"
 		SymbolScope* pParentScope = m_pSymbolScope->m_pParent;
 #line 354 "../../../Source/Core/AST/ClassDecl.nll"
 		if (pParentScope == 0)
 #line 355 "../../../Source/Core/AST/ClassDecl.nll"
 			return 0;
+#line 356 "../../../Source/Core/AST/ClassDecl.nll"
 		const char* sBaseName = m_pBaseTypeRef->m_pTypeToken->GetString();
+#line 357 "../../../Source/Core/AST/ClassDecl.nll"
 		Vector<Symbol*>* pCandidates = new Vector<Symbol*>();
 #line 358 "../../../Source/Core/AST/ClassDecl.nll"
 		pResolver->ResolveInScopeChainNoBaseClasses(sBaseName, pParentScope, pCandidates);
 #line 359 "../../../Source/Core/AST/ClassDecl.nll"
 		if (pCandidates->GetSize() == 1)
 		{
+#line 361 "../../../Source/Core/AST/ClassDecl.nll"
 			Symbol* pSym = pCandidates->Get(0);
 #line 362 "../../../Source/Core/AST/ClassDecl.nll"
 			if (pSym->m_eKind == Symbol::Kind::CLASS && pSym->m_pDeclAST != 0 && pSym->m_pDeclAST->m_eType == AST::Type::AST_CLASS_DECL)
@@ -642,13 +675,16 @@ namespace NumbatLogic
 #line 368 "../../../Source/Core/AST/ClassDecl.nll"
 			if (pSym->m_eKind == Symbol::Kind::NAMESPACE && pSym->m_pScope != 0 && m_pBaseTypeRef->m_pChildTypeRef != 0)
 			{
+#line 370 "../../../Source/Core/AST/ClassDecl.nll"
 				const char* sChildName = m_pBaseTypeRef->m_pChildTypeRef->m_pTypeToken->GetString();
+#line 371 "../../../Source/Core/AST/ClassDecl.nll"
 				Vector<Symbol*>* pChildCandidates = new Vector<Symbol*>();
 #line 372 "../../../Source/Core/AST/ClassDecl.nll"
 				pResolver->ResolveInScopeChainNoBaseClasses(sChildName, pSym->m_pScope, pChildCandidates);
 #line 373 "../../../Source/Core/AST/ClassDecl.nll"
 				if (pChildCandidates->GetSize() == 1)
 				{
+#line 375 "../../../Source/Core/AST/ClassDecl.nll"
 					Symbol* pChildSym = pChildCandidates->Get(0);
 #line 376 "../../../Source/Core/AST/ClassDecl.nll"
 					if (pChildSym->m_eKind == Symbol::Kind::CLASS && pChildSym->m_pDeclAST != 0 && pChildSym->m_pDeclAST->m_eType == AST::Type::AST_CLASS_DECL)
@@ -676,10 +712,12 @@ namespace NumbatLogic
 		if (m_pBaseClassDecl != 0)
 #line 390 "../../../Source/Core/AST/ClassDecl.nll"
 			return m_pBaseClassDecl;
+#line 392 "../../../Source/Core/AST/ClassDecl.nll"
 		Validator* pV = pValidator;
 #line 393 "../../../Source/Core/AST/ClassDecl.nll"
 		if (pV == 0)
 		{
+#line 395 "../../../Source/Core/AST/ClassDecl.nll"
 			Project* pProject = GetProject();
 #line 396 "../../../Source/Core/AST/ClassDecl.nll"
 			if (pProject != 0)
@@ -689,6 +727,7 @@ namespace NumbatLogic
 #line 399 "../../../Source/Core/AST/ClassDecl.nll"
 		if (m_pBaseTypeRef != 0 && m_pParent != 0 && pV != 0)
 		{
+#line 401 "../../../Source/Core/AST/ClassDecl.nll"
 			ValueType* pBaseValueType = m_pBaseTypeRef->CreateValueType(pV->m_pResolver);
 #line 402 "../../../Source/Core/AST/ClassDecl.nll"
 			if (pBaseValueType != 0)
@@ -711,6 +750,7 @@ namespace NumbatLogic
 #line 413 "../../../Source/Core/AST/ClassDecl.nll"
 		if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_MEMBER_CLASS_DECL)
 		{
+#line 415 "../../../Source/Core/AST/ClassDecl.nll"
 			MemberClassDecl* pMember = (MemberClassDecl*)(m_pParent);
 #line 416 "../../../Source/Core/AST/ClassDecl.nll"
 			pMember->m_pParentClassDecl->AppendFullyQualifiedName(sOut);
@@ -742,6 +782,7 @@ namespace NumbatLogic
 			if (i > 0)
 #line 433 "../../../Source/Core/AST/ClassDecl.nll"
 				pOutputBuilder->m_sOut->Append(", ");
+#line 434 "../../../Source/Core/AST/ClassDecl.nll"
 			GenericTypeDecl* pGenericTypeDecl = m_pGenericTypeDeclVector->Get(i);
 #line 435 "../../../Source/Core/AST/ClassDecl.nll"
 			pGenericTypeDecl->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
@@ -793,6 +834,7 @@ namespace NumbatLogic
 						if (i > 0)
 #line 468 "../../../Source/Core/AST/ClassDecl.nll"
 							pOutputBuilder->m_sOut->Append(", ");
+#line 469 "../../../Source/Core/AST/ClassDecl.nll"
 						GenericTypeDecl* pGenericTypeDecl = m_pGenericTypeDeclVector->Get(i);
 #line 470 "../../../Source/Core/AST/ClassDecl.nll"
 						pGenericTypeDecl->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
@@ -847,6 +889,7 @@ namespace NumbatLogic
 					}
 #line 507 "../../../Source/Core/AST/ClassDecl.nll"
 					pOutputBuilder->m_sOut->Append("where ");
+#line 508 "../../../Source/Core/AST/ClassDecl.nll"
 					GenericTypeDecl* pGenericTypeDecl = m_pGenericTypeDeclVector->Get(i);
 #line 509 "../../../Source/Core/AST/ClassDecl.nll"
 					pGenericTypeDecl->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
@@ -863,6 +906,7 @@ namespace NumbatLogic
 #line 518 "../../../Source/Core/AST/ClassDecl.nll"
 			nDepth++;
 		}
+#line 521 "../../../Source/Core/AST/ClassDecl.nll"
 		AST* pMember = m_pFirstChild;
 #line 522 "../../../Source/Core/AST/ClassDecl.nll"
 		while (pMember != 0)

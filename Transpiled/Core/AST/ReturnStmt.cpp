@@ -37,7 +37,9 @@ namespace NumbatLogic
 #line 13 "../../../Source/Core/AST/ReturnStmt.nll"
 	ReturnStmt* ReturnStmt::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 15 "../../../Source/Core/AST/ReturnStmt.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 17 "../../../Source/Core/AST/ReturnStmt.nll"
 		Token* pReturnToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_RETURN);
 #line 18 "../../../Source/Core/AST/ReturnStmt.nll"
 		if (pReturnToken == 0)
@@ -48,6 +50,7 @@ namespace NumbatLogic
 		}
 #line 20 "../../../Source/Core/AST/ReturnStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 22 "../../../Source/Core/AST/ReturnStmt.nll"
 		AST* pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 24 "../../../Source/Core/AST/ReturnStmt.nll"
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == 0)
@@ -59,6 +62,7 @@ namespace NumbatLogic
 		}
 #line 26 "../../../Source/Core/AST/ReturnStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 28 "../../../Source/Core/AST/ReturnStmt.nll"
 		ReturnStmt* pReturnStmt = new ReturnStmt();
 #line 30 "../../../Source/Core/AST/ReturnStmt.nll"
 		pReturnStmt->m_pFirstToken = pReturnToken;

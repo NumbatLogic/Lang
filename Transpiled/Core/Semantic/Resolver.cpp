@@ -88,6 +88,7 @@ namespace NumbatLogic
 #line 33 "../../../Source/Core/Semantic/Resolver.nll"
 		if (pOwner->m_eType == AST::Type::AST_MEMBER_CLASS_DECL)
 		{
+#line 35 "../../../Source/Core/Semantic/Resolver.nll"
 			MemberClassDecl* pMember = (MemberClassDecl*)(pOwner);
 #line 36 "../../../Source/Core/Semantic/Resolver.nll"
 			return pMember->m_pClassDecl;
@@ -99,10 +100,12 @@ namespace NumbatLogic
 #line 41 "../../../Source/Core/Semantic/Resolver.nll"
 	SymbolScope* Resolver::CreateChildScope(AST* pNode, SymbolScope* pParent, SymbolScope::Kind eKind)
 	{
+#line 43 "../../../Source/Core/Semantic/Resolver.nll"
 		SymbolScope* pOwnedScope = new SymbolScope();
 		NumbatLogic::SymbolScope* __1793915775 = pOwnedScope;
 #line 44 "../../../Source/Core/Semantic/Resolver.nll"
 		pOwnedScope = 0;
+#line 44 "../../../Source/Core/Semantic/Resolver.nll"
 		SymbolScope* pNewScope = m_pScopeVector->PushBack(__1793915775);
 #line 45 "../../../Source/Core/Semantic/Resolver.nll"
 		pNewScope->m_eKind = eKind;
@@ -124,7 +127,9 @@ namespace NumbatLogic
 		if (pScope == 0 || sShortName == 0)
 #line 55 "../../../Source/Core/Semantic/Resolver.nll"
 			return;
+#line 56 "../../../Source/Core/Semantic/Resolver.nll"
 		const char* sQual = (sQualifiedName != 0 && !ExternalString::Equal(sQualifiedName, "")) ? sQualifiedName : sShortName;
+#line 57 "../../../Source/Core/Semantic/Resolver.nll"
 		Symbol* pOwnedSymbol = new Symbol();
 #line 58 "../../../Source/Core/Semantic/Resolver.nll"
 		pOwnedSymbol->m_eKind = eKind;
@@ -151,6 +156,7 @@ namespace NumbatLogic
 		if (pNode == 0)
 #line 72 "../../../Source/Core/Semantic/Resolver.nll"
 			return 0;
+#line 74 "../../../Source/Core/Semantic/Resolver.nll"
 		AST* pWalk = pNode;
 #line 75 "../../../Source/Core/Semantic/Resolver.nll"
 		while (pWalk != 0)
@@ -181,12 +187,15 @@ namespace NumbatLogic
 		if (pOwnerNode == 0 || pOwnerNode->m_pSymbolScope != 0)
 #line 95 "../../../Source/Core/Semantic/Resolver.nll"
 			return;
+#line 97 "../../../Source/Core/Semantic/Resolver.nll"
 		ClassDecl* pClassDecl = GetClassDeclFromOwnerAST(pOwnerNode);
 #line 98 "../../../Source/Core/Semantic/Resolver.nll"
 		if (pClassDecl == 0)
 #line 99 "../../../Source/Core/Semantic/Resolver.nll"
 			return;
+#line 102 "../../../Source/Core/Semantic/Resolver.nll"
 		SymbolScope* pEnclosing = m_pGlobalScope;
+#line 103 "../../../Source/Core/Semantic/Resolver.nll"
 		AST* pWalk = pOwnerNode->m_pParent;
 #line 104 "../../../Source/Core/Semantic/Resolver.nll"
 		while (pWalk != 0)
@@ -210,9 +219,11 @@ namespace NumbatLogic
 #line 116 "../../../Source/Core/Semantic/Resolver.nll"
 			pWalk = pWalk->m_pParent;
 		}
+#line 119 "../../../Source/Core/Semantic/Resolver.nll"
 		SymbolScope* pClassScope = CreateChildScope(pOwnerNode, pEnclosing, SymbolScope::Kind::CLASS);
 #line 120 "../../../Source/Core/Semantic/Resolver.nll"
 		AddGenericParamsToScope(pClassDecl, pClassScope);
+#line 122 "../../../Source/Core/Semantic/Resolver.nll"
 		AST* pChild = pClassDecl->m_pFirstChild;
 #line 123 "../../../Source/Core/Semantic/Resolver.nll"
 		while (pChild != 0)
@@ -234,7 +245,9 @@ namespace NumbatLogic
 #line 134 "../../../Source/Core/Semantic/Resolver.nll"
 		for (int i = 0; i < pClassDecl->m_pGenericTypeDeclVector->GetSize(); i++)
 		{
+#line 136 "../../../Source/Core/Semantic/Resolver.nll"
 			GenericTypeDecl* pGenericTypeDecl = pClassDecl->m_pGenericTypeDeclVector->Get(i);
+#line 137 "../../../Source/Core/Semantic/Resolver.nll"
 			const char* sGenericName = pGenericTypeDecl->m_pFirstToken->GetString();
 #line 138 "../../../Source/Core/Semantic/Resolver.nll"
 			AddSymbolToScope(pScope, sGenericName, Symbol::Kind::GENERIC_PARAM, pGenericTypeDecl, 0);
@@ -251,6 +264,7 @@ namespace NumbatLogic
 #line 146 "../../../Source/Core/Semantic/Resolver.nll"
 		if (pMemberNode->m_eType == AST::Type::AST_MEMBER_VAR_DECL)
 		{
+#line 148 "../../../Source/Core/Semantic/Resolver.nll"
 			MemberVarDecl* pMemberVar = (MemberVarDecl*)(pMemberNode);
 #line 149 "../../../Source/Core/Semantic/Resolver.nll"
 			if (pMemberVar->m_pVarDecl != 0)
@@ -261,6 +275,7 @@ namespace NumbatLogic
 #line 152 "../../../Source/Core/Semantic/Resolver.nll"
 			if (pMemberNode->m_eType == AST::Type::AST_MEMBER_FUNCTION_DECL)
 			{
+#line 154 "../../../Source/Core/Semantic/Resolver.nll"
 				MemberFunctionDecl* pMemberFunc = (MemberFunctionDecl*)(pMemberNode);
 #line 155 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pMemberFunc->m_pFunctionDecl != 0)
@@ -271,11 +286,14 @@ namespace NumbatLogic
 #line 158 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pMemberNode->m_eType == AST::Type::AST_MEMBER_CLASS_DECL)
 				{
+#line 160 "../../../Source/Core/Semantic/Resolver.nll"
 					MemberClassDecl* pMemberClass = (MemberClassDecl*)(pMemberNode);
 #line 161 "../../../Source/Core/Semantic/Resolver.nll"
 					if (pMemberClass->m_pClassDecl != 0)
 					{
+#line 163 "../../../Source/Core/Semantic/Resolver.nll"
 						const char* sName = pMemberClass->m_pClassDecl->m_pNameToken->GetString();
+#line 164 "../../../Source/Core/Semantic/Resolver.nll"
 						InternalString* sTemp = new InternalString("");
 #line 165 "../../../Source/Core/Semantic/Resolver.nll"
 						pMemberClass->m_pClassDecl->AppendFullyQualifiedName(sTemp);
@@ -288,6 +306,7 @@ namespace NumbatLogic
 #line 169 "../../../Source/Core/Semantic/Resolver.nll"
 					if (pMemberNode->m_eType == AST::Type::AST_MEMBER_ENUM_DECL)
 					{
+#line 171 "../../../Source/Core/Semantic/Resolver.nll"
 						MemberEnumDecl* pMemberEnum = (MemberEnumDecl*)(pMemberNode);
 #line 172 "../../../Source/Core/Semantic/Resolver.nll"
 						if (pMemberEnum->m_pEnumDecl != 0)
@@ -298,6 +317,7 @@ namespace NumbatLogic
 #line 175 "../../../Source/Core/Semantic/Resolver.nll"
 						if (pMemberNode->m_eType == AST::Type::DELEGATE_DECL)
 						{
+#line 177 "../../../Source/Core/Semantic/Resolver.nll"
 							DelegateDecl* pDelegateDecl = (DelegateDecl*)(pMemberNode);
 #line 178 "../../../Source/Core/Semantic/Resolver.nll"
 							if (pDelegateDecl->m_pFunctionDecl != 0 && pDelegateDecl->m_pFunctionDecl->m_pNameToken != 0)
@@ -326,14 +346,18 @@ namespace NumbatLogic
 		if (pNode == 0 || pScope == 0)
 #line 197 "../../../Source/Core/Semantic/Resolver.nll"
 			return;
+#line 200 "../../../Source/Core/Semantic/Resolver.nll"
 		SymbolScope* pCurrentScope = pScope;
 #line 202 "../../../Source/Core/Semantic/Resolver.nll"
 		switch (pNode->m_eType)
 		{
 			case AST::Type::NAMESPACE_DECL:
 			{
+#line 206 "../../../Source/Core/Semantic/Resolver.nll"
 				NamespaceDecl* pNamespaceDecl = (NamespaceDecl*)(pNode);
+#line 207 "../../../Source/Core/Semantic/Resolver.nll"
 				const char* sName = pNamespaceDecl->m_pNameToken->GetString();
+#line 213 "../../../Source/Core/Semantic/Resolver.nll"
 				SymbolScope* pNamespaceScope = pScope->FindNamespaceScope(sName);
 #line 214 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pNamespaceScope != 0)
@@ -345,10 +369,12 @@ namespace NumbatLogic
 #line 218 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
+#line 222 "../../../Source/Core/Semantic/Resolver.nll"
 				const char* sQual = sName;
 #line 223 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pNamespaceDecl->m_pNamespaceNode != 0)
 				{
+#line 225 "../../../Source/Core/Semantic/Resolver.nll"
 					InternalString* sTemp = new InternalString("");
 #line 226 "../../../Source/Core/Semantic/Resolver.nll"
 					pNamespaceDecl->m_pNamespaceNode->AppendFullyQualifiedName(sTemp);
@@ -369,6 +395,7 @@ namespace NumbatLogic
 #line 238 "../../../Source/Core/Semantic/Resolver.nll"
 				if (m_pBuildTempSymbolVector->GetSize() > 0)
 				{
+#line 240 "../../../Source/Core/Semantic/Resolver.nll"
 					Symbol* pLast = m_pBuildTempSymbolVector->Get(m_pBuildTempSymbolVector->GetSize() - 1);
 #line 241 "../../../Source/Core/Semantic/Resolver.nll"
 					pLast->m_pScope = pNamespaceScope;
@@ -379,12 +406,16 @@ namespace NumbatLogic
 
 			case AST::Type::AST_CLASS_DECL:
 			{
+#line 247 "../../../Source/Core/Semantic/Resolver.nll"
 				ClassDecl* pClassDecl = (ClassDecl*)(pNode);
+#line 251 "../../../Source/Core/Semantic/Resolver.nll"
 				bool bIsInnerOfMemberClass = (pClassDecl->m_pParent != 0 && pClassDecl->m_pParent->m_eType == AST::Type::AST_MEMBER_CLASS_DECL);
 #line 253 "../../../Source/Core/Semantic/Resolver.nll"
 				if (!bIsInnerOfMemberClass)
 				{
+#line 255 "../../../Source/Core/Semantic/Resolver.nll"
 					const char* sName = pClassDecl->m_pNameToken->GetString();
+#line 256 "../../../Source/Core/Semantic/Resolver.nll"
 					InternalString* sTemp = new InternalString("");
 #line 257 "../../../Source/Core/Semantic/Resolver.nll"
 					pClassDecl->AppendFullyQualifiedName(sTemp);
@@ -394,6 +425,7 @@ namespace NumbatLogic
 				}
 #line 261 "../../../Source/Core/Semantic/Resolver.nll"
 				pCurrentScope = CreateChildScope(pNode, pScope, SymbolScope::Kind::CLASS);
+#line 262 "../../../Source/Core/Semantic/Resolver.nll"
 				SymbolScope* pClassScope = pCurrentScope;
 #line 264 "../../../Source/Core/Semantic/Resolver.nll"
 				AddGenericParamsToScope(pClassDecl, pClassScope);
@@ -403,6 +435,7 @@ namespace NumbatLogic
 
 			case AST::Type::AST_ENUM_DECL:
 			{
+#line 269 "../../../Source/Core/Semantic/Resolver.nll"
 				EnumDecl* pEnumDecl = (EnumDecl*)(pNode);
 #line 273 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pEnumDecl->m_pParent != 0 && pEnumDecl->m_pParent->m_eType == AST::Type::AST_MEMBER_ENUM_DECL)
@@ -416,6 +449,7 @@ namespace NumbatLogic
 
 			case AST::Type::AST_GENERIC_TYPE_DECL:
 			{
+#line 285 "../../../Source/Core/Semantic/Resolver.nll"
 				GenericTypeDecl* pGenericTypeDecl = (GenericTypeDecl*)(pNode);
 #line 286 "../../../Source/Core/Semantic/Resolver.nll"
 				AddSymbolToScope(pScope, pGenericTypeDecl->m_pFirstToken->GetString(), Symbol::Kind::GENERIC_PARAM, pNode, 0);
@@ -425,11 +459,13 @@ namespace NumbatLogic
 
 			case AST::Type::AST_FUNCTION_DECL:
 			{
+#line 291 "../../../Source/Core/Semantic/Resolver.nll"
 				FunctionDecl* pFunctionDecl = (FunctionDecl*)(pNode);
 #line 295 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pFunctionDecl->m_pParent != 0 && (pFunctionDecl->m_pParent->m_eType == AST::Type::DELEGATE_DECL || pFunctionDecl->m_pParent->m_eType == AST::Type::AST_TOR_DECL))
 #line 298 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
+#line 304 "../../../Source/Core/Semantic/Resolver.nll"
 				bool bIsInnerOfMember = (pFunctionDecl->m_pParent != 0 && pFunctionDecl->m_pParent->m_eType == AST::Type::AST_MEMBER_FUNCTION_DECL);
 #line 306 "../../../Source/Core/Semantic/Resolver.nll"
 				if (!bIsInnerOfMember)
@@ -443,6 +479,7 @@ namespace NumbatLogic
 
 			case AST::Type::AST_VAR_DECL:
 			{
+#line 314 "../../../Source/Core/Semantic/Resolver.nll"
 				VarDecl* pVarDecl = (VarDecl*)(pNode);
 #line 320 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pVarDecl->m_pParent != 0 && pVarDecl->m_pParent->m_eType == AST::Type::AST_MEMBER_VAR_DECL)
@@ -456,6 +493,7 @@ namespace NumbatLogic
 
 			case AST::Type::DELEGATE_DECL:
 			{
+#line 329 "../../../Source/Core/Semantic/Resolver.nll"
 				DelegateDecl* pDelegate = (DelegateDecl*)(pNode);
 #line 330 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pDelegate->m_pFunctionDecl != 0)
@@ -483,6 +521,7 @@ namespace NumbatLogic
 
 			case AST::Type::AST_MEMBER_CLASS_DECL:
 			{
+#line 346 "../../../Source/Core/Semantic/Resolver.nll"
 				MemberClassDecl* pMemberClass = (MemberClassDecl*)(pNode);
 #line 347 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pMemberClass->m_pClassDecl != 0)
@@ -506,6 +545,7 @@ namespace NumbatLogic
 
 			case AST::Type::ENUM_DECL_VALUE:
 			{
+#line 361 "../../../Source/Core/Semantic/Resolver.nll"
 				EnumDeclValue* pEnumValue = (EnumDeclValue*)(pNode);
 #line 362 "../../../Source/Core/Semantic/Resolver.nll"
 				AddSymbolToScope(pScope, pEnumValue->m_pFirstToken->GetString(), Symbol::Kind::ENUM_VALUE, pNode, 0);
@@ -538,10 +578,12 @@ namespace NumbatLogic
 			}
 
 		}
+#line 385 "../../../Source/Core/Semantic/Resolver.nll"
 		AST* pChild = pNode->m_pFirstChild;
 #line 386 "../../../Source/Core/Semantic/Resolver.nll"
 		while (pChild != 0)
 		{
+#line 388 "../../../Source/Core/Semantic/Resolver.nll"
 			AST* pNext = pChild->m_pNextSibling;
 #line 389 "../../../Source/Core/Semantic/Resolver.nll"
 			BuildForNode(pChild, pCurrentScope);
@@ -557,6 +599,7 @@ namespace NumbatLogic
 		Assert::Plz(pOut != 0);
 #line 399 "../../../Source/Core/Semantic/Resolver.nll"
 		pOut->Clear();
+#line 400 "../../../Source/Core/Semantic/Resolver.nll"
 		SymbolScope* pScope = pStartScope;
 #line 401 "../../../Source/Core/Semantic/Resolver.nll"
 		while (pScope != 0)
@@ -579,6 +622,7 @@ namespace NumbatLogic
 		Assert::Plz(pOut != 0);
 #line 417 "../../../Source/Core/Semantic/Resolver.nll"
 		pOut->Clear();
+#line 419 "../../../Source/Core/Semantic/Resolver.nll"
 		SymbolScope* pScope = pStartScope;
 #line 420 "../../../Source/Core/Semantic/Resolver.nll"
 		while (pScope != 0)
@@ -592,10 +636,12 @@ namespace NumbatLogic
 #line 429 "../../../Source/Core/Semantic/Resolver.nll"
 			if (pScope->m_eKind == SymbolScope::Kind::CLASS)
 			{
+#line 431 "../../../Source/Core/Semantic/Resolver.nll"
 				ClassDecl* pClass = GetClassDeclFromOwnerAST(pScope->m_pOwnerAST);
 #line 432 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pClass != 0)
 				{
+#line 434 "../../../Source/Core/Semantic/Resolver.nll"
 					ClassDecl* pBase = pClass->GetBaseClassDeclForScopeLookup(this);
 #line 435 "../../../Source/Core/Semantic/Resolver.nll"
 					while (pBase != 0)
@@ -623,6 +669,7 @@ namespace NumbatLogic
 #line 453 "../../../Source/Core/Semantic/Resolver.nll"
 	void Resolver::ResolveFromNode(AST* pNode, const char* sName, Vector<Symbol*>* pOut)
 	{
+#line 455 "../../../Source/Core/Semantic/Resolver.nll"
 		SymbolScope* pScope = GetEnclosingScope(pNode);
 #line 456 "../../../Source/Core/Semantic/Resolver.nll"
 		ResolveInScopeChain(sName, pScope, pOut);

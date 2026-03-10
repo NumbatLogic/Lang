@@ -1,582 +1,629 @@
 #line 1 "../../../Source/Core/Semantic/Resolver.nll"
 namespace NumbatLogic
 {
-#line 5 "../../../Source/Core/Semantic/Resolver.nll"
+#line 4 "../../../Source/Core/Semantic/Resolver.nll"
 	class Resolver
 	{
-#line 8 "../../../Source/Core/Semantic/Resolver.nll"
+#line 7 "../../../Source/Core/Semantic/Resolver.nll"
 		public SymbolScope m_pGlobalScope;
-#line 12 "../../../Source/Core/Semantic/Resolver.nll"
+#line 11 "../../../Source/Core/Semantic/Resolver.nll"
 		public OwnedVector<SymbolScope> m_pScopeVector;
-#line 15 "../../../Source/Core/Semantic/Resolver.nll"
+#line 14 "../../../Source/Core/Semantic/Resolver.nll"
 		protected Vector<Symbol> m_pBuildTempSymbolVector;
-#line 17 "../../../Source/Core/Semantic/Resolver.nll"
+#line 16 "../../../Source/Core/Semantic/Resolver.nll"
 		public Resolver()
 		{
-#line 19 "../../../Source/Core/Semantic/Resolver.nll"
+#line 18 "../../../Source/Core/Semantic/Resolver.nll"
 			m_pGlobalScope = new SymbolScope();
-#line 20 "../../../Source/Core/Semantic/Resolver.nll"
+#line 19 "../../../Source/Core/Semantic/Resolver.nll"
 			m_pGlobalScope.m_eKind = SymbolScope.Kind.GLOBAL;
-#line 21 "../../../Source/Core/Semantic/Resolver.nll"
+#line 20 "../../../Source/Core/Semantic/Resolver.nll"
 			m_pGlobalScope.m_pParent = null;
-#line 22 "../../../Source/Core/Semantic/Resolver.nll"
+#line 21 "../../../Source/Core/Semantic/Resolver.nll"
 			m_pGlobalScope.m_pOwnerAST = null;
-#line 24 "../../../Source/Core/Semantic/Resolver.nll"
+#line 23 "../../../Source/Core/Semantic/Resolver.nll"
 			m_pScopeVector = new OwnedVector<SymbolScope>();
-#line 25 "../../../Source/Core/Semantic/Resolver.nll"
+#line 24 "../../../Source/Core/Semantic/Resolver.nll"
 			m_pBuildTempSymbolVector = new Vector<Symbol>();
 		}
 
-#line 28 "../../../Source/Core/Semantic/Resolver.nll"
+#line 27 "../../../Source/Core/Semantic/Resolver.nll"
 		protected ClassDecl GetClassDeclFromOwnerAST(AST pOwner)
 		{
-#line 30 "../../../Source/Core/Semantic/Resolver.nll"
+#line 29 "../../../Source/Core/Semantic/Resolver.nll"
 			if (pOwner == null)
-#line 31 "../../../Source/Core/Semantic/Resolver.nll"
+#line 30 "../../../Source/Core/Semantic/Resolver.nll"
 				return null;
-#line 32 "../../../Source/Core/Semantic/Resolver.nll"
+#line 31 "../../../Source/Core/Semantic/Resolver.nll"
 			if (pOwner.m_eType == AST.Type.AST_CLASS_DECL)
-#line 33 "../../../Source/Core/Semantic/Resolver.nll"
+#line 32 "../../../Source/Core/Semantic/Resolver.nll"
 				return (ClassDecl)(pOwner);
-#line 34 "../../../Source/Core/Semantic/Resolver.nll"
+#line 33 "../../../Source/Core/Semantic/Resolver.nll"
 			if (pOwner.m_eType == AST.Type.AST_MEMBER_CLASS_DECL)
 			{
+#line 35 "../../../Source/Core/Semantic/Resolver.nll"
 				MemberClassDecl pMember = (MemberClassDecl)(pOwner);
-#line 37 "../../../Source/Core/Semantic/Resolver.nll"
+#line 36 "../../../Source/Core/Semantic/Resolver.nll"
 				return pMember.m_pClassDecl;
 			}
-#line 39 "../../../Source/Core/Semantic/Resolver.nll"
+#line 38 "../../../Source/Core/Semantic/Resolver.nll"
 			return null;
 		}
 
-#line 42 "../../../Source/Core/Semantic/Resolver.nll"
+#line 41 "../../../Source/Core/Semantic/Resolver.nll"
 		protected SymbolScope CreateChildScope(AST pNode, SymbolScope pParent, SymbolScope.Kind eKind)
 		{
+#line 43 "../../../Source/Core/Semantic/Resolver.nll"
 			SymbolScope pOwnedScope = new SymbolScope();
 			NumbatLogic.SymbolScope __1793915775 = pOwnedScope;
-#line 45 "../../../Source/Core/Semantic/Resolver.nll"
+#line 44 "../../../Source/Core/Semantic/Resolver.nll"
 			pOwnedScope = null;
+#line 44 "../../../Source/Core/Semantic/Resolver.nll"
 			SymbolScope pNewScope = m_pScopeVector.PushBack(__1793915775);
-#line 46 "../../../Source/Core/Semantic/Resolver.nll"
+#line 45 "../../../Source/Core/Semantic/Resolver.nll"
 			pNewScope.m_eKind = eKind;
-#line 47 "../../../Source/Core/Semantic/Resolver.nll"
+#line 46 "../../../Source/Core/Semantic/Resolver.nll"
 			pNewScope.m_pParent = pParent;
-#line 48 "../../../Source/Core/Semantic/Resolver.nll"
+#line 47 "../../../Source/Core/Semantic/Resolver.nll"
 			pNewScope.m_pOwnerAST = pNode;
-#line 49 "../../../Source/Core/Semantic/Resolver.nll"
+#line 48 "../../../Source/Core/Semantic/Resolver.nll"
 			pNode.m_pSymbolScope = pNewScope;
-#line 50 "../../../Source/Core/Semantic/Resolver.nll"
+#line 49 "../../../Source/Core/Semantic/Resolver.nll"
 			return pNewScope;
 		}
 
-#line 53 "../../../Source/Core/Semantic/Resolver.nll"
+#line 52 "../../../Source/Core/Semantic/Resolver.nll"
 		protected void AddSymbolToScope(SymbolScope pScope, string sShortName, Symbol.Kind eKind, AST pDeclAST, string sQualifiedName)
 		{
-#line 55 "../../../Source/Core/Semantic/Resolver.nll"
+#line 54 "../../../Source/Core/Semantic/Resolver.nll"
 			if (pScope == null || sShortName == null)
-#line 56 "../../../Source/Core/Semantic/Resolver.nll"
+#line 55 "../../../Source/Core/Semantic/Resolver.nll"
 				return;
+#line 56 "../../../Source/Core/Semantic/Resolver.nll"
 			string sQual = (sQualifiedName != null && !ExternalString.Equal(sQualifiedName, "")) ? sQualifiedName : sShortName;
+#line 57 "../../../Source/Core/Semantic/Resolver.nll"
 			Symbol pOwnedSymbol = new Symbol();
-#line 59 "../../../Source/Core/Semantic/Resolver.nll"
+#line 58 "../../../Source/Core/Semantic/Resolver.nll"
 			pOwnedSymbol.m_eKind = eKind;
-#line 60 "../../../Source/Core/Semantic/Resolver.nll"
+#line 59 "../../../Source/Core/Semantic/Resolver.nll"
 			pOwnedSymbol.m_sShortName = sShortName;
-#line 61 "../../../Source/Core/Semantic/Resolver.nll"
+#line 60 "../../../Source/Core/Semantic/Resolver.nll"
 			pOwnedSymbol.m_sQualifiedName = sQual;
-#line 62 "../../../Source/Core/Semantic/Resolver.nll"
+#line 61 "../../../Source/Core/Semantic/Resolver.nll"
 			pOwnedSymbol.m_pDeclAST = pDeclAST;
-#line 63 "../../../Source/Core/Semantic/Resolver.nll"
+#line 62 "../../../Source/Core/Semantic/Resolver.nll"
 			pOwnedSymbol.m_pScope = null;
 			NumbatLogic.Symbol __3172268842 = pOwnedSymbol;
-#line 64 "../../../Source/Core/Semantic/Resolver.nll"
+#line 63 "../../../Source/Core/Semantic/Resolver.nll"
 			pOwnedSymbol = null;
-#line 64 "../../../Source/Core/Semantic/Resolver.nll"
+#line 63 "../../../Source/Core/Semantic/Resolver.nll"
 			pScope.AddSymbol(sShortName, __3172268842);
 		}
 
-#line 70 "../../../Source/Core/Semantic/Resolver.nll"
+#line 69 "../../../Source/Core/Semantic/Resolver.nll"
 		public SymbolScope GetEnclosingScope(AST pNode)
 		{
-#line 72 "../../../Source/Core/Semantic/Resolver.nll"
+#line 71 "../../../Source/Core/Semantic/Resolver.nll"
 			if (pNode == null)
-#line 73 "../../../Source/Core/Semantic/Resolver.nll"
+#line 72 "../../../Source/Core/Semantic/Resolver.nll"
 				return null;
+#line 74 "../../../Source/Core/Semantic/Resolver.nll"
 			AST pWalk = pNode;
-#line 76 "../../../Source/Core/Semantic/Resolver.nll"
+#line 75 "../../../Source/Core/Semantic/Resolver.nll"
 			while (pWalk != null)
 			{
-#line 78 "../../../Source/Core/Semantic/Resolver.nll"
+#line 77 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pWalk.m_eType == AST.Type.AST_CLASS_DECL || pWalk.m_eType == AST.Type.AST_MEMBER_CLASS_DECL)
 				{
-#line 80 "../../../Source/Core/Semantic/Resolver.nll"
+#line 79 "../../../Source/Core/Semantic/Resolver.nll"
 					if (pWalk.m_pSymbolScope == null)
-#line 81 "../../../Source/Core/Semantic/Resolver.nll"
+#line 80 "../../../Source/Core/Semantic/Resolver.nll"
 						EnsureClassScope(pWalk);
 				}
-#line 83 "../../../Source/Core/Semantic/Resolver.nll"
+#line 82 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pWalk.m_pSymbolScope != null)
-#line 84 "../../../Source/Core/Semantic/Resolver.nll"
+#line 83 "../../../Source/Core/Semantic/Resolver.nll"
 					return pWalk.m_pSymbolScope;
-#line 85 "../../../Source/Core/Semantic/Resolver.nll"
+#line 84 "../../../Source/Core/Semantic/Resolver.nll"
 				pWalk = pWalk.m_pParent;
 			}
-#line 89 "../../../Source/Core/Semantic/Resolver.nll"
+#line 88 "../../../Source/Core/Semantic/Resolver.nll"
 			return m_pGlobalScope;
 		}
 
-#line 93 "../../../Source/Core/Semantic/Resolver.nll"
+#line 92 "../../../Source/Core/Semantic/Resolver.nll"
 		protected void EnsureClassScope(AST pOwnerNode)
 		{
-#line 95 "../../../Source/Core/Semantic/Resolver.nll"
+#line 94 "../../../Source/Core/Semantic/Resolver.nll"
 			if (pOwnerNode == null || pOwnerNode.m_pSymbolScope != null)
-#line 96 "../../../Source/Core/Semantic/Resolver.nll"
+#line 95 "../../../Source/Core/Semantic/Resolver.nll"
 				return;
+#line 97 "../../../Source/Core/Semantic/Resolver.nll"
 			ClassDecl pClassDecl = GetClassDeclFromOwnerAST(pOwnerNode);
-#line 99 "../../../Source/Core/Semantic/Resolver.nll"
+#line 98 "../../../Source/Core/Semantic/Resolver.nll"
 			if (pClassDecl == null)
-#line 100 "../../../Source/Core/Semantic/Resolver.nll"
+#line 99 "../../../Source/Core/Semantic/Resolver.nll"
 				return;
+#line 102 "../../../Source/Core/Semantic/Resolver.nll"
 			SymbolScope pEnclosing = m_pGlobalScope;
+#line 103 "../../../Source/Core/Semantic/Resolver.nll"
 			AST pWalk = pOwnerNode.m_pParent;
-#line 105 "../../../Source/Core/Semantic/Resolver.nll"
+#line 104 "../../../Source/Core/Semantic/Resolver.nll"
 			while (pWalk != null)
 			{
-#line 107 "../../../Source/Core/Semantic/Resolver.nll"
+#line 106 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pWalk.m_eType == AST.Type.AST_CLASS_DECL || pWalk.m_eType == AST.Type.AST_MEMBER_CLASS_DECL)
 				{
-#line 109 "../../../Source/Core/Semantic/Resolver.nll"
+#line 108 "../../../Source/Core/Semantic/Resolver.nll"
 					if (pWalk.m_pSymbolScope == null)
-#line 110 "../../../Source/Core/Semantic/Resolver.nll"
+#line 109 "../../../Source/Core/Semantic/Resolver.nll"
 						EnsureClassScope(pWalk);
 				}
-#line 112 "../../../Source/Core/Semantic/Resolver.nll"
+#line 111 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pWalk.m_pSymbolScope != null)
 				{
-#line 114 "../../../Source/Core/Semantic/Resolver.nll"
+#line 113 "../../../Source/Core/Semantic/Resolver.nll"
 					pEnclosing = pWalk.m_pSymbolScope;
-#line 115 "../../../Source/Core/Semantic/Resolver.nll"
+#line 114 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
-#line 117 "../../../Source/Core/Semantic/Resolver.nll"
+#line 116 "../../../Source/Core/Semantic/Resolver.nll"
 				pWalk = pWalk.m_pParent;
 			}
+#line 119 "../../../Source/Core/Semantic/Resolver.nll"
 			SymbolScope pClassScope = CreateChildScope(pOwnerNode, pEnclosing, SymbolScope.Kind.CLASS);
-#line 121 "../../../Source/Core/Semantic/Resolver.nll"
+#line 120 "../../../Source/Core/Semantic/Resolver.nll"
 			AddGenericParamsToScope(pClassDecl, pClassScope);
+#line 122 "../../../Source/Core/Semantic/Resolver.nll"
 			AST pChild = pClassDecl.m_pFirstChild;
-#line 124 "../../../Source/Core/Semantic/Resolver.nll"
+#line 123 "../../../Source/Core/Semantic/Resolver.nll"
 			while (pChild != null)
 			{
-#line 126 "../../../Source/Core/Semantic/Resolver.nll"
+#line 125 "../../../Source/Core/Semantic/Resolver.nll"
 				AddMemberSymbolToScope(pChild, pClassScope);
-#line 127 "../../../Source/Core/Semantic/Resolver.nll"
+#line 126 "../../../Source/Core/Semantic/Resolver.nll"
 				pChild = pChild.m_pNextSibling;
 			}
 		}
 
-#line 131 "../../../Source/Core/Semantic/Resolver.nll"
+#line 130 "../../../Source/Core/Semantic/Resolver.nll"
 		protected void AddGenericParamsToScope(ClassDecl pClassDecl, SymbolScope pScope)
 		{
-#line 133 "../../../Source/Core/Semantic/Resolver.nll"
+#line 132 "../../../Source/Core/Semantic/Resolver.nll"
 			if (pClassDecl == null || pScope == null || pClassDecl.m_pGenericTypeDeclVector == null)
-#line 134 "../../../Source/Core/Semantic/Resolver.nll"
+#line 133 "../../../Source/Core/Semantic/Resolver.nll"
 				return;
-#line 135 "../../../Source/Core/Semantic/Resolver.nll"
+#line 134 "../../../Source/Core/Semantic/Resolver.nll"
 			for (int i = 0; i < pClassDecl.m_pGenericTypeDeclVector.GetSize(); i++)
 			{
+#line 136 "../../../Source/Core/Semantic/Resolver.nll"
 				GenericTypeDecl pGenericTypeDecl = pClassDecl.m_pGenericTypeDeclVector.Get(i);
+#line 137 "../../../Source/Core/Semantic/Resolver.nll"
 				string sGenericName = pGenericTypeDecl.m_pFirstToken.GetString();
-#line 139 "../../../Source/Core/Semantic/Resolver.nll"
+#line 138 "../../../Source/Core/Semantic/Resolver.nll"
 				AddSymbolToScope(pScope, sGenericName, Symbol.Kind.GENERIC_PARAM, pGenericTypeDecl, null);
 			}
 		}
 
-#line 143 "../../../Source/Core/Semantic/Resolver.nll"
+#line 142 "../../../Source/Core/Semantic/Resolver.nll"
 		protected void AddMemberSymbolToScope(AST pMemberNode, SymbolScope pScope)
 		{
-#line 145 "../../../Source/Core/Semantic/Resolver.nll"
+#line 144 "../../../Source/Core/Semantic/Resolver.nll"
 			if (pMemberNode == null || pScope == null)
-#line 146 "../../../Source/Core/Semantic/Resolver.nll"
+#line 145 "../../../Source/Core/Semantic/Resolver.nll"
 				return;
-#line 147 "../../../Source/Core/Semantic/Resolver.nll"
+#line 146 "../../../Source/Core/Semantic/Resolver.nll"
 			if (pMemberNode.m_eType == AST.Type.AST_MEMBER_VAR_DECL)
 			{
+#line 148 "../../../Source/Core/Semantic/Resolver.nll"
 				MemberVarDecl pMemberVar = (MemberVarDecl)(pMemberNode);
-#line 150 "../../../Source/Core/Semantic/Resolver.nll"
+#line 149 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pMemberVar.m_pVarDecl != null)
-#line 151 "../../../Source/Core/Semantic/Resolver.nll"
+#line 150 "../../../Source/Core/Semantic/Resolver.nll"
 					AddSymbolToScope(pScope, pMemberVar.m_pVarDecl.m_pNameToken.GetString(), Symbol.Kind.VAR, pMemberNode, null);
 			}
 			else
-#line 153 "../../../Source/Core/Semantic/Resolver.nll"
+#line 152 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pMemberNode.m_eType == AST.Type.AST_MEMBER_FUNCTION_DECL)
 				{
+#line 154 "../../../Source/Core/Semantic/Resolver.nll"
 					MemberFunctionDecl pMemberFunc = (MemberFunctionDecl)(pMemberNode);
-#line 156 "../../../Source/Core/Semantic/Resolver.nll"
+#line 155 "../../../Source/Core/Semantic/Resolver.nll"
 					if (pMemberFunc.m_pFunctionDecl != null)
-#line 157 "../../../Source/Core/Semantic/Resolver.nll"
+#line 156 "../../../Source/Core/Semantic/Resolver.nll"
 						AddSymbolToScope(pScope, pMemberFunc.m_pFunctionDecl.m_pNameToken.GetString(), Symbol.Kind.METHOD, pMemberNode, null);
 				}
 				else
-#line 159 "../../../Source/Core/Semantic/Resolver.nll"
+#line 158 "../../../Source/Core/Semantic/Resolver.nll"
 					if (pMemberNode.m_eType == AST.Type.AST_MEMBER_CLASS_DECL)
 					{
+#line 160 "../../../Source/Core/Semantic/Resolver.nll"
 						MemberClassDecl pMemberClass = (MemberClassDecl)(pMemberNode);
-#line 162 "../../../Source/Core/Semantic/Resolver.nll"
+#line 161 "../../../Source/Core/Semantic/Resolver.nll"
 						if (pMemberClass.m_pClassDecl != null)
 						{
+#line 163 "../../../Source/Core/Semantic/Resolver.nll"
 							string sName = pMemberClass.m_pClassDecl.m_pNameToken.GetString();
+#line 164 "../../../Source/Core/Semantic/Resolver.nll"
 							InternalString sTemp = new InternalString("");
-#line 166 "../../../Source/Core/Semantic/Resolver.nll"
+#line 165 "../../../Source/Core/Semantic/Resolver.nll"
 							pMemberClass.m_pClassDecl.AppendFullyQualifiedName(sTemp);
-#line 167 "../../../Source/Core/Semantic/Resolver.nll"
+#line 166 "../../../Source/Core/Semantic/Resolver.nll"
 							AddSymbolToScope(pScope, sName, Symbol.Kind.CLASS, pMemberNode, sTemp.GetExternalString());
 						}
 					}
 					else
-#line 170 "../../../Source/Core/Semantic/Resolver.nll"
+#line 169 "../../../Source/Core/Semantic/Resolver.nll"
 						if (pMemberNode.m_eType == AST.Type.AST_MEMBER_ENUM_DECL)
 						{
+#line 171 "../../../Source/Core/Semantic/Resolver.nll"
 							MemberEnumDecl pMemberEnum = (MemberEnumDecl)(pMemberNode);
-#line 173 "../../../Source/Core/Semantic/Resolver.nll"
+#line 172 "../../../Source/Core/Semantic/Resolver.nll"
 							if (pMemberEnum.m_pEnumDecl != null)
-#line 174 "../../../Source/Core/Semantic/Resolver.nll"
+#line 173 "../../../Source/Core/Semantic/Resolver.nll"
 								AddSymbolToScope(pScope, pMemberEnum.m_pEnumDecl.m_pNameToken.GetString(), Symbol.Kind.ENUM, pMemberNode, null);
 						}
 						else
-#line 176 "../../../Source/Core/Semantic/Resolver.nll"
+#line 175 "../../../Source/Core/Semantic/Resolver.nll"
 							if (pMemberNode.m_eType == AST.Type.DELEGATE_DECL)
 							{
+#line 177 "../../../Source/Core/Semantic/Resolver.nll"
 								DelegateDecl pDelegateDecl = (DelegateDecl)(pMemberNode);
-#line 179 "../../../Source/Core/Semantic/Resolver.nll"
+#line 178 "../../../Source/Core/Semantic/Resolver.nll"
 								if (pDelegateDecl.m_pFunctionDecl != null && pDelegateDecl.m_pFunctionDecl.m_pNameToken != null)
-#line 180 "../../../Source/Core/Semantic/Resolver.nll"
+#line 179 "../../../Source/Core/Semantic/Resolver.nll"
 									AddSymbolToScope(pScope, pDelegateDecl.m_pFunctionDecl.m_pNameToken.GetString(), Symbol.Kind.DELEGATE, pMemberNode, null);
 							}
 		}
 
-#line 185 "../../../Source/Core/Semantic/Resolver.nll"
+#line 184 "../../../Source/Core/Semantic/Resolver.nll"
 		public void BuildForRoot(AST pRoot)
 		{
-#line 187 "../../../Source/Core/Semantic/Resolver.nll"
+#line 186 "../../../Source/Core/Semantic/Resolver.nll"
 			if (pRoot == null)
-#line 188 "../../../Source/Core/Semantic/Resolver.nll"
+#line 187 "../../../Source/Core/Semantic/Resolver.nll"
 				return;
-#line 191 "../../../Source/Core/Semantic/Resolver.nll"
+#line 190 "../../../Source/Core/Semantic/Resolver.nll"
 			pRoot.m_pSymbolScope = m_pGlobalScope;
-#line 192 "../../../Source/Core/Semantic/Resolver.nll"
+#line 191 "../../../Source/Core/Semantic/Resolver.nll"
 			BuildForNode(pRoot, m_pGlobalScope);
 		}
 
-#line 195 "../../../Source/Core/Semantic/Resolver.nll"
+#line 194 "../../../Source/Core/Semantic/Resolver.nll"
 		protected void BuildForNode(AST pNode, SymbolScope pScope)
 		{
-#line 197 "../../../Source/Core/Semantic/Resolver.nll"
+#line 196 "../../../Source/Core/Semantic/Resolver.nll"
 			if (pNode == null || pScope == null)
-#line 198 "../../../Source/Core/Semantic/Resolver.nll"
+#line 197 "../../../Source/Core/Semantic/Resolver.nll"
 				return;
+#line 200 "../../../Source/Core/Semantic/Resolver.nll"
 			SymbolScope pCurrentScope = pScope;
-#line 203 "../../../Source/Core/Semantic/Resolver.nll"
+#line 202 "../../../Source/Core/Semantic/Resolver.nll"
 			switch (pNode.m_eType)
 			{
 				case AST.Type.NAMESPACE_DECL:
 				{
+#line 206 "../../../Source/Core/Semantic/Resolver.nll"
 					NamespaceDecl pNamespaceDecl = (NamespaceDecl)(pNode);
+#line 207 "../../../Source/Core/Semantic/Resolver.nll"
 					string sName = pNamespaceDecl.m_pNameToken.GetString();
+#line 213 "../../../Source/Core/Semantic/Resolver.nll"
 					SymbolScope pNamespaceScope = pScope.FindNamespaceScope(sName);
-#line 215 "../../../Source/Core/Semantic/Resolver.nll"
+#line 214 "../../../Source/Core/Semantic/Resolver.nll"
 					if (pNamespaceScope != null)
 					{
-#line 217 "../../../Source/Core/Semantic/Resolver.nll"
+#line 216 "../../../Source/Core/Semantic/Resolver.nll"
 						pNode.m_pSymbolScope = pNamespaceScope;
-#line 218 "../../../Source/Core/Semantic/Resolver.nll"
+#line 217 "../../../Source/Core/Semantic/Resolver.nll"
 						pCurrentScope = pNamespaceScope;
-#line 219 "../../../Source/Core/Semantic/Resolver.nll"
+#line 218 "../../../Source/Core/Semantic/Resolver.nll"
 						break;
 					}
+#line 222 "../../../Source/Core/Semantic/Resolver.nll"
 					string sQual = sName;
-#line 224 "../../../Source/Core/Semantic/Resolver.nll"
+#line 223 "../../../Source/Core/Semantic/Resolver.nll"
 					if (pNamespaceDecl.m_pNamespaceNode != null)
 					{
+#line 225 "../../../Source/Core/Semantic/Resolver.nll"
 						InternalString sTemp = new InternalString("");
-#line 227 "../../../Source/Core/Semantic/Resolver.nll"
+#line 226 "../../../Source/Core/Semantic/Resolver.nll"
 						pNamespaceDecl.m_pNamespaceNode.AppendFullyQualifiedName(sTemp);
-#line 228 "../../../Source/Core/Semantic/Resolver.nll"
+#line 227 "../../../Source/Core/Semantic/Resolver.nll"
 						sQual = sTemp.GetExternalString();
 					}
-#line 230 "../../../Source/Core/Semantic/Resolver.nll"
+#line 229 "../../../Source/Core/Semantic/Resolver.nll"
 					AddSymbolToScope(pScope, sName, Symbol.Kind.NAMESPACE, pNode, sQual);
-#line 232 "../../../Source/Core/Semantic/Resolver.nll"
+#line 231 "../../../Source/Core/Semantic/Resolver.nll"
 					pNamespaceScope = CreateChildScope(pNode, pScope, SymbolScope.Kind.NAMESPACE);
-#line 233 "../../../Source/Core/Semantic/Resolver.nll"
+#line 232 "../../../Source/Core/Semantic/Resolver.nll"
 					pCurrentScope = pNamespaceScope;
-#line 237 "../../../Source/Core/Semantic/Resolver.nll"
+#line 236 "../../../Source/Core/Semantic/Resolver.nll"
 					m_pBuildTempSymbolVector.Clear();
-#line 238 "../../../Source/Core/Semantic/Resolver.nll"
+#line 237 "../../../Source/Core/Semantic/Resolver.nll"
 					pScope.FindInThisScope(sName, m_pBuildTempSymbolVector);
-#line 239 "../../../Source/Core/Semantic/Resolver.nll"
+#line 238 "../../../Source/Core/Semantic/Resolver.nll"
 					if (m_pBuildTempSymbolVector.GetSize() > 0)
 					{
+#line 240 "../../../Source/Core/Semantic/Resolver.nll"
 						Symbol pLast = m_pBuildTempSymbolVector.Get(m_pBuildTempSymbolVector.GetSize() - 1);
-#line 242 "../../../Source/Core/Semantic/Resolver.nll"
+#line 241 "../../../Source/Core/Semantic/Resolver.nll"
 						pLast.m_pScope = pNamespaceScope;
 					}
-#line 244 "../../../Source/Core/Semantic/Resolver.nll"
+#line 243 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
 
 				case AST.Type.AST_CLASS_DECL:
 				{
+#line 247 "../../../Source/Core/Semantic/Resolver.nll"
 					ClassDecl pClassDecl = (ClassDecl)(pNode);
+#line 251 "../../../Source/Core/Semantic/Resolver.nll"
 					bool bIsInnerOfMemberClass = (pClassDecl.m_pParent != null && pClassDecl.m_pParent.m_eType == AST.Type.AST_MEMBER_CLASS_DECL);
-#line 254 "../../../Source/Core/Semantic/Resolver.nll"
+#line 253 "../../../Source/Core/Semantic/Resolver.nll"
 					if (!bIsInnerOfMemberClass)
 					{
+#line 255 "../../../Source/Core/Semantic/Resolver.nll"
 						string sName = pClassDecl.m_pNameToken.GetString();
+#line 256 "../../../Source/Core/Semantic/Resolver.nll"
 						InternalString sTemp = new InternalString("");
-#line 258 "../../../Source/Core/Semantic/Resolver.nll"
+#line 257 "../../../Source/Core/Semantic/Resolver.nll"
 						pClassDecl.AppendFullyQualifiedName(sTemp);
-#line 259 "../../../Source/Core/Semantic/Resolver.nll"
+#line 258 "../../../Source/Core/Semantic/Resolver.nll"
 						AddSymbolToScope(pScope, sName, Symbol.Kind.CLASS, pNode, sTemp.GetExternalString());
 					}
-#line 262 "../../../Source/Core/Semantic/Resolver.nll"
+#line 261 "../../../Source/Core/Semantic/Resolver.nll"
 					pCurrentScope = CreateChildScope(pNode, pScope, SymbolScope.Kind.CLASS);
+#line 262 "../../../Source/Core/Semantic/Resolver.nll"
 					SymbolScope pClassScope = pCurrentScope;
-#line 265 "../../../Source/Core/Semantic/Resolver.nll"
+#line 264 "../../../Source/Core/Semantic/Resolver.nll"
 					AddGenericParamsToScope(pClassDecl, pClassScope);
-#line 266 "../../../Source/Core/Semantic/Resolver.nll"
+#line 265 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
 
 				case AST.Type.AST_ENUM_DECL:
 				{
+#line 269 "../../../Source/Core/Semantic/Resolver.nll"
 					EnumDecl pEnumDecl = (EnumDecl)(pNode);
-#line 274 "../../../Source/Core/Semantic/Resolver.nll"
+#line 273 "../../../Source/Core/Semantic/Resolver.nll"
 					if (pEnumDecl.m_pParent != null && pEnumDecl.m_pParent.m_eType == AST.Type.AST_MEMBER_ENUM_DECL)
-#line 276 "../../../Source/Core/Semantic/Resolver.nll"
+#line 275 "../../../Source/Core/Semantic/Resolver.nll"
 						break;
-#line 277 "../../../Source/Core/Semantic/Resolver.nll"
+#line 276 "../../../Source/Core/Semantic/Resolver.nll"
 					AddSymbolToScope(pScope, pEnumDecl.m_pNameToken.GetString(), Symbol.Kind.ENUM, pNode, null);
-#line 278 "../../../Source/Core/Semantic/Resolver.nll"
+#line 277 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
 
 				case AST.Type.AST_GENERIC_TYPE_DECL:
 				{
+#line 285 "../../../Source/Core/Semantic/Resolver.nll"
 					GenericTypeDecl pGenericTypeDecl = (GenericTypeDecl)(pNode);
-#line 287 "../../../Source/Core/Semantic/Resolver.nll"
+#line 286 "../../../Source/Core/Semantic/Resolver.nll"
 					AddSymbolToScope(pScope, pGenericTypeDecl.m_pFirstToken.GetString(), Symbol.Kind.GENERIC_PARAM, pNode, null);
-#line 288 "../../../Source/Core/Semantic/Resolver.nll"
+#line 287 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
 
 				case AST.Type.AST_FUNCTION_DECL:
 				{
+#line 291 "../../../Source/Core/Semantic/Resolver.nll"
 					FunctionDecl pFunctionDecl = (FunctionDecl)(pNode);
-#line 296 "../../../Source/Core/Semantic/Resolver.nll"
+#line 295 "../../../Source/Core/Semantic/Resolver.nll"
 					if (pFunctionDecl.m_pParent != null && (pFunctionDecl.m_pParent.m_eType == AST.Type.DELEGATE_DECL || pFunctionDecl.m_pParent.m_eType == AST.Type.AST_TOR_DECL))
-#line 299 "../../../Source/Core/Semantic/Resolver.nll"
+#line 298 "../../../Source/Core/Semantic/Resolver.nll"
 						break;
+#line 304 "../../../Source/Core/Semantic/Resolver.nll"
 					bool bIsInnerOfMember = (pFunctionDecl.m_pParent != null && pFunctionDecl.m_pParent.m_eType == AST.Type.AST_MEMBER_FUNCTION_DECL);
-#line 307 "../../../Source/Core/Semantic/Resolver.nll"
+#line 306 "../../../Source/Core/Semantic/Resolver.nll"
 					if (!bIsInnerOfMember)
-#line 308 "../../../Source/Core/Semantic/Resolver.nll"
+#line 307 "../../../Source/Core/Semantic/Resolver.nll"
 						AddSymbolToScope(pScope, pFunctionDecl.m_pNameToken.GetString(), Symbol.Kind.FUNCTION, pNode, null);
-#line 310 "../../../Source/Core/Semantic/Resolver.nll"
+#line 309 "../../../Source/Core/Semantic/Resolver.nll"
 					pCurrentScope = CreateChildScope(pNode, pScope, SymbolScope.Kind.FUNCTION);
-#line 311 "../../../Source/Core/Semantic/Resolver.nll"
+#line 310 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
 
 				case AST.Type.AST_VAR_DECL:
 				{
+#line 314 "../../../Source/Core/Semantic/Resolver.nll"
 					VarDecl pVarDecl = (VarDecl)(pNode);
-#line 321 "../../../Source/Core/Semantic/Resolver.nll"
+#line 320 "../../../Source/Core/Semantic/Resolver.nll"
 					if (pVarDecl.m_pParent != null && pVarDecl.m_pParent.m_eType == AST.Type.AST_MEMBER_VAR_DECL)
-#line 323 "../../../Source/Core/Semantic/Resolver.nll"
+#line 322 "../../../Source/Core/Semantic/Resolver.nll"
 						break;
-#line 325 "../../../Source/Core/Semantic/Resolver.nll"
+#line 324 "../../../Source/Core/Semantic/Resolver.nll"
 					AddSymbolToScope(pScope, pVarDecl.m_pNameToken.GetString(), Symbol.Kind.VAR, pNode, null);
-#line 326 "../../../Source/Core/Semantic/Resolver.nll"
+#line 325 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
 
 				case AST.Type.DELEGATE_DECL:
 				{
+#line 329 "../../../Source/Core/Semantic/Resolver.nll"
 					DelegateDecl pDelegate = (DelegateDecl)(pNode);
-#line 331 "../../../Source/Core/Semantic/Resolver.nll"
+#line 330 "../../../Source/Core/Semantic/Resolver.nll"
 					if (pDelegate.m_pFunctionDecl != null)
-#line 332 "../../../Source/Core/Semantic/Resolver.nll"
+#line 331 "../../../Source/Core/Semantic/Resolver.nll"
 						AddSymbolToScope(pScope, pDelegate.m_pFunctionDecl.m_pNameToken.GetString(), Symbol.Kind.DELEGATE, pNode, null);
-#line 333 "../../../Source/Core/Semantic/Resolver.nll"
+#line 332 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
 
 				case AST.Type.AST_MEMBER_FUNCTION_DECL:
 				{
-#line 337 "../../../Source/Core/Semantic/Resolver.nll"
+#line 336 "../../../Source/Core/Semantic/Resolver.nll"
 					AddMemberSymbolToScope(pNode, pCurrentScope);
-#line 338 "../../../Source/Core/Semantic/Resolver.nll"
+#line 337 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
 
 				case AST.Type.AST_MEMBER_VAR_DECL:
 				{
-#line 342 "../../../Source/Core/Semantic/Resolver.nll"
+#line 341 "../../../Source/Core/Semantic/Resolver.nll"
 					AddMemberSymbolToScope(pNode, pCurrentScope);
-#line 343 "../../../Source/Core/Semantic/Resolver.nll"
+#line 342 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
 
 				case AST.Type.AST_MEMBER_CLASS_DECL:
 				{
+#line 346 "../../../Source/Core/Semantic/Resolver.nll"
 					MemberClassDecl pMemberClass = (MemberClassDecl)(pNode);
-#line 348 "../../../Source/Core/Semantic/Resolver.nll"
+#line 347 "../../../Source/Core/Semantic/Resolver.nll"
 					if (pMemberClass.m_pClassDecl != null)
 					{
-#line 350 "../../../Source/Core/Semantic/Resolver.nll"
+#line 349 "../../../Source/Core/Semantic/Resolver.nll"
 						AddMemberSymbolToScope(pNode, pCurrentScope);
-#line 351 "../../../Source/Core/Semantic/Resolver.nll"
+#line 350 "../../../Source/Core/Semantic/Resolver.nll"
 						pCurrentScope = CreateChildScope(pNode, pScope, SymbolScope.Kind.CLASS);
 					}
-#line 353 "../../../Source/Core/Semantic/Resolver.nll"
+#line 352 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
 
 				case AST.Type.AST_MEMBER_ENUM_DECL:
 				{
-#line 357 "../../../Source/Core/Semantic/Resolver.nll"
+#line 356 "../../../Source/Core/Semantic/Resolver.nll"
 					AddMemberSymbolToScope(pNode, pCurrentScope);
-#line 358 "../../../Source/Core/Semantic/Resolver.nll"
+#line 357 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
 
 				case AST.Type.ENUM_DECL_VALUE:
 				{
+#line 361 "../../../Source/Core/Semantic/Resolver.nll"
 					EnumDeclValue pEnumValue = (EnumDeclValue)(pNode);
-#line 363 "../../../Source/Core/Semantic/Resolver.nll"
+#line 362 "../../../Source/Core/Semantic/Resolver.nll"
 					AddSymbolToScope(pScope, pEnumValue.m_pFirstToken.GetString(), Symbol.Kind.ENUM_VALUE, pNode, null);
-#line 364 "../../../Source/Core/Semantic/Resolver.nll"
+#line 363 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
 
 				case AST.Type.AST_SCOPE:
 				{
-#line 368 "../../../Source/Core/Semantic/Resolver.nll"
+#line 367 "../../../Source/Core/Semantic/Resolver.nll"
 					pCurrentScope = CreateChildScope(pNode, pScope, SymbolScope.Kind.BLOCK);
-#line 369 "../../../Source/Core/Semantic/Resolver.nll"
+#line 368 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
 
 				case AST.Type.AST_FOR_STMT:
 				{
-#line 374 "../../../Source/Core/Semantic/Resolver.nll"
+#line 373 "../../../Source/Core/Semantic/Resolver.nll"
 					pCurrentScope = CreateChildScope(pNode, pScope, SymbolScope.Kind.BLOCK);
-#line 375 "../../../Source/Core/Semantic/Resolver.nll"
+#line 374 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
 
 				case AST.Type.AST_TOR_DECL:
 				{
-#line 380 "../../../Source/Core/Semantic/Resolver.nll"
+#line 379 "../../../Source/Core/Semantic/Resolver.nll"
 					pCurrentScope = CreateChildScope(pNode, pScope, SymbolScope.Kind.FUNCTION);
-#line 381 "../../../Source/Core/Semantic/Resolver.nll"
+#line 380 "../../../Source/Core/Semantic/Resolver.nll"
 					break;
 				}
 
 			}
+#line 385 "../../../Source/Core/Semantic/Resolver.nll"
 			AST pChild = pNode.m_pFirstChild;
-#line 387 "../../../Source/Core/Semantic/Resolver.nll"
+#line 386 "../../../Source/Core/Semantic/Resolver.nll"
 			while (pChild != null)
 			{
+#line 388 "../../../Source/Core/Semantic/Resolver.nll"
 				AST pNext = pChild.m_pNextSibling;
-#line 390 "../../../Source/Core/Semantic/Resolver.nll"
+#line 389 "../../../Source/Core/Semantic/Resolver.nll"
 				BuildForNode(pChild, pCurrentScope);
-#line 391 "../../../Source/Core/Semantic/Resolver.nll"
+#line 390 "../../../Source/Core/Semantic/Resolver.nll"
 				pChild = pNext;
 			}
 		}
 
-#line 397 "../../../Source/Core/Semantic/Resolver.nll"
+#line 396 "../../../Source/Core/Semantic/Resolver.nll"
 		public void ResolveInScopeChainNoBaseClasses(string sName, SymbolScope pStartScope, Vector<Symbol> pOut)
 		{
-#line 399 "../../../Source/Core/Semantic/Resolver.nll"
+#line 398 "../../../Source/Core/Semantic/Resolver.nll"
 			Assert.Plz(pOut != null);
-#line 400 "../../../Source/Core/Semantic/Resolver.nll"
+#line 399 "../../../Source/Core/Semantic/Resolver.nll"
 			pOut.Clear();
+#line 400 "../../../Source/Core/Semantic/Resolver.nll"
 			SymbolScope pScope = pStartScope;
-#line 402 "../../../Source/Core/Semantic/Resolver.nll"
+#line 401 "../../../Source/Core/Semantic/Resolver.nll"
 			while (pScope != null)
 			{
-#line 404 "../../../Source/Core/Semantic/Resolver.nll"
+#line 403 "../../../Source/Core/Semantic/Resolver.nll"
 				pScope.FindInThisScope(sName, pOut);
-#line 405 "../../../Source/Core/Semantic/Resolver.nll"
+#line 404 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pOut.GetSize() > 0)
-#line 406 "../../../Source/Core/Semantic/Resolver.nll"
+#line 405 "../../../Source/Core/Semantic/Resolver.nll"
 					return;
-#line 407 "../../../Source/Core/Semantic/Resolver.nll"
+#line 406 "../../../Source/Core/Semantic/Resolver.nll"
 				pScope = pScope.m_pParent;
 			}
 		}
 
-#line 414 "../../../Source/Core/Semantic/Resolver.nll"
+#line 413 "../../../Source/Core/Semantic/Resolver.nll"
 		public void ResolveInScopeChain(string sName, SymbolScope pStartScope, Vector<Symbol> pOut)
 		{
-#line 416 "../../../Source/Core/Semantic/Resolver.nll"
+#line 415 "../../../Source/Core/Semantic/Resolver.nll"
 			Assert.Plz(pOut != null);
-#line 418 "../../../Source/Core/Semantic/Resolver.nll"
+#line 417 "../../../Source/Core/Semantic/Resolver.nll"
 			pOut.Clear();
+#line 419 "../../../Source/Core/Semantic/Resolver.nll"
 			SymbolScope pScope = pStartScope;
-#line 421 "../../../Source/Core/Semantic/Resolver.nll"
+#line 420 "../../../Source/Core/Semantic/Resolver.nll"
 			while (pScope != null)
 			{
-#line 423 "../../../Source/Core/Semantic/Resolver.nll"
+#line 422 "../../../Source/Core/Semantic/Resolver.nll"
 				pScope.FindInThisScope(sName, pOut);
-#line 424 "../../../Source/Core/Semantic/Resolver.nll"
+#line 423 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pOut.GetSize() > 0)
-#line 425 "../../../Source/Core/Semantic/Resolver.nll"
+#line 424 "../../../Source/Core/Semantic/Resolver.nll"
 					return;
-#line 430 "../../../Source/Core/Semantic/Resolver.nll"
+#line 429 "../../../Source/Core/Semantic/Resolver.nll"
 				if (pScope.m_eKind == SymbolScope.Kind.CLASS)
 				{
+#line 431 "../../../Source/Core/Semantic/Resolver.nll"
 					ClassDecl pClass = GetClassDeclFromOwnerAST(pScope.m_pOwnerAST);
-#line 433 "../../../Source/Core/Semantic/Resolver.nll"
+#line 432 "../../../Source/Core/Semantic/Resolver.nll"
 					if (pClass != null)
 					{
+#line 434 "../../../Source/Core/Semantic/Resolver.nll"
 						ClassDecl pBase = pClass.GetBaseClassDeclForScopeLookup(this);
-#line 436 "../../../Source/Core/Semantic/Resolver.nll"
+#line 435 "../../../Source/Core/Semantic/Resolver.nll"
 						while (pBase != null)
 						{
-#line 438 "../../../Source/Core/Semantic/Resolver.nll"
+#line 437 "../../../Source/Core/Semantic/Resolver.nll"
 							if (pBase.m_pSymbolScope != null)
 							{
-#line 440 "../../../Source/Core/Semantic/Resolver.nll"
+#line 439 "../../../Source/Core/Semantic/Resolver.nll"
 								pBase.m_pSymbolScope.FindInThisScope(sName, pOut);
-#line 441 "../../../Source/Core/Semantic/Resolver.nll"
+#line 440 "../../../Source/Core/Semantic/Resolver.nll"
 								if (pOut.GetSize() > 0)
-#line 442 "../../../Source/Core/Semantic/Resolver.nll"
+#line 441 "../../../Source/Core/Semantic/Resolver.nll"
 									return;
 							}
-#line 444 "../../../Source/Core/Semantic/Resolver.nll"
+#line 443 "../../../Source/Core/Semantic/Resolver.nll"
 							pBase = pBase.GetBaseClassDeclForScopeLookup(this);
 						}
 					}
 				}
-#line 449 "../../../Source/Core/Semantic/Resolver.nll"
+#line 448 "../../../Source/Core/Semantic/Resolver.nll"
 				pScope = pScope.m_pParent;
 			}
 		}
 
-#line 454 "../../../Source/Core/Semantic/Resolver.nll"
+#line 453 "../../../Source/Core/Semantic/Resolver.nll"
 		public void ResolveFromNode(AST pNode, string sName, Vector<Symbol> pOut)
 		{
+#line 455 "../../../Source/Core/Semantic/Resolver.nll"
 			SymbolScope pScope = GetEnclosingScope(pNode);
-#line 457 "../../../Source/Core/Semantic/Resolver.nll"
+#line 456 "../../../Source/Core/Semantic/Resolver.nll"
 			ResolveInScopeChain(sName, pScope, pOut);
 		}
 
-#line 5 "../../../Source/Core/Semantic/Resolver.nll"
+#line 4 "../../../Source/Core/Semantic/Resolver.nll"
 		~Resolver()
 		{
 		}

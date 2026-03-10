@@ -541,6 +541,7 @@ namespace NumbatLogic
 #line 204 "../../../Source/Core/Token.nll"
 	Token* Token::Clone()
 	{
+#line 206 "../../../Source/Core/Token.nll"
 		Token* pToken = new Token();
 #line 207 "../../../Source/Core/Token.nll"
 		pToken->m_eType = m_eType;

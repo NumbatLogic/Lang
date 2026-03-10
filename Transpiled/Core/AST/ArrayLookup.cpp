@@ -47,7 +47,9 @@ namespace NumbatLogic
 #line 16 "../../../Source/Core/AST/ArrayLookup.nll"
 	ArrayLookup* ArrayLookup::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 18 "../../../Source/Core/AST/ArrayLookup.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 21 "../../../Source/Core/AST/ArrayLookup.nll"
 		AST* pExpression = Identifier::TryCreate(pTokenContainer, pTempOffset);
 #line 22 "../../../Source/Core/AST/ArrayLookup.nll"
 		if (pExpression == 0)
@@ -65,6 +67,7 @@ namespace NumbatLogic
 #line 26 "../../../Source/Core/AST/ArrayLookup.nll"
 			return 0;
 		}
+#line 28 "../../../Source/Core/AST/ArrayLookup.nll"
 		ArrayLookup* pArrayLookup = new ArrayLookup();
 #line 29 "../../../Source/Core/AST/ArrayLookup.nll"
 		pArrayLookup->m_pFirstToken = pExpression->m_pFirstToken;
@@ -80,6 +83,7 @@ namespace NumbatLogic
 		{
 #line 35 "../../../Source/Core/AST/ArrayLookup.nll"
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 37 "../../../Source/Core/AST/ArrayLookup.nll"
 			AST* pIndexExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 38 "../../../Source/Core/AST/ArrayLookup.nll"
 			if (pIndexExpression == 0)
@@ -138,7 +142,9 @@ namespace NumbatLogic
 #line 63 "../../../Source/Core/AST/ArrayLookup.nll"
 	AST* ArrayLookup::BaseClone()
 	{
+#line 65 "../../../Source/Core/AST/ArrayLookup.nll"
 		ArrayLookup* pArrayLookup = new ArrayLookup();
+#line 67 "../../../Source/Core/AST/ArrayLookup.nll"
 		AST* pExpression = m_pExpression->BaseClone();
 #line 68 "../../../Source/Core/AST/ArrayLookup.nll"
 		pArrayLookup->m_pExpression = pExpression;
@@ -150,6 +156,7 @@ namespace NumbatLogic
 #line 71 "../../../Source/Core/AST/ArrayLookup.nll"
 		for (int i = 0; i < m_pIndexExpressionVector->GetSize(); i++)
 		{
+#line 73 "../../../Source/Core/AST/ArrayLookup.nll"
 			AST* pIndexExpression = m_pIndexExpressionVector->Get(i)->BaseClone();
 #line 74 "../../../Source/Core/AST/ArrayLookup.nll"
 			pArrayLookup->m_pIndexExpressionVector->PushBack(pIndexExpression);

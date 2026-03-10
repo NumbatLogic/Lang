@@ -11,6 +11,7 @@ namespace NumbatLogic
 #line 7 "../../../Source/Core/OffsetDatum.nll"
 	OffsetDatum* OffsetDatum::Create(OffsetDatum* pOther)
 	{
+#line 9 "../../../Source/Core/OffsetDatum.nll"
 		OffsetDatum* pThis = new OffsetDatum();
 #line 10 "../../../Source/Core/OffsetDatum.nll"
 		if (pOther != 0)

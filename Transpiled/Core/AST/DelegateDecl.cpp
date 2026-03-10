@@ -46,7 +46,9 @@ namespace NumbatLogic
 #line 13 "../../../Source/Core/AST/DelegateDecl.nll"
 	DelegateDecl* DelegateDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, ClassDecl* pParentClassDecl)
 	{
+#line 15 "../../../Source/Core/AST/DelegateDecl.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 17 "../../../Source/Core/AST/DelegateDecl.nll"
 		AccessLevel* pAccessLevel = AccessLevel::TryCreate(pTokenContainer, pTempOffset);
 #line 18 "../../../Source/Core/AST/DelegateDecl.nll"
 		if (pAccessLevel == 0)
@@ -56,6 +58,7 @@ namespace NumbatLogic
 #line 19 "../../../Source/Core/AST/DelegateDecl.nll"
 			return 0;
 		}
+#line 21 "../../../Source/Core/AST/DelegateDecl.nll"
 		Token* pToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_DELEGATE);
 #line 22 "../../../Source/Core/AST/DelegateDecl.nll"
 		if (pToken == 0)
@@ -67,6 +70,7 @@ namespace NumbatLogic
 		}
 #line 24 "../../../Source/Core/AST/DelegateDecl.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 26 "../../../Source/Core/AST/DelegateDecl.nll"
 		DelegateDecl* pDelegateDecl = new DelegateDecl();
 #line 27 "../../../Source/Core/AST/DelegateDecl.nll"
 		pDelegateDecl->m_pFirstToken = pToken;
@@ -77,6 +81,7 @@ namespace NumbatLogic
 		pAccessLevel = 0;
 #line 29 "../../../Source/Core/AST/DelegateDecl.nll"
 		pDelegateDecl->AddChild(__98812055);
+#line 31 "../../../Source/Core/AST/DelegateDecl.nll"
 		FunctionDecl* pFunctionDecl = FunctionDecl::TryCreate(pTokenContainer, pTempOffset, 0);
 #line 32 "../../../Source/Core/AST/DelegateDecl.nll"
 		if (pFunctionDecl == 0)

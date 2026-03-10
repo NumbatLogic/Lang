@@ -38,7 +38,9 @@ namespace NumbatLogic
 #line 10 "../../../Source/Core/AST/IfStmt.nll"
 	IfStmt* IfStmt::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 12 "../../../Source/Core/AST/IfStmt.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 14 "../../../Source/Core/AST/IfStmt.nll"
 		Token* pIfToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_IF);
 #line 15 "../../../Source/Core/AST/IfStmt.nll"
 		if (pIfToken == 0)
@@ -64,6 +66,7 @@ namespace NumbatLogic
 		}
 #line 26 "../../../Source/Core/AST/IfStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 28 "../../../Source/Core/AST/IfStmt.nll"
 		AST* pCondition = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 29 "../../../Source/Core/AST/IfStmt.nll"
 		if (pCondition == 0)
@@ -95,6 +98,7 @@ namespace NumbatLogic
 		}
 #line 44 "../../../Source/Core/AST/IfStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 46 "../../../Source/Core/AST/IfStmt.nll"
 		Scope* pThenScope = Scope::TryCreate(pTokenContainer, pTempOffset, true);
 #line 47 "../../../Source/Core/AST/IfStmt.nll"
 		if (pThenScope == 0)
@@ -111,6 +115,7 @@ namespace NumbatLogic
 #line 52 "../../../Source/Core/AST/IfStmt.nll"
 			return 0;
 		}
+#line 55 "../../../Source/Core/AST/IfStmt.nll"
 		Scope* pElseScope = 0;
 #line 56 "../../../Source/Core/AST/IfStmt.nll"
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_ELSE) != 0)
@@ -136,6 +141,7 @@ namespace NumbatLogic
 				return 0;
 			}
 		}
+#line 69 "../../../Source/Core/AST/IfStmt.nll"
 		IfStmt* pIfStmt = new IfStmt();
 #line 71 "../../../Source/Core/AST/IfStmt.nll"
 		pIfStmt->m_eType = AST::Type::AST_IF_STMT;
@@ -176,9 +182,13 @@ namespace NumbatLogic
 #line 83 "../../../Source/Core/AST/IfStmt.nll"
 	void IfStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
+#line 85 "../../../Source/Core/AST/IfStmt.nll"
 		AST* pCondition = m_pFirstChild;
+#line 86 "../../../Source/Core/AST/IfStmt.nll"
 		AST* pThen = pCondition->m_pNextSibling;
+#line 87 "../../../Source/Core/AST/IfStmt.nll"
 		AST* pElse = pThen->m_pNextSibling;
+#line 89 "../../../Source/Core/AST/IfStmt.nll"
 		IfStmt* pParentIfStmt = 0;
 #line 90 "../../../Source/Core/AST/IfStmt.nll"
 		if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_IF_STMT)

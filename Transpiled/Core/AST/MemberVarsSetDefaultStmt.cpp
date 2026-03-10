@@ -59,6 +59,7 @@ namespace NumbatLogic
 #line 18 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 			if (m_pParent->m_pParent->m_eType == AST::Type::AST_TOR_DECL)
 			{
+#line 20 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 				TorDecl* pTorDecl = (TorDecl*)(m_pParent->m_pParent);
 #line 21 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 				if (pTorDecl->m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_CONSTRUCT)
@@ -94,6 +95,7 @@ namespace NumbatLogic
 #line 46 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 		if (eLanguage == AST::Language::CPP)
 		{
+#line 48 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 			AST* pChild = m_pParent->m_pParent->m_pParent->m_pFirstChild;
 #line 49 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 			while (pChild != 0)
@@ -101,15 +103,18 @@ namespace NumbatLogic
 #line 51 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 				if (pChild->m_eType == AST::Type::AST_MEMBER_VAR_DECL)
 				{
+#line 53 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 					MemberVarDecl* pMemberVarDecl = (MemberVarDecl*)(pChild);
 #line 55 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 					if (!pMemberVarDecl->m_bStatic)
 					{
+#line 57 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 						Project* pProject = GetProject();
 #line 58 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 						if (pProject == 0 || pProject->m_pValidator == 0)
 #line 59 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 							continue;
+#line 60 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 						ValueType* pValueType = pMemberVarDecl->m_pVarDecl->m_pTypeRef->GetRecursiveValueType(pProject->m_pValidator->m_pResolver);
 #line 62 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 						if (!pMemberVarDecl->m_pVarDecl->m_pTypeRef->m_bConst)
@@ -117,10 +122,12 @@ namespace NumbatLogic
 #line 64 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 							if (pMemberVarDecl->m_pVarDecl->m_pArraySizeVector != 0)
 							{
+#line 66 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 								int nArraySizeSize = pMemberVarDecl->m_pVarDecl->m_pArraySizeVector->GetSize();
 #line 67 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 								for (int i = 0; i < nArraySizeSize; i++)
 								{
+#line 69 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 									AST* pArraySize = pMemberVarDecl->m_pVarDecl->m_pArraySizeVector->Get(i);
 #line 70 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 									Util::Pad(nDepth + i, pOutputBuilder->m_sOut);
@@ -205,6 +212,7 @@ namespace NumbatLogic
 										if (pValueType->m_pEnumDecl == 0)
 #line 124 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 											pOutputBuilder->m_sOut->Append("no_m_pEnumDecl");
+#line 125 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										EnumDeclValue* pEnumDeclValue = pValueType->m_pEnumDecl->m_pEnumDeclValueVector->Get(0);
 #line 126 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										if (pValueType->m_pEnumDecl == 0)
@@ -288,6 +296,7 @@ namespace NumbatLogic
 										if (pValueType->m_pEnumDecl == 0)
 #line 179 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 											pOutputBuilder->m_sOut->Append("no_m_pEnumDecl");
+#line 180 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										EnumDeclValue* pEnumDeclValue = pValueType->m_pEnumDecl->m_pEnumDeclValueVector->Get(0);
 #line 181 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										if (pValueType->m_pEnumDecl == 0)

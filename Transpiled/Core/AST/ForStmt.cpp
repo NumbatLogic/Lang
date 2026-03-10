@@ -42,7 +42,9 @@ namespace NumbatLogic
 #line 11 "../../../Source/Core/AST/ForStmt.nll"
 	ForStmt* ForStmt::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 13 "../../../Source/Core/AST/ForStmt.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 15 "../../../Source/Core/AST/ForStmt.nll"
 		Token* pForToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_FOR);
 #line 16 "../../../Source/Core/AST/ForStmt.nll"
 		if (pForToken == 0)
@@ -66,6 +68,7 @@ namespace NumbatLogic
 		}
 #line 26 "../../../Source/Core/AST/ForStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 28 "../../../Source/Core/AST/ForStmt.nll"
 		AST* pBeforeStatement = VarDecl::TryCreate(pTokenContainer, pTempOffset, true);
 #line 29 "../../../Source/Core/AST/ForStmt.nll"
 		if (pBeforeStatement == 0)
@@ -103,6 +106,7 @@ namespace NumbatLogic
 		}
 #line 48 "../../../Source/Core/AST/ForStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 50 "../../../Source/Core/AST/ForStmt.nll"
 		AST* pConditionStatement = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 51 "../../../Source/Core/AST/ForStmt.nll"
 		if (pConditionStatement == 0)
@@ -136,6 +140,7 @@ namespace NumbatLogic
 		}
 #line 66 "../../../Source/Core/AST/ForStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 68 "../../../Source/Core/AST/ForStmt.nll"
 		AST* pLoopStatement = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 77 "../../../Source/Core/AST/ForStmt.nll"
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT) == 0)
@@ -155,6 +160,7 @@ namespace NumbatLogic
 		}
 #line 84 "../../../Source/Core/AST/ForStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 86 "../../../Source/Core/AST/ForStmt.nll"
 		AST* pStatement = Scope::TryCreate(pTokenContainer, pTempOffset, true);
 #line 87 "../../../Source/Core/AST/ForStmt.nll"
 		if (pStatement == 0)
@@ -166,6 +172,7 @@ namespace NumbatLogic
 #line 91 "../../../Source/Core/AST/ForStmt.nll"
 			NumbatLogic::Assert::Plz(false);
 		}
+#line 94 "../../../Source/Core/AST/ForStmt.nll"
 		ForStmt* pForStmt = new ForStmt();
 #line 95 "../../../Source/Core/AST/ForStmt.nll"
 		pForStmt->m_pFirstToken = pForToken;
@@ -210,9 +217,13 @@ namespace NumbatLogic
 #line 107 "../../../Source/Core/AST/ForStmt.nll"
 	void ForStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
+#line 109 "../../../Source/Core/AST/ForStmt.nll"
 		AST* pBeforeStatement = m_pFirstChild;
+#line 110 "../../../Source/Core/AST/ForStmt.nll"
 		AST* pConditionStatement = pBeforeStatement->m_pNextSibling;
+#line 111 "../../../Source/Core/AST/ForStmt.nll"
 		AST* pLoopStatement = pConditionStatement->m_pNextSibling;
+#line 112 "../../../Source/Core/AST/ForStmt.nll"
 		AST* pStatement = pLoopStatement->m_pNextSibling;
 #line 114 "../../../Source/Core/AST/ForStmt.nll"
 		pOutputBuilder->UpdateSourceLocation(eLanguage, m_pFirstToken);

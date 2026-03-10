@@ -28,7 +28,9 @@ namespace NumbatLogic
 #line 5 "../../../Source/Core/AST/ThisExpr.nll"
 	ThisExpr* ThisExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 7 "../../../Source/Core/AST/ThisExpr.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 9 "../../../Source/Core/AST/ThisExpr.nll"
 		Token* pThisToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_THIS);
 #line 10 "../../../Source/Core/AST/ThisExpr.nll"
 		if (pThisToken == 0)
@@ -39,6 +41,7 @@ namespace NumbatLogic
 		}
 #line 12 "../../../Source/Core/AST/ThisExpr.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 14 "../../../Source/Core/AST/ThisExpr.nll"
 		ThisExpr* pThisExpr = new ThisExpr();
 #line 16 "../../../Source/Core/AST/ThisExpr.nll"
 		pThisExpr->m_eType = AST::Type::THIS_EXPR;
@@ -59,6 +62,7 @@ namespace NumbatLogic
 	{
 #line 25 "../../../Source/Core/AST/ThisExpr.nll"
 		m_pValueType = new ValueType(ValueType::Type::CLASS_DECL_VALUE);
+#line 27 "../../../Source/Core/AST/ThisExpr.nll"
 		AST* pTestParent = m_pParent;
 #line 28 "../../../Source/Core/AST/ThisExpr.nll"
 		while (true)

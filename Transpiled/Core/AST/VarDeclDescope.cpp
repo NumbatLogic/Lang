@@ -49,7 +49,9 @@ namespace NumbatLogic
 #line 15 "../../../Source/Core/AST/VarDeclDescope.nll"
 		for (int j = 0; j < m_pVarDeclVector->GetSize(); j++)
 		{
+#line 17 "../../../Source/Core/AST/VarDeclDescope.nll"
 			VarDecl* pVarDecl = m_pVarDeclVector->Get(j);
+#line 18 "../../../Source/Core/AST/VarDeclDescope.nll"
 			const char* sxName = pVarDecl->m_pNameToken->GetString();
 #line 20 "../../../Source/Core/AST/VarDeclDescope.nll"
 			if (pVarDecl->m_pArraySizeVector != 0)
@@ -57,10 +59,12 @@ namespace NumbatLogic
 #line 22 "../../../Source/Core/AST/VarDeclDescope.nll"
 				if (eLanguage == AST::Language::CPP)
 				{
+#line 24 "../../../Source/Core/AST/VarDeclDescope.nll"
 					int nArraySizeSize = pVarDecl->m_pArraySizeVector->GetSize();
 #line 25 "../../../Source/Core/AST/VarDeclDescope.nll"
 					for (int i = 0; i < nArraySizeSize; i++)
 					{
+#line 27 "../../../Source/Core/AST/VarDeclDescope.nll"
 						AST* pArraySize = pVarDecl->m_pArraySizeVector->Get(i);
 #line 28 "../../../Source/Core/AST/VarDeclDescope.nll"
 						Util::Pad(nDepth + i, pOutputBuilder->m_sOut);
@@ -125,7 +129,9 @@ namespace NumbatLogic
 #line 63 "../../../Source/Core/AST/VarDeclDescope.nll"
 					if (eLanguage == AST::Language::CS)
 					{
+#line 65 "../../../Source/Core/AST/VarDeclDescope.nll"
 						Project* pProject = GetProject();
+#line 66 "../../../Source/Core/AST/VarDeclDescope.nll"
 						ValueType* pValueType = pVarDecl->m_pTypeRef->CreateValueType(pProject->m_pValidator->m_pResolver);
 #line 67 "../../../Source/Core/AST/VarDeclDescope.nll"
 						if (pValueType != 0 && pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)

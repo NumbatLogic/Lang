@@ -46,7 +46,9 @@ namespace NumbatLogic
 #line 13 "../../../Source/Core/AST/TorDecl.nll"
 	TorDecl* TorDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, ClassDecl* pParentClassDecl)
 	{
+#line 15 "../../../Source/Core/AST/TorDecl.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 17 "../../../Source/Core/AST/TorDecl.nll"
 		AccessLevel* pAccessLevel = AccessLevel::TryCreate(pTokenContainer, pTempOffset);
 #line 18 "../../../Source/Core/AST/TorDecl.nll"
 		if (pAccessLevel == 0)
@@ -56,6 +58,7 @@ namespace NumbatLogic
 #line 19 "../../../Source/Core/AST/TorDecl.nll"
 			return 0;
 		}
+#line 21 "../../../Source/Core/AST/TorDecl.nll"
 		Token* pTypeToken = pTokenContainer->Peek(pTempOffset);
 #line 22 "../../../Source/Core/AST/TorDecl.nll"
 		if (pTypeToken == 0 || pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_CONSTRUCT && pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_DESTRUCT)
@@ -67,6 +70,7 @@ namespace NumbatLogic
 		}
 #line 24 "../../../Source/Core/AST/TorDecl.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 26 "../../../Source/Core/AST/TorDecl.nll"
 		ParamDecl* pParamDecl = ParamDecl::TryCreate(pTokenContainer, pTempOffset);
 #line 27 "../../../Source/Core/AST/TorDecl.nll"
 		if (pParamDecl == 0)
@@ -83,8 +87,11 @@ namespace NumbatLogic
 #line 32 "../../../Source/Core/AST/TorDecl.nll"
 			return 0;
 		}
+#line 35 "../../../Source/Core/AST/TorDecl.nll"
 		TorDecl* pTorDecl = new TorDecl();
+#line 37 "../../../Source/Core/AST/TorDecl.nll"
 		Scope* pScope = 0;
+#line 38 "../../../Source/Core/AST/TorDecl.nll"
 		Token* pSemicolon = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON);
 #line 39 "../../../Source/Core/AST/TorDecl.nll"
 		if (pSemicolon != 0)
@@ -92,12 +99,14 @@ namespace NumbatLogic
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		else
 		{
+#line 43 "../../../Source/Core/AST/TorDecl.nll"
 			Token* pColon = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_COLON);
 #line 44 "../../../Source/Core/AST/TorDecl.nll"
 			if (pColon != 0)
 			{
 #line 46 "../../../Source/Core/AST/TorDecl.nll"
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 48 "../../../Source/Core/AST/TorDecl.nll"
 				Token* pBase = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_BASE);
 #line 49 "../../../Source/Core/AST/TorDecl.nll"
 				if (pBase == 0)
@@ -118,10 +127,12 @@ namespace NumbatLogic
 				}
 #line 56 "../../../Source/Core/AST/TorDecl.nll"
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 58 "../../../Source/Core/AST/TorDecl.nll"
 				ParamCall* pParamCall = ParamCall::TryCreate(pTokenContainer, pTempOffset);
 #line 59 "../../../Source/Core/AST/TorDecl.nll"
 				if (pParamCall == 0)
 				{
+#line 61 "../../../Source/Core/AST/TorDecl.nll"
 					InternalString* sTemp = new InternalString("expected ParamCall ");
 #line 62 "../../../Source/Core/AST/TorDecl.nll"
 					sTemp->Append(pTokenContainer->StringifyOffset(pTempOffset));
@@ -219,6 +230,7 @@ namespace NumbatLogic
 #line 106 "../../../Source/Core/AST/TorDecl.nll"
 		if (m_pParentClassDecl != 0 && m_pBaseParamCall != 0)
 		{
+#line 109 "../../../Source/Core/AST/TorDecl.nll"
 			ClassDecl* pBaseClass = m_pParentClassDecl->GetBaseClassDecl(pValidator);
 #line 111 "../../../Source/Core/AST/TorDecl.nll"
 			if (pBaseClass == 0)
@@ -228,6 +240,7 @@ namespace NumbatLogic
 #line 114 "../../../Source/Core/AST/TorDecl.nll"
 				return;
 			}
+#line 117 "../../../Source/Core/AST/TorDecl.nll"
 			AST* pMember = pBaseClass->m_pFirstChild;
 #line 118 "../../../Source/Core/AST/TorDecl.nll"
 			while (pMember != 0)
@@ -235,6 +248,7 @@ namespace NumbatLogic
 #line 120 "../../../Source/Core/AST/TorDecl.nll"
 				if (pMember->m_eType == AST::Type::AST_TOR_DECL)
 				{
+#line 122 "../../../Source/Core/AST/TorDecl.nll"
 					TorDecl* pTorDecl = (TorDecl*)(pMember);
 #line 123 "../../../Source/Core/AST/TorDecl.nll"
 					if (pTorDecl->m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_CONSTRUCT)
@@ -253,6 +267,7 @@ namespace NumbatLogic
 #line 134 "../../../Source/Core/AST/TorDecl.nll"
 			if (pMember == 0)
 			{
+#line 136 "../../../Source/Core/AST/TorDecl.nll"
 				InternalString* sTemp = new InternalString("could not find a matching BASE constructor in ");
 #line 137 "../../../Source/Core/AST/TorDecl.nll"
 				sTemp->AppendString(pBaseClass->m_pNameToken->GetString());
@@ -268,6 +283,7 @@ namespace NumbatLogic
 #line 144 "../../../Source/Core/AST/TorDecl.nll"
 	void TorDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
+#line 146 "../../../Source/Core/AST/TorDecl.nll"
 		bool bGeneric = m_pParentClassDecl != 0 && m_pParentClassDecl->m_pGenericTypeDeclVector->GetSize() > 0;
 #line 148 "../../../Source/Core/AST/TorDecl.nll"
 		if (bGeneric && eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)

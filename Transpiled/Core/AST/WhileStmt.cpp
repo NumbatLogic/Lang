@@ -40,7 +40,9 @@ namespace NumbatLogic
 #line 13 "../../../Source/Core/AST/WhileStmt.nll"
 	WhileStmt* WhileStmt::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 15 "../../../Source/Core/AST/WhileStmt.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 17 "../../../Source/Core/AST/WhileStmt.nll"
 		Token* pWhileToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_WHILE);
 #line 18 "../../../Source/Core/AST/WhileStmt.nll"
 		if (pWhileToken == 0)
@@ -64,6 +66,7 @@ namespace NumbatLogic
 		}
 #line 28 "../../../Source/Core/AST/WhileStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 30 "../../../Source/Core/AST/WhileStmt.nll"
 		AST* pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 31 "../../../Source/Core/AST/WhileStmt.nll"
 		if (pExpression == 0)
@@ -93,6 +96,7 @@ namespace NumbatLogic
 		}
 #line 45 "../../../Source/Core/AST/WhileStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 47 "../../../Source/Core/AST/WhileStmt.nll"
 		Scope* pScope = Scope::TryCreate(pTokenContainer, pTempOffset, true);
 #line 48 "../../../Source/Core/AST/WhileStmt.nll"
 		if (pScope == 0)
@@ -104,6 +108,7 @@ namespace NumbatLogic
 #line 52 "../../../Source/Core/AST/WhileStmt.nll"
 			NumbatLogic::Assert::Plz(false);
 		}
+#line 55 "../../../Source/Core/AST/WhileStmt.nll"
 		WhileStmt* pWhileStmt = new WhileStmt();
 #line 57 "../../../Source/Core/AST/WhileStmt.nll"
 		pWhileStmt->m_eType = AST::Type::AST_WHILE_STMT;

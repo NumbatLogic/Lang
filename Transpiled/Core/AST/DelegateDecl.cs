@@ -1,112 +1,117 @@
 #line 1 "../../../Source/Core/AST/DelegateDecl.nll"
 namespace NumbatLogic
 {
-#line 4 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 3 "../../../Source/Core/AST/DelegateDecl.nll"
 	class DelegateDecl : AST
 	{
-#line 6 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 5 "../../../Source/Core/AST/DelegateDecl.nll"
 		public AccessLevel m_pAccessLevel;
-#line 7 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 6 "../../../Source/Core/AST/DelegateDecl.nll"
 		public FunctionDecl m_pFunctionDecl;
-#line 9 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 8 "../../../Source/Core/AST/DelegateDecl.nll"
 		public DelegateDecl()
 		{
-#line 11 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 10 "../../../Source/Core/AST/DelegateDecl.nll"
 			m_eType = AST.Type.DELEGATE_DECL;
 		}
 
-#line 14 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 13 "../../../Source/Core/AST/DelegateDecl.nll"
 		public static DelegateDecl TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum, ClassDecl pParentClassDecl)
 		{
+#line 15 "../../../Source/Core/AST/DelegateDecl.nll"
 			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
+#line 17 "../../../Source/Core/AST/DelegateDecl.nll"
 			AccessLevel pAccessLevel = AccessLevel.TryCreate(pTokenContainer, pTempOffset);
-#line 19 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 18 "../../../Source/Core/AST/DelegateDecl.nll"
 			if (pAccessLevel == null)
 			{
-#line 20 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 19 "../../../Source/Core/AST/DelegateDecl.nll"
 				return null;
 			}
+#line 21 "../../../Source/Core/AST/DelegateDecl.nll"
 			Token pToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_KEYWORD_DELEGATE);
-#line 23 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 22 "../../../Source/Core/AST/DelegateDecl.nll"
 			if (pToken == null)
 			{
-#line 24 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 23 "../../../Source/Core/AST/DelegateDecl.nll"
 				return null;
 			}
-#line 25 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 24 "../../../Source/Core/AST/DelegateDecl.nll"
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 26 "../../../Source/Core/AST/DelegateDecl.nll"
 			DelegateDecl pDelegateDecl = new DelegateDecl();
-#line 28 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 27 "../../../Source/Core/AST/DelegateDecl.nll"
 			pDelegateDecl.m_pFirstToken = pToken;
-#line 29 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 28 "../../../Source/Core/AST/DelegateDecl.nll"
 			pDelegateDecl.m_pAccessLevel = pAccessLevel;
 			NumbatLogic.AccessLevel __98812055 = pAccessLevel;
-#line 30 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 29 "../../../Source/Core/AST/DelegateDecl.nll"
 			pAccessLevel = null;
-#line 30 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 29 "../../../Source/Core/AST/DelegateDecl.nll"
 			pDelegateDecl.AddChild(__98812055);
+#line 31 "../../../Source/Core/AST/DelegateDecl.nll"
 			FunctionDecl pFunctionDecl = FunctionDecl.TryCreate(pTokenContainer, pTempOffset, null);
-#line 33 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 32 "../../../Source/Core/AST/DelegateDecl.nll"
 			if (pFunctionDecl == null)
 			{
-#line 35 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 34 "../../../Source/Core/AST/DelegateDecl.nll"
 				Console.Log("expected function decl");
-#line 36 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 35 "../../../Source/Core/AST/DelegateDecl.nll"
 				Assert.Plz(false);
-#line 37 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 36 "../../../Source/Core/AST/DelegateDecl.nll"
 				return null;
 			}
-#line 40 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 39 "../../../Source/Core/AST/DelegateDecl.nll"
 			if (pFunctionDecl.m_pScope != null)
 			{
-#line 42 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 41 "../../../Source/Core/AST/DelegateDecl.nll"
 				Console.Log("function def can't have scope!");
-#line 43 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 42 "../../../Source/Core/AST/DelegateDecl.nll"
 				Assert.Plz(false);
-#line 44 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 43 "../../../Source/Core/AST/DelegateDecl.nll"
 				return null;
 			}
-#line 47 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 46 "../../../Source/Core/AST/DelegateDecl.nll"
 			pDelegateDecl.m_pFunctionDecl = pFunctionDecl;
 			NumbatLogic.FunctionDecl __4279829941 = pFunctionDecl;
-#line 48 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 47 "../../../Source/Core/AST/DelegateDecl.nll"
 			pFunctionDecl = null;
-#line 48 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 47 "../../../Source/Core/AST/DelegateDecl.nll"
 			pDelegateDecl.AddChild(__4279829941);
-#line 50 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 49 "../../../Source/Core/AST/DelegateDecl.nll"
 			pOffsetDatum.Set(pTempOffset);
 			NumbatLogic.DelegateDecl __305311194 = pDelegateDecl;
-#line 51 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 50 "../../../Source/Core/AST/DelegateDecl.nll"
 			pDelegateDecl = null;
-#line 51 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 50 "../../../Source/Core/AST/DelegateDecl.nll"
 			return __305311194;
 		}
 
-#line 59 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 58 "../../../Source/Core/AST/DelegateDecl.nll"
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-#line 64 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 63 "../../../Source/Core/AST/DelegateDecl.nll"
 			if (eLanguage == AST.Language.CPP && eOutputFile == AST.OutputFile.SOURCE)
-#line 65 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 64 "../../../Source/Core/AST/DelegateDecl.nll"
 				return;
-#line 67 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 66 "../../../Source/Core/AST/DelegateDecl.nll"
 			Util.Pad(nDepth, pOutputBuilder.m_sOut);
-#line 68 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 67 "../../../Source/Core/AST/DelegateDecl.nll"
 			m_pAccessLevel.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-#line 69 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 68 "../../../Source/Core/AST/DelegateDecl.nll"
 			if (eLanguage == AST.Language.CPP)
-#line 70 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 69 "../../../Source/Core/AST/DelegateDecl.nll"
 				pOutputBuilder.m_sOut.AppendChar(':');
-#line 71 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 70 "../../../Source/Core/AST/DelegateDecl.nll"
 			pOutputBuilder.m_sOut.AppendChar(' ');
-#line 73 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 72 "../../../Source/Core/AST/DelegateDecl.nll"
 			switch (eLanguage)
 			{
 				case AST.Language.CPP:
 				{
-#line 77 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 76 "../../../Source/Core/AST/DelegateDecl.nll"
 					pOutputBuilder.m_sOut.Append("typedef ");
-#line 78 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 77 "../../../Source/Core/AST/DelegateDecl.nll"
 					break;
 				}
 
@@ -114,30 +119,30 @@ namespace NumbatLogic
 				case AST.Language.NLL:
 				case AST.Language.NLL_DEF:
 				{
-#line 84 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 83 "../../../Source/Core/AST/DelegateDecl.nll"
 					pOutputBuilder.m_sOut.Append("delegate ");
-#line 85 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 84 "../../../Source/Core/AST/DelegateDecl.nll"
 					break;
 				}
 
 			}
-#line 89 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 88 "../../../Source/Core/AST/DelegateDecl.nll"
 			m_pFunctionDecl.m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-#line 90 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 89 "../../../Source/Core/AST/DelegateDecl.nll"
 			pOutputBuilder.m_sOut.AppendChar(' ');
+#line 91 "../../../Source/Core/AST/DelegateDecl.nll"
+			if (eLanguage == AST.Language.CPP)
 #line 92 "../../../Source/Core/AST/DelegateDecl.nll"
-			if (eLanguage == AST.Language.CPP)
-#line 93 "../../../Source/Core/AST/DelegateDecl.nll"
 				pOutputBuilder.m_sOut.AppendChar('(');
-#line 94 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 93 "../../../Source/Core/AST/DelegateDecl.nll"
 			pOutputBuilder.m_sOut.Append(m_pFunctionDecl.m_pNameToken.GetString());
-#line 95 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 94 "../../../Source/Core/AST/DelegateDecl.nll"
 			if (eLanguage == AST.Language.CPP)
-#line 96 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 95 "../../../Source/Core/AST/DelegateDecl.nll"
 				pOutputBuilder.m_sOut.AppendChar(')');
-#line 98 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 97 "../../../Source/Core/AST/DelegateDecl.nll"
 			m_pFunctionDecl.m_pParamDecl.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-#line 100 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 99 "../../../Source/Core/AST/DelegateDecl.nll"
 			pOutputBuilder.m_sOut.Append(";\n");
 		}
 

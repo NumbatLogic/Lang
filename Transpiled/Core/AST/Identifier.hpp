@@ -30,7 +30,7 @@ namespace NumbatLogic
 		public: virtual AST* BaseClone();
 #line 35 "../../../Source/Core/AST/Identifier.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 424 "../../../Source/Core/AST/Identifier.nll"
+#line 418 "../../../Source/Core/AST/Identifier.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 #line 3 "../../../Source/Core/AST/Identifier.nll"
 		public: Identifier();

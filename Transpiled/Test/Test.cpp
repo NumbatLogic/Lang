@@ -129,14 +129,19 @@ namespace NumbatLogic
 #line 73 "../../../Source/Test/Test.nll"
 	void Test::FullCheck(const char* sInput, AST::Type eAstType)
 	{
+#line 75 "../../../Source/Test/Test.nll"
 		OwnedVector<InternalString*>* sDefineVector = new OwnedVector<InternalString*>();
+#line 76 "../../../Source/Test/Test.nll"
 		TokenContainer* pTokenContainer = new TokenContainer();
+#line 77 "../../../Source/Test/Test.nll"
 		InternalString* sTest = new InternalString("test.nll");
 #line 78 "../../../Source/Test/Test.nll"
 		pTokenContainer->Tokenize(sInput, sTest, sDefineVector);
+#line 80 "../../../Source/Test/Test.nll"
 		InternalString* sTokenized = new InternalString("");
 #line 82 "../../../Source/Test/Test.nll"
 		pTokenContainer->Stringify(sTokenized);
+#line 83 "../../../Source/Test/Test.nll"
 		const char* sxTokenized = sTokenized->GetExternalString();
 #line 85 "../../../Source/Test/Test.nll"
 		if (!sTokenized->IsEqual(sInput))
@@ -158,7 +163,9 @@ namespace NumbatLogic
 		}
 #line 94 "../../../Source/Test/Test.nll"
 		pTokenContainer->StripWhitespace();
+#line 96 "../../../Source/Test/Test.nll"
 		OffsetDatum* pOffsetDatum = OffsetDatum::Create(0);
+#line 98 "../../../Source/Test/Test.nll"
 		AST* pAST = AST::CreateFromTokenContainer(pTokenContainer, pOffsetDatum);
 #line 100 "../../../Source/Test/Test.nll"
 		if (pAST == 0)
@@ -192,6 +199,7 @@ namespace NumbatLogic
 #line 113 "../../../Source/Test/Test.nll"
 			return;
 		}
+#line 116 "../../../Source/Test/Test.nll"
 		OutputBuilder* pOutputBuilder = new OutputBuilder();
 #line 117 "../../../Source/Test/Test.nll"
 		pAST->Stringify(AST::Language::NLL, AST::OutputFile::SOURCE, 0, pOutputBuilder);

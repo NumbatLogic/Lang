@@ -32,7 +32,9 @@ namespace NumbatLogic
 #line 10 "../../../Source/Core/AST/NullExpr.nll"
 	NullExpr* NullExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 12 "../../../Source/Core/AST/NullExpr.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 14 "../../../Source/Core/AST/NullExpr.nll"
 		Token* pNullToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_NULL);
 #line 15 "../../../Source/Core/AST/NullExpr.nll"
 		if (pNullToken == 0)
@@ -43,6 +45,7 @@ namespace NumbatLogic
 		}
 #line 17 "../../../Source/Core/AST/NullExpr.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 19 "../../../Source/Core/AST/NullExpr.nll"
 		NullExpr* pNullExpr = new NullExpr();
 #line 20 "../../../Source/Core/AST/NullExpr.nll"
 		pNullExpr->m_pFirstToken = pNullToken;

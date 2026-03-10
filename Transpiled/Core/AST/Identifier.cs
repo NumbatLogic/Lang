@@ -1,449 +1,474 @@
 #line 1 "../../../Source/Core/AST/Identifier.nll"
 namespace NumbatLogic
 {
-#line 4 "../../../Source/Core/AST/Identifier.nll"
+#line 3 "../../../Source/Core/AST/Identifier.nll"
 	class Identifier : AST
 	{
-#line 6 "../../../Source/Core/AST/Identifier.nll"
+#line 5 "../../../Source/Core/AST/Identifier.nll"
 		public Token m_pNameToken;
-#line 8 "../../../Source/Core/AST/Identifier.nll"
+#line 7 "../../../Source/Core/AST/Identifier.nll"
 		public static Identifier TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
 		{
+#line 9 "../../../Source/Core/AST/Identifier.nll"
 			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
+#line 11 "../../../Source/Core/AST/Identifier.nll"
 			Token pToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_IDENTIFIER);
-#line 13 "../../../Source/Core/AST/Identifier.nll"
+#line 12 "../../../Source/Core/AST/Identifier.nll"
 			if (pToken == null)
 			{
-#line 14 "../../../Source/Core/AST/Identifier.nll"
+#line 13 "../../../Source/Core/AST/Identifier.nll"
 				return null;
 			}
-#line 15 "../../../Source/Core/AST/Identifier.nll"
+#line 14 "../../../Source/Core/AST/Identifier.nll"
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 16 "../../../Source/Core/AST/Identifier.nll"
 			Identifier pIdentifier = new Identifier();
-#line 18 "../../../Source/Core/AST/Identifier.nll"
+#line 17 "../../../Source/Core/AST/Identifier.nll"
 			pIdentifier.m_eType = AST.Type.AST_IDENTIFIER;
-#line 19 "../../../Source/Core/AST/Identifier.nll"
+#line 18 "../../../Source/Core/AST/Identifier.nll"
 			pIdentifier.m_pNameToken = pToken;
-#line 20 "../../../Source/Core/AST/Identifier.nll"
+#line 19 "../../../Source/Core/AST/Identifier.nll"
 			pIdentifier.m_pFirstToken = pToken;
-#line 22 "../../../Source/Core/AST/Identifier.nll"
+#line 21 "../../../Source/Core/AST/Identifier.nll"
 			pOffsetDatum.Set(pTempOffset);
 			NumbatLogic.Identifier __4180376026 = pIdentifier;
-#line 24 "../../../Source/Core/AST/Identifier.nll"
+#line 23 "../../../Source/Core/AST/Identifier.nll"
 			pIdentifier = null;
-#line 24 "../../../Source/Core/AST/Identifier.nll"
+#line 23 "../../../Source/Core/AST/Identifier.nll"
 			return __4180376026;
 		}
 
-#line 27 "../../../Source/Core/AST/Identifier.nll"
+#line 26 "../../../Source/Core/AST/Identifier.nll"
 		public override AST BaseClone()
 		{
+#line 28 "../../../Source/Core/AST/Identifier.nll"
 			Identifier pIdentifier = new Identifier();
-#line 30 "../../../Source/Core/AST/Identifier.nll"
+#line 29 "../../../Source/Core/AST/Identifier.nll"
 			pIdentifier.m_eType = m_eType;
-#line 31 "../../../Source/Core/AST/Identifier.nll"
+#line 30 "../../../Source/Core/AST/Identifier.nll"
 			pIdentifier.m_pNameToken = m_pNameToken;
-#line 32 "../../../Source/Core/AST/Identifier.nll"
+#line 31 "../../../Source/Core/AST/Identifier.nll"
 			pIdentifier.m_pFirstToken = m_pFirstToken;
 			NumbatLogic.Identifier __4180441624 = pIdentifier;
-#line 33 "../../../Source/Core/AST/Identifier.nll"
+#line 32 "../../../Source/Core/AST/Identifier.nll"
 			pIdentifier = null;
-#line 33 "../../../Source/Core/AST/Identifier.nll"
+#line 32 "../../../Source/Core/AST/Identifier.nll"
 			return __4180441624;
 		}
 
-#line 36 "../../../Source/Core/AST/Identifier.nll"
+#line 35 "../../../Source/Core/AST/Identifier.nll"
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
+#line 37 "../../../Source/Core/AST/Identifier.nll"
 			string sName = m_pNameToken.GetString();
+#line 40 "../../../Source/Core/AST/Identifier.nll"
 			AST pContextParent = (pParent != null) ? (AST)(pParent) : m_pParent;
+#line 42 "../../../Source/Core/AST/Identifier.nll"
 			AST pAST = null;
+#line 43 "../../../Source/Core/AST/Identifier.nll"
 			AST pBase = this;
-			AST pChild = this;
+#line 44 "../../../Source/Core/AST/Identifier.nll"
 			bool bResolverAmbiguous = false;
-#line 47 "../../../Source/Core/AST/Identifier.nll"
+#line 45 "../../../Source/Core/AST/Identifier.nll"
 			if (pContextParent != null)
 			{
-#line 52 "../../../Source/Core/AST/Identifier.nll"
+#line 50 "../../../Source/Core/AST/Identifier.nll"
 				if (pContextParent.m_eType == AST.Type.AST_ARRAY_LOOKUP)
 				{
+#line 52 "../../../Source/Core/AST/Identifier.nll"
 					ArrayLookup pAL = (ArrayLookup)(pContextParent);
-#line 55 "../../../Source/Core/AST/Identifier.nll"
+#line 53 "../../../Source/Core/AST/Identifier.nll"
 					if (pAL.m_pExpression == this)
 					{
+#line 55 "../../../Source/Core/AST/Identifier.nll"
 						AST pWalk = pAL.m_pParent;
-#line 58 "../../../Source/Core/AST/Identifier.nll"
+#line 56 "../../../Source/Core/AST/Identifier.nll"
 						while (pWalk != null && pBase == this)
 						{
-#line 60 "../../../Source/Core/AST/Identifier.nll"
+#line 58 "../../../Source/Core/AST/Identifier.nll"
 							if (pWalk.m_eType == AST.Type.AST_OPERATOR_EXPR)
 							{
+#line 60 "../../../Source/Core/AST/Identifier.nll"
 								OperatorExpr pOpWalk = (OperatorExpr)(pWalk);
+#line 61 "../../../Source/Core/AST/Identifier.nll"
 								bool bRightIsArrayLookupOrMulLeft = (pOpWalk.m_pRight == pAL);
-#line 64 "../../../Source/Core/AST/Identifier.nll"
+#line 62 "../../../Source/Core/AST/Identifier.nll"
 								if (!bRightIsArrayLookupOrMulLeft && pOpWalk.m_pRight != null && pOpWalk.m_pRight.m_eType == AST.Type.AST_OPERATOR_EXPR)
 								{
+#line 64 "../../../Source/Core/AST/Identifier.nll"
 									OperatorExpr pRightOp = (OperatorExpr)(pOpWalk.m_pRight);
-#line 67 "../../../Source/Core/AST/Identifier.nll"
+#line 65 "../../../Source/Core/AST/Identifier.nll"
 									bRightIsArrayLookupOrMulLeft = (pRightOp.m_pLeft == pAL);
 								}
-#line 69 "../../../Source/Core/AST/Identifier.nll"
+#line 67 "../../../Source/Core/AST/Identifier.nll"
 								if (pOpWalk.GetOperatorType() == OperatorExpr.OperatorType.SCOPE_RESOLUTION && pOpWalk.m_pLeft != null && bRightIsArrayLookupOrMulLeft)
 								{
-#line 72 "../../../Source/Core/AST/Identifier.nll"
+#line 70 "../../../Source/Core/AST/Identifier.nll"
 									if (pOpWalk.m_pLeft.m_pValueType == null)
-#line 73 "../../../Source/Core/AST/Identifier.nll"
+#line 71 "../../../Source/Core/AST/Identifier.nll"
 										pOpWalk.m_pLeft.Validate(pValidator, pOpWalk);
-#line 74 "../../../Source/Core/AST/Identifier.nll"
+#line 72 "../../../Source/Core/AST/Identifier.nll"
 									if (pOpWalk.m_pLeft.m_pValueType != null)
 									{
-#line 76 "../../../Source/Core/AST/Identifier.nll"
+#line 74 "../../../Source/Core/AST/Identifier.nll"
 										if (pOpWalk.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL || pOpWalk.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 										{
-#line 79 "../../../Source/Core/AST/Identifier.nll"
+#line 77 "../../../Source/Core/AST/Identifier.nll"
 											AddClassDeclReference(pOpWalk.m_pLeft.m_pValueType.m_pClassDecl, AST.OutputFile.SOURCE, false);
-#line 80 "../../../Source/Core/AST/Identifier.nll"
+#line 78 "../../../Source/Core/AST/Identifier.nll"
 											pBase = pOpWalk.m_pLeft.m_pValueType.m_pClassDecl;
-#line 81 "../../../Source/Core/AST/Identifier.nll"
-											pChild = null;
-#line 82 "../../../Source/Core/AST/Identifier.nll"
+#line 79 "../../../Source/Core/AST/Identifier.nll"
 											break;
 										}
 										else
-#line 84 "../../../Source/Core/AST/Identifier.nll"
+#line 81 "../../../Source/Core/AST/Identifier.nll"
 											if (pOpWalk.m_pLeft.m_pValueType.m_eType == ValueType.Type.ENUM_DECL)
 											{
-#line 86 "../../../Source/Core/AST/Identifier.nll"
+#line 83 "../../../Source/Core/AST/Identifier.nll"
 												pBase = pOpWalk.m_pLeft.m_pValueType.m_pEnumDecl;
-#line 87 "../../../Source/Core/AST/Identifier.nll"
-												pChild = null;
-#line 88 "../../../Source/Core/AST/Identifier.nll"
+#line 84 "../../../Source/Core/AST/Identifier.nll"
 												break;
 											}
 									}
 								}
 							}
-#line 93 "../../../Source/Core/AST/Identifier.nll"
+#line 89 "../../../Source/Core/AST/Identifier.nll"
 							pWalk = pWalk.m_pParent;
 						}
 					}
 				}
-#line 97 "../../../Source/Core/AST/Identifier.nll"
+#line 93 "../../../Source/Core/AST/Identifier.nll"
 				if (pContextParent.m_eType == AST.Type.AST_OPERATOR_EXPR)
 				{
+#line 95 "../../../Source/Core/AST/Identifier.nll"
 					OperatorExpr pOpContext = (OperatorExpr)(pContextParent);
-#line 100 "../../../Source/Core/AST/Identifier.nll"
+#line 96 "../../../Source/Core/AST/Identifier.nll"
 					if (pOpContext.GetOperatorType() == OperatorExpr.OperatorType.MEMBER_ACCESS && pOpContext.m_pLeft != null && pOpContext.m_pLeft.m_pValueType != null && pOpContext.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 					{
-#line 102 "../../../Source/Core/AST/Identifier.nll"
+#line 98 "../../../Source/Core/AST/Identifier.nll"
 						AddClassDeclReference(pOpContext.m_pLeft.m_pValueType.m_pClassDecl, AST.OutputFile.SOURCE, false);
-#line 103 "../../../Source/Core/AST/Identifier.nll"
+#line 99 "../../../Source/Core/AST/Identifier.nll"
 						pBase = pOpContext.m_pLeft.m_pValueType.m_pClassDecl;
-#line 104 "../../../Source/Core/AST/Identifier.nll"
-						pChild = null;
 					}
 					else
-#line 106 "../../../Source/Core/AST/Identifier.nll"
+#line 101 "../../../Source/Core/AST/Identifier.nll"
 						if (pOpContext.GetOperatorType() == OperatorExpr.OperatorType.SCOPE_RESOLUTION && pOpContext.m_pLeft != null && pOpContext.m_pLeft.m_pValueType != null)
 						{
-#line 108 "../../../Source/Core/AST/Identifier.nll"
+#line 103 "../../../Source/Core/AST/Identifier.nll"
 							if (pOpContext.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL)
 							{
-#line 110 "../../../Source/Core/AST/Identifier.nll"
+#line 105 "../../../Source/Core/AST/Identifier.nll"
 								AddClassDeclReference(pOpContext.m_pLeft.m_pValueType.m_pClassDecl, AST.OutputFile.SOURCE, false);
-#line 111 "../../../Source/Core/AST/Identifier.nll"
+#line 106 "../../../Source/Core/AST/Identifier.nll"
 								pBase = pOpContext.m_pLeft.m_pValueType.m_pClassDecl;
-#line 112 "../../../Source/Core/AST/Identifier.nll"
-								pChild = null;
 							}
 							else
-#line 114 "../../../Source/Core/AST/Identifier.nll"
+#line 108 "../../../Source/Core/AST/Identifier.nll"
 								if (pOpContext.m_pLeft.m_pValueType.m_eType == ValueType.Type.ENUM_DECL)
 								{
-#line 116 "../../../Source/Core/AST/Identifier.nll"
+#line 110 "../../../Source/Core/AST/Identifier.nll"
 									pBase = pOpContext.m_pLeft.m_pValueType.m_pEnumDecl;
-#line 117 "../../../Source/Core/AST/Identifier.nll"
-									pChild = null;
 								}
 								else
-#line 119 "../../../Source/Core/AST/Identifier.nll"
+#line 112 "../../../Source/Core/AST/Identifier.nll"
 									if (pOpContext.m_pLeft.m_pValueType.m_eType == ValueType.Type.NAMESPACE_NODE)
 									{
+#line 114 "../../../Source/Core/AST/Identifier.nll"
 										Vector<NamespaceDecl> pNamespaceDeclVector = pOpContext.m_pLeft.m_pValueType.m_pNamespaceNode.m_pNamespaceDeclVector;
+#line 115 "../../../Source/Core/AST/Identifier.nll"
 										Vector<Symbol> pCandidates = new Vector<Symbol>();
+#line 116 "../../../Source/Core/AST/Identifier.nll"
 										Vector<Symbol> pRelevant = new Vector<Symbol>();
-#line 124 "../../../Source/Core/AST/Identifier.nll"
+#line 117 "../../../Source/Core/AST/Identifier.nll"
 										for (int i = 0; i < pNamespaceDeclVector.GetSize(); i++)
 										{
+#line 119 "../../../Source/Core/AST/Identifier.nll"
 											NamespaceDecl pNamespaceDecl = pNamespaceDeclVector.Get(i);
-#line 127 "../../../Source/Core/AST/Identifier.nll"
+#line 120 "../../../Source/Core/AST/Identifier.nll"
 											pCandidates.Clear();
-#line 128 "../../../Source/Core/AST/Identifier.nll"
+#line 121 "../../../Source/Core/AST/Identifier.nll"
 											pValidator.m_pResolver.ResolveFromNode(pNamespaceDecl, sName, pCandidates);
-#line 129 "../../../Source/Core/AST/Identifier.nll"
+#line 122 "../../../Source/Core/AST/Identifier.nll"
 											pRelevant.Clear();
-#line 130 "../../../Source/Core/AST/Identifier.nll"
+#line 123 "../../../Source/Core/AST/Identifier.nll"
 											for (int j = 0; j < pCandidates.GetSize(); j++)
 											{
+#line 125 "../../../Source/Core/AST/Identifier.nll"
 												Symbol pSym = pCandidates.Get(j);
-#line 133 "../../../Source/Core/AST/Identifier.nll"
+#line 126 "../../../Source/Core/AST/Identifier.nll"
 												if (pSym.m_eKind == Symbol.Kind.CLASS || pSym.m_eKind == Symbol.Kind.ENUM || pSym.m_eKind == Symbol.Kind.VAR || pSym.m_eKind == Symbol.Kind.PARAM || pSym.m_eKind == Symbol.Kind.FUNCTION || pSym.m_eKind == Symbol.Kind.METHOD || pSym.m_eKind == Symbol.Kind.DELEGATE || pSym.m_eKind == Symbol.Kind.ENUM_VALUE || pSym.m_eKind == Symbol.Kind.NAMESPACE)
 												{
-#line 143 "../../../Source/Core/AST/Identifier.nll"
+#line 136 "../../../Source/Core/AST/Identifier.nll"
 													pRelevant.PushBack(pSym);
 												}
 											}
-#line 146 "../../../Source/Core/AST/Identifier.nll"
+#line 139 "../../../Source/Core/AST/Identifier.nll"
 											if (pRelevant.GetSize() == 1 && pRelevant.Get(0).m_pDeclAST != null)
 											{
-#line 148 "../../../Source/Core/AST/Identifier.nll"
+#line 141 "../../../Source/Core/AST/Identifier.nll"
 												pAST = pRelevant.Get(0).m_pDeclAST;
-#line 149 "../../../Source/Core/AST/Identifier.nll"
+#line 142 "../../../Source/Core/AST/Identifier.nll"
 												break;
 											}
-#line 151 "../../../Source/Core/AST/Identifier.nll"
+#line 144 "../../../Source/Core/AST/Identifier.nll"
 											if (pRelevant.GetSize() > 1)
 											{
-#line 153 "../../../Source/Core/AST/Identifier.nll"
+#line 146 "../../../Source/Core/AST/Identifier.nll"
 												bResolverAmbiguous = true;
-#line 154 "../../../Source/Core/AST/Identifier.nll"
+#line 147 "../../../Source/Core/AST/Identifier.nll"
 												break;
 											}
 										}
 									}
 									else
 									{
-#line 160 "../../../Source/Core/AST/Identifier.nll"
+#line 153 "../../../Source/Core/AST/Identifier.nll"
 										pValidator.AddError("Unexpected left of ::", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-#line 161 "../../../Source/Core/AST/Identifier.nll"
+#line 154 "../../../Source/Core/AST/Identifier.nll"
 										return;
 									}
 						}
 				}
 			}
-#line 167 "../../../Source/Core/AST/Identifier.nll"
+#line 160 "../../../Source/Core/AST/Identifier.nll"
 			if (pAST == null)
 			{
+#line 162 "../../../Source/Core/AST/Identifier.nll"
 				Vector<Symbol> pCandidates = new Vector<Symbol>();
-#line 170 "../../../Source/Core/AST/Identifier.nll"
+#line 163 "../../../Source/Core/AST/Identifier.nll"
 				pValidator.m_pResolver.ResolveFromNode(pBase, sName, pCandidates);
+#line 165 "../../../Source/Core/AST/Identifier.nll"
 				Vector<Symbol> pRelevant = new Vector<Symbol>();
-#line 173 "../../../Source/Core/AST/Identifier.nll"
+#line 166 "../../../Source/Core/AST/Identifier.nll"
 				for (int i = 0; i < pCandidates.GetSize(); i++)
 				{
+#line 168 "../../../Source/Core/AST/Identifier.nll"
 					Symbol pSym = pCandidates.Get(i);
-#line 176 "../../../Source/Core/AST/Identifier.nll"
+#line 169 "../../../Source/Core/AST/Identifier.nll"
 					if (pSym.m_eKind == Symbol.Kind.CLASS || pSym.m_eKind == Symbol.Kind.ENUM || pSym.m_eKind == Symbol.Kind.VAR || pSym.m_eKind == Symbol.Kind.PARAM || pSym.m_eKind == Symbol.Kind.FUNCTION || pSym.m_eKind == Symbol.Kind.METHOD || pSym.m_eKind == Symbol.Kind.DELEGATE || pSym.m_eKind == Symbol.Kind.ENUM_VALUE || pSym.m_eKind == Symbol.Kind.NAMESPACE)
 					{
-#line 186 "../../../Source/Core/AST/Identifier.nll"
+#line 179 "../../../Source/Core/AST/Identifier.nll"
 						pRelevant.PushBack(pSym);
 					}
 				}
-#line 190 "../../../Source/Core/AST/Identifier.nll"
+#line 183 "../../../Source/Core/AST/Identifier.nll"
 				if (pRelevant.GetSize() == 1)
 				{
+#line 185 "../../../Source/Core/AST/Identifier.nll"
 					Symbol pSymbol = pRelevant.Get(0);
-#line 193 "../../../Source/Core/AST/Identifier.nll"
+#line 186 "../../../Source/Core/AST/Identifier.nll"
 					if (pSymbol.m_pDeclAST != null)
-#line 194 "../../../Source/Core/AST/Identifier.nll"
+#line 187 "../../../Source/Core/AST/Identifier.nll"
 						pAST = pSymbol.m_pDeclAST;
 				}
 				else
-#line 196 "../../../Source/Core/AST/Identifier.nll"
+#line 189 "../../../Source/Core/AST/Identifier.nll"
 					if (pRelevant.GetSize() > 1)
-#line 197 "../../../Source/Core/AST/Identifier.nll"
+#line 190 "../../../Source/Core/AST/Identifier.nll"
 						bResolverAmbiguous = true;
 			}
-#line 200 "../../../Source/Core/AST/Identifier.nll"
+#line 193 "../../../Source/Core/AST/Identifier.nll"
 			if (pAST == null)
 			{
-#line 202 "../../../Source/Core/AST/Identifier.nll"
+#line 195 "../../../Source/Core/AST/Identifier.nll"
 				if (bResolverAmbiguous)
 				{
+#line 197 "../../../Source/Core/AST/Identifier.nll"
 					InternalString sAmbiguous = new InternalString("Ambiguous identifier (multiple declarations in scope): ");
-#line 205 "../../../Source/Core/AST/Identifier.nll"
+#line 198 "../../../Source/Core/AST/Identifier.nll"
 					sAmbiguous.Append(sName);
-#line 206 "../../../Source/Core/AST/Identifier.nll"
+#line 199 "../../../Source/Core/AST/Identifier.nll"
 					pValidator.AddError(sAmbiguous.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 				}
 				else
 				{
+#line 203 "../../../Source/Core/AST/Identifier.nll"
 					InternalString sTemp = new InternalString("Identifier Unbeknownst! ");
-#line 211 "../../../Source/Core/AST/Identifier.nll"
+#line 204 "../../../Source/Core/AST/Identifier.nll"
 					sTemp.Append(sName);
-#line 212 "../../../Source/Core/AST/Identifier.nll"
+#line 205 "../../../Source/Core/AST/Identifier.nll"
 					if (pContextParent != null)
-#line 213 "../../../Source/Core/AST/Identifier.nll"
+#line 206 "../../../Source/Core/AST/Identifier.nll"
 						sTemp.Append(" has parent");
-#line 214 "../../../Source/Core/AST/Identifier.nll"
+#line 207 "../../../Source/Core/AST/Identifier.nll"
 					sTemp.Append(" base: ");
-#line 215 "../../../Source/Core/AST/Identifier.nll"
+#line 208 "../../../Source/Core/AST/Identifier.nll"
 					pBase.StringifyType(sTemp);
-#line 216 "../../../Source/Core/AST/Identifier.nll"
+#line 209 "../../../Source/Core/AST/Identifier.nll"
 					pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 				}
-#line 218 "../../../Source/Core/AST/Identifier.nll"
+#line 211 "../../../Source/Core/AST/Identifier.nll"
 				return;
 			}
-#line 221 "../../../Source/Core/AST/Identifier.nll"
+#line 214 "../../../Source/Core/AST/Identifier.nll"
 			if (pAST.m_eType == AST.Type.AST_CLASS_DECL)
 			{
-#line 223 "../../../Source/Core/AST/Identifier.nll"
+#line 216 "../../../Source/Core/AST/Identifier.nll"
 				m_pValueType = new ValueType(ValueType.Type.CLASS_DECL);
-#line 224 "../../../Source/Core/AST/Identifier.nll"
+#line 217 "../../../Source/Core/AST/Identifier.nll"
 				m_pValueType.m_pClassDecl = (ClassDecl)(pAST);
-#line 227 "../../../Source/Core/AST/Identifier.nll"
+#line 220 "../../../Source/Core/AST/Identifier.nll"
 				AddClassDeclReference(m_pValueType.m_pClassDecl, AST.OutputFile.SOURCE, false);
+#line 223 "../../../Source/Core/AST/Identifier.nll"
 				AST pCheckParent = m_pParent;
+#line 224 "../../../Source/Core/AST/Identifier.nll"
 				AST pCurrent = this;
-#line 232 "../../../Source/Core/AST/Identifier.nll"
+#line 225 "../../../Source/Core/AST/Identifier.nll"
 				for (int i = 0; i < 5; i++)
 				{
-#line 234 "../../../Source/Core/AST/Identifier.nll"
+#line 227 "../../../Source/Core/AST/Identifier.nll"
 					if (pCheckParent == null)
-#line 235 "../../../Source/Core/AST/Identifier.nll"
+#line 228 "../../../Source/Core/AST/Identifier.nll"
 						break;
-#line 236 "../../../Source/Core/AST/Identifier.nll"
+#line 229 "../../../Source/Core/AST/Identifier.nll"
 					if (pCheckParent.m_eType == AST.Type.AST_VAR_DECL)
 					{
+#line 231 "../../../Source/Core/AST/Identifier.nll"
 						VarDecl pVarDecl = (VarDecl)(pCheckParent);
+#line 233 "../../../Source/Core/AST/Identifier.nll"
 						bool bInArraySize = false;
-#line 241 "../../../Source/Core/AST/Identifier.nll"
+#line 234 "../../../Source/Core/AST/Identifier.nll"
 						if (pVarDecl.m_pArraySizeVector != null)
 						{
-#line 243 "../../../Source/Core/AST/Identifier.nll"
+#line 236 "../../../Source/Core/AST/Identifier.nll"
 							for (int j = 0; j < pVarDecl.m_pArraySizeVector.GetSize(); j++)
 							{
-#line 245 "../../../Source/Core/AST/Identifier.nll"
+#line 238 "../../../Source/Core/AST/Identifier.nll"
 								if (pCurrent == pVarDecl.m_pArraySizeVector.Get(j))
 								{
-#line 247 "../../../Source/Core/AST/Identifier.nll"
+#line 240 "../../../Source/Core/AST/Identifier.nll"
 									bInArraySize = true;
-#line 248 "../../../Source/Core/AST/Identifier.nll"
+#line 241 "../../../Source/Core/AST/Identifier.nll"
 									break;
 								}
 							}
 						}
-#line 254 "../../../Source/Core/AST/Identifier.nll"
+#line 247 "../../../Source/Core/AST/Identifier.nll"
 						if (bInArraySize && pVarDecl.m_pParent != null && pVarDecl.m_pParent.m_eType == AST.Type.AST_MEMBER_VAR_DECL)
-#line 255 "../../../Source/Core/AST/Identifier.nll"
+#line 248 "../../../Source/Core/AST/Identifier.nll"
 							AddClassDeclReference(m_pValueType.m_pClassDecl, AST.OutputFile.HEADER, false);
-#line 258 "../../../Source/Core/AST/Identifier.nll"
+#line 251 "../../../Source/Core/AST/Identifier.nll"
 						if (pCurrent == pVarDecl.m_pAssignment && pVarDecl.m_pParent != null && pVarDecl.m_pParent.m_eType == AST.Type.AST_MEMBER_VAR_DECL)
 						{
+#line 253 "../../../Source/Core/AST/Identifier.nll"
 							MemberVarDecl pMemberVarDecl = (MemberVarDecl)(pVarDecl.m_pParent);
-#line 261 "../../../Source/Core/AST/Identifier.nll"
+#line 254 "../../../Source/Core/AST/Identifier.nll"
 							if (pMemberVarDecl.m_bStatic)
-#line 262 "../../../Source/Core/AST/Identifier.nll"
+#line 255 "../../../Source/Core/AST/Identifier.nll"
 								AddClassDeclReference(m_pValueType.m_pClassDecl, AST.OutputFile.HEADER, false);
 						}
-#line 265 "../../../Source/Core/AST/Identifier.nll"
+#line 258 "../../../Source/Core/AST/Identifier.nll"
 						break;
 					}
-#line 268 "../../../Source/Core/AST/Identifier.nll"
+#line 261 "../../../Source/Core/AST/Identifier.nll"
 					pCurrent = pCheckParent;
-#line 269 "../../../Source/Core/AST/Identifier.nll"
+#line 262 "../../../Source/Core/AST/Identifier.nll"
 					pCheckParent = pCheckParent.m_pParent;
 				}
-#line 272 "../../../Source/Core/AST/Identifier.nll"
+#line 265 "../../../Source/Core/AST/Identifier.nll"
 				return;
 			}
 			else
-#line 274 "../../../Source/Core/AST/Identifier.nll"
+#line 267 "../../../Source/Core/AST/Identifier.nll"
 				if (pAST.m_eType == AST.Type.AST_MEMBER_CLASS_DECL)
 				{
+#line 269 "../../../Source/Core/AST/Identifier.nll"
 					MemberClassDecl pMemberClassDecl = (MemberClassDecl)(pAST);
-#line 277 "../../../Source/Core/AST/Identifier.nll"
+#line 270 "../../../Source/Core/AST/Identifier.nll"
 					if (pMemberClassDecl.m_pClassDecl != null)
 					{
-#line 279 "../../../Source/Core/AST/Identifier.nll"
+#line 272 "../../../Source/Core/AST/Identifier.nll"
 						m_pValueType = new ValueType(ValueType.Type.CLASS_DECL);
-#line 280 "../../../Source/Core/AST/Identifier.nll"
+#line 273 "../../../Source/Core/AST/Identifier.nll"
 						m_pValueType.m_pClassDecl = pMemberClassDecl.m_pClassDecl;
-#line 281 "../../../Source/Core/AST/Identifier.nll"
+#line 274 "../../../Source/Core/AST/Identifier.nll"
 						AddClassDeclReference(m_pValueType.m_pClassDecl, AST.OutputFile.SOURCE, false);
 					}
-#line 283 "../../../Source/Core/AST/Identifier.nll"
+#line 276 "../../../Source/Core/AST/Identifier.nll"
 					return;
 				}
-#line 286 "../../../Source/Core/AST/Identifier.nll"
+#line 279 "../../../Source/Core/AST/Identifier.nll"
 			if (pAST.m_eType == AST.Type.AST_ENUM_DECL)
 			{
-#line 288 "../../../Source/Core/AST/Identifier.nll"
+#line 281 "../../../Source/Core/AST/Identifier.nll"
 				m_pValueType = new ValueType(ValueType.Type.ENUM_DECL);
-#line 289 "../../../Source/Core/AST/Identifier.nll"
+#line 282 "../../../Source/Core/AST/Identifier.nll"
 				m_pValueType.m_pEnumDecl = (EnumDecl)(pAST);
-#line 290 "../../../Source/Core/AST/Identifier.nll"
+#line 283 "../../../Source/Core/AST/Identifier.nll"
 				return;
 			}
 			else
-#line 292 "../../../Source/Core/AST/Identifier.nll"
+#line 285 "../../../Source/Core/AST/Identifier.nll"
 				if (pAST.m_eType == AST.Type.AST_MEMBER_ENUM_DECL)
 				{
+#line 287 "../../../Source/Core/AST/Identifier.nll"
 					MemberEnumDecl pMemberEnum = (MemberEnumDecl)(pAST);
-#line 295 "../../../Source/Core/AST/Identifier.nll"
+#line 288 "../../../Source/Core/AST/Identifier.nll"
 					if (pMemberEnum.m_pEnumDecl != null)
 					{
-#line 297 "../../../Source/Core/AST/Identifier.nll"
+#line 290 "../../../Source/Core/AST/Identifier.nll"
 						m_pValueType = new ValueType(ValueType.Type.ENUM_DECL);
-#line 298 "../../../Source/Core/AST/Identifier.nll"
+#line 291 "../../../Source/Core/AST/Identifier.nll"
 						m_pValueType.m_pEnumDecl = pMemberEnum.m_pEnumDecl;
-#line 299 "../../../Source/Core/AST/Identifier.nll"
+#line 292 "../../../Source/Core/AST/Identifier.nll"
 						return;
 					}
 				}
-#line 303 "../../../Source/Core/AST/Identifier.nll"
+#line 296 "../../../Source/Core/AST/Identifier.nll"
 			if (pAST.m_eType == AST.Type.ENUM_DECL_VALUE)
 			{
-#line 305 "../../../Source/Core/AST/Identifier.nll"
+#line 298 "../../../Source/Core/AST/Identifier.nll"
 				m_pValueType = new ValueType(ValueType.Type.ENUM_DECL_VALUE);
-#line 306 "../../../Source/Core/AST/Identifier.nll"
+#line 299 "../../../Source/Core/AST/Identifier.nll"
 				m_pValueType.m_pEnumDeclValue = (EnumDeclValue)(pAST);
-#line 307 "../../../Source/Core/AST/Identifier.nll"
+#line 300 "../../../Source/Core/AST/Identifier.nll"
 				return;
 			}
-#line 310 "../../../Source/Core/AST/Identifier.nll"
+#line 303 "../../../Source/Core/AST/Identifier.nll"
 			if (pAST.m_eType == AST.Type.AST_VAR_DECL)
 			{
+#line 305 "../../../Source/Core/AST/Identifier.nll"
 				VarDecl pVarDecl = (VarDecl)(pAST);
-#line 313 "../../../Source/Core/AST/Identifier.nll"
+#line 306 "../../../Source/Core/AST/Identifier.nll"
 				m_pValueType = pVarDecl.m_pTypeRef.CreateValueType(pValidator.m_pResolver);
-#line 315 "../../../Source/Core/AST/Identifier.nll"
+#line 308 "../../../Source/Core/AST/Identifier.nll"
 				if (m_pValueType == null)
 				{
-#line 317 "../../../Source/Core/AST/Identifier.nll"
+#line 310 "../../../Source/Core/AST/Identifier.nll"
 					pValidator.AddError("Could not create ValueType for VarDecl", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-#line 318 "../../../Source/Core/AST/Identifier.nll"
+#line 311 "../../../Source/Core/AST/Identifier.nll"
 					return;
 				}
-#line 322 "../../../Source/Core/AST/Identifier.nll"
+#line 315 "../../../Source/Core/AST/Identifier.nll"
 				if (m_pValueType.m_eType == ValueType.Type.GENERIC_TYPE_DECL_VALUE)
 				{
-#line 324 "../../../Source/Core/AST/Identifier.nll"
+#line 317 "../../../Source/Core/AST/Identifier.nll"
 					if (pParent != null)
 					{
-#line 326 "../../../Source/Core/AST/Identifier.nll"
+#line 319 "../../../Source/Core/AST/Identifier.nll"
 						if (pParent.GetOperatorType() == OperatorExpr.OperatorType.MEMBER_ACCESS && pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 						{
-#line 328 "../../../Source/Core/AST/Identifier.nll"
+#line 321 "../../../Source/Core/AST/Identifier.nll"
 							if (pParent.m_pLeft.m_pValueType.m_pGenericValueTypeVector != null)
 							{
-#line 330 "../../../Source/Core/AST/Identifier.nll"
+#line 323 "../../../Source/Core/AST/Identifier.nll"
 								if (pParent.m_pLeft.m_pValueType.m_pGenericValueTypeVector.GetSize() > 0)
 								{
+#line 325 "../../../Source/Core/AST/Identifier.nll"
 									ValueType pGenericValueType = pParent.m_pLeft.m_pValueType.m_pGenericValueTypeVector.Get(0);
-#line 333 "../../../Source/Core/AST/Identifier.nll"
+#line 326 "../../../Source/Core/AST/Identifier.nll"
 									if (pGenericValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 									{
+#line 328 "../../../Source/Core/AST/Identifier.nll"
 										ValueType pOldValueType;
-										NumbatLogic.ValueType __865768328 = m_pValueType;
-#line 336 "../../../Source/Core/AST/Identifier.nll"
+										NumbatLogic.ValueType __865702733 = m_pValueType;
+#line 329 "../../../Source/Core/AST/Identifier.nll"
 										m_pValueType = null;
-#line 336 "../../../Source/Core/AST/Identifier.nll"
-										pOldValueType = __865768328;
-#line 337 "../../../Source/Core/AST/Identifier.nll"
+#line 329 "../../../Source/Core/AST/Identifier.nll"
+										pOldValueType = __865702733;
+#line 330 "../../../Source/Core/AST/Identifier.nll"
 										m_pValueType = pGenericValueType.Clone();
-#line 338 "../../../Source/Core/AST/Identifier.nll"
+#line 331 "../../../Source/Core/AST/Identifier.nll"
 										m_pValueType.m_ePointerType = pOldValueType.m_ePointerType;
 									}
 								}
@@ -451,56 +476,60 @@ namespace NumbatLogic
 						}
 					}
 				}
-#line 347 "../../../Source/Core/AST/Identifier.nll"
+#line 340 "../../../Source/Core/AST/Identifier.nll"
 				return;
 			}
 			else
-#line 349 "../../../Source/Core/AST/Identifier.nll"
+#line 342 "../../../Source/Core/AST/Identifier.nll"
 				if (pAST.m_eType == AST.Type.AST_MEMBER_VAR_DECL)
 				{
+#line 344 "../../../Source/Core/AST/Identifier.nll"
 					MemberVarDecl pMemberVarDecl = (MemberVarDecl)(pAST);
-#line 352 "../../../Source/Core/AST/Identifier.nll"
+#line 345 "../../../Source/Core/AST/Identifier.nll"
 					if (pMemberVarDecl.m_pVarDecl != null)
 					{
+#line 347 "../../../Source/Core/AST/Identifier.nll"
 						VarDecl pVarDecl = pMemberVarDecl.m_pVarDecl;
-#line 355 "../../../Source/Core/AST/Identifier.nll"
+#line 348 "../../../Source/Core/AST/Identifier.nll"
 						m_pValueType = pVarDecl.m_pTypeRef.CreateValueType(pValidator.m_pResolver);
-#line 357 "../../../Source/Core/AST/Identifier.nll"
+#line 350 "../../../Source/Core/AST/Identifier.nll"
 						if (m_pValueType == null)
 						{
-#line 359 "../../../Source/Core/AST/Identifier.nll"
+#line 352 "../../../Source/Core/AST/Identifier.nll"
 							pValidator.AddError("Could not create ValueType for MemberVarDecl", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
-#line 360 "../../../Source/Core/AST/Identifier.nll"
+#line 353 "../../../Source/Core/AST/Identifier.nll"
 							return;
 						}
-#line 364 "../../../Source/Core/AST/Identifier.nll"
+#line 357 "../../../Source/Core/AST/Identifier.nll"
 						if (m_pValueType.m_eType == ValueType.Type.GENERIC_TYPE_DECL_VALUE)
 						{
-#line 366 "../../../Source/Core/AST/Identifier.nll"
+#line 359 "../../../Source/Core/AST/Identifier.nll"
 							if (pParent != null)
 							{
-#line 368 "../../../Source/Core/AST/Identifier.nll"
+#line 361 "../../../Source/Core/AST/Identifier.nll"
 								if (pParent.GetOperatorType() == OperatorExpr.OperatorType.MEMBER_ACCESS && pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 								{
-#line 370 "../../../Source/Core/AST/Identifier.nll"
+#line 363 "../../../Source/Core/AST/Identifier.nll"
 									if (pParent.m_pLeft.m_pValueType.m_pGenericValueTypeVector != null)
 									{
-#line 372 "../../../Source/Core/AST/Identifier.nll"
+#line 365 "../../../Source/Core/AST/Identifier.nll"
 										if (pParent.m_pLeft.m_pValueType.m_pGenericValueTypeVector.GetSize() > 0)
 										{
+#line 367 "../../../Source/Core/AST/Identifier.nll"
 											ValueType pGenericValueType = pParent.m_pLeft.m_pValueType.m_pGenericValueTypeVector.Get(0);
-#line 375 "../../../Source/Core/AST/Identifier.nll"
+#line 368 "../../../Source/Core/AST/Identifier.nll"
 											if (pGenericValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 											{
+#line 370 "../../../Source/Core/AST/Identifier.nll"
 												ValueType pOldValueType;
-												NumbatLogic.ValueType __866030726 = m_pValueType;
-#line 378 "../../../Source/Core/AST/Identifier.nll"
+												NumbatLogic.ValueType __866030720 = m_pValueType;
+#line 371 "../../../Source/Core/AST/Identifier.nll"
 												m_pValueType = null;
-#line 378 "../../../Source/Core/AST/Identifier.nll"
-												pOldValueType = __866030726;
-#line 379 "../../../Source/Core/AST/Identifier.nll"
+#line 371 "../../../Source/Core/AST/Identifier.nll"
+												pOldValueType = __866030720;
+#line 372 "../../../Source/Core/AST/Identifier.nll"
 												m_pValueType = pGenericValueType.Clone();
-#line 380 "../../../Source/Core/AST/Identifier.nll"
+#line 373 "../../../Source/Core/AST/Identifier.nll"
 												m_pValueType.m_ePointerType = pOldValueType.m_ePointerType;
 											}
 										}
@@ -508,65 +537,67 @@ namespace NumbatLogic
 								}
 							}
 						}
-#line 388 "../../../Source/Core/AST/Identifier.nll"
+#line 381 "../../../Source/Core/AST/Identifier.nll"
 						return;
 					}
 				}
-#line 392 "../../../Source/Core/AST/Identifier.nll"
+#line 385 "../../../Source/Core/AST/Identifier.nll"
 			if (pAST.m_eType == AST.Type.AST_FUNCTION_DECL)
 			{
-#line 394 "../../../Source/Core/AST/Identifier.nll"
+#line 387 "../../../Source/Core/AST/Identifier.nll"
 				m_pValueType = new ValueType(ValueType.Type.FUNCTION_DECL);
-#line 395 "../../../Source/Core/AST/Identifier.nll"
+#line 388 "../../../Source/Core/AST/Identifier.nll"
 				m_pValueType.m_pFunctionDecl = (FunctionDecl)(pAST);
-#line 396 "../../../Source/Core/AST/Identifier.nll"
+#line 389 "../../../Source/Core/AST/Identifier.nll"
 				return;
 			}
 			else
-#line 398 "../../../Source/Core/AST/Identifier.nll"
+#line 391 "../../../Source/Core/AST/Identifier.nll"
 				if (pAST.m_eType == AST.Type.AST_MEMBER_FUNCTION_DECL)
 				{
+#line 393 "../../../Source/Core/AST/Identifier.nll"
 					MemberFunctionDecl pMFD = (MemberFunctionDecl)(pAST);
-#line 401 "../../../Source/Core/AST/Identifier.nll"
+#line 394 "../../../Source/Core/AST/Identifier.nll"
 					if (pMFD.m_pFunctionDecl != null)
 					{
-#line 403 "../../../Source/Core/AST/Identifier.nll"
+#line 396 "../../../Source/Core/AST/Identifier.nll"
 						m_pValueType = new ValueType(ValueType.Type.FUNCTION_DECL);
-#line 404 "../../../Source/Core/AST/Identifier.nll"
+#line 397 "../../../Source/Core/AST/Identifier.nll"
 						m_pValueType.m_pFunctionDecl = pMFD.m_pFunctionDecl;
-#line 405 "../../../Source/Core/AST/Identifier.nll"
+#line 398 "../../../Source/Core/AST/Identifier.nll"
 						return;
 					}
 				}
-#line 409 "../../../Source/Core/AST/Identifier.nll"
+#line 402 "../../../Source/Core/AST/Identifier.nll"
 			if (pAST.m_eType == AST.Type.NAMESPACE_DECL)
 			{
-#line 411 "../../../Source/Core/AST/Identifier.nll"
+#line 404 "../../../Source/Core/AST/Identifier.nll"
 				m_pValueType = new ValueType(ValueType.Type.NAMESPACE_NODE);
-#line 412 "../../../Source/Core/AST/Identifier.nll"
+#line 405 "../../../Source/Core/AST/Identifier.nll"
 				m_pValueType.m_pNamespaceNode = ((NamespaceDecl)(pAST)).m_pNamespaceNode;
-#line 413 "../../../Source/Core/AST/Identifier.nll"
+#line 406 "../../../Source/Core/AST/Identifier.nll"
 				return;
 			}
 			{
+#line 410 "../../../Source/Core/AST/Identifier.nll"
 				InternalString sTemp = new InternalString("say what? ");
-#line 418 "../../../Source/Core/AST/Identifier.nll"
+#line 411 "../../../Source/Core/AST/Identifier.nll"
 				pAST.StringifyType(sTemp);
-#line 419 "../../../Source/Core/AST/Identifier.nll"
+#line 412 "../../../Source/Core/AST/Identifier.nll"
 				pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 			}
-#line 422 "../../../Source/Core/AST/Identifier.nll"
+#line 415 "../../../Source/Core/AST/Identifier.nll"
 			base.Validate(pValidator, pParent);
 		}
 
-#line 425 "../../../Source/Core/AST/Identifier.nll"
+#line 418 "../../../Source/Core/AST/Identifier.nll"
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-#line 427 "../../../Source/Core/AST/Identifier.nll"
+#line 420 "../../../Source/Core/AST/Identifier.nll"
 			m_pNameToken.Stringify(pOutputBuilder.m_sOut);
 		}
 
-#line 4 "../../../Source/Core/AST/Identifier.nll"
+#line 3 "../../../Source/Core/AST/Identifier.nll"
 		public Identifier()
 		{
 		}

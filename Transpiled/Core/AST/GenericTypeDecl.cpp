@@ -21,7 +21,9 @@ namespace NumbatLogic
 #line 5 "../../../Source/Core/AST/GenericTypeDecl.nll"
 	GenericTypeDecl* GenericTypeDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 7 "../../../Source/Core/AST/GenericTypeDecl.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 9 "../../../Source/Core/AST/GenericTypeDecl.nll"
 		Token* pTypeToken = pTokenContainer->Peek(pTempOffset);
 #line 10 "../../../Source/Core/AST/GenericTypeDecl.nll"
 		if (pTypeToken == 0 || pTypeToken->m_eType != Token::Type::TOKEN_IDENTIFIER)
@@ -32,6 +34,7 @@ namespace NumbatLogic
 		}
 #line 12 "../../../Source/Core/AST/GenericTypeDecl.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 14 "../../../Source/Core/AST/GenericTypeDecl.nll"
 		GenericTypeDecl* pGenericTypeDecl = new GenericTypeDecl();
 #line 16 "../../../Source/Core/AST/GenericTypeDecl.nll"
 		pGenericTypeDecl->m_eType = AST::Type::AST_GENERIC_TYPE_DECL;

@@ -32,6 +32,7 @@ namespace NumbatLogic
 #line 11 "../../../Source/Core/AST/NumberExpr.nll"
 	NumberExpr* NumberExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 13 "../../../Source/Core/AST/NumberExpr.nll"
 		Token* pToken = pTokenContainer->PeekExpect(pOffsetDatum, Token::Type::TOKEN_NUMBER);
 #line 14 "../../../Source/Core/AST/NumberExpr.nll"
 		if (pToken == 0)
@@ -39,6 +40,7 @@ namespace NumbatLogic
 			return 0;
 #line 16 "../../../Source/Core/AST/NumberExpr.nll"
 		pOffsetDatum->m_nOffset = pOffsetDatum->m_nOffset + 1;
+#line 17 "../../../Source/Core/AST/NumberExpr.nll"
 		NumberExpr* pNumberExpr = new NumberExpr(pToken);
 		NumbatLogic::NumberExpr* __3368034133 = pNumberExpr;
 #line 18 "../../../Source/Core/AST/NumberExpr.nll"
@@ -50,6 +52,7 @@ namespace NumbatLogic
 #line 21 "../../../Source/Core/AST/NumberExpr.nll"
 	AST* NumberExpr::BaseClone()
 	{
+#line 24 "../../../Source/Core/AST/NumberExpr.nll"
 		NumberExpr* pNumberExpr = new NumberExpr(m_pFirstToken);
 		NumbatLogic::NumberExpr* __3368099729 = pNumberExpr;
 #line 25 "../../../Source/Core/AST/NumberExpr.nll"

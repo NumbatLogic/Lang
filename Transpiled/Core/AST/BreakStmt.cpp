@@ -38,7 +38,9 @@ namespace NumbatLogic
 #line 10 "../../../Source/Core/AST/BreakStmt.nll"
 	BreakStmt* BreakStmt::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 12 "../../../Source/Core/AST/BreakStmt.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 14 "../../../Source/Core/AST/BreakStmt.nll"
 		Token* pBreakToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_BREAK);
 #line 15 "../../../Source/Core/AST/BreakStmt.nll"
 		if (pBreakToken == 0)
@@ -62,6 +64,7 @@ namespace NumbatLogic
 		}
 #line 25 "../../../Source/Core/AST/BreakStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 27 "../../../Source/Core/AST/BreakStmt.nll"
 		BreakStmt* pBreakStmt = new BreakStmt();
 #line 29 "../../../Source/Core/AST/BreakStmt.nll"
 		pBreakStmt->m_eType = AST::Type::AST_BREAK_STMT;

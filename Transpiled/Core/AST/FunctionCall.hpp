@@ -29,7 +29,7 @@ namespace NumbatLogic
 		public: static FunctionCall* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 #line 44 "../../../Source/Core/AST/FunctionCall.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 553 "../../../Source/Core/AST/FunctionCall.nll"
+#line 549 "../../../Source/Core/AST/FunctionCall.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 #line 3 "../../../Source/Core/AST/FunctionCall.nll"
 		public: FunctionCall();

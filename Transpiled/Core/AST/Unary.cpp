@@ -27,7 +27,9 @@ namespace NumbatLogic
 #line 7 "../../../Source/Core/AST/Unary.nll"
 	Unary* Unary::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 9 "../../../Source/Core/AST/Unary.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 11 "../../../Source/Core/AST/Unary.nll"
 		Token* pToken = pTokenContainer->Peek(pTempOffset);
 #line 12 "../../../Source/Core/AST/Unary.nll"
 		if (pToken == 0 || pToken->m_eType != Token::Type::TOKEN_MINUS && pToken->m_eType != Token::Type::TOKEN_BANG && pToken->m_eType != Token::Type::TOKEN_PLUS_PLUS && pToken->m_eType != Token::Type::TOKEN_MINUS_MINUS && pToken->m_eType != Token::Type::TOKEN_TILDE)
@@ -38,7 +40,9 @@ namespace NumbatLogic
 		}
 #line 14 "../../../Source/Core/AST/Unary.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 16 "../../../Source/Core/AST/Unary.nll"
 		AST* pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
+#line 18 "../../../Source/Core/AST/Unary.nll"
 		Unary* pUnary = new Unary();
 #line 20 "../../../Source/Core/AST/Unary.nll"
 		pUnary->m_eType = AST::Type::AST_UNARY;
@@ -70,6 +74,7 @@ namespace NumbatLogic
 #line 35 "../../../Source/Core/AST/Unary.nll"
 		if (m_pExpression->m_pValueType == 0)
 		{
+#line 37 "../../../Source/Core/AST/Unary.nll"
 			InternalString* sTemp = new InternalString("expression did not validate?? ");
 #line 38 "../../../Source/Core/AST/Unary.nll"
 			m_pExpression->StringifyType(sTemp);

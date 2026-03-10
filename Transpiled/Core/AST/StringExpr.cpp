@@ -23,6 +23,7 @@ namespace NumbatLogic
 #line 5 "../../../Source/Core/AST/StringExpr.nll"
 	StringExpr* StringExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 7 "../../../Source/Core/AST/StringExpr.nll"
 		Token* pToken = pTokenContainer->PeekExpect(pOffsetDatum, Token::Type::TOKEN_STRING);
 #line 8 "../../../Source/Core/AST/StringExpr.nll"
 		if (pToken == 0)
@@ -30,6 +31,7 @@ namespace NumbatLogic
 			return 0;
 #line 10 "../../../Source/Core/AST/StringExpr.nll"
 		pOffsetDatum->m_nOffset = pOffsetDatum->m_nOffset + 1;
+#line 12 "../../../Source/Core/AST/StringExpr.nll"
 		StringExpr* pStringExpr = new StringExpr();
 #line 13 "../../../Source/Core/AST/StringExpr.nll"
 		pStringExpr->m_eType = AST::Type::AST_STRING;

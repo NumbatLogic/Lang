@@ -27,7 +27,9 @@ namespace NumbatLogic
 #line 5 "../../../Source/Core/AST/Paren.nll"
 	Paren* Paren::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 7 "../../../Source/Core/AST/Paren.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 9 "../../../Source/Core/AST/Paren.nll"
 		Token* pOpeningToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_LEFT);
 #line 10 "../../../Source/Core/AST/Paren.nll"
 		if (pOpeningToken == 0)
@@ -38,6 +40,7 @@ namespace NumbatLogic
 		}
 #line 12 "../../../Source/Core/AST/Paren.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 14 "../../../Source/Core/AST/Paren.nll"
 		AST* pChild = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 15 "../../../Source/Core/AST/Paren.nll"
 		if (pChild == 0)
@@ -47,6 +50,7 @@ namespace NumbatLogic
 #line 16 "../../../Source/Core/AST/Paren.nll"
 			return 0;
 		}
+#line 18 "../../../Source/Core/AST/Paren.nll"
 		Token* pClosingToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT);
 #line 19 "../../../Source/Core/AST/Paren.nll"
 		if (pClosingToken == 0)
@@ -58,6 +62,7 @@ namespace NumbatLogic
 		}
 #line 21 "../../../Source/Core/AST/Paren.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 23 "../../../Source/Core/AST/Paren.nll"
 		Paren* pParen = new Paren();
 #line 24 "../../../Source/Core/AST/Paren.nll"
 		pParen->m_eType = AST::Type::AST_PAREN;

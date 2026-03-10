@@ -68,21 +68,21 @@ namespace NumbatLogic
 		public: virtual AST* BaseClone();
 #line 447 "../../../Source/Core/AST/TypeRef.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 636 "../../../Source/Core/AST/TypeRef.nll"
+#line 635 "../../../Source/Core/AST/TypeRef.nll"
 		public: ValueType* GetRecursiveValueType(Resolver* pResolver);
-#line 648 "../../../Source/Core/AST/TypeRef.nll"
+#line 647 "../../../Source/Core/AST/TypeRef.nll"
 		public: ValueType* CreateValueType(Resolver* pResolver);
-#line 662 "../../../Source/Core/AST/TypeRef.nll"
+#line 661 "../../../Source/Core/AST/TypeRef.nll"
 		protected: ValueType* SetValueType(Resolver* pResolver);
-#line 858 "../../../Source/Core/AST/TypeRef.nll"
+#line 857 "../../../Source/Core/AST/TypeRef.nll"
 		public: bool IsIntegral();
-#line 870 "../../../Source/Core/AST/TypeRef.nll"
+#line 869 "../../../Source/Core/AST/TypeRef.nll"
 		public: bool IsInt();
-#line 883 "../../../Source/Core/AST/TypeRef.nll"
+#line 882 "../../../Source/Core/AST/TypeRef.nll"
 		public: bool IsBool();
-#line 888 "../../../Source/Core/AST/TypeRef.nll"
+#line 887 "../../../Source/Core/AST/TypeRef.nll"
 		public: bool IsFloat();
-#line 893 "../../../Source/Core/AST/TypeRef.nll"
+#line 892 "../../../Source/Core/AST/TypeRef.nll"
 		public: bool IsDouble();
 #line 3 "../../../Source/Core/AST/TypeRef.nll"
 		public: virtual ~TypeRef();

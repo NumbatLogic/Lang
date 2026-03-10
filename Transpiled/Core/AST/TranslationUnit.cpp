@@ -62,6 +62,7 @@ namespace NumbatLogic
 #line 23 "../../../Source/Core/AST/TranslationUnit.nll"
 	ReferenceNode* ReferenceNode::GetOrCreateChildNode(const char* sxName)
 	{
+#line 25 "../../../Source/Core/AST/TranslationUnit.nll"
 		ReferenceNode* pChild = 0;
 #line 26 "../../../Source/Core/AST/TranslationUnit.nll"
 		for (int i = 0; i < m_pChildNodeVector->GetSize(); i++)
@@ -73,6 +74,7 @@ namespace NumbatLogic
 #line 30 "../../../Source/Core/AST/TranslationUnit.nll"
 				return pChild;
 		}
+#line 33 "../../../Source/Core/AST/TranslationUnit.nll"
 		ReferenceNode* pCreatedChild = new ReferenceNode(sxName);
 #line 34 "../../../Source/Core/AST/TranslationUnit.nll"
 		pChild = pCreatedChild;
@@ -110,6 +112,7 @@ namespace NumbatLogic
 #line 52 "../../../Source/Core/AST/TranslationUnit.nll"
 		for (int i = 0; i < m_pChildNodeVector->GetSize(); i++)
 		{
+#line 54 "../../../Source/Core/AST/TranslationUnit.nll"
 			ReferenceNode* pChild = m_pChildNodeVector->Get(i);
 #line 55 "../../../Source/Core/AST/TranslationUnit.nll"
 			pChild->Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
@@ -117,6 +120,7 @@ namespace NumbatLogic
 #line 58 "../../../Source/Core/AST/TranslationUnit.nll"
 		for (int i = 0; i < m_pChildClassVector->GetSize(); i++)
 		{
+#line 60 "../../../Source/Core/AST/TranslationUnit.nll"
 			ClassDeclReference* pChild = m_pChildClassVector->Get(i);
 #line 61 "../../../Source/Core/AST/TranslationUnit.nll"
 			if (pChild->m_pClassDecl->m_pGenericTypeDeclVector->GetSize() > 0)
@@ -179,16 +183,20 @@ namespace NumbatLogic
 #line 99 "../../../Source/Core/AST/TranslationUnit.nll"
 	TranslationUnit* TranslationUnit::Create(const char* sInFile, OwnedVector<InternalString*>* sDefineVector)
 	{
+#line 101 "../../../Source/Core/AST/TranslationUnit.nll"
 		TranslationUnit* pThis = new TranslationUnit(sInFile);
+#line 103 "../../../Source/Core/AST/TranslationUnit.nll"
 		InternalString* sInput = File::GetContents(pThis->m_sInFile->GetExternalString());
 #line 106 "../../../Source/Core/AST/TranslationUnit.nll"
 		pThis->m_pTokenContainer->Tokenize(sInput->GetExternalString(), pThis->m_sInFile, sDefineVector);
 #line 107 "../../../Source/Core/AST/TranslationUnit.nll"
 		pThis->m_pTokenContainer->StripWhitespace();
+#line 109 "../../../Source/Core/AST/TranslationUnit.nll"
 		OffsetDatum* pOffsetDatum = OffsetDatum::Create(0);
 #line 112 "../../../Source/Core/AST/TranslationUnit.nll"
 		while (pOffsetDatum->m_nOffset < pThis->m_pTokenContainer->m_pTokenVector->GetSize())
 		{
+#line 114 "../../../Source/Core/AST/TranslationUnit.nll"
 			AST* pAST = AST::CreateFromTokenContainer(pThis->m_pTokenContainer, pOffsetDatum);
 #line 115 "../../../Source/Core/AST/TranslationUnit.nll"
 			if (pAST == 0)
@@ -219,6 +227,7 @@ namespace NumbatLogic
 #line 126 "../../../Source/Core/AST/TranslationUnit.nll"
 		for (int i = 0; i < m_pClassDeclReferenceVector->GetSize(); i++)
 		{
+#line 128 "../../../Source/Core/AST/TranslationUnit.nll"
 			ClassDeclReference* pTestClassDeclReference = m_pClassDeclReferenceVector->Get(i);
 #line 129 "../../../Source/Core/AST/TranslationUnit.nll"
 			if (pTestClassDeclReference->m_pClassDecl == pClassDecl && pTestClassDeclReference->m_eOutputFile == eOutputFile)
@@ -233,6 +242,7 @@ namespace NumbatLogic
 				}
 			}
 		}
+#line 144 "../../../Source/Core/AST/TranslationUnit.nll"
 		ClassDeclReference* pClassDeclReference = new ClassDeclReference();
 #line 145 "../../../Source/Core/AST/TranslationUnit.nll"
 		pClassDeclReference->m_pClassDecl = pClassDecl;
@@ -256,16 +266,20 @@ namespace NumbatLogic
 #line 157 "../../../Source/Core/AST/TranslationUnit.nll"
 		if (sPath->EndsWith(".nll.def"))
 		{
+#line 159 "../../../Source/Core/AST/TranslationUnit.nll"
 			InternalString* sFolder = new InternalString("");
+#line 160 "../../../Source/Core/AST/TranslationUnit.nll"
 			InternalString* sFile = sPath->CreateClone();
 #line 162 "../../../Source/Core/AST/TranslationUnit.nll"
 			while (true)
 			{
+#line 164 "../../../Source/Core/AST/TranslationUnit.nll"
 				int nIndex = sFile->FindChar('/');
 #line 165 "../../../Source/Core/AST/TranslationUnit.nll"
 				if (nIndex == -1)
 #line 166 "../../../Source/Core/AST/TranslationUnit.nll"
 					break;
+#line 168 "../../../Source/Core/AST/TranslationUnit.nll"
 				InternalString* sTemp = sFile->CreateClone();
 #line 169 "../../../Source/Core/AST/TranslationUnit.nll"
 				sTemp->SubStr(0, nIndex + 1);
@@ -371,22 +385,28 @@ namespace NumbatLogic
 #line 237 "../../../Source/Core/AST/TranslationUnit.nll"
 	InternalString* TranslationUnit::RetargetRelativePath(Language eLanguage, OutputFile eOutputFile, const char* sxFrom, const char* sxTo)
 	{
+#line 239 "../../../Source/Core/AST/TranslationUnit.nll"
 		InternalString* sFrom = new InternalString(sxFrom);
+#line 240 "../../../Source/Core/AST/TranslationUnit.nll"
 		InternalString* sTo = new InternalString(sxTo);
 #line 242 "../../../Source/Core/AST/TranslationUnit.nll"
 		ConvertFilePath(eLanguage, eOutputFile, sFrom);
 #line 243 "../../../Source/Core/AST/TranslationUnit.nll"
 		ConvertFilePath(eLanguage, eOutputFile, sTo);
+#line 245 "../../../Source/Core/AST/TranslationUnit.nll"
 		OwnedVector<InternalString*>* sFromVector = new OwnedVector<InternalString*>();
+#line 246 "../../../Source/Core/AST/TranslationUnit.nll"
 		OwnedVector<InternalString*>* sToVector = new OwnedVector<InternalString*>();
 #line 248 "../../../Source/Core/AST/TranslationUnit.nll"
 		while (true)
 		{
+#line 250 "../../../Source/Core/AST/TranslationUnit.nll"
 			int nIndex = sFrom->FindChar('/');
 #line 251 "../../../Source/Core/AST/TranslationUnit.nll"
 			if (nIndex == -1)
 #line 252 "../../../Source/Core/AST/TranslationUnit.nll"
 				break;
+#line 254 "../../../Source/Core/AST/TranslationUnit.nll"
 			InternalString* sTemp = sFrom->CreateClone();
 #line 255 "../../../Source/Core/AST/TranslationUnit.nll"
 			sTemp->SubStr(0, nIndex + 1);
@@ -402,11 +422,13 @@ namespace NumbatLogic
 #line 260 "../../../Source/Core/AST/TranslationUnit.nll"
 		while (true)
 		{
+#line 262 "../../../Source/Core/AST/TranslationUnit.nll"
 			int nIndex = sTo->FindChar('/');
 #line 263 "../../../Source/Core/AST/TranslationUnit.nll"
 			if (nIndex == -1)
 #line 264 "../../../Source/Core/AST/TranslationUnit.nll"
 				break;
+#line 266 "../../../Source/Core/AST/TranslationUnit.nll"
 			InternalString* sTemp = sTo->CreateClone();
 #line 267 "../../../Source/Core/AST/TranslationUnit.nll"
 			sTemp->SubStr(0, nIndex + 1);
@@ -435,6 +457,7 @@ namespace NumbatLogic
 #line 282 "../../../Source/Core/AST/TranslationUnit.nll"
 			sToVector->Erase(0);
 		}
+#line 285 "../../../Source/Core/AST/TranslationUnit.nll"
 		InternalString* sOut = new InternalString("");
 #line 287 "../../../Source/Core/AST/TranslationUnit.nll"
 		for (int i = 0; i < sFromVector->GetSize(); i++)
@@ -469,15 +492,19 @@ namespace NumbatLogic
 #line 302 "../../../Source/Core/AST/TranslationUnit.nll"
 				pOutputBuilder->m_sOut->Append("#pragma once\n\n");
 			}
+#line 305 "../../../Source/Core/AST/TranslationUnit.nll"
 			OwnedVector<InternalString*>* sPreviousIncludes = new OwnedVector<InternalString*>();
+#line 306 "../../../Source/Core/AST/TranslationUnit.nll"
 			ReferenceNode* pRootReferenceNode = new ReferenceNode("");
 #line 308 "../../../Source/Core/AST/TranslationUnit.nll"
 			for (int i = 0; i < m_pClassDeclReferenceVector->GetSize(); i++)
 			{
+#line 310 "../../../Source/Core/AST/TranslationUnit.nll"
 				ClassDeclReference* pClassDeclReference = m_pClassDeclReferenceVector->Get(i);
 #line 311 "../../../Source/Core/AST/TranslationUnit.nll"
 				if (eOutputFile == pClassDeclReference->m_eOutputFile)
 				{
+#line 317 "../../../Source/Core/AST/TranslationUnit.nll"
 					bool bOnlyInclude = !pClassDeclReference->m_bForwardReference;
 #line 318 "../../../Source/Core/AST/TranslationUnit.nll"
 					if (bOnlyInclude)
@@ -485,6 +512,7 @@ namespace NumbatLogic
 #line 320 "../../../Source/Core/AST/TranslationUnit.nll"
 						for (int j = 0; j < m_pClassDeclReferenceVector->GetSize(); j++)
 						{
+#line 322 "../../../Source/Core/AST/TranslationUnit.nll"
 							ClassDeclReference* pTestClassDeclReference = m_pClassDeclReferenceVector->Get(j);
 #line 323 "../../../Source/Core/AST/TranslationUnit.nll"
 							if (pTestClassDeclReference->m_pClassDecl == pClassDeclReference->m_pClassDecl)
@@ -507,7 +535,9 @@ namespace NumbatLogic
 #line 337 "../../../Source/Core/AST/TranslationUnit.nll"
 					if (pClassDeclReference->m_bForwardReference || bOnlyInclude)
 					{
+#line 339 "../../../Source/Core/AST/TranslationUnit.nll"
 						Vector<InternalString*>* sNamespaceVector = new Vector<InternalString*>();
+#line 340 "../../../Source/Core/AST/TranslationUnit.nll"
 						NamespaceNode* pNamespaceNode = pClassDeclReference->m_pClassDecl->m_pNamespaceNode;
 #line 341 "../../../Source/Core/AST/TranslationUnit.nll"
 						while (pNamespaceNode != 0 && pNamespaceNode->m_sName != 0)
@@ -517,10 +547,12 @@ namespace NumbatLogic
 #line 344 "../../../Source/Core/AST/TranslationUnit.nll"
 							pNamespaceNode = pNamespaceNode->m_pParent;
 						}
+#line 348 "../../../Source/Core/AST/TranslationUnit.nll"
 						ReferenceNode* pCurrentNode = pRootReferenceNode;
 #line 349 "../../../Source/Core/AST/TranslationUnit.nll"
 						for (int j = 0; j < sNamespaceVector->GetSize(); j++)
 						{
+#line 351 "../../../Source/Core/AST/TranslationUnit.nll"
 							InternalString* sNamespace = sNamespaceVector->Get(j);
 #line 352 "../../../Source/Core/AST/TranslationUnit.nll"
 							pCurrentNode = pCurrentNode->GetOrCreateChildNode(sNamespace->GetExternalString());
@@ -532,10 +564,12 @@ namespace NumbatLogic
 #line 358 "../../../Source/Core/AST/TranslationUnit.nll"
 					if (!pClassDeclReference->m_bForwardReference)
 					{
+#line 360 "../../../Source/Core/AST/TranslationUnit.nll"
 						bool bFound = false;
 #line 361 "../../../Source/Core/AST/TranslationUnit.nll"
 						for (int j = 0; j < sPreviousIncludes->GetSize(); j++)
 						{
+#line 363 "../../../Source/Core/AST/TranslationUnit.nll"
 							InternalString* sTemp = sPreviousIncludes->Get(j);
 #line 364 "../../../Source/Core/AST/TranslationUnit.nll"
 							if (sTemp->IsEqual(pClassDeclReference->m_pClassDecl->m_pNameToken->m_sFileName->GetExternalString()))
@@ -552,6 +586,7 @@ namespace NumbatLogic
 							continue;
 #line 372 "../../../Source/Core/AST/TranslationUnit.nll"
 						sPreviousIncludes->PushBack(new InternalString(pClassDeclReference->m_pClassDecl->m_pNameToken->m_sFileName->GetExternalString()));
+#line 374 "../../../Source/Core/AST/TranslationUnit.nll"
 						InternalString* sFixedPath = RetargetRelativePath(eLanguage, AST::OutputFile::HEADER, m_pFirstChild->m_pFirstToken->m_sFileName->GetExternalString(), pClassDeclReference->m_pClassDecl->m_pNameToken->m_sFileName->GetExternalString());
 #line 375 "../../../Source/Core/AST/TranslationUnit.nll"
 						pOutputBuilder->m_sOut->Append("#include \"");
@@ -572,6 +607,7 @@ namespace NumbatLogic
 			if (sPreviousIncludes) delete sPreviousIncludes;
 			if (pRootReferenceNode) delete pRootReferenceNode;
 		}
+#line 387 "../../../Source/Core/AST/TranslationUnit.nll"
 		AST* pChild = m_pFirstChild;
 #line 388 "../../../Source/Core/AST/TranslationUnit.nll"
 		while (pChild != 0)

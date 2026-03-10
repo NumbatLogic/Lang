@@ -34,6 +34,7 @@ namespace NumbatLogic
 #line 9 "../../../Source/CLI/CLI.nll"
 		if (sArgVector->GetSize() % 2 != 0)
 		{
+#line 11 "../../../Source/CLI/CLI.nll"
 			InternalString* sTemp = new InternalString("expected even number of args! Got ");
 #line 12 "../../../Source/CLI/CLI.nll"
 			sTemp->AppendInt(sArgVector->GetSize());
@@ -43,22 +44,34 @@ namespace NumbatLogic
 #line 14 "../../../Source/CLI/CLI.nll"
 			return;
 		}
+#line 17 "../../../Source/CLI/CLI.nll"
 		Project* pProject = new Project();
+#line 18 "../../../Source/CLI/CLI.nll"
 		InternalString* sAmalgamateFileName = 0;
+#line 19 "../../../Source/CLI/CLI.nll"
 		bool bOutputNLLDef = false;
+#line 21 "../../../Source/CLI/CLI.nll"
 		OwnedVector<InternalString*>* sAmalgamatedHPPAppend = new OwnedVector<InternalString*>();
+#line 22 "../../../Source/CLI/CLI.nll"
 		OwnedVector<InternalString*>* sAmalgamatedCPPPrepend = new OwnedVector<InternalString*>();
+#line 23 "../../../Source/CLI/CLI.nll"
 		OwnedVector<InternalString*>* sAmalgamatedCPPAppend = new OwnedVector<InternalString*>();
+#line 24 "../../../Source/CLI/CLI.nll"
 		OwnedVector<InternalString*>* sAmalgamatedCSAppend = new OwnedVector<InternalString*>();
+#line 25 "../../../Source/CLI/CLI.nll"
 		OwnedVector<InternalString*>* sDefineVector = new OwnedVector<InternalString*>();
+#line 27 "../../../Source/CLI/CLI.nll"
 		int i = 0;
 #line 28 "../../../Source/CLI/CLI.nll"
 		while (i < sArgVector->GetSize())
 		{
+#line 30 "../../../Source/CLI/CLI.nll"
 			InternalString* sTemp = 0;
+#line 32 "../../../Source/CLI/CLI.nll"
 			const char* sxArg0 = sArgVector->Get(i);
 #line 33 "../../../Source/CLI/CLI.nll"
 			i++;
+#line 34 "../../../Source/CLI/CLI.nll"
 			const char* sxArg1 = sArgVector->Get(i);
 #line 35 "../../../Source/CLI/CLI.nll"
 			i++;
@@ -207,14 +220,18 @@ namespace NumbatLogic
 #line 120 "../../../Source/CLI/CLI.nll"
 		if (sAmalgamateFileName != 0)
 		{
+#line 122 "../../../Source/CLI/CLI.nll"
 			InternalString* sOutFileName = new InternalString(sAmalgamateFileName->GetExternalString());
 #line 123 "../../../Source/CLI/CLI.nll"
 			sOutFileName->Replace(".nll", ".cs");
+#line 125 "../../../Source/CLI/CLI.nll"
 			InternalString* sAppend = new InternalString("");
 #line 127 "../../../Source/CLI/CLI.nll"
 			for (int x = 0; x < sAmalgamatedCSAppend->GetSize(); x++)
 			{
+#line 129 "../../../Source/CLI/CLI.nll"
 				InternalString* sInFileName = sAmalgamatedCSAppend->Get(x);
+#line 130 "../../../Source/CLI/CLI.nll"
 				InternalString* sInFile = File::GetContents(sInFileName->GetExternalString());
 #line 132 "../../../Source/CLI/CLI.nll"
 				sAppend->AppendString(sInFile->GetExternalString());
@@ -222,6 +239,7 @@ namespace NumbatLogic
 				sAppend->AppendString("\n\n");
 				if (sInFile) delete sInFile;
 			}
+#line 136 "../../../Source/CLI/CLI.nll"
 			InternalString* sOutFile = File::GetContents(sOutFileName->GetExternalString());
 #line 137 "../../../Source/CLI/CLI.nll"
 			sOutFile->AppendString(sAppend->GetExternalString());
@@ -238,14 +256,18 @@ namespace NumbatLogic
 #line 144 "../../../Source/CLI/CLI.nll"
 		if (sAmalgamateFileName != 0)
 		{
+#line 146 "../../../Source/CLI/CLI.nll"
 			InternalString* sOutFileName = new InternalString(sAmalgamateFileName->GetExternalString());
 #line 147 "../../../Source/CLI/CLI.nll"
 			sOutFileName->Replace(".nll", ".hpp");
+#line 149 "../../../Source/CLI/CLI.nll"
 			InternalString* sAppend = new InternalString("");
 #line 151 "../../../Source/CLI/CLI.nll"
 			for (int x = 0; x < sAmalgamatedHPPAppend->GetSize(); x++)
 			{
+#line 153 "../../../Source/CLI/CLI.nll"
 				InternalString* sInFileName = sAmalgamatedHPPAppend->Get(x);
+#line 154 "../../../Source/CLI/CLI.nll"
 				InternalString* sInFile = File::GetContents(sInFileName->GetExternalString());
 #line 156 "../../../Source/CLI/CLI.nll"
 				sAppend->AppendString(sInFile->GetExternalString());
@@ -253,6 +275,7 @@ namespace NumbatLogic
 				sAppend->AppendString("\n\n");
 				if (sInFile) delete sInFile;
 			}
+#line 160 "../../../Source/CLI/CLI.nll"
 			InternalString* sOutFile = File::GetContents(sOutFileName->GetExternalString());
 #line 161 "../../../Source/CLI/CLI.nll"
 			sOutFile->AppendString(sAppend->GetExternalString());
@@ -269,15 +292,20 @@ namespace NumbatLogic
 #line 170 "../../../Source/CLI/CLI.nll"
 		if (sAmalgamateFileName != 0)
 		{
+#line 172 "../../../Source/CLI/CLI.nll"
 			InternalString* sOutFileName = new InternalString(sAmalgamateFileName->GetExternalString());
 #line 173 "../../../Source/CLI/CLI.nll"
 			sOutFileName->Replace(".nll", ".cpp");
+#line 175 "../../../Source/CLI/CLI.nll"
 			InternalString* sPrepend = new InternalString("");
+#line 176 "../../../Source/CLI/CLI.nll"
 			InternalString* sAppend = new InternalString("");
 #line 178 "../../../Source/CLI/CLI.nll"
 			for (int x = 0; x < sAmalgamatedCPPPrepend->GetSize(); x++)
 			{
+#line 180 "../../../Source/CLI/CLI.nll"
 				InternalString* sInFileName = sAmalgamatedCPPPrepend->Get(x);
+#line 181 "../../../Source/CLI/CLI.nll"
 				InternalString* sInFile = File::GetContents(sInFileName->GetExternalString());
 #line 184 "../../../Source/CLI/CLI.nll"
 				sInFile->Replace("#pragma once", "");
@@ -294,7 +322,9 @@ namespace NumbatLogic
 #line 192 "../../../Source/CLI/CLI.nll"
 			for (int x = 0; x < sAmalgamatedCPPAppend->GetSize(); x++)
 			{
+#line 194 "../../../Source/CLI/CLI.nll"
 				InternalString* sInFileName = sAmalgamatedCPPAppend->Get(x);
+#line 195 "../../../Source/CLI/CLI.nll"
 				InternalString* sInFile = File::GetContents(sInFileName->GetExternalString());
 #line 198 "../../../Source/CLI/CLI.nll"
 				sInFile->Replace("#include \"Assert.hpp\"", "");
@@ -346,6 +376,7 @@ namespace NumbatLogic
 				sAppend->AppendString("\n\n");
 				if (sInFile) delete sInFile;
 			}
+#line 237 "../../../Source/CLI/CLI.nll"
 			InternalString* sOutFile = File::GetContents(sOutFileName->GetExternalString());
 #line 238 "../../../Source/CLI/CLI.nll"
 			sOutFile->PrependString(sPrepend->GetExternalString());

@@ -1,119 +1,126 @@
 #line 1 "../../../Source/Core/AST/TTHashExpr.nll"
 namespace NumbatLogic
 {
-#line 4 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 3 "../../../Source/Core/AST/TTHashExpr.nll"
 	class TTHashExpr : AST
 	{
-#line 6 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 5 "../../../Source/Core/AST/TTHashExpr.nll"
 		protected StringExpr m_pStringExpr;
-#line 8 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 7 "../../../Source/Core/AST/TTHashExpr.nll"
 		public TTHashExpr()
 		{
-#line 10 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 9 "../../../Source/Core/AST/TTHashExpr.nll"
 			m_eType = AST.Type.AST_TTHASH_EXP;
 		}
 
-#line 13 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 12 "../../../Source/Core/AST/TTHashExpr.nll"
 		public static TTHashExpr TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
 		{
+#line 14 "../../../Source/Core/AST/TTHashExpr.nll"
 			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
+#line 16 "../../../Source/Core/AST/TTHashExpr.nll"
 			Token pTTHashToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_KEYWORD_TTHASH);
-#line 18 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 17 "../../../Source/Core/AST/TTHashExpr.nll"
 			if (pTTHashToken == null)
 			{
-#line 19 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 18 "../../../Source/Core/AST/TTHashExpr.nll"
 				return null;
 			}
-#line 20 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 19 "../../../Source/Core/AST/TTHashExpr.nll"
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 21 "../../../Source/Core/AST/TTHashExpr.nll"
 			Token pOpenToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_LEFT);
-#line 23 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 22 "../../../Source/Core/AST/TTHashExpr.nll"
 			if (pOpenToken == null)
 			{
-#line 25 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 24 "../../../Source/Core/AST/TTHashExpr.nll"
 				Console.Log("expected '(' ");
-#line 26 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 25 "../../../Source/Core/AST/TTHashExpr.nll"
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-#line 27 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 26 "../../../Source/Core/AST/TTHashExpr.nll"
 				NumbatLogic.Assert.Plz(false);
-#line 28 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 27 "../../../Source/Core/AST/TTHashExpr.nll"
 				return null;
 			}
-#line 30 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 29 "../../../Source/Core/AST/TTHashExpr.nll"
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 31 "../../../Source/Core/AST/TTHashExpr.nll"
 			StringExpr pStringExpr = StringExpr.TryCreate(pTokenContainer, pTempOffset);
-#line 33 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 32 "../../../Source/Core/AST/TTHashExpr.nll"
 			if (pStringExpr == null)
 			{
-#line 35 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 34 "../../../Source/Core/AST/TTHashExpr.nll"
 				Console.Log("expected a string to tthash");
-#line 36 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 35 "../../../Source/Core/AST/TTHashExpr.nll"
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-#line 37 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 36 "../../../Source/Core/AST/TTHashExpr.nll"
 				NumbatLogic.Assert.Plz(false);
-#line 38 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 37 "../../../Source/Core/AST/TTHashExpr.nll"
 				return null;
 			}
+#line 40 "../../../Source/Core/AST/TTHashExpr.nll"
 			Token pCloseToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_RIGHT);
-#line 42 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 41 "../../../Source/Core/AST/TTHashExpr.nll"
 			if (pCloseToken == null)
 			{
-#line 44 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 43 "../../../Source/Core/AST/TTHashExpr.nll"
 				Console.Log("expected ')' ");
-#line 45 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 44 "../../../Source/Core/AST/TTHashExpr.nll"
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-#line 46 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 45 "../../../Source/Core/AST/TTHashExpr.nll"
 				NumbatLogic.Assert.Plz(false);
-#line 47 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 46 "../../../Source/Core/AST/TTHashExpr.nll"
 				return null;
 			}
-#line 49 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 48 "../../../Source/Core/AST/TTHashExpr.nll"
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 51 "../../../Source/Core/AST/TTHashExpr.nll"
 			TTHashExpr pTTHashExpr = new TTHashExpr();
-#line 53 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 52 "../../../Source/Core/AST/TTHashExpr.nll"
 			pTTHashExpr.m_pFirstToken = pTTHashToken;
-#line 54 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 53 "../../../Source/Core/AST/TTHashExpr.nll"
 			pTTHashExpr.m_pStringExpr = pStringExpr;
 			NumbatLogic.StringExpr __1742876149 = pStringExpr;
-#line 55 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 54 "../../../Source/Core/AST/TTHashExpr.nll"
 			pStringExpr = null;
-#line 55 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 54 "../../../Source/Core/AST/TTHashExpr.nll"
 			pTTHashExpr.AddChild(__1742876149);
-#line 57 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 56 "../../../Source/Core/AST/TTHashExpr.nll"
 			pOffsetDatum.Set(pTempOffset);
 			NumbatLogic.TTHashExpr __4133333365 = pTTHashExpr;
-#line 58 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 57 "../../../Source/Core/AST/TTHashExpr.nll"
 			pTTHashExpr = null;
-#line 58 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 57 "../../../Source/Core/AST/TTHashExpr.nll"
 			return __4133333365;
 		}
 
-#line 61 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 60 "../../../Source/Core/AST/TTHashExpr.nll"
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
-#line 63 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 62 "../../../Source/Core/AST/TTHashExpr.nll"
 			m_pValueType = new ValueType(ValueType.Type.INT);
 		}
 
-#line 66 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 65 "../../../Source/Core/AST/TTHashExpr.nll"
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-#line 68 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 67 "../../../Source/Core/AST/TTHashExpr.nll"
 			if (eLanguage == AST.Language.NLL || eLanguage == AST.Language.NLL_DEF)
 			{
-#line 70 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 69 "../../../Source/Core/AST/TTHashExpr.nll"
 				pOutputBuilder.m_sOut.Append("tthash(");
-#line 71 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 70 "../../../Source/Core/AST/TTHashExpr.nll"
 				m_pStringExpr.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-#line 72 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 71 "../../../Source/Core/AST/TTHashExpr.nll"
 				pOutputBuilder.m_sOut.AppendChar(')');
 			}
 			else
 			{
+#line 75 "../../../Source/Core/AST/TTHashExpr.nll"
 				InternalString sTemp = new InternalString(m_pStringExpr.m_pFirstToken.m_sValue.GetExternalString());
-#line 77 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 76 "../../../Source/Core/AST/TTHashExpr.nll"
 				sTemp.Crop(1, sTemp.GetLength() - 2);
-#line 78 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 77 "../../../Source/Core/AST/TTHashExpr.nll"
 				pOutputBuilder.m_sOut.AppendUint32(ExternalString.GetChecksum(sTemp.GetExternalString()));
 			}
 		}

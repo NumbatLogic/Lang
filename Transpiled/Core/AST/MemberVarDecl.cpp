@@ -43,8 +43,11 @@ namespace NumbatLogic
 #line 14 "../../../Source/Core/AST/MemberVarDecl.nll"
 	MemberVarDecl* MemberVarDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 16 "../../../Source/Core/AST/MemberVarDecl.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 18 "../../../Source/Core/AST/MemberVarDecl.nll"
 		bool bStatic = false;
+#line 20 "../../../Source/Core/AST/MemberVarDecl.nll"
 		AccessLevel* pAccessLevel = AccessLevel::TryCreate(pTokenContainer, pTempOffset);
 #line 21 "../../../Source/Core/AST/MemberVarDecl.nll"
 		if (pAccessLevel == 0)
@@ -54,6 +57,7 @@ namespace NumbatLogic
 #line 22 "../../../Source/Core/AST/MemberVarDecl.nll"
 			return 0;
 		}
+#line 24 "../../../Source/Core/AST/MemberVarDecl.nll"
 		Token* pStaticToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_STATIC);
 #line 25 "../../../Source/Core/AST/MemberVarDecl.nll"
 		if (pStaticToken != 0)
@@ -63,6 +67,7 @@ namespace NumbatLogic
 #line 28 "../../../Source/Core/AST/MemberVarDecl.nll"
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		}
+#line 31 "../../../Source/Core/AST/MemberVarDecl.nll"
 		VarDecl* pVarDecl = VarDecl::TryCreate(pTokenContainer, pTempOffset, false);
 #line 32 "../../../Source/Core/AST/MemberVarDecl.nll"
 		if (pVarDecl == 0)
@@ -73,6 +78,7 @@ namespace NumbatLogic
 #line 33 "../../../Source/Core/AST/MemberVarDecl.nll"
 			return 0;
 		}
+#line 35 "../../../Source/Core/AST/MemberVarDecl.nll"
 		MemberVarDecl* pMemberVarDecl = new MemberVarDecl();
 #line 37 "../../../Source/Core/AST/MemberVarDecl.nll"
 		pMemberVarDecl->m_eType = AST::Type::AST_MEMBER_VAR_DECL;
@@ -109,6 +115,7 @@ namespace NumbatLogic
 	{
 #line 51 "../../../Source/Core/AST/MemberVarDecl.nll"
 		AST::Validate(pValidator, pParent);
+#line 53 "../../../Source/Core/AST/MemberVarDecl.nll"
 		InternalString* sTemp = new InternalString(m_pVarDecl->m_pNameToken->GetString());
 #line 54 "../../../Source/Core/AST/MemberVarDecl.nll"
 		if (!(sTemp->StartsWith("m_") || sTemp->StartsWith("__")) && !m_pVarDecl->m_pTypeRef->m_bConst)
@@ -122,10 +129,12 @@ namespace NumbatLogic
 #line 60 "../../../Source/Core/AST/MemberVarDecl.nll"
 	void MemberVarDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
+#line 62 "../../../Source/Core/AST/MemberVarDecl.nll"
 		bool bArrayAssignment = m_pVarDecl->m_pArraySizeVector != 0 && m_pVarDecl->m_pAssignment != 0;
 #line 67 "../../../Source/Core/AST/MemberVarDecl.nll"
 		if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
 		{
+#line 69 "../../../Source/Core/AST/MemberVarDecl.nll"
 			bool bDoIt = false;
 #line 70 "../../../Source/Core/AST/MemberVarDecl.nll"
 			if (bArrayAssignment)

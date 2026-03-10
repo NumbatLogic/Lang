@@ -65,6 +65,7 @@ namespace NumbatLogic
 #line 65 "../../../Source/Core/ValueType.nll"
 	ValueType* ValueType::Clone()
 	{
+#line 67 "../../../Source/Core/ValueType.nll"
 		ValueType* pValueType = new ValueType(m_eType);
 #line 69 "../../../Source/Core/ValueType.nll"
 		pValueType->m_bConst = m_bConst;
@@ -113,6 +114,7 @@ namespace NumbatLogic
 #line 109 "../../../Source/Core/ValueType.nll"
 		if (pTo->m_ePointerType != TypeRef::PointerType::OWNED && m_ePointerType == TypeRef::PointerType::OWNED_PREASSSIGN)
 		{
+#line 111 "../../../Source/Core/ValueType.nll"
 			InternalString* sTemp = new InternalString("Can't assign an owned pointer to a non-owned variable. FROM[");
 #line 112 "../../../Source/Core/ValueType.nll"
 			StringifyType(sTemp);
@@ -139,6 +141,7 @@ namespace NumbatLogic
 #line 124 "../../../Source/Core/ValueType.nll"
 		if (pTo->m_ePointerType == TypeRef::PointerType::OWNED && (m_ePointerType != TypeRef::PointerType::OWNED_PREASSSIGN && m_eType != ValueType::Type::NULL_VALUE))
 		{
+#line 126 "../../../Source/Core/ValueType.nll"
 			InternalString* sTemp = new InternalString("Expected right side of = to be OWNED_PREASSSIGN (result of own). FROM[");
 #line 127 "../../../Source/Core/ValueType.nll"
 			StringifyType(sTemp);
@@ -166,6 +169,7 @@ namespace NumbatLogic
 #line 138 "../../../Source/Core/ValueType.nll"
 			if (m_ePointerType == TypeRef::PointerType::TRANSITON)
 			{
+#line 140 "../../../Source/Core/ValueType.nll"
 				InternalString* sTemp = new InternalString("Cannot store a TRANSITION pointer (need to `own` it). FROM[");
 #line 141 "../../../Source/Core/ValueType.nll"
 				StringifyType(sTemp);
@@ -211,7 +215,9 @@ namespace NumbatLogic
 #line 168 "../../../Source/Core/ValueType.nll"
 			for (int i = 0; i < m_pGenericValueTypeVector->GetSize(); i++)
 			{
+#line 170 "../../../Source/Core/ValueType.nll"
 				ValueType* pSubFrom = m_pGenericValueTypeVector->Get(i);
+#line 171 "../../../Source/Core/ValueType.nll"
 				ValueType* pSubTo = pTo->m_pGenericValueTypeVector->Get(i);
 #line 185 "../../../Source/Core/ValueType.nll"
 				if (pSubFrom->m_ePointerType != pSubTo->m_ePointerType)
@@ -230,6 +236,7 @@ namespace NumbatLogic
 #line 197 "../../../Source/Core/ValueType.nll"
 	TypeRef* ValueType::CreateTypeRef()
 	{
+#line 199 "../../../Source/Core/ValueType.nll"
 		TypeRef* pTypeRef = new TypeRef();
 #line 200 "../../../Source/Core/ValueType.nll"
 		pTypeRef->m_bConst = m_bConst;
@@ -254,6 +261,7 @@ namespace NumbatLogic
 #line 215 "../../../Source/Core/ValueType.nll"
 					for (int i = 0; i < m_pGenericValueTypeVector->GetSize(); i++)
 					{
+#line 217 "../../../Source/Core/ValueType.nll"
 						TypeRef* pGenericTypeRef = m_pGenericValueTypeVector->Get(i)->CreateTypeRef();
 #line 218 "../../../Source/Core/ValueType.nll"
 						pTypeRef->m_pGenericTypeRefVector->PushBack(pGenericTypeRef);
@@ -265,10 +273,12 @@ namespace NumbatLogic
 						if (pGenericTypeRef) delete pGenericTypeRef;
 					}
 				}
+#line 225 "../../../Source/Core/ValueType.nll"
 				NamespaceNode* pNamespaceNode = m_pClassDecl->m_pNamespaceNode;
 #line 226 "../../../Source/Core/ValueType.nll"
 				while (pNamespaceNode != 0 && pNamespaceNode->m_sName != 0)
 				{
+#line 228 "../../../Source/Core/ValueType.nll"
 					TypeRef* pNamespaceTypeRef = new TypeRef();
 #line 230 "../../../Source/Core/ValueType.nll"
 					pNamespaceTypeRef->m_pCloneToken = new Token();

@@ -41,7 +41,9 @@ namespace NumbatLogic
 #line 12 "../../../Source/Core/AST/TTHashExpr.nll"
 	TTHashExpr* TTHashExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 14 "../../../Source/Core/AST/TTHashExpr.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 16 "../../../Source/Core/AST/TTHashExpr.nll"
 		Token* pTTHashToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_TTHASH);
 #line 17 "../../../Source/Core/AST/TTHashExpr.nll"
 		if (pTTHashToken == 0)
@@ -52,6 +54,7 @@ namespace NumbatLogic
 		}
 #line 19 "../../../Source/Core/AST/TTHashExpr.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 21 "../../../Source/Core/AST/TTHashExpr.nll"
 		Token* pOpenToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_LEFT);
 #line 22 "../../../Source/Core/AST/TTHashExpr.nll"
 		if (pOpenToken == 0)
@@ -68,6 +71,7 @@ namespace NumbatLogic
 		}
 #line 29 "../../../Source/Core/AST/TTHashExpr.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 31 "../../../Source/Core/AST/TTHashExpr.nll"
 		StringExpr* pStringExpr = StringExpr::TryCreate(pTokenContainer, pTempOffset);
 #line 32 "../../../Source/Core/AST/TTHashExpr.nll"
 		if (pStringExpr == 0)
@@ -83,6 +87,7 @@ namespace NumbatLogic
 #line 37 "../../../Source/Core/AST/TTHashExpr.nll"
 			return 0;
 		}
+#line 40 "../../../Source/Core/AST/TTHashExpr.nll"
 		Token* pCloseToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT);
 #line 41 "../../../Source/Core/AST/TTHashExpr.nll"
 		if (pCloseToken == 0)
@@ -100,6 +105,7 @@ namespace NumbatLogic
 		}
 #line 48 "../../../Source/Core/AST/TTHashExpr.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 51 "../../../Source/Core/AST/TTHashExpr.nll"
 		TTHashExpr* pTTHashExpr = new TTHashExpr();
 #line 52 "../../../Source/Core/AST/TTHashExpr.nll"
 		pTTHashExpr->m_pFirstToken = pTTHashToken;
@@ -143,6 +149,7 @@ namespace NumbatLogic
 		}
 		else
 		{
+#line 75 "../../../Source/Core/AST/TTHashExpr.nll"
 			InternalString* sTemp = new InternalString(m_pStringExpr->m_pFirstToken->m_sValue->GetExternalString());
 #line 76 "../../../Source/Core/AST/TTHashExpr.nll"
 			sTemp->Crop(1, sTemp->GetLength() - 2);

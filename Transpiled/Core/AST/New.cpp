@@ -41,7 +41,9 @@ namespace NumbatLogic
 #line 8 "../../../Source/Core/AST/New.nll"
 	New* New::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 10 "../../../Source/Core/AST/New.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 12 "../../../Source/Core/AST/New.nll"
 		Token* pNewToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_NEW);
 #line 13 "../../../Source/Core/AST/New.nll"
 		if (pNewToken == 0)
@@ -52,6 +54,7 @@ namespace NumbatLogic
 		}
 #line 15 "../../../Source/Core/AST/New.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 17 "../../../Source/Core/AST/New.nll"
 		TypeRef* pTypeRef = TypeRef::TryCreate(pTokenContainer, pTempOffset);
 #line 18 "../../../Source/Core/AST/New.nll"
 		if (pTypeRef == 0)
@@ -67,6 +70,7 @@ namespace NumbatLogic
 #line 23 "../../../Source/Core/AST/New.nll"
 			return 0;
 		}
+#line 26 "../../../Source/Core/AST/New.nll"
 		ParamCall* pParamCall = ParamCall::TryCreate(pTokenContainer, pTempOffset);
 #line 27 "../../../Source/Core/AST/New.nll"
 		if (pParamCall == 0)
@@ -83,6 +87,7 @@ namespace NumbatLogic
 #line 32 "../../../Source/Core/AST/New.nll"
 			return 0;
 		}
+#line 35 "../../../Source/Core/AST/New.nll"
 		New* pNew = new New();
 #line 37 "../../../Source/Core/AST/New.nll"
 		pNew->m_eType = AST::Type::AST_NEW_EXP;
@@ -135,6 +140,7 @@ namespace NumbatLogic
 #line 64 "../../../Source/Core/AST/New.nll"
 			if (m_pValueType->m_eType != ValueType::Type::CLASS_DECL_VALUE)
 			{
+#line 66 "../../../Source/Core/AST/New.nll"
 				InternalString* sTemp = new InternalString("expected to be newing a CLASS_DECL_VALUE, got ");
 #line 67 "../../../Source/Core/AST/New.nll"
 				m_pValueType->StringifyType(sTemp);
@@ -150,7 +156,9 @@ namespace NumbatLogic
 #line 73 "../../../Source/Core/AST/New.nll"
 				return;
 			}
+#line 76 "../../../Source/Core/AST/New.nll"
 			ClassDecl* pClassDecl = m_pValueType->m_pClassDecl;
+#line 77 "../../../Source/Core/AST/New.nll"
 			AST* pMember = pClassDecl->m_pFirstChild;
 #line 78 "../../../Source/Core/AST/New.nll"
 			while (pMember != 0)
@@ -158,6 +166,7 @@ namespace NumbatLogic
 #line 80 "../../../Source/Core/AST/New.nll"
 				if (pMember->m_eType == AST::Type::AST_TOR_DECL)
 				{
+#line 82 "../../../Source/Core/AST/New.nll"
 					TorDecl* pTorDecl = (TorDecl*)(pMember);
 #line 83 "../../../Source/Core/AST/New.nll"
 					if (pTorDecl->m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_CONSTRUCT)
