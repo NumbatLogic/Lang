@@ -380,7 +380,7 @@ namespace NumbatLogic
 		public void Output(AST.Language eLanguage, OutputFile eOutputFile)
 		{
 			InternalString sOutFile = new InternalString("");
-			OutputBuilder out = new OutputBuilder();
+			OutputBuilder pOut = new OutputBuilder();
 #line 283 "../../../Source/Core/Project.nll"
 			for (int i = 0; i < m_pTranslationUnitVector.GetSize(); i++)
 			{
@@ -394,18 +394,18 @@ namespace NumbatLogic
 					TranslationUnit.ConvertFilePath(eLanguage, eOutputFile, sOutFile);
 					string sxOutFile = sOutFile.GetExternalString();
 #line 294 "../../../Source/Core/Project.nll"
-					out.m_sOut.Set("");
+					pOut.m_sOut.Set("");
 #line 295 "../../../Source/Core/Project.nll"
-					pTranslationUnit.Stringify(eLanguage, eOutputFile, 0, out);
+					pTranslationUnit.Stringify(eLanguage, eOutputFile, 0, pOut);
 					InternalString sDirectory = File.GetFileDirectory(sxOutFile);
 #line 298 "../../../Source/Core/Project.nll"
 					File.CreateDirectory(sDirectory.GetExternalString());
 					InternalString sTestFile = File.GetContents(sxOutFile);
 #line 302 "../../../Source/Core/Project.nll"
-					if (sTestFile == null || !out.m_sOut.IsEqual(sTestFile.GetExternalString()))
+					if (sTestFile == null || !pOut.m_sOut.IsEqual(sTestFile.GetExternalString()))
 					{
 #line 304 "../../../Source/Core/Project.nll"
-						File.PutContents(sxOutFile, out.m_sOut.GetExternalString());
+						File.PutContents(sxOutFile, pOut.m_sOut.GetExternalString());
 					}
 				}
 			}
