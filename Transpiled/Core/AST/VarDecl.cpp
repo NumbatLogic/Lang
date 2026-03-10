@@ -9,8 +9,8 @@
 #include "../../../../LangShared/Assert/CPP/Assert.hpp"
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
-#include "../Util.hpp"
 #include "../OutputBuilder.hpp"
+#include "../Util.hpp"
 #include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "ClassDecl.hpp"
 #include "MemberVarDecl.hpp"
@@ -30,8 +30,8 @@ namespace NumbatLogic
 	class Assert;
 	class Validator;
 	class ValueType;
-	class Util;
 	class OutputBuilder;
+	class Util;
 	class InternalString;
 	class ClassDecl;
 	class MemberVarDecl;
@@ -59,7 +59,9 @@ namespace NumbatLogic
 #line 20 "../../../Source/Core/AST/VarDecl.nll"
 	VarDecl* VarDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, bool bInline)
 	{
+#line 22 "../../../Source/Core/AST/VarDecl.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 24 "../../../Source/Core/AST/VarDecl.nll"
 		TypeRef* pTypeRef = TypeRef::TryCreate(pTokenContainer, pTempOffset);
 #line 25 "../../../Source/Core/AST/VarDecl.nll"
 		if (pTypeRef == 0)
@@ -69,6 +71,7 @@ namespace NumbatLogic
 #line 26 "../../../Source/Core/AST/VarDecl.nll"
 			return 0;
 		}
+#line 28 "../../../Source/Core/AST/VarDecl.nll"
 		Token* pNameToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
 #line 29 "../../../Source/Core/AST/VarDecl.nll"
 		if (pNameToken == 0)
@@ -80,7 +83,9 @@ namespace NumbatLogic
 		}
 #line 31 "../../../Source/Core/AST/VarDecl.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 33 "../../../Source/Core/AST/VarDecl.nll"
 		VarDecl* pVarDecl = new VarDecl();
+#line 35 "../../../Source/Core/AST/VarDecl.nll"
 		Token* pSquareBracketLeftToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_LEFT);
 #line 36 "../../../Source/Core/AST/VarDecl.nll"
 		while (pSquareBracketLeftToken != 0)
@@ -91,6 +96,7 @@ namespace NumbatLogic
 				pVarDecl->m_pArraySizeVector = new Vector<AST*>();
 #line 41 "../../../Source/Core/AST/VarDecl.nll"
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 43 "../../../Source/Core/AST/VarDecl.nll"
 			AST* pArraySize = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 44 "../../../Source/Core/AST/VarDecl.nll"
 			if (pArraySize == 0)
@@ -108,6 +114,7 @@ namespace NumbatLogic
 #line 49 "../../../Source/Core/AST/VarDecl.nll"
 				return 0;
 			}
+#line 52 "../../../Source/Core/AST/VarDecl.nll"
 			Token* pSquareBracketRightToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_RIGHT);
 #line 53 "../../../Source/Core/AST/VarDecl.nll"
 			if (pSquareBracketRightToken == 0)
@@ -138,7 +145,9 @@ namespace NumbatLogic
 			pSquareBracketLeftToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_LEFT);
 			if (pArraySize) delete pArraySize;
 		}
+#line 69 "../../../Source/Core/AST/VarDecl.nll"
 		AST* pAssignment = 0;
+#line 70 "../../../Source/Core/AST/VarDecl.nll"
 		Token* pEqualsToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_EQUALS);
 #line 71 "../../../Source/Core/AST/VarDecl.nll"
 		if (pEqualsToken != 0)
@@ -227,6 +236,7 @@ namespace NumbatLogic
 		if (m_pParent->m_eType != AST::Type::AST_MEMBER_VAR_DECL && m_pParent->m_eType != AST::Type::AST_PARAM_DECL)
 #line 114 "../../../Source/Core/AST/VarDecl.nll"
 			pValidator->AddVarDecl(this);
+#line 116 "../../../Source/Core/AST/VarDecl.nll"
 		ValueType* pValueType = m_pTypeRef->CreateValueType(pValidator->m_pResolver);
 #line 117 "../../../Source/Core/AST/VarDecl.nll"
 		if (pValueType == 0)
@@ -301,221 +311,238 @@ namespace NumbatLogic
 	void VarDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
 #line 164 "../../../Source/Core/AST/VarDecl.nll"
+		if (nDepth > 0 && m_pFirstToken != 0)
+#line 165 "../../../Source/Core/AST/VarDecl.nll"
+			pOutputBuilder->UpdateSourceLocation(eLanguage, m_pFirstToken);
+#line 166 "../../../Source/Core/AST/VarDecl.nll"
 		Util::Pad(nDepth, pOutputBuilder->m_sOut);
-#line 167 "../../../Source/Core/AST/VarDecl.nll"
+#line 169 "../../../Source/Core/AST/VarDecl.nll"
 		if (eLanguage == AST::Language::CS)
 		{
-#line 169 "../../../Source/Core/AST/VarDecl.nll"
+#line 171 "../../../Source/Core/AST/VarDecl.nll"
 			if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_PARAM_DECL)
 			{
-				bool bBefore = m_pTypeRef->m_bConst;
-#line 172 "../../../Source/Core/AST/VarDecl.nll"
-				m_pTypeRef->m_bConst = false;
 #line 173 "../../../Source/Core/AST/VarDecl.nll"
-				m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+				bool bBefore = m_pTypeRef->m_bConst;
 #line 174 "../../../Source/Core/AST/VarDecl.nll"
+				m_pTypeRef->m_bConst = false;
+#line 175 "../../../Source/Core/AST/VarDecl.nll"
+				m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+#line 176 "../../../Source/Core/AST/VarDecl.nll"
 				m_pTypeRef->m_bConst = bBefore;
 			}
 			else
 			{
+#line 180 "../../../Source/Core/AST/VarDecl.nll"
 				bool bBefore = m_pTypeRef->m_bConst;
-#line 179 "../../../Source/Core/AST/VarDecl.nll"
+#line 181 "../../../Source/Core/AST/VarDecl.nll"
 				if (m_pArraySizeVector != 0 && bBefore)
 				{
-#line 181 "../../../Source/Core/AST/VarDecl.nll"
+#line 183 "../../../Source/Core/AST/VarDecl.nll"
 					m_pTypeRef->m_bConst = false;
-#line 182 "../../../Source/Core/AST/VarDecl.nll"
+#line 184 "../../../Source/Core/AST/VarDecl.nll"
 					pOutputBuilder->m_sOut->Append("readonly ");
 				}
-#line 184 "../../../Source/Core/AST/VarDecl.nll"
+#line 186 "../../../Source/Core/AST/VarDecl.nll"
 				m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-#line 185 "../../../Source/Core/AST/VarDecl.nll"
+#line 187 "../../../Source/Core/AST/VarDecl.nll"
 				m_pTypeRef->m_bConst = bBefore;
 			}
-#line 188 "../../../Source/Core/AST/VarDecl.nll"
+#line 190 "../../../Source/Core/AST/VarDecl.nll"
 			if (m_pArraySizeVector != 0)
 			{
-#line 190 "../../../Source/Core/AST/VarDecl.nll"
+#line 192 "../../../Source/Core/AST/VarDecl.nll"
 				pOutputBuilder->m_sOut->AppendChar('[');
-#line 193 "../../../Source/Core/AST/VarDecl.nll"
+#line 195 "../../../Source/Core/AST/VarDecl.nll"
 				pOutputBuilder->m_sOut->AppendChar(']');
 			}
 		}
 		else
 		{
-#line 198 "../../../Source/Core/AST/VarDecl.nll"
+#line 200 "../../../Source/Core/AST/VarDecl.nll"
 			m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		}
-#line 200 "../../../Source/Core/AST/VarDecl.nll"
+#line 202 "../../../Source/Core/AST/VarDecl.nll"
 		pOutputBuilder->m_sOut->AppendChar(' ');
-#line 203 "../../../Source/Core/AST/VarDecl.nll"
+#line 205 "../../../Source/Core/AST/VarDecl.nll"
 		if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_MEMBER_VAR_DECL && eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
 		{
+#line 207 "../../../Source/Core/AST/VarDecl.nll"
 			AST* pParentParent = m_pParent->m_pParent;
-#line 206 "../../../Source/Core/AST/VarDecl.nll"
+#line 208 "../../../Source/Core/AST/VarDecl.nll"
 			if (pParentParent == 0 || pParentParent->m_eType != AST::Type::AST_CLASS_DECL)
 			{
-#line 208 "../../../Source/Core/AST/VarDecl.nll"
+#line 210 "../../../Source/Core/AST/VarDecl.nll"
 				Assert::Plz(false);
 			}
-			ClassDecl* pClassDecl = (ClassDecl*)(pParentParent);
-#line 212 "../../../Source/Core/AST/VarDecl.nll"
-			pOutputBuilder->m_sOut->AppendString(pClassDecl->m_pNameToken->GetString());
 #line 213 "../../../Source/Core/AST/VarDecl.nll"
+			ClassDecl* pClassDecl = (ClassDecl*)(pParentParent);
+#line 214 "../../../Source/Core/AST/VarDecl.nll"
+			pOutputBuilder->m_sOut->AppendString(pClassDecl->m_pNameToken->GetString());
+#line 215 "../../../Source/Core/AST/VarDecl.nll"
 			pOutputBuilder->m_sOut->AppendString("::");
 		}
-#line 216 "../../../Source/Core/AST/VarDecl.nll"
-		pOutputBuilder->m_sOut->AppendString(m_pNameToken->GetString());
 #line 218 "../../../Source/Core/AST/VarDecl.nll"
+		pOutputBuilder->m_sOut->AppendString(m_pNameToken->GetString());
+#line 220 "../../../Source/Core/AST/VarDecl.nll"
 		if (m_pArraySizeVector != 0 && eLanguage != AST::Language::CS)
 		{
-#line 220 "../../../Source/Core/AST/VarDecl.nll"
+#line 222 "../../../Source/Core/AST/VarDecl.nll"
 			for (int i = 0; i < m_pArraySizeVector->GetSize(); i++)
 			{
-				AST* pArraySize = m_pArraySizeVector->Get(i);
-#line 223 "../../../Source/Core/AST/VarDecl.nll"
-				pOutputBuilder->m_sOut->AppendChar('[');
 #line 224 "../../../Source/Core/AST/VarDecl.nll"
-				pArraySize->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+				AST* pArraySize = m_pArraySizeVector->Get(i);
 #line 225 "../../../Source/Core/AST/VarDecl.nll"
+				pOutputBuilder->m_sOut->AppendChar('[');
+#line 226 "../../../Source/Core/AST/VarDecl.nll"
+				pArraySize->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+#line 227 "../../../Source/Core/AST/VarDecl.nll"
 				pOutputBuilder->m_sOut->AppendChar(']');
 			}
 		}
+#line 231 "../../../Source/Core/AST/VarDecl.nll"
 		MemberVarDecl* pMemberVarDecl = (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_MEMBER_VAR_DECL) ? (MemberVarDecl*)(m_pParent) : 0;
-		bool bStatic = pMemberVarDecl != 0 && pMemberVarDecl->m_bStatic;
 #line 232 "../../../Source/Core/AST/VarDecl.nll"
+		bool bStatic = pMemberVarDecl != 0 && pMemberVarDecl->m_bStatic;
+#line 234 "../../../Source/Core/AST/VarDecl.nll"
 		if (m_pAssignment != 0)
 		{
+#line 236 "../../../Source/Core/AST/VarDecl.nll"
 			bool bArrayAssignment = m_pArraySizeVector != 0;
-			bool bDoIt = true;
 #line 238 "../../../Source/Core/AST/VarDecl.nll"
+			bool bDoIt = true;
+#line 240 "../../../Source/Core/AST/VarDecl.nll"
 			if (eLanguage == AST::Language::CPP)
 			{
-#line 240 "../../../Source/Core/AST/VarDecl.nll"
+#line 242 "../../../Source/Core/AST/VarDecl.nll"
 				if (pMemberVarDecl != 0)
 				{
-#line 242 "../../../Source/Core/AST/VarDecl.nll"
+#line 244 "../../../Source/Core/AST/VarDecl.nll"
 					if (eOutputFile == AST::OutputFile::HEADER)
 					{
-#line 245 "../../../Source/Core/AST/VarDecl.nll"
+#line 247 "../../../Source/Core/AST/VarDecl.nll"
 						if (!(bStatic && m_pTypeRef->m_bConst && m_pTypeRef->IsIntegral() && !bArrayAssignment))
-#line 246 "../../../Source/Core/AST/VarDecl.nll"
+#line 248 "../../../Source/Core/AST/VarDecl.nll"
 							bDoIt = false;
 					}
 					else
 					{
-#line 250 "../../../Source/Core/AST/VarDecl.nll"
+#line 252 "../../../Source/Core/AST/VarDecl.nll"
 						if (bStatic && m_pTypeRef->m_bConst && m_pTypeRef->IsIntegral() && !bArrayAssignment)
-#line 251 "../../../Source/Core/AST/VarDecl.nll"
+#line 253 "../../../Source/Core/AST/VarDecl.nll"
 							bDoIt = false;
 					}
 				}
 				else
 				{
-#line 257 "../../../Source/Core/AST/VarDecl.nll"
+#line 259 "../../../Source/Core/AST/VarDecl.nll"
 					if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_PARAM_DECL && eOutputFile == AST::OutputFile::SOURCE)
-#line 258 "../../../Source/Core/AST/VarDecl.nll"
+#line 260 "../../../Source/Core/AST/VarDecl.nll"
 						bDoIt = false;
 				}
 			}
-#line 262 "../../../Source/Core/AST/VarDecl.nll"
+#line 264 "../../../Source/Core/AST/VarDecl.nll"
 			if (bDoIt)
 			{
-#line 264 "../../../Source/Core/AST/VarDecl.nll"
+#line 266 "../../../Source/Core/AST/VarDecl.nll"
 				pOutputBuilder->m_sOut->AppendString(" = ");
-#line 265 "../../../Source/Core/AST/VarDecl.nll"
+#line 267 "../../../Source/Core/AST/VarDecl.nll"
 				m_pAssignment->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 			}
 		}
 		else
 		{
-#line 270 "../../../Source/Core/AST/VarDecl.nll"
+#line 272 "../../../Source/Core/AST/VarDecl.nll"
 			if (!m_bInline)
 			{
+#line 274 "../../../Source/Core/AST/VarDecl.nll"
 				const char* sxToAppend = 0;
-#line 273 "../../../Source/Core/AST/VarDecl.nll"
+#line 275 "../../../Source/Core/AST/VarDecl.nll"
 				if (eOutputFile == AST::OutputFile::SOURCE && eLanguage != AST::Language::NLL && eLanguage != AST::Language::NLL_DEF)
 				{
-#line 275 "../../../Source/Core/AST/VarDecl.nll"
+#line 277 "../../../Source/Core/AST/VarDecl.nll"
 					if (m_pParent->m_eType != AST::Type::AST_MEMBER_VAR_DECL)
 					{
-#line 277 "../../../Source/Core/AST/VarDecl.nll"
+#line 279 "../../../Source/Core/AST/VarDecl.nll"
 						if (m_pArraySizeVector == 0)
 						{
-#line 279 "../../../Source/Core/AST/VarDecl.nll"
+#line 281 "../../../Source/Core/AST/VarDecl.nll"
 							if (m_pTypeRef->IsInt())
-#line 280 "../../../Source/Core/AST/VarDecl.nll"
+#line 282 "../../../Source/Core/AST/VarDecl.nll"
 								sxToAppend = " = 0";
 							else
-#line 281 "../../../Source/Core/AST/VarDecl.nll"
+#line 283 "../../../Source/Core/AST/VarDecl.nll"
 								if (m_pTypeRef->IsBool())
-#line 282 "../../../Source/Core/AST/VarDecl.nll"
+#line 284 "../../../Source/Core/AST/VarDecl.nll"
 									sxToAppend = " = false";
 								else
-#line 283 "../../../Source/Core/AST/VarDecl.nll"
+#line 285 "../../../Source/Core/AST/VarDecl.nll"
 									if (m_pTypeRef->IsFloat())
-#line 284 "../../../Source/Core/AST/VarDecl.nll"
+#line 286 "../../../Source/Core/AST/VarDecl.nll"
 										sxToAppend = " = 0.0f";
 									else
-#line 285 "../../../Source/Core/AST/VarDecl.nll"
+#line 287 "../../../Source/Core/AST/VarDecl.nll"
 										if (m_pTypeRef->IsDouble())
-#line 286 "../../../Source/Core/AST/VarDecl.nll"
+#line 288 "../../../Source/Core/AST/VarDecl.nll"
 											sxToAppend = " = 0.0";
 						}
 					}
 				}
-#line 291 "../../../Source/Core/AST/VarDecl.nll"
+#line 293 "../../../Source/Core/AST/VarDecl.nll"
 				if (sxToAppend != 0)
 				{
-#line 293 "../../../Source/Core/AST/VarDecl.nll"
+#line 295 "../../../Source/Core/AST/VarDecl.nll"
 					pOutputBuilder->m_sOut->AppendString(sxToAppend);
 				}
 				else
 				{
-#line 297 "../../../Source/Core/AST/VarDecl.nll"
+#line 299 "../../../Source/Core/AST/VarDecl.nll"
 					if (eLanguage == AST::Language::CPP)
 					{
-#line 299 "../../../Source/Core/AST/VarDecl.nll"
+#line 301 "../../../Source/Core/AST/VarDecl.nll"
 						if (eOutputFile == AST::OutputFile::SOURCE)
 						{
+#line 303 "../../../Source/Core/AST/VarDecl.nll"
 							Project* pProject = GetProject();
-							ValueType* pValueType = m_pTypeRef->CreateValueType(pProject->m_pValidator->m_pResolver);
 #line 304 "../../../Source/Core/AST/VarDecl.nll"
+							ValueType* pValueType = m_pTypeRef->CreateValueType(pProject->m_pValidator->m_pResolver);
+#line 306 "../../../Source/Core/AST/VarDecl.nll"
 							if (pValueType != 0 && pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE && m_pArraySizeVector == 0)
-#line 305 "../../../Source/Core/AST/VarDecl.nll"
-								pOutputBuilder->m_sOut->AppendString(" = 0");
 #line 307 "../../../Source/Core/AST/VarDecl.nll"
+								pOutputBuilder->m_sOut->AppendString(" = 0");
+#line 309 "../../../Source/Core/AST/VarDecl.nll"
 							if (bStatic && m_pTypeRef->IsIntegral())
-#line 308 "../../../Source/Core/AST/VarDecl.nll"
+#line 310 "../../../Source/Core/AST/VarDecl.nll"
 								pOutputBuilder->m_sOut->AppendString(" = 0");
 							if (pValueType) delete pValueType;
 						}
 					}
-#line 312 "../../../Source/Core/AST/VarDecl.nll"
+#line 314 "../../../Source/Core/AST/VarDecl.nll"
 					if (eLanguage == AST::Language::CS && m_pArraySizeVector != 0)
 					{
-#line 314 "../../../Source/Core/AST/VarDecl.nll"
+#line 316 "../../../Source/Core/AST/VarDecl.nll"
 						pOutputBuilder->m_sOut->AppendString(" = new ");
-#line 315 "../../../Source/Core/AST/VarDecl.nll"
-						m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 #line 317 "../../../Source/Core/AST/VarDecl.nll"
+						m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+#line 319 "../../../Source/Core/AST/VarDecl.nll"
 						for (int i = 0; i < m_pArraySizeVector->GetSize(); i++)
 						{
-							AST* pArraySize = m_pArraySizeVector->Get(i);
-#line 320 "../../../Source/Core/AST/VarDecl.nll"
-							pOutputBuilder->m_sOut->AppendChar('[');
 #line 321 "../../../Source/Core/AST/VarDecl.nll"
-							pArraySize->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+							AST* pArraySize = m_pArraySizeVector->Get(i);
 #line 322 "../../../Source/Core/AST/VarDecl.nll"
+							pOutputBuilder->m_sOut->AppendChar('[');
+#line 323 "../../../Source/Core/AST/VarDecl.nll"
+							pArraySize->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+#line 324 "../../../Source/Core/AST/VarDecl.nll"
 							pOutputBuilder->m_sOut->AppendChar(']');
 						}
 					}
 				}
 			}
 		}
-#line 329 "../../../Source/Core/AST/VarDecl.nll"
+#line 331 "../../../Source/Core/AST/VarDecl.nll"
 		if (!m_bInline)
-#line 330 "../../../Source/Core/AST/VarDecl.nll"
+#line 332 "../../../Source/Core/AST/VarDecl.nll"
 			pOutputBuilder->m_sOut->AppendString(";\n");
 	}
 

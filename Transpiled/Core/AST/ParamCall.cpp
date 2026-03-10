@@ -27,7 +27,9 @@ namespace NumbatLogic
 #line 5 "../../../Source/Core/AST/ParamCall.nll"
 	ParamCall* ParamCall::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 7 "../../../Source/Core/AST/ParamCall.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 9 "../../../Source/Core/AST/ParamCall.nll"
 		Token* m_pFirstToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_LEFT);
 #line 10 "../../../Source/Core/AST/ParamCall.nll"
 		if (m_pFirstToken == 0)
@@ -44,6 +46,7 @@ namespace NumbatLogic
 		}
 #line 17 "../../../Source/Core/AST/ParamCall.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 20 "../../../Source/Core/AST/ParamCall.nll"
 		ParamCall* pParamCall = new ParamCall();
 #line 22 "../../../Source/Core/AST/ParamCall.nll"
 		pParamCall->m_eType = AST::Type::AST_PARAM_CALL;
@@ -60,6 +63,7 @@ namespace NumbatLogic
 #line 30 "../../../Source/Core/AST/ParamCall.nll"
 				break;
 			}
+#line 33 "../../../Source/Core/AST/ParamCall.nll"
 			AST* pParam = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 34 "../../../Source/Core/AST/ParamCall.nll"
 			if (pParam == 0)
@@ -112,6 +116,7 @@ namespace NumbatLogic
 	{
 #line 61 "../../../Source/Core/AST/ParamCall.nll"
 		pOutputBuilder->m_sOut->AppendChar('(');
+#line 62 "../../../Source/Core/AST/ParamCall.nll"
 		AST* pParam = m_pFirstChild;
 #line 63 "../../../Source/Core/AST/ParamCall.nll"
 		while (pParam != 0)

@@ -31,7 +31,7 @@ namespace NumbatLogic
 #line 16 "../../../Source/Core/OutputBuilder.nll"
 			m_sOut->Append("#line ");
 #line 17 "../../../Source/Core/OutputBuilder.nll"
-			if (eLanguage == AST::Language::CS)
+			if (eLanguage == AST::Language::CS && pToken->m_nLine == 0)
 #line 18 "../../../Source/Core/OutputBuilder.nll"
 				m_sOut->AppendInt(pToken->m_nLine + 1);
 			else

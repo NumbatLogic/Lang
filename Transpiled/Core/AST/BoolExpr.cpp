@@ -23,6 +23,7 @@ namespace NumbatLogic
 #line 5 "../../../Source/Core/AST/BoolExpr.nll"
 	BoolExpr* BoolExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 7 "../../../Source/Core/AST/BoolExpr.nll"
 		Token* pToken = pTokenContainer->Peek(pOffsetDatum);
 #line 8 "../../../Source/Core/AST/BoolExpr.nll"
 		if (pToken == 0 || (pToken->m_eType != Token::Type::TOKEN_KEYWORD_TRUE && pToken->m_eType != Token::Type::TOKEN_KEYWORD_FALSE))
@@ -30,6 +31,7 @@ namespace NumbatLogic
 			return 0;
 #line 11 "../../../Source/Core/AST/BoolExpr.nll"
 		pOffsetDatum->m_nOffset = pOffsetDatum->m_nOffset + 1;
+#line 13 "../../../Source/Core/AST/BoolExpr.nll"
 		BoolExpr* pBoolExpr = new BoolExpr();
 #line 14 "../../../Source/Core/AST/BoolExpr.nll"
 		pBoolExpr->m_eType = AST::Type::AST_BOOL_EXPR;

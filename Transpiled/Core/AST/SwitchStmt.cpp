@@ -53,7 +53,9 @@ namespace NumbatLogic
 #line 19 "../../../Source/Core/AST/SwitchStmt.nll"
 	SwitchStmt* SwitchStmt::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 21 "../../../Source/Core/AST/SwitchStmt.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 23 "../../../Source/Core/AST/SwitchStmt.nll"
 		Token* pSwitchToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_SWITCH);
 #line 24 "../../../Source/Core/AST/SwitchStmt.nll"
 		if (pSwitchToken == 0)
@@ -77,6 +79,7 @@ namespace NumbatLogic
 		}
 #line 34 "../../../Source/Core/AST/SwitchStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 36 "../../../Source/Core/AST/SwitchStmt.nll"
 		AST* pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 37 "../../../Source/Core/AST/SwitchStmt.nll"
 		if (pExpression == 0)
@@ -120,6 +123,7 @@ namespace NumbatLogic
 		}
 #line 59 "../../../Source/Core/AST/SwitchStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 62 "../../../Source/Core/AST/SwitchStmt.nll"
 		SwitchStmt* pSwitchStmt = new SwitchStmt();
 #line 63 "../../../Source/Core/AST/SwitchStmt.nll"
 		pSwitchStmt->m_pFirstToken = pSwitchToken;
@@ -156,7 +160,9 @@ namespace NumbatLogic
 #line 80 "../../../Source/Core/AST/SwitchStmt.nll"
 				return 0;
 			}
+#line 83 "../../../Source/Core/AST/SwitchStmt.nll"
 			Token* pCaseToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_CASE);
+#line 84 "../../../Source/Core/AST/SwitchStmt.nll"
 			Token* pDefaultToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_DEFAULT);
 #line 85 "../../../Source/Core/AST/SwitchStmt.nll"
 			if (pCaseToken == 0 && pDefaultToken == 0)
@@ -195,6 +201,7 @@ namespace NumbatLogic
 				}
 #line 103 "../../../Source/Core/AST/SwitchStmt.nll"
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 105 "../../../Source/Core/AST/SwitchStmt.nll"
 				AST* pDefaultStatement = AST::CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
 #line 106 "../../../Source/Core/AST/SwitchStmt.nll"
 				if (pDefaultStatement == 0)
@@ -212,6 +219,7 @@ namespace NumbatLogic
 #line 111 "../../../Source/Core/AST/SwitchStmt.nll"
 					return 0;
 				}
+#line 114 "../../../Source/Core/AST/SwitchStmt.nll"
 				AST* pScopedDefaultStatement = 0;
 #line 115 "../../../Source/Core/AST/SwitchStmt.nll"
 				if (pDefaultStatement->m_eType == AST::Type::AST_SCOPE)
@@ -244,6 +252,7 @@ namespace NumbatLogic
 #line 125 "../../../Source/Core/AST/SwitchStmt.nll"
 				continue;
 			}
+#line 128 "../../../Source/Core/AST/SwitchStmt.nll"
 			AST* pCaseExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 129 "../../../Source/Core/AST/SwitchStmt.nll"
 			if (pCaseExpression == 0)
@@ -295,6 +304,7 @@ namespace NumbatLogic
 #line 152 "../../../Source/Core/AST/SwitchStmt.nll"
 				continue;
 			}
+#line 155 "../../../Source/Core/AST/SwitchStmt.nll"
 			AST* pCaseStatement = AST::CreateStatementFromTokenContainer(pTokenContainer, pTempOffset);
 #line 156 "../../../Source/Core/AST/SwitchStmt.nll"
 			if (pCaseStatement == 0)
@@ -313,6 +323,7 @@ namespace NumbatLogic
 #line 161 "../../../Source/Core/AST/SwitchStmt.nll"
 				return 0;
 			}
+#line 164 "../../../Source/Core/AST/SwitchStmt.nll"
 			AST* pScopedCaseStatement = 0;
 #line 165 "../../../Source/Core/AST/SwitchStmt.nll"
 			if (pCaseStatement->m_eType == AST::Type::AST_SCOPE)
@@ -377,7 +388,9 @@ namespace NumbatLogic
 #line 192 "../../../Source/Core/AST/SwitchStmt.nll"
 		for (int i = 0; i < m_pExpressionVector->GetSize(); i++)
 		{
+#line 194 "../../../Source/Core/AST/SwitchStmt.nll"
 			AST* pCaseExpression = m_pExpressionVector->Get(i);
+#line 195 "../../../Source/Core/AST/SwitchStmt.nll"
 			AST* pCaseStatement = m_pStatementVector->Get(i);
 #line 197 "../../../Source/Core/AST/SwitchStmt.nll"
 			Util::Pad(nDepth, pOutputBuilder->m_sOut);

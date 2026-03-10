@@ -1,10 +1,10 @@
 #line 1 "../../../Source/Core/AST/TypeRef.nll"
 namespace NumbatLogic
 {
-#line 4 "../../../Source/Core/AST/TypeRef.nll"
+#line 3 "../../../Source/Core/AST/TypeRef.nll"
 	class TypeRef : AST
 	{
-#line 6 "../../../Source/Core/AST/TypeRef.nll"
+#line 5 "../../../Source/Core/AST/TypeRef.nll"
 		public enum PointerType
 		{
 			SHARED,
@@ -13,251 +13,266 @@ namespace NumbatLogic
 			OWNED_PREASSSIGN,
 		}
 
-#line 14 "../../../Source/Core/AST/TypeRef.nll"
+#line 13 "../../../Source/Core/AST/TypeRef.nll"
 		public bool m_bConst;
-#line 15 "../../../Source/Core/AST/TypeRef.nll"
+#line 14 "../../../Source/Core/AST/TypeRef.nll"
 		public bool m_bRef;
-#line 16 "../../../Source/Core/AST/TypeRef.nll"
+#line 15 "../../../Source/Core/AST/TypeRef.nll"
 		public Token m_pTypeToken;
-#line 17 "../../../Source/Core/AST/TypeRef.nll"
+#line 16 "../../../Source/Core/AST/TypeRef.nll"
 		public Vector<TypeRef> m_pGenericTypeRefVector;
-#line 18 "../../../Source/Core/AST/TypeRef.nll"
+#line 17 "../../../Source/Core/AST/TypeRef.nll"
 		public TypeRef m_pChildTypeRef;
-#line 19 "../../../Source/Core/AST/TypeRef.nll"
+#line 18 "../../../Source/Core/AST/TypeRef.nll"
 		public PointerType m_ePointerType;
-#line 21 "../../../Source/Core/AST/TypeRef.nll"
+#line 20 "../../../Source/Core/AST/TypeRef.nll"
 		public Token m_pCloneToken;
-#line 23 "../../../Source/Core/AST/TypeRef.nll"
+#line 22 "../../../Source/Core/AST/TypeRef.nll"
 		public AST m_pFoundType;
-#line 25 "../../../Source/Core/AST/TypeRef.nll"
+#line 24 "../../../Source/Core/AST/TypeRef.nll"
 		public TypeRef()
 		{
-#line 27 "../../../Source/Core/AST/TypeRef.nll"
+#line 26 "../../../Source/Core/AST/TypeRef.nll"
 			m_eType = AST.Type.AST_TYPE_REF;
-#line 28 "../../../Source/Core/AST/TypeRef.nll"
+#line 27 "../../../Source/Core/AST/TypeRef.nll"
 			m_pGenericTypeRefVector = new Vector<TypeRef>();
-#line 29 "../../../Source/Core/AST/TypeRef.nll"
+#line 28 "../../../Source/Core/AST/TypeRef.nll"
 			m_bConst = false;
-#line 30 "../../../Source/Core/AST/TypeRef.nll"
+#line 29 "../../../Source/Core/AST/TypeRef.nll"
 			m_bRef = false;
 		}
 
-#line 33 "../../../Source/Core/AST/TypeRef.nll"
+#line 32 "../../../Source/Core/AST/TypeRef.nll"
 		public static TypeRef TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
 		{
+#line 34 "../../../Source/Core/AST/TypeRef.nll"
 			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
+#line 36 "../../../Source/Core/AST/TypeRef.nll"
 			bool bConst = false;
+#line 37 "../../../Source/Core/AST/TypeRef.nll"
 			Token pConstToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_KEYWORD_CONST);
-#line 39 "../../../Source/Core/AST/TypeRef.nll"
+#line 38 "../../../Source/Core/AST/TypeRef.nll"
 			if (pConstToken != null)
 			{
-#line 41 "../../../Source/Core/AST/TypeRef.nll"
+#line 40 "../../../Source/Core/AST/TypeRef.nll"
 				bConst = true;
-#line 42 "../../../Source/Core/AST/TypeRef.nll"
+#line 41 "../../../Source/Core/AST/TypeRef.nll"
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			}
+#line 44 "../../../Source/Core/AST/TypeRef.nll"
 			bool bRef = false;
+#line 45 "../../../Source/Core/AST/TypeRef.nll"
 			Token pRefToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_KEYWORD_REF);
-#line 47 "../../../Source/Core/AST/TypeRef.nll"
+#line 46 "../../../Source/Core/AST/TypeRef.nll"
 			if (pRefToken != null)
 			{
-#line 49 "../../../Source/Core/AST/TypeRef.nll"
+#line 48 "../../../Source/Core/AST/TypeRef.nll"
 				bRef = true;
-#line 50 "../../../Source/Core/AST/TypeRef.nll"
+#line 49 "../../../Source/Core/AST/TypeRef.nll"
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			}
+#line 52 "../../../Source/Core/AST/TypeRef.nll"
 			Token pTypeToken = pTokenContainer.Peek(pTempOffset);
-#line 54 "../../../Source/Core/AST/TypeRef.nll"
+#line 53 "../../../Source/Core/AST/TypeRef.nll"
 			if (pTypeToken == null || pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_VOID && pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_INT && pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_BOOL && pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_UNICHAR && pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_STRING && pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_UINT && pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_UINT8 && pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_UINT16 && pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_UINT32 && pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_UINT64 && pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_INT8 && pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_INT16 && pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_INT32 && pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_DOUBLE && pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_FLOAT && pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_VOIDPTR && pTypeToken.m_eType != Token.Type.TOKEN_IDENTIFIER)
 			{
-#line 72 "../../../Source/Core/AST/TypeRef.nll"
+#line 71 "../../../Source/Core/AST/TypeRef.nll"
 				return null;
 			}
-#line 73 "../../../Source/Core/AST/TypeRef.nll"
+#line 72 "../../../Source/Core/AST/TypeRef.nll"
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 75 "../../../Source/Core/AST/TypeRef.nll"
 			TypeRef pTypeRef = new TypeRef();
-#line 78 "../../../Source/Core/AST/TypeRef.nll"
+#line 77 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef.m_pFirstToken = pTypeToken;
-#line 79 "../../../Source/Core/AST/TypeRef.nll"
+#line 78 "../../../Source/Core/AST/TypeRef.nll"
 			if (pConstToken != null)
-#line 80 "../../../Source/Core/AST/TypeRef.nll"
+#line 79 "../../../Source/Core/AST/TypeRef.nll"
 				pTypeRef.m_pFirstToken = pConstToken;
-#line 81 "../../../Source/Core/AST/TypeRef.nll"
+#line 80 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef.m_bConst = bConst;
-#line 82 "../../../Source/Core/AST/TypeRef.nll"
+#line 81 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef.m_pTypeToken = pTypeToken;
-#line 83 "../../../Source/Core/AST/TypeRef.nll"
+#line 82 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef.m_pChildTypeRef = null;
-#line 84 "../../../Source/Core/AST/TypeRef.nll"
+#line 83 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef.m_ePointerType = PointerType.SHARED;
-#line 86 "../../../Source/Core/AST/TypeRef.nll"
+#line 85 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef.m_bRef = bRef;
-#line 88 "../../../Source/Core/AST/TypeRef.nll"
+#line 87 "../../../Source/Core/AST/TypeRef.nll"
 			if (pTypeToken.m_eType == Token.Type.TOKEN_IDENTIFIER)
 			{
+#line 89 "../../../Source/Core/AST/TypeRef.nll"
 				Token pAngleBracketLeft = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_ANGLE_BRACKET_LEFT);
-#line 91 "../../../Source/Core/AST/TypeRef.nll"
+#line 90 "../../../Source/Core/AST/TypeRef.nll"
 				if (pAngleBracketLeft != null)
 				{
-#line 93 "../../../Source/Core/AST/TypeRef.nll"
+#line 92 "../../../Source/Core/AST/TypeRef.nll"
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 95 "../../../Source/Core/AST/TypeRef.nll"
+#line 94 "../../../Source/Core/AST/TypeRef.nll"
 					while (true)
 					{
-#line 97 "../../../Source/Core/AST/TypeRef.nll"
+#line 96 "../../../Source/Core/AST/TypeRef.nll"
 						if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_ANGLE_BRACKET_RIGHT) != null)
 						{
-#line 99 "../../../Source/Core/AST/TypeRef.nll"
+#line 98 "../../../Source/Core/AST/TypeRef.nll"
 							pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 100 "../../../Source/Core/AST/TypeRef.nll"
+#line 99 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
+#line 102 "../../../Source/Core/AST/TypeRef.nll"
 						TypeRef pGenericTypeRef = TypeRef.TryCreate(pTokenContainer, pTempOffset);
-#line 104 "../../../Source/Core/AST/TypeRef.nll"
+#line 103 "../../../Source/Core/AST/TypeRef.nll"
 						if (pGenericTypeRef == null)
 						{
-#line 106 "../../../Source/Core/AST/TypeRef.nll"
+#line 105 "../../../Source/Core/AST/TypeRef.nll"
 							Console.Log("expected inner TypeRef");
-#line 107 "../../../Source/Core/AST/TypeRef.nll"
+#line 106 "../../../Source/Core/AST/TypeRef.nll"
 							Assert.Plz(false);
 						}
-#line 110 "../../../Source/Core/AST/TypeRef.nll"
+#line 109 "../../../Source/Core/AST/TypeRef.nll"
 						pTypeRef.m_pGenericTypeRefVector.PushBack(pGenericTypeRef);
 						NumbatLogic.TypeRef __3744382558 = pGenericTypeRef;
-#line 111 "../../../Source/Core/AST/TypeRef.nll"
+#line 110 "../../../Source/Core/AST/TypeRef.nll"
 						pGenericTypeRef = null;
-#line 111 "../../../Source/Core/AST/TypeRef.nll"
+#line 110 "../../../Source/Core/AST/TypeRef.nll"
 						pTypeRef.AddChild(__3744382558);
-#line 113 "../../../Source/Core/AST/TypeRef.nll"
+#line 112 "../../../Source/Core/AST/TypeRef.nll"
 						if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_ANGLE_BRACKET_RIGHT) != null)
 						{
-#line 114 "../../../Source/Core/AST/TypeRef.nll"
+#line 113 "../../../Source/Core/AST/TypeRef.nll"
 							continue;
 						}
-#line 116 "../../../Source/Core/AST/TypeRef.nll"
+#line 115 "../../../Source/Core/AST/TypeRef.nll"
 						if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_COMMA) == null)
 						{
+#line 117 "../../../Source/Core/AST/TypeRef.nll"
 							InternalString sTemp = new InternalString("expected comma ");
-#line 119 "../../../Source/Core/AST/TypeRef.nll"
+#line 118 "../../../Source/Core/AST/TypeRef.nll"
 							sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
-#line 120 "../../../Source/Core/AST/TypeRef.nll"
+#line 119 "../../../Source/Core/AST/TypeRef.nll"
 							Console.Log(sTemp.GetExternalString());
-#line 121 "../../../Source/Core/AST/TypeRef.nll"
+#line 120 "../../../Source/Core/AST/TypeRef.nll"
 							Assert.Plz(false);
 						}
-#line 123 "../../../Source/Core/AST/TypeRef.nll"
+#line 122 "../../../Source/Core/AST/TypeRef.nll"
 						pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 					}
 				}
 			}
-#line 128 "../../../Source/Core/AST/TypeRef.nll"
+#line 127 "../../../Source/Core/AST/TypeRef.nll"
 			if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_DOUBLE_COLON) != null)
 			{
-#line 130 "../../../Source/Core/AST/TypeRef.nll"
+#line 129 "../../../Source/Core/AST/TypeRef.nll"
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 131 "../../../Source/Core/AST/TypeRef.nll"
 				TypeRef pChildTypeRef = TypeRef.TryCreate(pTokenContainer, pTempOffset);
-#line 133 "../../../Source/Core/AST/TypeRef.nll"
+#line 132 "../../../Source/Core/AST/TypeRef.nll"
 				if (pChildTypeRef == null)
 				{
+#line 134 "../../../Source/Core/AST/TypeRef.nll"
 					InternalString sTemp = new InternalString("expected child TypeRef... ");
-#line 136 "../../../Source/Core/AST/TypeRef.nll"
+#line 135 "../../../Source/Core/AST/TypeRef.nll"
 					sTemp.Append(pTokenContainer.StringifyOffset(pTempOffset));
-#line 137 "../../../Source/Core/AST/TypeRef.nll"
+#line 136 "../../../Source/Core/AST/TypeRef.nll"
 					Console.Log(sTemp.GetExternalString());
-#line 138 "../../../Source/Core/AST/TypeRef.nll"
+#line 137 "../../../Source/Core/AST/TypeRef.nll"
 					Assert.Plz(false);
-#line 139 "../../../Source/Core/AST/TypeRef.nll"
+#line 138 "../../../Source/Core/AST/TypeRef.nll"
 					return null;
 				}
-#line 142 "../../../Source/Core/AST/TypeRef.nll"
+#line 141 "../../../Source/Core/AST/TypeRef.nll"
 				pTypeRef.m_pChildTypeRef = pChildTypeRef;
 				NumbatLogic.TypeRef __1983801666 = pChildTypeRef;
-#line 143 "../../../Source/Core/AST/TypeRef.nll"
+#line 142 "../../../Source/Core/AST/TypeRef.nll"
 				pChildTypeRef = null;
-#line 143 "../../../Source/Core/AST/TypeRef.nll"
+#line 142 "../../../Source/Core/AST/TypeRef.nll"
 				pTypeRef.AddChild(__1983801666);
 			}
 			else
-#line 150 "../../../Source/Core/AST/TypeRef.nll"
+#line 149 "../../../Source/Core/AST/TypeRef.nll"
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_STAR) != null)
 				{
-#line 152 "../../../Source/Core/AST/TypeRef.nll"
+#line 151 "../../../Source/Core/AST/TypeRef.nll"
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 153 "../../../Source/Core/AST/TypeRef.nll"
+#line 152 "../../../Source/Core/AST/TypeRef.nll"
 					pTypeRef.m_ePointerType = PointerType.OWNED;
 				}
 				else
-#line 155 "../../../Source/Core/AST/TypeRef.nll"
+#line 154 "../../../Source/Core/AST/TypeRef.nll"
 					if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_STAR_DOUBLE) != null)
 					{
-#line 157 "../../../Source/Core/AST/TypeRef.nll"
+#line 156 "../../../Source/Core/AST/TypeRef.nll"
 						pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 158 "../../../Source/Core/AST/TypeRef.nll"
+#line 157 "../../../Source/Core/AST/TypeRef.nll"
 						pTypeRef.m_ePointerType = PointerType.TRANSITON;
 					}
-#line 164 "../../../Source/Core/AST/TypeRef.nll"
+#line 163 "../../../Source/Core/AST/TypeRef.nll"
 			pOffsetDatum.Set(pTempOffset);
 			NumbatLogic.TypeRef __967910118 = pTypeRef;
-#line 165 "../../../Source/Core/AST/TypeRef.nll"
+#line 164 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef = null;
-#line 165 "../../../Source/Core/AST/TypeRef.nll"
+#line 164 "../../../Source/Core/AST/TypeRef.nll"
 			return __967910118;
 		}
 
-#line 169 "../../../Source/Core/AST/TypeRef.nll"
+#line 168 "../../../Source/Core/AST/TypeRef.nll"
 		public ClassDecl GetFoundClassDecl()
 		{
-#line 171 "../../../Source/Core/AST/TypeRef.nll"
+#line 170 "../../../Source/Core/AST/TypeRef.nll"
 			if (m_pFoundType != null && m_pFoundType.m_eType == AST.Type.AST_CLASS_DECL)
-#line 172 "../../../Source/Core/AST/TypeRef.nll"
+#line 171 "../../../Source/Core/AST/TypeRef.nll"
 				return (ClassDecl)(m_pFoundType);
-#line 173 "../../../Source/Core/AST/TypeRef.nll"
+#line 172 "../../../Source/Core/AST/TypeRef.nll"
 			return null;
 		}
 
-#line 176 "../../../Source/Core/AST/TypeRef.nll"
+#line 175 "../../../Source/Core/AST/TypeRef.nll"
 		protected void ValidateClassDecl(Validator pValidator, ClassDecl pClassDecl, TypeRef pThisOrChild)
 		{
-#line 178 "../../../Source/Core/AST/TypeRef.nll"
+#line 177 "../../../Source/Core/AST/TypeRef.nll"
 			if (m_pParent != null)
 			{
-#line 182 "../../../Source/Core/AST/TypeRef.nll"
+#line 181 "../../../Source/Core/AST/TypeRef.nll"
 				if (m_pParent.m_eType == AST.Type.AST_NEW_EXP)
 				{
 				}
 				else
-#line 187 "../../../Source/Core/AST/TypeRef.nll"
+#line 186 "../../../Source/Core/AST/TypeRef.nll"
 					if (m_pParent.m_eType == AST.Type.AST_TYPE_REF)
 					{
+#line 188 "../../../Source/Core/AST/TypeRef.nll"
 						TypeRef pSubParentTypeRef = (TypeRef)(m_pParent);
-#line 192 "../../../Source/Core/AST/TypeRef.nll"
+#line 191 "../../../Source/Core/AST/TypeRef.nll"
 						AddClassDeclReference(pClassDecl, AST.OutputFile.HEADER, true);
-#line 195 "../../../Source/Core/AST/TypeRef.nll"
+#line 194 "../../../Source/Core/AST/TypeRef.nll"
 						if (pSubParentTypeRef.m_pChildTypeRef != this)
 						{
+#line 196 "../../../Source/Core/AST/TypeRef.nll"
 							AST pParentParent = m_pParent.m_pParent;
-#line 198 "../../../Source/Core/AST/TypeRef.nll"
+#line 197 "../../../Source/Core/AST/TypeRef.nll"
 							if (pParentParent != null)
 							{
-#line 200 "../../../Source/Core/AST/TypeRef.nll"
+#line 199 "../../../Source/Core/AST/TypeRef.nll"
 								if (pParentParent.m_eType == AST.Type.AST_NEW_EXP)
-#line 201 "../../../Source/Core/AST/TypeRef.nll"
+#line 200 "../../../Source/Core/AST/TypeRef.nll"
 									AddClassDeclReference(pClassDecl, AST.OutputFile.SOURCE, false);
+#line 202 "../../../Source/Core/AST/TypeRef.nll"
 								AST pParentParentParent = pParentParent.m_pParent;
-#line 204 "../../../Source/Core/AST/TypeRef.nll"
+#line 203 "../../../Source/Core/AST/TypeRef.nll"
 								if (pParentParentParent != null)
 								{
-#line 208 "../../../Source/Core/AST/TypeRef.nll"
+#line 207 "../../../Source/Core/AST/TypeRef.nll"
 									if (pParentParentParent.m_eType == AST.Type.AST_MEMBER_VAR_DECL)
-#line 209 "../../../Source/Core/AST/TypeRef.nll"
+#line 208 "../../../Source/Core/AST/TypeRef.nll"
 										AddClassDeclReference(pClassDecl, AST.OutputFile.HEADER, false);
 									else
-#line 210 "../../../Source/Core/AST/TypeRef.nll"
+#line 209 "../../../Source/Core/AST/TypeRef.nll"
 										if (pParentParentParent.m_eType == AST.Type.AST_MEMBER_FUNCTION_DECL)
-#line 211 "../../../Source/Core/AST/TypeRef.nll"
+#line 210 "../../../Source/Core/AST/TypeRef.nll"
 											AddClassDeclReference(pClassDecl, AST.OutputFile.HEADER, true);
 										else
-#line 213 "../../../Source/Core/AST/TypeRef.nll"
+#line 212 "../../../Source/Core/AST/TypeRef.nll"
 											AddClassDeclReference(pClassDecl, AST.OutputFile.SOURCE, true);
 								}
 							}
@@ -265,304 +280,330 @@ namespace NumbatLogic
 					}
 					else
 					{
+#line 219 "../../../Source/Core/AST/TypeRef.nll"
 						AST.OutputFile eOutputFile = AST.OutputFile.SOURCE;
+#line 220 "../../../Source/Core/AST/TypeRef.nll"
 						bool bForwardReference = pThisOrChild.m_pChildTypeRef == null && m_pGenericTypeRefVector.GetSize() == 0;
+#line 222 "../../../Source/Core/AST/TypeRef.nll"
 						AST pParentParent = m_pParent.m_pParent;
-#line 224 "../../../Source/Core/AST/TypeRef.nll"
+#line 223 "../../../Source/Core/AST/TypeRef.nll"
 						if (pParentParent != null)
 						{
-#line 226 "../../../Source/Core/AST/TypeRef.nll"
+#line 225 "../../../Source/Core/AST/TypeRef.nll"
 							if (pParentParent.m_eType == AST.Type.AST_MEMBER_VAR_DECL || pParentParent.m_eType == AST.Type.AST_MEMBER_FUNCTION_DECL)
 							{
-#line 228 "../../../Source/Core/AST/TypeRef.nll"
+#line 227 "../../../Source/Core/AST/TypeRef.nll"
 								eOutputFile = AST.OutputFile.HEADER;
 							}
 							else
 							{
+#line 231 "../../../Source/Core/AST/TypeRef.nll"
 								AST pParentParentParent = pParentParent.m_pParent;
-#line 233 "../../../Source/Core/AST/TypeRef.nll"
+#line 232 "../../../Source/Core/AST/TypeRef.nll"
 								if (pParentParentParent != null)
 								{
+#line 234 "../../../Source/Core/AST/TypeRef.nll"
 									AST pParentParentParentParent = pParentParentParent.m_pParent;
-#line 236 "../../../Source/Core/AST/TypeRef.nll"
+#line 235 "../../../Source/Core/AST/TypeRef.nll"
 									if (pParentParentParentParent != null)
 									{
-#line 238 "../../../Source/Core/AST/TypeRef.nll"
+#line 237 "../../../Source/Core/AST/TypeRef.nll"
 										if (m_pParent.m_eType == AST.Type.AST_VAR_DECL && pParentParent.m_eType == AST.Type.AST_PARAM_DECL && (pParentParentParent.m_eType == AST.Type.AST_FUNCTION_DECL && pParentParentParentParent.m_eType == AST.Type.AST_MEMBER_FUNCTION_DECL || pParentParentParent.m_eType == AST.Type.AST_TOR_DECL || (pParentParentParent.m_eType == AST.Type.AST_FUNCTION_DECL && pParentParentParentParent.m_eType == AST.Type.DELEGATE_DECL)))
-#line 239 "../../../Source/Core/AST/TypeRef.nll"
+#line 238 "../../../Source/Core/AST/TypeRef.nll"
 											eOutputFile = AST.OutputFile.HEADER;
 									}
 								}
 							}
 						}
-#line 245 "../../../Source/Core/AST/TypeRef.nll"
+#line 244 "../../../Source/Core/AST/TypeRef.nll"
 						AddClassDeclReference(pClassDecl, eOutputFile, bForwardReference);
 					}
 			}
 		}
 
-#line 250 "../../../Source/Core/AST/TypeRef.nll"
+#line 249 "../../../Source/Core/AST/TypeRef.nll"
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
-#line 252 "../../../Source/Core/AST/TypeRef.nll"
+#line 251 "../../../Source/Core/AST/TypeRef.nll"
 			if (m_pTypeToken.m_eType == Token.Type.TOKEN_IDENTIFIER)
 			{
+#line 253 "../../../Source/Core/AST/TypeRef.nll"
 				AST pType = null;
+#line 254 "../../../Source/Core/AST/TypeRef.nll"
 				bool bResolverTypeAmbiguous = false;
+#line 255 "../../../Source/Core/AST/TypeRef.nll"
 				string sTypeName = m_pTypeToken.GetString();
+#line 262 "../../../Source/Core/AST/TypeRef.nll"
 				TypeRef pParentTypeRef = null;
-#line 264 "../../../Source/Core/AST/TypeRef.nll"
+#line 263 "../../../Source/Core/AST/TypeRef.nll"
 				if (m_pParent != null && m_pParent.m_eType == AST.Type.AST_TYPE_REF)
 				{
-#line 266 "../../../Source/Core/AST/TypeRef.nll"
+#line 265 "../../../Source/Core/AST/TypeRef.nll"
 					pParentTypeRef = (TypeRef)(m_pParent);
-#line 267 "../../../Source/Core/AST/TypeRef.nll"
+#line 266 "../../../Source/Core/AST/TypeRef.nll"
 					if (pParentTypeRef.m_pChildTypeRef != this)
-#line 268 "../../../Source/Core/AST/TypeRef.nll"
+#line 267 "../../../Source/Core/AST/TypeRef.nll"
 						pParentTypeRef = null;
 				}
+#line 270 "../../../Source/Core/AST/TypeRef.nll"
 				Vector<Symbol> pCandidates = new Vector<Symbol>();
+#line 271 "../../../Source/Core/AST/TypeRef.nll"
 				AST pResolverBase = this;
-#line 273 "../../../Source/Core/AST/TypeRef.nll"
+#line 272 "../../../Source/Core/AST/TypeRef.nll"
 				if (pParentTypeRef != null && pParentTypeRef.m_pFoundType != null)
-#line 274 "../../../Source/Core/AST/TypeRef.nll"
+#line 273 "../../../Source/Core/AST/TypeRef.nll"
 					pResolverBase = pParentTypeRef.m_pFoundType;
-#line 275 "../../../Source/Core/AST/TypeRef.nll"
+#line 274 "../../../Source/Core/AST/TypeRef.nll"
 				pValidator.m_pResolver.ResolveFromNode(pResolverBase, sTypeName, pCandidates);
+#line 276 "../../../Source/Core/AST/TypeRef.nll"
 				Vector<Symbol> pTypeLike = new Vector<Symbol>();
-#line 278 "../../../Source/Core/AST/TypeRef.nll"
+#line 277 "../../../Source/Core/AST/TypeRef.nll"
 				for (int i = 0; i < pCandidates.GetSize(); i++)
 				{
+#line 279 "../../../Source/Core/AST/TypeRef.nll"
 					Symbol pSym = pCandidates.Get(i);
-#line 281 "../../../Source/Core/AST/TypeRef.nll"
+#line 280 "../../../Source/Core/AST/TypeRef.nll"
 					if (pSym.m_eKind == Symbol.Kind.CLASS || pSym.m_eKind == Symbol.Kind.ENUM || pSym.m_eKind == Symbol.Kind.GENERIC_PARAM || pSym.m_eKind == Symbol.Kind.DELEGATE || pSym.m_eKind == Symbol.Kind.NAMESPACE)
 					{
-#line 287 "../../../Source/Core/AST/TypeRef.nll"
+#line 286 "../../../Source/Core/AST/TypeRef.nll"
 						pTypeLike.PushBack(pSym);
 					}
 				}
-#line 291 "../../../Source/Core/AST/TypeRef.nll"
+#line 290 "../../../Source/Core/AST/TypeRef.nll"
 				if (pTypeLike.GetSize() == 1)
 				{
+#line 292 "../../../Source/Core/AST/TypeRef.nll"
 					Symbol pSymbol = pTypeLike.Get(0);
-#line 294 "../../../Source/Core/AST/TypeRef.nll"
+#line 293 "../../../Source/Core/AST/TypeRef.nll"
 					if (pSymbol.m_pDeclAST != null)
 					{
-#line 296 "../../../Source/Core/AST/TypeRef.nll"
+#line 295 "../../../Source/Core/AST/TypeRef.nll"
 						pType = pSymbol.m_pDeclAST;
-#line 297 "../../../Source/Core/AST/TypeRef.nll"
+#line 296 "../../../Source/Core/AST/TypeRef.nll"
 						m_pFoundType = pType;
 					}
 				}
 				else
-#line 300 "../../../Source/Core/AST/TypeRef.nll"
+#line 299 "../../../Source/Core/AST/TypeRef.nll"
 					if (pTypeLike.GetSize() > 1)
-#line 301 "../../../Source/Core/AST/TypeRef.nll"
+#line 300 "../../../Source/Core/AST/TypeRef.nll"
 						bResolverTypeAmbiguous = true;
-#line 303 "../../../Source/Core/AST/TypeRef.nll"
+#line 302 "../../../Source/Core/AST/TypeRef.nll"
 				if (pType == null)
 				{
-#line 305 "../../../Source/Core/AST/TypeRef.nll"
+#line 304 "../../../Source/Core/AST/TypeRef.nll"
 					if (bResolverTypeAmbiguous)
 					{
+#line 306 "../../../Source/Core/AST/TypeRef.nll"
 						InternalString sAmbiguous = new InternalString("Ambiguous type (multiple declarations in scope): ");
-#line 308 "../../../Source/Core/AST/TypeRef.nll"
+#line 307 "../../../Source/Core/AST/TypeRef.nll"
 						sAmbiguous.Append(sTypeName);
-#line 309 "../../../Source/Core/AST/TypeRef.nll"
+#line 308 "../../../Source/Core/AST/TypeRef.nll"
 						pValidator.AddError(sAmbiguous.GetExternalString(), m_pTypeToken.m_sFileName, m_pTypeToken.m_nLine, m_pTypeToken.m_nColumn);
 					}
 					else
 					{
+#line 312 "../../../Source/Core/AST/TypeRef.nll"
 						InternalString sTemp = new InternalString("Unknown type: ");
-#line 314 "../../../Source/Core/AST/TypeRef.nll"
+#line 313 "../../../Source/Core/AST/TypeRef.nll"
 						sTemp.Append(sTypeName);
+#line 315 "../../../Source/Core/AST/TypeRef.nll"
 						TypeRef pSubParentTypeRef = null;
-#line 317 "../../../Source/Core/AST/TypeRef.nll"
+#line 316 "../../../Source/Core/AST/TypeRef.nll"
 						if (m_pParent.m_eType == AST.Type.AST_TYPE_REF)
 						{
-#line 319 "../../../Source/Core/AST/TypeRef.nll"
+#line 318 "../../../Source/Core/AST/TypeRef.nll"
 							pSubParentTypeRef = (TypeRef)(m_pParent);
-#line 320 "../../../Source/Core/AST/TypeRef.nll"
+#line 319 "../../../Source/Core/AST/TypeRef.nll"
 							if (pSubParentTypeRef.m_pChildTypeRef != this)
-#line 321 "../../../Source/Core/AST/TypeRef.nll"
+#line 320 "../../../Source/Core/AST/TypeRef.nll"
 								pSubParentTypeRef = null;
 						}
-#line 323 "../../../Source/Core/AST/TypeRef.nll"
+#line 322 "../../../Source/Core/AST/TypeRef.nll"
 						if (pSubParentTypeRef != null && pSubParentTypeRef.m_pFoundType != null)
-#line 324 "../../../Source/Core/AST/TypeRef.nll"
+#line 323 "../../../Source/Core/AST/TypeRef.nll"
 							sTemp.Append(" -- had parent");
-#line 326 "../../../Source/Core/AST/TypeRef.nll"
+#line 325 "../../../Source/Core/AST/TypeRef.nll"
 						pValidator.AddError(sTemp.GetExternalString(), m_pTypeToken.m_sFileName, m_pTypeToken.m_nLine, m_pTypeToken.m_nColumn);
 					}
-#line 328 "../../../Source/Core/AST/TypeRef.nll"
+#line 327 "../../../Source/Core/AST/TypeRef.nll"
 					return;
 				}
-#line 330 "../../../Source/Core/AST/TypeRef.nll"
+#line 329 "../../../Source/Core/AST/TypeRef.nll"
 				if (pType.m_eType == AST.Type.AST_CLASS_DECL)
 				{
+#line 331 "../../../Source/Core/AST/TypeRef.nll"
 					ClassDecl pClassDecl = (ClassDecl)(pType);
-#line 333 "../../../Source/Core/AST/TypeRef.nll"
+#line 332 "../../../Source/Core/AST/TypeRef.nll"
 					ValidateClassDecl(pValidator, pClassDecl, this);
-#line 335 "../../../Source/Core/AST/TypeRef.nll"
+#line 334 "../../../Source/Core/AST/TypeRef.nll"
 					if (m_pChildTypeRef != null)
 					{
-#line 337 "../../../Source/Core/AST/TypeRef.nll"
+#line 336 "../../../Source/Core/AST/TypeRef.nll"
 						m_pChildTypeRef.Validate(pValidator, null);
 					}
 				}
 				else
-#line 340 "../../../Source/Core/AST/TypeRef.nll"
+#line 339 "../../../Source/Core/AST/TypeRef.nll"
 					if (pType.m_eType == AST.Type.NAMESPACE_DECL)
 					{
-#line 346 "../../../Source/Core/AST/TypeRef.nll"
+#line 345 "../../../Source/Core/AST/TypeRef.nll"
 						if (m_pChildTypeRef == null)
 						{
-#line 348 "../../../Source/Core/AST/TypeRef.nll"
+#line 347 "../../../Source/Core/AST/TypeRef.nll"
 							pValidator.AddError("Namespace typeref musttt have a child???", m_pTypeToken.m_sFileName, m_pTypeToken.m_nLine, m_pTypeToken.m_nColumn);
-#line 349 "../../../Source/Core/AST/TypeRef.nll"
+#line 348 "../../../Source/Core/AST/TypeRef.nll"
 							return;
 						}
-#line 352 "../../../Source/Core/AST/TypeRef.nll"
+#line 351 "../../../Source/Core/AST/TypeRef.nll"
 						if (m_pChildTypeRef.m_pTypeToken.m_eType != Token.Type.TOKEN_IDENTIFIER)
 						{
-#line 354 "../../../Source/Core/AST/TypeRef.nll"
+#line 353 "../../../Source/Core/AST/TypeRef.nll"
 							pValidator.AddError("child must be IDENTIFIER", m_pChildTypeRef.m_pTypeToken.m_sFileName, m_pChildTypeRef.m_pTypeToken.m_nLine, m_pChildTypeRef.m_pTypeToken.m_nColumn);
-#line 355 "../../../Source/Core/AST/TypeRef.nll"
+#line 354 "../../../Source/Core/AST/TypeRef.nll"
 							return;
 						}
-#line 358 "../../../Source/Core/AST/TypeRef.nll"
+#line 357 "../../../Source/Core/AST/TypeRef.nll"
 						m_pChildTypeRef.Validate(pValidator, null);
 					}
 					else
-#line 361 "../../../Source/Core/AST/TypeRef.nll"
+#line 360 "../../../Source/Core/AST/TypeRef.nll"
 						if (pType.m_eType == AST.Type.AST_ENUM_DECL)
 						{
 						}
 						else
-#line 365 "../../../Source/Core/AST/TypeRef.nll"
+#line 364 "../../../Source/Core/AST/TypeRef.nll"
 							if (pType.m_eType == AST.Type.AST_MEMBER_CLASS_DECL)
 							{
 							}
 							else
-#line 370 "../../../Source/Core/AST/TypeRef.nll"
+#line 369 "../../../Source/Core/AST/TypeRef.nll"
 								if (pType.m_eType == AST.Type.AST_MEMBER_ENUM_DECL)
 								{
 								}
 								else
-#line 374 "../../../Source/Core/AST/TypeRef.nll"
+#line 373 "../../../Source/Core/AST/TypeRef.nll"
 									if (pType.m_eType == AST.Type.AST_GENERIC_TYPE_DECL)
 									{
 									}
 									else
-#line 378 "../../../Source/Core/AST/TypeRef.nll"
+#line 377 "../../../Source/Core/AST/TypeRef.nll"
 										if (pType.m_eType == AST.Type.DELEGATE_DECL)
 										{
 										}
 										else
 										{
+#line 383 "../../../Source/Core/AST/TypeRef.nll"
 											InternalString sTemp = new InternalString("Found type, but it's not a AST_CLASS_DECL, AST_MEMBER_CLASS_DECL, NAMESPACE_DECL, AST_ENUM_DECL, AST_MEMBER_ENUM_DECL, AST_GENERIC_TYPE_DECL or DELEGATE_DECL! Got: ");
-#line 385 "../../../Source/Core/AST/TypeRef.nll"
+#line 384 "../../../Source/Core/AST/TypeRef.nll"
 											pType.StringifyType(sTemp);
-#line 387 "../../../Source/Core/AST/TypeRef.nll"
+#line 386 "../../../Source/Core/AST/TypeRef.nll"
 											pValidator.AddError(sTemp.GetExternalString(), m_pTypeToken.m_sFileName, m_pTypeToken.m_nLine, m_pTypeToken.m_nColumn);
 										}
 			}
 			else
 			{
-#line 393 "../../../Source/Core/AST/TypeRef.nll"
+#line 392 "../../../Source/Core/AST/TypeRef.nll"
 				if (m_pChildTypeRef != null)
 				{
-#line 395 "../../../Source/Core/AST/TypeRef.nll"
+#line 394 "../../../Source/Core/AST/TypeRef.nll"
 					pValidator.AddError("Not identifier but has child type ref???", m_pTypeToken.m_sFileName, m_pTypeToken.m_nLine, m_pTypeToken.m_nColumn);
-#line 396 "../../../Source/Core/AST/TypeRef.nll"
+#line 395 "../../../Source/Core/AST/TypeRef.nll"
 					return;
 				}
 			}
-#line 403 "../../../Source/Core/AST/TypeRef.nll"
+#line 402 "../../../Source/Core/AST/TypeRef.nll"
 			for (int i = 0; i < m_pGenericTypeRefVector.GetSize(); i++)
 			{
+#line 404 "../../../Source/Core/AST/TypeRef.nll"
 				TypeRef pGenericTypeRef = m_pGenericTypeRefVector.Get(i);
-#line 406 "../../../Source/Core/AST/TypeRef.nll"
+#line 405 "../../../Source/Core/AST/TypeRef.nll"
 				pGenericTypeRef.Validate(pValidator, null);
 			}
-#line 411 "../../../Source/Core/AST/TypeRef.nll"
+#line 410 "../../../Source/Core/AST/TypeRef.nll"
 			base.Validate(pValidator, pParent);
 		}
 
-#line 414 "../../../Source/Core/AST/TypeRef.nll"
+#line 413 "../../../Source/Core/AST/TypeRef.nll"
 		public TypeRef Clone()
 		{
+#line 415 "../../../Source/Core/AST/TypeRef.nll"
 			TypeRef pTypeRef = new TypeRef();
-#line 417 "../../../Source/Core/AST/TypeRef.nll"
+#line 416 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef.m_pCloneToken = m_pTypeToken.Clone();
-#line 418 "../../../Source/Core/AST/TypeRef.nll"
+#line 417 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef.m_bConst = m_bConst;
-#line 419 "../../../Source/Core/AST/TypeRef.nll"
+#line 418 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef.m_pFirstToken = pTypeRef.m_pCloneToken;
-#line 420 "../../../Source/Core/AST/TypeRef.nll"
+#line 419 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef.m_pTypeToken = pTypeRef.m_pCloneToken;
-#line 421 "../../../Source/Core/AST/TypeRef.nll"
+#line 420 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef.m_pFoundType = m_pFoundType;
-#line 423 "../../../Source/Core/AST/TypeRef.nll"
+#line 422 "../../../Source/Core/AST/TypeRef.nll"
 			for (int i = 0; i < m_pGenericTypeRefVector.GetSize(); i++)
 			{
+#line 424 "../../../Source/Core/AST/TypeRef.nll"
 				TypeRef pGenericTypeRef = m_pGenericTypeRefVector.Get(i).Clone();
-#line 426 "../../../Source/Core/AST/TypeRef.nll"
+#line 425 "../../../Source/Core/AST/TypeRef.nll"
 				pTypeRef.m_pGenericTypeRefVector.PushBack(pGenericTypeRef);
 				NumbatLogic.TypeRef __3769232678 = pGenericTypeRef;
-#line 427 "../../../Source/Core/AST/TypeRef.nll"
+#line 426 "../../../Source/Core/AST/TypeRef.nll"
 				pGenericTypeRef = null;
-#line 427 "../../../Source/Core/AST/TypeRef.nll"
+#line 426 "../../../Source/Core/AST/TypeRef.nll"
 				pTypeRef.AddChild(__3769232678);
 			}
-#line 430 "../../../Source/Core/AST/TypeRef.nll"
+#line 429 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef.m_pChildTypeRef = null;
-#line 431 "../../../Source/Core/AST/TypeRef.nll"
+#line 430 "../../../Source/Core/AST/TypeRef.nll"
 			if (m_pChildTypeRef != null)
 			{
+#line 432 "../../../Source/Core/AST/TypeRef.nll"
 				TypeRef pChildTypeRef = m_pChildTypeRef.Clone();
-#line 434 "../../../Source/Core/AST/TypeRef.nll"
+#line 433 "../../../Source/Core/AST/TypeRef.nll"
 				pTypeRef.m_pChildTypeRef = pChildTypeRef;
 				NumbatLogic.TypeRef __2008520584 = pChildTypeRef;
-#line 435 "../../../Source/Core/AST/TypeRef.nll"
+#line 434 "../../../Source/Core/AST/TypeRef.nll"
 				pChildTypeRef = null;
-#line 435 "../../../Source/Core/AST/TypeRef.nll"
+#line 434 "../../../Source/Core/AST/TypeRef.nll"
 				pTypeRef.AddChild(__2008520584);
 			}
-#line 438 "../../../Source/Core/AST/TypeRef.nll"
+#line 437 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef.m_ePointerType = m_ePointerType;
 			NumbatLogic.TypeRef __992497841 = pTypeRef;
-#line 440 "../../../Source/Core/AST/TypeRef.nll"
+#line 439 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef = null;
-#line 440 "../../../Source/Core/AST/TypeRef.nll"
+#line 439 "../../../Source/Core/AST/TypeRef.nll"
 			return __992497841;
 		}
 
-#line 443 "../../../Source/Core/AST/TypeRef.nll"
+#line 442 "../../../Source/Core/AST/TypeRef.nll"
 		public override AST BaseClone()
 		{
-#line 445 "../../../Source/Core/AST/TypeRef.nll"
+#line 444 "../../../Source/Core/AST/TypeRef.nll"
 			return Clone();
 		}
 
-#line 448 "../../../Source/Core/AST/TypeRef.nll"
+#line 447 "../../../Source/Core/AST/TypeRef.nll"
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-#line 450 "../../../Source/Core/AST/TypeRef.nll"
+#line 449 "../../../Source/Core/AST/TypeRef.nll"
 			if (m_bConst)
 			{
+#line 451 "../../../Source/Core/AST/TypeRef.nll"
 				bool bOutput = true;
-#line 455 "../../../Source/Core/AST/TypeRef.nll"
+#line 454 "../../../Source/Core/AST/TypeRef.nll"
 				if (eLanguage == AST.Language.CS)
 				{
-#line 457 "../../../Source/Core/AST/TypeRef.nll"
+#line 456 "../../../Source/Core/AST/TypeRef.nll"
 					bOutput = false;
+#line 457 "../../../Source/Core/AST/TypeRef.nll"
 					Project pProject = GetProject();
-#line 459 "../../../Source/Core/AST/TypeRef.nll"
+#line 458 "../../../Source/Core/AST/TypeRef.nll"
 					if (pProject != null && pProject.m_pValidator != null)
 					{
+#line 460 "../../../Source/Core/AST/TypeRef.nll"
 						ValueType pValueType = GetRecursiveValueType(pProject.m_pValidator.m_pResolver);
-#line 463 "../../../Source/Core/AST/TypeRef.nll"
+#line 462 "../../../Source/Core/AST/TypeRef.nll"
 						switch (pValueType.m_eType)
 						{
 							case ValueType.Type.INT:
@@ -571,188 +612,188 @@ namespace NumbatLogic
 							case ValueType.Type.UNICHAR:
 							case ValueType.Type.ENUM_DECL_VALUE:
 							{
-#line 472 "../../../Source/Core/AST/TypeRef.nll"
+#line 471 "../../../Source/Core/AST/TypeRef.nll"
 								bOutput = true;
-#line 473 "../../../Source/Core/AST/TypeRef.nll"
+#line 472 "../../../Source/Core/AST/TypeRef.nll"
 								break;
 							}
 
 						}
 					}
 				}
-#line 479 "../../../Source/Core/AST/TypeRef.nll"
+#line 478 "../../../Source/Core/AST/TypeRef.nll"
 				if (bOutput)
-#line 480 "../../../Source/Core/AST/TypeRef.nll"
+#line 479 "../../../Source/Core/AST/TypeRef.nll"
 					pOutputBuilder.m_sOut.AppendString("const ");
 			}
-#line 485 "../../../Source/Core/AST/TypeRef.nll"
+#line 484 "../../../Source/Core/AST/TypeRef.nll"
 			if (eLanguage == AST.Language.CPP)
 			{
-#line 487 "../../../Source/Core/AST/TypeRef.nll"
+#line 486 "../../../Source/Core/AST/TypeRef.nll"
 				if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UNICHAR)
-#line 488 "../../../Source/Core/AST/TypeRef.nll"
+#line 487 "../../../Source/Core/AST/TypeRef.nll"
 					pOutputBuilder.m_sOut.Append("unsigned short");
 				else
-#line 489 "../../../Source/Core/AST/TypeRef.nll"
+#line 488 "../../../Source/Core/AST/TypeRef.nll"
 					if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_STRING)
 					{
-#line 491 "../../../Source/Core/AST/TypeRef.nll"
+#line 490 "../../../Source/Core/AST/TypeRef.nll"
 						if (m_bConst)
-#line 492 "../../../Source/Core/AST/TypeRef.nll"
+#line 491 "../../../Source/Core/AST/TypeRef.nll"
 							pOutputBuilder.m_sOut.Append("char*");
 						else
-#line 494 "../../../Source/Core/AST/TypeRef.nll"
+#line 493 "../../../Source/Core/AST/TypeRef.nll"
 							pOutputBuilder.m_sOut.Append("const char*");
 					}
 					else
-#line 496 "../../../Source/Core/AST/TypeRef.nll"
+#line 495 "../../../Source/Core/AST/TypeRef.nll"
 						if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT)
-#line 497 "../../../Source/Core/AST/TypeRef.nll"
+#line 496 "../../../Source/Core/AST/TypeRef.nll"
 							pOutputBuilder.m_sOut.Append("unsigned int");
 						else
-#line 498 "../../../Source/Core/AST/TypeRef.nll"
+#line 497 "../../../Source/Core/AST/TypeRef.nll"
 							if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT8)
-#line 499 "../../../Source/Core/AST/TypeRef.nll"
+#line 498 "../../../Source/Core/AST/TypeRef.nll"
 								pOutputBuilder.m_sOut.Append("unsigned char");
 							else
-#line 500 "../../../Source/Core/AST/TypeRef.nll"
+#line 499 "../../../Source/Core/AST/TypeRef.nll"
 								if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT16)
-#line 501 "../../../Source/Core/AST/TypeRef.nll"
+#line 500 "../../../Source/Core/AST/TypeRef.nll"
 									pOutputBuilder.m_sOut.Append("unsigned short");
 								else
-#line 502 "../../../Source/Core/AST/TypeRef.nll"
+#line 501 "../../../Source/Core/AST/TypeRef.nll"
 									if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT32)
-#line 503 "../../../Source/Core/AST/TypeRef.nll"
+#line 502 "../../../Source/Core/AST/TypeRef.nll"
 										pOutputBuilder.m_sOut.Append("unsigned int");
 									else
-#line 504 "../../../Source/Core/AST/TypeRef.nll"
+#line 503 "../../../Source/Core/AST/TypeRef.nll"
 										if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT64)
-#line 505 "../../../Source/Core/AST/TypeRef.nll"
+#line 504 "../../../Source/Core/AST/TypeRef.nll"
 											pOutputBuilder.m_sOut.Append("unsigned long long");
 										else
-#line 506 "../../../Source/Core/AST/TypeRef.nll"
+#line 505 "../../../Source/Core/AST/TypeRef.nll"
 											if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_INT32)
-#line 507 "../../../Source/Core/AST/TypeRef.nll"
+#line 506 "../../../Source/Core/AST/TypeRef.nll"
 												pOutputBuilder.m_sOut.Append("int");
 											else
-#line 508 "../../../Source/Core/AST/TypeRef.nll"
+#line 507 "../../../Source/Core/AST/TypeRef.nll"
 												if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_INT16)
-#line 509 "../../../Source/Core/AST/TypeRef.nll"
+#line 508 "../../../Source/Core/AST/TypeRef.nll"
 													pOutputBuilder.m_sOut.Append("short");
 												else
-#line 510 "../../../Source/Core/AST/TypeRef.nll"
+#line 509 "../../../Source/Core/AST/TypeRef.nll"
 													if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_INT8)
-#line 511 "../../../Source/Core/AST/TypeRef.nll"
+#line 510 "../../../Source/Core/AST/TypeRef.nll"
 														pOutputBuilder.m_sOut.Append("signed char");
 													else
-#line 512 "../../../Source/Core/AST/TypeRef.nll"
+#line 511 "../../../Source/Core/AST/TypeRef.nll"
 														if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_VOIDPTR)
-#line 513 "../../../Source/Core/AST/TypeRef.nll"
+#line 512 "../../../Source/Core/AST/TypeRef.nll"
 															pOutputBuilder.m_sOut.Append("void*");
 														else
-#line 515 "../../../Source/Core/AST/TypeRef.nll"
+#line 514 "../../../Source/Core/AST/TypeRef.nll"
 															m_pTypeToken.Stringify(pOutputBuilder.m_sOut);
-#line 517 "../../../Source/Core/AST/TypeRef.nll"
+#line 516 "../../../Source/Core/AST/TypeRef.nll"
 				if (m_bRef)
-#line 518 "../../../Source/Core/AST/TypeRef.nll"
+#line 517 "../../../Source/Core/AST/TypeRef.nll"
 					pOutputBuilder.m_sOut.AppendString("&");
 			}
 			else
-#line 520 "../../../Source/Core/AST/TypeRef.nll"
+#line 519 "../../../Source/Core/AST/TypeRef.nll"
 				if (eLanguage == AST.Language.CS)
 				{
-#line 522 "../../../Source/Core/AST/TypeRef.nll"
+#line 521 "../../../Source/Core/AST/TypeRef.nll"
 					if (m_bRef && eLanguage == AST.Language.CS)
-#line 523 "../../../Source/Core/AST/TypeRef.nll"
+#line 522 "../../../Source/Core/AST/TypeRef.nll"
 						pOutputBuilder.m_sOut.AppendString("ref ");
-#line 525 "../../../Source/Core/AST/TypeRef.nll"
+#line 524 "../../../Source/Core/AST/TypeRef.nll"
 					switch (m_pTypeToken.m_eType)
 					{
 						case Token.Type.TOKEN_KEYWORD_UNICHAR:
 						{
-#line 527 "../../../Source/Core/AST/TypeRef.nll"
+#line 526 "../../../Source/Core/AST/TypeRef.nll"
 							pOutputBuilder.m_sOut.Append("char");
-#line 527 "../../../Source/Core/AST/TypeRef.nll"
+#line 526 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_STRING:
 						{
-#line 528 "../../../Source/Core/AST/TypeRef.nll"
+#line 527 "../../../Source/Core/AST/TypeRef.nll"
 							pOutputBuilder.m_sOut.Append("string");
-#line 528 "../../../Source/Core/AST/TypeRef.nll"
+#line 527 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_VOIDPTR:
 						{
-#line 529 "../../../Source/Core/AST/TypeRef.nll"
+#line 528 "../../../Source/Core/AST/TypeRef.nll"
 							pOutputBuilder.m_sOut.Append("object");
-#line 529 "../../../Source/Core/AST/TypeRef.nll"
+#line 528 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_UINT8:
 						{
-#line 530 "../../../Source/Core/AST/TypeRef.nll"
+#line 529 "../../../Source/Core/AST/TypeRef.nll"
 							pOutputBuilder.m_sOut.Append("byte");
-#line 530 "../../../Source/Core/AST/TypeRef.nll"
+#line 529 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_UINT16:
 						{
-#line 531 "../../../Source/Core/AST/TypeRef.nll"
+#line 530 "../../../Source/Core/AST/TypeRef.nll"
 							pOutputBuilder.m_sOut.Append("ushort");
-#line 531 "../../../Source/Core/AST/TypeRef.nll"
+#line 530 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_UINT32:
 						{
-#line 532 "../../../Source/Core/AST/TypeRef.nll"
+#line 531 "../../../Source/Core/AST/TypeRef.nll"
 							pOutputBuilder.m_sOut.Append("uint");
-#line 532 "../../../Source/Core/AST/TypeRef.nll"
+#line 531 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_UINT64:
 						{
-#line 533 "../../../Source/Core/AST/TypeRef.nll"
+#line 532 "../../../Source/Core/AST/TypeRef.nll"
 							pOutputBuilder.m_sOut.Append("ulong");
-#line 533 "../../../Source/Core/AST/TypeRef.nll"
+#line 532 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_INT8:
 						{
-#line 534 "../../../Source/Core/AST/TypeRef.nll"
+#line 533 "../../../Source/Core/AST/TypeRef.nll"
 							pOutputBuilder.m_sOut.Append("sbyte");
-#line 534 "../../../Source/Core/AST/TypeRef.nll"
+#line 533 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_INT16:
 						{
-#line 535 "../../../Source/Core/AST/TypeRef.nll"
+#line 534 "../../../Source/Core/AST/TypeRef.nll"
 							pOutputBuilder.m_sOut.Append("short");
-#line 535 "../../../Source/Core/AST/TypeRef.nll"
+#line 534 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						case Token.Type.TOKEN_KEYWORD_INT32:
 						{
-#line 536 "../../../Source/Core/AST/TypeRef.nll"
+#line 535 "../../../Source/Core/AST/TypeRef.nll"
 							pOutputBuilder.m_sOut.Append("int");
-#line 536 "../../../Source/Core/AST/TypeRef.nll"
+#line 535 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
 						default:
 						{
-#line 540 "../../../Source/Core/AST/TypeRef.nll"
+#line 539 "../../../Source/Core/AST/TypeRef.nll"
 							m_pTypeToken.Stringify(pOutputBuilder.m_sOut);
-#line 541 "../../../Source/Core/AST/TypeRef.nll"
+#line 540 "../../../Source/Core/AST/TypeRef.nll"
 							break;
 						}
 
@@ -760,345 +801,364 @@ namespace NumbatLogic
 				}
 				else
 				{
-#line 549 "../../../Source/Core/AST/TypeRef.nll"
+#line 548 "../../../Source/Core/AST/TypeRef.nll"
 					m_pTypeToken.Stringify(pOutputBuilder.m_sOut);
 				}
-#line 553 "../../../Source/Core/AST/TypeRef.nll"
+#line 552 "../../../Source/Core/AST/TypeRef.nll"
 			if (m_pGenericTypeRefVector.GetSize() > 0)
 			{
-#line 555 "../../../Source/Core/AST/TypeRef.nll"
+#line 554 "../../../Source/Core/AST/TypeRef.nll"
 				pOutputBuilder.m_sOut.AppendChar('<');
-#line 556 "../../../Source/Core/AST/TypeRef.nll"
+#line 555 "../../../Source/Core/AST/TypeRef.nll"
 				for (int i = 0; i < m_pGenericTypeRefVector.GetSize(); i++)
 				{
-#line 558 "../../../Source/Core/AST/TypeRef.nll"
+#line 557 "../../../Source/Core/AST/TypeRef.nll"
 					if (i > 0)
-#line 559 "../../../Source/Core/AST/TypeRef.nll"
+#line 558 "../../../Source/Core/AST/TypeRef.nll"
 						pOutputBuilder.m_sOut.Append(", ");
+#line 559 "../../../Source/Core/AST/TypeRef.nll"
 					TypeRef pGenericTypeRef = m_pGenericTypeRefVector.Get(i);
-#line 561 "../../../Source/Core/AST/TypeRef.nll"
+#line 560 "../../../Source/Core/AST/TypeRef.nll"
 					pGenericTypeRef.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 				}
-#line 563 "../../../Source/Core/AST/TypeRef.nll"
+#line 562 "../../../Source/Core/AST/TypeRef.nll"
 				if (eLanguage == AST.Language.NLL_DEF)
-#line 564 "../../../Source/Core/AST/TypeRef.nll"
+#line 563 "../../../Source/Core/AST/TypeRef.nll"
 					pOutputBuilder.m_sOut.AppendChar('!');
-#line 565 "../../../Source/Core/AST/TypeRef.nll"
+#line 564 "../../../Source/Core/AST/TypeRef.nll"
 				pOutputBuilder.m_sOut.AppendChar('>');
 			}
-#line 568 "../../../Source/Core/AST/TypeRef.nll"
+#line 567 "../../../Source/Core/AST/TypeRef.nll"
 			if (m_pChildTypeRef != null)
 			{
-#line 570 "../../../Source/Core/AST/TypeRef.nll"
+#line 569 "../../../Source/Core/AST/TypeRef.nll"
 				switch (eLanguage)
 				{
 					case AST.Language.NLL:
 					case AST.Language.NLL_DEF:
 					case AST.Language.CPP:
 					{
-#line 576 "../../../Source/Core/AST/TypeRef.nll"
+#line 575 "../../../Source/Core/AST/TypeRef.nll"
 						pOutputBuilder.m_sOut.Append("::");
-#line 577 "../../../Source/Core/AST/TypeRef.nll"
+#line 576 "../../../Source/Core/AST/TypeRef.nll"
 						break;
 					}
 
 					case AST.Language.CS:
 					{
-#line 581 "../../../Source/Core/AST/TypeRef.nll"
+#line 580 "../../../Source/Core/AST/TypeRef.nll"
 						pOutputBuilder.m_sOut.AppendChar('.');
-#line 582 "../../../Source/Core/AST/TypeRef.nll"
+#line 581 "../../../Source/Core/AST/TypeRef.nll"
 						break;
 					}
 
 				}
-#line 585 "../../../Source/Core/AST/TypeRef.nll"
+#line 584 "../../../Source/Core/AST/TypeRef.nll"
 				m_pChildTypeRef.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 			}
+#line 587 "../../../Source/Core/AST/TypeRef.nll"
 			TypeRef pFinalChildTypeRef = this;
-#line 589 "../../../Source/Core/AST/TypeRef.nll"
+#line 588 "../../../Source/Core/AST/TypeRef.nll"
 			while (pFinalChildTypeRef.m_pChildTypeRef != null)
 			{
-#line 591 "../../../Source/Core/AST/TypeRef.nll"
+#line 590 "../../../Source/Core/AST/TypeRef.nll"
 				pFinalChildTypeRef = pFinalChildTypeRef.m_pChildTypeRef;
 			}
-#line 594 "../../../Source/Core/AST/TypeRef.nll"
+#line 593 "../../../Source/Core/AST/TypeRef.nll"
 			if (pFinalChildTypeRef.m_pTypeToken.m_eType == Token.Type.TOKEN_IDENTIFIER)
 			{
-				string sTypeName = pFinalChildTypeRef.m_pTypeToken.GetString();
+#line 595 "../../../Source/Core/AST/TypeRef.nll"
 				AST pType = pFinalChildTypeRef.m_pFoundType;
+#line 598 "../../../Source/Core/AST/TypeRef.nll"
 				string sxAppendString = "";
-#line 602 "../../../Source/Core/AST/TypeRef.nll"
+#line 600 "../../../Source/Core/AST/TypeRef.nll"
 				if (eLanguage == AST.Language.CPP && pType != null && pType.m_eType == AST.Type.AST_CLASS_DECL)
+#line 601 "../../../Source/Core/AST/TypeRef.nll"
+					sxAppendString = "*";
 #line 603 "../../../Source/Core/AST/TypeRef.nll"
-					sxAppendString = "*";
-#line 605 "../../../Source/Core/AST/TypeRef.nll"
 				if (eLanguage == AST.Language.CPP && pType != null && pType.m_eType == AST.Type.DELEGATE_DECL)
-#line 606 "../../../Source/Core/AST/TypeRef.nll"
+#line 604 "../../../Source/Core/AST/TypeRef.nll"
 					sxAppendString = "*";
-#line 613 "../../../Source/Core/AST/TypeRef.nll"
+#line 611 "../../../Source/Core/AST/TypeRef.nll"
 				if (m_pParent != null)
 				{
-#line 615 "../../../Source/Core/AST/TypeRef.nll"
+#line 613 "../../../Source/Core/AST/TypeRef.nll"
 					if (m_pParent.m_eType == AST.Type.AST_NEW_EXP)
-#line 616 "../../../Source/Core/AST/TypeRef.nll"
+#line 614 "../../../Source/Core/AST/TypeRef.nll"
 						sxAppendString = "";
-#line 618 "../../../Source/Core/AST/TypeRef.nll"
+#line 616 "../../../Source/Core/AST/TypeRef.nll"
 					if (m_pParent.m_eType == AST.Type.AST_TYPE_REF)
 					{
+#line 618 "../../../Source/Core/AST/TypeRef.nll"
 						TypeRef pParentTypeRef = (TypeRef)(m_pParent);
-#line 621 "../../../Source/Core/AST/TypeRef.nll"
+#line 619 "../../../Source/Core/AST/TypeRef.nll"
 						if (pParentTypeRef.m_pChildTypeRef == this)
-#line 622 "../../../Source/Core/AST/TypeRef.nll"
+#line 620 "../../../Source/Core/AST/TypeRef.nll"
 							sxAppendString = "";
 					}
-#line 625 "../../../Source/Core/AST/TypeRef.nll"
+#line 623 "../../../Source/Core/AST/TypeRef.nll"
 					if (m_pParent.m_eType == AST.Type.AST_CLASS_DECL)
 					{
+#line 625 "../../../Source/Core/AST/TypeRef.nll"
 						ClassDecl pParentClassDecl = (ClassDecl)(m_pParent);
-#line 628 "../../../Source/Core/AST/TypeRef.nll"
+#line 626 "../../../Source/Core/AST/TypeRef.nll"
 						if (pParentClassDecl.m_pBaseTypeRef == this)
-#line 629 "../../../Source/Core/AST/TypeRef.nll"
+#line 627 "../../../Source/Core/AST/TypeRef.nll"
 							sxAppendString = "";
 					}
-#line 632 "../../../Source/Core/AST/TypeRef.nll"
+#line 630 "../../../Source/Core/AST/TypeRef.nll"
 					pOutputBuilder.m_sOut.AppendString(sxAppendString);
 				}
 			}
 		}
 
-#line 637 "../../../Source/Core/AST/TypeRef.nll"
+#line 635 "../../../Source/Core/AST/TypeRef.nll"
 		public ValueType GetRecursiveValueType(Resolver pResolver)
 		{
-#line 639 "../../../Source/Core/AST/TypeRef.nll"
+#line 637 "../../../Source/Core/AST/TypeRef.nll"
 			if (m_pValueType == null)
-#line 640 "../../../Source/Core/AST/TypeRef.nll"
+#line 638 "../../../Source/Core/AST/TypeRef.nll"
 				SetValueType(pResolver);
-#line 642 "../../../Source/Core/AST/TypeRef.nll"
+#line 640 "../../../Source/Core/AST/TypeRef.nll"
 			if (m_pChildTypeRef != null)
-#line 643 "../../../Source/Core/AST/TypeRef.nll"
+#line 641 "../../../Source/Core/AST/TypeRef.nll"
 				return m_pChildTypeRef.GetRecursiveValueType(pResolver);
-#line 645 "../../../Source/Core/AST/TypeRef.nll"
+#line 643 "../../../Source/Core/AST/TypeRef.nll"
 			return m_pValueType;
 		}
 
-#line 649 "../../../Source/Core/AST/TypeRef.nll"
+#line 647 "../../../Source/Core/AST/TypeRef.nll"
 		public ValueType CreateValueType(Resolver pResolver)
 		{
-#line 651 "../../../Source/Core/AST/TypeRef.nll"
+#line 649 "../../../Source/Core/AST/TypeRef.nll"
 			if (m_pValueType == null)
-#line 652 "../../../Source/Core/AST/TypeRef.nll"
+#line 650 "../../../Source/Core/AST/TypeRef.nll"
 				SetValueType(pResolver);
-#line 654 "../../../Source/Core/AST/TypeRef.nll"
+#line 652 "../../../Source/Core/AST/TypeRef.nll"
 			if (m_pChildTypeRef != null)
-#line 655 "../../../Source/Core/AST/TypeRef.nll"
+#line 653 "../../../Source/Core/AST/TypeRef.nll"
 				return m_pChildTypeRef.CreateValueType(pResolver);
-#line 657 "../../../Source/Core/AST/TypeRef.nll"
+#line 655 "../../../Source/Core/AST/TypeRef.nll"
 			if (m_pValueType != null)
-#line 658 "../../../Source/Core/AST/TypeRef.nll"
+#line 656 "../../../Source/Core/AST/TypeRef.nll"
 				return m_pValueType.Clone();
-#line 660 "../../../Source/Core/AST/TypeRef.nll"
+#line 658 "../../../Source/Core/AST/TypeRef.nll"
 			return null;
 		}
 
-#line 663 "../../../Source/Core/AST/TypeRef.nll"
+#line 661 "../../../Source/Core/AST/TypeRef.nll"
 		protected ValueType SetValueType(Resolver pResolver)
 		{
-#line 667 "../../../Source/Core/AST/TypeRef.nll"
+#line 665 "../../../Source/Core/AST/TypeRef.nll"
 			switch (m_pTypeToken.m_eType)
 			{
 				case Token.Type.TOKEN_IDENTIFIER:
 				{
+#line 670 "../../../Source/Core/AST/TypeRef.nll"
 					AST pType = m_pFoundType;
-#line 673 "../../../Source/Core/AST/TypeRef.nll"
+#line 671 "../../../Source/Core/AST/TypeRef.nll"
 					if (pType == null && pResolver != null)
 					{
+#line 674 "../../../Source/Core/AST/TypeRef.nll"
 						string sTypeName = m_pTypeToken.GetString();
+#line 675 "../../../Source/Core/AST/TypeRef.nll"
 						TypeRef pParentTypeRef = null;
-#line 678 "../../../Source/Core/AST/TypeRef.nll"
+#line 676 "../../../Source/Core/AST/TypeRef.nll"
 						if (m_pParent != null && m_pParent.m_eType == AST.Type.AST_TYPE_REF)
 						{
-#line 680 "../../../Source/Core/AST/TypeRef.nll"
+#line 678 "../../../Source/Core/AST/TypeRef.nll"
 							pParentTypeRef = (TypeRef)(m_pParent);
-#line 681 "../../../Source/Core/AST/TypeRef.nll"
+#line 679 "../../../Source/Core/AST/TypeRef.nll"
 							if (pParentTypeRef.m_pChildTypeRef != this)
-#line 682 "../../../Source/Core/AST/TypeRef.nll"
+#line 680 "../../../Source/Core/AST/TypeRef.nll"
 								pParentTypeRef = null;
 						}
+#line 682 "../../../Source/Core/AST/TypeRef.nll"
 						Vector<Symbol> pCandidates = new Vector<Symbol>();
+#line 683 "../../../Source/Core/AST/TypeRef.nll"
 						AST pResolverBase = this;
-#line 686 "../../../Source/Core/AST/TypeRef.nll"
+#line 684 "../../../Source/Core/AST/TypeRef.nll"
 						if (pParentTypeRef != null && pParentTypeRef.m_pFoundType != null)
-#line 687 "../../../Source/Core/AST/TypeRef.nll"
+#line 685 "../../../Source/Core/AST/TypeRef.nll"
 							pResolverBase = pParentTypeRef.m_pFoundType;
-#line 688 "../../../Source/Core/AST/TypeRef.nll"
+#line 686 "../../../Source/Core/AST/TypeRef.nll"
 						pResolver.ResolveFromNode(pResolverBase, sTypeName, pCandidates);
+#line 687 "../../../Source/Core/AST/TypeRef.nll"
 						Vector<Symbol> pTypeLike = new Vector<Symbol>();
-#line 690 "../../../Source/Core/AST/TypeRef.nll"
+#line 688 "../../../Source/Core/AST/TypeRef.nll"
 						for (int i = 0; i < pCandidates.GetSize(); i++)
 						{
+#line 690 "../../../Source/Core/AST/TypeRef.nll"
 							Symbol pSym = pCandidates.Get(i);
-#line 693 "../../../Source/Core/AST/TypeRef.nll"
+#line 691 "../../../Source/Core/AST/TypeRef.nll"
 							if (pSym.m_eKind == Symbol.Kind.CLASS || pSym.m_eKind == Symbol.Kind.ENUM || pSym.m_eKind == Symbol.Kind.GENERIC_PARAM || pSym.m_eKind == Symbol.Kind.DELEGATE || pSym.m_eKind == Symbol.Kind.NAMESPACE)
 							{
-#line 699 "../../../Source/Core/AST/TypeRef.nll"
+#line 697 "../../../Source/Core/AST/TypeRef.nll"
 								pTypeLike.PushBack(pSym);
 							}
 						}
-#line 702 "../../../Source/Core/AST/TypeRef.nll"
+#line 700 "../../../Source/Core/AST/TypeRef.nll"
 						if (pTypeLike.GetSize() == 1)
 						{
+#line 702 "../../../Source/Core/AST/TypeRef.nll"
 							Symbol pSymbol = pTypeLike.Get(0);
-#line 705 "../../../Source/Core/AST/TypeRef.nll"
+#line 703 "../../../Source/Core/AST/TypeRef.nll"
 							if (pSymbol.m_pDeclAST != null)
 							{
-#line 707 "../../../Source/Core/AST/TypeRef.nll"
+#line 705 "../../../Source/Core/AST/TypeRef.nll"
 								pType = pSymbol.m_pDeclAST;
-#line 708 "../../../Source/Core/AST/TypeRef.nll"
+#line 706 "../../../Source/Core/AST/TypeRef.nll"
 								m_pFoundType = pType;
 							}
 						}
 					}
-#line 713 "../../../Source/Core/AST/TypeRef.nll"
+#line 711 "../../../Source/Core/AST/TypeRef.nll"
 					if (pType != null)
 					{
-#line 715 "../../../Source/Core/AST/TypeRef.nll"
+#line 713 "../../../Source/Core/AST/TypeRef.nll"
 						if (pType.m_eType == AST.Type.AST_CLASS_DECL)
 						{
-#line 717 "../../../Source/Core/AST/TypeRef.nll"
+#line 715 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType = new ValueType(ValueType.Type.CLASS_DECL_VALUE);
-#line 718 "../../../Source/Core/AST/TypeRef.nll"
+#line 716 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType.m_bConst = m_bConst;
-#line 719 "../../../Source/Core/AST/TypeRef.nll"
+#line 717 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType.m_pClassDecl = (ClassDecl)(pType);
-#line 720 "../../../Source/Core/AST/TypeRef.nll"
+#line 718 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType.m_ePointerType = m_ePointerType;
-#line 724 "../../../Source/Core/AST/TypeRef.nll"
+#line 722 "../../../Source/Core/AST/TypeRef.nll"
 							for (int i = 0; i < m_pGenericTypeRefVector.GetSize(); i++)
 							{
+#line 724 "../../../Source/Core/AST/TypeRef.nll"
 								TypeRef pGenericTypeRef = m_pGenericTypeRefVector.Get(i);
+#line 726 "../../../Source/Core/AST/TypeRef.nll"
 								ValueType pGenericValueType = pGenericTypeRef.CreateValueType(pResolver);
-#line 729 "../../../Source/Core/AST/TypeRef.nll"
+#line 727 "../../../Source/Core/AST/TypeRef.nll"
 								if (pGenericValueType == null)
 								{
-#line 730 "../../../Source/Core/AST/TypeRef.nll"
+#line 728 "../../../Source/Core/AST/TypeRef.nll"
 									return null;
 								}
-								NumbatLogic.ValueType __2199059312 = pGenericValueType;
-#line 731 "../../../Source/Core/AST/TypeRef.nll"
+								NumbatLogic.ValueType __2198993722 = pGenericValueType;
+#line 729 "../../../Source/Core/AST/TypeRef.nll"
 								pGenericValueType = null;
-#line 731 "../../../Source/Core/AST/TypeRef.nll"
-								m_pValueType.m_pGenericValueTypeVector.PushBack(__2199059312);
+#line 729 "../../../Source/Core/AST/TypeRef.nll"
+								m_pValueType.m_pGenericValueTypeVector.PushBack(__2198993722);
 							}
-#line 734 "../../../Source/Core/AST/TypeRef.nll"
+#line 732 "../../../Source/Core/AST/TypeRef.nll"
 							return m_pValueType;
 						}
-#line 737 "../../../Source/Core/AST/TypeRef.nll"
+#line 735 "../../../Source/Core/AST/TypeRef.nll"
 						if (pType.m_eType == AST.Type.AST_MEMBER_CLASS_DECL)
 						{
+#line 737 "../../../Source/Core/AST/TypeRef.nll"
 							MemberClassDecl pMemberClass = (MemberClassDecl)(pType);
-#line 740 "../../../Source/Core/AST/TypeRef.nll"
+#line 738 "../../../Source/Core/AST/TypeRef.nll"
 							if (pMemberClass.m_pClassDecl != null)
 							{
-#line 742 "../../../Source/Core/AST/TypeRef.nll"
+#line 740 "../../../Source/Core/AST/TypeRef.nll"
 								m_pValueType = new ValueType(ValueType.Type.CLASS_DECL_VALUE);
-#line 743 "../../../Source/Core/AST/TypeRef.nll"
+#line 741 "../../../Source/Core/AST/TypeRef.nll"
 								m_pValueType.m_bConst = m_bConst;
-#line 744 "../../../Source/Core/AST/TypeRef.nll"
+#line 742 "../../../Source/Core/AST/TypeRef.nll"
 								m_pValueType.m_pClassDecl = pMemberClass.m_pClassDecl;
-#line 745 "../../../Source/Core/AST/TypeRef.nll"
+#line 743 "../../../Source/Core/AST/TypeRef.nll"
 								m_pValueType.m_ePointerType = m_ePointerType;
-#line 747 "../../../Source/Core/AST/TypeRef.nll"
+#line 745 "../../../Source/Core/AST/TypeRef.nll"
 								for (int i = 0; i < m_pGenericTypeRefVector.GetSize(); i++)
 								{
+#line 747 "../../../Source/Core/AST/TypeRef.nll"
 									TypeRef pGenericTypeRef = m_pGenericTypeRefVector.Get(i);
+#line 748 "../../../Source/Core/AST/TypeRef.nll"
 									ValueType pGenericValueType = pGenericTypeRef.CreateValueType(pResolver);
-#line 751 "../../../Source/Core/AST/TypeRef.nll"
+#line 749 "../../../Source/Core/AST/TypeRef.nll"
 									if (pGenericValueType == null)
 									{
-#line 752 "../../../Source/Core/AST/TypeRef.nll"
+#line 750 "../../../Source/Core/AST/TypeRef.nll"
 										return null;
 									}
-									NumbatLogic.ValueType __2199190512 = pGenericValueType;
-#line 753 "../../../Source/Core/AST/TypeRef.nll"
+									NumbatLogic.ValueType __2199190511 = pGenericValueType;
+#line 751 "../../../Source/Core/AST/TypeRef.nll"
 									pGenericValueType = null;
-#line 753 "../../../Source/Core/AST/TypeRef.nll"
-									m_pValueType.m_pGenericValueTypeVector.PushBack(__2199190512);
+#line 751 "../../../Source/Core/AST/TypeRef.nll"
+									m_pValueType.m_pGenericValueTypeVector.PushBack(__2199190511);
 								}
-#line 756 "../../../Source/Core/AST/TypeRef.nll"
+#line 754 "../../../Source/Core/AST/TypeRef.nll"
 								return m_pValueType;
 							}
 						}
-#line 760 "../../../Source/Core/AST/TypeRef.nll"
+#line 758 "../../../Source/Core/AST/TypeRef.nll"
 						if (pType.m_eType == AST.Type.AST_GENERIC_TYPE_DECL)
 						{
-#line 762 "../../../Source/Core/AST/TypeRef.nll"
+#line 760 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType = new ValueType(ValueType.Type.GENERIC_TYPE_DECL_VALUE);
-#line 763 "../../../Source/Core/AST/TypeRef.nll"
+#line 761 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType.m_bConst = m_bConst;
-#line 764 "../../../Source/Core/AST/TypeRef.nll"
+#line 762 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType.m_pGenericTypeDecl = (GenericTypeDecl)(pType);
-#line 765 "../../../Source/Core/AST/TypeRef.nll"
+#line 763 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType.m_ePointerType = m_ePointerType;
-#line 766 "../../../Source/Core/AST/TypeRef.nll"
+#line 764 "../../../Source/Core/AST/TypeRef.nll"
 							return m_pValueType;
 						}
-#line 769 "../../../Source/Core/AST/TypeRef.nll"
+#line 767 "../../../Source/Core/AST/TypeRef.nll"
 						if (pType.m_eType == AST.Type.AST_ENUM_DECL)
 						{
-#line 771 "../../../Source/Core/AST/TypeRef.nll"
+#line 769 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType = new ValueType(ValueType.Type.ENUM_DECL_VALUE);
-#line 772 "../../../Source/Core/AST/TypeRef.nll"
+#line 770 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType.m_bConst = m_bConst;
-#line 773 "../../../Source/Core/AST/TypeRef.nll"
+#line 771 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType.m_pEnumDecl = (EnumDecl)(pType);
-#line 774 "../../../Source/Core/AST/TypeRef.nll"
+#line 772 "../../../Source/Core/AST/TypeRef.nll"
 							return m_pValueType;
 						}
-#line 777 "../../../Source/Core/AST/TypeRef.nll"
+#line 775 "../../../Source/Core/AST/TypeRef.nll"
 						if (pType.m_eType == AST.Type.AST_MEMBER_ENUM_DECL)
 						{
+#line 777 "../../../Source/Core/AST/TypeRef.nll"
 							MemberEnumDecl pMemberEnum = (MemberEnumDecl)(pType);
-#line 780 "../../../Source/Core/AST/TypeRef.nll"
+#line 778 "../../../Source/Core/AST/TypeRef.nll"
 							if (pMemberEnum.m_pEnumDecl != null)
 							{
-#line 782 "../../../Source/Core/AST/TypeRef.nll"
+#line 780 "../../../Source/Core/AST/TypeRef.nll"
 								m_pValueType = new ValueType(ValueType.Type.ENUM_DECL_VALUE);
-#line 783 "../../../Source/Core/AST/TypeRef.nll"
+#line 781 "../../../Source/Core/AST/TypeRef.nll"
 								m_pValueType.m_bConst = m_bConst;
-#line 784 "../../../Source/Core/AST/TypeRef.nll"
+#line 782 "../../../Source/Core/AST/TypeRef.nll"
 								m_pValueType.m_pEnumDecl = pMemberEnum.m_pEnumDecl;
-#line 785 "../../../Source/Core/AST/TypeRef.nll"
+#line 783 "../../../Source/Core/AST/TypeRef.nll"
 								m_pValueType.m_ePointerType = m_ePointerType;
-#line 786 "../../../Source/Core/AST/TypeRef.nll"
+#line 784 "../../../Source/Core/AST/TypeRef.nll"
 								return m_pValueType;
 							}
 						}
-#line 790 "../../../Source/Core/AST/TypeRef.nll"
+#line 788 "../../../Source/Core/AST/TypeRef.nll"
 						if (pType.m_eType == AST.Type.ENUM_DECL_VALUE)
 						{
-#line 792 "../../../Source/Core/AST/TypeRef.nll"
+#line 790 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType = new ValueType(ValueType.Type.ENUM_DECL_VALUE);
-#line 793 "../../../Source/Core/AST/TypeRef.nll"
+#line 791 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType.m_bConst = m_bConst;
-#line 794 "../../../Source/Core/AST/TypeRef.nll"
+#line 792 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType.m_pEnumDeclValue = (EnumDeclValue)(pType);
-#line 795 "../../../Source/Core/AST/TypeRef.nll"
+#line 793 "../../../Source/Core/AST/TypeRef.nll"
 							return m_pValueType;
 						}
-#line 798 "../../../Source/Core/AST/TypeRef.nll"
+#line 796 "../../../Source/Core/AST/TypeRef.nll"
 						if (pType.m_eType == AST.Type.DELEGATE_DECL)
 						{
-#line 800 "../../../Source/Core/AST/TypeRef.nll"
+#line 798 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType = new ValueType(ValueType.Type.DELEGATE_DECL_VALUE);
-#line 801 "../../../Source/Core/AST/TypeRef.nll"
+#line 799 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType.m_bConst = m_bConst;
-#line 802 "../../../Source/Core/AST/TypeRef.nll"
+#line 800 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType.m_pDelegateDecl = (DelegateDecl)(pType);
-#line 803 "../../../Source/Core/AST/TypeRef.nll"
+#line 801 "../../../Source/Core/AST/TypeRef.nll"
 							return m_pValueType;
 						}
 					}
-#line 807 "../../../Source/Core/AST/TypeRef.nll"
+#line 805 "../../../Source/Core/AST/TypeRef.nll"
 					return null;
 				}
 
@@ -1114,115 +1174,117 @@ namespace NumbatLogic
 				case Token.Type.TOKEN_KEYWORD_DOUBLE:
 				case Token.Type.TOKEN_KEYWORD_FLOAT:
 				{
-#line 821 "../../../Source/Core/AST/TypeRef.nll"
+#line 819 "../../../Source/Core/AST/TypeRef.nll"
 					m_pValueType = new ValueType(ValueType.Type.INT);
-#line 822 "../../../Source/Core/AST/TypeRef.nll"
+#line 820 "../../../Source/Core/AST/TypeRef.nll"
 					m_pValueType.m_bConst = m_bConst;
-#line 823 "../../../Source/Core/AST/TypeRef.nll"
+#line 821 "../../../Source/Core/AST/TypeRef.nll"
 					return m_pValueType;
 				}
 
 				case Token.Type.TOKEN_KEYWORD_STRING:
 				{
-#line 827 "../../../Source/Core/AST/TypeRef.nll"
+#line 825 "../../../Source/Core/AST/TypeRef.nll"
 					m_pValueType = new ValueType(ValueType.Type.STRING);
-#line 828 "../../../Source/Core/AST/TypeRef.nll"
+#line 826 "../../../Source/Core/AST/TypeRef.nll"
 					m_pValueType.m_bConst = m_bConst;
-#line 829 "../../../Source/Core/AST/TypeRef.nll"
+#line 827 "../../../Source/Core/AST/TypeRef.nll"
 					return m_pValueType;
 				}
 
 				case Token.Type.TOKEN_KEYWORD_BOOL:
 				{
-#line 833 "../../../Source/Core/AST/TypeRef.nll"
+#line 831 "../../../Source/Core/AST/TypeRef.nll"
 					m_pValueType = new ValueType(ValueType.Type.BOOL);
-#line 834 "../../../Source/Core/AST/TypeRef.nll"
+#line 832 "../../../Source/Core/AST/TypeRef.nll"
 					m_pValueType.m_bConst = m_bConst;
-#line 835 "../../../Source/Core/AST/TypeRef.nll"
+#line 833 "../../../Source/Core/AST/TypeRef.nll"
 					return m_pValueType;
 				}
 
 				case Token.Type.TOKEN_KEYWORD_UNICHAR:
 				{
-#line 839 "../../../Source/Core/AST/TypeRef.nll"
+#line 837 "../../../Source/Core/AST/TypeRef.nll"
 					m_pValueType = new ValueType(ValueType.Type.UNICHAR);
-#line 840 "../../../Source/Core/AST/TypeRef.nll"
+#line 838 "../../../Source/Core/AST/TypeRef.nll"
 					m_pValueType.m_bConst = m_bConst;
-#line 841 "../../../Source/Core/AST/TypeRef.nll"
+#line 839 "../../../Source/Core/AST/TypeRef.nll"
 					return m_pValueType;
 				}
 
 				case Token.Type.TOKEN_KEYWORD_VOID:
 				{
-#line 845 "../../../Source/Core/AST/TypeRef.nll"
+#line 843 "../../../Source/Core/AST/TypeRef.nll"
 					m_pValueType = new ValueType(ValueType.Type.VOID);
-#line 846 "../../../Source/Core/AST/TypeRef.nll"
+#line 844 "../../../Source/Core/AST/TypeRef.nll"
 					m_pValueType.m_bConst = m_bConst;
-#line 847 "../../../Source/Core/AST/TypeRef.nll"
+#line 845 "../../../Source/Core/AST/TypeRef.nll"
 					return m_pValueType;
 				}
 
 				case Token.Type.TOKEN_KEYWORD_VOIDPTR:
 				{
-#line 851 "../../../Source/Core/AST/TypeRef.nll"
+#line 849 "../../../Source/Core/AST/TypeRef.nll"
 					m_pValueType = new ValueType(ValueType.Type.VOIDPTR);
-#line 852 "../../../Source/Core/AST/TypeRef.nll"
+#line 850 "../../../Source/Core/AST/TypeRef.nll"
 					m_pValueType.m_bConst = m_bConst;
-#line 853 "../../../Source/Core/AST/TypeRef.nll"
+#line 851 "../../../Source/Core/AST/TypeRef.nll"
 					return m_pValueType;
 				}
 
 			}
-#line 856 "../../../Source/Core/AST/TypeRef.nll"
+#line 854 "../../../Source/Core/AST/TypeRef.nll"
 			return null;
 		}
 
-#line 859 "../../../Source/Core/AST/TypeRef.nll"
+#line 857 "../../../Source/Core/AST/TypeRef.nll"
 		public bool IsIntegral()
 		{
+#line 859 "../../../Source/Core/AST/TypeRef.nll"
 			Project pProject = GetProject();
-#line 862 "../../../Source/Core/AST/TypeRef.nll"
+#line 860 "../../../Source/Core/AST/TypeRef.nll"
 			if (pProject == null || pProject.m_pValidator == null)
-#line 863 "../../../Source/Core/AST/TypeRef.nll"
+#line 861 "../../../Source/Core/AST/TypeRef.nll"
 				return IsInt() || IsBool() || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UNICHAR;
+#line 862 "../../../Source/Core/AST/TypeRef.nll"
 			ValueType pValueType = GetRecursiveValueType(pProject.m_pValidator.m_pResolver);
-#line 865 "../../../Source/Core/AST/TypeRef.nll"
+#line 863 "../../../Source/Core/AST/TypeRef.nll"
 			if (pValueType.m_eType == ValueType.Type.ENUM_DECL_VALUE)
-#line 866 "../../../Source/Core/AST/TypeRef.nll"
+#line 864 "../../../Source/Core/AST/TypeRef.nll"
 				return true;
-#line 867 "../../../Source/Core/AST/TypeRef.nll"
+#line 865 "../../../Source/Core/AST/TypeRef.nll"
 			return IsInt() || IsBool() || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UNICHAR;
 		}
 
-#line 871 "../../../Source/Core/AST/TypeRef.nll"
+#line 869 "../../../Source/Core/AST/TypeRef.nll"
 		public bool IsInt()
 		{
-#line 873 "../../../Source/Core/AST/TypeRef.nll"
+#line 871 "../../../Source/Core/AST/TypeRef.nll"
 			return m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_INT || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT8 || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT16 || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT32 || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_UINT64 || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_INT8 || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_INT16 || m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_INT32;
 		}
 
-#line 884 "../../../Source/Core/AST/TypeRef.nll"
+#line 882 "../../../Source/Core/AST/TypeRef.nll"
 		public bool IsBool()
 		{
-#line 886 "../../../Source/Core/AST/TypeRef.nll"
+#line 884 "../../../Source/Core/AST/TypeRef.nll"
 			return m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_BOOL;
 		}
 
-#line 889 "../../../Source/Core/AST/TypeRef.nll"
+#line 887 "../../../Source/Core/AST/TypeRef.nll"
 		public bool IsFloat()
 		{
-#line 891 "../../../Source/Core/AST/TypeRef.nll"
+#line 889 "../../../Source/Core/AST/TypeRef.nll"
 			return m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_FLOAT;
 		}
 
-#line 894 "../../../Source/Core/AST/TypeRef.nll"
+#line 892 "../../../Source/Core/AST/TypeRef.nll"
 		public bool IsDouble()
 		{
-#line 896 "../../../Source/Core/AST/TypeRef.nll"
+#line 894 "../../../Source/Core/AST/TypeRef.nll"
 			return m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_DOUBLE;
 		}
 
-#line 4 "../../../Source/Core/AST/TypeRef.nll"
+#line 3 "../../../Source/Core/AST/TypeRef.nll"
 		~TypeRef()
 		{
 		}

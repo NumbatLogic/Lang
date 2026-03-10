@@ -23,7 +23,9 @@ namespace NumbatLogic
 #line 5 "../../../Source/Core/AST/AccessLevel.nll"
 	AccessLevel* AccessLevel::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 7 "../../../Source/Core/AST/AccessLevel.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 9 "../../../Source/Core/AST/AccessLevel.nll"
 		Token* pAccessLevelToken = pTokenContainer->Peek(pTempOffset);
 #line 10 "../../../Source/Core/AST/AccessLevel.nll"
 		if (pAccessLevelToken == 0 || pAccessLevelToken->m_eType != Token::Type::TOKEN_KEYWORD_PRIVATE && pAccessLevelToken->m_eType != Token::Type::TOKEN_KEYWORD_PUBLIC)
@@ -34,6 +36,7 @@ namespace NumbatLogic
 		}
 #line 12 "../../../Source/Core/AST/AccessLevel.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 14 "../../../Source/Core/AST/AccessLevel.nll"
 		AccessLevel* pAccessLevel = new AccessLevel();
 #line 16 "../../../Source/Core/AST/AccessLevel.nll"
 		pAccessLevel->m_eType = AST::Type::AST_ACCESS_LEVEL;

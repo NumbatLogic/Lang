@@ -37,7 +37,9 @@ namespace NumbatLogic
 #line 15 "../../../Source/Core/AST/MemberClassDecl.nll"
 	MemberClassDecl* MemberClassDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, ClassDecl* pParentClassDecl)
 	{
+#line 17 "../../../Source/Core/AST/MemberClassDecl.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 19 "../../../Source/Core/AST/MemberClassDecl.nll"
 		AccessLevel* pAccessLevel = AccessLevel::TryCreate(pTokenContainer, pTempOffset);
 #line 20 "../../../Source/Core/AST/MemberClassDecl.nll"
 		if (pAccessLevel == 0)
@@ -47,6 +49,7 @@ namespace NumbatLogic
 #line 21 "../../../Source/Core/AST/MemberClassDecl.nll"
 			return 0;
 		}
+#line 23 "../../../Source/Core/AST/MemberClassDecl.nll"
 		MemberClassDecl* pMemberClassDecl = new MemberClassDecl();
 #line 25 "../../../Source/Core/AST/MemberClassDecl.nll"
 		pMemberClassDecl->m_pParentClassDecl = pParentClassDecl;
@@ -54,6 +57,7 @@ namespace NumbatLogic
 		pMemberClassDecl->m_pAccessLevel = pAccessLevel;
 #line 27 "../../../Source/Core/AST/MemberClassDecl.nll"
 		pMemberClassDecl->m_pFirstToken = pAccessLevel->m_pFirstToken;
+#line 30 "../../../Source/Core/AST/MemberClassDecl.nll"
 		ClassDecl* pClassDecl = ClassDecl::TryCreate(pTokenContainer, pTempOffset, pMemberClassDecl);
 #line 31 "../../../Source/Core/AST/MemberClassDecl.nll"
 		if (pClassDecl == 0)

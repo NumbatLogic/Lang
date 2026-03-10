@@ -47,6 +47,7 @@ namespace NumbatLogic
 		if (ppSymbol == 0)
 #line 38 "../../../Source/Core/Semantic/SymbolScope.nll"
 			return;
+#line 40 "../../../Source/Core/Semantic/SymbolScope.nll"
 		OwnedVector<Symbol*>* pBucket = 0;
 #line 41 "../../../Source/Core/Semantic/SymbolScope.nll"
 		if (m_pSymbolMap->Contains(sName))
@@ -56,6 +57,7 @@ namespace NumbatLogic
 		}
 		else
 		{
+#line 47 "../../../Source/Core/Semantic/SymbolScope.nll"
 			OwnedVector<Symbol*>* pOwnedBucket = new OwnedVector<Symbol*>();
 #line 48 "../../../Source/Core/Semantic/SymbolScope.nll"
 			pBucket = pOwnedBucket;
@@ -82,6 +84,7 @@ namespace NumbatLogic
 #line 63 "../../../Source/Core/Semantic/SymbolScope.nll"
 		if (m_pSymbolMap->Contains(sName))
 		{
+#line 65 "../../../Source/Core/Semantic/SymbolScope.nll"
 			OwnedVector<Symbol*>* pBucket = m_pSymbolMap->Get(sName);
 #line 66 "../../../Source/Core/Semantic/SymbolScope.nll"
 			for (int i = 0; i < pBucket->GetSize(); i++)
@@ -99,10 +102,12 @@ namespace NumbatLogic
 		if (!m_pSymbolMap->Contains(sName))
 #line 79 "../../../Source/Core/Semantic/SymbolScope.nll"
 			return 0;
+#line 80 "../../../Source/Core/Semantic/SymbolScope.nll"
 		OwnedVector<Symbol*>* pBucket = m_pSymbolMap->Get(sName);
 #line 81 "../../../Source/Core/Semantic/SymbolScope.nll"
 		for (int i = 0; i < pBucket->GetSize(); i++)
 		{
+#line 83 "../../../Source/Core/Semantic/SymbolScope.nll"
 			Symbol* pSym = pBucket->Get(i);
 #line 84 "../../../Source/Core/Semantic/SymbolScope.nll"
 			if (pSym->m_eKind == Symbol::Kind::NAMESPACE && pSym->m_pScope != 0)

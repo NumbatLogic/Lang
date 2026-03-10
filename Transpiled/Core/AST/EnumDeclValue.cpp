@@ -37,7 +37,9 @@ namespace NumbatLogic
 #line 13 "../../../Source/Core/AST/EnumDeclValue.nll"
 	EnumDeclValue* EnumDeclValue::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 15 "../../../Source/Core/AST/EnumDeclValue.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 17 "../../../Source/Core/AST/EnumDeclValue.nll"
 		Token* pToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
 #line 18 "../../../Source/Core/AST/EnumDeclValue.nll"
 		if (pToken == 0)
@@ -48,7 +50,9 @@ namespace NumbatLogic
 		}
 #line 20 "../../../Source/Core/AST/EnumDeclValue.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 22 "../../../Source/Core/AST/EnumDeclValue.nll"
 		EnumDeclValue* pEnumDeclValue = new EnumDeclValue(pToken);
+#line 25 "../../../Source/Core/AST/EnumDeclValue.nll"
 		Token* pEqualsToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_EQUALS);
 #line 26 "../../../Source/Core/AST/EnumDeclValue.nll"
 		if (pEqualsToken != 0)

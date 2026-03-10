@@ -36,7 +36,9 @@ namespace NumbatLogic
 #line 10 "../../../Source/Core/AST/StaticArray.nll"
 	StaticArray* StaticArray::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 12 "../../../Source/Core/AST/StaticArray.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 14 "../../../Source/Core/AST/StaticArray.nll"
 		Token* pSquareBracketLeftToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_LEFT);
 #line 15 "../../../Source/Core/AST/StaticArray.nll"
 		if (pSquareBracketLeftToken == 0)
@@ -47,6 +49,7 @@ namespace NumbatLogic
 		}
 #line 17 "../../../Source/Core/AST/StaticArray.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 19 "../../../Source/Core/AST/StaticArray.nll"
 		StaticArray* pStaticArray = new StaticArray();
 #line 20 "../../../Source/Core/AST/StaticArray.nll"
 		pStaticArray->m_pFirstToken = pSquareBracketLeftToken;
@@ -61,6 +64,7 @@ namespace NumbatLogic
 #line 27 "../../../Source/Core/AST/StaticArray.nll"
 				break;
 			}
+#line 30 "../../../Source/Core/AST/StaticArray.nll"
 			AST* pElement = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 31 "../../../Source/Core/AST/StaticArray.nll"
 			if (pElement == 0)
@@ -132,6 +136,7 @@ namespace NumbatLogic
 		else
 #line 67 "../../../Source/Core/AST/StaticArray.nll"
 			pOutputBuilder->m_sOut->AppendChar('[');
+#line 68 "../../../Source/Core/AST/StaticArray.nll"
 		AST* pParam = m_pFirstChild;
 #line 69 "../../../Source/Core/AST/StaticArray.nll"
 		while (pParam != 0)

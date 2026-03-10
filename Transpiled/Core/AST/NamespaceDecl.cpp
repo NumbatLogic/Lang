@@ -42,7 +42,9 @@ namespace NumbatLogic
 #line 14 "../../../Source/Core/AST/NamespaceDecl.nll"
 	NamespaceDecl* NamespaceDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 16 "../../../Source/Core/AST/NamespaceDecl.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 18 "../../../Source/Core/AST/NamespaceDecl.nll"
 		Token* pNamespaceToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_NAMESPACE);
 #line 19 "../../../Source/Core/AST/NamespaceDecl.nll"
 		if (pNamespaceToken == 0)
@@ -53,7 +55,9 @@ namespace NumbatLogic
 		}
 #line 21 "../../../Source/Core/AST/NamespaceDecl.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 23 "../../../Source/Core/AST/NamespaceDecl.nll"
 		NamespaceDecl* pNamespaceDecl = new NamespaceDecl();
+#line 25 "../../../Source/Core/AST/NamespaceDecl.nll"
 		Token* pNameToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
 #line 26 "../../../Source/Core/AST/NamespaceDecl.nll"
 		if (pNameToken == 0)
@@ -102,6 +106,7 @@ namespace NumbatLogic
 #line 52 "../../../Source/Core/AST/NamespaceDecl.nll"
 				break;
 			}
+#line 55 "../../../Source/Core/AST/NamespaceDecl.nll"
 			AST* pAST = AST::CreateFromTokenContainer(pTokenContainer, pTempOffset);
 #line 56 "../../../Source/Core/AST/NamespaceDecl.nll"
 			if (pAST != 0)
@@ -136,6 +141,7 @@ namespace NumbatLogic
 #line 72 "../../../Source/Core/AST/NamespaceDecl.nll"
 	void NamespaceDecl::PreValidate(Validator* pValidator, OperatorExpr* pParent)
 	{
+#line 74 "../../../Source/Core/AST/NamespaceDecl.nll"
 		const char* sxName = m_pNameToken->GetString();
 #line 75 "../../../Source/Core/AST/NamespaceDecl.nll"
 		pValidator->BeginNamespace(sxName);
@@ -148,6 +154,7 @@ namespace NumbatLogic
 #line 80 "../../../Source/Core/AST/NamespaceDecl.nll"
 	void NamespaceDecl::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
+#line 82 "../../../Source/Core/AST/NamespaceDecl.nll"
 		const char* sxName = m_pNameToken->GetString();
 #line 83 "../../../Source/Core/AST/NamespaceDecl.nll"
 		pValidator->BeginNamespace(sxName);
@@ -176,6 +183,7 @@ namespace NumbatLogic
 		pOutputBuilder->m_sOut->Append("{\n");
 #line 99 "../../../Source/Core/AST/NamespaceDecl.nll"
 		nDepth++;
+#line 101 "../../../Source/Core/AST/NamespaceDecl.nll"
 		AST* pChild = m_pFirstChild;
 #line 102 "../../../Source/Core/AST/NamespaceDecl.nll"
 		while (pChild != 0)

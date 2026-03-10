@@ -161,6 +161,8 @@ namespace NumbatLogic
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
+			if (nDepth > 0 && m_pFirstToken != null)
+				pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
 			Util::Pad(nDepth, pOutputBuilder.m_sOut);
 
 			// drop const from params

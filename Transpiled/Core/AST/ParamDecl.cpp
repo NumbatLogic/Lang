@@ -52,7 +52,9 @@ namespace NumbatLogic
 #line 14 "../../../Source/Core/AST/ParamDecl.nll"
 	ParamDecl* ParamDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 16 "../../../Source/Core/AST/ParamDecl.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 18 "../../../Source/Core/AST/ParamDecl.nll"
 		Token* m_pFirstToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_LEFT);
 #line 20 "../../../Source/Core/AST/ParamDecl.nll"
 		if (m_pFirstToken == 0)
@@ -63,6 +65,7 @@ namespace NumbatLogic
 		}
 #line 22 "../../../Source/Core/AST/ParamDecl.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 25 "../../../Source/Core/AST/ParamDecl.nll"
 		ParamDecl* pParamDecl = new ParamDecl();
 #line 26 "../../../Source/Core/AST/ParamDecl.nll"
 		pParamDecl->m_pFirstToken = m_pFirstToken;
@@ -77,6 +80,7 @@ namespace NumbatLogic
 #line 32 "../../../Source/Core/AST/ParamDecl.nll"
 				break;
 			}
+#line 35 "../../../Source/Core/AST/ParamDecl.nll"
 			VarDecl* pParam = VarDecl::TryCreate(pTokenContainer, pTempOffset, true);
 #line 36 "../../../Source/Core/AST/ParamDecl.nll"
 			if (pParam == 0)
@@ -131,6 +135,7 @@ namespace NumbatLogic
 	{
 #line 64 "../../../Source/Core/AST/ParamDecl.nll"
 		AST::Validate(pValidator, pParent);
+#line 66 "../../../Source/Core/AST/ParamDecl.nll"
 		AST* pParam = m_pFirstChild;
 #line 67 "../../../Source/Core/AST/ParamDecl.nll"
 		while (pParam != 0)
@@ -143,6 +148,7 @@ namespace NumbatLogic
 #line 73 "../../../Source/Core/AST/ParamDecl.nll"
 				return;
 			}
+#line 76 "../../../Source/Core/AST/ParamDecl.nll"
 			VarDecl* pVarDecl = (VarDecl*)(pParam);
 #line 78 "../../../Source/Core/AST/ParamDecl.nll"
 			if (pVarDecl->m_pTypeRef->m_pTypeToken->m_eType == Token::Type::TOKEN_IDENTIFIER)
@@ -164,8 +170,11 @@ namespace NumbatLogic
 #line 91 "../../../Source/Core/AST/ParamDecl.nll"
 	bool ParamDecl::ValidateParamCall(ParamCall* pParamCall, Validator* pValidator, bool bReportErrors)
 	{
+#line 93 "../../../Source/Core/AST/ParamDecl.nll"
 		int nIndex = 0;
+#line 94 "../../../Source/Core/AST/ParamDecl.nll"
 		AST* pCallChild = pParamCall->m_pFirstChild;
+#line 95 "../../../Source/Core/AST/ParamDecl.nll"
 		AST* pDeclChild = m_pFirstChild;
 #line 97 "../../../Source/Core/AST/ParamDecl.nll"
 		while (true)
@@ -180,6 +189,7 @@ namespace NumbatLogic
 #line 104 "../../../Source/Core/AST/ParamDecl.nll"
 				if (pDeclChild->m_eType == AST::Type::AST_VAR_DECL)
 				{
+#line 106 "../../../Source/Core/AST/ParamDecl.nll"
 					VarDecl* pVarDecl2 = (VarDecl*)(pDeclChild);
 #line 107 "../../../Source/Core/AST/ParamDecl.nll"
 					if (pVarDecl2->m_pAssignment != 0)
@@ -216,6 +226,7 @@ namespace NumbatLogic
 #line 128 "../../../Source/Core/AST/ParamDecl.nll"
 				if (bReportErrors && pValidator != 0)
 				{
+#line 130 "../../../Source/Core/AST/ParamDecl.nll"
 					InternalString* sTemp = new InternalString("no value type for param at index: ");
 #line 131 "../../../Source/Core/AST/ParamDecl.nll"
 					sTemp->AppendInt(nIndex);
@@ -232,6 +243,7 @@ namespace NumbatLogic
 #line 140 "../../../Source/Core/AST/ParamDecl.nll"
 				if (bReportErrors && pValidator != 0)
 				{
+#line 142 "../../../Source/Core/AST/ParamDecl.nll"
 					InternalString* sTemp = new InternalString("param expected to be var decl at index: ");
 #line 143 "../../../Source/Core/AST/ParamDecl.nll"
 					sTemp->AppendInt(nIndex);
@@ -242,7 +254,9 @@ namespace NumbatLogic
 #line 146 "../../../Source/Core/AST/ParamDecl.nll"
 				return false;
 			}
+#line 149 "../../../Source/Core/AST/ParamDecl.nll"
 			VarDecl* pVarDecl = (VarDecl*)(pDeclChild);
+#line 150 "../../../Source/Core/AST/ParamDecl.nll"
 			ValueType* pValueType = pVarDecl->m_pTypeRef->CreateValueType(pValidator->m_pResolver);
 #line 152 "../../../Source/Core/AST/ParamDecl.nll"
 			if (pValueType == 0)
@@ -286,6 +300,7 @@ namespace NumbatLogic
 #line 179 "../../../Source/Core/AST/ParamDecl.nll"
 					if (bReportErrors && pValidator != 0)
 					{
+#line 181 "../../../Source/Core/AST/ParamDecl.nll"
 						InternalString* sTemp = new InternalString("type mismatch ");
 #line 182 "../../../Source/Core/AST/ParamDecl.nll"
 						pCallChild->m_pValueType->StringifyType(sTemp);
@@ -334,6 +349,7 @@ namespace NumbatLogic
 	{
 #line 214 "../../../Source/Core/AST/ParamDecl.nll"
 		pOutputBuilder->m_sOut->AppendChar('(');
+#line 215 "../../../Source/Core/AST/ParamDecl.nll"
 		AST* pParam = m_pFirstChild;
 #line 216 "../../../Source/Core/AST/ParamDecl.nll"
 		while (pParam != 0)

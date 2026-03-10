@@ -40,6 +40,7 @@ namespace NumbatLogic
 #line 16 "../../../Source/Core/TokenContainer.nll"
 		if (pParseDatum->m_sInput->GetLength() > 0)
 		{
+#line 18 "../../../Source/Core/TokenContainer.nll"
 			unsigned short nChar = pParseDatum->m_sInput->GetChar(0);
 #line 19 "../../../Source/Core/TokenContainer.nll"
 			if (!bPeak)
@@ -55,15 +56,18 @@ namespace NumbatLogic
 #line 26 "../../../Source/Core/TokenContainer.nll"
 	bool TokenContainer::Tokenize(const char* sInput, InternalString* sFileName, OwnedVector<InternalString*>* sDefineVector)
 	{
+#line 28 "../../../Source/Core/TokenContainer.nll"
 		ParseDatum* pParseDatum = new ParseDatum();
 #line 29 "../../../Source/Core/TokenContainer.nll"
 		pParseDatum->m_sInput->Set(sInput);
 #line 30 "../../../Source/Core/TokenContainer.nll"
 		pParseDatum->m_sFileName = sFileName;
+#line 32 "../../../Source/Core/TokenContainer.nll"
 		int nIfdefDepth = 0;
 #line 34 "../../../Source/Core/TokenContainer.nll"
 		while (true)
 		{
+#line 36 "../../../Source/Core/TokenContainer.nll"
 			unsigned short nChar = ReadChar(pParseDatum, false);
 #line 37 "../../../Source/Core/TokenContainer.nll"
 			if (nChar == 0 || nChar < 0)
@@ -81,6 +85,7 @@ namespace NumbatLogic
 				{
 #line 48 "../../../Source/Core/TokenContainer.nll"
 					pParseDatum->m_sInput->SubStr(6, pParseDatum->m_sInput->GetLength() - 6);
+#line 50 "../../../Source/Core/TokenContainer.nll"
 					InternalString* sName = new InternalString("");
 #line 51 "../../../Source/Core/TokenContainer.nll"
 					while (true)
@@ -106,7 +111,9 @@ namespace NumbatLogic
 					pParseDatum->m_nLine = pParseDatum->m_nLine + 1;
 #line 65 "../../../Source/Core/TokenContainer.nll"
 					pParseDatum->m_nColumn = 0;
+#line 67 "../../../Source/Core/TokenContainer.nll"
 					bool bFound = false;
+#line 68 "../../../Source/Core/TokenContainer.nll"
 					const char* sxName = sName->GetExternalString();
 #line 69 "../../../Source/Core/TokenContainer.nll"
 					for (int i = 0; i < sDefineVector->GetSize(); i++)
@@ -191,6 +198,7 @@ namespace NumbatLogic
 #line 130 "../../../Source/Core/TokenContainer.nll"
 			if (nChar == '/')
 			{
+#line 132 "../../../Source/Core/TokenContainer.nll"
 				unsigned short nNextChar = ReadChar(pParseDatum, true);
 				{
 #line 135 "../../../Source/Core/TokenContainer.nll"
@@ -201,6 +209,7 @@ namespace NumbatLogic
 #line 139 "../../../Source/Core/TokenContainer.nll"
 						while (true)
 						{
+#line 141 "../../../Source/Core/TokenContainer.nll"
 							unsigned short nNextNextChar = ReadChar(pParseDatum, false);
 #line 142 "../../../Source/Core/TokenContainer.nll"
 							if (nNextNextChar == 0 || nNextNextChar < 0)
@@ -222,10 +231,12 @@ namespace NumbatLogic
 						{
 #line 156 "../../../Source/Core/TokenContainer.nll"
 							ProcessCurrentRead(pParseDatum);
+#line 158 "../../../Source/Core/TokenContainer.nll"
 							int nLastChar = 0;
 #line 159 "../../../Source/Core/TokenContainer.nll"
 							while (true)
 							{
+#line 161 "../../../Source/Core/TokenContainer.nll"
 								unsigned short nNextNextChar = ReadChar(pParseDatum, false);
 #line 162 "../../../Source/Core/TokenContainer.nll"
 								if (nNextNextChar == 0 || nNextNextChar < 0)
@@ -283,16 +294,19 @@ namespace NumbatLogic
 				case '}':
 				case '~':
 				{
+#line 211 "../../../Source/Core/TokenContainer.nll"
 					int nLength = pParseDatum->m_sCurrentRead->GetLength();
 #line 212 "../../../Source/Core/TokenContainer.nll"
 					if (nChar == '.' && nLength > 0)
 					{
+#line 214 "../../../Source/Core/TokenContainer.nll"
 						int i = 0;
 #line 215 "../../../Source/Core/TokenContainer.nll"
 						for (int hax = 0; i < nLength; i = i + 1)
 						{
 #line 217 "../../../Source/Core/TokenContainer.nll"
 							hax++;
+#line 218 "../../../Source/Core/TokenContainer.nll"
 							int nTestChar = pParseDatum->m_sCurrentRead->GetChar(i);
 #line 219 "../../../Source/Core/TokenContainer.nll"
 							if (nTestChar < '0' || nTestChar > '9')
@@ -364,6 +378,7 @@ namespace NumbatLogic
 
 			case 1:
 			{
+#line 270 "../../../Source/Core/TokenContainer.nll"
 				Token::Type eType = Token::Type::TOKEN_IDENTIFIER;
 #line 271 "../../../Source/Core/TokenContainer.nll"
 				switch (pParseDatum->m_sCurrentRead->GetChar(0))
@@ -599,6 +614,7 @@ namespace NumbatLogic
 #line 304 "../../../Source/Core/TokenContainer.nll"
 					if (m_pTokenVector->GetSize() > 0)
 					{
+#line 306 "../../../Source/Core/TokenContainer.nll"
 						Token* pPreviousToken = m_pTokenVector->Get(m_pTokenVector->GetSize() - 1);
 #line 308 "../../../Source/Core/TokenContainer.nll"
 						if (pPreviousToken->m_eType == Token::Type::TOKEN_COLON && eType == Token::Type::TOKEN_COLON)
@@ -1122,15 +1138,20 @@ namespace NumbatLogic
 
 		}
 		{
+#line 644 "../../../Source/Core/TokenContainer.nll"
 			int i = 0;
+#line 645 "../../../Source/Core/TokenContainer.nll"
 			bool bFirstZero = false;
+#line 646 "../../../Source/Core/TokenContainer.nll"
 			bool bHex = false;
+#line 647 "../../../Source/Core/TokenContainer.nll"
 			int nLength = pParseDatum->m_sCurrentRead->GetLength();
 #line 648 "../../../Source/Core/TokenContainer.nll"
 			for (int hax = 0; i < nLength; i = i + 1)
 			{
 #line 650 "../../../Source/Core/TokenContainer.nll"
 				hax++;
+#line 651 "../../../Source/Core/TokenContainer.nll"
 				int nChar = pParseDatum->m_sCurrentRead->GetChar(i);
 #line 653 "../../../Source/Core/TokenContainer.nll"
 				if (i == 0 && nChar == '0')
@@ -1190,6 +1211,7 @@ namespace NumbatLogic
 #line 698 "../../../Source/Core/TokenContainer.nll"
 	void TokenContainer::PushToken(Token::Type eType, int nLine, int nColumn, ParseDatum* pParseDatum, bool bCopyString)
 	{
+#line 700 "../../../Source/Core/TokenContainer.nll"
 		Token* pToken = new Token();
 #line 701 "../../../Source/Core/TokenContainer.nll"
 		pToken->m_eType = eType;
@@ -1216,14 +1238,17 @@ namespace NumbatLogic
 #line 714 "../../../Source/Core/TokenContainer.nll"
 	void TokenContainer::ParseQuoted(ParseDatum* pParseDatum, unsigned short nQuoteChar)
 	{
+#line 716 "../../../Source/Core/TokenContainer.nll"
 		bool bEscaping = false;
 #line 724 "../../../Source/Core/TokenContainer.nll"
 		while (true)
 		{
+#line 726 "../../../Source/Core/TokenContainer.nll"
 			unsigned short nChar = ReadChar(pParseDatum, false);
 #line 727 "../../../Source/Core/TokenContainer.nll"
 			if (nChar == '\0')
 			{
+#line 730 "../../../Source/Core/TokenContainer.nll"
 				Token::Type eType = Token::Type::TOKEN_CHAR_UNTERMINATED;
 #line 731 "../../../Source/Core/TokenContainer.nll"
 				if (nQuoteChar == '"')
@@ -1241,6 +1266,7 @@ namespace NumbatLogic
 #line 740 "../../../Source/Core/TokenContainer.nll"
 			if (nChar == nQuoteChar && !bEscaping)
 			{
+#line 742 "../../../Source/Core/TokenContainer.nll"
 				Token::Type eType = Token::Type::TOKEN_CHAR;
 #line 743 "../../../Source/Core/TokenContainer.nll"
 				if (nQuoteChar == '"')
@@ -1271,6 +1297,7 @@ namespace NumbatLogic
 #line 764 "../../../Source/Core/TokenContainer.nll"
 		for (int i = 0; i < m_pTokenVector->GetSize(); i++)
 		{
+#line 766 "../../../Source/Core/TokenContainer.nll"
 			Token* pToken = m_pTokenVector->Get(i);
 #line 767 "../../../Source/Core/TokenContainer.nll"
 			sOut->Append(pToken->GetString());
@@ -1280,10 +1307,12 @@ namespace NumbatLogic
 #line 771 "../../../Source/Core/TokenContainer.nll"
 	void TokenContainer::StripWhitespace()
 	{
+#line 773 "../../../Source/Core/TokenContainer.nll"
 		int nIn = 0;
 #line 774 "../../../Source/Core/TokenContainer.nll"
 		while (nIn < m_pTokenVector->GetSize())
 		{
+#line 776 "../../../Source/Core/TokenContainer.nll"
 			Token* pToken = m_pTokenVector->Get(nIn);
 #line 777 "../../../Source/Core/TokenContainer.nll"
 			if (pToken->m_eType == Token::Type::TOKEN_CARRIGE_RETURN || pToken->m_eType == Token::Type::TOKEN_NEW_LINE || pToken->m_eType == Token::Type::TOKEN_SPACE || pToken->m_eType == Token::Type::TOKEN_TAB)
@@ -1312,6 +1341,7 @@ namespace NumbatLogic
 #line 797 "../../../Source/Core/TokenContainer.nll"
 	Token* TokenContainer::PeekExpect(OffsetDatum* pOffsetDatum, Token::Type eType)
 	{
+#line 799 "../../../Source/Core/TokenContainer.nll"
 		Token* pToken = Peek(pOffsetDatum);
 #line 800 "../../../Source/Core/TokenContainer.nll"
 		if (pToken == 0 || pToken->m_eType != eType)
@@ -1324,6 +1354,7 @@ namespace NumbatLogic
 #line 805 "../../../Source/Core/TokenContainer.nll"
 	const char* TokenContainer::StringifyOffset(OffsetDatum* pOffsetDatum)
 	{
+#line 807 "../../../Source/Core/TokenContainer.nll"
 		Token* pToken = 0;
 #line 808 "../../../Source/Core/TokenContainer.nll"
 		if (pOffsetDatum->m_nOffset < m_pTokenVector->GetSize())

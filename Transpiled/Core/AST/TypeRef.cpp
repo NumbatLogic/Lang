@@ -74,8 +74,11 @@ namespace NumbatLogic
 #line 32 "../../../Source/Core/AST/TypeRef.nll"
 	TypeRef* TypeRef::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 34 "../../../Source/Core/AST/TypeRef.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 36 "../../../Source/Core/AST/TypeRef.nll"
 		bool bConst = false;
+#line 37 "../../../Source/Core/AST/TypeRef.nll"
 		Token* pConstToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_CONST);
 #line 38 "../../../Source/Core/AST/TypeRef.nll"
 		if (pConstToken != 0)
@@ -85,7 +88,9 @@ namespace NumbatLogic
 #line 41 "../../../Source/Core/AST/TypeRef.nll"
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		}
+#line 44 "../../../Source/Core/AST/TypeRef.nll"
 		bool bRef = false;
+#line 45 "../../../Source/Core/AST/TypeRef.nll"
 		Token* pRefToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_REF);
 #line 46 "../../../Source/Core/AST/TypeRef.nll"
 		if (pRefToken != 0)
@@ -95,6 +100,7 @@ namespace NumbatLogic
 #line 49 "../../../Source/Core/AST/TypeRef.nll"
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		}
+#line 52 "../../../Source/Core/AST/TypeRef.nll"
 		Token* pTypeToken = pTokenContainer->Peek(pTempOffset);
 #line 53 "../../../Source/Core/AST/TypeRef.nll"
 		if (pTypeToken == 0 || pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_VOID && pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_INT && pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_BOOL && pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_UNICHAR && pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_STRING && pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_UINT && pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_UINT8 && pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_UINT16 && pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_UINT32 && pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_UINT64 && pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_INT8 && pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_INT16 && pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_INT32 && pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_DOUBLE && pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_FLOAT && pTypeToken->m_eType != Token::Type::TOKEN_KEYWORD_VOIDPTR && pTypeToken->m_eType != Token::Type::TOKEN_IDENTIFIER)
@@ -105,6 +111,7 @@ namespace NumbatLogic
 		}
 #line 72 "../../../Source/Core/AST/TypeRef.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 75 "../../../Source/Core/AST/TypeRef.nll"
 		TypeRef* pTypeRef = new TypeRef();
 #line 77 "../../../Source/Core/AST/TypeRef.nll"
 		pTypeRef->m_pFirstToken = pTypeToken;
@@ -125,6 +132,7 @@ namespace NumbatLogic
 #line 87 "../../../Source/Core/AST/TypeRef.nll"
 		if (pTypeToken->m_eType == Token::Type::TOKEN_IDENTIFIER)
 		{
+#line 89 "../../../Source/Core/AST/TypeRef.nll"
 			Token* pAngleBracketLeft = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_ANGLE_BRACKET_LEFT);
 #line 90 "../../../Source/Core/AST/TypeRef.nll"
 			if (pAngleBracketLeft != 0)
@@ -142,6 +150,7 @@ namespace NumbatLogic
 #line 99 "../../../Source/Core/AST/TypeRef.nll"
 						break;
 					}
+#line 102 "../../../Source/Core/AST/TypeRef.nll"
 					TypeRef* pGenericTypeRef = TypeRef::TryCreate(pTokenContainer, pTempOffset);
 #line 103 "../../../Source/Core/AST/TypeRef.nll"
 					if (pGenericTypeRef == 0)
@@ -168,6 +177,7 @@ namespace NumbatLogic
 #line 115 "../../../Source/Core/AST/TypeRef.nll"
 					if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_COMMA) == 0)
 					{
+#line 117 "../../../Source/Core/AST/TypeRef.nll"
 						InternalString* sTemp = new InternalString("expected comma ");
 #line 118 "../../../Source/Core/AST/TypeRef.nll"
 						sTemp->Append(pTokenContainer->StringifyOffset(pTempOffset));
@@ -188,10 +198,12 @@ namespace NumbatLogic
 		{
 #line 129 "../../../Source/Core/AST/TypeRef.nll"
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 131 "../../../Source/Core/AST/TypeRef.nll"
 			TypeRef* pChildTypeRef = TypeRef::TryCreate(pTokenContainer, pTempOffset);
 #line 132 "../../../Source/Core/AST/TypeRef.nll"
 			if (pChildTypeRef == 0)
 			{
+#line 134 "../../../Source/Core/AST/TypeRef.nll"
 				InternalString* sTemp = new InternalString("expected child TypeRef... ");
 #line 135 "../../../Source/Core/AST/TypeRef.nll"
 				sTemp->Append(pTokenContainer->StringifyOffset(pTempOffset));
@@ -268,12 +280,14 @@ namespace NumbatLogic
 #line 186 "../../../Source/Core/AST/TypeRef.nll"
 				if (m_pParent->m_eType == AST::Type::AST_TYPE_REF)
 				{
+#line 188 "../../../Source/Core/AST/TypeRef.nll"
 					TypeRef* pSubParentTypeRef = (TypeRef*)(m_pParent);
 #line 191 "../../../Source/Core/AST/TypeRef.nll"
 					AddClassDeclReference(pClassDecl, AST::OutputFile::HEADER, true);
 #line 194 "../../../Source/Core/AST/TypeRef.nll"
 					if (pSubParentTypeRef->m_pChildTypeRef != this)
 					{
+#line 196 "../../../Source/Core/AST/TypeRef.nll"
 						AST* pParentParent = m_pParent->m_pParent;
 #line 197 "../../../Source/Core/AST/TypeRef.nll"
 						if (pParentParent != 0)
@@ -282,6 +296,7 @@ namespace NumbatLogic
 							if (pParentParent->m_eType == AST::Type::AST_NEW_EXP)
 #line 200 "../../../Source/Core/AST/TypeRef.nll"
 								AddClassDeclReference(pClassDecl, AST::OutputFile::SOURCE, false);
+#line 202 "../../../Source/Core/AST/TypeRef.nll"
 							AST* pParentParentParent = pParentParent->m_pParent;
 #line 203 "../../../Source/Core/AST/TypeRef.nll"
 							if (pParentParentParent != 0)
@@ -304,8 +319,11 @@ namespace NumbatLogic
 				}
 				else
 				{
+#line 219 "../../../Source/Core/AST/TypeRef.nll"
 					AST::OutputFile eOutputFile = AST::OutputFile::SOURCE;
+#line 220 "../../../Source/Core/AST/TypeRef.nll"
 					bool bForwardReference = pThisOrChild->m_pChildTypeRef == 0 && m_pGenericTypeRefVector->GetSize() == 0;
+#line 222 "../../../Source/Core/AST/TypeRef.nll"
 					AST* pParentParent = m_pParent->m_pParent;
 #line 223 "../../../Source/Core/AST/TypeRef.nll"
 					if (pParentParent != 0)
@@ -318,10 +336,12 @@ namespace NumbatLogic
 						}
 						else
 						{
+#line 231 "../../../Source/Core/AST/TypeRef.nll"
 							AST* pParentParentParent = pParentParent->m_pParent;
 #line 232 "../../../Source/Core/AST/TypeRef.nll"
 							if (pParentParentParent != 0)
 							{
+#line 234 "../../../Source/Core/AST/TypeRef.nll"
 								AST* pParentParentParentParent = pParentParentParent->m_pParent;
 #line 235 "../../../Source/Core/AST/TypeRef.nll"
 								if (pParentParentParentParent != 0)
@@ -346,9 +366,13 @@ namespace NumbatLogic
 #line 251 "../../../Source/Core/AST/TypeRef.nll"
 		if (m_pTypeToken->m_eType == Token::Type::TOKEN_IDENTIFIER)
 		{
+#line 253 "../../../Source/Core/AST/TypeRef.nll"
 			AST* pType = 0;
+#line 254 "../../../Source/Core/AST/TypeRef.nll"
 			bool bResolverTypeAmbiguous = false;
+#line 255 "../../../Source/Core/AST/TypeRef.nll"
 			const char* sTypeName = m_pTypeToken->GetString();
+#line 262 "../../../Source/Core/AST/TypeRef.nll"
 			TypeRef* pParentTypeRef = 0;
 #line 263 "../../../Source/Core/AST/TypeRef.nll"
 			if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_TYPE_REF)
@@ -360,7 +384,9 @@ namespace NumbatLogic
 #line 267 "../../../Source/Core/AST/TypeRef.nll"
 					pParentTypeRef = 0;
 			}
+#line 270 "../../../Source/Core/AST/TypeRef.nll"
 			Vector<Symbol*>* pCandidates = new Vector<Symbol*>();
+#line 271 "../../../Source/Core/AST/TypeRef.nll"
 			AST* pResolverBase = this;
 #line 272 "../../../Source/Core/AST/TypeRef.nll"
 			if (pParentTypeRef != 0 && pParentTypeRef->m_pFoundType != 0)
@@ -368,10 +394,12 @@ namespace NumbatLogic
 				pResolverBase = pParentTypeRef->m_pFoundType;
 #line 274 "../../../Source/Core/AST/TypeRef.nll"
 			pValidator->m_pResolver->ResolveFromNode(pResolverBase, sTypeName, pCandidates);
+#line 276 "../../../Source/Core/AST/TypeRef.nll"
 			Vector<Symbol*>* pTypeLike = new Vector<Symbol*>();
 #line 277 "../../../Source/Core/AST/TypeRef.nll"
 			for (int i = 0; i < pCandidates->GetSize(); i++)
 			{
+#line 279 "../../../Source/Core/AST/TypeRef.nll"
 				Symbol* pSym = pCandidates->Get(i);
 #line 280 "../../../Source/Core/AST/TypeRef.nll"
 				if (pSym->m_eKind == Symbol::Kind::CLASS || pSym->m_eKind == Symbol::Kind::ENUM || pSym->m_eKind == Symbol::Kind::GENERIC_PARAM || pSym->m_eKind == Symbol::Kind::DELEGATE || pSym->m_eKind == Symbol::Kind::NAMESPACE)
@@ -383,6 +411,7 @@ namespace NumbatLogic
 #line 290 "../../../Source/Core/AST/TypeRef.nll"
 			if (pTypeLike->GetSize() == 1)
 			{
+#line 292 "../../../Source/Core/AST/TypeRef.nll"
 				Symbol* pSymbol = pTypeLike->Get(0);
 #line 293 "../../../Source/Core/AST/TypeRef.nll"
 				if (pSymbol->m_pDeclAST != 0)
@@ -404,6 +433,7 @@ namespace NumbatLogic
 #line 304 "../../../Source/Core/AST/TypeRef.nll"
 				if (bResolverTypeAmbiguous)
 				{
+#line 306 "../../../Source/Core/AST/TypeRef.nll"
 					InternalString* sAmbiguous = new InternalString("Ambiguous type (multiple declarations in scope): ");
 #line 307 "../../../Source/Core/AST/TypeRef.nll"
 					sAmbiguous->Append(sTypeName);
@@ -413,9 +443,11 @@ namespace NumbatLogic
 				}
 				else
 				{
+#line 312 "../../../Source/Core/AST/TypeRef.nll"
 					InternalString* sTemp = new InternalString("Unknown type: ");
 #line 313 "../../../Source/Core/AST/TypeRef.nll"
 					sTemp->Append(sTypeName);
+#line 315 "../../../Source/Core/AST/TypeRef.nll"
 					TypeRef* pSubParentTypeRef = 0;
 #line 316 "../../../Source/Core/AST/TypeRef.nll"
 					if (m_pParent->m_eType == AST::Type::AST_TYPE_REF)
@@ -443,6 +475,7 @@ namespace NumbatLogic
 #line 329 "../../../Source/Core/AST/TypeRef.nll"
 			if (pType->m_eType == AST::Type::AST_CLASS_DECL)
 			{
+#line 331 "../../../Source/Core/AST/TypeRef.nll"
 				ClassDecl* pClassDecl = (ClassDecl*)(pType);
 #line 332 "../../../Source/Core/AST/TypeRef.nll"
 				ValidateClassDecl(pValidator, pClassDecl, this);
@@ -507,6 +540,7 @@ namespace NumbatLogic
 									}
 									else
 									{
+#line 383 "../../../Source/Core/AST/TypeRef.nll"
 										InternalString* sTemp = new InternalString("Found type, but it's not a AST_CLASS_DECL, AST_MEMBER_CLASS_DECL, NAMESPACE_DECL, AST_ENUM_DECL, AST_MEMBER_ENUM_DECL, AST_GENERIC_TYPE_DECL or DELEGATE_DECL! Got: ");
 #line 384 "../../../Source/Core/AST/TypeRef.nll"
 										pType->StringifyType(sTemp);
@@ -531,6 +565,7 @@ namespace NumbatLogic
 #line 402 "../../../Source/Core/AST/TypeRef.nll"
 		for (int i = 0; i < m_pGenericTypeRefVector->GetSize(); i++)
 		{
+#line 404 "../../../Source/Core/AST/TypeRef.nll"
 			TypeRef* pGenericTypeRef = m_pGenericTypeRefVector->Get(i);
 #line 405 "../../../Source/Core/AST/TypeRef.nll"
 			pGenericTypeRef->Validate(pValidator, 0);
@@ -542,6 +577,7 @@ namespace NumbatLogic
 #line 413 "../../../Source/Core/AST/TypeRef.nll"
 	TypeRef* TypeRef::Clone()
 	{
+#line 415 "../../../Source/Core/AST/TypeRef.nll"
 		TypeRef* pTypeRef = new TypeRef();
 #line 416 "../../../Source/Core/AST/TypeRef.nll"
 		pTypeRef->m_pCloneToken = m_pTypeToken->Clone();
@@ -556,6 +592,7 @@ namespace NumbatLogic
 #line 422 "../../../Source/Core/AST/TypeRef.nll"
 		for (int i = 0; i < m_pGenericTypeRefVector->GetSize(); i++)
 		{
+#line 424 "../../../Source/Core/AST/TypeRef.nll"
 			TypeRef* pGenericTypeRef = m_pGenericTypeRefVector->Get(i)->Clone();
 #line 425 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef->m_pGenericTypeRefVector->PushBack(pGenericTypeRef);
@@ -571,6 +608,7 @@ namespace NumbatLogic
 #line 430 "../../../Source/Core/AST/TypeRef.nll"
 		if (m_pChildTypeRef != 0)
 		{
+#line 432 "../../../Source/Core/AST/TypeRef.nll"
 			TypeRef* pChildTypeRef = m_pChildTypeRef->Clone();
 #line 433 "../../../Source/Core/AST/TypeRef.nll"
 			pTypeRef->m_pChildTypeRef = pChildTypeRef;
@@ -603,16 +641,19 @@ namespace NumbatLogic
 #line 449 "../../../Source/Core/AST/TypeRef.nll"
 		if (m_bConst)
 		{
+#line 451 "../../../Source/Core/AST/TypeRef.nll"
 			bool bOutput = true;
 #line 454 "../../../Source/Core/AST/TypeRef.nll"
 			if (eLanguage == AST::Language::CS)
 			{
 #line 456 "../../../Source/Core/AST/TypeRef.nll"
 				bOutput = false;
+#line 457 "../../../Source/Core/AST/TypeRef.nll"
 				Project* pProject = GetProject();
 #line 458 "../../../Source/Core/AST/TypeRef.nll"
 				if (pProject != 0 && pProject->m_pValidator != 0)
 				{
+#line 460 "../../../Source/Core/AST/TypeRef.nll"
 					ValueType* pValueType = GetRecursiveValueType(pProject->m_pValidator->m_pResolver);
 #line 462 "../../../Source/Core/AST/TypeRef.nll"
 					switch (pValueType->m_eType)
@@ -827,6 +868,7 @@ namespace NumbatLogic
 				if (i > 0)
 #line 558 "../../../Source/Core/AST/TypeRef.nll"
 					pOutputBuilder->m_sOut->Append(", ");
+#line 559 "../../../Source/Core/AST/TypeRef.nll"
 				TypeRef* pGenericTypeRef = m_pGenericTypeRefVector->Get(i);
 #line 560 "../../../Source/Core/AST/TypeRef.nll"
 				pGenericTypeRef->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
@@ -866,6 +908,7 @@ namespace NumbatLogic
 #line 584 "../../../Source/Core/AST/TypeRef.nll"
 			m_pChildTypeRef->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		}
+#line 587 "../../../Source/Core/AST/TypeRef.nll"
 		TypeRef* pFinalChildTypeRef = this;
 #line 588 "../../../Source/Core/AST/TypeRef.nll"
 		while (pFinalChildTypeRef->m_pChildTypeRef != 0)
@@ -876,287 +919,304 @@ namespace NumbatLogic
 #line 593 "../../../Source/Core/AST/TypeRef.nll"
 		if (pFinalChildTypeRef->m_pTypeToken->m_eType == Token::Type::TOKEN_IDENTIFIER)
 		{
-			const char* sTypeName = pFinalChildTypeRef->m_pTypeToken->GetString();
+#line 595 "../../../Source/Core/AST/TypeRef.nll"
 			AST* pType = pFinalChildTypeRef->m_pFoundType;
+#line 598 "../../../Source/Core/AST/TypeRef.nll"
 			const char* sxAppendString = "";
-#line 601 "../../../Source/Core/AST/TypeRef.nll"
+#line 600 "../../../Source/Core/AST/TypeRef.nll"
 			if (eLanguage == AST::Language::CPP && pType != 0 && pType->m_eType == AST::Type::AST_CLASS_DECL)
-#line 602 "../../../Source/Core/AST/TypeRef.nll"
+#line 601 "../../../Source/Core/AST/TypeRef.nll"
 				sxAppendString = "*";
-#line 604 "../../../Source/Core/AST/TypeRef.nll"
+#line 603 "../../../Source/Core/AST/TypeRef.nll"
 			if (eLanguage == AST::Language::CPP && pType != 0 && pType->m_eType == AST::Type::DELEGATE_DECL)
-#line 605 "../../../Source/Core/AST/TypeRef.nll"
+#line 604 "../../../Source/Core/AST/TypeRef.nll"
 				sxAppendString = "*";
-#line 612 "../../../Source/Core/AST/TypeRef.nll"
+#line 611 "../../../Source/Core/AST/TypeRef.nll"
 			if (m_pParent != 0)
 			{
-#line 614 "../../../Source/Core/AST/TypeRef.nll"
+#line 613 "../../../Source/Core/AST/TypeRef.nll"
 				if (m_pParent->m_eType == AST::Type::AST_NEW_EXP)
-#line 615 "../../../Source/Core/AST/TypeRef.nll"
+#line 614 "../../../Source/Core/AST/TypeRef.nll"
 					sxAppendString = "";
-#line 617 "../../../Source/Core/AST/TypeRef.nll"
+#line 616 "../../../Source/Core/AST/TypeRef.nll"
 				if (m_pParent->m_eType == AST::Type::AST_TYPE_REF)
 				{
+#line 618 "../../../Source/Core/AST/TypeRef.nll"
 					TypeRef* pParentTypeRef = (TypeRef*)(m_pParent);
-#line 620 "../../../Source/Core/AST/TypeRef.nll"
+#line 619 "../../../Source/Core/AST/TypeRef.nll"
 					if (pParentTypeRef->m_pChildTypeRef == this)
-#line 621 "../../../Source/Core/AST/TypeRef.nll"
+#line 620 "../../../Source/Core/AST/TypeRef.nll"
 						sxAppendString = "";
 				}
-#line 624 "../../../Source/Core/AST/TypeRef.nll"
+#line 623 "../../../Source/Core/AST/TypeRef.nll"
 				if (m_pParent->m_eType == AST::Type::AST_CLASS_DECL)
 				{
+#line 625 "../../../Source/Core/AST/TypeRef.nll"
 					ClassDecl* pParentClassDecl = (ClassDecl*)(m_pParent);
-#line 627 "../../../Source/Core/AST/TypeRef.nll"
+#line 626 "../../../Source/Core/AST/TypeRef.nll"
 					if (pParentClassDecl->m_pBaseTypeRef == this)
-#line 628 "../../../Source/Core/AST/TypeRef.nll"
+#line 627 "../../../Source/Core/AST/TypeRef.nll"
 						sxAppendString = "";
 				}
-#line 631 "../../../Source/Core/AST/TypeRef.nll"
+#line 630 "../../../Source/Core/AST/TypeRef.nll"
 				pOutputBuilder->m_sOut->AppendString(sxAppendString);
 			}
 		}
 	}
 
-#line 636 "../../../Source/Core/AST/TypeRef.nll"
+#line 635 "../../../Source/Core/AST/TypeRef.nll"
 	ValueType* TypeRef::GetRecursiveValueType(Resolver* pResolver)
 	{
-#line 638 "../../../Source/Core/AST/TypeRef.nll"
+#line 637 "../../../Source/Core/AST/TypeRef.nll"
 		if (m_pValueType == 0)
-#line 639 "../../../Source/Core/AST/TypeRef.nll"
+#line 638 "../../../Source/Core/AST/TypeRef.nll"
 			SetValueType(pResolver);
-#line 641 "../../../Source/Core/AST/TypeRef.nll"
+#line 640 "../../../Source/Core/AST/TypeRef.nll"
 		if (m_pChildTypeRef != 0)
-#line 642 "../../../Source/Core/AST/TypeRef.nll"
+#line 641 "../../../Source/Core/AST/TypeRef.nll"
 			return m_pChildTypeRef->GetRecursiveValueType(pResolver);
-#line 644 "../../../Source/Core/AST/TypeRef.nll"
+#line 643 "../../../Source/Core/AST/TypeRef.nll"
 		return m_pValueType;
 	}
 
-#line 648 "../../../Source/Core/AST/TypeRef.nll"
+#line 647 "../../../Source/Core/AST/TypeRef.nll"
 	ValueType* TypeRef::CreateValueType(Resolver* pResolver)
 	{
-#line 650 "../../../Source/Core/AST/TypeRef.nll"
+#line 649 "../../../Source/Core/AST/TypeRef.nll"
 		if (m_pValueType == 0)
-#line 651 "../../../Source/Core/AST/TypeRef.nll"
+#line 650 "../../../Source/Core/AST/TypeRef.nll"
 			SetValueType(pResolver);
-#line 653 "../../../Source/Core/AST/TypeRef.nll"
+#line 652 "../../../Source/Core/AST/TypeRef.nll"
 		if (m_pChildTypeRef != 0)
-#line 654 "../../../Source/Core/AST/TypeRef.nll"
+#line 653 "../../../Source/Core/AST/TypeRef.nll"
 			return m_pChildTypeRef->CreateValueType(pResolver);
-#line 656 "../../../Source/Core/AST/TypeRef.nll"
+#line 655 "../../../Source/Core/AST/TypeRef.nll"
 		if (m_pValueType != 0)
-#line 657 "../../../Source/Core/AST/TypeRef.nll"
+#line 656 "../../../Source/Core/AST/TypeRef.nll"
 			return m_pValueType->Clone();
-#line 659 "../../../Source/Core/AST/TypeRef.nll"
+#line 658 "../../../Source/Core/AST/TypeRef.nll"
 		return 0;
 	}
 
-#line 662 "../../../Source/Core/AST/TypeRef.nll"
+#line 661 "../../../Source/Core/AST/TypeRef.nll"
 	ValueType* TypeRef::SetValueType(Resolver* pResolver)
 	{
-#line 666 "../../../Source/Core/AST/TypeRef.nll"
+#line 665 "../../../Source/Core/AST/TypeRef.nll"
 		switch (m_pTypeToken->m_eType)
 		{
 			case Token::Type::TOKEN_IDENTIFIER:
 			{
+#line 670 "../../../Source/Core/AST/TypeRef.nll"
 				AST* pType = m_pFoundType;
-#line 672 "../../../Source/Core/AST/TypeRef.nll"
+#line 671 "../../../Source/Core/AST/TypeRef.nll"
 				if (pType == 0 && pResolver != 0)
 				{
+#line 674 "../../../Source/Core/AST/TypeRef.nll"
 					const char* sTypeName = m_pTypeToken->GetString();
+#line 675 "../../../Source/Core/AST/TypeRef.nll"
 					TypeRef* pParentTypeRef = 0;
-#line 677 "../../../Source/Core/AST/TypeRef.nll"
+#line 676 "../../../Source/Core/AST/TypeRef.nll"
 					if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_TYPE_REF)
 					{
-#line 679 "../../../Source/Core/AST/TypeRef.nll"
+#line 678 "../../../Source/Core/AST/TypeRef.nll"
 						pParentTypeRef = (TypeRef*)(m_pParent);
-#line 680 "../../../Source/Core/AST/TypeRef.nll"
+#line 679 "../../../Source/Core/AST/TypeRef.nll"
 						if (pParentTypeRef->m_pChildTypeRef != this)
-#line 681 "../../../Source/Core/AST/TypeRef.nll"
+#line 680 "../../../Source/Core/AST/TypeRef.nll"
 							pParentTypeRef = 0;
 					}
+#line 682 "../../../Source/Core/AST/TypeRef.nll"
 					Vector<Symbol*>* pCandidates = new Vector<Symbol*>();
+#line 683 "../../../Source/Core/AST/TypeRef.nll"
 					AST* pResolverBase = this;
-#line 685 "../../../Source/Core/AST/TypeRef.nll"
+#line 684 "../../../Source/Core/AST/TypeRef.nll"
 					if (pParentTypeRef != 0 && pParentTypeRef->m_pFoundType != 0)
-#line 686 "../../../Source/Core/AST/TypeRef.nll"
+#line 685 "../../../Source/Core/AST/TypeRef.nll"
 						pResolverBase = pParentTypeRef->m_pFoundType;
-#line 687 "../../../Source/Core/AST/TypeRef.nll"
+#line 686 "../../../Source/Core/AST/TypeRef.nll"
 					pResolver->ResolveFromNode(pResolverBase, sTypeName, pCandidates);
+#line 687 "../../../Source/Core/AST/TypeRef.nll"
 					Vector<Symbol*>* pTypeLike = new Vector<Symbol*>();
-#line 689 "../../../Source/Core/AST/TypeRef.nll"
+#line 688 "../../../Source/Core/AST/TypeRef.nll"
 					for (int i = 0; i < pCandidates->GetSize(); i++)
 					{
+#line 690 "../../../Source/Core/AST/TypeRef.nll"
 						Symbol* pSym = pCandidates->Get(i);
-#line 692 "../../../Source/Core/AST/TypeRef.nll"
+#line 691 "../../../Source/Core/AST/TypeRef.nll"
 						if (pSym->m_eKind == Symbol::Kind::CLASS || pSym->m_eKind == Symbol::Kind::ENUM || pSym->m_eKind == Symbol::Kind::GENERIC_PARAM || pSym->m_eKind == Symbol::Kind::DELEGATE || pSym->m_eKind == Symbol::Kind::NAMESPACE)
 						{
-#line 698 "../../../Source/Core/AST/TypeRef.nll"
+#line 697 "../../../Source/Core/AST/TypeRef.nll"
 							pTypeLike->PushBack(pSym);
 						}
 					}
-#line 701 "../../../Source/Core/AST/TypeRef.nll"
+#line 700 "../../../Source/Core/AST/TypeRef.nll"
 					if (pTypeLike->GetSize() == 1)
 					{
+#line 702 "../../../Source/Core/AST/TypeRef.nll"
 						Symbol* pSymbol = pTypeLike->Get(0);
-#line 704 "../../../Source/Core/AST/TypeRef.nll"
+#line 703 "../../../Source/Core/AST/TypeRef.nll"
 						if (pSymbol->m_pDeclAST != 0)
 						{
-#line 706 "../../../Source/Core/AST/TypeRef.nll"
+#line 705 "../../../Source/Core/AST/TypeRef.nll"
 							pType = pSymbol->m_pDeclAST;
-#line 707 "../../../Source/Core/AST/TypeRef.nll"
+#line 706 "../../../Source/Core/AST/TypeRef.nll"
 							m_pFoundType = pType;
 						}
 					}
 					if (pCandidates) delete pCandidates;
 					if (pTypeLike) delete pTypeLike;
 				}
-#line 712 "../../../Source/Core/AST/TypeRef.nll"
+#line 711 "../../../Source/Core/AST/TypeRef.nll"
 				if (pType != 0)
 				{
-#line 714 "../../../Source/Core/AST/TypeRef.nll"
+#line 713 "../../../Source/Core/AST/TypeRef.nll"
 					if (pType->m_eType == AST::Type::AST_CLASS_DECL)
 					{
-#line 716 "../../../Source/Core/AST/TypeRef.nll"
+#line 715 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType = new ValueType(ValueType::Type::CLASS_DECL_VALUE);
-#line 717 "../../../Source/Core/AST/TypeRef.nll"
+#line 716 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType->m_bConst = m_bConst;
-#line 718 "../../../Source/Core/AST/TypeRef.nll"
+#line 717 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType->m_pClassDecl = (ClassDecl*)(pType);
-#line 719 "../../../Source/Core/AST/TypeRef.nll"
+#line 718 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType->m_ePointerType = m_ePointerType;
-#line 723 "../../../Source/Core/AST/TypeRef.nll"
+#line 722 "../../../Source/Core/AST/TypeRef.nll"
 						for (int i = 0; i < m_pGenericTypeRefVector->GetSize(); i++)
 						{
+#line 724 "../../../Source/Core/AST/TypeRef.nll"
 							TypeRef* pGenericTypeRef = m_pGenericTypeRefVector->Get(i);
+#line 726 "../../../Source/Core/AST/TypeRef.nll"
 							ValueType* pGenericValueType = pGenericTypeRef->CreateValueType(pResolver);
-#line 728 "../../../Source/Core/AST/TypeRef.nll"
+#line 727 "../../../Source/Core/AST/TypeRef.nll"
 							if (pGenericValueType == 0)
 							{
 								if (pGenericValueType) delete pGenericValueType;
-#line 729 "../../../Source/Core/AST/TypeRef.nll"
+#line 728 "../../../Source/Core/AST/TypeRef.nll"
 								return 0;
 							}
-							NumbatLogic::ValueType* __2199059312 = pGenericValueType;
-#line 730 "../../../Source/Core/AST/TypeRef.nll"
+							NumbatLogic::ValueType* __2198993722 = pGenericValueType;
+#line 729 "../../../Source/Core/AST/TypeRef.nll"
 							pGenericValueType = 0;
-#line 730 "../../../Source/Core/AST/TypeRef.nll"
-							m_pValueType->m_pGenericValueTypeVector->PushBack(__2199059312);
+#line 729 "../../../Source/Core/AST/TypeRef.nll"
+							m_pValueType->m_pGenericValueTypeVector->PushBack(__2198993722);
 							if (pGenericValueType) delete pGenericValueType;
 						}
-#line 733 "../../../Source/Core/AST/TypeRef.nll"
+#line 732 "../../../Source/Core/AST/TypeRef.nll"
 						return m_pValueType;
 					}
-#line 736 "../../../Source/Core/AST/TypeRef.nll"
+#line 735 "../../../Source/Core/AST/TypeRef.nll"
 					if (pType->m_eType == AST::Type::AST_MEMBER_CLASS_DECL)
 					{
+#line 737 "../../../Source/Core/AST/TypeRef.nll"
 						MemberClassDecl* pMemberClass = (MemberClassDecl*)(pType);
-#line 739 "../../../Source/Core/AST/TypeRef.nll"
+#line 738 "../../../Source/Core/AST/TypeRef.nll"
 						if (pMemberClass->m_pClassDecl != 0)
 						{
-#line 741 "../../../Source/Core/AST/TypeRef.nll"
+#line 740 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType = new ValueType(ValueType::Type::CLASS_DECL_VALUE);
-#line 742 "../../../Source/Core/AST/TypeRef.nll"
+#line 741 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType->m_bConst = m_bConst;
-#line 743 "../../../Source/Core/AST/TypeRef.nll"
+#line 742 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType->m_pClassDecl = pMemberClass->m_pClassDecl;
-#line 744 "../../../Source/Core/AST/TypeRef.nll"
+#line 743 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType->m_ePointerType = m_ePointerType;
-#line 746 "../../../Source/Core/AST/TypeRef.nll"
+#line 745 "../../../Source/Core/AST/TypeRef.nll"
 							for (int i = 0; i < m_pGenericTypeRefVector->GetSize(); i++)
 							{
+#line 747 "../../../Source/Core/AST/TypeRef.nll"
 								TypeRef* pGenericTypeRef = m_pGenericTypeRefVector->Get(i);
+#line 748 "../../../Source/Core/AST/TypeRef.nll"
 								ValueType* pGenericValueType = pGenericTypeRef->CreateValueType(pResolver);
-#line 750 "../../../Source/Core/AST/TypeRef.nll"
+#line 749 "../../../Source/Core/AST/TypeRef.nll"
 								if (pGenericValueType == 0)
 								{
 									if (pGenericValueType) delete pGenericValueType;
-#line 751 "../../../Source/Core/AST/TypeRef.nll"
+#line 750 "../../../Source/Core/AST/TypeRef.nll"
 									return 0;
 								}
-								NumbatLogic::ValueType* __2199190512 = pGenericValueType;
-#line 752 "../../../Source/Core/AST/TypeRef.nll"
+								NumbatLogic::ValueType* __2199190511 = pGenericValueType;
+#line 751 "../../../Source/Core/AST/TypeRef.nll"
 								pGenericValueType = 0;
-#line 752 "../../../Source/Core/AST/TypeRef.nll"
-								m_pValueType->m_pGenericValueTypeVector->PushBack(__2199190512);
+#line 751 "../../../Source/Core/AST/TypeRef.nll"
+								m_pValueType->m_pGenericValueTypeVector->PushBack(__2199190511);
 								if (pGenericValueType) delete pGenericValueType;
 							}
-#line 755 "../../../Source/Core/AST/TypeRef.nll"
+#line 754 "../../../Source/Core/AST/TypeRef.nll"
 							return m_pValueType;
 						}
 					}
-#line 759 "../../../Source/Core/AST/TypeRef.nll"
+#line 758 "../../../Source/Core/AST/TypeRef.nll"
 					if (pType->m_eType == AST::Type::AST_GENERIC_TYPE_DECL)
 					{
-#line 761 "../../../Source/Core/AST/TypeRef.nll"
+#line 760 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType = new ValueType(ValueType::Type::GENERIC_TYPE_DECL_VALUE);
-#line 762 "../../../Source/Core/AST/TypeRef.nll"
+#line 761 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType->m_bConst = m_bConst;
-#line 763 "../../../Source/Core/AST/TypeRef.nll"
+#line 762 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType->m_pGenericTypeDecl = (GenericTypeDecl*)(pType);
-#line 764 "../../../Source/Core/AST/TypeRef.nll"
+#line 763 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType->m_ePointerType = m_ePointerType;
-#line 765 "../../../Source/Core/AST/TypeRef.nll"
+#line 764 "../../../Source/Core/AST/TypeRef.nll"
 						return m_pValueType;
 					}
-#line 768 "../../../Source/Core/AST/TypeRef.nll"
+#line 767 "../../../Source/Core/AST/TypeRef.nll"
 					if (pType->m_eType == AST::Type::AST_ENUM_DECL)
 					{
-#line 770 "../../../Source/Core/AST/TypeRef.nll"
+#line 769 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType = new ValueType(ValueType::Type::ENUM_DECL_VALUE);
-#line 771 "../../../Source/Core/AST/TypeRef.nll"
+#line 770 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType->m_bConst = m_bConst;
-#line 772 "../../../Source/Core/AST/TypeRef.nll"
+#line 771 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType->m_pEnumDecl = (EnumDecl*)(pType);
-#line 773 "../../../Source/Core/AST/TypeRef.nll"
+#line 772 "../../../Source/Core/AST/TypeRef.nll"
 						return m_pValueType;
 					}
-#line 776 "../../../Source/Core/AST/TypeRef.nll"
+#line 775 "../../../Source/Core/AST/TypeRef.nll"
 					if (pType->m_eType == AST::Type::AST_MEMBER_ENUM_DECL)
 					{
+#line 777 "../../../Source/Core/AST/TypeRef.nll"
 						MemberEnumDecl* pMemberEnum = (MemberEnumDecl*)(pType);
-#line 779 "../../../Source/Core/AST/TypeRef.nll"
+#line 778 "../../../Source/Core/AST/TypeRef.nll"
 						if (pMemberEnum->m_pEnumDecl != 0)
 						{
-#line 781 "../../../Source/Core/AST/TypeRef.nll"
+#line 780 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType = new ValueType(ValueType::Type::ENUM_DECL_VALUE);
-#line 782 "../../../Source/Core/AST/TypeRef.nll"
+#line 781 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType->m_bConst = m_bConst;
-#line 783 "../../../Source/Core/AST/TypeRef.nll"
+#line 782 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType->m_pEnumDecl = pMemberEnum->m_pEnumDecl;
-#line 784 "../../../Source/Core/AST/TypeRef.nll"
+#line 783 "../../../Source/Core/AST/TypeRef.nll"
 							m_pValueType->m_ePointerType = m_ePointerType;
-#line 785 "../../../Source/Core/AST/TypeRef.nll"
+#line 784 "../../../Source/Core/AST/TypeRef.nll"
 							return m_pValueType;
 						}
 					}
-#line 789 "../../../Source/Core/AST/TypeRef.nll"
+#line 788 "../../../Source/Core/AST/TypeRef.nll"
 					if (pType->m_eType == AST::Type::ENUM_DECL_VALUE)
 					{
-#line 791 "../../../Source/Core/AST/TypeRef.nll"
+#line 790 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType = new ValueType(ValueType::Type::ENUM_DECL_VALUE);
-#line 792 "../../../Source/Core/AST/TypeRef.nll"
+#line 791 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType->m_bConst = m_bConst;
-#line 793 "../../../Source/Core/AST/TypeRef.nll"
+#line 792 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType->m_pEnumDeclValue = (EnumDeclValue*)(pType);
-#line 794 "../../../Source/Core/AST/TypeRef.nll"
+#line 793 "../../../Source/Core/AST/TypeRef.nll"
 						return m_pValueType;
 					}
-#line 797 "../../../Source/Core/AST/TypeRef.nll"
+#line 796 "../../../Source/Core/AST/TypeRef.nll"
 					if (pType->m_eType == AST::Type::DELEGATE_DECL)
 					{
-#line 799 "../../../Source/Core/AST/TypeRef.nll"
+#line 798 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType = new ValueType(ValueType::Type::DELEGATE_DECL_VALUE);
-#line 800 "../../../Source/Core/AST/TypeRef.nll"
+#line 799 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType->m_bConst = m_bConst;
-#line 801 "../../../Source/Core/AST/TypeRef.nll"
+#line 800 "../../../Source/Core/AST/TypeRef.nll"
 						m_pValueType->m_pDelegateDecl = (DelegateDecl*)(pType);
-#line 802 "../../../Source/Core/AST/TypeRef.nll"
+#line 801 "../../../Source/Core/AST/TypeRef.nll"
 						return m_pValueType;
 					}
 				}
-#line 806 "../../../Source/Core/AST/TypeRef.nll"
+#line 805 "../../../Source/Core/AST/TypeRef.nll"
 				return 0;
 			}
 
@@ -1172,111 +1232,113 @@ namespace NumbatLogic
 			case Token::Type::TOKEN_KEYWORD_DOUBLE:
 			case Token::Type::TOKEN_KEYWORD_FLOAT:
 			{
-#line 820 "../../../Source/Core/AST/TypeRef.nll"
+#line 819 "../../../Source/Core/AST/TypeRef.nll"
 				m_pValueType = new ValueType(ValueType::Type::INT);
-#line 821 "../../../Source/Core/AST/TypeRef.nll"
+#line 820 "../../../Source/Core/AST/TypeRef.nll"
 				m_pValueType->m_bConst = m_bConst;
-#line 822 "../../../Source/Core/AST/TypeRef.nll"
+#line 821 "../../../Source/Core/AST/TypeRef.nll"
 				return m_pValueType;
 			}
 
 			case Token::Type::TOKEN_KEYWORD_STRING:
 			{
-#line 826 "../../../Source/Core/AST/TypeRef.nll"
+#line 825 "../../../Source/Core/AST/TypeRef.nll"
 				m_pValueType = new ValueType(ValueType::Type::STRING);
-#line 827 "../../../Source/Core/AST/TypeRef.nll"
+#line 826 "../../../Source/Core/AST/TypeRef.nll"
 				m_pValueType->m_bConst = m_bConst;
-#line 828 "../../../Source/Core/AST/TypeRef.nll"
+#line 827 "../../../Source/Core/AST/TypeRef.nll"
 				return m_pValueType;
 			}
 
 			case Token::Type::TOKEN_KEYWORD_BOOL:
 			{
-#line 832 "../../../Source/Core/AST/TypeRef.nll"
+#line 831 "../../../Source/Core/AST/TypeRef.nll"
 				m_pValueType = new ValueType(ValueType::Type::BOOL);
-#line 833 "../../../Source/Core/AST/TypeRef.nll"
+#line 832 "../../../Source/Core/AST/TypeRef.nll"
 				m_pValueType->m_bConst = m_bConst;
-#line 834 "../../../Source/Core/AST/TypeRef.nll"
+#line 833 "../../../Source/Core/AST/TypeRef.nll"
 				return m_pValueType;
 			}
 
 			case Token::Type::TOKEN_KEYWORD_UNICHAR:
 			{
-#line 838 "../../../Source/Core/AST/TypeRef.nll"
+#line 837 "../../../Source/Core/AST/TypeRef.nll"
 				m_pValueType = new ValueType(ValueType::Type::UNICHAR);
-#line 839 "../../../Source/Core/AST/TypeRef.nll"
+#line 838 "../../../Source/Core/AST/TypeRef.nll"
 				m_pValueType->m_bConst = m_bConst;
-#line 840 "../../../Source/Core/AST/TypeRef.nll"
+#line 839 "../../../Source/Core/AST/TypeRef.nll"
 				return m_pValueType;
 			}
 
 			case Token::Type::TOKEN_KEYWORD_VOID:
 			{
-#line 844 "../../../Source/Core/AST/TypeRef.nll"
+#line 843 "../../../Source/Core/AST/TypeRef.nll"
 				m_pValueType = new ValueType(ValueType::Type::VOID);
-#line 845 "../../../Source/Core/AST/TypeRef.nll"
+#line 844 "../../../Source/Core/AST/TypeRef.nll"
 				m_pValueType->m_bConst = m_bConst;
-#line 846 "../../../Source/Core/AST/TypeRef.nll"
+#line 845 "../../../Source/Core/AST/TypeRef.nll"
 				return m_pValueType;
 			}
 
 			case Token::Type::TOKEN_KEYWORD_VOIDPTR:
 			{
-#line 850 "../../../Source/Core/AST/TypeRef.nll"
+#line 849 "../../../Source/Core/AST/TypeRef.nll"
 				m_pValueType = new ValueType(ValueType::Type::VOIDPTR);
-#line 851 "../../../Source/Core/AST/TypeRef.nll"
+#line 850 "../../../Source/Core/AST/TypeRef.nll"
 				m_pValueType->m_bConst = m_bConst;
-#line 852 "../../../Source/Core/AST/TypeRef.nll"
+#line 851 "../../../Source/Core/AST/TypeRef.nll"
 				return m_pValueType;
 			}
 
 		}
-#line 855 "../../../Source/Core/AST/TypeRef.nll"
+#line 854 "../../../Source/Core/AST/TypeRef.nll"
 		return 0;
 	}
 
-#line 858 "../../../Source/Core/AST/TypeRef.nll"
+#line 857 "../../../Source/Core/AST/TypeRef.nll"
 	bool TypeRef::IsIntegral()
 	{
+#line 859 "../../../Source/Core/AST/TypeRef.nll"
 		Project* pProject = GetProject();
-#line 861 "../../../Source/Core/AST/TypeRef.nll"
+#line 860 "../../../Source/Core/AST/TypeRef.nll"
 		if (pProject == 0 || pProject->m_pValidator == 0)
-#line 862 "../../../Source/Core/AST/TypeRef.nll"
+#line 861 "../../../Source/Core/AST/TypeRef.nll"
 			return IsInt() || IsBool() || m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_UNICHAR;
+#line 862 "../../../Source/Core/AST/TypeRef.nll"
 		ValueType* pValueType = GetRecursiveValueType(pProject->m_pValidator->m_pResolver);
-#line 864 "../../../Source/Core/AST/TypeRef.nll"
+#line 863 "../../../Source/Core/AST/TypeRef.nll"
 		if (pValueType->m_eType == ValueType::Type::ENUM_DECL_VALUE)
-#line 865 "../../../Source/Core/AST/TypeRef.nll"
+#line 864 "../../../Source/Core/AST/TypeRef.nll"
 			return true;
-#line 866 "../../../Source/Core/AST/TypeRef.nll"
+#line 865 "../../../Source/Core/AST/TypeRef.nll"
 		return IsInt() || IsBool() || m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_UNICHAR;
 	}
 
-#line 870 "../../../Source/Core/AST/TypeRef.nll"
+#line 869 "../../../Source/Core/AST/TypeRef.nll"
 	bool TypeRef::IsInt()
 	{
-#line 872 "../../../Source/Core/AST/TypeRef.nll"
+#line 871 "../../../Source/Core/AST/TypeRef.nll"
 		return m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_INT || m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_UINT || m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_UINT8 || m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_UINT16 || m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_UINT32 || m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_UINT64 || m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_INT8 || m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_INT16 || m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_INT32;
 	}
 
-#line 883 "../../../Source/Core/AST/TypeRef.nll"
+#line 882 "../../../Source/Core/AST/TypeRef.nll"
 	bool TypeRef::IsBool()
 	{
-#line 885 "../../../Source/Core/AST/TypeRef.nll"
+#line 884 "../../../Source/Core/AST/TypeRef.nll"
 		return m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_BOOL;
 	}
 
-#line 888 "../../../Source/Core/AST/TypeRef.nll"
+#line 887 "../../../Source/Core/AST/TypeRef.nll"
 	bool TypeRef::IsFloat()
 	{
-#line 890 "../../../Source/Core/AST/TypeRef.nll"
+#line 889 "../../../Source/Core/AST/TypeRef.nll"
 		return m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_FLOAT;
 	}
 
-#line 893 "../../../Source/Core/AST/TypeRef.nll"
+#line 892 "../../../Source/Core/AST/TypeRef.nll"
 	bool TypeRef::IsDouble()
 	{
-#line 895 "../../../Source/Core/AST/TypeRef.nll"
+#line 894 "../../../Source/Core/AST/TypeRef.nll"
 		return m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_DOUBLE;
 	}
 

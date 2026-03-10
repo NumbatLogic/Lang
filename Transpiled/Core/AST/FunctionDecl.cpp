@@ -46,7 +46,9 @@ namespace NumbatLogic
 #line 12 "../../../Source/Core/AST/FunctionDecl.nll"
 	FunctionDecl* FunctionDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, AST* pParent)
 	{
+#line 14 "../../../Source/Core/AST/FunctionDecl.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 16 "../../../Source/Core/AST/FunctionDecl.nll"
 		TypeRef* pTypeRef = TypeRef::TryCreate(pTokenContainer, pTempOffset);
 #line 17 "../../../Source/Core/AST/FunctionDecl.nll"
 		if (pTypeRef == 0)
@@ -56,6 +58,7 @@ namespace NumbatLogic
 #line 18 "../../../Source/Core/AST/FunctionDecl.nll"
 			return 0;
 		}
+#line 20 "../../../Source/Core/AST/FunctionDecl.nll"
 		Token* pNameToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
 #line 21 "../../../Source/Core/AST/FunctionDecl.nll"
 		if (pNameToken == 0)
@@ -75,6 +78,7 @@ namespace NumbatLogic
 #line 26 "../../../Source/Core/AST/FunctionDecl.nll"
 			return 0;
 		}
+#line 28 "../../../Source/Core/AST/FunctionDecl.nll"
 		ParamDecl* pParamDecl = ParamDecl::TryCreate(pTokenContainer, pTempOffset);
 #line 29 "../../../Source/Core/AST/FunctionDecl.nll"
 		if (pParamDecl == 0)
@@ -91,7 +95,9 @@ namespace NumbatLogic
 #line 34 "../../../Source/Core/AST/FunctionDecl.nll"
 			return 0;
 		}
+#line 37 "../../../Source/Core/AST/FunctionDecl.nll"
 		bool bConst = false;
+#line 38 "../../../Source/Core/AST/FunctionDecl.nll"
 		Token* pConst = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_CONST);
 #line 39 "../../../Source/Core/AST/FunctionDecl.nll"
 		if (pConst != 0)
@@ -101,7 +107,9 @@ namespace NumbatLogic
 #line 42 "../../../Source/Core/AST/FunctionDecl.nll"
 			bConst = true;
 		}
+#line 45 "../../../Source/Core/AST/FunctionDecl.nll"
 		Scope* pScope = 0;
+#line 46 "../../../Source/Core/AST/FunctionDecl.nll"
 		Token* pSemicolon = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON);
 #line 47 "../../../Source/Core/AST/FunctionDecl.nll"
 		if (pSemicolon != 0)
@@ -122,6 +130,7 @@ namespace NumbatLogic
 				Assert::Plz(false);
 			}
 		}
+#line 61 "../../../Source/Core/AST/FunctionDecl.nll"
 		FunctionDecl* pFunctionDecl = new FunctionDecl();
 #line 63 "../../../Source/Core/AST/FunctionDecl.nll"
 		pFunctionDecl->m_eType = AST::Type::AST_FUNCTION_DECL;
@@ -190,6 +199,7 @@ namespace NumbatLogic
 				return;
 			}
 		}
+#line 97 "../../../Source/Core/AST/FunctionDecl.nll"
 		ValueType* pValueType = m_pTypeRef->CreateValueType(pValidator->m_pResolver);
 #line 98 "../../../Source/Core/AST/FunctionDecl.nll"
 		if (pValueType == 0)
@@ -210,11 +220,13 @@ namespace NumbatLogic
 #line 108 "../../../Source/Core/AST/FunctionDecl.nll"
 	void FunctionDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
+#line 110 "../../../Source/Core/AST/FunctionDecl.nll"
 		MemberFunctionDecl* pMemberFunctionDecl = 0;
 #line 111 "../../../Source/Core/AST/FunctionDecl.nll"
 		if (m_pParent != 0 && m_pParent->m_eType == AST::Type::AST_MEMBER_FUNCTION_DECL)
 #line 112 "../../../Source/Core/AST/FunctionDecl.nll"
 			pMemberFunctionDecl = (MemberFunctionDecl*)(m_pParent);
+#line 114 "../../../Source/Core/AST/FunctionDecl.nll"
 		bool bGeneric = pMemberFunctionDecl != 0 && pMemberFunctionDecl->m_pParentClassDecl->m_pGenericTypeDeclVector->GetSize() > 0;
 #line 116 "../../../Source/Core/AST/FunctionDecl.nll"
 		if (pMemberFunctionDecl != 0 && eLanguage == AST::Language::CS && ExternalString::Equal("GetType", m_pNameToken->GetString()))
@@ -232,8 +244,11 @@ namespace NumbatLogic
 #line 128 "../../../Source/Core/AST/FunctionDecl.nll"
 			if (pMemberFunctionDecl != 0)
 			{
+#line 130 "../../../Source/Core/AST/FunctionDecl.nll"
 				AST* pPrefixParent = pMemberFunctionDecl;
+#line 131 "../../../Source/Core/AST/FunctionDecl.nll"
 				InternalString* sPrefix = new InternalString("");
+#line 132 "../../../Source/Core/AST/FunctionDecl.nll"
 				InternalString* sTemp = new InternalString("");
 #line 134 "../../../Source/Core/AST/FunctionDecl.nll"
 				while (pPrefixParent->m_pParent != 0)

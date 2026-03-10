@@ -49,7 +49,9 @@ namespace NumbatLogic
 #line 18 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 	MemberFunctionDecl* MemberFunctionDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, ClassDecl* pParentClassDecl)
 	{
+#line 20 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 22 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		AccessLevel* pAccessLevel = AccessLevel::TryCreate(pTokenContainer, pTempOffset);
 #line 23 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		if (pAccessLevel == 0)
@@ -59,9 +61,13 @@ namespace NumbatLogic
 #line 24 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 			return 0;
 		}
+#line 26 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		bool bStatic = false;
+#line 27 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		bool bVirtual = false;
+#line 28 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		bool bOverride = false;
+#line 30 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		Token* pToken = pTokenContainer->Peek(pTempOffset);
 #line 31 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		if (pToken == 0)
@@ -105,6 +111,7 @@ namespace NumbatLogic
 			}
 
 		}
+#line 55 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		MemberFunctionDecl* pMemberFunctionDecl = new MemberFunctionDecl();
 #line 56 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		pMemberFunctionDecl->m_pParent = pParentClassDecl;
@@ -120,6 +127,7 @@ namespace NumbatLogic
 		pMemberFunctionDecl->m_bVirtual = bVirtual;
 #line 62 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		pMemberFunctionDecl->m_bOverride = bOverride;
+#line 64 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		FunctionDecl* pFunctionDecl = FunctionDecl::TryCreate(pTokenContainer, pTempOffset, pMemberFunctionDecl);
 #line 65 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		if (pFunctionDecl == 0)
@@ -165,6 +173,7 @@ namespace NumbatLogic
 #line 82 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 	void MemberFunctionDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
+#line 84 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		bool bGeneric = m_pParentClassDecl->m_pGenericTypeDeclVector->GetSize() > 0;
 #line 85 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		if (bGeneric && eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)

@@ -1,307 +1,338 @@
 #line 1 "../../../Source/CLI/CLI.nll"
 namespace NumbatLogic
 {
-#line 4 "../../../Source/CLI/CLI.nll"
+#line 3 "../../../Source/CLI/CLI.nll"
 	class CLI
 	{
-#line 6 "../../../Source/CLI/CLI.nll"
+#line 5 "../../../Source/CLI/CLI.nll"
 		public static void Run(Vector<string> sArgVector)
 		{
-#line 8 "../../../Source/CLI/CLI.nll"
+#line 7 "../../../Source/CLI/CLI.nll"
 			Console.Log("CLI");
-#line 10 "../../../Source/CLI/CLI.nll"
+#line 9 "../../../Source/CLI/CLI.nll"
 			if (sArgVector.GetSize() % 2 != 0)
 			{
+#line 11 "../../../Source/CLI/CLI.nll"
 				InternalString sTemp = new InternalString("expected even number of args! Got ");
-#line 13 "../../../Source/CLI/CLI.nll"
+#line 12 "../../../Source/CLI/CLI.nll"
 				sTemp.AppendInt(sArgVector.GetSize());
-#line 14 "../../../Source/CLI/CLI.nll"
+#line 13 "../../../Source/CLI/CLI.nll"
 				Console.Log(sTemp.GetExternalString());
-#line 15 "../../../Source/CLI/CLI.nll"
+#line 14 "../../../Source/CLI/CLI.nll"
 				return;
 			}
+#line 17 "../../../Source/CLI/CLI.nll"
 			Project pProject = new Project();
+#line 18 "../../../Source/CLI/CLI.nll"
 			InternalString sAmalgamateFileName = null;
+#line 19 "../../../Source/CLI/CLI.nll"
 			bool bOutputNLLDef = false;
+#line 21 "../../../Source/CLI/CLI.nll"
 			OwnedVector<InternalString> sAmalgamatedHPPAppend = new OwnedVector<InternalString>();
+#line 22 "../../../Source/CLI/CLI.nll"
 			OwnedVector<InternalString> sAmalgamatedCPPPrepend = new OwnedVector<InternalString>();
+#line 23 "../../../Source/CLI/CLI.nll"
 			OwnedVector<InternalString> sAmalgamatedCPPAppend = new OwnedVector<InternalString>();
+#line 24 "../../../Source/CLI/CLI.nll"
 			OwnedVector<InternalString> sAmalgamatedCSAppend = new OwnedVector<InternalString>();
+#line 25 "../../../Source/CLI/CLI.nll"
 			OwnedVector<InternalString> sDefineVector = new OwnedVector<InternalString>();
+#line 27 "../../../Source/CLI/CLI.nll"
 			int i = 0;
-#line 29 "../../../Source/CLI/CLI.nll"
+#line 28 "../../../Source/CLI/CLI.nll"
 			while (i < sArgVector.GetSize())
 			{
+#line 30 "../../../Source/CLI/CLI.nll"
 				InternalString sTemp;
+#line 32 "../../../Source/CLI/CLI.nll"
 				string sxArg0 = sArgVector.Get(i);
+#line 33 "../../../Source/CLI/CLI.nll"
+				i++;
 #line 34 "../../../Source/CLI/CLI.nll"
-				i++;
 				string sxArg1 = sArgVector.Get(i);
-#line 36 "../../../Source/CLI/CLI.nll"
+#line 35 "../../../Source/CLI/CLI.nll"
 				i++;
-#line 38 "../../../Source/CLI/CLI.nll"
+#line 37 "../../../Source/CLI/CLI.nll"
 				if (ExternalString.Equal(sxArg0, "-d"))
 				{
-#line 40 "../../../Source/CLI/CLI.nll"
+#line 39 "../../../Source/CLI/CLI.nll"
 					sDefineVector.PushBack(new InternalString(sxArg1));
-#line 41 "../../../Source/CLI/CLI.nll"
+#line 40 "../../../Source/CLI/CLI.nll"
 					continue;
 				}
-#line 44 "../../../Source/CLI/CLI.nll"
+#line 43 "../../../Source/CLI/CLI.nll"
 				if (ExternalString.Equal(sxArg0, "-f"))
 				{
-#line 46 "../../../Source/CLI/CLI.nll"
+#line 45 "../../../Source/CLI/CLI.nll"
 					sTemp = new InternalString("Recurse: ");
-#line 47 "../../../Source/CLI/CLI.nll"
+#line 46 "../../../Source/CLI/CLI.nll"
 					sTemp.Append(sxArg1);
-#line 48 "../../../Source/CLI/CLI.nll"
+#line 47 "../../../Source/CLI/CLI.nll"
 					Console.Log(sTemp.GetExternalString());
-#line 49 "../../../Source/CLI/CLI.nll"
+#line 48 "../../../Source/CLI/CLI.nll"
 					pProject.AddDirectory(sxArg1, sDefineVector);
-#line 50 "../../../Source/CLI/CLI.nll"
+#line 49 "../../../Source/CLI/CLI.nll"
 					continue;
 				}
-#line 53 "../../../Source/CLI/CLI.nll"
+#line 52 "../../../Source/CLI/CLI.nll"
 				if (ExternalString.Equal(sxArg0, "-fi"))
 				{
-#line 55 "../../../Source/CLI/CLI.nll"
+#line 54 "../../../Source/CLI/CLI.nll"
 					sTemp = new InternalString("File: ");
-#line 56 "../../../Source/CLI/CLI.nll"
+#line 55 "../../../Source/CLI/CLI.nll"
 					sTemp.Append(sxArg1);
-#line 57 "../../../Source/CLI/CLI.nll"
+#line 56 "../../../Source/CLI/CLI.nll"
 					Console.Log(sTemp.GetExternalString());
-#line 58 "../../../Source/CLI/CLI.nll"
+#line 57 "../../../Source/CLI/CLI.nll"
 					pProject.AddFile(sxArg1, sDefineVector);
-#line 59 "../../../Source/CLI/CLI.nll"
+#line 58 "../../../Source/CLI/CLI.nll"
 					continue;
 				}
-#line 62 "../../../Source/CLI/CLI.nll"
+#line 61 "../../../Source/CLI/CLI.nll"
 				if (ExternalString.Equal(sxArg0, "-a"))
 				{
-#line 64 "../../../Source/CLI/CLI.nll"
+#line 63 "../../../Source/CLI/CLI.nll"
 					sAmalgamateFileName = new InternalString(sxArg1);
-#line 65 "../../../Source/CLI/CLI.nll"
+#line 64 "../../../Source/CLI/CLI.nll"
 					continue;
 				}
-#line 68 "../../../Source/CLI/CLI.nll"
+#line 67 "../../../Source/CLI/CLI.nll"
 				if (ExternalString.Equal(sxArg0, "--output-nll-def"))
 				{
-#line 70 "../../../Source/CLI/CLI.nll"
+#line 69 "../../../Source/CLI/CLI.nll"
 					if (!ExternalString.Equal(sxArg1, "true"))
 					{
-#line 72 "../../../Source/CLI/CLI.nll"
+#line 71 "../../../Source/CLI/CLI.nll"
 						Console.Log("if set, --output-nll must be true");
-#line 73 "../../../Source/CLI/CLI.nll"
+#line 72 "../../../Source/CLI/CLI.nll"
 						return;
 					}
-#line 76 "../../../Source/CLI/CLI.nll"
+#line 75 "../../../Source/CLI/CLI.nll"
 					bOutputNLLDef = true;
-#line 77 "../../../Source/CLI/CLI.nll"
+#line 76 "../../../Source/CLI/CLI.nll"
 					continue;
 				}
-#line 80 "../../../Source/CLI/CLI.nll"
+#line 79 "../../../Source/CLI/CLI.nll"
 				if (ExternalString.Equal(sxArg0, "-ahppa"))
 				{
-#line 82 "../../../Source/CLI/CLI.nll"
+#line 81 "../../../Source/CLI/CLI.nll"
 					sAmalgamatedHPPAppend.PushBack(new InternalString(sxArg1));
-#line 83 "../../../Source/CLI/CLI.nll"
+#line 82 "../../../Source/CLI/CLI.nll"
 					continue;
 				}
-#line 86 "../../../Source/CLI/CLI.nll"
+#line 85 "../../../Source/CLI/CLI.nll"
 				if (ExternalString.Equal(sxArg0, "-acppp"))
 				{
-#line 88 "../../../Source/CLI/CLI.nll"
+#line 87 "../../../Source/CLI/CLI.nll"
 					sAmalgamatedCPPPrepend.PushBack(new InternalString(sxArg1));
-#line 89 "../../../Source/CLI/CLI.nll"
+#line 88 "../../../Source/CLI/CLI.nll"
 					continue;
 				}
-#line 92 "../../../Source/CLI/CLI.nll"
+#line 91 "../../../Source/CLI/CLI.nll"
 				if (ExternalString.Equal(sxArg0, "-acppa"))
 				{
-#line 94 "../../../Source/CLI/CLI.nll"
+#line 93 "../../../Source/CLI/CLI.nll"
 					sAmalgamatedCPPAppend.PushBack(new InternalString(sxArg1));
-#line 95 "../../../Source/CLI/CLI.nll"
+#line 94 "../../../Source/CLI/CLI.nll"
 					continue;
 				}
-#line 98 "../../../Source/CLI/CLI.nll"
+#line 97 "../../../Source/CLI/CLI.nll"
 				if (ExternalString.Equal(sxArg0, "-acsa"))
 				{
-#line 100 "../../../Source/CLI/CLI.nll"
+#line 99 "../../../Source/CLI/CLI.nll"
 					sAmalgamatedCSAppend.PushBack(new InternalString(sxArg1));
-#line 101 "../../../Source/CLI/CLI.nll"
+#line 100 "../../../Source/CLI/CLI.nll"
 					continue;
 				}
-#line 104 "../../../Source/CLI/CLI.nll"
+#line 103 "../../../Source/CLI/CLI.nll"
 				sTemp = new InternalString("Unexpected arg: ");
-#line 105 "../../../Source/CLI/CLI.nll"
+#line 104 "../../../Source/CLI/CLI.nll"
 				sTemp.Append(sxArg0);
-#line 106 "../../../Source/CLI/CLI.nll"
+#line 105 "../../../Source/CLI/CLI.nll"
 				Console.Log(sTemp.GetExternalString());
-#line 107 "../../../Source/CLI/CLI.nll"
+#line 106 "../../../Source/CLI/CLI.nll"
 				return;
 			}
-#line 110 "../../../Source/CLI/CLI.nll"
+#line 109 "../../../Source/CLI/CLI.nll"
 			if (sAmalgamateFileName != null)
 			{
-#line 112 "../../../Source/CLI/CLI.nll"
+#line 111 "../../../Source/CLI/CLI.nll"
 				Console.Log("Amalgamate");
-#line 113 "../../../Source/CLI/CLI.nll"
+#line 112 "../../../Source/CLI/CLI.nll"
 				pProject.Amalgamate(sAmalgamateFileName.GetExternalString());
 			}
-#line 116 "../../../Source/CLI/CLI.nll"
+#line 115 "../../../Source/CLI/CLI.nll"
 			Console.Log("Validate");
-#line 117 "../../../Source/CLI/CLI.nll"
+#line 116 "../../../Source/CLI/CLI.nll"
 			pProject.FullValidate();
-#line 119 "../../../Source/CLI/CLI.nll"
+#line 118 "../../../Source/CLI/CLI.nll"
 			Console.Log("Output CS");
-#line 120 "../../../Source/CLI/CLI.nll"
+#line 119 "../../../Source/CLI/CLI.nll"
 			pProject.Output(AST.Language.CS, AST.OutputFile.SOURCE);
-#line 121 "../../../Source/CLI/CLI.nll"
+#line 120 "../../../Source/CLI/CLI.nll"
 			if (sAmalgamateFileName != null)
 			{
+#line 122 "../../../Source/CLI/CLI.nll"
 				InternalString sOutFileName = new InternalString(sAmalgamateFileName.GetExternalString());
-#line 124 "../../../Source/CLI/CLI.nll"
+#line 123 "../../../Source/CLI/CLI.nll"
 				sOutFileName.Replace(".nll", ".cs");
+#line 125 "../../../Source/CLI/CLI.nll"
 				InternalString sAppend = new InternalString("");
-#line 128 "../../../Source/CLI/CLI.nll"
+#line 127 "../../../Source/CLI/CLI.nll"
 				for (int x = 0; x < sAmalgamatedCSAppend.GetSize(); x++)
 				{
+#line 129 "../../../Source/CLI/CLI.nll"
 					InternalString sInFileName = sAmalgamatedCSAppend.Get(x);
+#line 130 "../../../Source/CLI/CLI.nll"
 					InternalString sInFile = File.GetContents(sInFileName.GetExternalString());
-#line 133 "../../../Source/CLI/CLI.nll"
+#line 132 "../../../Source/CLI/CLI.nll"
 					sAppend.AppendString(sInFile.GetExternalString());
-#line 134 "../../../Source/CLI/CLI.nll"
+#line 133 "../../../Source/CLI/CLI.nll"
 					sAppend.AppendString("\n\n");
 				}
+#line 136 "../../../Source/CLI/CLI.nll"
 				InternalString sOutFile = File.GetContents(sOutFileName.GetExternalString());
-#line 138 "../../../Source/CLI/CLI.nll"
+#line 137 "../../../Source/CLI/CLI.nll"
 				sOutFile.AppendString(sAppend.GetExternalString());
-#line 139 "../../../Source/CLI/CLI.nll"
+#line 138 "../../../Source/CLI/CLI.nll"
 				File.PutContents(sOutFileName.GetExternalString(), sOutFile.GetExternalString());
 			}
-#line 143 "../../../Source/CLI/CLI.nll"
+#line 142 "../../../Source/CLI/CLI.nll"
 			Console.Log("Output HPP");
-#line 144 "../../../Source/CLI/CLI.nll"
+#line 143 "../../../Source/CLI/CLI.nll"
 			pProject.Output(AST.Language.CPP, AST.OutputFile.HEADER);
-#line 145 "../../../Source/CLI/CLI.nll"
+#line 144 "../../../Source/CLI/CLI.nll"
 			if (sAmalgamateFileName != null)
 			{
+#line 146 "../../../Source/CLI/CLI.nll"
 				InternalString sOutFileName = new InternalString(sAmalgamateFileName.GetExternalString());
-#line 148 "../../../Source/CLI/CLI.nll"
+#line 147 "../../../Source/CLI/CLI.nll"
 				sOutFileName.Replace(".nll", ".hpp");
+#line 149 "../../../Source/CLI/CLI.nll"
 				InternalString sAppend = new InternalString("");
-#line 152 "../../../Source/CLI/CLI.nll"
+#line 151 "../../../Source/CLI/CLI.nll"
 				for (int x = 0; x < sAmalgamatedHPPAppend.GetSize(); x++)
 				{
+#line 153 "../../../Source/CLI/CLI.nll"
 					InternalString sInFileName = sAmalgamatedHPPAppend.Get(x);
+#line 154 "../../../Source/CLI/CLI.nll"
 					InternalString sInFile = File.GetContents(sInFileName.GetExternalString());
-#line 157 "../../../Source/CLI/CLI.nll"
+#line 156 "../../../Source/CLI/CLI.nll"
 					sAppend.AppendString(sInFile.GetExternalString());
-#line 158 "../../../Source/CLI/CLI.nll"
+#line 157 "../../../Source/CLI/CLI.nll"
 					sAppend.AppendString("\n\n");
 				}
+#line 160 "../../../Source/CLI/CLI.nll"
 				InternalString sOutFile = File.GetContents(sOutFileName.GetExternalString());
-#line 162 "../../../Source/CLI/CLI.nll"
+#line 161 "../../../Source/CLI/CLI.nll"
 				sOutFile.AppendString(sAppend.GetExternalString());
-#line 163 "../../../Source/CLI/CLI.nll"
+#line 162 "../../../Source/CLI/CLI.nll"
 				File.PutContents(sOutFileName.GetExternalString(), sOutFile.GetExternalString());
 			}
-#line 168 "../../../Source/CLI/CLI.nll"
+#line 167 "../../../Source/CLI/CLI.nll"
 			Console.Log("Output CPP");
-#line 169 "../../../Source/CLI/CLI.nll"
+#line 168 "../../../Source/CLI/CLI.nll"
 			pProject.Output(AST.Language.CPP, AST.OutputFile.SOURCE);
-#line 171 "../../../Source/CLI/CLI.nll"
+#line 170 "../../../Source/CLI/CLI.nll"
 			if (sAmalgamateFileName != null)
 			{
+#line 172 "../../../Source/CLI/CLI.nll"
 				InternalString sOutFileName = new InternalString(sAmalgamateFileName.GetExternalString());
-#line 174 "../../../Source/CLI/CLI.nll"
+#line 173 "../../../Source/CLI/CLI.nll"
 				sOutFileName.Replace(".nll", ".cpp");
+#line 175 "../../../Source/CLI/CLI.nll"
 				InternalString sPrepend = new InternalString("");
+#line 176 "../../../Source/CLI/CLI.nll"
 				InternalString sAppend = new InternalString("");
-#line 179 "../../../Source/CLI/CLI.nll"
+#line 178 "../../../Source/CLI/CLI.nll"
 				for (int x = 0; x < sAmalgamatedCPPPrepend.GetSize(); x++)
 				{
+#line 180 "../../../Source/CLI/CLI.nll"
 					InternalString sInFileName = sAmalgamatedCPPPrepend.Get(x);
+#line 181 "../../../Source/CLI/CLI.nll"
 					InternalString sInFile = File.GetContents(sInFileName.GetExternalString());
-#line 185 "../../../Source/CLI/CLI.nll"
+#line 184 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#pragma once", "");
-#line 186 "../../../Source/CLI/CLI.nll"
+#line 185 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"tinyxml2/tinyxml2.h\"", "");
-#line 187 "../../../Source/CLI/CLI.nll"
+#line 186 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"miniz/miniz.h\"", "");
-#line 189 "../../../Source/CLI/CLI.nll"
+#line 188 "../../../Source/CLI/CLI.nll"
 					sPrepend.AppendString(sInFile.GetExternalString());
-#line 190 "../../../Source/CLI/CLI.nll"
+#line 189 "../../../Source/CLI/CLI.nll"
 					sPrepend.AppendString("\n\n");
 				}
-#line 193 "../../../Source/CLI/CLI.nll"
+#line 192 "../../../Source/CLI/CLI.nll"
 				for (int x = 0; x < sAmalgamatedCPPAppend.GetSize(); x++)
 				{
+#line 194 "../../../Source/CLI/CLI.nll"
 					InternalString sInFileName = sAmalgamatedCPPAppend.Get(x);
+#line 195 "../../../Source/CLI/CLI.nll"
 					InternalString sInFile = File.GetContents(sInFileName.GetExternalString());
-#line 199 "../../../Source/CLI/CLI.nll"
+#line 198 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"Assert.hpp\"", "");
-#line 200 "../../../Source/CLI/CLI.nll"
+#line 199 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"../../Assert/CPP/Assert.hpp\"", "");
-#line 202 "../../../Source/CLI/CLI.nll"
+#line 201 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"Blob.hpp\"", "");
-#line 203 "../../../Source/CLI/CLI.nll"
+#line 202 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"../../Blob/CPP/Blob.hpp\"", "");
-#line 205 "../../../Source/CLI/CLI.nll"
+#line 204 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"Console.hpp\"", "");
-#line 206 "../../../Source/CLI/CLI.nll"
+#line 205 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"../../Console/CPP/Console.hpp\"", "");
-#line 208 "../../../Source/CLI/CLI.nll"
+#line 207 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"ExternalString.hpp\"", "");
-#line 209 "../../../Source/CLI/CLI.nll"
+#line 208 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"../../ExternalString/CPP/ExternalString.hpp\"", "");
-#line 211 "../../../Source/CLI/CLI.nll"
+#line 210 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"InternalString.hpp\"", "");
-#line 212 "../../../Source/CLI/CLI.nll"
+#line 211 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"../../InternalString/CPP/InternalString.hpp\"", "");
-#line 214 "../../../Source/CLI/CLI.nll"
+#line 213 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"Utils.hpp\"", "");
-#line 215 "../../../Source/CLI/CLI.nll"
+#line 214 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"../../Utils/CPP/Utils.hpp\"", "");
-#line 217 "../../../Source/CLI/CLI.nll"
+#line 216 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"Vector.hpp\"", "");
-#line 218 "../../../Source/CLI/CLI.nll"
+#line 217 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"../../Vector/CPP/Vector.hpp\"", "");
-#line 222 "../../../Source/CLI/CLI.nll"
+#line 221 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"Xml.hpp\"", "");
-#line 223 "../../../Source/CLI/CLI.nll"
+#line 222 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"../../Xml/CPP/Xml.hpp\"", "");
-#line 225 "../../../Source/CLI/CLI.nll"
+#line 224 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"Zip.hpp\"", "");
-#line 226 "../../../Source/CLI/CLI.nll"
+#line 225 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"../../Zip/CPP/Zip.hpp\"", "");
-#line 228 "../../../Source/CLI/CLI.nll"
+#line 227 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"ZipWriter.hpp\"", "");
-#line 229 "../../../Source/CLI/CLI.nll"
+#line 228 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"../../Zip/CPP/ZipWriter.hpp\"", "");
-#line 231 "../../../Source/CLI/CLI.nll"
+#line 230 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"tinyxml2.h\"", "");
-#line 232 "../../../Source/CLI/CLI.nll"
+#line 231 "../../../Source/CLI/CLI.nll"
 					sInFile.Replace("#include \"miniz.h\"", "");
-#line 234 "../../../Source/CLI/CLI.nll"
+#line 233 "../../../Source/CLI/CLI.nll"
 					sAppend.AppendString(sInFile.GetExternalString());
-#line 235 "../../../Source/CLI/CLI.nll"
+#line 234 "../../../Source/CLI/CLI.nll"
 					sAppend.AppendString("\n\n");
 				}
+#line 237 "../../../Source/CLI/CLI.nll"
 				InternalString sOutFile = File.GetContents(sOutFileName.GetExternalString());
-#line 239 "../../../Source/CLI/CLI.nll"
+#line 238 "../../../Source/CLI/CLI.nll"
 				sOutFile.PrependString(sPrepend.GetExternalString());
-#line 240 "../../../Source/CLI/CLI.nll"
+#line 239 "../../../Source/CLI/CLI.nll"
 				sOutFile.AppendString(sAppend.GetExternalString());
-#line 241 "../../../Source/CLI/CLI.nll"
+#line 240 "../../../Source/CLI/CLI.nll"
 				File.PutContents(sOutFileName.GetExternalString(), sOutFile.GetExternalString());
 			}
-#line 245 "../../../Source/CLI/CLI.nll"
+#line 244 "../../../Source/CLI/CLI.nll"
 			if (bOutputNLLDef)
 			{
-#line 247 "../../../Source/CLI/CLI.nll"
+#line 246 "../../../Source/CLI/CLI.nll"
 				Console.Log("Output NLL DEF");
-#line 248 "../../../Source/CLI/CLI.nll"
+#line 247 "../../../Source/CLI/CLI.nll"
 				pProject.Output(AST.Language.NLL_DEF, AST.OutputFile.SOURCE);
 			}
 		}

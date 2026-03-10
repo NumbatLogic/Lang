@@ -41,7 +41,6 @@ namespace NumbatLogic
 
 			AST pAST = null;
 			AST pBase = this;
-			AST pChild = this;
 			bool bResolverAmbiguous = false;
 			if (pContextParent != null)
 			{
@@ -77,13 +76,11 @@ namespace NumbatLogic
 										{
 											AddClassDeclReference(pOpWalk.m_pLeft.m_pValueType.m_pClassDecl, AST::OutputFile::SOURCE, false);
 											pBase = pOpWalk.m_pLeft.m_pValueType.m_pClassDecl;
-											pChild = null;
 											break;
 										}
 										else if (pOpWalk.m_pLeft.m_pValueType.m_eType == ValueType::Type::ENUM_DECL)
 										{
 											pBase = pOpWalk.m_pLeft.m_pValueType.m_pEnumDecl;
-											pChild = null;
 											break;
 										}
 									}
@@ -100,7 +97,6 @@ namespace NumbatLogic
 					{
 						AddClassDeclReference(pOpContext.m_pLeft.m_pValueType.m_pClassDecl, AST::OutputFile::SOURCE, false);
 						pBase = pOpContext.m_pLeft.m_pValueType.m_pClassDecl;
-						pChild = null;
 					}
 					else if (pOpContext.GetOperatorType() == OperatorExpr::OperatorType::SCOPE_RESOLUTION && pOpContext.m_pLeft != null && pOpContext.m_pLeft.m_pValueType != null)
 					{
@@ -108,12 +104,10 @@ namespace NumbatLogic
 						{
 							AddClassDeclReference(pOpContext.m_pLeft.m_pValueType.m_pClassDecl, AST::OutputFile::SOURCE, false);
 							pBase = pOpContext.m_pLeft.m_pValueType.m_pClassDecl;
-							pChild = null;
 						}
 						else if (pOpContext.m_pLeft.m_pValueType.m_eType == ValueType::Type::ENUM_DECL)
 						{
 							pBase = pOpContext.m_pLeft.m_pValueType.m_pEnumDecl;
-							pChild = null;
 						}
 						else if (pOpContext.m_pLeft.m_pValueType.m_eType == ValueType::Type::NAMESPACE_NODE)
 						{

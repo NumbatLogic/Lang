@@ -131,6 +131,7 @@ namespace NumbatLogic
 #line 105 "../../../Source/Core/AST/AST.nll"
 	AST* AST::CreateFromTokenContainer(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 107 "../../../Source/Core/AST/AST.nll"
 		AST* pAst = 0;
 #line 109 "../../../Source/Core/AST/AST.nll"
 		pAst = FunctionDecl::TryCreate(pTokenContainer, pOffsetDatum, 0);
@@ -195,6 +196,7 @@ namespace NumbatLogic
 #line 132 "../../../Source/Core/AST/AST.nll"
 	AST* AST::CreateStatementFromTokenContainer(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 134 "../../../Source/Core/AST/AST.nll"
 		AST* pAst = 0;
 #line 136 "../../../Source/Core/AST/AST.nll"
 		pAst = ReturnStmt::TryCreate(pTokenContainer, pOffsetDatum);
@@ -336,6 +338,7 @@ namespace NumbatLogic
 #line 187 "../../../Source/Core/AST/AST.nll"
 	AST* AST::TryCreateInnerExpression(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 189 "../../../Source/Core/AST/AST.nll"
 		AST* pAst = 0;
 #line 191 "../../../Source/Core/AST/AST.nll"
 		pAst = NumberExpr::TryCreate(pTokenContainer, pOffsetDatum);
@@ -554,11 +557,14 @@ namespace NumbatLogic
 #line 270 "../../../Source/Core/AST/AST.nll"
 	AST* AST::TryCreateExpression(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 272 "../../../Source/Core/AST/AST.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 273 "../../../Source/Core/AST/AST.nll"
 		AST* pLeft = TryCreateInnerExpression(pTokenContainer, pTempOffset);
 #line 274 "../../../Source/Core/AST/AST.nll"
 		if (pLeft != 0)
 		{
+#line 276 "../../../Source/Core/AST/AST.nll"
 			Token* pOperatorToken = pTokenContainer->Peek(pTempOffset);
 #line 277 "../../../Source/Core/AST/AST.nll"
 			if (pOperatorToken != 0 && pOperatorToken->m_eType == Token::Type::TOKEN_QUESTION_MARK)
@@ -575,6 +581,7 @@ namespace NumbatLogic
 #line 281 "../../../Source/Core/AST/AST.nll"
 				return TrinaryExpr::Create(__3927602644, pTokenContainer, pOffsetDatum);
 			}
+#line 284 "../../../Source/Core/AST/AST.nll"
 			OperatorExpr::OperatorType eOperatorType = OperatorExpr::PeekOperator(pTokenContainer, pTempOffset);
 #line 285 "../../../Source/Core/AST/AST.nll"
 			if (eOperatorType != OperatorExpr::OperatorType::UNKNOWN)
@@ -592,6 +599,7 @@ namespace NumbatLogic
 #line 290 "../../../Source/Core/AST/AST.nll"
 					return OperatorExpr::Create(eOperatorType, pOperatorToken, __3927668242, 0);
 				}
+#line 293 "../../../Source/Core/AST/AST.nll"
 				AST* pRight = TryCreateExpression(pTokenContainer, pTempOffset);
 #line 294 "../../../Source/Core/AST/AST.nll"
 				if (pRight != 0)
@@ -610,6 +618,7 @@ namespace NumbatLogic
 #line 297 "../../../Source/Core/AST/AST.nll"
 					return OperatorExpr::Create(eOperatorType, pOperatorToken, __3927668249, __542787396);
 				}
+#line 301 "../../../Source/Core/AST/AST.nll"
 				InternalString* sTemp = new InternalString("Probably should have something after the operator??? ");
 #line 302 "../../../Source/Core/AST/AST.nll"
 				sTemp->Append(pOperatorToken->m_sFileName->GetExternalString());
@@ -646,10 +655,12 @@ namespace NumbatLogic
 #line 316 "../../../Source/Core/AST/AST.nll"
 	void AST::PreValidate(Validator* pValidator, OperatorExpr* pParent)
 	{
+#line 318 "../../../Source/Core/AST/AST.nll"
 		AST* pChild = m_pFirstChild;
 #line 319 "../../../Source/Core/AST/AST.nll"
 		while (pChild != 0)
 		{
+#line 322 "../../../Source/Core/AST/AST.nll"
 			AST* pNextSibling = pChild->m_pNextSibling;
 #line 323 "../../../Source/Core/AST/AST.nll"
 			pChild->PreValidate(pValidator, 0);
@@ -661,10 +672,12 @@ namespace NumbatLogic
 #line 328 "../../../Source/Core/AST/AST.nll"
 	void AST::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
+#line 330 "../../../Source/Core/AST/AST.nll"
 		AST* pChild = m_pFirstChild;
 #line 331 "../../../Source/Core/AST/AST.nll"
 		while (pChild != 0)
 		{
+#line 334 "../../../Source/Core/AST/AST.nll"
 			AST* pNextSibling = pChild->m_pNextSibling;
 #line 335 "../../../Source/Core/AST/AST.nll"
 			pChild->Validate(pValidator, 0);
@@ -766,6 +779,7 @@ namespace NumbatLogic
 			NumbatLogic::AST* __1700906182 = m_pFirstChild;
 #line 396 "../../../Source/Core/AST/AST.nll"
 			m_pFirstChild = 0;
+#line 396 "../../../Source/Core/AST/AST.nll"
 			AST* pOwnedChild = __1700906182;
 #line 397 "../../../Source/Core/AST/AST.nll"
 			if (m_pLastChild == pOwnedChild)
@@ -789,6 +803,7 @@ namespace NumbatLogic
 		}
 		else
 		{
+#line 406 "../../../Source/Core/AST/AST.nll"
 			AST* pFindChild = m_pFirstChild;
 #line 407 "../../../Source/Core/AST/AST.nll"
 			while (pFindChild != 0)
@@ -799,6 +814,7 @@ namespace NumbatLogic
 					NumbatLogic::AST* __326915199 = pFindChild->m_pNextSibling;
 #line 411 "../../../Source/Core/AST/AST.nll"
 					pFindChild->m_pNextSibling = 0;
+#line 411 "../../../Source/Core/AST/AST.nll"
 					AST* pOwnedChild = __326915199;
 #line 412 "../../../Source/Core/AST/AST.nll"
 					if (m_pLastChild == pOwnedChild)
@@ -840,6 +856,7 @@ namespace NumbatLogic
 #line 435 "../../../Source/Core/AST/AST.nll"
 	Project* AST::GetProject()
 	{
+#line 437 "../../../Source/Core/AST/AST.nll"
 		AST* p = this;
 #line 438 "../../../Source/Core/AST/AST.nll"
 		while (p != 0 && p->m_eType != AST::Type::AST_PROJECT)
@@ -859,6 +876,7 @@ namespace NumbatLogic
 #line 448 "../../../Source/Core/AST/AST.nll"
 	AST* AST::BaseClone()
 	{
+#line 450 "../../../Source/Core/AST/AST.nll"
 		InternalString* sTemp = new InternalString("BaseClone() not setup for ");
 #line 451 "../../../Source/Core/AST/AST.nll"
 		StringifyType(sTemp);
@@ -874,6 +892,7 @@ namespace NumbatLogic
 #line 457 "../../../Source/Core/AST/AST.nll"
 	AST* AST::GetParentStatement()
 	{
+#line 459 "../../../Source/Core/AST/AST.nll"
 		AST* pParent = m_pParent;
 #line 460 "../../../Source/Core/AST/AST.nll"
 		while (pParent != 0)

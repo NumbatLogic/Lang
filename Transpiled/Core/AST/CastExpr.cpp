@@ -44,7 +44,9 @@ namespace NumbatLogic
 #line 13 "../../../Source/Core/AST/CastExpr.nll"
 	CastExpr* CastExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 15 "../../../Source/Core/AST/CastExpr.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 17 "../../../Source/Core/AST/CastExpr.nll"
 		Token* pCastToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_CAST);
 #line 18 "../../../Source/Core/AST/CastExpr.nll"
 		if (pCastToken == 0)
@@ -55,6 +57,7 @@ namespace NumbatLogic
 		}
 #line 20 "../../../Source/Core/AST/CastExpr.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 22 "../../../Source/Core/AST/CastExpr.nll"
 		TypeRef* pTypeRef = TypeRef::TryCreate(pTokenContainer, pTempOffset);
 #line 23 "../../../Source/Core/AST/CastExpr.nll"
 		if (pTypeRef == 0)
@@ -70,6 +73,7 @@ namespace NumbatLogic
 #line 28 "../../../Source/Core/AST/CastExpr.nll"
 			return 0;
 		}
+#line 31 "../../../Source/Core/AST/CastExpr.nll"
 		ParamCall* pParamCall = ParamCall::TryCreate(pTokenContainer, pTempOffset);
 #line 32 "../../../Source/Core/AST/CastExpr.nll"
 		if (pParamCall == 0)
@@ -86,6 +90,7 @@ namespace NumbatLogic
 #line 37 "../../../Source/Core/AST/CastExpr.nll"
 			return 0;
 		}
+#line 40 "../../../Source/Core/AST/CastExpr.nll"
 		CastExpr* pCastExpr = new CastExpr();
 #line 41 "../../../Source/Core/AST/CastExpr.nll"
 		pCastExpr->m_pFirstToken = pCastToken;
@@ -130,6 +135,7 @@ namespace NumbatLogic
 #line 60 "../../../Source/Core/AST/CastExpr.nll"
 			return;
 		}
+#line 63 "../../../Source/Core/AST/CastExpr.nll"
 		AST* pFirstChild = m_pParamCall->m_pFirstChild;
 #line 64 "../../../Source/Core/AST/CastExpr.nll"
 		if (pFirstChild == 0)

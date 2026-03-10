@@ -42,10 +42,12 @@ namespace NumbatLogic
 #line 18 "../../../Source/Core/NamespaceNode.nll"
 	NamespaceNode* NamespaceNode::GetOrCreateChild(NamespaceDecl* pNamespaceDecl)
 	{
+#line 20 "../../../Source/Core/NamespaceNode.nll"
 		NamespaceNode* pNamespaceNode = GetChild(pNamespaceDecl->m_pNameToken->m_sValue->GetExternalString());
 #line 22 "../../../Source/Core/NamespaceNode.nll"
 		if (pNamespaceNode == 0)
 		{
+#line 24 "../../../Source/Core/NamespaceNode.nll"
 			NamespaceNode* pOwnedNamespaceNode = new NamespaceNode(pNamespaceDecl->m_pNameToken->m_sValue, this);
 			NumbatLogic::NamespaceNode* __1383045035 = pOwnedNamespaceNode;
 #line 25 "../../../Source/Core/NamespaceNode.nll"
@@ -68,6 +70,7 @@ namespace NumbatLogic
 #line 36 "../../../Source/Core/NamespaceNode.nll"
 		for (int i = 0; i < m_pChildVector->GetSize(); i++)
 		{
+#line 38 "../../../Source/Core/NamespaceNode.nll"
 			NamespaceNode* pChild = m_pChildVector->Get(i);
 #line 39 "../../../Source/Core/NamespaceNode.nll"
 			if (ExternalString::Equal(sxName, pChild->m_sName->GetExternalString()))

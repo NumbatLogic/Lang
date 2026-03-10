@@ -41,7 +41,9 @@ namespace NumbatLogic
 #line 13 "../../../Source/Core/AST/DeleteStmt.nll"
 	DeleteStmt* DeleteStmt::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 15 "../../../Source/Core/AST/DeleteStmt.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 17 "../../../Source/Core/AST/DeleteStmt.nll"
 		Token* pDeleteToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_DELETE);
 #line 18 "../../../Source/Core/AST/DeleteStmt.nll"
 		if (pDeleteToken == 0)
@@ -52,6 +54,7 @@ namespace NumbatLogic
 		}
 #line 20 "../../../Source/Core/AST/DeleteStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 22 "../../../Source/Core/AST/DeleteStmt.nll"
 		AST* pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 23 "../../../Source/Core/AST/DeleteStmt.nll"
 		if (pExpression == 0)
@@ -71,6 +74,7 @@ namespace NumbatLogic
 		}
 #line 28 "../../../Source/Core/AST/DeleteStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 30 "../../../Source/Core/AST/DeleteStmt.nll"
 		DeleteStmt* pDelete = new DeleteStmt();
 #line 32 "../../../Source/Core/AST/DeleteStmt.nll"
 		pDelete->m_pFirstToken = pDeleteToken;

@@ -43,7 +43,9 @@ namespace NumbatLogic
 #line 13 "../../../Source/Core/AST/EnumDecl.nll"
 	EnumDecl* EnumDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 15 "../../../Source/Core/AST/EnumDecl.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 17 "../../../Source/Core/AST/EnumDecl.nll"
 		Token* pEnumToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_ENUM);
 #line 18 "../../../Source/Core/AST/EnumDecl.nll"
 		if (pEnumToken == 0)
@@ -54,6 +56,7 @@ namespace NumbatLogic
 		}
 #line 20 "../../../Source/Core/AST/EnumDecl.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 22 "../../../Source/Core/AST/EnumDecl.nll"
 		EnumDecl* pEnumDecl = new EnumDecl();
 #line 24 "../../../Source/Core/AST/EnumDecl.nll"
 		pEnumDecl->m_eType = AST::Type::AST_ENUM_DECL;
@@ -102,6 +105,7 @@ namespace NumbatLogic
 #line 51 "../../../Source/Core/AST/EnumDecl.nll"
 				break;
 			}
+#line 54 "../../../Source/Core/AST/EnumDecl.nll"
 			EnumDeclValue* pEnumDeclValue = EnumDeclValue::TryCreate(pTokenContainer, pTempOffset);
 #line 55 "../../../Source/Core/AST/EnumDecl.nll"
 			if (pEnumDeclValue == 0)
@@ -167,6 +171,7 @@ namespace NumbatLogic
 		{
 #line 88 "../../../Source/Core/AST/EnumDecl.nll"
 			Util::Pad(nDepth + 1, pOutputBuilder->m_sOut);
+#line 89 "../../../Source/Core/AST/EnumDecl.nll"
 			EnumDeclValue* pEnumDeclValue = m_pEnumDeclValueVector->Get(i);
 #line 90 "../../../Source/Core/AST/EnumDecl.nll"
 			pEnumDeclValue->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);

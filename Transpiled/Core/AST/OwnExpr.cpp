@@ -33,7 +33,9 @@ namespace NumbatLogic
 #line 7 "../../../Source/Core/AST/OwnExpr.nll"
 	OwnExpr* OwnExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 9 "../../../Source/Core/AST/OwnExpr.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 11 "../../../Source/Core/AST/OwnExpr.nll"
 		Token* pOwnToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_OWN);
 #line 12 "../../../Source/Core/AST/OwnExpr.nll"
 		if (pOwnToken == 0)
@@ -44,6 +46,7 @@ namespace NumbatLogic
 		}
 #line 14 "../../../Source/Core/AST/OwnExpr.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 16 "../../../Source/Core/AST/OwnExpr.nll"
 		AST* pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 17 "../../../Source/Core/AST/OwnExpr.nll"
 		if (pExpression == 0)
@@ -57,6 +60,7 @@ namespace NumbatLogic
 #line 21 "../../../Source/Core/AST/OwnExpr.nll"
 			return 0;
 		}
+#line 24 "../../../Source/Core/AST/OwnExpr.nll"
 		OwnExpr* pOwnExpr = new OwnExpr();
 #line 26 "../../../Source/Core/AST/OwnExpr.nll"
 		pOwnExpr->m_eType = AST::Type::AST_OWN_EXP;
@@ -96,6 +100,7 @@ namespace NumbatLogic
 #line 45 "../../../Source/Core/AST/OwnExpr.nll"
 		if (m_pExpression->m_pValueType->m_eType != ValueType::Type::CLASS_DECL_VALUE && m_pExpression->m_pValueType->m_eType != ValueType::Type::GENERIC_TYPE_DECL_VALUE)
 		{
+#line 47 "../../../Source/Core/AST/OwnExpr.nll"
 			InternalString* sError = new InternalString("Expected right side of own to be a CLASS_DECL_VALUE or GENERIC_TYPE_DECL_VALUE, got: ");
 #line 48 "../../../Source/Core/AST/OwnExpr.nll"
 			m_pExpression->m_pValueType->StringifyType(sError);

@@ -41,8 +41,11 @@ namespace NumbatLogic
 #line 14 "../../../Source/Core/AST/TrinaryExpr.nll"
 	TrinaryExpr* TrinaryExpr::Create(AST* pFirstExpressionTransition, TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 16 "../../../Source/Core/AST/TrinaryExpr.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 18 "../../../Source/Core/AST/TrinaryExpr.nll"
 		AST* pFirstExpression = pFirstExpressionTransition;
+#line 20 "../../../Source/Core/AST/TrinaryExpr.nll"
 		AST* pSecondExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 21 "../../../Source/Core/AST/TrinaryExpr.nll"
 		if (pSecondExpression == 0)
@@ -59,6 +62,7 @@ namespace NumbatLogic
 #line 26 "../../../Source/Core/AST/TrinaryExpr.nll"
 			return 0;
 		}
+#line 29 "../../../Source/Core/AST/TrinaryExpr.nll"
 		Token* pColonToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_COLON);
 #line 30 "../../../Source/Core/AST/TrinaryExpr.nll"
 		if (pColonToken == 0)
@@ -71,6 +75,7 @@ namespace NumbatLogic
 		}
 #line 32 "../../../Source/Core/AST/TrinaryExpr.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 34 "../../../Source/Core/AST/TrinaryExpr.nll"
 		AST* pThirdExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 35 "../../../Source/Core/AST/TrinaryExpr.nll"
 		if (pThirdExpression == 0)
@@ -88,6 +93,7 @@ namespace NumbatLogic
 #line 40 "../../../Source/Core/AST/TrinaryExpr.nll"
 			return 0;
 		}
+#line 43 "../../../Source/Core/AST/TrinaryExpr.nll"
 		TrinaryExpr* pTrinaryExpr = new TrinaryExpr();
 #line 45 "../../../Source/Core/AST/TrinaryExpr.nll"
 		pTrinaryExpr->m_pFirstExpression = pFirstExpression;

@@ -35,7 +35,9 @@ namespace NumbatLogic
 #line 13 "../../../Source/Core/AST/ExpressionStmt.nll"
 	ExpressionStmt* ExpressionStmt::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
+#line 15 "../../../Source/Core/AST/ExpressionStmt.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
+#line 17 "../../../Source/Core/AST/ExpressionStmt.nll"
 		AST* pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 #line 18 "../../../Source/Core/AST/ExpressionStmt.nll"
 		if (pExpression == 0)
@@ -55,6 +57,7 @@ namespace NumbatLogic
 		}
 #line 23 "../../../Source/Core/AST/ExpressionStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
+#line 26 "../../../Source/Core/AST/ExpressionStmt.nll"
 		ExpressionStmt* pExpressionStmt = new ExpressionStmt();
 #line 27 "../../../Source/Core/AST/ExpressionStmt.nll"
 		pExpressionStmt->m_pFirstToken = pExpression->m_pFirstToken;

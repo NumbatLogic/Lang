@@ -1,127 +1,132 @@
 #line 1 "../../../Source/Core/AST/StaticArray.nll"
 namespace NumbatLogic
 {
-#line 4 "../../../Source/Core/AST/StaticArray.nll"
+#line 3 "../../../Source/Core/AST/StaticArray.nll"
 	class StaticArray : AST
 	{
-#line 6 "../../../Source/Core/AST/StaticArray.nll"
+#line 5 "../../../Source/Core/AST/StaticArray.nll"
 		public StaticArray()
 		{
-#line 8 "../../../Source/Core/AST/StaticArray.nll"
+#line 7 "../../../Source/Core/AST/StaticArray.nll"
 			m_eType = AST.Type.AST_STATIC_ARRAY;
 		}
 
-#line 11 "../../../Source/Core/AST/StaticArray.nll"
+#line 10 "../../../Source/Core/AST/StaticArray.nll"
 		public static StaticArray TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
 		{
+#line 12 "../../../Source/Core/AST/StaticArray.nll"
 			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
+#line 14 "../../../Source/Core/AST/StaticArray.nll"
 			Token pSquareBracketLeftToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SQUARE_BRACKET_LEFT);
-#line 16 "../../../Source/Core/AST/StaticArray.nll"
+#line 15 "../../../Source/Core/AST/StaticArray.nll"
 			if (pSquareBracketLeftToken == null)
 			{
-#line 17 "../../../Source/Core/AST/StaticArray.nll"
+#line 16 "../../../Source/Core/AST/StaticArray.nll"
 				return null;
 			}
-#line 18 "../../../Source/Core/AST/StaticArray.nll"
+#line 17 "../../../Source/Core/AST/StaticArray.nll"
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 19 "../../../Source/Core/AST/StaticArray.nll"
 			StaticArray pStaticArray = new StaticArray();
-#line 21 "../../../Source/Core/AST/StaticArray.nll"
+#line 20 "../../../Source/Core/AST/StaticArray.nll"
 			pStaticArray.m_pFirstToken = pSquareBracketLeftToken;
-#line 23 "../../../Source/Core/AST/StaticArray.nll"
+#line 22 "../../../Source/Core/AST/StaticArray.nll"
 			while (true)
 			{
-#line 25 "../../../Source/Core/AST/StaticArray.nll"
+#line 24 "../../../Source/Core/AST/StaticArray.nll"
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SQUARE_BRACKET_RIGHT) != null)
 				{
-#line 27 "../../../Source/Core/AST/StaticArray.nll"
+#line 26 "../../../Source/Core/AST/StaticArray.nll"
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 28 "../../../Source/Core/AST/StaticArray.nll"
+#line 27 "../../../Source/Core/AST/StaticArray.nll"
 					break;
 				}
+#line 30 "../../../Source/Core/AST/StaticArray.nll"
 				AST pElement = AST.TryCreateExpression(pTokenContainer, pTempOffset);
-#line 32 "../../../Source/Core/AST/StaticArray.nll"
+#line 31 "../../../Source/Core/AST/StaticArray.nll"
 				if (pElement == null)
 				{
-#line 34 "../../../Source/Core/AST/StaticArray.nll"
+#line 33 "../../../Source/Core/AST/StaticArray.nll"
 					Console.Log("expected element");
-#line 35 "../../../Source/Core/AST/StaticArray.nll"
+#line 34 "../../../Source/Core/AST/StaticArray.nll"
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-#line 36 "../../../Source/Core/AST/StaticArray.nll"
+#line 35 "../../../Source/Core/AST/StaticArray.nll"
 					NumbatLogic.Assert.Plz(false);
-#line 37 "../../../Source/Core/AST/StaticArray.nll"
+#line 36 "../../../Source/Core/AST/StaticArray.nll"
 					return null;
 				}
 				NumbatLogic.AST __984805329 = pElement;
-#line 39 "../../../Source/Core/AST/StaticArray.nll"
+#line 38 "../../../Source/Core/AST/StaticArray.nll"
 				pElement = null;
-#line 39 "../../../Source/Core/AST/StaticArray.nll"
+#line 38 "../../../Source/Core/AST/StaticArray.nll"
 				pStaticArray.AddChild(__984805329);
-#line 41 "../../../Source/Core/AST/StaticArray.nll"
+#line 40 "../../../Source/Core/AST/StaticArray.nll"
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SQUARE_BRACKET_RIGHT) != null)
 				{
-#line 42 "../../../Source/Core/AST/StaticArray.nll"
+#line 41 "../../../Source/Core/AST/StaticArray.nll"
 					continue;
 				}
-#line 44 "../../../Source/Core/AST/StaticArray.nll"
+#line 43 "../../../Source/Core/AST/StaticArray.nll"
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_COMMA) == null)
 				{
-#line 46 "../../../Source/Core/AST/StaticArray.nll"
+#line 45 "../../../Source/Core/AST/StaticArray.nll"
 					Console.Log("expected comma");
-#line 47 "../../../Source/Core/AST/StaticArray.nll"
+#line 46 "../../../Source/Core/AST/StaticArray.nll"
 					Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-#line 48 "../../../Source/Core/AST/StaticArray.nll"
+#line 47 "../../../Source/Core/AST/StaticArray.nll"
 					NumbatLogic.Assert.Plz(false);
 				}
-#line 50 "../../../Source/Core/AST/StaticArray.nll"
+#line 49 "../../../Source/Core/AST/StaticArray.nll"
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			}
-#line 53 "../../../Source/Core/AST/StaticArray.nll"
+#line 52 "../../../Source/Core/AST/StaticArray.nll"
 			pOffsetDatum.Set(pTempOffset);
 			NumbatLogic.StaticArray __2518123513 = pStaticArray;
-#line 54 "../../../Source/Core/AST/StaticArray.nll"
+#line 53 "../../../Source/Core/AST/StaticArray.nll"
 			pStaticArray = null;
-#line 54 "../../../Source/Core/AST/StaticArray.nll"
+#line 53 "../../../Source/Core/AST/StaticArray.nll"
 			return __2518123513;
 		}
 
-#line 57 "../../../Source/Core/AST/StaticArray.nll"
+#line 56 "../../../Source/Core/AST/StaticArray.nll"
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
-#line 59 "../../../Source/Core/AST/StaticArray.nll"
+#line 58 "../../../Source/Core/AST/StaticArray.nll"
 			base.Validate(pValidator, pParent);
-#line 60 "../../../Source/Core/AST/StaticArray.nll"
+#line 59 "../../../Source/Core/AST/StaticArray.nll"
 			m_pValueType = new ValueType(ValueType.Type.STATIC_ARRAY);
 		}
 
-#line 63 "../../../Source/Core/AST/StaticArray.nll"
+#line 62 "../../../Source/Core/AST/StaticArray.nll"
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-#line 65 "../../../Source/Core/AST/StaticArray.nll"
+#line 64 "../../../Source/Core/AST/StaticArray.nll"
 			if (eLanguage == AST.Language.CPP || eLanguage == AST.Language.CS)
-#line 66 "../../../Source/Core/AST/StaticArray.nll"
+#line 65 "../../../Source/Core/AST/StaticArray.nll"
 				pOutputBuilder.m_sOut.AppendChar('{');
 			else
-#line 68 "../../../Source/Core/AST/StaticArray.nll"
+#line 67 "../../../Source/Core/AST/StaticArray.nll"
 				pOutputBuilder.m_sOut.AppendChar('[');
+#line 68 "../../../Source/Core/AST/StaticArray.nll"
 			AST pParam = m_pFirstChild;
-#line 70 "../../../Source/Core/AST/StaticArray.nll"
+#line 69 "../../../Source/Core/AST/StaticArray.nll"
 			while (pParam != null)
 			{
-#line 72 "../../../Source/Core/AST/StaticArray.nll"
+#line 71 "../../../Source/Core/AST/StaticArray.nll"
 				if (pParam != m_pFirstChild)
-#line 73 "../../../Source/Core/AST/StaticArray.nll"
+#line 72 "../../../Source/Core/AST/StaticArray.nll"
 					pOutputBuilder.m_sOut.Append(", ");
-#line 74 "../../../Source/Core/AST/StaticArray.nll"
+#line 73 "../../../Source/Core/AST/StaticArray.nll"
 				pParam.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-#line 75 "../../../Source/Core/AST/StaticArray.nll"
+#line 74 "../../../Source/Core/AST/StaticArray.nll"
 				pParam = pParam.m_pNextSibling;
 			}
-#line 77 "../../../Source/Core/AST/StaticArray.nll"
+#line 76 "../../../Source/Core/AST/StaticArray.nll"
 			if (eLanguage == AST.Language.CPP || eLanguage == AST.Language.CS)
-#line 78 "../../../Source/Core/AST/StaticArray.nll"
+#line 77 "../../../Source/Core/AST/StaticArray.nll"
 				pOutputBuilder.m_sOut.AppendChar('}');
 			else
-#line 80 "../../../Source/Core/AST/StaticArray.nll"
+#line 79 "../../../Source/Core/AST/StaticArray.nll"
 				pOutputBuilder.m_sOut.AppendChar(']');
 		}
 

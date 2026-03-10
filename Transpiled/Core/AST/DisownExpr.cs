@@ -1,251 +1,271 @@
 #line 1 "../../../Source/Core/AST/DisownExpr.nll"
 namespace NumbatLogic
 {
-#line 4 "../../../Source/Core/AST/DisownExpr.nll"
+#line 3 "../../../Source/Core/AST/DisownExpr.nll"
 	class DisownExpr : AST
 	{
-#line 6 "../../../Source/Core/AST/DisownExpr.nll"
+#line 5 "../../../Source/Core/AST/DisownExpr.nll"
 		public AST m_pExpression;
-#line 7 "../../../Source/Core/AST/DisownExpr.nll"
+#line 6 "../../../Source/Core/AST/DisownExpr.nll"
 		public InternalString m_sTempVarName;
-#line 9 "../../../Source/Core/AST/DisownExpr.nll"
+#line 8 "../../../Source/Core/AST/DisownExpr.nll"
 		public DisownExpr()
 		{
-#line 11 "../../../Source/Core/AST/DisownExpr.nll"
+#line 10 "../../../Source/Core/AST/DisownExpr.nll"
 			m_eType = AST.Type.AST_DISOWN_EXP;
 		}
 
-#line 14 "../../../Source/Core/AST/DisownExpr.nll"
+#line 13 "../../../Source/Core/AST/DisownExpr.nll"
 		public static DisownExpr TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
 		{
+#line 15 "../../../Source/Core/AST/DisownExpr.nll"
 			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
+#line 17 "../../../Source/Core/AST/DisownExpr.nll"
 			Token pDisownToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_KEYWORD_DISOWN);
-#line 19 "../../../Source/Core/AST/DisownExpr.nll"
+#line 18 "../../../Source/Core/AST/DisownExpr.nll"
 			if (pDisownToken == null)
 			{
-#line 20 "../../../Source/Core/AST/DisownExpr.nll"
+#line 19 "../../../Source/Core/AST/DisownExpr.nll"
 				return null;
 			}
-#line 21 "../../../Source/Core/AST/DisownExpr.nll"
+#line 20 "../../../Source/Core/AST/DisownExpr.nll"
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+#line 22 "../../../Source/Core/AST/DisownExpr.nll"
 			AST pExpression = AST.TryCreateExpression(pTokenContainer, pTempOffset);
-#line 24 "../../../Source/Core/AST/DisownExpr.nll"
+#line 23 "../../../Source/Core/AST/DisownExpr.nll"
 			if (pExpression == null)
 			{
-#line 26 "../../../Source/Core/AST/DisownExpr.nll"
+#line 25 "../../../Source/Core/AST/DisownExpr.nll"
 				Console.Log("expected expresssion");
-#line 27 "../../../Source/Core/AST/DisownExpr.nll"
+#line 26 "../../../Source/Core/AST/DisownExpr.nll"
 				Assert.Plz(false);
-#line 28 "../../../Source/Core/AST/DisownExpr.nll"
+#line 27 "../../../Source/Core/AST/DisownExpr.nll"
 				return null;
 			}
+#line 30 "../../../Source/Core/AST/DisownExpr.nll"
 			DisownExpr pDisownExpr = new DisownExpr();
-#line 33 "../../../Source/Core/AST/DisownExpr.nll"
+#line 32 "../../../Source/Core/AST/DisownExpr.nll"
 			pDisownExpr.m_pFirstToken = pDisownToken;
-#line 34 "../../../Source/Core/AST/DisownExpr.nll"
+#line 33 "../../../Source/Core/AST/DisownExpr.nll"
 			pDisownExpr.m_pExpression = pExpression;
 			NumbatLogic.AST __1929399913 = pExpression;
-#line 35 "../../../Source/Core/AST/DisownExpr.nll"
+#line 34 "../../../Source/Core/AST/DisownExpr.nll"
 			pExpression = null;
-#line 35 "../../../Source/Core/AST/DisownExpr.nll"
+#line 34 "../../../Source/Core/AST/DisownExpr.nll"
 			pDisownExpr.AddChild(__1929399913);
-#line 37 "../../../Source/Core/AST/DisownExpr.nll"
+#line 36 "../../../Source/Core/AST/DisownExpr.nll"
 			pOffsetDatum.Set(pTempOffset);
 			NumbatLogic.DisownExpr __1970191169 = pDisownExpr;
-#line 38 "../../../Source/Core/AST/DisownExpr.nll"
+#line 37 "../../../Source/Core/AST/DisownExpr.nll"
 			pDisownExpr = null;
-#line 38 "../../../Source/Core/AST/DisownExpr.nll"
+#line 37 "../../../Source/Core/AST/DisownExpr.nll"
 			return __1970191169;
 		}
 
-#line 41 "../../../Source/Core/AST/DisownExpr.nll"
+#line 40 "../../../Source/Core/AST/DisownExpr.nll"
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
-#line 43 "../../../Source/Core/AST/DisownExpr.nll"
+#line 42 "../../../Source/Core/AST/DisownExpr.nll"
 			base.Validate(pValidator, pParent);
-#line 45 "../../../Source/Core/AST/DisownExpr.nll"
+#line 44 "../../../Source/Core/AST/DisownExpr.nll"
 			if (m_pExpression.m_pValueType == null)
 			{
-#line 47 "../../../Source/Core/AST/DisownExpr.nll"
+#line 46 "../../../Source/Core/AST/DisownExpr.nll"
 				pValidator.AddError("No valuetype for expression???", m_pExpression.m_pFirstToken.m_sFileName, m_pExpression.m_pFirstToken.m_nLine, m_pExpression.m_pFirstToken.m_nColumn);
-#line 48 "../../../Source/Core/AST/DisownExpr.nll"
+#line 47 "../../../Source/Core/AST/DisownExpr.nll"
 				return;
 			}
-#line 51 "../../../Source/Core/AST/DisownExpr.nll"
+#line 50 "../../../Source/Core/AST/DisownExpr.nll"
 			if (m_pExpression.m_pValueType.m_eType != ValueType.Type.CLASS_DECL_VALUE && m_pExpression.m_pValueType.m_eType != ValueType.Type.GENERIC_TYPE_DECL_VALUE)
 			{
-#line 53 "../../../Source/Core/AST/DisownExpr.nll"
+#line 52 "../../../Source/Core/AST/DisownExpr.nll"
 				pValidator.AddError("Expected right side of Disown to be a CLASS_DECL_VALUE or GENERIC_TYPE_DECL_VALUE", m_pExpression.m_pFirstToken.m_sFileName, m_pExpression.m_pFirstToken.m_nLine, m_pExpression.m_pFirstToken.m_nColumn);
-#line 54 "../../../Source/Core/AST/DisownExpr.nll"
+#line 53 "../../../Source/Core/AST/DisownExpr.nll"
 				return;
 			}
-#line 57 "../../../Source/Core/AST/DisownExpr.nll"
+#line 56 "../../../Source/Core/AST/DisownExpr.nll"
 			if (m_pExpression.m_pValueType.m_ePointerType != TypeRef.PointerType.OWNED)
 			{
-#line 59 "../../../Source/Core/AST/DisownExpr.nll"
+#line 58 "../../../Source/Core/AST/DisownExpr.nll"
 				pValidator.AddError("Expected right side of Disown to be a OWNED type", m_pExpression.m_pFirstToken.m_sFileName, m_pExpression.m_pFirstToken.m_nLine, m_pExpression.m_pFirstToken.m_nColumn);
-#line 60 "../../../Source/Core/AST/DisownExpr.nll"
+#line 59 "../../../Source/Core/AST/DisownExpr.nll"
 				return;
 			}
-#line 63 "../../../Source/Core/AST/DisownExpr.nll"
+#line 62 "../../../Source/Core/AST/DisownExpr.nll"
 			m_pValueType = m_pExpression.m_pValueType.Clone();
-#line 64 "../../../Source/Core/AST/DisownExpr.nll"
+#line 63 "../../../Source/Core/AST/DisownExpr.nll"
 			m_pValueType.m_ePointerType = TypeRef.PointerType.TRANSITON;
-#line 67 "../../../Source/Core/AST/DisownExpr.nll"
+#line 66 "../../../Source/Core/AST/DisownExpr.nll"
 			if (m_pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 			{
-#line 69 "../../../Source/Core/AST/DisownExpr.nll"
+#line 68 "../../../Source/Core/AST/DisownExpr.nll"
 				if (m_pValueType.m_pClassDecl == null)
 				{
-#line 71 "../../../Source/Core/AST/DisownExpr.nll"
+#line 70 "../../../Source/Core/AST/DisownExpr.nll"
 					pValidator.AddError("Can't disown unbeknownst thing (ClassDecl)", m_pExpression.m_pFirstToken.m_sFileName, m_pExpression.m_pFirstToken.m_nLine, m_pExpression.m_pFirstToken.m_nColumn);
-#line 72 "../../../Source/Core/AST/DisownExpr.nll"
+#line 71 "../../../Source/Core/AST/DisownExpr.nll"
 					return;
 				}
 			}
 			else
-#line 75 "../../../Source/Core/AST/DisownExpr.nll"
+#line 74 "../../../Source/Core/AST/DisownExpr.nll"
 				if (m_pValueType.m_eType == ValueType.Type.GENERIC_TYPE_DECL_VALUE)
 				{
-#line 77 "../../../Source/Core/AST/DisownExpr.nll"
+#line 76 "../../../Source/Core/AST/DisownExpr.nll"
 					if (m_pValueType.m_pGenericTypeDecl == null)
 					{
-#line 79 "../../../Source/Core/AST/DisownExpr.nll"
+#line 78 "../../../Source/Core/AST/DisownExpr.nll"
 						pValidator.AddError("Can't disown unbeknownst thing (GenericTypeDecl)", m_pExpression.m_pFirstToken.m_sFileName, m_pExpression.m_pFirstToken.m_nLine, m_pExpression.m_pFirstToken.m_nColumn);
-#line 80 "../../../Source/Core/AST/DisownExpr.nll"
+#line 79 "../../../Source/Core/AST/DisownExpr.nll"
 						return;
 					}
 				}
+#line 83 "../../../Source/Core/AST/DisownExpr.nll"
 			AST pParentStatement = GetParentStatement();
-#line 85 "../../../Source/Core/AST/DisownExpr.nll"
+#line 84 "../../../Source/Core/AST/DisownExpr.nll"
 			if (pParentStatement == null)
 			{
-#line 87 "../../../Source/Core/AST/DisownExpr.nll"
+#line 86 "../../../Source/Core/AST/DisownExpr.nll"
 				pValidator.AddError("Can'd find disown parent???", m_pExpression.m_pFirstToken.m_sFileName, m_pExpression.m_pFirstToken.m_nLine, m_pExpression.m_pFirstToken.m_nColumn);
-#line 88 "../../../Source/Core/AST/DisownExpr.nll"
+#line 87 "../../../Source/Core/AST/DisownExpr.nll"
 				return;
 			}
+#line 90 "../../../Source/Core/AST/DisownExpr.nll"
 			InternalString sTempName = new InternalString("");
+#line 91 "../../../Source/Core/AST/DisownExpr.nll"
 			OutputBuilder outTemp = new OutputBuilder();
-#line 93 "../../../Source/Core/AST/DisownExpr.nll"
+#line 92 "../../../Source/Core/AST/DisownExpr.nll"
 			m_pExpression.Stringify(AST.Language.CPP, AST.OutputFile.SOURCE, 0, outTemp);
-#line 95 "../../../Source/Core/AST/DisownExpr.nll"
+#line 94 "../../../Source/Core/AST/DisownExpr.nll"
 			sTempName.Append(outTemp.m_sOut.GetExternalString());
-#line 97 "../../../Source/Core/AST/DisownExpr.nll"
+#line 96 "../../../Source/Core/AST/DisownExpr.nll"
 			sTempName.AppendInt(pParentStatement.m_pFirstToken.m_nLine);
+#line 97 "../../../Source/Core/AST/DisownExpr.nll"
 			uint nHash = ExternalString.GetChecksum(sTempName.GetExternalString());
-#line 100 "../../../Source/Core/AST/DisownExpr.nll"
+#line 99 "../../../Source/Core/AST/DisownExpr.nll"
 			sTempName.Set("__");
-#line 101 "../../../Source/Core/AST/DisownExpr.nll"
+#line 100 "../../../Source/Core/AST/DisownExpr.nll"
 			sTempName.AppendUint32(nHash);
+#line 105 "../../../Source/Core/AST/DisownExpr.nll"
 			AST pParentParent = pParentStatement.m_pParent;
 			{
+#line 108 "../../../Source/Core/AST/DisownExpr.nll"
 				TypeRef pTypeRef = m_pValueType.CreateTypeRef();
+#line 109 "../../../Source/Core/AST/DisownExpr.nll"
 				Token pNameToken = new Token();
-#line 111 "../../../Source/Core/AST/DisownExpr.nll"
+#line 110 "../../../Source/Core/AST/DisownExpr.nll"
 				pNameToken.m_eType = Token.Type.TOKEN_IDENTIFIER;
-#line 112 "../../../Source/Core/AST/DisownExpr.nll"
+#line 111 "../../../Source/Core/AST/DisownExpr.nll"
 				pNameToken.m_sValue = new InternalString(sTempName.GetExternalString());
+#line 115 "../../../Source/Core/AST/DisownExpr.nll"
 				AST pAssignment = m_pExpression.BaseClone();
+#line 117 "../../../Source/Core/AST/DisownExpr.nll"
 				VarDecl pTempVarDecl = new VarDecl();
-#line 119 "../../../Source/Core/AST/DisownExpr.nll"
+#line 118 "../../../Source/Core/AST/DisownExpr.nll"
 				pTempVarDecl.m_pFirstToken = pTypeRef.m_pFirstToken;
-#line 120 "../../../Source/Core/AST/DisownExpr.nll"
+#line 119 "../../../Source/Core/AST/DisownExpr.nll"
 				pTempVarDecl.m_pTypeRef = pTypeRef;
-#line 121 "../../../Source/Core/AST/DisownExpr.nll"
+#line 120 "../../../Source/Core/AST/DisownExpr.nll"
 				pTempVarDecl.m_pNameToken = pNameToken;
 				NumbatLogic.Token __2859238226 = pNameToken;
-#line 122 "../../../Source/Core/AST/DisownExpr.nll"
+#line 121 "../../../Source/Core/AST/DisownExpr.nll"
 				pNameToken = null;
-#line 122 "../../../Source/Core/AST/DisownExpr.nll"
+#line 121 "../../../Source/Core/AST/DisownExpr.nll"
 				pTempVarDecl.m_pOwnedNameToken = __2859238226;
-#line 123 "../../../Source/Core/AST/DisownExpr.nll"
+#line 122 "../../../Source/Core/AST/DisownExpr.nll"
 				pTempVarDecl.m_pAssignment = pAssignment;
 				NumbatLogic.TypeRef __967647721 = pTypeRef;
-#line 124 "../../../Source/Core/AST/DisownExpr.nll"
+#line 123 "../../../Source/Core/AST/DisownExpr.nll"
 				pTypeRef = null;
-#line 124 "../../../Source/Core/AST/DisownExpr.nll"
+#line 123 "../../../Source/Core/AST/DisownExpr.nll"
 				pTempVarDecl.AddChild(__967647721);
 				NumbatLogic.AST __183884758 = pAssignment;
-#line 125 "../../../Source/Core/AST/DisownExpr.nll"
+#line 124 "../../../Source/Core/AST/DisownExpr.nll"
 				pAssignment = null;
-#line 125 "../../../Source/Core/AST/DisownExpr.nll"
+#line 124 "../../../Source/Core/AST/DisownExpr.nll"
 				pTempVarDecl.AddChild(__183884758);
+#line 126 "../../../Source/Core/AST/DisownExpr.nll"
 				AST pInjectedVarDecl = pTempVarDecl;
 				NumbatLogic.VarDecl __3774795561 = pTempVarDecl;
-#line 128 "../../../Source/Core/AST/DisownExpr.nll"
+#line 127 "../../../Source/Core/AST/DisownExpr.nll"
 				pTempVarDecl = null;
-#line 128 "../../../Source/Core/AST/DisownExpr.nll"
+#line 127 "../../../Source/Core/AST/DisownExpr.nll"
 				pParentParent.AddChildBefore(__3774795561, pParentStatement);
-#line 129 "../../../Source/Core/AST/DisownExpr.nll"
+#line 128 "../../../Source/Core/AST/DisownExpr.nll"
 				pValidator.ValidateSubtree(pInjectedVarDecl);
 			}
 			{
+#line 132 "../../../Source/Core/AST/DisownExpr.nll"
 				AST pLeft = m_pExpression.BaseClone();
+#line 134 "../../../Source/Core/AST/DisownExpr.nll"
 				NullExpr pRight = new NullExpr();
+#line 136 "../../../Source/Core/AST/DisownExpr.nll"
 				Token pOperatorToken = new Token();
-#line 138 "../../../Source/Core/AST/DisownExpr.nll"
+#line 137 "../../../Source/Core/AST/DisownExpr.nll"
 				pOperatorToken.m_eType = Token.Type.TOKEN_EQUALS;
 				NumbatLogic.AST __3919013152 = pLeft;
-#line 140 "../../../Source/Core/AST/DisownExpr.nll"
+#line 139 "../../../Source/Core/AST/DisownExpr.nll"
 				pLeft = null;
 				NumbatLogic.NullExpr __534132299 = pRight;
-#line 140 "../../../Source/Core/AST/DisownExpr.nll"
+#line 139 "../../../Source/Core/AST/DisownExpr.nll"
 				pRight = null;
+#line 139 "../../../Source/Core/AST/DisownExpr.nll"
 				OperatorExpr pOperatorExpr = OperatorExpr.Create(OperatorExpr.OperatorType.ASSIGNMENT, pOperatorToken, __3919013152, __534132299);
 				NumbatLogic.Token __3603785160 = pOperatorToken;
-#line 141 "../../../Source/Core/AST/DisownExpr.nll"
+#line 140 "../../../Source/Core/AST/DisownExpr.nll"
 				pOperatorToken = null;
-#line 141 "../../../Source/Core/AST/DisownExpr.nll"
+#line 140 "../../../Source/Core/AST/DisownExpr.nll"
 				pOperatorExpr.m_pOwnedOperatorToken = __3603785160;
+#line 142 "../../../Source/Core/AST/DisownExpr.nll"
 				ExpressionStmt pExpressionStmt = new ExpressionStmt();
-#line 144 "../../../Source/Core/AST/DisownExpr.nll"
+#line 143 "../../../Source/Core/AST/DisownExpr.nll"
 				pExpressionStmt.m_pFirstToken = pOperatorExpr.m_pFirstToken;
-#line 145 "../../../Source/Core/AST/DisownExpr.nll"
+#line 144 "../../../Source/Core/AST/DisownExpr.nll"
 				pExpressionStmt.m_pExpression = pOperatorExpr;
 				NumbatLogic.OperatorExpr __2365778377 = pOperatorExpr;
-#line 146 "../../../Source/Core/AST/DisownExpr.nll"
+#line 145 "../../../Source/Core/AST/DisownExpr.nll"
 				pOperatorExpr = null;
-#line 146 "../../../Source/Core/AST/DisownExpr.nll"
+#line 145 "../../../Source/Core/AST/DisownExpr.nll"
 				pExpressionStmt.AddChild(__2365778377);
+#line 147 "../../../Source/Core/AST/DisownExpr.nll"
 				AST pInjectedStmt = pExpressionStmt;
 				NumbatLogic.ExpressionStmt __1415267173 = pExpressionStmt;
-#line 149 "../../../Source/Core/AST/DisownExpr.nll"
+#line 148 "../../../Source/Core/AST/DisownExpr.nll"
 				pExpressionStmt = null;
-#line 149 "../../../Source/Core/AST/DisownExpr.nll"
+#line 148 "../../../Source/Core/AST/DisownExpr.nll"
 				pParentParent.AddChildBefore(__1415267173, pParentStatement);
-#line 150 "../../../Source/Core/AST/DisownExpr.nll"
+#line 149 "../../../Source/Core/AST/DisownExpr.nll"
 				pValidator.ValidateSubtree(pInjectedStmt);
 			}
 			NumbatLogic.InternalString __3313827548 = sTempName;
-#line 153 "../../../Source/Core/AST/DisownExpr.nll"
+#line 152 "../../../Source/Core/AST/DisownExpr.nll"
 			sTempName = null;
-#line 153 "../../../Source/Core/AST/DisownExpr.nll"
+#line 152 "../../../Source/Core/AST/DisownExpr.nll"
 			m_sTempVarName = __3313827548;
 		}
 
-#line 156 "../../../Source/Core/AST/DisownExpr.nll"
+#line 155 "../../../Source/Core/AST/DisownExpr.nll"
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-#line 158 "../../../Source/Core/AST/DisownExpr.nll"
+#line 157 "../../../Source/Core/AST/DisownExpr.nll"
 			if (m_sTempVarName != null)
 			{
-#line 160 "../../../Source/Core/AST/DisownExpr.nll"
+#line 159 "../../../Source/Core/AST/DisownExpr.nll"
 				pOutputBuilder.m_sOut.Append(m_sTempVarName.GetExternalString());
-#line 161 "../../../Source/Core/AST/DisownExpr.nll"
+#line 160 "../../../Source/Core/AST/DisownExpr.nll"
 				return;
 			}
-#line 164 "../../../Source/Core/AST/DisownExpr.nll"
+#line 163 "../../../Source/Core/AST/DisownExpr.nll"
 			if (eLanguage == AST.Language.NLL)
 			{
-#line 166 "../../../Source/Core/AST/DisownExpr.nll"
+#line 165 "../../../Source/Core/AST/DisownExpr.nll"
 				pOutputBuilder.m_sOut.Append("disown ");
 			}
-#line 169 "../../../Source/Core/AST/DisownExpr.nll"
+#line 168 "../../../Source/Core/AST/DisownExpr.nll"
 			m_pExpression.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		}
 
-#line 4 "../../../Source/Core/AST/DisownExpr.nll"
+#line 3 "../../../Source/Core/AST/DisownExpr.nll"
 		~DisownExpr()
 		{
 		}
