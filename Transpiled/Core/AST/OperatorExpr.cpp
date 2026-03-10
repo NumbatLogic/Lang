@@ -26,11 +26,11 @@ namespace NumbatLogic
 	class ClassDecl;
 	class OutputBuilder;
 }
-#line 1 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 0 "../../../Source/Core/AST/OperatorExpr.nll"
 namespace NumbatLogic
 {
-#line 4 "../../../Source/Core/AST/OperatorExpr.nll"
-#line 45 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 3 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 44 "../../../Source/Core/AST/OperatorExpr.nll"
 	OperatorExpr::OperatorExpr()
 	{
 		m_eOperatorType = OperatorExpr::OperatorType::LOGICAL_AND;
@@ -38,42 +38,42 @@ namespace NumbatLogic
 		m_pOwnedOperatorToken = 0;
 		m_pLeft = 0;
 		m_pRight = 0;
-#line 47 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 46 "../../../Source/Core/AST/OperatorExpr.nll"
 		m_eType = AST::Type::AST_OPERATOR_EXPR;
 	}
 
-#line 50 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 49 "../../../Source/Core/AST/OperatorExpr.nll"
 	Token* OperatorExpr::GetFirstOperatorToken()
 	{
-#line 52 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 51 "../../../Source/Core/AST/OperatorExpr.nll"
 		Assert::Plz(m_pFirstOperatorToken != 0);
-#line 53 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 52 "../../../Source/Core/AST/OperatorExpr.nll"
 		return m_pFirstOperatorToken;
 	}
 
-#line 56 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 55 "../../../Source/Core/AST/OperatorExpr.nll"
 	OperatorExpr::OperatorType OperatorExpr::GetOperatorType()
 	{
-#line 58 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 57 "../../../Source/Core/AST/OperatorExpr.nll"
 		return m_eOperatorType;
 	}
 
-#line 61 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 60 "../../../Source/Core/AST/OperatorExpr.nll"
 	bool OperatorExpr::IsPostfix(OperatorExpr::OperatorType eOperatorType)
 	{
-#line 63 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 62 "../../../Source/Core/AST/OperatorExpr.nll"
 		return (eOperatorType == OperatorType::DECREMENT || eOperatorType == OperatorType::INCREMENT);
 	}
 
-#line 66 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 65 "../../../Source/Core/AST/OperatorExpr.nll"
 	int OperatorExpr::GetOperatorTokenCount(OperatorExpr::OperatorType eOp)
 	{
-#line 68 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 67 "../../../Source/Core/AST/OperatorExpr.nll"
 		switch (eOp)
 		{
 			case OperatorType::UNKNOWN:
 			{
-#line 71 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 70 "../../../Source/Core/AST/OperatorExpr.nll"
 				return 0;
 			}
 
@@ -90,916 +90,916 @@ namespace NumbatLogic
 			case OperatorType::LOGICAL_AND:
 			case OperatorType::LOGICAL_OR:
 			{
-#line 84 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 83 "../../../Source/Core/AST/OperatorExpr.nll"
 				return 2;
 			}
 
 			case OperatorType::LEFT_SHIFT_ASSIGN:
 			case OperatorType::RIGHT_SHIFT_ASSIGN:
 			{
-#line 87 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 86 "../../../Source/Core/AST/OperatorExpr.nll"
 				return 3;
 			}
 
 			default:
 			{
-#line 89 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 88 "../../../Source/Core/AST/OperatorExpr.nll"
 				return 1;
 			}
 
 		}
 	}
 
-#line 93 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 92 "../../../Source/Core/AST/OperatorExpr.nll"
 	OperatorExpr::OperatorType OperatorExpr::GetOperatorTypeFromTokens(Token* pFirst, Token* pSecond, Token* pThird)
 	{
-#line 95 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 94 "../../../Source/Core/AST/OperatorExpr.nll"
 		Assert::Plz(pFirst != 0);
-#line 97 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 96 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (pThird != 0)
 		{
-#line 99 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 98 "../../../Source/Core/AST/OperatorExpr.nll"
 			Assert::Plz(pSecond != 0);
-#line 101 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 100 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (pFirst->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT && pSecond->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT && pThird->m_eType == Token::Type::TOKEN_EQUALS)
-#line 102 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 101 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::LEFT_SHIFT_ASSIGN;
-#line 103 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 102 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (pFirst->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT && pSecond->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT && pThird->m_eType == Token::Type::TOKEN_EQUALS)
-#line 104 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 103 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::RIGHT_SHIFT_ASSIGN;
 		}
-#line 107 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 106 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (pSecond != 0)
 		{
-#line 109 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 108 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (pFirst->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT && pSecond->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT)
-#line 110 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 109 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::RIGHT_SHIFT;
-#line 111 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 110 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (pFirst->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT && pSecond->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT)
-#line 112 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 111 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::LEFT_SHIFT;
-#line 113 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 112 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (pFirst->m_eType == Token::Type::TOKEN_EQUALS && pSecond->m_eType == Token::Type::TOKEN_EQUALS)
-#line 114 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 113 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::EQUALITY;
-#line 115 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 114 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (pFirst->m_eType == Token::Type::TOKEN_BANG && pSecond->m_eType == Token::Type::TOKEN_EQUALS)
-#line 116 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 115 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::INEQUALITY;
-#line 117 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 116 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (pFirst->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_LEFT && pSecond->m_eType == Token::Type::TOKEN_EQUALS)
-#line 118 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 117 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::LESS_THAN_OR_EQUAL;
-#line 119 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 118 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (pFirst->m_eType == Token::Type::TOKEN_ANGLE_BRACKET_RIGHT && pSecond->m_eType == Token::Type::TOKEN_EQUALS)
-#line 120 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 119 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::GREATER_THAN_OR_EQUAL;
-#line 121 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 120 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (pFirst->m_eType == Token::Type::TOKEN_PLUS && pSecond->m_eType == Token::Type::TOKEN_EQUALS)
-#line 122 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 121 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::ADD_ASSIGN;
-#line 123 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 122 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (pFirst->m_eType == Token::Type::TOKEN_MINUS && pSecond->m_eType == Token::Type::TOKEN_EQUALS)
-#line 124 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 123 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::SUBTRACT_ASSIGN;
-#line 125 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 124 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (pFirst->m_eType == Token::Type::TOKEN_STAR && pSecond->m_eType == Token::Type::TOKEN_EQUALS)
-#line 126 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 125 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::MULTIPLY_ASSIGN;
-#line 127 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 126 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (pFirst->m_eType == Token::Type::TOKEN_DIVIDE && pSecond->m_eType == Token::Type::TOKEN_EQUALS)
-#line 128 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 127 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::DIVIDE_ASSIGN;
-#line 129 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 128 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (pFirst->m_eType == Token::Type::TOKEN_BITWISE_AND && pSecond->m_eType == Token::Type::TOKEN_BITWISE_AND)
-#line 130 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 129 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::LOGICAL_AND;
-#line 131 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 130 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (pFirst->m_eType == Token::Type::TOKEN_BITWISE_OR && pSecond->m_eType == Token::Type::TOKEN_BITWISE_OR)
-#line 132 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 131 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::LOGICAL_OR;
 		}
-#line 135 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 134 "../../../Source/Core/AST/OperatorExpr.nll"
 		switch (pFirst->m_eType)
 		{
 			case Token::Type::TOKEN_ANGLE_BRACKET_LEFT:
 			{
-#line 137 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 136 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::LESS_THAN;
 			}
 
 			case Token::Type::TOKEN_ANGLE_BRACKET_RIGHT:
 			{
-#line 138 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 137 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::GREATER_THAN;
 			}
 
 			case Token::Type::TOKEN_BITWISE_AND:
 			{
-#line 139 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 138 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::BITWISE_AND;
 			}
 
 			case Token::Type::TOKEN_BITWISE_OR:
 			{
-#line 140 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 139 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::BITWISE_OR;
 			}
 
 			case Token::Type::TOKEN_CARET:
 			{
-#line 141 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 140 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::BITWISE_XOR;
 			}
 
 			case Token::Type::TOKEN_DIVIDE:
 			{
-#line 142 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 141 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::DIVISION;
 			}
 
 			case Token::Type::TOKEN_DOT:
 			{
-#line 143 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 142 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::MEMBER_ACCESS;
 			}
 
 			case Token::Type::TOKEN_DOUBLE_COLON:
 			{
-#line 144 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 143 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::SCOPE_RESOLUTION;
 			}
 
 			case Token::Type::TOKEN_EQUALS:
 			{
-#line 145 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 144 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::ASSIGNMENT;
 			}
 
 			case Token::Type::TOKEN_MINUS:
 			{
-#line 146 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 145 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::SUBTRACTION;
 			}
 
 			case Token::Type::TOKEN_MINUS_MINUS:
 			{
-#line 147 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 146 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::DECREMENT;
 			}
 
 			case Token::Type::TOKEN_MODULUS:
 			{
-#line 148 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 147 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::MODULO;
 			}
 
 			case Token::Type::TOKEN_PLUS:
 			{
-#line 149 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 148 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::ADDITION;
 			}
 
 			case Token::Type::TOKEN_PLUS_PLUS:
 			{
-#line 150 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 149 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::INCREMENT;
 			}
 
 			case Token::Type::TOKEN_STAR:
 			{
-#line 151 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 150 "../../../Source/Core/AST/OperatorExpr.nll"
 				return OperatorType::MULTIPLICATION;
 			}
 
 		}
-#line 153 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 152 "../../../Source/Core/AST/OperatorExpr.nll"
 		return OperatorType::UNKNOWN;
 	}
 
-#line 156 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 155 "../../../Source/Core/AST/OperatorExpr.nll"
 	OperatorExpr::OperatorType OperatorExpr::PeekOperator(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		Token* pFirst = pTokenContainer->Peek(pOffsetDatum);
-#line 159 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 158 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (pFirst == 0)
-#line 160 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 159 "../../../Source/Core/AST/OperatorExpr.nll"
 			return OperatorType::UNKNOWN;
-#line 161 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 160 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOffsetDatum->m_nOffset++;
 		Token* pSecond = pTokenContainer->Peek(pOffsetDatum);
-#line 163 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 162 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOffsetDatum->m_nOffset++;
 		Token* pThird = pTokenContainer->Peek(pOffsetDatum);
-#line 165 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 164 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOffsetDatum->m_nOffset -= 2;
 		OperatorType eType = GetOperatorTypeFromTokens(pFirst, pSecond, pThird);
-#line 168 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 167 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (eType == OperatorType::UNKNOWN)
-#line 169 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 168 "../../../Source/Core/AST/OperatorExpr.nll"
 			return OperatorType::UNKNOWN;
-#line 170 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 169 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOffsetDatum->m_nOffset += GetOperatorTokenCount(eType);
-#line 171 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 170 "../../../Source/Core/AST/OperatorExpr.nll"
 		return eType;
 	}
 
-#line 174 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 173 "../../../Source/Core/AST/OperatorExpr.nll"
 	OperatorExpr* OperatorExpr::Create(OperatorExpr::OperatorType eOperatorType, Token* pFirstOperatorToken, AST* pLeft, AST* pRight)
 	{
-#line 176 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 175 "../../../Source/Core/AST/OperatorExpr.nll"
 		Assert::Plz(pLeft != 0);
-#line 177 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 176 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (IsPostfix(eOperatorType))
-#line 178 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 177 "../../../Source/Core/AST/OperatorExpr.nll"
 			Assert::Plz(pRight == 0);
 		OperatorExpr* pOperatorExpr = new OperatorExpr();
 		AST* pOwnedLeft = pLeft;
 		AST* pOwnedRight = pRight;
-#line 185 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 184 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOperatorExpr->m_pFirstToken = pLeft->m_pFirstToken;
-#line 186 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 185 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOperatorExpr->m_eOperatorType = eOperatorType;
-#line 187 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 186 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOperatorExpr->m_pFirstOperatorToken = pFirstOperatorToken;
-#line 188 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 187 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOperatorExpr->m_pLeft = pOwnedLeft;
-#line 189 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 188 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOperatorExpr->m_pRight = pOwnedRight;
-#line 191 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 190 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (pLeft != 0)
 		{
 			NumbatLogic::AST* __4182703981 = pOwnedLeft;
-#line 192 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 191 "../../../Source/Core/AST/OperatorExpr.nll"
 			pOwnedLeft = 0;
-#line 192 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 191 "../../../Source/Core/AST/OperatorExpr.nll"
 			pOperatorExpr->AddChild(__4182703981);
 		}
-#line 194 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 193 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (pRight != 0)
 		{
 			NumbatLogic::AST* __2506872229 = pOwnedRight;
-#line 195 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 194 "../../../Source/Core/AST/OperatorExpr.nll"
 			pOwnedRight = 0;
-#line 195 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 194 "../../../Source/Core/AST/OperatorExpr.nll"
 			pOperatorExpr->AddChild(__2506872229);
 		}
 		NumbatLogic::OperatorExpr* __2366106373 = pOperatorExpr;
-#line 197 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 196 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOperatorExpr = 0;
 		if (pOwnedLeft) delete pOwnedLeft;
 		if (pOwnedRight) delete pOwnedRight;
-#line 197 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 196 "../../../Source/Core/AST/OperatorExpr.nll"
 		return __2366106373;
 	}
 
-#line 200 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 199 "../../../Source/Core/AST/OperatorExpr.nll"
 	AST* OperatorExpr::BaseClone()
 	{
 		AST* pLeft = 0;
 		AST* pRight = 0;
-#line 205 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 204 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (m_pLeft != 0)
-#line 206 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 205 "../../../Source/Core/AST/OperatorExpr.nll"
 			pLeft = m_pLeft->BaseClone();
-#line 208 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 207 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (m_pRight != 0)
-#line 209 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 208 "../../../Source/Core/AST/OperatorExpr.nll"
 			pRight = m_pRight->BaseClone();
 		Token* pOwnedClone = GetFirstOperatorToken()->Clone();
 		NumbatLogic::AST* __3927143451 = pLeft;
-#line 212 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 211 "../../../Source/Core/AST/OperatorExpr.nll"
 		pLeft = 0;
 		NumbatLogic::AST* __542262598 = pRight;
-#line 212 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 211 "../../../Source/Core/AST/OperatorExpr.nll"
 		pRight = 0;
 		OperatorExpr* pResult = OperatorExpr::Create(m_eOperatorType, pOwnedClone, __3927143451, __542262598);
 		NumbatLogic::Token* __425741643 = pOwnedClone;
-#line 213 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 212 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOwnedClone = 0;
-#line 213 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 212 "../../../Source/Core/AST/OperatorExpr.nll"
 		pResult->m_pOwnedOperatorToken = __425741643;
 		NumbatLogic::OperatorExpr* __3076476007 = pResult;
-#line 214 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 213 "../../../Source/Core/AST/OperatorExpr.nll"
 		pResult = 0;
 		if (pLeft) delete pLeft;
 		if (pRight) delete pRight;
 		if (pOwnedClone) delete pOwnedClone;
-#line 214 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 213 "../../../Source/Core/AST/OperatorExpr.nll"
 		return __3076476007;
 	}
 
-#line 217 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 216 "../../../Source/Core/AST/OperatorExpr.nll"
 	void OperatorExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
-#line 235 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 234 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (m_pLeft != 0)
 		{
-#line 237 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 236 "../../../Source/Core/AST/OperatorExpr.nll"
 			m_pLeft->Validate(pValidator, pParent);
-#line 238 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 237 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (m_pLeft->m_pValueType == 0)
 			{
-#line 240 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 239 "../../../Source/Core/AST/OperatorExpr.nll"
 				pValidator->AddError("No ValueType for left of operator: ", m_pLeft->m_pFirstToken->m_sFileName, m_pLeft->m_pFirstToken->m_nLine, m_pLeft->m_pFirstToken->m_nColumn);
-#line 241 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 240 "../../../Source/Core/AST/OperatorExpr.nll"
 				return;
 			}
 			else
 			{
 				Token* pOpToken = GetFirstOperatorToken();
-#line 246 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 245 "../../../Source/Core/AST/OperatorExpr.nll"
 				if (m_pLeft->m_pValueType->m_eType == ValueType::Type::CLASS_DECL || m_pLeft->m_pValueType->m_eType == ValueType::Type::ENUM_DECL || m_pLeft->m_pValueType->m_eType == ValueType::Type::NAMESPACE_NODE)
 				{
-#line 248 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 247 "../../../Source/Core/AST/OperatorExpr.nll"
 					if (GetOperatorType() != OperatorType::SCOPE_RESOLUTION)
 					{
-#line 250 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 249 "../../../Source/Core/AST/OperatorExpr.nll"
 						pValidator->AddError("Expected :: ", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
-#line 251 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 250 "../../../Source/Core/AST/OperatorExpr.nll"
 						return;
 					}
-#line 253 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 252 "../../../Source/Core/AST/OperatorExpr.nll"
 					if (m_pRight == 0)
 					{
-#line 255 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 254 "../../../Source/Core/AST/OperatorExpr.nll"
 						pValidator->AddError("Expected right side of :: operator", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
-#line 256 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 255 "../../../Source/Core/AST/OperatorExpr.nll"
 						return;
 					}
-#line 259 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 258 "../../../Source/Core/AST/OperatorExpr.nll"
 					if (m_pRight->m_eType != AST::Type::AST_IDENTIFIER && m_pRight->m_eType != AST::Type::AST_OPERATOR_EXPR && m_pRight->m_eType != AST::Type::AST_FUNCTION_CALL && m_pRight->m_eType != AST::Type::AST_ARRAY_LOOKUP)
 					{
 						InternalString* sTemp = new InternalString("Unexpected right side of :: operator: ");
-#line 262 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 261 "../../../Source/Core/AST/OperatorExpr.nll"
 						m_pRight->StringifyType(sTemp);
-#line 264 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 263 "../../../Source/Core/AST/OperatorExpr.nll"
 						pValidator->AddError(sTemp->GetExternalString(), pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 						if (sTemp) delete sTemp;
-#line 265 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 264 "../../../Source/Core/AST/OperatorExpr.nll"
 						return;
 					}
-#line 268 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 267 "../../../Source/Core/AST/OperatorExpr.nll"
 					m_pRight->Validate(pValidator, this);
-#line 269 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 268 "../../../Source/Core/AST/OperatorExpr.nll"
 					if (m_pRight->m_pValueType == 0)
 					{
-#line 271 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 270 "../../../Source/Core/AST/OperatorExpr.nll"
 						pValidator->AddError("No ValueType for right of operator: ", m_pRight->m_pFirstToken->m_sFileName, m_pRight->m_pFirstToken->m_nLine, m_pRight->m_pFirstToken->m_nColumn);
-#line 272 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 271 "../../../Source/Core/AST/OperatorExpr.nll"
 						return;
 					}
-#line 275 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 274 "../../../Source/Core/AST/OperatorExpr.nll"
 					m_pValueType = m_pRight->m_pValueType->Clone();
-#line 277 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 276 "../../../Source/Core/AST/OperatorExpr.nll"
 					return;
 				}
-#line 280 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 279 "../../../Source/Core/AST/OperatorExpr.nll"
 				if (GetOperatorType() == OperatorType::MEMBER_ACCESS)
 				{
-#line 282 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 281 "../../../Source/Core/AST/OperatorExpr.nll"
 					if (m_pLeft->m_pValueType->m_eType == ValueType::Type::GENERIC_TYPE_DECL_VALUE)
 					{
-#line 284 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 283 "../../../Source/Core/AST/OperatorExpr.nll"
 						if (m_pLeft->m_pValueType->m_pGenericTypeDecl == 0)
 						{
-#line 286 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 285 "../../../Source/Core/AST/OperatorExpr.nll"
 							pValidator->AddError(" set but m_pGenericTypeDecl is null???", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
-#line 287 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 286 "../../../Source/Core/AST/OperatorExpr.nll"
 							return;
 						}
 					}
 					else
-#line 290 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 289 "../../../Source/Core/AST/OperatorExpr.nll"
 						if (m_pLeft->m_pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
 						{
-#line 292 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 291 "../../../Source/Core/AST/OperatorExpr.nll"
 							if (m_pLeft->m_pValueType->m_pClassDecl == 0)
 							{
-#line 294 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 293 "../../../Source/Core/AST/OperatorExpr.nll"
 								pValidator->AddError(" set but m_pClassDecl is null???", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
-#line 295 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 294 "../../../Source/Core/AST/OperatorExpr.nll"
 								return;
 							}
 						}
 						else
 						{
-#line 300 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 299 "../../../Source/Core/AST/OperatorExpr.nll"
 							pValidator->AddError("Expected ValueType::Type::CLASS_DECL_VALUE or ValueType::Type::GENERIC_TYPE_DECL_VALUE on left of TOKEN_DOT operator", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
-#line 301 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 300 "../../../Source/Core/AST/OperatorExpr.nll"
 							return;
 						}
-#line 304 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 303 "../../../Source/Core/AST/OperatorExpr.nll"
 					m_pRight->Validate(pValidator, this);
-#line 305 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 304 "../../../Source/Core/AST/OperatorExpr.nll"
 					if (m_pRight->m_pValueType == 0)
 					{
-#line 307 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 306 "../../../Source/Core/AST/OperatorExpr.nll"
 						pValidator->AddError("No ValueType for right of operator: ", m_pRight->m_pFirstToken->m_sFileName, m_pRight->m_pFirstToken->m_nLine, m_pRight->m_pFirstToken->m_nColumn);
-#line 308 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 307 "../../../Source/Core/AST/OperatorExpr.nll"
 						return;
 					}
-#line 311 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 310 "../../../Source/Core/AST/OperatorExpr.nll"
 					m_pValueType = m_pRight->m_pValueType->Clone();
-#line 312 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 311 "../../../Source/Core/AST/OperatorExpr.nll"
 					return;
 				}
-#line 315 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 314 "../../../Source/Core/AST/OperatorExpr.nll"
 				if (GetOperatorType() == OperatorType::ADDITION)
 				{
-#line 317 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 316 "../../../Source/Core/AST/OperatorExpr.nll"
 					if (m_pLeft->m_pValueType->m_eType == ValueType::Type::STRING)
 					{
-#line 319 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 318 "../../../Source/Core/AST/OperatorExpr.nll"
 						pValidator->AddError("Cannot concat strings with +", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
-#line 320 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 319 "../../../Source/Core/AST/OperatorExpr.nll"
 						return;
 					}
 				}
-#line 324 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 323 "../../../Source/Core/AST/OperatorExpr.nll"
 				if (GetOperatorType() == OperatorType::EQUALITY || GetOperatorType() == OperatorType::INEQUALITY)
 				{
-#line 326 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 325 "../../../Source/Core/AST/OperatorExpr.nll"
 					if (m_pRight == 0)
 					{
-#line 328 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 327 "../../../Source/Core/AST/OperatorExpr.nll"
 						pValidator->AddError("Nohing on right side to compare?", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
-#line 329 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 328 "../../../Source/Core/AST/OperatorExpr.nll"
 						return;
 					}
-#line 332 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 331 "../../../Source/Core/AST/OperatorExpr.nll"
 					m_pRight->Validate(pValidator, this);
-#line 334 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 333 "../../../Source/Core/AST/OperatorExpr.nll"
 					if (m_pLeft->m_pValueType->m_eType == ValueType::Type::STRING && m_pRight->m_pValueType->m_eType == ValueType::Type::STRING)
 					{
-#line 336 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 335 "../../../Source/Core/AST/OperatorExpr.nll"
 						pValidator->AddError("Cannot == or != strings use ExternalString::Equal", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
-#line 337 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 336 "../../../Source/Core/AST/OperatorExpr.nll"
 						return;
 					}
-#line 340 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 339 "../../../Source/Core/AST/OperatorExpr.nll"
 					m_pValueType = new ValueType(ValueType::Type::BOOL);
-#line 341 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 340 "../../../Source/Core/AST/OperatorExpr.nll"
 					return;
 				}
-#line 344 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 343 "../../../Source/Core/AST/OperatorExpr.nll"
 				if (m_pRight != 0)
-#line 345 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 344 "../../../Source/Core/AST/OperatorExpr.nll"
 					m_pRight->Validate(pValidator, this);
-#line 347 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 346 "../../../Source/Core/AST/OperatorExpr.nll"
 				if (GetOperatorType() == OperatorType::ASSIGNMENT)
 				{
-#line 349 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 348 "../../../Source/Core/AST/OperatorExpr.nll"
 					if (m_pRight->m_pValueType == 0)
 					{
-#line 351 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 350 "../../../Source/Core/AST/OperatorExpr.nll"
 						pValidator->AddError("No ValueType for right of operator = ???", m_pRight->m_pFirstToken->m_sFileName, m_pRight->m_pFirstToken->m_nLine, m_pRight->m_pFirstToken->m_nColumn);
-#line 352 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 351 "../../../Source/Core/AST/OperatorExpr.nll"
 						return;
 					}
-#line 355 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 354 "../../../Source/Core/AST/OperatorExpr.nll"
 					if (m_pLeft->m_pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
 					{
-#line 357 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 356 "../../../Source/Core/AST/OperatorExpr.nll"
 						if (m_pRight->m_pValueType->m_eType == ValueType::Type::CLASS_DECL_VALUE)
 						{
-#line 363 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 362 "../../../Source/Core/AST/OperatorExpr.nll"
 							if (m_pLeft->m_pValueType->m_ePointerType == TypeRef::PointerType::OWNED && m_pRight->m_pValueType->m_ePointerType != TypeRef::PointerType::OWNED_PREASSSIGN)
 							{
 								InternalString* sTemp = new InternalString("Expected right side of = to be OWNED_PREASSSIGN (result of own). FROM[");
-#line 366 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 365 "../../../Source/Core/AST/OperatorExpr.nll"
 								m_pRight->m_pValueType->StringifyType(sTemp);
-#line 367 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 366 "../../../Source/Core/AST/OperatorExpr.nll"
 								if (m_pRight->m_pValueType->m_pClassDecl != 0)
 								{
-#line 369 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 368 "../../../Source/Core/AST/OperatorExpr.nll"
 									sTemp->Append(" name=");
-#line 370 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 369 "../../../Source/Core/AST/OperatorExpr.nll"
 									sTemp->AppendString(m_pRight->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
 								}
-#line 372 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 371 "../../../Source/Core/AST/OperatorExpr.nll"
 								sTemp->Append(" ptr=");
-#line 373 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 372 "../../../Source/Core/AST/OperatorExpr.nll"
 								ValueType::StringifyPointerType(sTemp, m_pRight->m_pValueType->m_ePointerType);
-#line 374 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 373 "../../../Source/Core/AST/OperatorExpr.nll"
 								sTemp->Append("] TO[");
-#line 375 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 374 "../../../Source/Core/AST/OperatorExpr.nll"
 								m_pLeft->m_pValueType->StringifyType(sTemp);
-#line 376 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 375 "../../../Source/Core/AST/OperatorExpr.nll"
 								if (m_pLeft->m_pValueType->m_pClassDecl != 0)
 								{
-#line 378 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 377 "../../../Source/Core/AST/OperatorExpr.nll"
 									sTemp->Append(" name=");
-#line 379 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 378 "../../../Source/Core/AST/OperatorExpr.nll"
 									sTemp->AppendString(m_pLeft->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
 								}
-#line 381 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 380 "../../../Source/Core/AST/OperatorExpr.nll"
 								sTemp->Append(" ptr=");
-#line 382 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 381 "../../../Source/Core/AST/OperatorExpr.nll"
 								ValueType::StringifyPointerType(sTemp, m_pLeft->m_pValueType->m_ePointerType);
-#line 383 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 382 "../../../Source/Core/AST/OperatorExpr.nll"
 								sTemp->Append("]");
-#line 384 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 383 "../../../Source/Core/AST/OperatorExpr.nll"
 								pValidator->AddError(sTemp->GetExternalString(), pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 								if (sTemp) delete sTemp;
-#line 385 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 384 "../../../Source/Core/AST/OperatorExpr.nll"
 								return;
 							}
-#line 388 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 387 "../../../Source/Core/AST/OperatorExpr.nll"
 							if (m_pLeft->m_pValueType->m_ePointerType == TypeRef::PointerType::SHARED && m_pRight->m_pValueType->m_ePointerType == TypeRef::PointerType::OWNED_PREASSSIGN)
 							{
 								InternalString* sTemp = new InternalString("Can't store an owned pointer in a shared pointer. FROM[");
-#line 391 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 390 "../../../Source/Core/AST/OperatorExpr.nll"
 								m_pRight->m_pValueType->StringifyType(sTemp);
-#line 392 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 391 "../../../Source/Core/AST/OperatorExpr.nll"
 								if (m_pRight->m_pValueType->m_pClassDecl != 0)
 								{
-#line 394 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 393 "../../../Source/Core/AST/OperatorExpr.nll"
 									sTemp->Append(" name=");
-#line 395 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 394 "../../../Source/Core/AST/OperatorExpr.nll"
 									sTemp->AppendString(m_pRight->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
 								}
-#line 397 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 396 "../../../Source/Core/AST/OperatorExpr.nll"
 								sTemp->Append(" ptr=");
-#line 398 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 397 "../../../Source/Core/AST/OperatorExpr.nll"
 								ValueType::StringifyPointerType(sTemp, m_pRight->m_pValueType->m_ePointerType);
-#line 399 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 398 "../../../Source/Core/AST/OperatorExpr.nll"
 								sTemp->Append("] TO[");
-#line 400 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 399 "../../../Source/Core/AST/OperatorExpr.nll"
 								m_pLeft->m_pValueType->StringifyType(sTemp);
-#line 401 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 400 "../../../Source/Core/AST/OperatorExpr.nll"
 								if (m_pLeft->m_pValueType->m_pClassDecl != 0)
 								{
-#line 403 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 402 "../../../Source/Core/AST/OperatorExpr.nll"
 									sTemp->Append(" name=");
-#line 404 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 403 "../../../Source/Core/AST/OperatorExpr.nll"
 									sTemp->AppendString(m_pLeft->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
 								}
-#line 406 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 405 "../../../Source/Core/AST/OperatorExpr.nll"
 								sTemp->Append(" ptr=");
-#line 407 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 406 "../../../Source/Core/AST/OperatorExpr.nll"
 								ValueType::StringifyPointerType(sTemp, m_pLeft->m_pValueType->m_ePointerType);
-#line 408 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 407 "../../../Source/Core/AST/OperatorExpr.nll"
 								sTemp->Append("]");
-#line 409 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 408 "../../../Source/Core/AST/OperatorExpr.nll"
 								pValidator->AddError(sTemp->GetExternalString(), pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 								if (sTemp) delete sTemp;
-#line 410 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 409 "../../../Source/Core/AST/OperatorExpr.nll"
 								return;
 							}
-#line 413 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 412 "../../../Source/Core/AST/OperatorExpr.nll"
 							if (m_pRight->m_pValueType->m_ePointerType == TypeRef::PointerType::TRANSITON)
 							{
 								InternalString* sTemp = new InternalString("Cannot store a TRANSITION pointer (need to `own` it). FROM[");
-#line 416 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 415 "../../../Source/Core/AST/OperatorExpr.nll"
 								m_pRight->m_pValueType->StringifyType(sTemp);
-#line 417 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 416 "../../../Source/Core/AST/OperatorExpr.nll"
 								if (m_pRight->m_pValueType->m_pClassDecl != 0)
 								{
-#line 419 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 418 "../../../Source/Core/AST/OperatorExpr.nll"
 									sTemp->Append(" name=");
-#line 420 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 419 "../../../Source/Core/AST/OperatorExpr.nll"
 									sTemp->AppendString(m_pRight->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
 								}
-#line 422 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 421 "../../../Source/Core/AST/OperatorExpr.nll"
 								sTemp->Append(" ptr=");
-#line 423 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 422 "../../../Source/Core/AST/OperatorExpr.nll"
 								ValueType::StringifyPointerType(sTemp, m_pRight->m_pValueType->m_ePointerType);
-#line 424 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 423 "../../../Source/Core/AST/OperatorExpr.nll"
 								sTemp->Append("] TO[");
-#line 425 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 424 "../../../Source/Core/AST/OperatorExpr.nll"
 								m_pLeft->m_pValueType->StringifyType(sTemp);
-#line 426 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 425 "../../../Source/Core/AST/OperatorExpr.nll"
 								if (m_pLeft->m_pValueType->m_pClassDecl != 0)
 								{
-#line 428 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 427 "../../../Source/Core/AST/OperatorExpr.nll"
 									sTemp->Append(" name=");
-#line 429 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 428 "../../../Source/Core/AST/OperatorExpr.nll"
 									sTemp->AppendString(m_pLeft->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
 								}
-#line 431 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 430 "../../../Source/Core/AST/OperatorExpr.nll"
 								sTemp->Append(" ptr=");
-#line 432 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 431 "../../../Source/Core/AST/OperatorExpr.nll"
 								ValueType::StringifyPointerType(sTemp, m_pLeft->m_pValueType->m_ePointerType);
-#line 433 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 432 "../../../Source/Core/AST/OperatorExpr.nll"
 								sTemp->Append("]");
-#line 434 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 433 "../../../Source/Core/AST/OperatorExpr.nll"
 								pValidator->AddError(sTemp->GetExternalString(), pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 								if (sTemp) delete sTemp;
-#line 435 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 434 "../../../Source/Core/AST/OperatorExpr.nll"
 								return;
 							}
-#line 440 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 439 "../../../Source/Core/AST/OperatorExpr.nll"
 							if (m_pLeft->m_pValueType->m_pClassDecl != m_pRight->m_pValueType->m_pClassDecl)
 							{
-#line 443 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 442 "../../../Source/Core/AST/OperatorExpr.nll"
 								AddClassDeclReference(m_pRight->m_pValueType->m_pClassDecl, AST::OutputFile::SOURCE, false);
 								ClassDecl* pBaseClassDecl = m_pRight->m_pValueType->m_pClassDecl->GetBaseClassDecl(pValidator);
-#line 447 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 446 "../../../Source/Core/AST/OperatorExpr.nll"
 								while (pBaseClassDecl != 0)
 								{
-#line 449 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 448 "../../../Source/Core/AST/OperatorExpr.nll"
 									if (pBaseClassDecl == m_pLeft->m_pValueType->m_pClassDecl)
-#line 450 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 449 "../../../Source/Core/AST/OperatorExpr.nll"
 										break;
-#line 451 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 450 "../../../Source/Core/AST/OperatorExpr.nll"
 									pBaseClassDecl = pBaseClassDecl->GetBaseClassDecl(pValidator);
 								}
-#line 454 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 453 "../../../Source/Core/AST/OperatorExpr.nll"
 								if (pBaseClassDecl != m_pLeft->m_pValueType->m_pClassDecl)
 								{
 									InternalString* sTemp = new InternalString("Can't assign ");
-#line 457 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 456 "../../../Source/Core/AST/OperatorExpr.nll"
 									sTemp->AppendString(m_pRight->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
-#line 458 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 457 "../../../Source/Core/AST/OperatorExpr.nll"
 									sTemp->AppendString(" to ");
-#line 459 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 458 "../../../Source/Core/AST/OperatorExpr.nll"
 									sTemp->AppendString(m_pLeft->m_pValueType->m_pClassDecl->m_pNameToken->GetString());
-#line 461 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 460 "../../../Source/Core/AST/OperatorExpr.nll"
 									pValidator->AddError(sTemp->GetExternalString(), pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
 									if (sTemp) delete sTemp;
-#line 462 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 461 "../../../Source/Core/AST/OperatorExpr.nll"
 									return;
 								}
 							}
 						}
 						else
-#line 467 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 466 "../../../Source/Core/AST/OperatorExpr.nll"
 							if (m_pRight->m_pValueType->m_eType == ValueType::Type::NULL_VALUE)
 							{
 							}
 							else
-#line 471 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 470 "../../../Source/Core/AST/OperatorExpr.nll"
 								if (m_pRight->m_pValueType->m_eType == ValueType::Type::GENERIC_TYPE_DECL_VALUE)
 								{
 								}
 								else
 								{
-#line 477 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 476 "../../../Source/Core/AST/OperatorExpr.nll"
 									pValidator->AddError("Expected right side of = to also be CLASS_DECL_VALUE or NULL_VALUE\n", pOpToken->m_sFileName, pOpToken->m_nLine, pOpToken->m_nColumn);
-#line 478 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 477 "../../../Source/Core/AST/OperatorExpr.nll"
 									return;
 								}
 					}
-#line 482 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 481 "../../../Source/Core/AST/OperatorExpr.nll"
 					m_pValueType = m_pLeft->m_pValueType->Clone();
-#line 483 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 482 "../../../Source/Core/AST/OperatorExpr.nll"
 					return;
 				}
-#line 488 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 487 "../../../Source/Core/AST/OperatorExpr.nll"
 				m_pValueType = m_pLeft->m_pValueType->Clone();
-#line 489 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 488 "../../../Source/Core/AST/OperatorExpr.nll"
 				return;
 			}
 		}
-#line 493 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 492 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (m_pRight != 0)
 		{
-#line 495 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 494 "../../../Source/Core/AST/OperatorExpr.nll"
 			m_pRight->Validate(pValidator, 0);
-#line 496 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 495 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (m_pRight->m_pValueType == 0)
 			{
 			}
 		}
-#line 502 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 501 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (m_pParent != 0)
 		{
 		}
 	}
 
-#line 509 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 508 "../../../Source/Core/AST/OperatorExpr.nll"
 	const char* OperatorExpr::GetOperatorString(OperatorExpr::OperatorType eOperatorType)
 	{
-#line 511 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 510 "../../../Source/Core/AST/OperatorExpr.nll"
 		switch (eOperatorType)
 		{
 			case OperatorType::LOGICAL_AND:
 			{
-#line 513 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 512 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "&&";
 			}
 
 			case OperatorType::LESS_THAN:
 			{
-#line 514 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 513 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "<";
 			}
 
 			case OperatorType::LESS_THAN_OR_EQUAL:
 			{
-#line 515 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 514 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "<=";
 			}
 
 			case OperatorType::GREATER_THAN:
 			{
-#line 516 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 515 "../../../Source/Core/AST/OperatorExpr.nll"
 				return ">";
 			}
 
 			case OperatorType::GREATER_THAN_OR_EQUAL:
 			{
-#line 517 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 516 "../../../Source/Core/AST/OperatorExpr.nll"
 				return ">=";
 			}
 
 			case OperatorType::BITWISE_AND:
 			{
-#line 518 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 517 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "&";
 			}
 
 			case OperatorType::BITWISE_OR:
 			{
-#line 519 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 518 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "|";
 			}
 
 			case OperatorType::BITWISE_XOR:
 			{
-#line 520 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 519 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "^";
 			}
 
 			case OperatorType::DIVISION:
 			{
-#line 521 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 520 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "/";
 			}
 
 			case OperatorType::MEMBER_ACCESS:
 			{
-#line 522 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 521 "../../../Source/Core/AST/OperatorExpr.nll"
 				return ".";
 			}
 
 			case OperatorType::LEFT_SHIFT:
 			{
-#line 523 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 522 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "<<";
 			}
 
 			case OperatorType::RIGHT_SHIFT:
 			{
-#line 524 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 523 "../../../Source/Core/AST/OperatorExpr.nll"
 				return ">>";
 			}
 
 			case OperatorType::SCOPE_RESOLUTION:
 			{
-#line 525 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 524 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "::";
 			}
 
 			case OperatorType::EQUALITY:
 			{
-#line 526 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 525 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "==";
 			}
 
 			case OperatorType::ASSIGNMENT:
 			{
-#line 527 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 526 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "=";
 			}
 
 			case OperatorType::SUBTRACTION:
 			{
-#line 528 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 527 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "-";
 			}
 
 			case OperatorType::SUBTRACT_ASSIGN:
 			{
-#line 529 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 528 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "-=";
 			}
 
 			case OperatorType::DECREMENT:
 			{
-#line 530 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 529 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "--";
 			}
 
 			case OperatorType::MODULO:
 			{
-#line 531 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 530 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "%";
 			}
 
 			case OperatorType::INEQUALITY:
 			{
-#line 532 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 531 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "!=";
 			}
 
 			case OperatorType::LOGICAL_OR:
 			{
-#line 533 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 532 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "||";
 			}
 
 			case OperatorType::ADDITION:
 			{
-#line 534 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 533 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "+";
 			}
 
 			case OperatorType::ADD_ASSIGN:
 			{
-#line 535 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 534 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "+=";
 			}
 
 			case OperatorType::INCREMENT:
 			{
-#line 536 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 535 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "++";
 			}
 
 			case OperatorType::MULTIPLICATION:
 			{
-#line 537 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 536 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "*";
 			}
 
 			case OperatorType::MULTIPLY_ASSIGN:
 			{
-#line 538 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 537 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "*=";
 			}
 
 			case OperatorType::DIVIDE_ASSIGN:
 			{
-#line 539 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 538 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "/=";
 			}
 
 			case OperatorType::LEFT_SHIFT_ASSIGN:
 			{
-#line 540 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 539 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "<<=";
 			}
 
 			case OperatorType::RIGHT_SHIFT_ASSIGN:
 			{
-#line 541 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 540 "../../../Source/Core/AST/OperatorExpr.nll"
 				return ">>=";
 			}
 
 			default:
 			{
-#line 542 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 541 "../../../Source/Core/AST/OperatorExpr.nll"
 				return "?";
 			}
 
 		}
 	}
 
-#line 546 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 545 "../../../Source/Core/AST/OperatorExpr.nll"
 	void OperatorExpr::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
 		OperatorType eOp = GetOperatorType();
 		const char* sPad = " ";
-#line 550 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 549 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (eOp == OperatorType::DECREMENT || eOp == OperatorType::INCREMENT || eOp == OperatorType::MEMBER_ACCESS || eOp == OperatorType::SCOPE_RESOLUTION)
-#line 551 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 550 "../../../Source/Core/AST/OperatorExpr.nll"
 			sPad = "";
 		const char* sOperator = GetOperatorString(eOp);
-#line 554 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 553 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (eLanguage == AST::Language::CS && eOp == OperatorType::SCOPE_RESOLUTION)
-#line 555 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 554 "../../../Source/Core/AST/OperatorExpr.nll"
 			sOperator = ".";
-#line 556 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 555 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (eLanguage == AST::Language::CPP && eOp == OperatorType::MEMBER_ACCESS)
 		{
-#line 558 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 557 "../../../Source/Core/AST/OperatorExpr.nll"
 			sOperator = "->";
-#line 559 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 558 "../../../Source/Core/AST/OperatorExpr.nll"
 			if (m_pLeft->m_eType == AST::Type::BASE_EXPR)
-#line 560 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 559 "../../../Source/Core/AST/OperatorExpr.nll"
 				sOperator = "::";
 		}
-#line 563 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 562 "../../../Source/Core/AST/OperatorExpr.nll"
 		m_pLeft->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-#line 564 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 563 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOutputBuilder->m_sOut->Append(sPad);
-#line 565 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 564 "../../../Source/Core/AST/OperatorExpr.nll"
 		pOutputBuilder->m_sOut->Append(sOperator);
-#line 567 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 566 "../../../Source/Core/AST/OperatorExpr.nll"
 		if (m_pRight != 0)
 		{
-#line 569 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 568 "../../../Source/Core/AST/OperatorExpr.nll"
 			pOutputBuilder->m_sOut->Append(sPad);
-#line 570 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 569 "../../../Source/Core/AST/OperatorExpr.nll"
 			m_pRight->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		}
 	}
 
-#line 4 "../../../Source/Core/AST/OperatorExpr.nll"
+#line 3 "../../../Source/Core/AST/OperatorExpr.nll"
 	OperatorExpr::~OperatorExpr()
 	{
 		if (m_pOwnedOperatorToken) delete m_pOwnedOperatorToken;

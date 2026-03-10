@@ -22,12 +22,17 @@ namespace NumbatLogic
 #line 17 "../../../Source/Core/OutputBuilder.nll"
 				m_sOut.Append("#line ");
 #line 18 "../../../Source/Core/OutputBuilder.nll"
-				m_sOut.AppendInt(pToken.m_nLine + 1);
+				if (eLanguage == AST.Language.CS)
 #line 19 "../../../Source/Core/OutputBuilder.nll"
-				m_sOut.Append(" \"");
-#line 20 "../../../Source/Core/OutputBuilder.nll"
-				m_sOut.Append(pToken.m_sFileName.GetExternalString());
+					m_sOut.AppendInt(pToken.m_nLine + 1);
+				else
 #line 21 "../../../Source/Core/OutputBuilder.nll"
+					m_sOut.AppendInt(pToken.m_nLine);
+#line 22 "../../../Source/Core/OutputBuilder.nll"
+				m_sOut.Append(" \"");
+#line 23 "../../../Source/Core/OutputBuilder.nll"
+				m_sOut.Append(pToken.m_sFileName.GetExternalString());
+#line 24 "../../../Source/Core/OutputBuilder.nll"
 				m_sOut.Append("\"\n");
 			}
 		}

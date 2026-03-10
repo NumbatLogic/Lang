@@ -24,131 +24,131 @@ namespace NumbatLogic
 	class Util;
 	class InternalString;
 }
-#line 1 "../../../Source/Core/AST/WhileStmt.nll"
+#line 0 "../../../Source/Core/AST/WhileStmt.nll"
 namespace NumbatLogic
 {
-#line 4 "../../../Source/Core/AST/WhileStmt.nll"
-#line 9 "../../../Source/Core/AST/WhileStmt.nll"
+#line 3 "../../../Source/Core/AST/WhileStmt.nll"
+#line 8 "../../../Source/Core/AST/WhileStmt.nll"
 	WhileStmt::WhileStmt()
 	{
 		m_pExpression = 0;
 		m_pScope = 0;
-#line 11 "../../../Source/Core/AST/WhileStmt.nll"
+#line 10 "../../../Source/Core/AST/WhileStmt.nll"
 		m_bStatement = true;
 	}
 
-#line 14 "../../../Source/Core/AST/WhileStmt.nll"
+#line 13 "../../../Source/Core/AST/WhileStmt.nll"
 	WhileStmt* WhileStmt::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
 		Token* pWhileToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_WHILE);
-#line 19 "../../../Source/Core/AST/WhileStmt.nll"
+#line 18 "../../../Source/Core/AST/WhileStmt.nll"
 		if (pWhileToken == 0)
 		{
 			if (pTempOffset) delete pTempOffset;
-#line 20 "../../../Source/Core/AST/WhileStmt.nll"
+#line 19 "../../../Source/Core/AST/WhileStmt.nll"
 			return 0;
 		}
-#line 21 "../../../Source/Core/AST/WhileStmt.nll"
+#line 20 "../../../Source/Core/AST/WhileStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 23 "../../../Source/Core/AST/WhileStmt.nll"
+#line 22 "../../../Source/Core/AST/WhileStmt.nll"
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_LEFT) == 0)
 		{
-#line 25 "../../../Source/Core/AST/WhileStmt.nll"
+#line 24 "../../../Source/Core/AST/WhileStmt.nll"
 			Console::Log("expected left paren");
-#line 26 "../../../Source/Core/AST/WhileStmt.nll"
+#line 25 "../../../Source/Core/AST/WhileStmt.nll"
 			NumbatLogic::Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
-#line 27 "../../../Source/Core/AST/WhileStmt.nll"
+#line 26 "../../../Source/Core/AST/WhileStmt.nll"
 			return 0;
 		}
-#line 29 "../../../Source/Core/AST/WhileStmt.nll"
+#line 28 "../../../Source/Core/AST/WhileStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		AST* pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
-#line 32 "../../../Source/Core/AST/WhileStmt.nll"
+#line 31 "../../../Source/Core/AST/WhileStmt.nll"
 		if (pExpression == 0)
 		{
-#line 34 "../../../Source/Core/AST/WhileStmt.nll"
+#line 33 "../../../Source/Core/AST/WhileStmt.nll"
 			Console::Log("expected expression");
-#line 35 "../../../Source/Core/AST/WhileStmt.nll"
+#line 34 "../../../Source/Core/AST/WhileStmt.nll"
 			NumbatLogic::Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pExpression) delete pExpression;
-#line 36 "../../../Source/Core/AST/WhileStmt.nll"
+#line 35 "../../../Source/Core/AST/WhileStmt.nll"
 			return 0;
 		}
-#line 39 "../../../Source/Core/AST/WhileStmt.nll"
+#line 38 "../../../Source/Core/AST/WhileStmt.nll"
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT) == 0)
 		{
-#line 41 "../../../Source/Core/AST/WhileStmt.nll"
+#line 40 "../../../Source/Core/AST/WhileStmt.nll"
 			Console::Log("expected right paren");
-#line 42 "../../../Source/Core/AST/WhileStmt.nll"
+#line 41 "../../../Source/Core/AST/WhileStmt.nll"
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-#line 43 "../../../Source/Core/AST/WhileStmt.nll"
+#line 42 "../../../Source/Core/AST/WhileStmt.nll"
 			NumbatLogic::Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pExpression) delete pExpression;
-#line 44 "../../../Source/Core/AST/WhileStmt.nll"
+#line 43 "../../../Source/Core/AST/WhileStmt.nll"
 			return 0;
 		}
-#line 46 "../../../Source/Core/AST/WhileStmt.nll"
+#line 45 "../../../Source/Core/AST/WhileStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 		Scope* pScope = Scope::TryCreate(pTokenContainer, pTempOffset, true);
-#line 49 "../../../Source/Core/AST/WhileStmt.nll"
+#line 48 "../../../Source/Core/AST/WhileStmt.nll"
 		if (pScope == 0)
 		{
-#line 51 "../../../Source/Core/AST/WhileStmt.nll"
+#line 50 "../../../Source/Core/AST/WhileStmt.nll"
 			Console::Log("expected scope");
-#line 52 "../../../Source/Core/AST/WhileStmt.nll"
+#line 51 "../../../Source/Core/AST/WhileStmt.nll"
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
-#line 53 "../../../Source/Core/AST/WhileStmt.nll"
+#line 52 "../../../Source/Core/AST/WhileStmt.nll"
 			NumbatLogic::Assert::Plz(false);
 		}
 		WhileStmt* pWhileStmt = new WhileStmt();
-#line 58 "../../../Source/Core/AST/WhileStmt.nll"
+#line 57 "../../../Source/Core/AST/WhileStmt.nll"
 		pWhileStmt->m_eType = AST::Type::AST_WHILE_STMT;
-#line 59 "../../../Source/Core/AST/WhileStmt.nll"
+#line 58 "../../../Source/Core/AST/WhileStmt.nll"
 		pWhileStmt->m_pFirstToken = pWhileToken;
-#line 60 "../../../Source/Core/AST/WhileStmt.nll"
+#line 59 "../../../Source/Core/AST/WhileStmt.nll"
 		pWhileStmt->m_pExpression = pExpression;
-#line 61 "../../../Source/Core/AST/WhileStmt.nll"
+#line 60 "../../../Source/Core/AST/WhileStmt.nll"
 		pWhileStmt->m_pScope = pScope;
 		NumbatLogic::AST* __1929596708 = pExpression;
-#line 63 "../../../Source/Core/AST/WhileStmt.nll"
+#line 62 "../../../Source/Core/AST/WhileStmt.nll"
 		pExpression = 0;
-#line 63 "../../../Source/Core/AST/WhileStmt.nll"
+#line 62 "../../../Source/Core/AST/WhileStmt.nll"
 		pWhileStmt->AddChild(__1929596708);
 		NumbatLogic::Scope* __1530749729 = pScope;
-#line 64 "../../../Source/Core/AST/WhileStmt.nll"
+#line 63 "../../../Source/Core/AST/WhileStmt.nll"
 		pScope = 0;
-#line 64 "../../../Source/Core/AST/WhileStmt.nll"
+#line 63 "../../../Source/Core/AST/WhileStmt.nll"
 		pWhileStmt->AddChild(__1530749729);
-#line 66 "../../../Source/Core/AST/WhileStmt.nll"
+#line 65 "../../../Source/Core/AST/WhileStmt.nll"
 		pOffsetDatum->Set(pTempOffset);
 		NumbatLogic::WhileStmt* __2238546185 = pWhileStmt;
-#line 67 "../../../Source/Core/AST/WhileStmt.nll"
+#line 66 "../../../Source/Core/AST/WhileStmt.nll"
 		pWhileStmt = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pExpression) delete pExpression;
 		if (pScope) delete pScope;
-#line 67 "../../../Source/Core/AST/WhileStmt.nll"
+#line 66 "../../../Source/Core/AST/WhileStmt.nll"
 		return __2238546185;
 	}
 
-#line 70 "../../../Source/Core/AST/WhileStmt.nll"
+#line 69 "../../../Source/Core/AST/WhileStmt.nll"
 	void WhileStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
-#line 72 "../../../Source/Core/AST/WhileStmt.nll"
+#line 71 "../../../Source/Core/AST/WhileStmt.nll"
 		pOutputBuilder->UpdateSourceLocation(eLanguage, m_pFirstToken);
-#line 73 "../../../Source/Core/AST/WhileStmt.nll"
+#line 72 "../../../Source/Core/AST/WhileStmt.nll"
 		Util::Pad(nDepth, pOutputBuilder->m_sOut);
-#line 75 "../../../Source/Core/AST/WhileStmt.nll"
+#line 74 "../../../Source/Core/AST/WhileStmt.nll"
 		pOutputBuilder->m_sOut->Append("while (");
-#line 76 "../../../Source/Core/AST/WhileStmt.nll"
+#line 75 "../../../Source/Core/AST/WhileStmt.nll"
 		m_pExpression->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-#line 77 "../../../Source/Core/AST/WhileStmt.nll"
+#line 76 "../../../Source/Core/AST/WhileStmt.nll"
 		pOutputBuilder->m_sOut->Append(")\n");
-#line 78 "../../../Source/Core/AST/WhileStmt.nll"
+#line 77 "../../../Source/Core/AST/WhileStmt.nll"
 		m_pScope->Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 	}
 
