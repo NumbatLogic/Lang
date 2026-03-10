@@ -46,14 +46,12 @@ namespace NumbatLogic
 			string sName = m_pFirstToken.GetString();
 
 			AST pBase = this;
-			AST pChild = this;
 			if (pParent != null)
 			{
 				if (pParent.GetOperatorType() == OperatorExpr::OperatorType::MEMBER_ACCESS && pParent.m_pLeft.m_pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE)
 				{
 					AddClassDeclReference(pParent.m_pLeft.m_pValueType.m_pClassDecl, AST::OutputFile::SOURCE, false);
 					pBase = pParent.m_pLeft.m_pValueType.m_pClassDecl;
-					pChild = null;
 				}
 				else if (pParent.GetOperatorType() == OperatorExpr::OperatorType::SCOPE_RESOLUTION)
 				{
@@ -61,12 +59,10 @@ namespace NumbatLogic
 					{
 						AddClassDeclReference(pParent.m_pLeft.m_pValueType.m_pClassDecl, AST::OutputFile::SOURCE, false);
 						pBase = pParent.m_pLeft.m_pValueType.m_pClassDecl;
-						pChild = null;
 					}
 					else if (pParent.m_pLeft.m_pValueType.m_eType == ValueType::Type::ENUM_DECL)
 					{
 						pBase = pParent.m_pLeft.m_pValueType.m_pEnumDecl;
-						pChild = null;
 					}
 					else
 					{

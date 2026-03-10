@@ -425,7 +425,7 @@ namespace NumbatLogic
 	void Project::Output(AST::Language eLanguage, OutputFile eOutputFile)
 	{
 		InternalString* sOutFile = new InternalString("");
-		OutputBuilder* out = new OutputBuilder();
+		OutputBuilder* pOut = new OutputBuilder();
 #line 282 "../../../Source/Core/Project.nll"
 		for (int i = 0; i < m_pTranslationUnitVector->GetSize(); i++)
 		{
@@ -439,25 +439,25 @@ namespace NumbatLogic
 				TranslationUnit::ConvertFilePath(eLanguage, eOutputFile, sOutFile);
 				const char* sxOutFile = sOutFile->GetExternalString();
 #line 293 "../../../Source/Core/Project.nll"
-				out->m_sOut->Set("");
+				pOut->m_sOut->Set("");
 #line 294 "../../../Source/Core/Project.nll"
-				pTranslationUnit->Stringify(eLanguage, eOutputFile, 0, out);
+				pTranslationUnit->Stringify(eLanguage, eOutputFile, 0, pOut);
 				InternalString* sDirectory = File::GetFileDirectory(sxOutFile);
 #line 297 "../../../Source/Core/Project.nll"
 				File::CreateDirectory(sDirectory->GetExternalString());
 				InternalString* sTestFile = File::GetContents(sxOutFile);
 #line 301 "../../../Source/Core/Project.nll"
-				if (sTestFile == 0 || !out->m_sOut->IsEqual(sTestFile->GetExternalString()))
+				if (sTestFile == 0 || !pOut->m_sOut->IsEqual(sTestFile->GetExternalString()))
 				{
 #line 303 "../../../Source/Core/Project.nll"
-					File::PutContents(sxOutFile, out->m_sOut->GetExternalString());
+					File::PutContents(sxOutFile, pOut->m_sOut->GetExternalString());
 				}
 				if (sDirectory) delete sDirectory;
 				if (sTestFile) delete sTestFile;
 			}
 		}
 		if (sOutFile) delete sOutFile;
-		if (out) delete out;
+		if (pOut) delete pOut;
 	}
 
 #line 3 "../../../Source/Core/Project.nll"

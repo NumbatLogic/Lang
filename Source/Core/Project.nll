@@ -276,7 +276,7 @@ namespace NumbatLogic
 		public void Output(AST::Language eLanguage, OutputFile eOutputFile)
 		{
 			InternalString* sOutFile = own new InternalString("");
-			OutputBuilder* out = own new OutputBuilder();
+			OutputBuilder* pOut = own new OutputBuilder();
 			
 			//string sCombined = "";
 			for (int i = 0; i < m_pTranslationUnitVector.GetSize(); i++)
@@ -290,17 +290,17 @@ namespace NumbatLogic
 					
 					string sxOutFile = sOutFile.GetExternalString();
 
-					out.m_sOut.Set("");
-					pTranslationUnit.Stringify(eLanguage, eOutputFile, 0, out);
+					pOut.m_sOut.Set("");
+					pTranslationUnit.Stringify(eLanguage, eOutputFile, 0, pOut);
 
 					InternalString* sDirectory = own File::GetFileDirectory(sxOutFile);
 					File::CreateDirectory(sDirectory.GetExternalString());
 
 
 					InternalString* sTestFile = own File::GetContents(sxOutFile);
-					if (sTestFile == null || !out.m_sOut.IsEqual(sTestFile.GetExternalString()))
+					if (sTestFile == null || !pOut.m_sOut.IsEqual(sTestFile.GetExternalString()))
 					{
-						File::PutContents(sxOutFile, out.m_sOut.GetExternalString());
+						File::PutContents(sxOutFile, pOut.m_sOut.GetExternalString());
 					}
 
 					//Console::Log(sxOutFile);
