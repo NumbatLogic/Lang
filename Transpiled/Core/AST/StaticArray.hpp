@@ -18,7 +18,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/StaticArray.nll"
 	class StaticArray : public AST
 	{
-#line 5 "../../../Source/Core/AST/StaticArray.nll"
 		public: StaticArray();
 #line 10 "../../../Source/Core/AST/StaticArray.nll"
 		public: static StaticArray* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);

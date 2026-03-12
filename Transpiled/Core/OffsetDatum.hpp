@@ -10,7 +10,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/OffsetDatum.nll"
 	class OffsetDatum
 	{
-#line 5 "../../../Source/Core/OffsetDatum.nll"
 		public: int m_nOffset;
 #line 7 "../../../Source/Core/OffsetDatum.nll"
 		public: static OffsetDatum* Create(OffsetDatum* pOther);

@@ -17,7 +17,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/EnumDeclValue.nll"
 	class EnumDeclValue : public AST
 	{
-#line 5 "../../../Source/Core/AST/EnumDeclValue.nll"
 		public: AST* m_pForceValue;
 #line 7 "../../../Source/Core/AST/EnumDeclValue.nll"
 		public: EnumDeclValue(Token* pFirstToken);

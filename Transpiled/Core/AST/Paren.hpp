@@ -18,7 +18,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/Paren.nll"
 	class Paren : public AST
 	{
-#line 5 "../../../Source/Core/AST/Paren.nll"
 		public: static Paren* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 #line 33 "../../../Source/Core/AST/Paren.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);

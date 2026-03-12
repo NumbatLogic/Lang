@@ -1,10 +1,8 @@
 #line 1 "../../../Source/Core/Token.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/Token.nll"
 	class Token
 	{
-#line 5 "../../../Source/Core/Token.nll"
 		public enum Type
 		{
 			TOKEN_ANGLE_BRACKET_LEFT,
@@ -101,25 +99,18 @@ namespace NumbatLogic
 
 #line 98 "../../../Source/Core/Token.nll"
 		public Type m_eType;
-#line 99 "../../../Source/Core/Token.nll"
 		public InternalString m_sFileName;
-#line 100 "../../../Source/Core/Token.nll"
 		public int m_nLine;
-#line 101 "../../../Source/Core/Token.nll"
 		public int m_nColumn;
-#line 102 "../../../Source/Core/Token.nll"
 		public InternalString m_sValue;
 #line 104 "../../../Source/Core/Token.nll"
 		public void Stringify(InternalString sOut)
 		{
-#line 106 "../../../Source/Core/Token.nll"
 			sOut.Append(GetString());
 		}
 
-#line 109 "../../../Source/Core/Token.nll"
 		public string GetString()
 		{
-#line 111 "../../../Source/Core/Token.nll"
 			switch (m_eType)
 			{
 				case Type.TOKEN_ANGLE_BRACKET_LEFT:
@@ -637,25 +628,16 @@ namespace NumbatLogic
 			return "???";
 		}
 
-#line 204 "../../../Source/Core/Token.nll"
 		public Token Clone()
 		{
-#line 206 "../../../Source/Core/Token.nll"
 			Token pToken = new Token();
-#line 207 "../../../Source/Core/Token.nll"
 			pToken.m_eType = m_eType;
-#line 208 "../../../Source/Core/Token.nll"
 			pToken.m_sFileName = m_sFileName;
-#line 209 "../../../Source/Core/Token.nll"
 			pToken.m_nLine = m_nLine;
-#line 210 "../../../Source/Core/Token.nll"
 			pToken.m_nColumn = m_nColumn;
-#line 211 "../../../Source/Core/Token.nll"
 			if (m_sValue != null)
-#line 212 "../../../Source/Core/Token.nll"
 				pToken.m_sValue = new InternalString(m_sValue.GetExternalString());
 			NumbatLogic.Token __3778724684 = pToken;
-#line 214 "../../../Source/Core/Token.nll"
 			pToken = null;
 #line 214 "../../../Source/Core/Token.nll"
 			return __3778724684;

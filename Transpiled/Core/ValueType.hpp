@@ -27,7 +27,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/ValueType.nll"
 	class ValueType
 	{
-#line 5 "../../../Source/Core/ValueType.nll"
 		public: enum Type
 		{
 			VOID,
@@ -52,17 +51,14 @@ namespace NumbatLogic
 
 #line 36 "../../../Source/Core/ValueType.nll"
 		public: bool m_bConst;
-#line 37 "../../../Source/Core/ValueType.nll"
 		public: Type m_eType;
 #line 39 "../../../Source/Core/ValueType.nll"
 		public: ClassDecl* m_pClassDecl;
-#line 40 "../../../Source/Core/ValueType.nll"
 		public: TypeRef::PointerType m_ePointerType;
 #line 42 "../../../Source/Core/ValueType.nll"
 		public: GenericTypeDecl* m_pGenericTypeDecl;
 #line 44 "../../../Source/Core/ValueType.nll"
 		public: EnumDecl* m_pEnumDecl;
-#line 45 "../../../Source/Core/ValueType.nll"
 		public: EnumDeclValue* m_pEnumDeclValue;
 #line 48 "../../../Source/Core/ValueType.nll"
 		public: OwnedVector<ValueType*>* m_pGenericValueTypeVector;

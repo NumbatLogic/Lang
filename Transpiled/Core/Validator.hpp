@@ -28,13 +28,9 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/Validator.nll"
 	class ValidatorError
 	{
-#line 5 "../../../Source/Core/Validator.nll"
 		public: InternalString* m_sError;
-#line 6 "../../../Source/Core/Validator.nll"
 		public: InternalString* m_sFile;
-#line 7 "../../../Source/Core/Validator.nll"
 		public: int m_nLine;
-#line 8 "../../../Source/Core/Validator.nll"
 		public: int m_nColumn;
 #line 3 "../../../Source/Core/Validator.nll"
 		public: ValidatorError();
@@ -44,9 +40,7 @@ namespace NumbatLogic
 #line 11 "../../../Source/Core/Validator.nll"
 	class ValidatorScope
 	{
-#line 13 "../../../Source/Core/Validator.nll"
 		public: Scope* m_pScope;
-#line 14 "../../../Source/Core/Validator.nll"
 		public: Vector<VarDecl*>* m_pVarDeclVector;
 #line 16 "../../../Source/Core/Validator.nll"
 		public: ValidatorScope(Scope* pScope);
@@ -56,11 +50,8 @@ namespace NumbatLogic
 #line 23 "../../../Source/Core/Validator.nll"
 	class Validator
 	{
-#line 25 "../../../Source/Core/Validator.nll"
 		protected: Project* m_pProject;
-#line 26 "../../../Source/Core/Validator.nll"
 		protected: OwnedVector<ValidatorError*>* m_pValidatorErrorVector;
-#line 27 "../../../Source/Core/Validator.nll"
 		protected: OwnedVector<ValidatorScope*>* m_pValidatorScopeVector;
 #line 29 "../../../Source/Core/Validator.nll"
 		public: NamespaceNode* m_pCurrentNamespaceNode;

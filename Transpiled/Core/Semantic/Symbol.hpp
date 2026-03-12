@@ -11,7 +11,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/Semantic/Symbol.nll"
 	class Symbol
 	{
-#line 5 "../../../Source/Core/Semantic/Symbol.nll"
 		public: enum Kind
 		{
 			NAMESPACE,
@@ -26,7 +25,6 @@ namespace NumbatLogic
 			ENUM_VALUE,
 		};
 
-#line 19 "../../../Source/Core/Semantic/Symbol.nll"
 		public: Kind m_eKind;
 #line 22 "../../../Source/Core/Semantic/Symbol.nll"
 		public: const char* m_sShortName;

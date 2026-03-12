@@ -17,7 +17,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/IfStmt.nll"
 	class IfStmt : public AST
 	{
-#line 5 "../../../Source/Core/AST/IfStmt.nll"
 		public: IfStmt();
 #line 10 "../../../Source/Core/AST/IfStmt.nll"
 		public: static IfStmt* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);

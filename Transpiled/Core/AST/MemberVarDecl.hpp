@@ -20,11 +20,8 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/MemberVarDecl.nll"
 	class MemberVarDecl : public AST
 	{
-#line 5 "../../../Source/Core/AST/MemberVarDecl.nll"
 		public: AccessLevel* m_pAccessLevel;
-#line 6 "../../../Source/Core/AST/MemberVarDecl.nll"
 		public: bool m_bStatic;
-#line 7 "../../../Source/Core/AST/MemberVarDecl.nll"
 		public: VarDecl* m_pVarDecl;
 #line 9 "../../../Source/Core/AST/MemberVarDecl.nll"
 		public: MemberVarDecl();

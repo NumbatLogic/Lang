@@ -21,17 +21,11 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 	class MemberFunctionDecl : public AST
 	{
-#line 5 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		public: ClassDecl* m_pParentClassDecl;
-#line 6 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		public: AccessLevel* m_pAccessLevel;
-#line 7 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		public: FunctionDecl* m_pFunctionDecl;
-#line 8 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		public: bool m_bStatic;
-#line 9 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		public: bool m_bVirtual;
-#line 10 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		public: bool m_bOverride;
 #line 12 "../../../Source/Core/AST/MemberFunctionDecl.nll"
 		public: MemberFunctionDecl();

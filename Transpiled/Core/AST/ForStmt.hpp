@@ -16,7 +16,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/ForStmt.nll"
 	class ForStmt : public AST
 	{
-#line 5 "../../../Source/Core/AST/ForStmt.nll"
 		public: ForStmt();
 #line 11 "../../../Source/Core/AST/ForStmt.nll"
 		public: static ForStmt* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);

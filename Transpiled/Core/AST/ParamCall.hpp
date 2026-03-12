@@ -16,7 +16,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/ParamCall.nll"
 	class ParamCall : public AST
 	{
-#line 5 "../../../Source/Core/AST/ParamCall.nll"
 		public: static ParamCall* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 #line 59 "../../../Source/Core/AST/ParamCall.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);

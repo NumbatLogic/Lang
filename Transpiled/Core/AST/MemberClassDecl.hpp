@@ -20,11 +20,8 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/MemberClassDecl.nll"
 	class MemberClassDecl : public AST
 	{
-#line 5 "../../../Source/Core/AST/MemberClassDecl.nll"
 		public: ClassDecl* m_pParentClassDecl;
-#line 6 "../../../Source/Core/AST/MemberClassDecl.nll"
 		public: AccessLevel* m_pAccessLevel;
-#line 7 "../../../Source/Core/AST/MemberClassDecl.nll"
 		public: ClassDecl* m_pClassDecl;
 #line 9 "../../../Source/Core/AST/MemberClassDecl.nll"
 		public: MemberClassDecl();

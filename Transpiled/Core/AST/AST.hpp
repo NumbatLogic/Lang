@@ -21,7 +21,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/AST.nll"
 	class AST
 	{
-#line 5 "../../../Source/Core/AST/AST.nll"
 		public: enum Type
 		{
 			AST_ACCESS_LEVEL,
@@ -98,17 +97,12 @@ namespace NumbatLogic
 
 #line 74 "../../../Source/Core/AST/AST.nll"
 		public: Type m_eType;
-#line 75 "../../../Source/Core/AST/AST.nll"
 		public: Token* m_pFirstToken;
 #line 77 "../../../Source/Core/AST/AST.nll"
 		public: AST* m_pParent;
-#line 78 "../../../Source/Core/AST/AST.nll"
 		public: AST* m_pFirstChild;
-#line 79 "../../../Source/Core/AST/AST.nll"
 		public: AST* m_pLastChild;
-#line 80 "../../../Source/Core/AST/AST.nll"
 		public: AST* m_pPrevSibling;
-#line 81 "../../../Source/Core/AST/AST.nll"
 		public: AST* m_pNextSibling;
 #line 84 "../../../Source/Core/AST/AST.nll"
 		public: SymbolScope* m_pSymbolScope;

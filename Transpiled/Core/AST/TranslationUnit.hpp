@@ -26,11 +26,8 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/TranslationUnit.nll"
 	class ClassDeclReference
 	{
-#line 5 "../../../Source/Core/AST/TranslationUnit.nll"
 		public: ClassDecl* m_pClassDecl;
-#line 6 "../../../Source/Core/AST/TranslationUnit.nll"
 		public: AST::OutputFile m_eOutputFile;
-#line 7 "../../../Source/Core/AST/TranslationUnit.nll"
 		public: bool m_bForwardReference;
 #line 3 "../../../Source/Core/AST/TranslationUnit.nll"
 		public: ClassDeclReference();
@@ -38,11 +35,8 @@ namespace NumbatLogic
 #line 10 "../../../Source/Core/AST/TranslationUnit.nll"
 	class ReferenceNode
 	{
-#line 12 "../../../Source/Core/AST/TranslationUnit.nll"
 		public: InternalString* m_sName;
-#line 13 "../../../Source/Core/AST/TranslationUnit.nll"
 		public: OwnedVector<ReferenceNode*>* m_pChildNodeVector;
-#line 14 "../../../Source/Core/AST/TranslationUnit.nll"
 		public: Vector<ClassDeclReference*>* m_pChildClassVector;
 #line 16 "../../../Source/Core/AST/TranslationUnit.nll"
 		public: ReferenceNode(const char* sxName);
@@ -56,11 +50,8 @@ namespace NumbatLogic
 #line 83 "../../../Source/Core/AST/TranslationUnit.nll"
 	class TranslationUnit : public AST
 	{
-#line 85 "../../../Source/Core/AST/TranslationUnit.nll"
 		public: InternalString* m_sInFile;
-#line 86 "../../../Source/Core/AST/TranslationUnit.nll"
 		public: TokenContainer* m_pTokenContainer;
-#line 87 "../../../Source/Core/AST/TranslationUnit.nll"
 		public: OwnedVector<ClassDeclReference*>* m_pClassDeclReferenceVector;
 #line 89 "../../../Source/Core/AST/TranslationUnit.nll"
 		public: TranslationUnit(const char* sInFile);

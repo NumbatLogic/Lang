@@ -20,9 +20,7 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/CastExpr.nll"
 	class CastExpr : public AST
 	{
-#line 5 "../../../Source/Core/AST/CastExpr.nll"
 		public: TypeRef* m_pTypeRef;
-#line 6 "../../../Source/Core/AST/CastExpr.nll"
 		public: ParamCall* m_pParamCall;
 #line 8 "../../../Source/Core/AST/CastExpr.nll"
 		public: CastExpr();

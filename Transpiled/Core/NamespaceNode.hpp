@@ -21,13 +21,9 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/NamespaceNode.nll"
 	class NamespaceNode
 	{
-#line 5 "../../../Source/Core/NamespaceNode.nll"
 		public: InternalString* m_sName;
-#line 6 "../../../Source/Core/NamespaceNode.nll"
 		public: NamespaceNode* m_pParent;
-#line 7 "../../../Source/Core/NamespaceNode.nll"
 		public: OwnedVector<NamespaceNode*>* m_pChildVector;
-#line 8 "../../../Source/Core/NamespaceNode.nll"
 		public: Vector<NamespaceDecl*>* m_pNamespaceDeclVector;
 #line 10 "../../../Source/Core/NamespaceNode.nll"
 		public: NamespaceNode(InternalString* sName, NamespaceNode* pParent);

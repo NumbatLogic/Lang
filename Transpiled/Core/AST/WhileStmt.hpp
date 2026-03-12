@@ -17,9 +17,7 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/WhileStmt.nll"
 	class WhileStmt : public AST
 	{
-#line 5 "../../../Source/Core/AST/WhileStmt.nll"
 		public: AST* m_pExpression;
-#line 6 "../../../Source/Core/AST/WhileStmt.nll"
 		public: Scope* m_pScope;
 #line 8 "../../../Source/Core/AST/WhileStmt.nll"
 		public: WhileStmt();

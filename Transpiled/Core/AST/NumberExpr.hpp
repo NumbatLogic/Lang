@@ -19,7 +19,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/NumberExpr.nll"
 	class NumberExpr : public AST
 	{
-#line 5 "../../../Source/Core/AST/NumberExpr.nll"
 		public: NumberExpr(Token* pFirstToken);
 #line 11 "../../../Source/Core/AST/NumberExpr.nll"
 		public: static NumberExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);

@@ -22,7 +22,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/Semantic/SymbolScope.nll"
 	class SymbolScope
 	{
-#line 5 "../../../Source/Core/Semantic/SymbolScope.nll"
 		public: enum Kind
 		{
 			GLOBAL,

@@ -18,9 +18,7 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/TokenContainer.nll"
 	class TokenContainer
 	{
-#line 5 "../../../Source/Core/TokenContainer.nll"
 		public: OwnedVector<Token*>* m_pTokenVector;
-#line 6 "../../../Source/Core/TokenContainer.nll"
 		protected: InternalString* m_sTemp;
 #line 8 "../../../Source/Core/TokenContainer.nll"
 		public: TokenContainer();

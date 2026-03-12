@@ -19,9 +19,7 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/DelegateDecl.nll"
 	class DelegateDecl : public AST
 	{
-#line 5 "../../../Source/Core/AST/DelegateDecl.nll"
 		public: AccessLevel* m_pAccessLevel;
-#line 6 "../../../Source/Core/AST/DelegateDecl.nll"
 		public: FunctionDecl* m_pFunctionDecl;
 #line 8 "../../../Source/Core/AST/DelegateDecl.nll"
 		public: DelegateDecl();

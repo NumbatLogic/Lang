@@ -19,7 +19,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/TTHashExpr.nll"
 	class TTHashExpr : public AST
 	{
-#line 5 "../../../Source/Core/AST/TTHashExpr.nll"
 		protected: StringExpr* m_pStringExpr;
 #line 7 "../../../Source/Core/AST/TTHashExpr.nll"
 		public: TTHashExpr();

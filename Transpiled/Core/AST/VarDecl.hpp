@@ -23,13 +23,9 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/VarDecl.nll"
 	class VarDecl : public AST
 	{
-#line 5 "../../../Source/Core/AST/VarDecl.nll"
 		public: TypeRef* m_pTypeRef;
-#line 6 "../../../Source/Core/AST/VarDecl.nll"
 		public: Token* m_pNameToken;
-#line 7 "../../../Source/Core/AST/VarDecl.nll"
 		public: AST* m_pAssignment;
-#line 8 "../../../Source/Core/AST/VarDecl.nll"
 		public: bool m_bInline;
 #line 10 "../../../Source/Core/AST/VarDecl.nll"
 		public: Vector<AST*>* m_pArraySizeVector;

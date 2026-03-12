@@ -18,11 +18,8 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/TrinaryExpr.nll"
 	class TrinaryExpr : public AST
 	{
-#line 5 "../../../Source/Core/AST/TrinaryExpr.nll"
 		public: AST* m_pFirstExpression;
-#line 6 "../../../Source/Core/AST/TrinaryExpr.nll"
 		public: AST* m_pSecondExpression;
-#line 7 "../../../Source/Core/AST/TrinaryExpr.nll"
 		public: AST* m_pThirdExpression;
 #line 9 "../../../Source/Core/AST/TrinaryExpr.nll"
 		public: TrinaryExpr();
