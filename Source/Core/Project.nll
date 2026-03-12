@@ -44,7 +44,11 @@ namespace NumbatLogic
 
 		public void AddDirectory(string sDirectory, OwnedVector<InternalString> sDefineVector)
 		{
-			OwnedVector<InternalString>* sFileVector = own File::GetRecursiveFileVector(sDirectory);
+			OwnedVector<InternalString>* pAllowedSuffixVector = own new OwnedVector<InternalString>();
+			pAllowedSuffixVector.PushBack(new InternalString(".nll"));
+			pAllowedSuffixVector.PushBack(new InternalString(".nll.def"));
+
+			OwnedVector<InternalString>* sFileVector = own File::GetRecursiveFileVector(sDirectory, pAllowedSuffixVector);
 
 			while (sFileVector.GetSize() > 0)
 			{
