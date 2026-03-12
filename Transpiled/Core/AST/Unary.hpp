@@ -18,7 +18,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/Unary.nll"
 	class Unary : public AST
 	{
-#line 5 "../../../Source/Core/AST/Unary.nll"
 		public: AST* m_pExpression;
 #line 7 "../../../Source/Core/AST/Unary.nll"
 		public: static Unary* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);

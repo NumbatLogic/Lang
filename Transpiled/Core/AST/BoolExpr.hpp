@@ -18,7 +18,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/BoolExpr.nll"
 	class BoolExpr : public AST
 	{
-#line 5 "../../../Source/Core/AST/BoolExpr.nll"
 		public: static BoolExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 #line 19 "../../../Source/Core/AST/BoolExpr.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);

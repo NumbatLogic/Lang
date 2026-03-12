@@ -18,7 +18,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/NullExpr.nll"
 	class NullExpr : public AST
 	{
-#line 5 "../../../Source/Core/AST/NullExpr.nll"
 		public: NullExpr();
 #line 10 "../../../Source/Core/AST/NullExpr.nll"
 		public: static NullExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);

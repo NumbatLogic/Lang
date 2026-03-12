@@ -20,9 +20,7 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/NamespaceDecl.nll"
 	class NamespaceDecl : public AST
 	{
-#line 5 "../../../Source/Core/AST/NamespaceDecl.nll"
 		public: Token* m_pNameToken;
-#line 6 "../../../Source/Core/AST/NamespaceDecl.nll"
 		public: NamespaceNode* m_pNamespaceNode;
 #line 8 "../../../Source/Core/AST/NamespaceDecl.nll"
 		public: NamespaceDecl();

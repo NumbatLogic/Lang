@@ -19,7 +19,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/OperatorExpr.nll"
 	class OperatorExpr : public AST
 	{
-#line 5 "../../../Source/Core/AST/OperatorExpr.nll"
 		public: enum OperatorType
 		{
 			LOGICAL_AND,
@@ -56,13 +55,9 @@ namespace NumbatLogic
 
 #line 38 "../../../Source/Core/AST/OperatorExpr.nll"
 		public: OperatorExpr::OperatorType m_eOperatorType;
-#line 39 "../../../Source/Core/AST/OperatorExpr.nll"
 		public: Token* m_pFirstOperatorToken;
-#line 40 "../../../Source/Core/AST/OperatorExpr.nll"
 		public: Token* m_pOwnedOperatorToken;
-#line 41 "../../../Source/Core/AST/OperatorExpr.nll"
 		public: AST* m_pLeft;
-#line 42 "../../../Source/Core/AST/OperatorExpr.nll"
 		public: AST* m_pRight;
 #line 44 "../../../Source/Core/AST/OperatorExpr.nll"
 		public: OperatorExpr();

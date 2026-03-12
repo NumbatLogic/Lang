@@ -18,7 +18,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/RefExpr.nll"
 	class RefExpr : public AST
 	{
-#line 5 "../../../Source/Core/AST/RefExpr.nll"
 		public: AST* m_pExpression;
 #line 7 "../../../Source/Core/AST/RefExpr.nll"
 		public: static RefExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);

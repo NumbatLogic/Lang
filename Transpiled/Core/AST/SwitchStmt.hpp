@@ -19,13 +19,9 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/SwitchStmt.nll"
 	class SwitchStmt : public AST
 	{
-#line 5 "../../../Source/Core/AST/SwitchStmt.nll"
 		public: AST* m_pExpression;
-#line 6 "../../../Source/Core/AST/SwitchStmt.nll"
 		public: Vector<AST*>* m_pExpressionVector;
-#line 7 "../../../Source/Core/AST/SwitchStmt.nll"
 		public: Vector<AST*>* m_pStatementVector;
-#line 8 "../../../Source/Core/AST/SwitchStmt.nll"
 		public: AST* m_pDefaultStatement;
 #line 10 "../../../Source/Core/AST/SwitchStmt.nll"
 		public: SwitchStmt();

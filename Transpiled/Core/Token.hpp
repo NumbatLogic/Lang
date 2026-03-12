@@ -11,7 +11,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/Token.nll"
 	class Token
 	{
-#line 5 "../../../Source/Core/Token.nll"
 		public: enum Type
 		{
 			TOKEN_ANGLE_BRACKET_LEFT,
@@ -108,13 +107,9 @@ namespace NumbatLogic
 
 #line 98 "../../../Source/Core/Token.nll"
 		public: Type m_eType;
-#line 99 "../../../Source/Core/Token.nll"
 		public: InternalString* m_sFileName;
-#line 100 "../../../Source/Core/Token.nll"
 		public: int m_nLine;
-#line 101 "../../../Source/Core/Token.nll"
 		public: int m_nColumn;
-#line 102 "../../../Source/Core/Token.nll"
 		public: InternalString* m_sValue;
 #line 104 "../../../Source/Core/Token.nll"
 		public: void Stringify(InternalString* sOut);

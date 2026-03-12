@@ -18,9 +18,7 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/MemberEnumDecl.nll"
 	class MemberEnumDecl : public AST
 	{
-#line 5 "../../../Source/Core/AST/MemberEnumDecl.nll"
 		public: AccessLevel* m_pAccessLevel;
-#line 6 "../../../Source/Core/AST/MemberEnumDecl.nll"
 		public: EnumDecl* m_pEnumDecl;
 #line 8 "../../../Source/Core/AST/MemberEnumDecl.nll"
 		public: MemberEnumDecl();

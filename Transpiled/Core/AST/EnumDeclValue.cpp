@@ -30,18 +30,14 @@ namespace NumbatLogic
 		m_pForceValue = 0;
 #line 9 "../../../Source/Core/AST/EnumDeclValue.nll"
 		m_eType = AST::Type::ENUM_DECL_VALUE;
-#line 10 "../../../Source/Core/AST/EnumDeclValue.nll"
 		m_pFirstToken = pFirstToken;
 	}
 
-#line 13 "../../../Source/Core/AST/EnumDeclValue.nll"
 	EnumDeclValue* EnumDeclValue::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
-#line 15 "../../../Source/Core/AST/EnumDeclValue.nll"
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
 #line 17 "../../../Source/Core/AST/EnumDeclValue.nll"
 		Token* pToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
-#line 18 "../../../Source/Core/AST/EnumDeclValue.nll"
 		if (pToken == 0)
 		{
 			if (pTempOffset) delete pTempOffset;
@@ -54,19 +50,14 @@ namespace NumbatLogic
 		EnumDeclValue* pEnumDeclValue = new EnumDeclValue(pToken);
 #line 25 "../../../Source/Core/AST/EnumDeclValue.nll"
 		Token* pEqualsToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_EQUALS);
-#line 26 "../../../Source/Core/AST/EnumDeclValue.nll"
 		if (pEqualsToken != 0)
 		{
-#line 28 "../../../Source/Core/AST/EnumDeclValue.nll"
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 #line 30 "../../../Source/Core/AST/EnumDeclValue.nll"
 			pEnumDeclValue->m_pForceValue = AST::TryCreateExpression(pTokenContainer, pTempOffset);
-#line 31 "../../../Source/Core/AST/EnumDeclValue.nll"
 			if (pEnumDeclValue->m_pForceValue == 0)
 			{
-#line 33 "../../../Source/Core/AST/EnumDeclValue.nll"
 				Console::Log("expected to parse something...");
-#line 34 "../../../Source/Core/AST/EnumDeclValue.nll"
 				Assert::Plz(false);
 				if (pTempOffset) delete pTempOffset;
 				if (pEnumDeclValue) delete pEnumDeclValue;
@@ -84,17 +75,12 @@ namespace NumbatLogic
 		return __478499602;
 	}
 
-#line 43 "../../../Source/Core/AST/EnumDeclValue.nll"
 	void EnumDeclValue::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
-#line 45 "../../../Source/Core/AST/EnumDeclValue.nll"
 		m_pFirstToken->Stringify(pOutputBuilder->m_sOut);
-#line 46 "../../../Source/Core/AST/EnumDeclValue.nll"
 		if (m_pForceValue != 0)
 		{
-#line 48 "../../../Source/Core/AST/EnumDeclValue.nll"
 			pOutputBuilder->m_sOut->AppendString(" = ");
-#line 49 "../../../Source/Core/AST/EnumDeclValue.nll"
 			m_pForceValue->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		}
 	}

@@ -18,7 +18,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/CharExpr.nll"
 	class CharExpr : public AST
 	{
-#line 5 "../../../Source/Core/AST/CharExpr.nll"
 		public: static CharExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 #line 18 "../../../Source/Core/AST/CharExpr.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);

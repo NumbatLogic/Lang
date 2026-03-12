@@ -18,7 +18,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/OwnExpr.nll"
 	class OwnExpr : public AST
 	{
-#line 5 "../../../Source/Core/AST/OwnExpr.nll"
 		public: AST* m_pExpression;
 #line 7 "../../../Source/Core/AST/OwnExpr.nll"
 		public: static OwnExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);

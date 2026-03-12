@@ -21,9 +21,7 @@ namespace NumbatLogic
 #line 5 "../../../Source/Core/AST/ArrayLookup.nll"
 	class ArrayLookup : public AST
 	{
-#line 7 "../../../Source/Core/AST/ArrayLookup.nll"
 		public: AST* m_pExpression;
-#line 8 "../../../Source/Core/AST/ArrayLookup.nll"
 		public: Vector<AST*>* m_pIndexExpressionVector;
 #line 10 "../../../Source/Core/AST/ArrayLookup.nll"
 		public: ArrayLookup();

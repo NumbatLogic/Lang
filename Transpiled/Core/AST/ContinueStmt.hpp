@@ -18,7 +18,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/ContinueStmt.nll"
 	class ContinueStmt : public AST
 	{
-#line 5 "../../../Source/Core/AST/ContinueStmt.nll"
 		public: ContinueStmt();
 #line 10 "../../../Source/Core/AST/ContinueStmt.nll"
 		public: static ContinueStmt* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);

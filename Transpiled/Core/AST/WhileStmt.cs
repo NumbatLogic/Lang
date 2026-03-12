@@ -1,28 +1,21 @@
 #line 1 "../../../Source/Core/AST/WhileStmt.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/WhileStmt.nll"
 	class WhileStmt : AST
 	{
-#line 5 "../../../Source/Core/AST/WhileStmt.nll"
 		public AST m_pExpression;
-#line 6 "../../../Source/Core/AST/WhileStmt.nll"
 		public Scope m_pScope;
 #line 8 "../../../Source/Core/AST/WhileStmt.nll"
 		public WhileStmt()
 		{
-#line 10 "../../../Source/Core/AST/WhileStmt.nll"
 			m_bStatement = true;
 		}
 
-#line 13 "../../../Source/Core/AST/WhileStmt.nll"
 		public static WhileStmt TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
 		{
-#line 15 "../../../Source/Core/AST/WhileStmt.nll"
 			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
 #line 17 "../../../Source/Core/AST/WhileStmt.nll"
 			Token pWhileToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_KEYWORD_WHILE);
-#line 18 "../../../Source/Core/AST/WhileStmt.nll"
 			if (pWhileToken == null)
 			{
 #line 19 "../../../Source/Core/AST/WhileStmt.nll"
@@ -33,65 +26,44 @@ namespace NumbatLogic
 #line 22 "../../../Source/Core/AST/WhileStmt.nll"
 			if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_LEFT) == null)
 			{
-#line 24 "../../../Source/Core/AST/WhileStmt.nll"
 				Console.Log("expected left paren");
-#line 25 "../../../Source/Core/AST/WhileStmt.nll"
 				NumbatLogic.Assert.Plz(false);
-#line 26 "../../../Source/Core/AST/WhileStmt.nll"
 				return null;
 			}
-#line 28 "../../../Source/Core/AST/WhileStmt.nll"
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 #line 30 "../../../Source/Core/AST/WhileStmt.nll"
 			AST pExpression = AST.TryCreateExpression(pTokenContainer, pTempOffset);
-#line 31 "../../../Source/Core/AST/WhileStmt.nll"
 			if (pExpression == null)
 			{
-#line 33 "../../../Source/Core/AST/WhileStmt.nll"
 				Console.Log("expected expression");
-#line 34 "../../../Source/Core/AST/WhileStmt.nll"
 				NumbatLogic.Assert.Plz(false);
-#line 35 "../../../Source/Core/AST/WhileStmt.nll"
 				return null;
 			}
 #line 38 "../../../Source/Core/AST/WhileStmt.nll"
 			if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_RIGHT) == null)
 			{
-#line 40 "../../../Source/Core/AST/WhileStmt.nll"
 				Console.Log("expected right paren");
-#line 41 "../../../Source/Core/AST/WhileStmt.nll"
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-#line 42 "../../../Source/Core/AST/WhileStmt.nll"
 				NumbatLogic.Assert.Plz(false);
-#line 43 "../../../Source/Core/AST/WhileStmt.nll"
 				return null;
 			}
-#line 45 "../../../Source/Core/AST/WhileStmt.nll"
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 #line 47 "../../../Source/Core/AST/WhileStmt.nll"
 			Scope pScope = Scope.TryCreate(pTokenContainer, pTempOffset, true);
-#line 48 "../../../Source/Core/AST/WhileStmt.nll"
 			if (pScope == null)
 			{
-#line 50 "../../../Source/Core/AST/WhileStmt.nll"
 				Console.Log("expected scope");
-#line 51 "../../../Source/Core/AST/WhileStmt.nll"
 				Console.Log(pTokenContainer.StringifyOffset(pTempOffset));
-#line 52 "../../../Source/Core/AST/WhileStmt.nll"
 				NumbatLogic.Assert.Plz(false);
 			}
 #line 55 "../../../Source/Core/AST/WhileStmt.nll"
 			WhileStmt pWhileStmt = new WhileStmt();
 #line 57 "../../../Source/Core/AST/WhileStmt.nll"
 			pWhileStmt.m_eType = AST.Type.AST_WHILE_STMT;
-#line 58 "../../../Source/Core/AST/WhileStmt.nll"
 			pWhileStmt.m_pFirstToken = pWhileToken;
-#line 59 "../../../Source/Core/AST/WhileStmt.nll"
 			pWhileStmt.m_pExpression = pExpression;
-#line 60 "../../../Source/Core/AST/WhileStmt.nll"
 			pWhileStmt.m_pScope = pScope;
 			NumbatLogic.AST __1929596708 = pExpression;
-#line 62 "../../../Source/Core/AST/WhileStmt.nll"
 			pExpression = null;
 #line 62 "../../../Source/Core/AST/WhileStmt.nll"
 			pWhileStmt.AddChild(__1929596708);
@@ -109,20 +81,14 @@ namespace NumbatLogic
 			return __2238546185;
 		}
 
-#line 69 "../../../Source/Core/AST/WhileStmt.nll"
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-#line 71 "../../../Source/Core/AST/WhileStmt.nll"
 			pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
-#line 72 "../../../Source/Core/AST/WhileStmt.nll"
 			Util.Pad(nDepth, pOutputBuilder.m_sOut);
 #line 74 "../../../Source/Core/AST/WhileStmt.nll"
 			pOutputBuilder.m_sOut.Append("while (");
-#line 75 "../../../Source/Core/AST/WhileStmt.nll"
 			m_pExpression.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-#line 76 "../../../Source/Core/AST/WhileStmt.nll"
 			pOutputBuilder.m_sOut.Append(")\n");
-#line 77 "../../../Source/Core/AST/WhileStmt.nll"
 			m_pScope.Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 		}
 

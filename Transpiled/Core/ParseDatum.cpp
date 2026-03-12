@@ -22,22 +22,15 @@ namespace NumbatLogic
 		m_nColumn = 0;
 #line 17 "../../../Source/Core/ParseDatum.nll"
 		m_sInput = new InternalString("");
-#line 18 "../../../Source/Core/ParseDatum.nll"
 		m_sCurrentRead = new InternalString("");
-#line 19 "../../../Source/Core/ParseDatum.nll"
 		ClearCurrentRead();
-#line 20 "../../../Source/Core/ParseDatum.nll"
 		m_nLine = 1;
 	}
 
-#line 23 "../../../Source/Core/ParseDatum.nll"
 	void ParseDatum::ClearCurrentRead()
 	{
-#line 25 "../../../Source/Core/ParseDatum.nll"
 		m_sCurrentRead->Set("");
-#line 26 "../../../Source/Core/ParseDatum.nll"
 		m_nCurrentReadLine = m_nLine;
-#line 27 "../../../Source/Core/ParseDatum.nll"
 		m_nCurrentReadColumn = m_nColumn;
 	}
 

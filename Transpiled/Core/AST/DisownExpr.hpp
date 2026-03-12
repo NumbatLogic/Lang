@@ -24,9 +24,7 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/DisownExpr.nll"
 	class DisownExpr : public AST
 	{
-#line 5 "../../../Source/Core/AST/DisownExpr.nll"
 		public: AST* m_pExpression;
-#line 6 "../../../Source/Core/AST/DisownExpr.nll"
 		public: InternalString* m_sTempVarName;
 #line 8 "../../../Source/Core/AST/DisownExpr.nll"
 		public: DisownExpr();

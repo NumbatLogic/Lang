@@ -25,11 +25,8 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/Project.nll"
 	class Project : public AST
 	{
-#line 5 "../../../Source/Core/Project.nll"
 		public: Vector<TranslationUnit*>* m_pTranslationUnitVector;
-#line 6 "../../../Source/Core/Project.nll"
 		public: NamespaceNode* m_pRootNamespaceNode;
-#line 7 "../../../Source/Core/Project.nll"
 		public: Validator* m_pValidator;
 #line 9 "../../../Source/Core/Project.nll"
 		public: Project();

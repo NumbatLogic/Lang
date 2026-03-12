@@ -18,7 +18,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/BreakStmt.nll"
 	class BreakStmt : public AST
 	{
-#line 5 "../../../Source/Core/AST/BreakStmt.nll"
 		public: BreakStmt();
 #line 10 "../../../Source/Core/AST/BreakStmt.nll"
 		public: static BreakStmt* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);

@@ -22,9 +22,7 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/EnumDecl.nll"
 	class EnumDecl : public AST
 	{
-#line 5 "../../../Source/Core/AST/EnumDecl.nll"
 		public: Token* m_pNameToken;
-#line 6 "../../../Source/Core/AST/EnumDecl.nll"
 		public: Vector<EnumDeclValue*>* m_pEnumDeclValueVector;
 #line 8 "../../../Source/Core/AST/EnumDecl.nll"
 		public: EnumDecl();

@@ -21,9 +21,7 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/FunctionCall.nll"
 	class FunctionCall : public AST
 	{
-#line 5 "../../../Source/Core/AST/FunctionCall.nll"
 		public: const char* m_sMangledName;
-#line 6 "../../../Source/Core/AST/FunctionCall.nll"
 		public: ParamCall* m_pParamCall;
 #line 8 "../../../Source/Core/AST/FunctionCall.nll"
 		public: static FunctionCall* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);

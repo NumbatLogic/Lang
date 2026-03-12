@@ -18,7 +18,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/ReturnStmt.nll"
 	class ReturnStmt : public AST
 	{
-#line 5 "../../../Source/Core/AST/ReturnStmt.nll"
 		public: AST* m_pExpression;
 #line 7 "../../../Source/Core/AST/ReturnStmt.nll"
 		public: ReturnStmt();

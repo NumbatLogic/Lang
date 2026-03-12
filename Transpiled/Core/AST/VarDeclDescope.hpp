@@ -18,7 +18,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/VarDeclDescope.nll"
 	class VarDeclDescope : public AST
 	{
-#line 5 "../../../Source/Core/AST/VarDeclDescope.nll"
 		public: Vector<VarDecl*>* m_pVarDeclVector;
 #line 7 "../../../Source/Core/AST/VarDeclDescope.nll"
 		public: VarDeclDescope();

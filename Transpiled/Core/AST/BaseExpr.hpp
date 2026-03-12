@@ -19,7 +19,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/BaseExpr.nll"
 	class BaseExpr : public AST
 	{
-#line 5 "../../../Source/Core/AST/BaseExpr.nll"
 		public: ClassDecl* m_pBaseClassDecl;
 #line 7 "../../../Source/Core/AST/BaseExpr.nll"
 		public: static BaseExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);

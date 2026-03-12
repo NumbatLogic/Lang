@@ -27,7 +27,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/TypeRef.nll"
 	class TypeRef : public AST
 	{
-#line 5 "../../../Source/Core/AST/TypeRef.nll"
 		public: enum PointerType
 		{
 			SHARED,
@@ -36,17 +35,11 @@ namespace NumbatLogic
 			OWNED_PREASSSIGN,
 		};
 
-#line 13 "../../../Source/Core/AST/TypeRef.nll"
 		public: bool m_bConst;
-#line 14 "../../../Source/Core/AST/TypeRef.nll"
 		public: bool m_bRef;
-#line 15 "../../../Source/Core/AST/TypeRef.nll"
 		public: Token* m_pTypeToken;
-#line 16 "../../../Source/Core/AST/TypeRef.nll"
 		public: Vector<TypeRef*>* m_pGenericTypeRefVector;
-#line 17 "../../../Source/Core/AST/TypeRef.nll"
 		public: TypeRef* m_pChildTypeRef;
-#line 18 "../../../Source/Core/AST/TypeRef.nll"
 		public: PointerType m_ePointerType;
 #line 20 "../../../Source/Core/AST/TypeRef.nll"
 		public: Token* m_pCloneToken;

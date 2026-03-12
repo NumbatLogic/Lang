@@ -18,13 +18,9 @@ namespace NumbatLogic
 		m_pScope = 0;
 #line 35 "../../../Source/Core/Semantic/Symbol.nll"
 		m_eKind = Kind::VAR;
-#line 36 "../../../Source/Core/Semantic/Symbol.nll"
 		m_sShortName = "";
-#line 37 "../../../Source/Core/Semantic/Symbol.nll"
 		m_sQualifiedName = "";
-#line 38 "../../../Source/Core/Semantic/Symbol.nll"
 		m_pDeclAST = 0;
-#line 39 "../../../Source/Core/Semantic/Symbol.nll"
 		m_pScope = 0;
 	}
 

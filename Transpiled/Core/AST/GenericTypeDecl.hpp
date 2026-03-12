@@ -16,7 +16,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/GenericTypeDecl.nll"
 	class GenericTypeDecl : public AST
 	{
-#line 5 "../../../Source/Core/AST/GenericTypeDecl.nll"
 		public: static GenericTypeDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 #line 23 "../../../Source/Core/AST/GenericTypeDecl.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);

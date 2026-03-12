@@ -14,7 +14,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/CLI/CLI.nll"
 	class CLI
 	{
-#line 5 "../../../Source/CLI/CLI.nll"
 		public: static void Run(Vector<const char*>* sArgVector);
 	};
 }

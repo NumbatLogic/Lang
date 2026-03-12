@@ -22,7 +22,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/Identifier.nll"
 	class Identifier : public AST
 	{
-#line 5 "../../../Source/Core/AST/Identifier.nll"
 		public: Token* m_pNameToken;
 #line 7 "../../../Source/Core/AST/Identifier.nll"
 		public: static Identifier* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);

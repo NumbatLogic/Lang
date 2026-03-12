@@ -22,17 +22,11 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/FunctionDecl.nll"
 	class FunctionDecl : public AST
 	{
-#line 5 "../../../Source/Core/AST/FunctionDecl.nll"
 		public: TypeRef* m_pTypeRef;
-#line 6 "../../../Source/Core/AST/FunctionDecl.nll"
 		public: Token* m_pNameToken;
-#line 7 "../../../Source/Core/AST/FunctionDecl.nll"
 		public: const char* m_sMangledName;
-#line 8 "../../../Source/Core/AST/FunctionDecl.nll"
 		public: ParamDecl* m_pParamDecl;
-#line 9 "../../../Source/Core/AST/FunctionDecl.nll"
 		public: bool m_bConst;
-#line 10 "../../../Source/Core/AST/FunctionDecl.nll"
 		public: Scope* m_pScope;
 #line 12 "../../../Source/Core/AST/FunctionDecl.nll"
 		public: static FunctionDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, AST* pParent);

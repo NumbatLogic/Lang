@@ -24,7 +24,6 @@ namespace NumbatLogic
 #line 3 "../../../Source/Core/AST/ParamDecl.nll"
 	class ParamDecl : public AST
 	{
-#line 5 "../../../Source/Core/AST/ParamDecl.nll"
 		public: Vector<VarDecl*>* m_pParamVector;
 #line 7 "../../../Source/Core/AST/ParamDecl.nll"
 		public: ParamDecl();
