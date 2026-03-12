@@ -88,21 +88,26 @@ namespace NumbatLogic
 #line 45 "../../../Source/Core/Project.nll"
 	void Project::AddDirectory(const char* sDirectory, OwnedVector<InternalString*>* sDefineVector)
 	{
-		OwnedVector<InternalString*>* sFileVector = File::GetRecursiveFileVector(sDirectory);
-#line 49 "../../../Source/Core/Project.nll"
+		OwnedVector<InternalString*>* pAllowedSuffixVector = new OwnedVector<InternalString*>();
+		pAllowedSuffixVector->PushBack(new InternalString(".nll"));
+		pAllowedSuffixVector->PushBack(new InternalString(".nll.def"));
+#line 51 "../../../Source/Core/Project.nll"
+		OwnedVector<InternalString*>* sFileVector = File::GetRecursiveFileVector(sDirectory, pAllowedSuffixVector);
+#line 53 "../../../Source/Core/Project.nll"
 		while (sFileVector->GetSize() > 0)
 		{
 			InternalString* sFile = sFileVector->PopBack();
 			AddFile(sFile->GetExternalString(), sDefineVector);
 			if (sFile) delete sFile;
 		}
+		if (pAllowedSuffixVector) delete pAllowedSuffixVector;
 		if (sFileVector) delete sFileVector;
 	}
 
-#line 56 "../../../Source/Core/Project.nll"
+#line 60 "../../../Source/Core/Project.nll"
 	void Project::FullValidate()
 	{
-#line 59 "../../../Source/Core/Project.nll"
+#line 63 "../../../Source/Core/Project.nll"
 		for (int i = 0; i < m_pTranslationUnitVector->GetSize(); i++)
 		{
 			TranslationUnit* pTranslationUnit = m_pTranslationUnitVector->Get(i);
@@ -115,21 +120,21 @@ namespace NumbatLogic
 					pTranslationUnit->m_sInFile->Replace("/Shared", "/Source/Shared");
 			}
 		}
-#line 73 "../../../Source/Core/Project.nll"
+#line 77 "../../../Source/Core/Project.nll"
 		m_pValidator = new Validator(this);
 		if (!m_pValidator->Validate())
 		{
 		}
 	}
 
-#line 80 "../../../Source/Core/Project.nll"
+#line 84 "../../../Source/Core/Project.nll"
 	void Project::RecurseNamespaces(AST* pInAst, NamespaceDecl* pSecretNamespace, TranslationUnit* pSecretTranslationUnit)
 	{
 		if (pInAst->m_eType == AST::Type::AST_TRANSLATION_UNIT)
 		{
 			Assert::Plz(pSecretNamespace == 0);
 		}
-#line 87 "../../../Source/Core/Project.nll"
+#line 91 "../../../Source/Core/Project.nll"
 		AST* pChild = pInAst->m_pFirstChild;
 		while (pChild != 0)
 		{
@@ -140,58 +145,58 @@ namespace NumbatLogic
 				{
 					AST* pNextChild = pChild;
 					pNextChild = pChild->m_pNextSibling;
-#line 98 "../../../Source/Core/Project.nll"
+#line 102 "../../../Source/Core/Project.nll"
 					AST* pOwnedChild = 0;
 					pOwnedChild = pInAst->RemoveChild(pChild);
-#line 101 "../../../Source/Core/Project.nll"
+#line 105 "../../../Source/Core/Project.nll"
 					Assert::Plz(pOwnedChild != 0);
-#line 103 "../../../Source/Core/Project.nll"
+#line 107 "../../../Source/Core/Project.nll"
 					if (pSecretNamespace == 0)
-					{
-						NumbatLogic::AST* __2227940687 = pOwnedChild;
-#line 105 "../../../Source/Core/Project.nll"
-						pOwnedChild = 0;
-#line 105 "../../../Source/Core/Project.nll"
-						pSecretTranslationUnit->AddChild(__2227940687);
-					}
-					else
 					{
 						NumbatLogic::AST* __2227940691 = pOwnedChild;
 #line 109 "../../../Source/Core/Project.nll"
 						pOwnedChild = 0;
 #line 109 "../../../Source/Core/Project.nll"
-						pSecretNamespace->AddChild(__2227940691);
+						pSecretTranslationUnit->AddChild(__2227940691);
 					}
-#line 112 "../../../Source/Core/Project.nll"
+					else
+					{
+						NumbatLogic::AST* __2228006284 = pOwnedChild;
+#line 113 "../../../Source/Core/Project.nll"
+						pOwnedChild = 0;
+#line 113 "../../../Source/Core/Project.nll"
+						pSecretNamespace->AddChild(__2228006284);
+					}
+#line 116 "../../../Source/Core/Project.nll"
 					pChild = pNextChild;
 					if (pOwnedChild) delete pOwnedChild;
-#line 113 "../../../Source/Core/Project.nll"
+#line 117 "../../../Source/Core/Project.nll"
 					continue;
 				}
-#line 117 "../../../Source/Core/Project.nll"
+#line 121 "../../../Source/Core/Project.nll"
 				NamespaceDecl* pNextSecretNamespace = new NamespaceDecl();
 				pNextSecretNamespace->m_pFirstToken = pNamespaceDecl->m_pFirstToken;
 				pNextSecretNamespace->m_pNameToken = pNamespaceDecl->m_pNameToken;
 				pNextSecretNamespace->m_bSkipOutput = pNamespaceDecl->m_bSkipOutput;
-#line 122 "../../../Source/Core/Project.nll"
+#line 126 "../../../Source/Core/Project.nll"
 				NamespaceDecl* pTemp = pNextSecretNamespace;
 				if (pSecretNamespace == 0)
-				{
-					NumbatLogic::NamespaceDecl* __4258634956 = pNextSecretNamespace;
-#line 125 "../../../Source/Core/Project.nll"
-					pNextSecretNamespace = 0;
-#line 125 "../../../Source/Core/Project.nll"
-					pSecretTranslationUnit->AddChild(__4258634956);
-				}
-				else
 				{
 					NumbatLogic::NamespaceDecl* __4258634960 = pNextSecretNamespace;
 #line 129 "../../../Source/Core/Project.nll"
 					pNextSecretNamespace = 0;
 #line 129 "../../../Source/Core/Project.nll"
-					pSecretNamespace->AddChild(__4258634960);
+					pSecretTranslationUnit->AddChild(__4258634960);
 				}
-#line 132 "../../../Source/Core/Project.nll"
+				else
+				{
+					NumbatLogic::NamespaceDecl* __4258700553 = pNextSecretNamespace;
+#line 133 "../../../Source/Core/Project.nll"
+					pNextSecretNamespace = 0;
+#line 133 "../../../Source/Core/Project.nll"
+					pSecretNamespace->AddChild(__4258700553);
+				}
+#line 136 "../../../Source/Core/Project.nll"
 				RecurseNamespaces(pNamespaceDecl, pTemp, pSecretTranslationUnit);
 				if (pNextSecretNamespace) delete pNextSecretNamespace;
 			}
@@ -203,7 +208,7 @@ namespace NumbatLogic
 	{
 		AST* pChild = pParentAST->m_pFirstChild;
 		Vector<NamespaceDecl*>* pPreviousNamespaceDecls = new Vector<NamespaceDecl*>();
-#line 144 "../../../Source/Core/Project.nll"
+#line 148 "../../../Source/Core/Project.nll"
 		while (pChild != 0)
 		{
 			if (pChild->m_eType == AST::Type::NAMESPACE_DECL)
@@ -219,52 +224,52 @@ namespace NumbatLogic
 						AST* pNextSibling = pChild->m_pNextSibling;
 						AST* pOwnedChild = 0;
 						pOwnedChild = pParentAST->RemoveChild(pChild);
-#line 160 "../../../Source/Core/Project.nll"
-						AST* pSubChild = 0;
-						NumbatLogic::AST* __2552901754 = pOwnedChild->m_pFirstChild;
-#line 161 "../../../Source/Core/Project.nll"
-						pOwnedChild->m_pFirstChild = 0;
-#line 161 "../../../Source/Core/Project.nll"
-						pSubChild = __2552901754;
-						pOwnedChild->m_pLastChild = 0;
 #line 164 "../../../Source/Core/Project.nll"
+						AST* pSubChild = 0;
+						NumbatLogic::AST* __2552901758 = pOwnedChild->m_pFirstChild;
+#line 165 "../../../Source/Core/Project.nll"
+						pOwnedChild->m_pFirstChild = 0;
+#line 165 "../../../Source/Core/Project.nll"
+						pSubChild = __2552901758;
+						pOwnedChild->m_pLastChild = 0;
+#line 168 "../../../Source/Core/Project.nll"
 						if (pSubChild != 0)
 						{
 							pSubChild->m_pParent = pPreviousNamespace;
 							if (pPreviousNamespace->m_pFirstChild == 0)
 							{
-								NumbatLogic::AST* __2417707016 = pSubChild;
-#line 169 "../../../Source/Core/Project.nll"
+								NumbatLogic::AST* __2417772609 = pSubChild;
+#line 173 "../../../Source/Core/Project.nll"
 								pSubChild = 0;
-#line 169 "../../../Source/Core/Project.nll"
-								pPreviousNamespace->m_pFirstChild = __2417707016;
+#line 173 "../../../Source/Core/Project.nll"
+								pPreviousNamespace->m_pFirstChild = __2417772609;
 								pPreviousNamespace->m_pLastChild = pPreviousNamespace->m_pFirstChild;
 							}
 							else
 							{
-								NumbatLogic::AST* __2417772610 = pSubChild;
-#line 174 "../../../Source/Core/Project.nll"
+								NumbatLogic::AST* __2417772614 = pSubChild;
+#line 178 "../../../Source/Core/Project.nll"
 								pSubChild = 0;
-#line 174 "../../../Source/Core/Project.nll"
-								pPreviousNamespace->m_pLastChild->m_pNextSibling = __2417772610;
+#line 178 "../../../Source/Core/Project.nll"
+								pPreviousNamespace->m_pLastChild->m_pNextSibling = __2417772614;
 								pPreviousNamespace->m_pLastChild->m_pNextSibling->m_pPrevSibling = pPreviousNamespace->m_pLastChild;
 							}
-#line 178 "../../../Source/Core/Project.nll"
+#line 182 "../../../Source/Core/Project.nll"
 							while (pPreviousNamespace->m_pLastChild->m_pNextSibling != 0)
 							{
 								pPreviousNamespace->m_pLastChild = pPreviousNamespace->m_pLastChild->m_pNextSibling;
 								pPreviousNamespace->m_pLastChild->m_pParent = pPreviousNamespace;
 							}
 						}
-#line 185 "../../../Source/Core/Project.nll"
+#line 189 "../../../Source/Core/Project.nll"
 						pChild = pNextSibling;
 						if (pOwnedChild) delete pOwnedChild;
 						if (pSubChild) delete pSubChild;
-#line 186 "../../../Source/Core/Project.nll"
+#line 190 "../../../Source/Core/Project.nll"
 						break;
 					}
 				}
-#line 190 "../../../Source/Core/Project.nll"
+#line 194 "../../../Source/Core/Project.nll"
 				if (i == pPreviousNamespaceDecls->GetSize())
 				{
 					pPreviousNamespaceDecls->PushBack(pNamespaceDecl);
@@ -274,11 +279,11 @@ namespace NumbatLogic
 					continue;
 				}
 			}
-#line 200 "../../../Source/Core/Project.nll"
+#line 204 "../../../Source/Core/Project.nll"
 			pChild = pChild->m_pNextSibling;
 		}
 		{
-#line 204 "../../../Source/Core/Project.nll"
+#line 208 "../../../Source/Core/Project.nll"
 			for (int i = 0; i < pPreviousNamespaceDecls->GetSize(); i++)
 			{
 				NamespaceDecl* pPreviousNamespace = pPreviousNamespaceDecls->Get(i);
@@ -288,61 +293,61 @@ namespace NumbatLogic
 		if (pPreviousNamespaceDecls) delete pPreviousNamespaceDecls;
 	}
 
-#line 212 "../../../Source/Core/Project.nll"
+#line 216 "../../../Source/Core/Project.nll"
 	void Project::Amalgamate(const char* sAmalgamateFileName)
 	{
-#line 215 "../../../Source/Core/Project.nll"
+#line 219 "../../../Source/Core/Project.nll"
 		InternalString* sSecretFileName = new InternalString(sAmalgamateFileName);
 		sSecretFileName->Replace(".nll", "Secret.nll");
 		TranslationUnit* pSecretTranslationUnit = new TranslationUnit(sSecretFileName->GetExternalString());
 		TranslationUnit* pPublicTranslationUnit = new TranslationUnit(sAmalgamateFileName);
-#line 220 "../../../Source/Core/Project.nll"
+#line 224 "../../../Source/Core/Project.nll"
 		while (m_pFirstChild != 0)
 		{
 			AST* pAST = 0;
 			pAST = RemoveChild(m_pFirstChild);
-#line 225 "../../../Source/Core/Project.nll"
+#line 229 "../../../Source/Core/Project.nll"
 			TranslationUnit* pTranslationUnit = (TranslationUnit*)(pAST);
 			bool bSkipOutput = pTranslationUnit->m_sInFile->EndsWith(".nll.def");
-#line 229 "../../../Source/Core/Project.nll"
+#line 233 "../../../Source/Core/Project.nll"
 			while (pTranslationUnit->m_pTokenContainer->m_pTokenVector->GetSize() > 0)
 			{
 				Token* pToken = pTranslationUnit->m_pTokenContainer->m_pTokenVector->PopFront();
 				pToken->m_sFileName = pPublicTranslationUnit->m_sInFile;
-				NumbatLogic::Token* __3778855881 = pToken;
-#line 233 "../../../Source/Core/Project.nll"
+				NumbatLogic::Token* __3778855885 = pToken;
+#line 237 "../../../Source/Core/Project.nll"
 				pToken = 0;
-#line 233 "../../../Source/Core/Project.nll"
-				pPublicTranslationUnit->m_pTokenContainer->m_pTokenVector->PushBack(__3778855881);
+#line 237 "../../../Source/Core/Project.nll"
+				pPublicTranslationUnit->m_pTokenContainer->m_pTokenVector->PushBack(__3778855885);
 				if (pToken) delete pToken;
 			}
 			if (pPublicTranslationUnit->m_pFirstChild == 0)
 			{
-				NumbatLogic::AST* __4061733424 = pAST->m_pFirstChild;
-#line 238 "../../../Source/Core/Project.nll"
+				NumbatLogic::AST* __4061799017 = pAST->m_pFirstChild;
+#line 242 "../../../Source/Core/Project.nll"
 				pAST->m_pFirstChild = 0;
-#line 238 "../../../Source/Core/Project.nll"
-				pPublicTranslationUnit->m_pFirstChild = __4061733424;
+#line 242 "../../../Source/Core/Project.nll"
+				pPublicTranslationUnit->m_pFirstChild = __4061799017;
 				pPublicTranslationUnit->m_pLastChild = pPublicTranslationUnit->m_pFirstChild;
 			}
 			else
 			{
-				NumbatLogic::AST* __4061799018 = pAST->m_pFirstChild;
-#line 243 "../../../Source/Core/Project.nll"
+				NumbatLogic::AST* __4061799022 = pAST->m_pFirstChild;
+#line 247 "../../../Source/Core/Project.nll"
 				pAST->m_pFirstChild = 0;
-#line 243 "../../../Source/Core/Project.nll"
-				pPublicTranslationUnit->m_pLastChild->m_pNextSibling = __4061799018;
+#line 247 "../../../Source/Core/Project.nll"
+				pPublicTranslationUnit->m_pLastChild->m_pNextSibling = __4061799022;
 				pPublicTranslationUnit->m_pLastChild = pPublicTranslationUnit->m_pLastChild->m_pNextSibling;
 			}
-#line 247 "../../../Source/Core/Project.nll"
+#line 251 "../../../Source/Core/Project.nll"
 			while (true)
 			{
 				pPublicTranslationUnit->m_pLastChild->m_pParent = pPublicTranslationUnit;
 				pPublicTranslationUnit->m_pLastChild->m_bSkipOutput = bSkipOutput;
-#line 252 "../../../Source/Core/Project.nll"
+#line 256 "../../../Source/Core/Project.nll"
 				if (pPublicTranslationUnit->m_pLastChild->m_pNextSibling == 0)
 					break;
-#line 255 "../../../Source/Core/Project.nll"
+#line 259 "../../../Source/Core/Project.nll"
 				pPublicTranslationUnit->m_pLastChild = pPublicTranslationUnit->m_pLastChild->m_pNextSibling;
 			}
 			if (pAST) delete pAST;
@@ -351,52 +356,52 @@ namespace NumbatLogic
 		{
 			m_pTranslationUnitVector->PopBack();
 		}
-#line 264 "../../../Source/Core/Project.nll"
+#line 268 "../../../Source/Core/Project.nll"
 		NamespaceMerge(pPublicTranslationUnit);
-#line 267 "../../../Source/Core/Project.nll"
+#line 271 "../../../Source/Core/Project.nll"
 		RecurseNamespaces(pPublicTranslationUnit, 0, pSecretTranslationUnit);
-#line 269 "../../../Source/Core/Project.nll"
+#line 273 "../../../Source/Core/Project.nll"
 		m_pTranslationUnitVector->PushBack(pSecretTranslationUnit);
-		NumbatLogic::TranslationUnit* __1635259254 = pSecretTranslationUnit;
-#line 270 "../../../Source/Core/Project.nll"
+		NumbatLogic::TranslationUnit* __1635259258 = pSecretTranslationUnit;
+#line 274 "../../../Source/Core/Project.nll"
 		pSecretTranslationUnit = 0;
-#line 270 "../../../Source/Core/Project.nll"
-		AddChild(__1635259254);
-#line 272 "../../../Source/Core/Project.nll"
+#line 274 "../../../Source/Core/Project.nll"
+		AddChild(__1635259258);
+#line 276 "../../../Source/Core/Project.nll"
 		m_pTranslationUnitVector->PushBack(pPublicTranslationUnit);
-		NumbatLogic::TranslationUnit* __623321714 = pPublicTranslationUnit;
-#line 273 "../../../Source/Core/Project.nll"
+		NumbatLogic::TranslationUnit* __623321718 = pPublicTranslationUnit;
+#line 277 "../../../Source/Core/Project.nll"
 		pPublicTranslationUnit = 0;
-#line 273 "../../../Source/Core/Project.nll"
-		AddChild(__623321714);
+#line 277 "../../../Source/Core/Project.nll"
+		AddChild(__623321718);
 		if (sSecretFileName) delete sSecretFileName;
 		if (pSecretTranslationUnit) delete pSecretTranslationUnit;
 		if (pPublicTranslationUnit) delete pPublicTranslationUnit;
 	}
 
-#line 276 "../../../Source/Core/Project.nll"
+#line 280 "../../../Source/Core/Project.nll"
 	void Project::Output(AST::Language eLanguage, OutputFile eOutputFile)
 	{
 		InternalString* sOutFile = new InternalString("");
 		OutputBuilder* pOut = new OutputBuilder();
-#line 282 "../../../Source/Core/Project.nll"
+#line 286 "../../../Source/Core/Project.nll"
 		for (int i = 0; i < m_pTranslationUnitVector->GetSize(); i++)
 		{
 			TranslationUnit* pTranslationUnit = m_pTranslationUnitVector->Get(i);
 			sOutFile->Set(pTranslationUnit->m_sInFile->GetExternalString());
-#line 287 "../../../Source/Core/Project.nll"
+#line 291 "../../../Source/Core/Project.nll"
 			if (sOutFile->EndsWith(".nll"))
 			{
 				TranslationUnit::ConvertFilePath(eLanguage, eOutputFile, sOutFile);
-#line 291 "../../../Source/Core/Project.nll"
+#line 295 "../../../Source/Core/Project.nll"
 				const char* sxOutFile = sOutFile->GetExternalString();
-#line 293 "../../../Source/Core/Project.nll"
+#line 297 "../../../Source/Core/Project.nll"
 				pOut->m_sOut->Set("");
 				pTranslationUnit->Stringify(eLanguage, eOutputFile, 0, pOut);
-#line 296 "../../../Source/Core/Project.nll"
+#line 300 "../../../Source/Core/Project.nll"
 				InternalString* sDirectory = File::GetFileDirectory(sxOutFile);
 				File::CreateDirectory(sDirectory->GetExternalString());
-#line 300 "../../../Source/Core/Project.nll"
+#line 304 "../../../Source/Core/Project.nll"
 				InternalString* sTestFile = File::GetContents(sxOutFile);
 				if (sTestFile == 0 || !pOut->m_sOut->IsEqual(sTestFile->GetExternalString()))
 				{

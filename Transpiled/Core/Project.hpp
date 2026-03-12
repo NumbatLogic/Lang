@@ -34,15 +34,15 @@ namespace NumbatLogic
 		public: void AddFile(const char* sFile, OwnedVector<InternalString*>* sDefineVector);
 #line 45 "../../../Source/Core/Project.nll"
 		public: void AddDirectory(const char* sDirectory, OwnedVector<InternalString*>* sDefineVector);
-#line 56 "../../../Source/Core/Project.nll"
+#line 60 "../../../Source/Core/Project.nll"
 		public: void FullValidate();
-#line 80 "../../../Source/Core/Project.nll"
+#line 84 "../../../Source/Core/Project.nll"
 		protected: void RecurseNamespaces(AST* pInAst, NamespaceDecl* pSecretNamespace, TranslationUnit* pSecretTranslationUnit);
-#line 139 "../../../Source/Core/Project.nll"
+#line 143 "../../../Source/Core/Project.nll"
 		protected: void NamespaceMerge(AST* pParentAST);
-#line 212 "../../../Source/Core/Project.nll"
+#line 216 "../../../Source/Core/Project.nll"
 		public: void Amalgamate(const char* sAmalgamateFileName);
-#line 276 "../../../Source/Core/Project.nll"
+#line 280 "../../../Source/Core/Project.nll"
 		public: void Output(AST::Language eLanguage, OutputFile eOutputFile);
 #line 3 "../../../Source/Core/Project.nll"
 		public: virtual ~Project();
