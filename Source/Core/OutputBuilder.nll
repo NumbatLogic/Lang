@@ -3,24 +3,50 @@ namespace NumbatLogic
 	class OutputBuilder
 	{
 		public InternalString* m_sOut;
+		private int m_nLastOutOffset;
+		private int m_nLastLine;
+		private InternalString* m_sLastFileName;
 
 		public construct()
 		{
 			m_sOut = own new InternalString("");
+			m_nLastOutOffset = 0;
+			m_nLastLine = -1;
+			m_sLastFileName = own new InternalString("");
 		}
 
 		public void UpdateSourceLocation(AST::Language eLanguage, Token pToken)
 		{
 			if (eLanguage == AST::Language::CPP || eLanguage == AST::Language::C || eLanguage == AST::Language::H || eLanguage == AST::Language::CS)
 			{
-				m_sOut.Append("#line ");
+				// Update our notion of the current output line based on newlines since the last call.
+				int nLength = m_sOut.GetLength();
+				for (int i = m_nLastOutOffset; i < nLength; i = i + 1)
+				{
+					if (m_sOut.GetChar(i) == '\n')
+						m_nLastLine = m_nLastLine + 1;
+				}
+				m_nLastOutOffset = nLength;
+
+				int nDesiredLine = pToken.m_nLine;
 				if (eLanguage == AST::Language::CS && pToken.m_nLine == 0)
-					m_sOut.AppendInt(pToken.m_nLine+1);
-				else
-					m_sOut.AppendInt(pToken.m_nLine);
-				m_sOut.Append(" \"");
-				m_sOut.Append(pToken.m_sFileName.GetExternalString());
-				m_sOut.Append("\"\n");
+					nDesiredLine = pToken.m_nLine + 1;
+
+				bool bSameFile = m_sLastFileName.IsEqual(pToken.m_sFileName.GetExternalString());
+
+				// Only emit a new #line if the effective line or file would change.
+				if (!bSameFile || m_nLastLine != nDesiredLine)
+				{
+					m_sOut.Append("#line ");
+					m_sOut.AppendInt(nDesiredLine);
+					m_sOut.Append(" \"");
+					m_sOut.Append(pToken.m_sFileName.GetExternalString());
+					m_sOut.Append("\"\n");
+
+					m_sLastFileName.Set(pToken.m_sFileName.GetExternalString());
+					m_nLastOutOffset = m_sOut.GetLength();
+					m_nLastLine = nDesiredLine;
+				}
 			}
 		}
 	}
