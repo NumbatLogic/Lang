@@ -10,14 +10,14 @@ namespace NumbatLogic
 	class OffsetDatum;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/AccessLevel.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/AccessLevel.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/AccessLevel.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/AccessLevel.nll"
 	class AccessLevel : public AST
 	{
 		public: static AccessLevel* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 23 "../../../Source/Core/AST/AccessLevel.nll"
+#line 23 "/home/cliffya/git/Lang/Source/Core/AST/AccessLevel.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 	};
 }

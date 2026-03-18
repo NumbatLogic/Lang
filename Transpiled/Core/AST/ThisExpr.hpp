@@ -12,16 +12,16 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/ThisExpr.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/ThisExpr.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/ThisExpr.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/ThisExpr.nll"
 	class ThisExpr : public AST
 	{
 		public: static ThisExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 23 "../../../Source/Core/AST/ThisExpr.nll"
+#line 23 "/home/cliffya/git/Lang/Source/Core/AST/ThisExpr.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 45 "../../../Source/Core/AST/ThisExpr.nll"
+#line 45 "/home/cliffya/git/Lang/Source/Core/AST/ThisExpr.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 	};
 }

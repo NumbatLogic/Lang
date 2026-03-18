@@ -20,52 +20,52 @@ namespace NumbatLogic
 	class TranslationUnit;
 	class AST;
 }
-#line 0 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 	class ClassDeclReference
 	{
 		public: ClassDecl* m_pClassDecl;
 		public: AST::OutputFile m_eOutputFile;
 		public: bool m_bForwardReference;
-#line 3 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: ClassDeclReference();
 	};
-#line 10 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 10 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 	class ReferenceNode
 	{
 		public: InternalString* m_sName;
 		public: OwnedVector<ReferenceNode*>* m_pChildNodeVector;
 		public: Vector<ClassDeclReference*>* m_pChildClassVector;
-#line 16 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 16 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: ReferenceNode(const char* sxName);
-#line 23 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 23 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: ReferenceNode* GetOrCreateChildNode(const char* sxName);
-#line 39 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 39 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: void Stringify(AST::Language eLanguage, AST::OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 10 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 10 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: virtual ~ReferenceNode();
 	};
-#line 83 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 83 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 	class TranslationUnit : public AST
 	{
 		public: InternalString* m_sInFile;
 		public: TokenContainer* m_pTokenContainer;
 		public: OwnedVector<ClassDeclReference*>* m_pClassDeclReferenceVector;
-#line 89 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 89 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: TranslationUnit(const char* sInFile);
-#line 99 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 99 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: static TranslationUnit* Create(const char* sInFile, OwnedVector<InternalString*>* sDefineVector);
-#line 124 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 128 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: virtual void AddClassDeclReference(ClassDecl* pClassDecl, OutputFile eOutputFile, bool bForwardReference);
-#line 154 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 158 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: static void ConvertFilePath(Language eLanguage, OutputFile eOutputFile, InternalString* sPath);
-#line 237 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 243 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: InternalString* RetargetRelativePath(Language eLanguage, OutputFile eOutputFile, const char* sxFrom, const char* sxTo);
-#line 296 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 302 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 83 "../../../Source/Core/AST/TranslationUnit.nll"
+#line 83 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: virtual ~TranslationUnit();
 	};
 }

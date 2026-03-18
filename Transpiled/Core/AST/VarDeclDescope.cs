@@ -1,10 +1,10 @@
-#line 1 "../../../Source/Core/AST/VarDeclDescope.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/AST/VarDeclDescope.nll"
 namespace NumbatLogic
 {
 	class VarDeclDescope : AST
 	{
 		public Vector<VarDecl> m_pVarDeclVector;
-#line 7 "../../../Source/Core/AST/VarDeclDescope.nll"
+#line 7 "/home/cliffya/git/Lang/Source/Core/AST/VarDeclDescope.nll"
 		public VarDeclDescope()
 		{
 			m_eType = AST.Type.AST_VAR_DECL_DESCOPE;
@@ -17,7 +17,7 @@ namespace NumbatLogic
 			{
 				VarDecl pVarDecl = m_pVarDeclVector.Get(j);
 				string sxName = pVarDecl.m_pNameToken.GetString();
-#line 20 "../../../Source/Core/AST/VarDeclDescope.nll"
+#line 20 "/home/cliffya/git/Lang/Source/Core/AST/VarDeclDescope.nll"
 				if (pVarDecl.m_pArraySizeVector != null)
 				{
 					if (eLanguage == AST.Language.CPP)
@@ -37,7 +37,7 @@ namespace NumbatLogic
 							pOutputBuilder.m_sOut.AppendInt(i);
 							pOutputBuilder.m_sOut.Append("++)\n");
 						}
-#line 40 "../../../Source/Core/AST/VarDeclDescope.nll"
+#line 40 "/home/cliffya/git/Lang/Source/Core/AST/VarDeclDescope.nll"
 						Util.Pad(nDepth + nArraySizeSize, pOutputBuilder.m_sOut);
 						pOutputBuilder.m_sOut.Append("delete ");
 						pOutputBuilder.m_sOut.Append(sxName);
@@ -62,7 +62,7 @@ namespace NumbatLogic
 						pOutputBuilder.m_sOut.Append(";\n");
 					}
 					else
-#line 63 "../../../Source/Core/AST/VarDeclDescope.nll"
+#line 63 "/home/cliffya/git/Lang/Source/Core/AST/VarDeclDescope.nll"
 						if (eLanguage == AST.Language.CS)
 						{
 							Project pProject = GetProject();
@@ -84,7 +84,7 @@ namespace NumbatLogic
 			}
 		}
 
-#line 3 "../../../Source/Core/AST/VarDeclDescope.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/VarDeclDescope.nll"
 		~VarDeclDescope()
 		{
 		}

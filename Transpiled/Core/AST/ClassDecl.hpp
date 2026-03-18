@@ -27,10 +27,10 @@ namespace NumbatLogic
 	class InternalString;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/ClassDecl.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/ClassDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 	class ClassDecl : public AST
 	{
 		public: Token* m_pNameToken;
@@ -38,33 +38,33 @@ namespace NumbatLogic
 		public: TypeRef* m_pBaseTypeRef;
 		public: OwnedVector<GenericTypeDecl*>* m_pGenericTypeDeclVector;
 		public: NamespaceNode* m_pNamespaceNode;
-#line 11 "../../../Source/Core/AST/ClassDecl.nll"
+#line 11 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		protected: ClassDecl* m_pBaseClassDecl;
-#line 13 "../../../Source/Core/AST/ClassDecl.nll"
+#line 13 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		protected: Token* m_pAccessLevelToken;
 		protected: Token* m_pTypeToken;
-#line 16 "../../../Source/Core/AST/ClassDecl.nll"
+#line 16 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		protected: Token* m_pConstructorAccessLevelToken;
 		protected: Token* m_pConstructorTypeToken;
-#line 19 "../../../Source/Core/AST/ClassDecl.nll"
+#line 19 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		public: ClassDecl();
-#line 28 "../../../Source/Core/AST/ClassDecl.nll"
+#line 28 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		public: static ClassDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, AST* pParent);
-#line 186 "../../../Source/Core/AST/ClassDecl.nll"
+#line 186 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		public: virtual void PreValidate(Validator* pValidator, OperatorExpr* pParent);
-#line 191 "../../../Source/Core/AST/ClassDecl.nll"
+#line 191 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 336 "../../../Source/Core/AST/ClassDecl.nll"
+#line 336 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		public: ClassDecl* GetBaseClassDeclForScopeLookup(Resolver* pResolver);
-#line 387 "../../../Source/Core/AST/ClassDecl.nll"
+#line 387 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		public: ClassDecl* GetBaseClassDecl(Validator* pValidator);
-#line 411 "../../../Source/Core/AST/ClassDecl.nll"
+#line 411 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		public: void AppendFullyQualifiedName(InternalString* sOut);
-#line 427 "../../../Source/Core/AST/ClassDecl.nll"
+#line 427 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		public: void StringifyTemplateThing(Language eLanguage, OutputFile eOutputFile, OutputBuilder* pOutputBuilder);
-#line 440 "../../../Source/Core/AST/ClassDecl.nll"
+#line 440 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 3 "../../../Source/Core/AST/ClassDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		public: virtual ~ClassDecl();
 	};
 }

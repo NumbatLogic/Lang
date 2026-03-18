@@ -12,20 +12,20 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/DeleteStmt.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/DeleteStmt.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/DeleteStmt.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/DeleteStmt.nll"
 	class DeleteStmt : public AST
 	{
 		public: AST* m_pExpression;
-#line 7 "../../../Source/Core/AST/DeleteStmt.nll"
+#line 7 "/home/cliffya/git/Lang/Source/Core/AST/DeleteStmt.nll"
 		public: DeleteStmt();
-#line 13 "../../../Source/Core/AST/DeleteStmt.nll"
+#line 13 "/home/cliffya/git/Lang/Source/Core/AST/DeleteStmt.nll"
 		public: static DeleteStmt* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 41 "../../../Source/Core/AST/DeleteStmt.nll"
+#line 41 "/home/cliffya/git/Lang/Source/Core/AST/DeleteStmt.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 55 "../../../Source/Core/AST/DeleteStmt.nll"
+#line 55 "/home/cliffya/git/Lang/Source/Core/AST/DeleteStmt.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 	};
 }

@@ -5,10 +5,10 @@ namespace NumbatLogic
 	class AST;
 	class SymbolScope;
 }
-#line 0 "../../../Source/Core/Semantic/Symbol.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/Semantic/Symbol.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/Semantic/Symbol.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/Semantic/Symbol.nll"
 	class Symbol
 	{
 		public: enum Kind
@@ -26,15 +26,15 @@ namespace NumbatLogic
 		};
 
 		public: Kind m_eKind;
-#line 22 "../../../Source/Core/Semantic/Symbol.nll"
+#line 22 "/home/cliffya/git/Lang/Source/Core/Semantic/Symbol.nll"
 		public: const char* m_sShortName;
-#line 25 "../../../Source/Core/Semantic/Symbol.nll"
+#line 25 "/home/cliffya/git/Lang/Source/Core/Semantic/Symbol.nll"
 		public: const char* m_sQualifiedName;
-#line 28 "../../../Source/Core/Semantic/Symbol.nll"
+#line 28 "/home/cliffya/git/Lang/Source/Core/Semantic/Symbol.nll"
 		public: AST* m_pDeclAST;
-#line 31 "../../../Source/Core/Semantic/Symbol.nll"
+#line 31 "/home/cliffya/git/Lang/Source/Core/Semantic/Symbol.nll"
 		public: SymbolScope* m_pScope;
-#line 33 "../../../Source/Core/Semantic/Symbol.nll"
+#line 33 "/home/cliffya/git/Lang/Source/Core/Semantic/Symbol.nll"
 		public: Symbol();
 	};
 }

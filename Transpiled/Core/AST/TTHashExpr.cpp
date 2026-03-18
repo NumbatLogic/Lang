@@ -26,32 +26,32 @@ namespace NumbatLogic
 	class InternalString;
 	class ExternalString;
 }
-#line 0 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/TTHashExpr.nll"
-#line 7 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
+#line 7 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 	TTHashExpr::TTHashExpr()
 	{
 		m_pStringExpr = 0;
-#line 9 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 9 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		m_eType = AST::Type::AST_TTHASH_EXP;
 	}
 
 	TTHashExpr* TTHashExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
-#line 16 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 16 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		Token* pTTHashToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_TTHASH);
 		if (pTTHashToken == 0)
 		{
 			if (pTempOffset) delete pTempOffset;
-#line 18 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 18 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 			return 0;
 		}
-#line 19 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 19 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 21 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 21 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		Token* pOpenToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_LEFT);
 		if (pOpenToken == 0)
 		{
@@ -59,11 +59,11 @@ namespace NumbatLogic
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
-#line 27 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 27 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 31 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 31 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		StringExpr* pStringExpr = StringExpr::TryCreate(pTokenContainer, pTempOffset);
 		if (pStringExpr == 0)
 		{
@@ -72,10 +72,10 @@ namespace NumbatLogic
 			NumbatLogic::Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pStringExpr) delete pStringExpr;
-#line 37 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 37 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 			return 0;
 		}
-#line 40 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 40 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		Token* pCloseToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT);
 		if (pCloseToken == 0)
 		{
@@ -84,27 +84,27 @@ namespace NumbatLogic
 			NumbatLogic::Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pStringExpr) delete pStringExpr;
-#line 46 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 46 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 51 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 51 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		TTHashExpr* pTTHashExpr = new TTHashExpr();
 		pTTHashExpr->m_pFirstToken = pTTHashToken;
 		pTTHashExpr->m_pStringExpr = pStringExpr;
 		NumbatLogic::StringExpr* __1742876149 = pStringExpr;
-#line 54 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 54 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		pStringExpr = 0;
-#line 54 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 54 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		pTTHashExpr->AddChild(__1742876149);
-#line 56 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 56 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		pOffsetDatum->Set(pTempOffset);
 		NumbatLogic::TTHashExpr* __4133333365 = pTTHashExpr;
-#line 57 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 57 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		pTTHashExpr = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pStringExpr) delete pStringExpr;
-#line 57 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 57 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		return __4133333365;
 	}
 

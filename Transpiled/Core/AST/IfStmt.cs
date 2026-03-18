@@ -1,4 +1,4 @@
-#line 1 "../../../Source/Core/AST/IfStmt.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 namespace NumbatLogic
 {
 	class IfStmt : AST
@@ -11,16 +11,16 @@ namespace NumbatLogic
 		public static IfStmt TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
 		{
 			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
-#line 14 "../../../Source/Core/AST/IfStmt.nll"
+#line 14 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			Token pIfToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_KEYWORD_IF);
 			if (pIfToken == null)
 			{
-#line 16 "../../../Source/Core/AST/IfStmt.nll"
+#line 16 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 				return null;
 			}
-#line 17 "../../../Source/Core/AST/IfStmt.nll"
+#line 17 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 19 "../../../Source/Core/AST/IfStmt.nll"
+#line 19 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_LEFT) == null)
 			{
 				Console.Log("expected left paren");
@@ -29,7 +29,7 @@ namespace NumbatLogic
 				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 28 "../../../Source/Core/AST/IfStmt.nll"
+#line 28 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			AST pCondition = AST.TryCreateExpression(pTokenContainer, pTempOffset);
 			if (pCondition == null)
 			{
@@ -38,7 +38,7 @@ namespace NumbatLogic
 				NumbatLogic.Assert.Plz(false);
 				return null;
 			}
-#line 37 "../../../Source/Core/AST/IfStmt.nll"
+#line 37 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_RIGHT) == null)
 			{
 				Console.Log("expected right paren");
@@ -47,7 +47,7 @@ namespace NumbatLogic
 				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 46 "../../../Source/Core/AST/IfStmt.nll"
+#line 46 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			Scope pThenScope = Scope.TryCreate(pTokenContainer, pTempOffset, true);
 			if (pThenScope == null)
 			{
@@ -56,7 +56,7 @@ namespace NumbatLogic
 				NumbatLogic.Assert.Plz(false);
 				return null;
 			}
-#line 55 "../../../Source/Core/AST/IfStmt.nll"
+#line 55 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			Scope pElseScope = null;
 			if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_KEYWORD_ELSE) != null)
 			{
@@ -70,33 +70,33 @@ namespace NumbatLogic
 					return null;
 				}
 			}
-#line 69 "../../../Source/Core/AST/IfStmt.nll"
+#line 69 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			IfStmt pIfStmt = new IfStmt();
-#line 71 "../../../Source/Core/AST/IfStmt.nll"
+#line 71 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			pIfStmt.m_eType = AST.Type.AST_IF_STMT;
 			pIfStmt.m_pFirstToken = pIfToken;
 			NumbatLogic.AST __86400392 = pCondition;
 			pCondition = null;
-#line 74 "../../../Source/Core/AST/IfStmt.nll"
+#line 74 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			pIfStmt.AddChild(__86400392);
 			NumbatLogic.Scope __3484778949 = pThenScope;
-#line 75 "../../../Source/Core/AST/IfStmt.nll"
+#line 75 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			pThenScope = null;
-#line 75 "../../../Source/Core/AST/IfStmt.nll"
+#line 75 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			pIfStmt.AddChild(__3484778949);
 			if (pElseScope != null)
 			{
 				NumbatLogic.Scope __1642439819 = pElseScope;
-#line 77 "../../../Source/Core/AST/IfStmt.nll"
+#line 77 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 				pElseScope = null;
-#line 77 "../../../Source/Core/AST/IfStmt.nll"
+#line 77 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 				pIfStmt.AddChild(__1642439819);
 			}
 			pOffsetDatum.Set(pTempOffset);
 			NumbatLogic.IfStmt __816210157 = pIfStmt;
-#line 80 "../../../Source/Core/AST/IfStmt.nll"
+#line 80 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			pIfStmt = null;
-#line 80 "../../../Source/Core/AST/IfStmt.nll"
+#line 80 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			return __816210157;
 		}
 
@@ -105,11 +105,11 @@ namespace NumbatLogic
 			AST pCondition = m_pFirstChild;
 			AST pThen = pCondition.m_pNextSibling;
 			AST pElse = pThen.m_pNextSibling;
-#line 89 "../../../Source/Core/AST/IfStmt.nll"
+#line 89 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			IfStmt pParentIfStmt = null;
 			if (m_pParent != null && m_pParent.m_eType == AST.Type.AST_IF_STMT)
 				pParentIfStmt = (IfStmt)(m_pParent);
-#line 93 "../../../Source/Core/AST/IfStmt.nll"
+#line 93 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			if (pParentIfStmt != null && pParentIfStmt.m_pFirstChild.m_pNextSibling.m_pNextSibling == this)
 				pOutputBuilder.m_sOut.Append(" ");
 			else
@@ -117,7 +117,7 @@ namespace NumbatLogic
 				pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
 				Util.Pad(nDepth, pOutputBuilder.m_sOut);
 			}
-#line 101 "../../../Source/Core/AST/IfStmt.nll"
+#line 101 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 			pOutputBuilder.m_sOut.Append("if (");
 			pCondition.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 			pOutputBuilder.m_sOut.Append(")\n");
@@ -132,7 +132,7 @@ namespace NumbatLogic
 				}
 				else
 				{
-#line 116 "../../../Source/Core/AST/IfStmt.nll"
+#line 116 "/home/cliffya/git/Lang/Source/Core/AST/IfStmt.nll"
 					pOutputBuilder.m_sOut.Append("else\n");
 					pElse.Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 				}

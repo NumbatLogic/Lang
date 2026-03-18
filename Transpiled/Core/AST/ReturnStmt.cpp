@@ -20,15 +20,15 @@ namespace NumbatLogic
 	class Util;
 	class InternalString;
 }
-#line 0 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/ReturnStmt.nll"
-#line 7 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
+#line 7 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 	ReturnStmt::ReturnStmt()
 	{
 		m_pExpression = 0;
-#line 9 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 9 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 		m_eType = AST::Type::AST_RETURN_STMT;
 		m_bStatement = true;
 	}
@@ -36,49 +36,49 @@ namespace NumbatLogic
 	ReturnStmt* ReturnStmt::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
-#line 17 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 17 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 		Token* pReturnToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_RETURN);
 		if (pReturnToken == 0)
 		{
 			if (pTempOffset) delete pTempOffset;
-#line 19 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 19 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 			return 0;
 		}
-#line 20 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 20 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 22 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 22 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 		AST* pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
-#line 24 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 24 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == 0)
 		{
 			if (pTempOffset) delete pTempOffset;
 			if (pExpression) delete pExpression;
-#line 25 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 25 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 			return 0;
 		}
-#line 26 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 26 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 28 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 28 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 		ReturnStmt* pReturnStmt = new ReturnStmt();
-#line 30 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 30 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 		pReturnStmt->m_pFirstToken = pReturnToken;
 		pReturnStmt->m_pExpression = pExpression;
-#line 33 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 33 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 		if (pExpression != 0)
 		{
 			NumbatLogic::AST* __1929399913 = pExpression;
-#line 34 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 34 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 			pExpression = 0;
-#line 34 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 34 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 			pReturnStmt->AddChild(__1929399913);
 		}
 		pOffsetDatum->Set(pTempOffset);
 		NumbatLogic::ReturnStmt* __2739522412 = pReturnStmt;
-#line 37 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 37 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 		pReturnStmt = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pExpression) delete pExpression;
-#line 37 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 37 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 		return __2739522412;
 	}
 
@@ -92,7 +92,7 @@ namespace NumbatLogic
 	{
 		pOutputBuilder->UpdateSourceLocation(eLanguage, m_pFirstToken);
 		Util::Pad(nDepth, pOutputBuilder->m_sOut);
-#line 51 "../../../Source/Core/AST/ReturnStmt.nll"
+#line 51 "/home/cliffya/git/Lang/Source/Core/AST/ReturnStmt.nll"
 		pOutputBuilder->m_sOut->AppendString("return");
 		if (m_pExpression != 0)
 		{

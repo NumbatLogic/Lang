@@ -18,24 +18,24 @@ namespace NumbatLogic
 	class ParamCall;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/ParamDecl.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/ParamDecl.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/ParamDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/ParamDecl.nll"
 	class ParamDecl : public AST
 	{
 		public: Vector<VarDecl*>* m_pParamVector;
-#line 7 "../../../Source/Core/AST/ParamDecl.nll"
+#line 7 "/home/cliffya/git/Lang/Source/Core/AST/ParamDecl.nll"
 		public: ParamDecl();
-#line 14 "../../../Source/Core/AST/ParamDecl.nll"
+#line 14 "/home/cliffya/git/Lang/Source/Core/AST/ParamDecl.nll"
 		public: static ParamDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 62 "../../../Source/Core/AST/ParamDecl.nll"
+#line 62 "/home/cliffya/git/Lang/Source/Core/AST/ParamDecl.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 91 "../../../Source/Core/AST/ParamDecl.nll"
+#line 91 "/home/cliffya/git/Lang/Source/Core/AST/ParamDecl.nll"
 		public: bool ValidateParamCall(ParamCall* pParamCall, Validator* pValidator, bool bReportErrors);
-#line 212 "../../../Source/Core/AST/ParamDecl.nll"
+#line 212 "/home/cliffya/git/Lang/Source/Core/AST/ParamDecl.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 3 "../../../Source/Core/AST/ParamDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/ParamDecl.nll"
 		public: virtual ~ParamDecl();
 	};
 }

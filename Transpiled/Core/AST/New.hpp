@@ -14,21 +14,21 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/New.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/New.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/New.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/New.nll"
 	class New : public AST
 	{
 		public: TypeRef* m_pTypeRef;
 		public: ParamCall* m_pParamCall;
-#line 8 "../../../Source/Core/AST/New.nll"
+#line 8 "/home/cliffya/git/Lang/Source/Core/AST/New.nll"
 		public: static New* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 49 "../../../Source/Core/AST/New.nll"
+#line 49 "/home/cliffya/git/Lang/Source/Core/AST/New.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 107 "../../../Source/Core/AST/New.nll"
+#line 107 "/home/cliffya/git/Lang/Source/Core/AST/New.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 3 "../../../Source/Core/AST/New.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/New.nll"
 		public: New();
 	};
 }

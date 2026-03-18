@@ -21,10 +21,10 @@ namespace NumbatLogic
 	class ValueType;
 	class Resolver;
 }
-#line 0 "../../../Source/Core/AST/TypeRef.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/TypeRef.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 	class TypeRef : public AST
 	{
 		public: enum PointerType
@@ -41,43 +41,43 @@ namespace NumbatLogic
 		public: Vector<TypeRef*>* m_pGenericTypeRefVector;
 		public: TypeRef* m_pChildTypeRef;
 		public: PointerType m_ePointerType;
-#line 20 "../../../Source/Core/AST/TypeRef.nll"
+#line 20 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: Token* m_pCloneToken;
-#line 22 "../../../Source/Core/AST/TypeRef.nll"
+#line 22 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: AST* m_pFoundType;
-#line 24 "../../../Source/Core/AST/TypeRef.nll"
+#line 24 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: TypeRef();
-#line 32 "../../../Source/Core/AST/TypeRef.nll"
+#line 32 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: static TypeRef* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 168 "../../../Source/Core/AST/TypeRef.nll"
+#line 168 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: ClassDecl* GetFoundClassDecl();
-#line 175 "../../../Source/Core/AST/TypeRef.nll"
+#line 175 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		protected: void ValidateClassDecl(Validator* pValidator, ClassDecl* pClassDecl, TypeRef* pThisOrChild);
-#line 249 "../../../Source/Core/AST/TypeRef.nll"
+#line 249 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 413 "../../../Source/Core/AST/TypeRef.nll"
+#line 413 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: TypeRef* Clone();
-#line 442 "../../../Source/Core/AST/TypeRef.nll"
+#line 442 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: virtual AST* BaseClone();
-#line 447 "../../../Source/Core/AST/TypeRef.nll"
+#line 447 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 635 "../../../Source/Core/AST/TypeRef.nll"
+#line 635 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: ValueType* GetRecursiveValueType(Resolver* pResolver);
-#line 647 "../../../Source/Core/AST/TypeRef.nll"
+#line 647 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: ValueType* CreateValueType(Resolver* pResolver);
-#line 661 "../../../Source/Core/AST/TypeRef.nll"
+#line 661 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		protected: ValueType* SetValueType(Resolver* pResolver);
-#line 857 "../../../Source/Core/AST/TypeRef.nll"
+#line 857 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: bool IsIntegral();
-#line 869 "../../../Source/Core/AST/TypeRef.nll"
+#line 869 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: bool IsInt();
-#line 882 "../../../Source/Core/AST/TypeRef.nll"
+#line 882 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: bool IsBool();
-#line 887 "../../../Source/Core/AST/TypeRef.nll"
+#line 887 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: bool IsFloat();
-#line 892 "../../../Source/Core/AST/TypeRef.nll"
+#line 892 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: bool IsDouble();
-#line 3 "../../../Source/Core/AST/TypeRef.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/TypeRef.nll"
 		public: virtual ~TypeRef();
 	};
 }

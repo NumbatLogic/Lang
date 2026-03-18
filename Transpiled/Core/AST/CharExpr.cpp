@@ -16,25 +16,25 @@ namespace NumbatLogic
 	class ValueType;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/CharExpr.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/CharExpr.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/CharExpr.nll"
-#line 5 "../../../Source/Core/AST/CharExpr.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/CharExpr.nll"
+#line 5 "/home/cliffya/git/Lang/Source/Core/AST/CharExpr.nll"
 	CharExpr* CharExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		Token* pToken = pTokenContainer->PeekExpect(pOffsetDatum, Token::Type::TOKEN_CHAR);
 		if (pToken == 0)
 			return 0;
 		pOffsetDatum->m_nOffset = pOffsetDatum->m_nOffset + 1;
-#line 12 "../../../Source/Core/AST/CharExpr.nll"
+#line 12 "/home/cliffya/git/Lang/Source/Core/AST/CharExpr.nll"
 		CharExpr* pCharExpr = new CharExpr();
 		pCharExpr->m_eType = AST::Type::AST_CHAR;
 		pCharExpr->m_pFirstToken = pToken;
 		NumbatLogic::CharExpr* __2615706591 = pCharExpr;
-#line 15 "../../../Source/Core/AST/CharExpr.nll"
+#line 15 "/home/cliffya/git/Lang/Source/Core/AST/CharExpr.nll"
 		pCharExpr = 0;
-#line 15 "../../../Source/Core/AST/CharExpr.nll"
+#line 15 "/home/cliffya/git/Lang/Source/Core/AST/CharExpr.nll"
 		return __2615706591;
 	}
 

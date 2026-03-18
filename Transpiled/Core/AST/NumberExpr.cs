@@ -1,4 +1,4 @@
-#line 1 "../../../Source/Core/AST/NumberExpr.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/AST/NumberExpr.nll"
 namespace NumbatLogic
 {
 	class NumberExpr : AST
@@ -17,20 +17,20 @@ namespace NumbatLogic
 			pOffsetDatum.m_nOffset = pOffsetDatum.m_nOffset + 1;
 			NumberExpr pNumberExpr = new NumberExpr(pToken);
 			NumbatLogic.NumberExpr __3368034133 = pNumberExpr;
-#line 18 "../../../Source/Core/AST/NumberExpr.nll"
+#line 18 "/home/cliffya/git/Lang/Source/Core/AST/NumberExpr.nll"
 			pNumberExpr = null;
-#line 18 "../../../Source/Core/AST/NumberExpr.nll"
+#line 18 "/home/cliffya/git/Lang/Source/Core/AST/NumberExpr.nll"
 			return __3368034133;
 		}
 
 		public override AST BaseClone()
 		{
-#line 24 "../../../Source/Core/AST/NumberExpr.nll"
+#line 24 "/home/cliffya/git/Lang/Source/Core/AST/NumberExpr.nll"
 			NumberExpr pNumberExpr = new NumberExpr(m_pFirstToken);
 			NumbatLogic.NumberExpr __3368099729 = pNumberExpr;
-#line 25 "../../../Source/Core/AST/NumberExpr.nll"
+#line 25 "/home/cliffya/git/Lang/Source/Core/AST/NumberExpr.nll"
 			pNumberExpr = null;
-#line 25 "../../../Source/Core/AST/NumberExpr.nll"
+#line 25 "/home/cliffya/git/Lang/Source/Core/AST/NumberExpr.nll"
 			return __3368099729;
 		}
 

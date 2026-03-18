@@ -24,11 +24,11 @@ namespace NumbatLogic
 	class Util;
 	class InternalString;
 }
-#line 0 "../../../Source/Core/AST/ContinueStmt.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/ContinueStmt.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/ContinueStmt.nll"
-#line 5 "../../../Source/Core/AST/ContinueStmt.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/ContinueStmt.nll"
+#line 5 "/home/cliffya/git/Lang/Source/Core/AST/ContinueStmt.nll"
 	ContinueStmt::ContinueStmt()
 	{
 		m_bStatement = true;
@@ -37,38 +37,38 @@ namespace NumbatLogic
 	ContinueStmt* ContinueStmt::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
-#line 14 "../../../Source/Core/AST/ContinueStmt.nll"
+#line 14 "/home/cliffya/git/Lang/Source/Core/AST/ContinueStmt.nll"
 		Token* pBreakToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_CONTINUE);
 		if (pBreakToken == 0)
 		{
 			if (pTempOffset) delete pTempOffset;
-#line 16 "../../../Source/Core/AST/ContinueStmt.nll"
+#line 16 "/home/cliffya/git/Lang/Source/Core/AST/ContinueStmt.nll"
 			return 0;
 		}
-#line 17 "../../../Source/Core/AST/ContinueStmt.nll"
+#line 17 "/home/cliffya/git/Lang/Source/Core/AST/ContinueStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 19 "../../../Source/Core/AST/ContinueStmt.nll"
+#line 19 "/home/cliffya/git/Lang/Source/Core/AST/ContinueStmt.nll"
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == 0)
 		{
 			Console::Log("expected semicolon");
 			NumbatLogic::Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
-#line 23 "../../../Source/Core/AST/ContinueStmt.nll"
+#line 23 "/home/cliffya/git/Lang/Source/Core/AST/ContinueStmt.nll"
 			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 27 "../../../Source/Core/AST/ContinueStmt.nll"
+#line 27 "/home/cliffya/git/Lang/Source/Core/AST/ContinueStmt.nll"
 		ContinueStmt* pContinueStmt = new ContinueStmt();
-#line 29 "../../../Source/Core/AST/ContinueStmt.nll"
+#line 29 "/home/cliffya/git/Lang/Source/Core/AST/ContinueStmt.nll"
 		pContinueStmt->m_eType = AST::Type::AST_CONTINUE_STMT;
 		pContinueStmt->m_pFirstToken = pBreakToken;
-#line 32 "../../../Source/Core/AST/ContinueStmt.nll"
+#line 32 "/home/cliffya/git/Lang/Source/Core/AST/ContinueStmt.nll"
 		pOffsetDatum->Set(pTempOffset);
 		NumbatLogic::ContinueStmt* __2497879999 = pContinueStmt;
-#line 33 "../../../Source/Core/AST/ContinueStmt.nll"
+#line 33 "/home/cliffya/git/Lang/Source/Core/AST/ContinueStmt.nll"
 		pContinueStmt = 0;
 		if (pTempOffset) delete pTempOffset;
-#line 33 "../../../Source/Core/AST/ContinueStmt.nll"
+#line 33 "/home/cliffya/git/Lang/Source/Core/AST/ContinueStmt.nll"
 		return __2497879999;
 	}
 

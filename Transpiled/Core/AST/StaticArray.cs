@@ -1,4 +1,4 @@
-#line 1 "../../../Source/Core/AST/StaticArray.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/AST/StaticArray.nll"
 namespace NumbatLogic
 {
 	class StaticArray : AST
@@ -11,19 +11,19 @@ namespace NumbatLogic
 		public static StaticArray TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
 		{
 			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
-#line 14 "../../../Source/Core/AST/StaticArray.nll"
+#line 14 "/home/cliffya/git/Lang/Source/Core/AST/StaticArray.nll"
 			Token pSquareBracketLeftToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SQUARE_BRACKET_LEFT);
 			if (pSquareBracketLeftToken == null)
 			{
-#line 16 "../../../Source/Core/AST/StaticArray.nll"
+#line 16 "/home/cliffya/git/Lang/Source/Core/AST/StaticArray.nll"
 				return null;
 			}
-#line 17 "../../../Source/Core/AST/StaticArray.nll"
+#line 17 "/home/cliffya/git/Lang/Source/Core/AST/StaticArray.nll"
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 19 "../../../Source/Core/AST/StaticArray.nll"
+#line 19 "/home/cliffya/git/Lang/Source/Core/AST/StaticArray.nll"
 			StaticArray pStaticArray = new StaticArray();
 			pStaticArray.m_pFirstToken = pSquareBracketLeftToken;
-#line 22 "../../../Source/Core/AST/StaticArray.nll"
+#line 22 "/home/cliffya/git/Lang/Source/Core/AST/StaticArray.nll"
 			while (true)
 			{
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SQUARE_BRACKET_RIGHT) != null)
@@ -31,7 +31,7 @@ namespace NumbatLogic
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 					break;
 				}
-#line 30 "../../../Source/Core/AST/StaticArray.nll"
+#line 30 "/home/cliffya/git/Lang/Source/Core/AST/StaticArray.nll"
 				AST pElement = AST.TryCreateExpression(pTokenContainer, pTempOffset);
 				if (pElement == null)
 				{
@@ -41,14 +41,14 @@ namespace NumbatLogic
 					return null;
 				}
 				NumbatLogic.AST __984805329 = pElement;
-#line 38 "../../../Source/Core/AST/StaticArray.nll"
+#line 38 "/home/cliffya/git/Lang/Source/Core/AST/StaticArray.nll"
 				pElement = null;
-#line 38 "../../../Source/Core/AST/StaticArray.nll"
+#line 38 "/home/cliffya/git/Lang/Source/Core/AST/StaticArray.nll"
 				pStaticArray.AddChild(__984805329);
-#line 40 "../../../Source/Core/AST/StaticArray.nll"
+#line 40 "/home/cliffya/git/Lang/Source/Core/AST/StaticArray.nll"
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SQUARE_BRACKET_RIGHT) != null)
 				{
-#line 41 "../../../Source/Core/AST/StaticArray.nll"
+#line 41 "/home/cliffya/git/Lang/Source/Core/AST/StaticArray.nll"
 					continue;
 				}
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_COMMA) == null)
@@ -59,12 +59,12 @@ namespace NumbatLogic
 				}
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			}
-#line 52 "../../../Source/Core/AST/StaticArray.nll"
+#line 52 "/home/cliffya/git/Lang/Source/Core/AST/StaticArray.nll"
 			pOffsetDatum.Set(pTempOffset);
 			NumbatLogic.StaticArray __2518123513 = pStaticArray;
-#line 53 "../../../Source/Core/AST/StaticArray.nll"
+#line 53 "/home/cliffya/git/Lang/Source/Core/AST/StaticArray.nll"
 			pStaticArray = null;
-#line 53 "../../../Source/Core/AST/StaticArray.nll"
+#line 53 "/home/cliffya/git/Lang/Source/Core/AST/StaticArray.nll"
 			return __2518123513;
 		}
 

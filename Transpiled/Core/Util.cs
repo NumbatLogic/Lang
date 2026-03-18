@@ -1,4 +1,4 @@
-#line 1 "../../../Source/Core/Util.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/Util.nll"
 namespace NumbatLogic
 {
 	class Util

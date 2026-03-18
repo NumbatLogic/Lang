@@ -1,4 +1,4 @@
-#line 1 "../../../Source/Core/Semantic/Symbol.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/Semantic/Symbol.nll"
 namespace NumbatLogic
 {
 	class Symbol
@@ -18,15 +18,15 @@ namespace NumbatLogic
 		}
 
 		public Kind m_eKind;
-#line 22 "../../../Source/Core/Semantic/Symbol.nll"
+#line 22 "/home/cliffya/git/Lang/Source/Core/Semantic/Symbol.nll"
 		public string m_sShortName;
-#line 25 "../../../Source/Core/Semantic/Symbol.nll"
+#line 25 "/home/cliffya/git/Lang/Source/Core/Semantic/Symbol.nll"
 		public string m_sQualifiedName;
-#line 28 "../../../Source/Core/Semantic/Symbol.nll"
+#line 28 "/home/cliffya/git/Lang/Source/Core/Semantic/Symbol.nll"
 		public AST m_pDeclAST;
-#line 31 "../../../Source/Core/Semantic/Symbol.nll"
+#line 31 "/home/cliffya/git/Lang/Source/Core/Semantic/Symbol.nll"
 		public SymbolScope m_pScope;
-#line 33 "../../../Source/Core/Semantic/Symbol.nll"
+#line 33 "/home/cliffya/git/Lang/Source/Core/Semantic/Symbol.nll"
 		public Symbol()
 		{
 			m_eKind = Kind.VAR;

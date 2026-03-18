@@ -13,19 +13,19 @@ namespace NumbatLogic
 	class ClassDecl;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/DelegateDecl.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/DelegateDecl.nll"
 	class DelegateDecl : public AST
 	{
 		public: AccessLevel* m_pAccessLevel;
 		public: FunctionDecl* m_pFunctionDecl;
-#line 8 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 8 "/home/cliffya/git/Lang/Source/Core/AST/DelegateDecl.nll"
 		public: DelegateDecl();
-#line 13 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 13 "/home/cliffya/git/Lang/Source/Core/AST/DelegateDecl.nll"
 		public: static DelegateDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, ClassDecl* pParentClassDecl);
-#line 58 "../../../Source/Core/AST/DelegateDecl.nll"
+#line 58 "/home/cliffya/git/Lang/Source/Core/AST/DelegateDecl.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 	};
 }

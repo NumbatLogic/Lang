@@ -24,25 +24,25 @@ namespace NumbatLogic
 	class ValueType;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/RefExpr.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/RefExpr.nll"
-#line 7 "../../../Source/Core/AST/RefExpr.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
+#line 7 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 	RefExpr* RefExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
-#line 11 "../../../Source/Core/AST/RefExpr.nll"
+#line 11 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 		Token* pRefToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_REF);
 		if (pRefToken == 0)
 		{
 			if (pTempOffset) delete pTempOffset;
-#line 13 "../../../Source/Core/AST/RefExpr.nll"
+#line 13 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 			return 0;
 		}
-#line 14 "../../../Source/Core/AST/RefExpr.nll"
+#line 14 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 16 "../../../Source/Core/AST/RefExpr.nll"
+#line 16 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 		AST* pExpression = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 		if (pExpression == 0)
 		{
@@ -50,44 +50,44 @@ namespace NumbatLogic
 			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pExpression) delete pExpression;
-#line 21 "../../../Source/Core/AST/RefExpr.nll"
+#line 21 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 			return 0;
 		}
-#line 24 "../../../Source/Core/AST/RefExpr.nll"
+#line 24 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 		RefExpr* pRefExpr = new RefExpr();
-#line 26 "../../../Source/Core/AST/RefExpr.nll"
+#line 26 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 		pRefExpr->m_eType = AST::Type::AST_REF_EXPR;
 		pRefExpr->m_pFirstToken = pRefToken;
 		pRefExpr->m_pExpression = pExpression;
 		NumbatLogic::AST* __1929334319 = pExpression;
-#line 29 "../../../Source/Core/AST/RefExpr.nll"
+#line 29 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 		pExpression = 0;
-#line 29 "../../../Source/Core/AST/RefExpr.nll"
+#line 29 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 		pRefExpr->AddChild(__1929334319);
-#line 31 "../../../Source/Core/AST/RefExpr.nll"
+#line 31 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 		pOffsetDatum->Set(pTempOffset);
 		NumbatLogic::RefExpr* __1130235351 = pRefExpr;
-#line 32 "../../../Source/Core/AST/RefExpr.nll"
+#line 32 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 		pRefExpr = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pExpression) delete pExpression;
-#line 32 "../../../Source/Core/AST/RefExpr.nll"
+#line 32 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 		return __1130235351;
 	}
 
 	void RefExpr::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
 		AST::Validate(pValidator, pParent);
-#line 41 "../../../Source/Core/AST/RefExpr.nll"
+#line 41 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 		if (m_pExpression->m_pValueType == 0)
 		{
 			InternalString* sTemp = new InternalString("ref expression has no value type");
 			pValidator->AddError(sTemp->GetExternalString(), m_pFirstToken->m_sFileName, m_pFirstToken->m_nLine, m_pFirstToken->m_nColumn);
 			if (sTemp) delete sTemp;
-#line 45 "../../../Source/Core/AST/RefExpr.nll"
+#line 45 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 			return;
 		}
-#line 48 "../../../Source/Core/AST/RefExpr.nll"
+#line 48 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 		m_pValueType = m_pExpression->m_pValueType->Clone();
 	}
 
@@ -100,7 +100,7 @@ namespace NumbatLogic
 		m_pExpression->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 	}
 
-#line 3 "../../../Source/Core/AST/RefExpr.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/RefExpr.nll"
 	RefExpr::RefExpr()
 	{
 		m_pExpression = 0;
