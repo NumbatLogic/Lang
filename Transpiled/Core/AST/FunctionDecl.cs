@@ -1,4 +1,4 @@
-#line 1 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 namespace NumbatLogic
 {
 	class FunctionDecl : AST
@@ -9,29 +9,29 @@ namespace NumbatLogic
 		public ParamDecl m_pParamDecl;
 		public bool m_bConst;
 		public Scope m_pScope;
-#line 12 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 12 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 		public static FunctionDecl TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum, AST pParent)
 		{
 			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
-#line 16 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 16 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			TypeRef pTypeRef = TypeRef.TryCreate(pTokenContainer, pTempOffset);
 			if (pTypeRef == null)
 			{
-#line 18 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 18 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 				return null;
 			}
 			Token pNameToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_IDENTIFIER);
 			if (pNameToken == null)
 			{
-#line 22 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 22 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 				return null;
 			}
-#line 23 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 23 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 25 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 25 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_LEFT) == null)
 			{
-#line 26 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 26 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 				return null;
 			}
 			ParamDecl pParamDecl = ParamDecl.TryCreate(pTokenContainer, pTempOffset);
@@ -42,7 +42,7 @@ namespace NumbatLogic
 				Assert.Plz(false);
 				return null;
 			}
-#line 37 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 37 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			bool bConst = false;
 			Token pConst = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_KEYWORD_CONST);
 			if (pConst != null)
@@ -50,7 +50,7 @@ namespace NumbatLogic
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 				bConst = true;
 			}
-#line 45 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 45 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			Scope pScope = null;
 			Token pSemicolon = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SEMICOLON);
 			if (pSemicolon != null)
@@ -65,9 +65,9 @@ namespace NumbatLogic
 					Assert.Plz(false);
 				}
 			}
-#line 61 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 61 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			FunctionDecl pFunctionDecl = new FunctionDecl();
-#line 63 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 63 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			pFunctionDecl.m_eType = AST.Type.AST_FUNCTION_DECL;
 			pFunctionDecl.m_pParent = pParent;
 			pFunctionDecl.m_pFirstToken = pTypeRef.m_pFirstToken;
@@ -79,34 +79,34 @@ namespace NumbatLogic
 			pFunctionDecl.m_pScope = pScope;
 			NumbatLogic.TypeRef __2942767685 = pTypeRef;
 			pTypeRef = null;
-#line 73 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 73 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			pFunctionDecl.AddChild(__2942767685);
 			NumbatLogic.ParamDecl __3702925988 = pParamDecl;
-#line 74 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 74 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			pParamDecl = null;
-#line 74 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 74 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			pFunctionDecl.AddChild(__3702925988);
-#line 76 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 76 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			if (pScope != null)
 			{
 				NumbatLogic.Scope __1530815332 = pScope;
-#line 77 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 77 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 				pScope = null;
-#line 77 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 77 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 				pFunctionDecl.AddChild(__1530815332);
 			}
 			pOffsetDatum.Set(pTempOffset);
 			NumbatLogic.FunctionDecl __4280092330 = pFunctionDecl;
-#line 80 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 80 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			pFunctionDecl = null;
-#line 80 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 80 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			return __4280092330;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
 			base.Validate(pValidator, pParent);
-#line 87 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 87 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			if (m_pTypeRef.m_pTypeToken.m_eType == Token.Type.TOKEN_IDENTIFIER)
 			{
 				if (m_pTypeRef.m_ePointerType == TypeRef.PointerType.OWNED)
@@ -115,14 +115,14 @@ namespace NumbatLogic
 					return;
 				}
 			}
-#line 97 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 97 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			ValueType pValueType = m_pTypeRef.CreateValueType(pValidator.m_pResolver);
 			if (pValueType == null)
 			{
 				pValidator.AddError("Unable to compute value type of function result", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 				return;
 			}
-#line 104 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 104 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			if (pValueType.m_pClassDecl != null)
 				AddClassDeclReference(pValueType.m_pClassDecl, AST.OutputFile.HEADER, true);
 		}
@@ -132,19 +132,19 @@ namespace NumbatLogic
 			MemberFunctionDecl pMemberFunctionDecl = null;
 			if (m_pParent != null && m_pParent.m_eType == AST.Type.AST_MEMBER_FUNCTION_DECL)
 				pMemberFunctionDecl = (MemberFunctionDecl)(m_pParent);
-#line 114 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 114 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			bool bGeneric = pMemberFunctionDecl != null && pMemberFunctionDecl.m_pParentClassDecl.m_pGenericTypeDeclVector.GetSize() > 0;
-#line 116 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 116 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			if (pMemberFunctionDecl != null && eLanguage == AST.Language.CS && ExternalString.Equal("GetType", m_pNameToken.GetString()))
 			{
-#line 119 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 119 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 				pOutputBuilder.m_sOut.Append("new ");
 			}
-#line 122 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 122 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-#line 124 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 124 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			pOutputBuilder.m_sOut.AppendChar(' ');
-#line 126 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 126 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			if (eLanguage == AST.Language.CPP && eOutputFile == AST.OutputFile.SOURCE)
 			{
 				if (pMemberFunctionDecl != null)
@@ -152,7 +152,7 @@ namespace NumbatLogic
 					AST pPrefixParent = pMemberFunctionDecl;
 					InternalString sPrefix = new InternalString("");
 					InternalString sTemp = new InternalString("");
-#line 134 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 134 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 					while (pPrefixParent.m_pParent != null)
 					{
 						if (pPrefixParent.m_eType == AST.Type.AST_CLASS_DECL)
@@ -163,26 +163,26 @@ namespace NumbatLogic
 							sPrefix.Append("::");
 							sPrefix.Append(sTemp.GetExternalString());
 						}
-#line 145 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 145 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 						pPrefixParent = pPrefixParent.m_pParent;
 					}
-#line 149 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 149 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 					pOutputBuilder.m_sOut.Append(sPrefix.GetExternalString());
 				}
 			}
-#line 153 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 153 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			pOutputBuilder.m_sOut.Append(m_sMangledName);
 			m_pParamDecl.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-#line 156 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 156 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			if (m_bConst && eLanguage == AST.Language.CPP)
 				pOutputBuilder.m_sOut.Append(" const");
-#line 160 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 160 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			if ((eOutputFile == AST.OutputFile.HEADER && !bGeneric) || eLanguage == AST.Language.NLL_DEF)
 			{
 				pOutputBuilder.m_sOut.Append(";\n");
 				return;
 			}
-#line 166 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 166 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 			if (m_pScope == null)
 			{
 				pOutputBuilder.m_sOut.Append(";\n");
@@ -195,7 +195,7 @@ namespace NumbatLogic
 			}
 		}
 
-#line 3 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 		public FunctionDecl()
 		{
 		}

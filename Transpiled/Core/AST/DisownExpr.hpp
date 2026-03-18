@@ -18,23 +18,23 @@ namespace NumbatLogic
 	class ExpressionStmt;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/DisownExpr.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/DisownExpr.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/DisownExpr.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/DisownExpr.nll"
 	class DisownExpr : public AST
 	{
 		public: AST* m_pExpression;
 		public: InternalString* m_sTempVarName;
-#line 8 "../../../Source/Core/AST/DisownExpr.nll"
+#line 8 "/home/cliffya/git/Lang/Source/Core/AST/DisownExpr.nll"
 		public: DisownExpr();
-#line 13 "../../../Source/Core/AST/DisownExpr.nll"
+#line 13 "/home/cliffya/git/Lang/Source/Core/AST/DisownExpr.nll"
 		public: static DisownExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 40 "../../../Source/Core/AST/DisownExpr.nll"
+#line 40 "/home/cliffya/git/Lang/Source/Core/AST/DisownExpr.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 155 "../../../Source/Core/AST/DisownExpr.nll"
+#line 155 "/home/cliffya/git/Lang/Source/Core/AST/DisownExpr.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 3 "../../../Source/Core/AST/DisownExpr.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/DisownExpr.nll"
 		public: virtual ~DisownExpr();
 	};
 }

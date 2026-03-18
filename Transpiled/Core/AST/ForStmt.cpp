@@ -26,11 +26,11 @@ namespace NumbatLogic
 	class Util;
 	class InternalString;
 }
-#line 0 "../../../Source/Core/AST/ForStmt.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/ForStmt.nll"
-#line 5 "../../../Source/Core/AST/ForStmt.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
+#line 5 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 	ForStmt::ForStmt()
 	{
 		m_eType = AST::Type::AST_FOR_STMT;
@@ -40,27 +40,27 @@ namespace NumbatLogic
 	ForStmt* ForStmt::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
-#line 15 "../../../Source/Core/AST/ForStmt.nll"
+#line 15 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		Token* pForToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_FOR);
 		if (pForToken == 0)
 		{
 			if (pTempOffset) delete pTempOffset;
-#line 17 "../../../Source/Core/AST/ForStmt.nll"
+#line 17 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 			return 0;
 		}
-#line 18 "../../../Source/Core/AST/ForStmt.nll"
+#line 18 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 20 "../../../Source/Core/AST/ForStmt.nll"
+#line 20 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_LEFT) == 0)
 		{
 			Console::Log("expected left paren");
 			NumbatLogic::Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
-#line 24 "../../../Source/Core/AST/ForStmt.nll"
+#line 24 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 28 "../../../Source/Core/AST/ForStmt.nll"
+#line 28 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		AST* pBeforeStatement = VarDecl::TryCreate(pTokenContainer, pTempOffset, true);
 		if (pBeforeStatement == 0)
 		{
@@ -72,11 +72,11 @@ namespace NumbatLogic
 				NumbatLogic::Assert::Plz(false);
 				if (pTempOffset) delete pTempOffset;
 				if (pBeforeStatement) delete pBeforeStatement;
-#line 37 "../../../Source/Core/AST/ForStmt.nll"
+#line 37 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 				return 0;
 			}
 		}
-#line 41 "../../../Source/Core/AST/ForStmt.nll"
+#line 41 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == 0)
 		{
 			Console::Log("expected semicolon");
@@ -84,11 +84,11 @@ namespace NumbatLogic
 			NumbatLogic::Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pBeforeStatement) delete pBeforeStatement;
-#line 46 "../../../Source/Core/AST/ForStmt.nll"
+#line 46 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 50 "../../../Source/Core/AST/ForStmt.nll"
+#line 50 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		AST* pConditionStatement = AST::TryCreateExpression(pTokenContainer, pTempOffset);
 		if (pConditionStatement == 0)
 		{
@@ -98,10 +98,10 @@ namespace NumbatLogic
 			if (pTempOffset) delete pTempOffset;
 			if (pBeforeStatement) delete pBeforeStatement;
 			if (pConditionStatement) delete pConditionStatement;
-#line 56 "../../../Source/Core/AST/ForStmt.nll"
+#line 56 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 			return 0;
 		}
-#line 59 "../../../Source/Core/AST/ForStmt.nll"
+#line 59 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == 0)
 		{
 			Console::Log("expected semicolon");
@@ -110,13 +110,13 @@ namespace NumbatLogic
 			if (pTempOffset) delete pTempOffset;
 			if (pBeforeStatement) delete pBeforeStatement;
 			if (pConditionStatement) delete pConditionStatement;
-#line 64 "../../../Source/Core/AST/ForStmt.nll"
+#line 64 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 68 "../../../Source/Core/AST/ForStmt.nll"
+#line 68 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		AST* pLoopStatement = AST::TryCreateExpression(pTokenContainer, pTempOffset);
-#line 77 "../../../Source/Core/AST/ForStmt.nll"
+#line 77 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_PARENTHESIS_RIGHT) == 0)
 		{
 			Console::Log("expected right paren");
@@ -126,11 +126,11 @@ namespace NumbatLogic
 			if (pBeforeStatement) delete pBeforeStatement;
 			if (pConditionStatement) delete pConditionStatement;
 			if (pLoopStatement) delete pLoopStatement;
-#line 82 "../../../Source/Core/AST/ForStmt.nll"
+#line 82 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 86 "../../../Source/Core/AST/ForStmt.nll"
+#line 86 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		AST* pStatement = Scope::TryCreate(pTokenContainer, pTempOffset, true);
 		if (pStatement == 0)
 		{
@@ -138,42 +138,42 @@ namespace NumbatLogic
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			NumbatLogic::Assert::Plz(false);
 		}
-#line 94 "../../../Source/Core/AST/ForStmt.nll"
+#line 94 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		ForStmt* pForStmt = new ForStmt();
 		pForStmt->m_pFirstToken = pForToken;
 		NumbatLogic::AST* __2156020446 = pBeforeStatement;
 		pBeforeStatement = 0;
-#line 97 "../../../Source/Core/AST/ForStmt.nll"
+#line 97 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		pForStmt->AddChild(__2156020446);
 		NumbatLogic::AST* __764111395 = pConditionStatement;
-#line 98 "../../../Source/Core/AST/ForStmt.nll"
+#line 98 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		pConditionStatement = 0;
-#line 98 "../../../Source/Core/AST/ForStmt.nll"
+#line 98 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		pForStmt->AddChild(__764111395);
 		if (pLoopStatement != 0)
 		{
 			NumbatLogic::AST* __373112406 = pLoopStatement;
-#line 100 "../../../Source/Core/AST/ForStmt.nll"
+#line 100 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 			pLoopStatement = 0;
-#line 100 "../../../Source/Core/AST/ForStmt.nll"
+#line 100 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 			pForStmt->AddChild(__373112406);
 		}
 		NumbatLogic::AST* __3036777715 = pStatement;
-#line 101 "../../../Source/Core/AST/ForStmt.nll"
+#line 101 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		pStatement = 0;
-#line 101 "../../../Source/Core/AST/ForStmt.nll"
+#line 101 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		pForStmt->AddChild(__3036777715);
-#line 103 "../../../Source/Core/AST/ForStmt.nll"
+#line 103 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		pOffsetDatum->Set(pTempOffset);
 		NumbatLogic::ForStmt* __464585012 = pForStmt;
-#line 104 "../../../Source/Core/AST/ForStmt.nll"
+#line 104 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		pForStmt = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pBeforeStatement) delete pBeforeStatement;
 		if (pConditionStatement) delete pConditionStatement;
 		if (pLoopStatement) delete pLoopStatement;
 		if (pStatement) delete pStatement;
-#line 104 "../../../Source/Core/AST/ForStmt.nll"
+#line 104 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		return __464585012;
 	}
 
@@ -183,24 +183,24 @@ namespace NumbatLogic
 		AST* pConditionStatement = pBeforeStatement->m_pNextSibling;
 		AST* pLoopStatement = pConditionStatement->m_pNextSibling;
 		AST* pStatement = pLoopStatement->m_pNextSibling;
-#line 114 "../../../Source/Core/AST/ForStmt.nll"
+#line 114 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		pOutputBuilder->UpdateSourceLocation(eLanguage, m_pFirstToken);
-#line 116 "../../../Source/Core/AST/ForStmt.nll"
+#line 116 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		Util::Pad(nDepth, pOutputBuilder->m_sOut);
 		pOutputBuilder->m_sOut->Append("for (");
 		pBeforeStatement->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		pOutputBuilder->m_sOut->Append("; ");
 		pConditionStatement->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		pOutputBuilder->m_sOut->Append("; ");
-#line 123 "../../../Source/Core/AST/ForStmt.nll"
+#line 123 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		if (pStatement != 0)
 			pLoopStatement->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-#line 126 "../../../Source/Core/AST/ForStmt.nll"
+#line 126 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		pOutputBuilder->m_sOut->Append(")\n");
-#line 128 "../../../Source/Core/AST/ForStmt.nll"
+#line 128 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		if (pStatement == 0)
 			pStatement = pLoopStatement;
-#line 131 "../../../Source/Core/AST/ForStmt.nll"
+#line 131 "/home/cliffya/git/Lang/Source/Core/AST/ForStmt.nll"
 		pStatement->Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 	}
 

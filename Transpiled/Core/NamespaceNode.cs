@@ -1,4 +1,4 @@
-#line 1 "../../../Source/Core/NamespaceNode.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 namespace NumbatLogic
 {
 	class NamespaceNode
@@ -7,7 +7,7 @@ namespace NumbatLogic
 		public NamespaceNode m_pParent;
 		public OwnedVector<NamespaceNode> m_pChildVector;
 		public Vector<NamespaceDecl> m_pNamespaceDeclVector;
-#line 10 "../../../Source/Core/NamespaceNode.nll"
+#line 10 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 		public NamespaceNode(InternalString sName, NamespaceNode pParent)
 		{
 			m_sName = sName;
@@ -19,20 +19,20 @@ namespace NumbatLogic
 		public NamespaceNode GetOrCreateChild(NamespaceDecl pNamespaceDecl)
 		{
 			NamespaceNode pNamespaceNode = GetChild(pNamespaceDecl.m_pNameToken.m_sValue.GetExternalString());
-#line 22 "../../../Source/Core/NamespaceNode.nll"
+#line 22 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 			if (pNamespaceNode == null)
 			{
 				NamespaceNode pOwnedNamespaceNode = new NamespaceNode(pNamespaceDecl.m_pNameToken.m_sValue, this);
 				NumbatLogic.NamespaceNode __1383045035 = pOwnedNamespaceNode;
-#line 25 "../../../Source/Core/NamespaceNode.nll"
+#line 25 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 				pOwnedNamespaceNode = null;
-#line 25 "../../../Source/Core/NamespaceNode.nll"
+#line 25 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 				pNamespaceNode = m_pChildVector.PushBack(__1383045035);
 			}
-#line 28 "../../../Source/Core/NamespaceNode.nll"
+#line 28 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 			pNamespaceNode.m_pNamespaceDeclVector.PushBack(pNamespaceDecl);
 			pNamespaceDecl.m_pNamespaceNode = pNamespaceNode;
-#line 31 "../../../Source/Core/NamespaceNode.nll"
+#line 31 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 			return pNamespaceNode;
 		}
 
@@ -59,7 +59,7 @@ namespace NumbatLogic
 			}
 		}
 
-#line 3 "../../../Source/Core/NamespaceNode.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 		~NamespaceNode()
 		{
 		}

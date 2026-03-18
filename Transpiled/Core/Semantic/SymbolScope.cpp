@@ -19,30 +19,30 @@ namespace NumbatLogic
 	class Vector;
 	class AST;
 }
-#line 0 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/Semantic/SymbolScope.nll"
-#line 26 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
+#line 26 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 	SymbolScope::SymbolScope()
 	{
 		m_eKind = Kind::GLOBAL;
 		m_pParent = 0;
 		m_pOwnerAST = 0;
 		m_pSymbolMap = 0;
-#line 28 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 28 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 		m_eKind = Kind::BLOCK;
 		m_pParent = 0;
 		m_pOwnerAST = 0;
 		m_pSymbolMap = new OwnedStringMap<OwnedVector<Symbol*>*>();
 	}
 
-#line 35 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 35 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 	void SymbolScope::AddSymbol(const char* sName, Symbol* ppSymbol)
 	{
 		if (ppSymbol == 0)
 			return;
-#line 40 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 40 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 		OwnedVector<Symbol*>* pBucket = 0;
 		if (m_pSymbolMap->Contains(sName))
 		{
@@ -53,9 +53,9 @@ namespace NumbatLogic
 			OwnedVector<Symbol*>* pOwnedBucket = new OwnedVector<Symbol*>();
 			pBucket = pOwnedBucket;
 			NumbatLogic::OwnedVector<NumbatLogic::Symbol*>* __1215975972 = pOwnedBucket;
-#line 49 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 49 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 			pOwnedBucket = 0;
-#line 49 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 49 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 			m_pSymbolMap->Set(sName, __1215975972);
 			if (pOwnedBucket) delete pOwnedBucket;
 		}
@@ -63,13 +63,13 @@ namespace NumbatLogic
 		pBucket->PushBack(ppSymbol);
 	}
 
-#line 57 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 57 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 	void SymbolScope::FindInThisScope(const char* sName, Vector<Symbol*>* pOut)
 	{
 		Assert::Plz(pOut != 0);
-#line 61 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 61 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 		pOut->Clear();
-#line 63 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 63 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 		if (m_pSymbolMap->Contains(sName))
 		{
 			OwnedVector<Symbol*>* pBucket = m_pSymbolMap->Get(sName);
@@ -80,7 +80,7 @@ namespace NumbatLogic
 		}
 	}
 
-#line 76 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 76 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 	SymbolScope* SymbolScope::FindNamespaceScope(const char* sName)
 	{
 		if (!m_pSymbolMap->Contains(sName))
@@ -95,7 +95,7 @@ namespace NumbatLogic
 		return 0;
 	}
 
-#line 3 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 	SymbolScope::~SymbolScope()
 	{
 		if (m_pSymbolMap) delete m_pSymbolMap;

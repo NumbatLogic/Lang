@@ -1,19 +1,19 @@
-#line 1 "../../../Source/Core/OffsetDatum.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/OffsetDatum.nll"
 namespace NumbatLogic
 {
 	class OffsetDatum
 	{
 		public int m_nOffset;
-#line 7 "../../../Source/Core/OffsetDatum.nll"
+#line 7 "/home/cliffya/git/Lang/Source/Core/OffsetDatum.nll"
 		public static OffsetDatum Create(OffsetDatum pOther)
 		{
 			OffsetDatum pThis = new OffsetDatum();
 			if (pOther != null)
 				pThis.Set(pOther);
 			NumbatLogic.OffsetDatum __3749477135 = pThis;
-#line 12 "../../../Source/Core/OffsetDatum.nll"
+#line 12 "/home/cliffya/git/Lang/Source/Core/OffsetDatum.nll"
 			pThis = null;
-#line 12 "../../../Source/Core/OffsetDatum.nll"
+#line 12 "/home/cliffya/git/Lang/Source/Core/OffsetDatum.nll"
 			return __3749477135;
 		}
 
@@ -22,7 +22,7 @@ namespace NumbatLogic
 			m_nOffset = pOther.m_nOffset;
 		}
 
-#line 3 "../../../Source/Core/OffsetDatum.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/OffsetDatum.nll"
 		public OffsetDatum()
 		{
 		}

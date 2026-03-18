@@ -1,4 +1,4 @@
-#line 1 "../../../Source/Core/AST/ParamCall.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/AST/ParamCall.nll"
 namespace NumbatLogic
 {
 	class ParamCall : AST
@@ -6,7 +6,7 @@ namespace NumbatLogic
 		public static ParamCall TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
 		{
 			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
-#line 9 "../../../Source/Core/AST/ParamCall.nll"
+#line 9 "/home/cliffya/git/Lang/Source/Core/AST/ParamCall.nll"
 			Token m_pFirstToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_LEFT);
 			if (m_pFirstToken == null)
 			{
@@ -16,12 +16,12 @@ namespace NumbatLogic
 				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 20 "../../../Source/Core/AST/ParamCall.nll"
+#line 20 "/home/cliffya/git/Lang/Source/Core/AST/ParamCall.nll"
 			ParamCall pParamCall = new ParamCall();
-#line 22 "../../../Source/Core/AST/ParamCall.nll"
+#line 22 "/home/cliffya/git/Lang/Source/Core/AST/ParamCall.nll"
 			pParamCall.m_eType = AST.Type.AST_PARAM_CALL;
 			pParamCall.m_pFirstToken = m_pFirstToken;
-#line 25 "../../../Source/Core/AST/ParamCall.nll"
+#line 25 "/home/cliffya/git/Lang/Source/Core/AST/ParamCall.nll"
 			while (true)
 			{
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_RIGHT) != null)
@@ -29,7 +29,7 @@ namespace NumbatLogic
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 					break;
 				}
-#line 33 "../../../Source/Core/AST/ParamCall.nll"
+#line 33 "/home/cliffya/git/Lang/Source/Core/AST/ParamCall.nll"
 				AST pParam = AST.TryCreateExpression(pTokenContainer, pTempOffset);
 				if (pParam == null)
 				{
@@ -39,12 +39,12 @@ namespace NumbatLogic
 				}
 				NumbatLogic.AST __3258004090 = pParam;
 				pParam = null;
-#line 41 "../../../Source/Core/AST/ParamCall.nll"
+#line 41 "/home/cliffya/git/Lang/Source/Core/AST/ParamCall.nll"
 				pParamCall.AddChild(__3258004090);
-#line 43 "../../../Source/Core/AST/ParamCall.nll"
+#line 43 "/home/cliffya/git/Lang/Source/Core/AST/ParamCall.nll"
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_RIGHT) != null)
 				{
-#line 44 "../../../Source/Core/AST/ParamCall.nll"
+#line 44 "/home/cliffya/git/Lang/Source/Core/AST/ParamCall.nll"
 					continue;
 				}
 				if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_COMMA) == null)
@@ -55,12 +55,12 @@ namespace NumbatLogic
 				}
 				pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
 			}
-#line 55 "../../../Source/Core/AST/ParamCall.nll"
+#line 55 "/home/cliffya/git/Lang/Source/Core/AST/ParamCall.nll"
 			pOffsetDatum.Set(pTempOffset);
 			NumbatLogic.ParamCall __1502847900 = pParamCall;
-#line 56 "../../../Source/Core/AST/ParamCall.nll"
+#line 56 "/home/cliffya/git/Lang/Source/Core/AST/ParamCall.nll"
 			pParamCall = null;
-#line 56 "../../../Source/Core/AST/ParamCall.nll"
+#line 56 "/home/cliffya/git/Lang/Source/Core/AST/ParamCall.nll"
 			return __1502847900;
 		}
 

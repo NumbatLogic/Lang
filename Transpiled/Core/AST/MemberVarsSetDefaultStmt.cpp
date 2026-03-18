@@ -35,11 +35,11 @@ namespace NumbatLogic
 	class EnumDeclValue;
 	class EnumDecl;
 }
-#line 0 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
-#line 5 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 5 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 	MemberVarsSetDefaultStmt::MemberVarsSetDefaultStmt()
 	{
 		m_eType = AST::Type::MEMBER_VARS_SET_DEFAULT_STMT;
@@ -49,7 +49,7 @@ namespace NumbatLogic
 	void MemberVarsSetDefaultStmt::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
 		AST::Validate(pValidator, pParent);
-#line 16 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 16 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 		if (m_pParent->m_eType == AST::Type::AST_SCOPE)
 		{
 			if (m_pParent->m_pParent->m_eType == AST::Type::AST_TOR_DECL)
@@ -62,18 +62,18 @@ namespace NumbatLogic
 						pValidator->AddError("MemberVarsSetDefaultStmt should be first child of constructor", 0, 0, 0);
 						return;
 					}
-#line 30 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 30 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 					if (pTorDecl->m_pParent->m_eType != AST::Type::AST_CLASS_DECL)
 					{
 						pValidator->AddError("MemberVarsSetDefaultStmt parent constructor is not child of a class decl???", 0, 0, 0);
 						return;
 					}
-#line 36 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 36 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 					return;
 				}
 			}
 		}
-#line 41 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 41 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 		pValidator->AddError("Expected parent to be constructor", 0, 0, 0);
 	}
 
@@ -87,14 +87,14 @@ namespace NumbatLogic
 				if (pChild->m_eType == AST::Type::AST_MEMBER_VAR_DECL)
 				{
 					MemberVarDecl* pMemberVarDecl = (MemberVarDecl*)(pChild);
-#line 55 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 55 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 					if (!pMemberVarDecl->m_bStatic)
 					{
 						Project* pProject = GetProject();
 						if (pProject == 0 || pProject->m_pValidator == 0)
 							continue;
 						ValueType* pValueType = pMemberVarDecl->m_pVarDecl->m_pTypeRef->GetRecursiveValueType(pProject->m_pValidator->m_pResolver);
-#line 62 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 62 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 						if (!pMemberVarDecl->m_pVarDecl->m_pTypeRef->m_bConst)
 						{
 							if (pMemberVarDecl->m_pVarDecl->m_pArraySizeVector != 0)
@@ -114,10 +114,10 @@ namespace NumbatLogic
 									pOutputBuilder->m_sOut->AppendInt(i);
 									pOutputBuilder->m_sOut->Append("++)\n");
 								}
-#line 82 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 82 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 								Util::Pad(nDepth + nArraySizeSize, pOutputBuilder->m_sOut);
 								pOutputBuilder->m_sOut->AppendString(pMemberVarDecl->m_pVarDecl->m_pNameToken->GetString());
-#line 85 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 85 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 								for (int i = 0; i < nArraySizeSize; i++)
 								{
 									pOutputBuilder->m_sOut->Append("[_x");
@@ -125,7 +125,7 @@ namespace NumbatLogic
 									pOutputBuilder->m_sOut->Append("]");
 								}
 								pOutputBuilder->m_sOut->Append(" = ");
-#line 94 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 94 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 								switch (pValueType->m_eType)
 								{
 									case ValueType::Type::INT:
@@ -136,7 +136,7 @@ namespace NumbatLogic
 
 									case ValueType::Type::BOOL:
 									{
-#line 103 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 103 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										pOutputBuilder->m_sOut->Append("false");
 										break;
 									}
@@ -144,7 +144,7 @@ namespace NumbatLogic
 									case ValueType::Type::CHAR:
 									case ValueType::Type::UNICHAR:
 									{
-#line 109 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 109 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										pOutputBuilder->m_sOut->Append("'0'");
 										break;
 									}
@@ -155,20 +155,20 @@ namespace NumbatLogic
 									case ValueType::Type::VOIDPTR:
 									case ValueType::Type::STRING:
 									{
-#line 118 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 118 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										pOutputBuilder->m_sOut->Append("0");
 										break;
 									}
 
 									case ValueType::Type::ENUM_DECL_VALUE:
 									{
-#line 123 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 123 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										if (pValueType->m_pEnumDecl == 0)
 											pOutputBuilder->m_sOut->Append("no_m_pEnumDecl");
 										EnumDeclValue* pEnumDeclValue = pValueType->m_pEnumDecl->m_pEnumDeclValueVector->Get(0);
 										if (pValueType->m_pEnumDecl == 0)
 											pOutputBuilder->m_sOut->Append("no_pEnumDeclValue");
-#line 129 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 129 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										pMemberVarDecl->m_pVarDecl->m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 										pOutputBuilder->m_sOut->Append("::");
 										pEnumDeclValue->m_pFirstToken->Stringify(pOutputBuilder->m_sOut);
@@ -177,19 +177,19 @@ namespace NumbatLogic
 
 									default:
 									{
-#line 136 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 136 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										pOutputBuilder->m_sOut->Append("???");
 										pValueType->StringifyType(pOutputBuilder->m_sOut);
 										break;
 									}
 
 								}
-#line 141 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 141 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 								pOutputBuilder->m_sOut->Append(";\n");
 							}
 							else
 							{
-#line 146 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 146 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 								Util::Pad(nDepth, pOutputBuilder->m_sOut);
 								pOutputBuilder->m_sOut->AppendString(pMemberVarDecl->m_pVarDecl->m_pNameToken->GetString());
 								pOutputBuilder->m_sOut->Append(" = ");
@@ -203,7 +203,7 @@ namespace NumbatLogic
 
 									case ValueType::Type::BOOL:
 									{
-#line 158 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 158 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										pOutputBuilder->m_sOut->Append("false");
 										break;
 									}
@@ -211,7 +211,7 @@ namespace NumbatLogic
 									case ValueType::Type::CHAR:
 									case ValueType::Type::UNICHAR:
 									{
-#line 164 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 164 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										pOutputBuilder->m_sOut->Append("'0'");
 										break;
 									}
@@ -222,20 +222,20 @@ namespace NumbatLogic
 									case ValueType::Type::VOIDPTR:
 									case ValueType::Type::STRING:
 									{
-#line 173 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 173 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										pOutputBuilder->m_sOut->Append("0");
 										break;
 									}
 
 									case ValueType::Type::ENUM_DECL_VALUE:
 									{
-#line 178 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 178 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										if (pValueType->m_pEnumDecl == 0)
 											pOutputBuilder->m_sOut->Append("no_m_pEnumDecl");
 										EnumDeclValue* pEnumDeclValue = pValueType->m_pEnumDecl->m_pEnumDeclValueVector->Get(0);
 										if (pValueType->m_pEnumDecl == 0)
 											pOutputBuilder->m_sOut->Append("no_pEnumDeclValue");
-#line 184 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 184 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										pMemberVarDecl->m_pVarDecl->m_pTypeRef->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 										pOutputBuilder->m_sOut->Append("::");
 										pEnumDeclValue->m_pFirstToken->Stringify(pOutputBuilder->m_sOut);
@@ -244,14 +244,14 @@ namespace NumbatLogic
 
 									default:
 									{
-#line 191 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 191 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 										pOutputBuilder->m_sOut->Append("???");
 										pValueType->StringifyType(pOutputBuilder->m_sOut);
 										break;
 									}
 
 								}
-#line 196 "../../../Source/Core/AST/MemberVarsSetDefaultStmt.nll"
+#line 196 "/home/cliffya/git/Lang/Source/Core/AST/MemberVarsSetDefaultStmt.nll"
 								pOutputBuilder->m_sOut->Append(";\n");
 							}
 						}

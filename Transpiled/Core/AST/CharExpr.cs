@@ -1,4 +1,4 @@
-#line 1 "../../../Source/Core/AST/CharExpr.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/AST/CharExpr.nll"
 namespace NumbatLogic
 {
 	class CharExpr : AST
@@ -9,14 +9,14 @@ namespace NumbatLogic
 			if (pToken == null)
 				return null;
 			pOffsetDatum.m_nOffset = pOffsetDatum.m_nOffset + 1;
-#line 12 "../../../Source/Core/AST/CharExpr.nll"
+#line 12 "/home/cliffya/git/Lang/Source/Core/AST/CharExpr.nll"
 			CharExpr pCharExpr = new CharExpr();
 			pCharExpr.m_eType = AST.Type.AST_CHAR;
 			pCharExpr.m_pFirstToken = pToken;
 			NumbatLogic.CharExpr __2615706591 = pCharExpr;
-#line 15 "../../../Source/Core/AST/CharExpr.nll"
+#line 15 "/home/cliffya/git/Lang/Source/Core/AST/CharExpr.nll"
 			pCharExpr = null;
-#line 15 "../../../Source/Core/AST/CharExpr.nll"
+#line 15 "/home/cliffya/git/Lang/Source/Core/AST/CharExpr.nll"
 			return __2615706591;
 		}
 

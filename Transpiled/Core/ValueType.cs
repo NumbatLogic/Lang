@@ -1,4 +1,4 @@
-#line 1 "../../../Source/Core/ValueType.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 namespace NumbatLogic
 {
 	class ValueType
@@ -25,26 +25,26 @@ namespace NumbatLogic
 			NAMESPACE_NODE,
 		}
 
-#line 36 "../../../Source/Core/ValueType.nll"
+#line 36 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 		public bool m_bConst;
 		public Type m_eType;
-#line 39 "../../../Source/Core/ValueType.nll"
+#line 39 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 		public ClassDecl m_pClassDecl;
 		public TypeRef.PointerType m_ePointerType;
-#line 42 "../../../Source/Core/ValueType.nll"
+#line 42 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 		public GenericTypeDecl m_pGenericTypeDecl;
-#line 44 "../../../Source/Core/ValueType.nll"
+#line 44 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 		public EnumDecl m_pEnumDecl;
 		public EnumDeclValue m_pEnumDeclValue;
-#line 48 "../../../Source/Core/ValueType.nll"
+#line 48 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 		public OwnedVector<ValueType> m_pGenericValueTypeVector;
-#line 50 "../../../Source/Core/ValueType.nll"
+#line 50 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 		public DelegateDecl m_pDelegateDecl;
-#line 52 "../../../Source/Core/ValueType.nll"
+#line 52 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 		public FunctionDecl m_pFunctionDecl;
-#line 54 "../../../Source/Core/ValueType.nll"
+#line 54 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 		public NamespaceNode m_pNamespaceNode;
-#line 57 "../../../Source/Core/ValueType.nll"
+#line 57 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 		public ValueType(Type eType)
 		{
 			m_bConst = false;
@@ -56,19 +56,19 @@ namespace NumbatLogic
 		public ValueType Clone()
 		{
 			ValueType pValueType = new ValueType(m_eType);
-#line 69 "../../../Source/Core/ValueType.nll"
+#line 69 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 			pValueType.m_bConst = m_bConst;
-#line 71 "../../../Source/Core/ValueType.nll"
+#line 71 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 			pValueType.m_pClassDecl = m_pClassDecl;
 			pValueType.m_ePointerType = m_ePointerType;
 			pValueType.m_pGenericTypeDecl = m_pGenericTypeDecl;
-#line 75 "../../../Source/Core/ValueType.nll"
+#line 75 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 			pValueType.m_pEnumDecl = m_pEnumDecl;
 			pValueType.m_pEnumDeclValue = m_pEnumDeclValue;
-#line 78 "../../../Source/Core/ValueType.nll"
+#line 78 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 			pValueType.m_pDelegateDecl = m_pDelegateDecl;
 			pValueType.m_pFunctionDecl = m_pFunctionDecl;
-#line 81 "../../../Source/Core/ValueType.nll"
+#line 81 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 			if (m_pGenericValueTypeVector != null)
 			{
 				for (int i = 0; i < m_pGenericValueTypeVector.GetSize(); i++)
@@ -76,7 +76,7 @@ namespace NumbatLogic
 			}
 			NumbatLogic.ValueType __1751098362 = pValueType;
 			pValueType = null;
-#line 87 "../../../Source/Core/ValueType.nll"
+#line 87 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 			return __1751098362;
 		}
 
@@ -88,7 +88,7 @@ namespace NumbatLogic
 					pValidator.AddError("No pTo to compare to???", pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
 				return false;
 			}
-#line 109 "../../../Source/Core/ValueType.nll"
+#line 109 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 			if (pTo.m_ePointerType != TypeRef.PointerType.OWNED && m_ePointerType == TypeRef.PointerType.OWNED_PREASSSIGN)
 			{
 				InternalString sTemp = new InternalString("Can't assign an owned pointer to a non-owned variable. FROM[");
@@ -103,7 +103,7 @@ namespace NumbatLogic
 				pValidator.AddError(sTemp.GetExternalString(), pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
 				return false;
 			}
-#line 124 "../../../Source/Core/ValueType.nll"
+#line 124 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 			if (pTo.m_ePointerType == TypeRef.PointerType.OWNED && (m_ePointerType != TypeRef.PointerType.OWNED_PREASSSIGN && m_eType != ValueType.Type.NULL_VALUE))
 			{
 				InternalString sTemp = new InternalString("Expected right side of = to be OWNED_PREASSSIGN (result of own). FROM[");
@@ -119,7 +119,7 @@ namespace NumbatLogic
 				return false;
 			}
 			else
-#line 138 "../../../Source/Core/ValueType.nll"
+#line 138 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 				if (m_ePointerType == TypeRef.PointerType.TRANSITON)
 				{
 					InternalString sTemp = new InternalString("Cannot store a TRANSITION pointer (need to `own` it). FROM[");
@@ -134,13 +134,13 @@ namespace NumbatLogic
 					pValidator.AddError(sTemp.GetExternalString(), pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
 					return false;
 				}
-#line 154 "../../../Source/Core/ValueType.nll"
+#line 154 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 			if ((m_pGenericValueTypeVector == null) != (pTo.m_pGenericValueTypeVector == null))
 			{
 				pValidator.AddError("m_pGenericValueTypeVector null mismatch", pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
 				return false;
 			}
-#line 160 "../../../Source/Core/ValueType.nll"
+#line 160 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 			if (m_pGenericValueTypeVector != null)
 			{
 				if (m_pGenericValueTypeVector.GetSize() != pTo.m_pGenericValueTypeVector.GetSize())
@@ -148,12 +148,12 @@ namespace NumbatLogic
 					pValidator.AddError("m_pGenericValueTypeVector size mismatch", pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
 					return false;
 				}
-#line 168 "../../../Source/Core/ValueType.nll"
+#line 168 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 				for (int i = 0; i < m_pGenericValueTypeVector.GetSize(); i++)
 				{
 					ValueType pSubFrom = m_pGenericValueTypeVector.Get(i);
 					ValueType pSubTo = pTo.m_pGenericValueTypeVector.Get(i);
-#line 185 "../../../Source/Core/ValueType.nll"
+#line 185 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					if (pSubFrom.m_ePointerType != pSubTo.m_ePointerType)
 					{
 						pValidator.AddError("sub pointer type mismatch", pToken.m_sFileName, pToken.m_nLine, pToken.m_nColumn);
@@ -161,7 +161,7 @@ namespace NumbatLogic
 					}
 				}
 			}
-#line 194 "../../../Source/Core/ValueType.nll"
+#line 194 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 			return true;
 		}
 
@@ -170,7 +170,7 @@ namespace NumbatLogic
 			TypeRef pTypeRef = new TypeRef();
 			pTypeRef.m_bConst = m_bConst;
 			pTypeRef.m_ePointerType = m_ePointerType;
-#line 203 "../../../Source/Core/ValueType.nll"
+#line 203 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 			switch (m_eType)
 			{
 				case Type.CLASS_DECL_VALUE:
@@ -179,7 +179,7 @@ namespace NumbatLogic
 					pTypeRef.m_pCloneToken.m_eType = Token.Type.TOKEN_IDENTIFIER;
 					pTypeRef.m_pCloneToken.m_sValue = new InternalString(m_pClassDecl.m_pNameToken.m_sValue.GetExternalString());
 					pTypeRef.m_pTypeToken = pTypeRef.m_pCloneToken;
-#line 213 "../../../Source/Core/ValueType.nll"
+#line 213 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					if (m_pGenericValueTypeVector != null)
 					{
 						for (int i = 0; i < m_pGenericValueTypeVector.GetSize(); i++)
@@ -187,53 +187,53 @@ namespace NumbatLogic
 							TypeRef pGenericTypeRef = m_pGenericValueTypeVector.Get(i).CreateTypeRef();
 							pTypeRef.m_pGenericTypeRefVector.PushBack(pGenericTypeRef);
 							NumbatLogic.TypeRef __3752644072 = pGenericTypeRef;
-#line 219 "../../../Source/Core/ValueType.nll"
+#line 219 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 							pGenericTypeRef = null;
-#line 219 "../../../Source/Core/ValueType.nll"
+#line 219 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 							pTypeRef.AddChild(__3752644072);
 						}
 					}
-#line 225 "../../../Source/Core/ValueType.nll"
+#line 225 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					NamespaceNode pNamespaceNode = m_pClassDecl.m_pNamespaceNode;
 					while (pNamespaceNode != null && pNamespaceNode.m_sName != null)
 					{
 						TypeRef pNamespaceTypeRef = new TypeRef();
-#line 230 "../../../Source/Core/ValueType.nll"
+#line 230 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 						pNamespaceTypeRef.m_pCloneToken = new Token();
 						pNamespaceTypeRef.m_pCloneToken.m_eType = Token.Type.TOKEN_IDENTIFIER;
 						pNamespaceTypeRef.m_pCloneToken.m_sValue = new InternalString(pNamespaceNode.m_sName.GetExternalString());
 						pNamespaceTypeRef.m_pTypeToken = pNamespaceTypeRef.m_pCloneToken;
-#line 235 "../../../Source/Core/ValueType.nll"
+#line 235 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 						pNamespaceTypeRef.m_pChildTypeRef = pTypeRef;
 						NumbatLogic.TypeRef __975974828 = pTypeRef;
-#line 236 "../../../Source/Core/ValueType.nll"
+#line 236 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 						pTypeRef = null;
-#line 236 "../../../Source/Core/ValueType.nll"
+#line 236 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 						pNamespaceTypeRef.AddChild(__975974828);
 						NumbatLogic.TypeRef __2554801001 = pNamespaceTypeRef;
 						pNamespaceTypeRef = null;
-#line 238 "../../../Source/Core/ValueType.nll"
+#line 238 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 						pTypeRef = __2554801001;
-#line 240 "../../../Source/Core/ValueType.nll"
+#line 240 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 						pNamespaceNode = pNamespaceNode.m_pParent;
 					}
 					NumbatLogic.TypeRef __976040424 = pTypeRef;
 					pTypeRef = null;
-#line 243 "../../../Source/Core/ValueType.nll"
+#line 243 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return __976040424;
 				}
 
 				case Type.GENERIC_TYPE_DECL_VALUE:
 				{
-#line 247 "../../../Source/Core/ValueType.nll"
+#line 247 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					pTypeRef.m_pCloneToken = new Token();
 					pTypeRef.m_pCloneToken.m_eType = Token.Type.TOKEN_IDENTIFIER;
 					pTypeRef.m_pCloneToken.m_sValue = new InternalString(m_pGenericTypeDecl.m_pFirstToken.m_sValue.GetExternalString());
 					pTypeRef.m_pTypeToken = pTypeRef.m_pCloneToken;
 					NumbatLogic.TypeRef __976106021 = pTypeRef;
-#line 251 "../../../Source/Core/ValueType.nll"
+#line 251 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					pTypeRef = null;
-#line 251 "../../../Source/Core/ValueType.nll"
+#line 251 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return __976106021;
 				}
 
@@ -248,150 +248,150 @@ namespace NumbatLogic
 			{
 				case Type.VOID:
 				{
-#line 263 "../../../Source/Core/ValueType.nll"
+#line 263 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("VOID");
-#line 263 "../../../Source/Core/ValueType.nll"
+#line 263 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.INT:
 				{
-#line 264 "../../../Source/Core/ValueType.nll"
+#line 264 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("INT");
-#line 264 "../../../Source/Core/ValueType.nll"
+#line 264 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.STRING:
 				{
-#line 265 "../../../Source/Core/ValueType.nll"
+#line 265 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("STRING");
-#line 265 "../../../Source/Core/ValueType.nll"
+#line 265 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.BOOL:
 				{
-#line 266 "../../../Source/Core/ValueType.nll"
+#line 266 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("BOOL");
-#line 266 "../../../Source/Core/ValueType.nll"
+#line 266 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.CHAR:
 				{
-#line 267 "../../../Source/Core/ValueType.nll"
+#line 267 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("CHAR");
-#line 267 "../../../Source/Core/ValueType.nll"
+#line 267 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.UNICHAR:
 				{
-#line 268 "../../../Source/Core/ValueType.nll"
+#line 268 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("UNICHAR");
-#line 268 "../../../Source/Core/ValueType.nll"
+#line 268 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.INSTANCE:
 				{
-#line 269 "../../../Source/Core/ValueType.nll"
+#line 269 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("INSTANCE");
-#line 269 "../../../Source/Core/ValueType.nll"
+#line 269 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.VOIDPTR:
 				{
-#line 270 "../../../Source/Core/ValueType.nll"
+#line 270 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("VOIDPTR");
-#line 270 "../../../Source/Core/ValueType.nll"
+#line 270 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.CLASS_DECL:
 				{
-#line 271 "../../../Source/Core/ValueType.nll"
+#line 271 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("CLASS_DECL");
-#line 271 "../../../Source/Core/ValueType.nll"
+#line 271 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.CLASS_DECL_VALUE:
 				{
-#line 272 "../../../Source/Core/ValueType.nll"
+#line 272 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("CLASS_DECL_VALUE");
-#line 272 "../../../Source/Core/ValueType.nll"
+#line 272 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.ENUM_DECL:
 				{
-#line 273 "../../../Source/Core/ValueType.nll"
+#line 273 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("ENUM_DECL");
-#line 273 "../../../Source/Core/ValueType.nll"
+#line 273 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.ENUM_DECL_VALUE:
 				{
-#line 274 "../../../Source/Core/ValueType.nll"
+#line 274 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("ENUM_DECL_VALUE");
-#line 274 "../../../Source/Core/ValueType.nll"
+#line 274 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.GENERIC_TYPE_DECL_VALUE:
 				{
-#line 275 "../../../Source/Core/ValueType.nll"
+#line 275 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("GENERIC_TYPE_DECL_VALUE");
-#line 275 "../../../Source/Core/ValueType.nll"
+#line 275 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.STATIC_ARRAY:
 				{
-#line 276 "../../../Source/Core/ValueType.nll"
+#line 276 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("STATIC_ARRAY");
-#line 276 "../../../Source/Core/ValueType.nll"
+#line 276 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.NULL_VALUE:
 				{
-#line 277 "../../../Source/Core/ValueType.nll"
+#line 277 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("NULL_VALUE");
-#line 277 "../../../Source/Core/ValueType.nll"
+#line 277 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.DELEGATE_DECL_VALUE:
 				{
-#line 278 "../../../Source/Core/ValueType.nll"
+#line 278 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("DELEGATE_DECL_VALUE");
-#line 278 "../../../Source/Core/ValueType.nll"
+#line 278 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.FUNCTION_DECL:
 				{
-#line 279 "../../../Source/Core/ValueType.nll"
+#line 279 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("FUNCTION_DECL");
-#line 279 "../../../Source/Core/ValueType.nll"
+#line 279 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case Type.NAMESPACE_NODE:
 				{
-#line 280 "../../../Source/Core/ValueType.nll"
+#line 280 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("NAMESPACE_NODE");
-#line 280 "../../../Source/Core/ValueType.nll"
+#line 280 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 			}
-#line 282 "../../../Source/Core/ValueType.nll"
+#line 282 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 			sOut.Append("???");
 		}
 
@@ -401,42 +401,42 @@ namespace NumbatLogic
 			{
 				case TypeRef.PointerType.SHARED:
 				{
-#line 289 "../../../Source/Core/ValueType.nll"
+#line 289 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("SHARED");
-#line 289 "../../../Source/Core/ValueType.nll"
+#line 289 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case TypeRef.PointerType.OWNED:
 				{
-#line 290 "../../../Source/Core/ValueType.nll"
+#line 290 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("OWNED");
-#line 290 "../../../Source/Core/ValueType.nll"
+#line 290 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case TypeRef.PointerType.TRANSITON:
 				{
-#line 291 "../../../Source/Core/ValueType.nll"
+#line 291 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("TRANSITON");
-#line 291 "../../../Source/Core/ValueType.nll"
+#line 291 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 				case TypeRef.PointerType.OWNED_PREASSSIGN:
 				{
-#line 292 "../../../Source/Core/ValueType.nll"
+#line 292 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					sOut.Append("OWNED_PREASSSIGN");
-#line 292 "../../../Source/Core/ValueType.nll"
+#line 292 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 					return;
 				}
 
 			}
-#line 294 "../../../Source/Core/ValueType.nll"
+#line 294 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 			sOut.Append("UNKNOWN_PTR");
 		}
 
-#line 3 "../../../Source/Core/ValueType.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/ValueType.nll"
 		~ValueType()
 		{
 		}

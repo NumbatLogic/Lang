@@ -18,18 +18,18 @@ namespace NumbatLogic
 	class InternalString;
 	class ExternalString;
 }
-#line 0 "../../../Source/Core/NamespaceNode.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/NamespaceNode.nll"
-#line 10 "../../../Source/Core/NamespaceNode.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
+#line 10 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 	NamespaceNode::NamespaceNode(InternalString* sName, NamespaceNode* pParent)
 	{
 		m_sName = 0;
 		m_pParent = 0;
 		m_pChildVector = 0;
 		m_pNamespaceDeclVector = 0;
-#line 12 "../../../Source/Core/NamespaceNode.nll"
+#line 12 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 		m_sName = sName;
 		m_pParent = pParent;
 		m_pChildVector = new OwnedVector<NamespaceNode*>();
@@ -39,20 +39,20 @@ namespace NumbatLogic
 	NamespaceNode* NamespaceNode::GetOrCreateChild(NamespaceDecl* pNamespaceDecl)
 	{
 		NamespaceNode* pNamespaceNode = GetChild(pNamespaceDecl->m_pNameToken->m_sValue->GetExternalString());
-#line 22 "../../../Source/Core/NamespaceNode.nll"
+#line 22 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 		if (pNamespaceNode == 0)
 		{
 			NamespaceNode* pOwnedNamespaceNode = new NamespaceNode(pNamespaceDecl->m_pNameToken->m_sValue, this);
 			NumbatLogic::NamespaceNode* __1383045035 = pOwnedNamespaceNode;
-#line 25 "../../../Source/Core/NamespaceNode.nll"
+#line 25 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 			pOwnedNamespaceNode = 0;
-#line 25 "../../../Source/Core/NamespaceNode.nll"
+#line 25 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 			pNamespaceNode = m_pChildVector->PushBack(__1383045035);
 			if (pOwnedNamespaceNode) delete pOwnedNamespaceNode;
 		}
 		pNamespaceNode->m_pNamespaceDeclVector->PushBack(pNamespaceDecl);
 		pNamespaceDecl->m_pNamespaceNode = pNamespaceNode;
-#line 31 "../../../Source/Core/NamespaceNode.nll"
+#line 31 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 		return pNamespaceNode;
 	}
 
@@ -79,7 +79,7 @@ namespace NumbatLogic
 		}
 	}
 
-#line 3 "../../../Source/Core/NamespaceNode.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 	NamespaceNode::~NamespaceNode()
 	{
 		if (m_pChildVector) delete m_pChildVector;

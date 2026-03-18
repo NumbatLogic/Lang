@@ -13,20 +13,20 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 	class TTHashExpr : public AST
 	{
 		protected: StringExpr* m_pStringExpr;
-#line 7 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 7 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		public: TTHashExpr();
-#line 12 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 12 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		public: static TTHashExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 60 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 60 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 65 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 65 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 	};
 }

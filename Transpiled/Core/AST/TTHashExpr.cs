@@ -1,10 +1,10 @@
-#line 1 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 namespace NumbatLogic
 {
 	class TTHashExpr : AST
 	{
 		protected StringExpr m_pStringExpr;
-#line 7 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 7 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 		public TTHashExpr()
 		{
 			m_eType = AST.Type.AST_TTHASH_EXP;
@@ -13,16 +13,16 @@ namespace NumbatLogic
 		public static TTHashExpr TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
 		{
 			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
-#line 16 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 16 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 			Token pTTHashToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_KEYWORD_TTHASH);
 			if (pTTHashToken == null)
 			{
-#line 18 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 18 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 				return null;
 			}
-#line 19 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 19 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 21 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 21 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 			Token pOpenToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_LEFT);
 			if (pOpenToken == null)
 			{
@@ -32,7 +32,7 @@ namespace NumbatLogic
 				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 31 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 31 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 			StringExpr pStringExpr = StringExpr.TryCreate(pTokenContainer, pTempOffset);
 			if (pStringExpr == null)
 			{
@@ -41,7 +41,7 @@ namespace NumbatLogic
 				NumbatLogic.Assert.Plz(false);
 				return null;
 			}
-#line 40 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 40 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 			Token pCloseToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_RIGHT);
 			if (pCloseToken == null)
 			{
@@ -51,21 +51,21 @@ namespace NumbatLogic
 				return null;
 			}
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 51 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 51 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 			TTHashExpr pTTHashExpr = new TTHashExpr();
 			pTTHashExpr.m_pFirstToken = pTTHashToken;
 			pTTHashExpr.m_pStringExpr = pStringExpr;
 			NumbatLogic.StringExpr __1742876149 = pStringExpr;
-#line 54 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 54 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 			pStringExpr = null;
-#line 54 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 54 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 			pTTHashExpr.AddChild(__1742876149);
-#line 56 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 56 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 			pOffsetDatum.Set(pTempOffset);
 			NumbatLogic.TTHashExpr __4133333365 = pTTHashExpr;
-#line 57 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 57 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 			pTTHashExpr = null;
-#line 57 "../../../Source/Core/AST/TTHashExpr.nll"
+#line 57 "/home/cliffya/git/Lang/Source/Core/AST/TTHashExpr.nll"
 			return __4133333365;
 		}
 

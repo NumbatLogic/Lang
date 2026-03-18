@@ -24,11 +24,11 @@ namespace NumbatLogic
 	class Util;
 	class InternalString;
 }
-#line 0 "../../../Source/Core/AST/BreakStmt.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/BreakStmt.nll"
-#line 5 "../../../Source/Core/AST/BreakStmt.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
+#line 5 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 	BreakStmt::BreakStmt()
 	{
 		m_bStatement = true;
@@ -37,38 +37,38 @@ namespace NumbatLogic
 	BreakStmt* BreakStmt::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
-#line 14 "../../../Source/Core/AST/BreakStmt.nll"
+#line 14 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 		Token* pBreakToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_BREAK);
 		if (pBreakToken == 0)
 		{
 			if (pTempOffset) delete pTempOffset;
-#line 16 "../../../Source/Core/AST/BreakStmt.nll"
+#line 16 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 			return 0;
 		}
-#line 17 "../../../Source/Core/AST/BreakStmt.nll"
+#line 17 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 19 "../../../Source/Core/AST/BreakStmt.nll"
+#line 19 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_SEMICOLON) == 0)
 		{
 			Console::Log("expected semicolon");
 			NumbatLogic::Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
-#line 23 "../../../Source/Core/AST/BreakStmt.nll"
+#line 23 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 27 "../../../Source/Core/AST/BreakStmt.nll"
+#line 27 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 		BreakStmt* pBreakStmt = new BreakStmt();
-#line 29 "../../../Source/Core/AST/BreakStmt.nll"
+#line 29 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 		pBreakStmt->m_eType = AST::Type::AST_BREAK_STMT;
 		pBreakStmt->m_pFirstToken = pBreakToken;
-#line 32 "../../../Source/Core/AST/BreakStmt.nll"
+#line 32 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 		pOffsetDatum->Set(pTempOffset);
 		NumbatLogic::BreakStmt* __3206362871 = pBreakStmt;
-#line 33 "../../../Source/Core/AST/BreakStmt.nll"
+#line 33 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 		pBreakStmt = 0;
 		if (pTempOffset) delete pTempOffset;
-#line 33 "../../../Source/Core/AST/BreakStmt.nll"
+#line 33 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 		return __3206362871;
 	}
 
@@ -81,7 +81,7 @@ namespace NumbatLogic
 	void BreakStmt::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
 		pOutputBuilder->UpdateSourceLocation(eLanguage, m_pFirstToken);
-#line 46 "../../../Source/Core/AST/BreakStmt.nll"
+#line 46 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 		Util::Pad(nDepth, pOutputBuilder->m_sOut);
 		pOutputBuilder->m_sOut->Append("break;\n");
 	}

@@ -12,37 +12,37 @@ namespace NumbatLogic
 	class ParseDatum;
 	class OffsetDatum;
 }
-#line 0 "../../../Source/Core/TokenContainer.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/TokenContainer.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/TokenContainer.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/TokenContainer.nll"
 	class TokenContainer
 	{
 		public: OwnedVector<Token*>* m_pTokenVector;
 		protected: InternalString* m_sTemp;
-#line 8 "../../../Source/Core/TokenContainer.nll"
+#line 8 "/home/cliffya/git/Lang/Source/Core/TokenContainer.nll"
 		public: TokenContainer();
-#line 14 "../../../Source/Core/TokenContainer.nll"
+#line 14 "/home/cliffya/git/Lang/Source/Core/TokenContainer.nll"
 		public: unsigned short ReadChar(ParseDatum* pParseDatum, bool bPeak);
-#line 26 "../../../Source/Core/TokenContainer.nll"
+#line 26 "/home/cliffya/git/Lang/Source/Core/TokenContainer.nll"
 		public: bool Tokenize(const char* sInput, InternalString* sFileName, OwnedVector<InternalString*>* sDefineVector);
-#line 260 "../../../Source/Core/TokenContainer.nll"
+#line 260 "/home/cliffya/git/Lang/Source/Core/TokenContainer.nll"
 		protected: void ProcessCurrentRead(ParseDatum* pParseDatum);
-#line 698 "../../../Source/Core/TokenContainer.nll"
+#line 698 "/home/cliffya/git/Lang/Source/Core/TokenContainer.nll"
 		protected: void PushToken(Token::Type eType, int nLine, int nColumn, ParseDatum* pParseDatum, bool bCopyString);
-#line 714 "../../../Source/Core/TokenContainer.nll"
+#line 714 "/home/cliffya/git/Lang/Source/Core/TokenContainer.nll"
 		protected: void ParseQuoted(ParseDatum* pParseDatum, unsigned short nQuoteChar);
-#line 762 "../../../Source/Core/TokenContainer.nll"
+#line 762 "/home/cliffya/git/Lang/Source/Core/TokenContainer.nll"
 		public: void Stringify(InternalString* sOut);
-#line 771 "../../../Source/Core/TokenContainer.nll"
+#line 771 "/home/cliffya/git/Lang/Source/Core/TokenContainer.nll"
 		public: void StripWhitespace();
-#line 790 "../../../Source/Core/TokenContainer.nll"
+#line 790 "/home/cliffya/git/Lang/Source/Core/TokenContainer.nll"
 		public: Token* Peek(OffsetDatum* pOffsetDatum);
-#line 797 "../../../Source/Core/TokenContainer.nll"
+#line 797 "/home/cliffya/git/Lang/Source/Core/TokenContainer.nll"
 		public: Token* PeekExpect(OffsetDatum* pOffsetDatum, Token::Type eType);
-#line 805 "../../../Source/Core/TokenContainer.nll"
+#line 805 "/home/cliffya/git/Lang/Source/Core/TokenContainer.nll"
 		public: const char* StringifyOffset(OffsetDatum* pOffsetDatum);
-#line 3 "../../../Source/Core/TokenContainer.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/TokenContainer.nll"
 		public: virtual ~TokenContainer();
 	};
 }

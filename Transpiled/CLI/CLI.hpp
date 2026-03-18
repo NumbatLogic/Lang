@@ -8,10 +8,10 @@ namespace NumbatLogic
 	class Vector;
 	class InternalString;
 }
-#line 0 "../../../Source/CLI/CLI.nll"
+#line 0 "/home/cliffya/git/Lang/Source/CLI/CLI.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/CLI/CLI.nll"
+#line 3 "/home/cliffya/git/Lang/Source/CLI/CLI.nll"
 	class CLI
 	{
 		public: static void Run(Vector<const char*>* sArgVector);

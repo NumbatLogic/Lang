@@ -12,18 +12,18 @@ namespace NumbatLogic
 	class VarDecl;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/VarDeclDescope.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/VarDeclDescope.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/VarDeclDescope.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/VarDeclDescope.nll"
 	class VarDeclDescope : public AST
 	{
 		public: Vector<VarDecl*>* m_pVarDeclVector;
-#line 7 "../../../Source/Core/AST/VarDeclDescope.nll"
+#line 7 "/home/cliffya/git/Lang/Source/Core/AST/VarDeclDescope.nll"
 		public: VarDeclDescope();
-#line 13 "../../../Source/Core/AST/VarDeclDescope.nll"
+#line 13 "/home/cliffya/git/Lang/Source/Core/AST/VarDeclDescope.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 3 "../../../Source/Core/AST/VarDeclDescope.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/VarDeclDescope.nll"
 		public: virtual ~VarDeclDescope();
 	};
 }

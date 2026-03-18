@@ -27,39 +27,39 @@ namespace NumbatLogic
 	class InternalString;
 	class Util;
 }
-#line 0 "../../../Source/Core/AST/EnumDecl.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/EnumDecl.nll"
-#line 8 "../../../Source/Core/AST/EnumDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
+#line 8 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 	EnumDecl::EnumDecl()
 	{
 		m_pNameToken = 0;
 		m_pEnumDeclValueVector = 0;
-#line 10 "../../../Source/Core/AST/EnumDecl.nll"
+#line 10 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 		m_bCanDescend = true;
 	}
 
 	EnumDecl* EnumDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
-#line 17 "../../../Source/Core/AST/EnumDecl.nll"
+#line 17 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 		Token* pEnumToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_ENUM);
 		if (pEnumToken == 0)
 		{
 			if (pTempOffset) delete pTempOffset;
-#line 19 "../../../Source/Core/AST/EnumDecl.nll"
+#line 19 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 			return 0;
 		}
-#line 20 "../../../Source/Core/AST/EnumDecl.nll"
+#line 20 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 22 "../../../Source/Core/AST/EnumDecl.nll"
+#line 22 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 		EnumDecl* pEnumDecl = new EnumDecl();
-#line 24 "../../../Source/Core/AST/EnumDecl.nll"
+#line 24 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 		pEnumDecl->m_eType = AST::Type::AST_ENUM_DECL;
 		pEnumDecl->m_pFirstToken = pEnumToken;
 		pEnumDecl->m_pEnumDeclValueVector = new Vector<EnumDeclValue*>();
-#line 28 "../../../Source/Core/AST/EnumDecl.nll"
+#line 28 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 		pEnumDecl->m_pNameToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
 		if (pEnumDecl->m_pNameToken == 0)
 		{
@@ -67,22 +67,22 @@ namespace NumbatLogic
 			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pEnumDecl) delete pEnumDecl;
-#line 33 "../../../Source/Core/AST/EnumDecl.nll"
+#line 33 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 37 "../../../Source/Core/AST/EnumDecl.nll"
+#line 37 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_LEFT) == 0)
 		{
 			Console::Log("expected opening curly brace");
 			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pEnumDecl) delete pEnumDecl;
-#line 41 "../../../Source/Core/AST/EnumDecl.nll"
+#line 41 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 46 "../../../Source/Core/AST/EnumDecl.nll"
+#line 46 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 		while (true)
 		{
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_RIGHT) != 0)
@@ -90,7 +90,7 @@ namespace NumbatLogic
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 				break;
 			}
-#line 54 "../../../Source/Core/AST/EnumDecl.nll"
+#line 54 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 			EnumDeclValue* pEnumDeclValue = EnumDeclValue::TryCreate(pTokenContainer, pTempOffset);
 			if (pEnumDeclValue == 0)
 			{
@@ -99,15 +99,15 @@ namespace NumbatLogic
 			}
 			pEnumDecl->m_pEnumDeclValueVector->PushBack(pEnumDeclValue);
 			NumbatLogic::EnumDeclValue* __478630801 = pEnumDeclValue;
-#line 61 "../../../Source/Core/AST/EnumDecl.nll"
+#line 61 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 			pEnumDeclValue = 0;
-#line 61 "../../../Source/Core/AST/EnumDecl.nll"
+#line 61 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 			pEnumDecl->AddChild(__478630801);
-#line 63 "../../../Source/Core/AST/EnumDecl.nll"
+#line 63 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_RIGHT) != 0)
 			{
 				if (pEnumDeclValue) delete pEnumDeclValue;
-#line 64 "../../../Source/Core/AST/EnumDecl.nll"
+#line 64 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 				continue;
 			}
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_COMMA) == 0)
@@ -121,10 +121,10 @@ namespace NumbatLogic
 		}
 		pOffsetDatum->Set(pTempOffset);
 		NumbatLogic::EnumDecl* __4282209082 = pEnumDecl;
-#line 76 "../../../Source/Core/AST/EnumDecl.nll"
+#line 76 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 		pEnumDecl = 0;
 		if (pTempOffset) delete pTempOffset;
-#line 76 "../../../Source/Core/AST/EnumDecl.nll"
+#line 76 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 		return __4282209082;
 	}
 
@@ -143,14 +143,14 @@ namespace NumbatLogic
 			pOutputBuilder->m_sOut->Append(",\n");
 		}
 		Util::Pad(nDepth, pOutputBuilder->m_sOut);
-#line 95 "../../../Source/Core/AST/EnumDecl.nll"
+#line 95 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 		if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::HEADER)
 			pOutputBuilder->m_sOut->Append("};\n");
 		else
 			pOutputBuilder->m_sOut->Append("}\n");
 	}
 
-#line 3 "../../../Source/Core/AST/EnumDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 	EnumDecl::~EnumDecl()
 	{
 		if (m_pEnumDeclValueVector) delete m_pEnumDeclValueVector;

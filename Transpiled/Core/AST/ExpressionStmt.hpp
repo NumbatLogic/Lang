@@ -10,18 +10,18 @@ namespace NumbatLogic
 	class OffsetDatum;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/ExpressionStmt.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/ExpressionStmt.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/ExpressionStmt.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/ExpressionStmt.nll"
 	class ExpressionStmt : public AST
 	{
 		public: AST* m_pExpression;
-#line 7 "../../../Source/Core/AST/ExpressionStmt.nll"
+#line 7 "/home/cliffya/git/Lang/Source/Core/AST/ExpressionStmt.nll"
 		public: ExpressionStmt();
-#line 13 "../../../Source/Core/AST/ExpressionStmt.nll"
+#line 13 "/home/cliffya/git/Lang/Source/Core/AST/ExpressionStmt.nll"
 		public: static ExpressionStmt* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 35 "../../../Source/Core/AST/ExpressionStmt.nll"
+#line 35 "/home/cliffya/git/Lang/Source/Core/AST/ExpressionStmt.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 	};
 }

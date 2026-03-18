@@ -18,11 +18,11 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class InternalString;
 }
-#line 0 "../../../Source/Core/AST/NullExpr.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/NullExpr.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/NullExpr.nll"
-#line 5 "../../../Source/Core/AST/NullExpr.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/NullExpr.nll"
+#line 5 "/home/cliffya/git/Lang/Source/Core/AST/NullExpr.nll"
 	NullExpr::NullExpr()
 	{
 		m_eType = AST::Type::NULL_EXPR;
@@ -31,26 +31,26 @@ namespace NumbatLogic
 	NullExpr* NullExpr::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
-#line 14 "../../../Source/Core/AST/NullExpr.nll"
+#line 14 "/home/cliffya/git/Lang/Source/Core/AST/NullExpr.nll"
 		Token* pNullToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_NULL);
 		if (pNullToken == 0)
 		{
 			if (pTempOffset) delete pTempOffset;
-#line 16 "../../../Source/Core/AST/NullExpr.nll"
+#line 16 "/home/cliffya/git/Lang/Source/Core/AST/NullExpr.nll"
 			return 0;
 		}
-#line 17 "../../../Source/Core/AST/NullExpr.nll"
+#line 17 "/home/cliffya/git/Lang/Source/Core/AST/NullExpr.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 19 "../../../Source/Core/AST/NullExpr.nll"
+#line 19 "/home/cliffya/git/Lang/Source/Core/AST/NullExpr.nll"
 		NullExpr* pNullExpr = new NullExpr();
 		pNullExpr->m_pFirstToken = pNullToken;
-#line 22 "../../../Source/Core/AST/NullExpr.nll"
+#line 22 "/home/cliffya/git/Lang/Source/Core/AST/NullExpr.nll"
 		pOffsetDatum->Set(pTempOffset);
 		NumbatLogic::NullExpr* __4021522189 = pNullExpr;
-#line 23 "../../../Source/Core/AST/NullExpr.nll"
+#line 23 "/home/cliffya/git/Lang/Source/Core/AST/NullExpr.nll"
 		pNullExpr = 0;
 		if (pTempOffset) delete pTempOffset;
-#line 23 "../../../Source/Core/AST/NullExpr.nll"
+#line 23 "/home/cliffya/git/Lang/Source/Core/AST/NullExpr.nll"
 		return __4021522189;
 	}
 

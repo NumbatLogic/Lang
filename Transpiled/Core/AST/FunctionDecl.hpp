@@ -16,10 +16,10 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 	class FunctionDecl : public AST
 	{
 		public: TypeRef* m_pTypeRef;
@@ -28,13 +28,13 @@ namespace NumbatLogic
 		public: ParamDecl* m_pParamDecl;
 		public: bool m_bConst;
 		public: Scope* m_pScope;
-#line 12 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 12 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 		public: static FunctionDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, AST* pParent);
-#line 83 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 83 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 108 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 108 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 3 "../../../Source/Core/AST/FunctionDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/FunctionDecl.nll"
 		public: FunctionDecl();
 	};
 }

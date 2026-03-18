@@ -16,21 +16,21 @@ namespace NumbatLogic
 	class OffsetDatum;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/EnumDecl.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/EnumDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 	class EnumDecl : public AST
 	{
 		public: Token* m_pNameToken;
 		public: Vector<EnumDeclValue*>* m_pEnumDeclValueVector;
-#line 8 "../../../Source/Core/AST/EnumDecl.nll"
+#line 8 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 		public: EnumDecl();
-#line 13 "../../../Source/Core/AST/EnumDecl.nll"
+#line 13 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 		public: static EnumDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 79 "../../../Source/Core/AST/EnumDecl.nll"
+#line 79 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 3 "../../../Source/Core/AST/EnumDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/EnumDecl.nll"
 		public: virtual ~EnumDecl();
 	};
 }

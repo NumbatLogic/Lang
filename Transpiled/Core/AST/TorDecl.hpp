@@ -18,10 +18,10 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/TorDecl.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/TorDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 	class TorDecl : public AST
 	{
 		public: ClassDecl* m_pParentClassDecl;
@@ -31,13 +31,13 @@ namespace NumbatLogic
 		public: ParamCall* m_pBaseParamCall;
 		public: Scope* m_pScope;
 		public: const char* m_sDisambiguate;
-#line 13 "../../../Source/Core/AST/TorDecl.nll"
+#line 13 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 		public: static TorDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, ClassDecl* pParentClassDecl);
-#line 100 "../../../Source/Core/AST/TorDecl.nll"
+#line 100 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 144 "../../../Source/Core/AST/TorDecl.nll"
+#line 144 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 3 "../../../Source/Core/AST/TorDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 		public: TorDecl();
 	};
 }

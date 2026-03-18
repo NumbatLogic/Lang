@@ -1,13 +1,13 @@
-#line 1 "../../../Source/Test/Test.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 namespace NumbatLogic
 {
 	class Test
 	{
-#line 12 "../../../Source/Test/Test.nll"
+#line 12 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		public static void Run()
 		{
 			Console.Log("Tests!");
-#line 17 "../../../Source/Test/Test.nll"
+#line 17 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			FullCheck("return;", AST.Type.AST_RETURN_STMT);
 			FullCheck("'s'", AST.Type.AST_CHAR);
 			FullCheck("return 'b';", AST.Type.AST_RETURN_STMT);
@@ -36,7 +36,7 @@ namespace NumbatLogic
 			FullCheck("ObjectType i = (abc());", AST.Type.AST_VAR_DECL);
 			FullCheck("new Thing()", AST.Type.AST_NEW_EXP);
 			FullCheck("new Thing();", AST.Type.AST_EXPRESSION_STMT);
-#line 46 "../../../Source/Test/Test.nll"
+#line 46 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			FullCheck("Thing pThing = new Thing();", AST.Type.AST_VAR_DECL);
 			FullCheck("int function() {return 0;}", AST.Type.AST_FUNCTION_DECL);
 			FullCheck("string func(int a, int b) {}", AST.Type.AST_FUNCTION_DECL);
@@ -45,7 +45,7 @@ namespace NumbatLogic
 			FullCheck("class Test {\npublic int func() {return 1;} public int thing;\n}", AST.Type.AST_CLASS_DECL);
 			FullCheck("class Test:Base {\npublic virtual int thing() {}\n}", AST.Type.AST_CLASS_DECL);
 			FullCheck("enum Type {A,B,C,}", AST.Type.AST_ENUM_DECL);
-#line 55 "../../../Source/Test/Test.nll"
+#line 55 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			FullCheck("while (true) {}", AST.Type.AST_WHILE_STMT);
 			FullCheck("zero == 0 || abc == '\\\\'", AST.Type.AST_OPERATOR_EXPR);
 			FullCheck("if (zero == 0) {return 0;}", AST.Type.AST_IF_STMT);
@@ -53,27 +53,27 @@ namespace NumbatLogic
 			FullCheck("if (a) {return 0;} else return b;", AST.Type.AST_IF_STMT);
 			FullCheck("wub[43+1]", AST.Type.AST_ARRAY_LOOKUP);
 			FullCheck("for (int i = 0; i < 10; i = i + 1) {return 0;}", AST.Type.AST_FOR_STMT);
-#line 63 "../../../Source/Test/Test.nll"
+#line 63 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			FullCheck("sOut = sOut + this.pGenericTypeRefVector.Get(i).Stringify(eLanguage, 0);", AST.Type.AST_EXPRESSION_STMT);
 			FullCheck("Vector<AST> pMemberVector = new Vector<AST>();", AST.Type.AST_VAR_DECL);
 			FullCheck("Token::Type eType = bloop;", AST.Type.AST_VAR_DECL);
-#line 67 "../../../Source/Test/Test.nll"
+#line 67 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			PointerTest.Run();
 		}
 
-#line 73 "../../../Source/Test/Test.nll"
+#line 73 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		public static void FullCheck(string sInput, AST.Type eAstType)
 		{
 			OwnedVector<InternalString> sDefineVector = new OwnedVector<InternalString>();
 			TokenContainer pTokenContainer = new TokenContainer();
 			InternalString sTest = new InternalString("test.nll");
 			pTokenContainer.Tokenize(sInput, sTest, sDefineVector);
-#line 80 "../../../Source/Test/Test.nll"
+#line 80 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			InternalString sTokenized = new InternalString("");
-#line 82 "../../../Source/Test/Test.nll"
+#line 82 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			pTokenContainer.Stringify(sTokenized);
 			string sxTokenized = sTokenized.GetExternalString();
-#line 85 "../../../Source/Test/Test.nll"
+#line 85 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			if (!sTokenized.IsEqual(sInput))
 			{
 				Console.Log("Initial tokenize failed!\n");
@@ -82,39 +82,39 @@ namespace NumbatLogic
 				Console.Log(sxTokenized);
 				return;
 			}
-#line 94 "../../../Source/Test/Test.nll"
+#line 94 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			pTokenContainer.StripWhitespace();
-#line 96 "../../../Source/Test/Test.nll"
+#line 96 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			OffsetDatum pOffsetDatum = OffsetDatum.Create(null);
-#line 98 "../../../Source/Test/Test.nll"
+#line 98 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			AST pAST = AST.CreateFromTokenContainer(pTokenContainer, pOffsetDatum);
-#line 100 "../../../Source/Test/Test.nll"
+#line 100 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			if (pAST == null)
 			{
 				Console.Log("  ** NO AST!");
 				return;
 			}
-#line 106 "../../../Source/Test/Test.nll"
+#line 106 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			if (pAST.m_eType != eAstType)
 			{
 				Console.Log("  ** AST TYPE MISMATCH!\n");
 				Console.Log(sxTokenized);
-#line 111 "../../../Source/Test/Test.nll"
+#line 111 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 				Console.Log(" != ");
-#line 113 "../../../Source/Test/Test.nll"
+#line 113 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 				return;
 			}
-#line 116 "../../../Source/Test/Test.nll"
+#line 116 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			OutputBuilder pOutputBuilder = new OutputBuilder();
 			pAST.Stringify(AST.Language.NLL, AST.OutputFile.SOURCE, 0, pOutputBuilder);
 			pOutputBuilder.m_sOut.Replace(" ", "");
 			pOutputBuilder.m_sOut.Replace("\n", "");
 			pOutputBuilder.m_sOut.Replace("\t", "");
-#line 122 "../../../Source/Test/Test.nll"
+#line 122 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			sTokenized.Set("");
 			pTokenContainer.Stringify(sTokenized);
 			sxTokenized = sTokenized.GetExternalString();
-#line 126 "../../../Source/Test/Test.nll"
+#line 126 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			if (!pOutputBuilder.m_sOut.IsEqual(sxTokenized))
 			{
 				Console.Log("Stringify failed!\n'");

@@ -1,4 +1,4 @@
-#line 1 "../../../Source/Core/Validator.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 namespace NumbatLogic
 {
 	class ValidatorError
@@ -7,53 +7,53 @@ namespace NumbatLogic
 		public InternalString m_sFile;
 		public int m_nLine;
 		public int m_nColumn;
-#line 3 "../../../Source/Core/Validator.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 		public ValidatorError()
 		{
 		}
 
-#line 3 "../../../Source/Core/Validator.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 		~ValidatorError()
 		{
 		}
 
 	}
-#line 11 "../../../Source/Core/Validator.nll"
+#line 11 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 	class ValidatorScope
 	{
 		public Scope m_pScope;
 		public Vector<VarDecl> m_pVarDeclVector;
-#line 16 "../../../Source/Core/Validator.nll"
+#line 16 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 		public ValidatorScope(Scope pScope)
 		{
 			m_pScope = pScope;
 			m_pVarDeclVector = new Vector<VarDecl>();
 		}
 
-#line 11 "../../../Source/Core/Validator.nll"
+#line 11 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 		~ValidatorScope()
 		{
 		}
 
 	}
-#line 23 "../../../Source/Core/Validator.nll"
+#line 23 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 	class Validator
 	{
 		protected Project m_pProject;
 		protected OwnedVector<ValidatorError> m_pValidatorErrorVector;
 		protected OwnedVector<ValidatorScope> m_pValidatorScopeVector;
-#line 29 "../../../Source/Core/Validator.nll"
+#line 29 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 		public NamespaceNode m_pCurrentNamespaceNode;
-#line 32 "../../../Source/Core/Validator.nll"
+#line 32 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 		public Resolver m_pResolver;
-#line 34 "../../../Source/Core/Validator.nll"
+#line 34 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 		public Validator(Project pProject)
 		{
 			m_pProject = pProject;
 			m_pValidatorErrorVector = new OwnedVector<ValidatorError>();
 			m_pValidatorScopeVector = new OwnedVector<ValidatorScope>();
 			m_pCurrentNamespaceNode = pProject.m_pRootNamespaceNode;
-#line 41 "../../../Source/Core/Validator.nll"
+#line 41 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 			m_pResolver = new Resolver();
 		}
 
@@ -75,31 +75,31 @@ namespace NumbatLogic
 		public bool Validate()
 		{
 			InternalString sTemp = new InternalString("");
-#line 64 "../../../Source/Core/Validator.nll"
+#line 64 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 			for (int i = 0; i < m_pProject.m_pTranslationUnitVector.GetSize(); i++)
 			{
 				TranslationUnit pTranslationUnit = m_pProject.m_pTranslationUnitVector.Get(i);
 				PreparseNamespaces(m_pProject.m_pRootNamespaceNode, pTranslationUnit);
 			}
-#line 71 "../../../Source/Core/Validator.nll"
+#line 71 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 			for (int i = 0; i < m_pProject.m_pTranslationUnitVector.GetSize(); i++)
 			{
 				TranslationUnit pTranslationUnit = m_pProject.m_pTranslationUnitVector.Get(i);
 				m_pResolver.BuildForRoot(pTranslationUnit);
 			}
-#line 77 "../../../Source/Core/Validator.nll"
+#line 77 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 			for (int i = 0; i < m_pProject.m_pTranslationUnitVector.GetSize(); i++)
 			{
 				TranslationUnit pTranslationUnit = m_pProject.m_pTranslationUnitVector.Get(i);
 				pTranslationUnit.PreValidate(this, null);
 			}
-#line 83 "../../../Source/Core/Validator.nll"
+#line 83 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 			for (int i = 0; i < m_pProject.m_pTranslationUnitVector.GetSize(); i++)
 			{
 				TranslationUnit pTranslationUnit = m_pProject.m_pTranslationUnitVector.Get(i);
 				pTranslationUnit.Validate(this, null);
 			}
-#line 89 "../../../Source/Core/Validator.nll"
+#line 89 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 			for (int i = 0; i < m_pValidatorErrorVector.GetSize(); i++)
 			{
 				ValidatorError pValidatorError = m_pValidatorErrorVector.Get(i);
@@ -112,7 +112,7 @@ namespace NumbatLogic
 				sTemp.Append(pValidatorError.m_sError.GetExternalString());
 				Console.Log(sTemp.GetExternalString());
 			}
-#line 102 "../../../Source/Core/Validator.nll"
+#line 102 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 			if (m_pValidatorErrorVector.GetSize() > 0)
 			{
 				sTemp.Set("");
@@ -120,7 +120,7 @@ namespace NumbatLogic
 				sTemp.Append(" errors");
 				Console.Log(sTemp.GetExternalString());
 			}
-#line 110 "../../../Source/Core/Validator.nll"
+#line 110 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 			return m_pValidatorErrorVector.GetSize() == 0;
 		}
 
@@ -135,13 +135,13 @@ namespace NumbatLogic
 			pValidatorError.m_nLine = nLine;
 			pValidatorError.m_nColumn = nColumn;
 			NumbatLogic.ValidatorError __3001553964 = pValidatorError;
-#line 123 "../../../Source/Core/Validator.nll"
+#line 123 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 			pValidatorError = null;
-#line 123 "../../../Source/Core/Validator.nll"
+#line 123 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 			m_pValidatorErrorVector.PushBack(__3001553964);
 		}
 
-#line 127 "../../../Source/Core/Validator.nll"
+#line 127 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 		public void ValidateSubtree(AST pRoot)
 		{
 			pRoot.PreValidate(this, null);
@@ -152,9 +152,9 @@ namespace NumbatLogic
 		{
 			ValidatorScope pValidatorScope = new ValidatorScope(pScope);
 			NumbatLogic.ValidatorScope __3052106978 = pValidatorScope;
-#line 136 "../../../Source/Core/Validator.nll"
+#line 136 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 			pValidatorScope = null;
-#line 136 "../../../Source/Core/Validator.nll"
+#line 136 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 			m_pValidatorScopeVector.PushBack(__3052106978);
 		}
 
@@ -166,7 +166,7 @@ namespace NumbatLogic
 				{
 					int nIndex = m_pValidatorScopeVector.GetSize() - 1;
 					Assert.Plz(nIndex >= 0);
-#line 148 "../../../Source/Core/Validator.nll"
+#line 148 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 					ValidatorScope pValidatorScope = m_pValidatorScopeVector.Get(nIndex);
 					pValidatorScope.m_pVarDeclVector.PushBack(pVarDecl);
 				}
@@ -177,7 +177,7 @@ namespace NumbatLogic
 			ValidatorScope pValidatorScope = m_pValidatorScopeVector.PopBack();
 			Assert.Plz(pValidatorScope != null);
 			Assert.Plz(pValidatorScope.m_pScope == pScope);
-#line 159 "../../../Source/Core/Validator.nll"
+#line 159 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 			AST pCheck = pScope;
 			while (pCheck != null && pCheck.m_eType == AST.Type.AST_SCOPE)
 			{
@@ -186,7 +186,7 @@ namespace NumbatLogic
 			if (pCheck != null)
 				if (pCheck.m_eType == AST.Type.AST_RETURN_STMT || pCheck.m_eType == AST.Type.AST_CONTINUE_STMT || pCheck.m_eType == AST.Type.AST_BREAK_STMT)
 				{
-#line 166 "../../../Source/Core/Validator.nll"
+#line 166 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 					return;
 				}
 			if (pValidatorScope.m_pVarDeclVector.GetSize() > 0)
@@ -198,21 +198,21 @@ namespace NumbatLogic
 					pVarDeclDescope.m_pVarDeclVector.PushBack(pVarDecl);
 				}
 				NumbatLogic.VarDeclDescope __2691051646 = pVarDeclDescope;
-#line 176 "../../../Source/Core/Validator.nll"
+#line 176 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 				pVarDeclDescope = null;
-#line 176 "../../../Source/Core/Validator.nll"
+#line 176 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 				pScope.AddChild(__2691051646);
 			}
 		}
 
 		public void InjectCleanup(AST pBreakOrContinueOrReturn)
 		{
-#line 183 "../../../Source/Core/Validator.nll"
+#line 183 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 			Identifier pDisownedIdentifier = null;
 			if (pBreakOrContinueOrReturn.m_eType == AST.Type.AST_RETURN_STMT)
 			{
 				ReturnStmt pReturnStmt = (ReturnStmt)(pBreakOrContinueOrReturn);
-#line 188 "../../../Source/Core/Validator.nll"
+#line 188 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 				if (pReturnStmt.m_pExpression != null && pReturnStmt.m_pExpression.m_eType == AST.Type.AST_DISOWN_EXP)
 				{
 					DisownExpr pDisownExpr = (DisownExpr)(pReturnStmt.m_pExpression);
@@ -222,7 +222,7 @@ namespace NumbatLogic
 					}
 				}
 			}
-#line 199 "../../../Source/Core/Validator.nll"
+#line 199 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 			VarDeclDescope pVarDeclDescope = new VarDeclDescope();
 			for (int i = m_pValidatorScopeVector.GetSize() - 1; i >= 0; i--)
 			{
@@ -237,7 +237,7 @@ namespace NumbatLogic
 					}
 					pVarDeclDescope.m_pVarDeclVector.PushBack(pVarDecl);
 				}
-#line 214 "../../../Source/Core/Validator.nll"
+#line 214 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 				if (pBreakOrContinueOrReturn.m_eType == AST.Type.AST_RETURN_STMT)
 				{
 					if (pValidatorScope.m_pScope.m_pParent.m_eType == AST.Type.AST_FUNCTION_DECL)
@@ -246,23 +246,23 @@ namespace NumbatLogic
 				else
 				{
 					if (pValidatorScope.m_pScope.m_pParent.m_eType == AST.Type.AST_FOR_STMT || pValidatorScope.m_pScope.m_pParent.m_eType == AST.Type.AST_WHILE_STMT || pValidatorScope.m_pScope.m_pParent.m_eType == AST.Type.AST_SWITCH_STMT)
-#line 224 "../../../Source/Core/Validator.nll"
+#line 224 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 						break;
 				}
 			}
-#line 228 "../../../Source/Core/Validator.nll"
+#line 228 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 			if (pVarDeclDescope.m_pVarDeclVector.GetSize() > 0)
 			{
 				AST pParent = pBreakOrContinueOrReturn.m_pParent;
 				NumbatLogic.VarDeclDescope __2699050750 = pVarDeclDescope;
-#line 231 "../../../Source/Core/Validator.nll"
+#line 231 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 				pVarDeclDescope = null;
-#line 231 "../../../Source/Core/Validator.nll"
+#line 231 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 				pParent.AddChildBefore(__2699050750, pBreakOrContinueOrReturn);
 			}
 		}
 
-#line 239 "../../../Source/Core/Validator.nll"
+#line 239 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 		public void BeginNamespace(string sxName)
 		{
 			m_pCurrentNamespaceNode = m_pCurrentNamespaceNode.GetChild(sxName);
@@ -276,7 +276,7 @@ namespace NumbatLogic
 			m_pCurrentNamespaceNode = m_pCurrentNamespaceNode.m_pParent;
 		}
 
-#line 23 "../../../Source/Core/Validator.nll"
+#line 23 "/home/cliffya/git/Lang/Source/Core/Validator.nll"
 		~Validator()
 		{
 		}

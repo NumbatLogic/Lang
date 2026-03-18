@@ -6,11 +6,11 @@ namespace NumbatLogic
 	class ParseDatum;
 	class InternalString;
 }
-#line 0 "../../../Source/Core/ParseDatum.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/ParseDatum.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/ParseDatum.nll"
-#line 15 "../../../Source/Core/ParseDatum.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/ParseDatum.nll"
+#line 15 "/home/cliffya/git/Lang/Source/Core/ParseDatum.nll"
 	ParseDatum::ParseDatum()
 	{
 		m_sInput = 0;
@@ -20,7 +20,7 @@ namespace NumbatLogic
 		m_sFileName = 0;
 		m_nLine = 0;
 		m_nColumn = 0;
-#line 17 "../../../Source/Core/ParseDatum.nll"
+#line 17 "/home/cliffya/git/Lang/Source/Core/ParseDatum.nll"
 		m_sInput = new InternalString("");
 		m_sCurrentRead = new InternalString("");
 		ClearCurrentRead();
@@ -34,7 +34,7 @@ namespace NumbatLogic
 		m_nCurrentReadColumn = m_nColumn;
 	}
 
-#line 3 "../../../Source/Core/ParseDatum.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/ParseDatum.nll"
 	ParseDatum::~ParseDatum()
 	{
 		if (m_sInput) delete m_sInput;

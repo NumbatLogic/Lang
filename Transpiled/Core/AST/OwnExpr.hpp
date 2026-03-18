@@ -12,20 +12,20 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/OwnExpr.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/OwnExpr.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/OwnExpr.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/OwnExpr.nll"
 	class OwnExpr : public AST
 	{
 		public: AST* m_pExpression;
-#line 7 "../../../Source/Core/AST/OwnExpr.nll"
+#line 7 "/home/cliffya/git/Lang/Source/Core/AST/OwnExpr.nll"
 		public: static OwnExpr* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 35 "../../../Source/Core/AST/OwnExpr.nll"
+#line 35 "/home/cliffya/git/Lang/Source/Core/AST/OwnExpr.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 63 "../../../Source/Core/AST/OwnExpr.nll"
+#line 63 "/home/cliffya/git/Lang/Source/Core/AST/OwnExpr.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 3 "../../../Source/Core/AST/OwnExpr.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/OwnExpr.nll"
 		public: OwnExpr();
 	};
 }

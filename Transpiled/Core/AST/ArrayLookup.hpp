@@ -15,25 +15,25 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/ArrayLookup.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/ArrayLookup.nll"
 namespace NumbatLogic
 {
-#line 5 "../../../Source/Core/AST/ArrayLookup.nll"
+#line 5 "/home/cliffya/git/Lang/Source/Core/AST/ArrayLookup.nll"
 	class ArrayLookup : public AST
 	{
 		public: AST* m_pExpression;
 		public: Vector<AST*>* m_pIndexExpressionVector;
-#line 10 "../../../Source/Core/AST/ArrayLookup.nll"
+#line 10 "/home/cliffya/git/Lang/Source/Core/AST/ArrayLookup.nll"
 		public: ArrayLookup();
-#line 16 "../../../Source/Core/AST/ArrayLookup.nll"
+#line 16 "/home/cliffya/git/Lang/Source/Core/AST/ArrayLookup.nll"
 		public: static ArrayLookup* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 63 "../../../Source/Core/AST/ArrayLookup.nll"
+#line 63 "/home/cliffya/git/Lang/Source/Core/AST/ArrayLookup.nll"
 		public: virtual AST* BaseClone();
-#line 82 "../../../Source/Core/AST/ArrayLookup.nll"
+#line 82 "/home/cliffya/git/Lang/Source/Core/AST/ArrayLookup.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 93 "../../../Source/Core/AST/ArrayLookup.nll"
+#line 93 "/home/cliffya/git/Lang/Source/Core/AST/ArrayLookup.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 5 "../../../Source/Core/AST/ArrayLookup.nll"
+#line 5 "/home/cliffya/git/Lang/Source/Core/AST/ArrayLookup.nll"
 		public: virtual ~ArrayLookup();
 	};
 }

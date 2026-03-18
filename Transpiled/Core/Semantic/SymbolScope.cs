@@ -1,4 +1,4 @@
-#line 1 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 namespace NumbatLogic
 {
 	class SymbolScope
@@ -13,15 +13,15 @@ namespace NumbatLogic
 			BLOCK,
 		}
 
-#line 14 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 14 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 		public Kind m_eKind;
-#line 17 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 17 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 		public SymbolScope m_pParent;
-#line 20 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 20 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 		public AST m_pOwnerAST;
-#line 24 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 24 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 		public OwnedStringMap<OwnedVector<Symbol>> m_pSymbolMap;
-#line 26 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 26 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 		public SymbolScope()
 		{
 			m_eKind = Kind.BLOCK;
@@ -30,12 +30,12 @@ namespace NumbatLogic
 			m_pSymbolMap = new OwnedStringMap<OwnedVector<Symbol>>();
 		}
 
-#line 35 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 35 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 		public void AddSymbol(string sName, Symbol ppSymbol)
 		{
 			if (ppSymbol == null)
 				return;
-#line 40 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 40 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 			OwnedVector<Symbol> pBucket;
 			if (m_pSymbolMap.Contains(sName))
 			{
@@ -46,23 +46,23 @@ namespace NumbatLogic
 				OwnedVector<Symbol> pOwnedBucket = new OwnedVector<Symbol>();
 				pBucket = pOwnedBucket;
 				NumbatLogic.OwnedVector<NumbatLogic.Symbol> __1215975972 = pOwnedBucket;
-#line 49 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 49 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 				pOwnedBucket = null;
-#line 49 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 49 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 				m_pSymbolMap.Set(sName, __1215975972);
 			}
-#line 52 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 52 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 			ppSymbol.m_pScope = this;
 			pBucket.PushBack(ppSymbol);
 		}
 
-#line 57 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 57 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 		public void FindInThisScope(string sName, Vector<Symbol> pOut)
 		{
 			Assert.Plz(pOut != null);
-#line 61 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 61 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 			pOut.Clear();
-#line 63 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 63 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 			if (m_pSymbolMap.Contains(sName))
 			{
 				OwnedVector<Symbol> pBucket = m_pSymbolMap.Get(sName);
@@ -73,7 +73,7 @@ namespace NumbatLogic
 			}
 		}
 
-#line 76 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 76 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 		public SymbolScope FindNamespaceScope(string sName)
 		{
 			if (!m_pSymbolMap.Contains(sName))
@@ -88,7 +88,7 @@ namespace NumbatLogic
 			return null;
 		}
 
-#line 3 "../../../Source/Core/Semantic/SymbolScope.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/Semantic/SymbolScope.nll"
 		~SymbolScope()
 		{
 		}

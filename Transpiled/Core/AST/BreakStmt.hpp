@@ -12,18 +12,18 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/BreakStmt.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/BreakStmt.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 	class BreakStmt : public AST
 	{
 		public: BreakStmt();
-#line 10 "../../../Source/Core/AST/BreakStmt.nll"
+#line 10 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 		public: static BreakStmt* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 36 "../../../Source/Core/AST/BreakStmt.nll"
+#line 36 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 42 "../../../Source/Core/AST/BreakStmt.nll"
+#line 42 "/home/cliffya/git/Lang/Source/Core/AST/BreakStmt.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 	};
 }

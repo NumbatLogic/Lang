@@ -1,27 +1,27 @@
-#line 1 "../../../Source/Core/AST/FunctionCall.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 namespace NumbatLogic
 {
 	class FunctionCall : AST
 	{
 		public string m_sMangledName;
 		public ParamCall m_pParamCall;
-#line 8 "../../../Source/Core/AST/FunctionCall.nll"
+#line 8 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 		public static FunctionCall TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
 		{
 			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
-#line 12 "../../../Source/Core/AST/FunctionCall.nll"
+#line 12 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			Token pNameToken = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_IDENTIFIER);
 			if (pNameToken == null)
 			{
-#line 14 "../../../Source/Core/AST/FunctionCall.nll"
+#line 14 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 				return null;
 			}
-#line 15 "../../../Source/Core/AST/FunctionCall.nll"
+#line 15 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 17 "../../../Source/Core/AST/FunctionCall.nll"
+#line 17 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			if (pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_PARENTHESIS_LEFT) == null)
 			{
-#line 18 "../../../Source/Core/AST/FunctionCall.nll"
+#line 18 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 				return null;
 			}
 			ParamCall pParamCall = ParamCall.TryCreate(pTokenContainer, pTempOffset);
@@ -33,30 +33,30 @@ namespace NumbatLogic
 				Assert.Plz(false);
 				return null;
 			}
-#line 30 "../../../Source/Core/AST/FunctionCall.nll"
+#line 30 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			FunctionCall pFunctionCall = new FunctionCall();
-#line 32 "../../../Source/Core/AST/FunctionCall.nll"
+#line 32 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			pFunctionCall.m_eType = AST.Type.AST_FUNCTION_CALL;
 			pFunctionCall.m_pFirstToken = pNameToken;
 			pFunctionCall.m_sMangledName = pNameToken.GetString();
 			pFunctionCall.m_pParamCall = pParamCall;
 			NumbatLogic.ParamCall __1502716703 = pParamCall;
 			pParamCall = null;
-#line 37 "../../../Source/Core/AST/FunctionCall.nll"
+#line 37 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			pFunctionCall.AddChild(__1502716703);
-#line 40 "../../../Source/Core/AST/FunctionCall.nll"
+#line 40 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			pOffsetDatum.Set(pTempOffset);
 			NumbatLogic.FunctionCall __2079883043 = pFunctionCall;
-#line 41 "../../../Source/Core/AST/FunctionCall.nll"
+#line 41 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			pFunctionCall = null;
-#line 41 "../../../Source/Core/AST/FunctionCall.nll"
+#line 41 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			return __2079883043;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
 			string sName = m_pFirstToken.GetString();
-#line 48 "../../../Source/Core/AST/FunctionCall.nll"
+#line 48 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			AST pBase = this;
 			if (pParent != null)
 			{
@@ -66,7 +66,7 @@ namespace NumbatLogic
 					pBase = pParent.m_pLeft.m_pValueType.m_pClassDecl;
 				}
 				else
-#line 56 "../../../Source/Core/AST/FunctionCall.nll"
+#line 56 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 					if (pParent.GetOperatorType() == OperatorExpr.OperatorType.SCOPE_RESOLUTION)
 					{
 						if (pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.CLASS_DECL)
@@ -75,7 +75,7 @@ namespace NumbatLogic
 							pBase = pParent.m_pLeft.m_pValueType.m_pClassDecl;
 						}
 						else
-#line 63 "../../../Source/Core/AST/FunctionCall.nll"
+#line 63 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 							if (pParent.m_pLeft.m_pValueType.m_eType == ValueType.Type.ENUM_DECL)
 							{
 								pBase = pParent.m_pLeft.m_pValueType.m_pEnumDecl;
@@ -87,32 +87,32 @@ namespace NumbatLogic
 							}
 					}
 			}
-#line 77 "../../../Source/Core/AST/FunctionCall.nll"
+#line 77 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			base.Validate(pValidator, pParent);
-#line 79 "../../../Source/Core/AST/FunctionCall.nll"
+#line 79 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			AST pResolverAST = null;
-#line 81 "../../../Source/Core/AST/FunctionCall.nll"
+#line 81 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			bool bResolverCallableAmbiguous = false;
 			int nCallableCandidatesFromResolver = 0;
-#line 84 "../../../Source/Core/AST/FunctionCall.nll"
+#line 84 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			Vector<Symbol> pCandidates = new Vector<Symbol>();
 			pValidator.m_pResolver.ResolveFromNode(pBase, sName, pCandidates);
-#line 87 "../../../Source/Core/AST/FunctionCall.nll"
+#line 87 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			Vector<Symbol> pCallable = new Vector<Symbol>();
 			for (int i = 0; i < pCandidates.GetSize(); i++)
 			{
 				Symbol pSym = pCandidates.Get(i);
 				if (pSym.m_eKind == Symbol.Kind.FUNCTION || pSym.m_eKind == Symbol.Kind.METHOD || pSym.m_eKind == Symbol.Kind.DELEGATE)
 				{
-#line 95 "../../../Source/Core/AST/FunctionCall.nll"
+#line 95 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 					pCallable.PushBack(pSym);
 					nCallableCandidatesFromResolver = nCallableCandidatesFromResolver + 1;
 				}
 				else
-#line 98 "../../../Source/Core/AST/FunctionCall.nll"
+#line 98 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 					if (pSym.m_eKind == Symbol.Kind.VAR && pSym.m_pDeclAST != null && pSym.m_pDeclAST.m_eType == AST.Type.AST_MEMBER_VAR_DECL)
 					{
-#line 101 "../../../Source/Core/AST/FunctionCall.nll"
+#line 101 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 						MemberVarDecl pMVD = (MemberVarDecl)(pSym.m_pDeclAST);
 						if (pMVD.m_pVarDecl != null && pMVD.m_pVarDecl.m_pTypeRef != null)
 						{
@@ -125,7 +125,7 @@ namespace NumbatLogic
 						}
 					}
 			}
-#line 116 "../../../Source/Core/AST/FunctionCall.nll"
+#line 116 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			if (pCallable.GetSize() > 1 && m_pParamCall != null)
 			{
 				int nArgCount = 0;
@@ -135,14 +135,14 @@ namespace NumbatLogic
 					nArgCount++;
 					pArg = pArg.m_pNextSibling;
 				}
-#line 126 "../../../Source/Core/AST/FunctionCall.nll"
+#line 126 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 				Vector<Symbol> pFiltered = new Vector<Symbol>();
 				for (int i = 0; i < pCallable.GetSize(); i++)
 				{
 					Symbol pSym = pCallable.Get(i);
 					AST pDeclAST = pSym.m_pDeclAST;
 					FunctionDecl pFD = null;
-#line 133 "../../../Source/Core/AST/FunctionCall.nll"
+#line 133 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 					if (pDeclAST != null)
 					{
 						if (pDeclAST.m_eType == AST.Type.AST_FUNCTION_DECL)
@@ -150,7 +150,7 @@ namespace NumbatLogic
 							pFD = (FunctionDecl)(pDeclAST);
 						}
 						else
-#line 139 "../../../Source/Core/AST/FunctionCall.nll"
+#line 139 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 							if (pDeclAST.m_eType == AST.Type.AST_MEMBER_FUNCTION_DECL)
 							{
 								MemberFunctionDecl pMFD = (MemberFunctionDecl)(pDeclAST);
@@ -158,7 +158,7 @@ namespace NumbatLogic
 									pFD = pMFD.m_pFunctionDecl;
 							}
 							else
-#line 145 "../../../Source/Core/AST/FunctionCall.nll"
+#line 145 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 								if (pDeclAST.m_eType == AST.Type.DELEGATE_DECL)
 								{
 									DelegateDecl pDD = (DelegateDecl)(pDeclAST);
@@ -166,7 +166,7 @@ namespace NumbatLogic
 										pFD = pDD.m_pFunctionDecl;
 								}
 								else
-#line 151 "../../../Source/Core/AST/FunctionCall.nll"
+#line 151 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 									if (pDeclAST.m_eType == AST.Type.AST_MEMBER_VAR_DECL)
 									{
 										MemberVarDecl pMVD = (MemberVarDecl)(pDeclAST);
@@ -178,10 +178,10 @@ namespace NumbatLogic
 										}
 									}
 					}
-#line 163 "../../../Source/Core/AST/FunctionCall.nll"
+#line 163 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 					int nMinParams = 0;
 					int nMaxParams = 0;
-#line 166 "../../../Source/Core/AST/FunctionCall.nll"
+#line 166 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 					if (pFD != null && pFD.m_pParamDecl != null)
 					{
 						AST pDeclChild = pFD.m_pParamDecl.m_pFirstChild;
@@ -194,21 +194,21 @@ namespace NumbatLogic
 								if (pVarDecl.m_pAssignment == null)
 									nMinParams++;
 							}
-#line 179 "../../../Source/Core/AST/FunctionCall.nll"
+#line 179 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 							pDeclChild = pDeclChild.m_pNextSibling;
 						}
 					}
-#line 184 "../../../Source/Core/AST/FunctionCall.nll"
+#line 184 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 					if (pFD == null || pFD.m_pParamDecl == null)
 					{
 						nMinParams = 0;
 						nMaxParams = 0;
 					}
-#line 190 "../../../Source/Core/AST/FunctionCall.nll"
+#line 190 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 					if (nArgCount >= nMinParams && nArgCount <= nMaxParams)
 						pFiltered.PushBack(pSym);
 				}
-#line 194 "../../../Source/Core/AST/FunctionCall.nll"
+#line 194 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 				if (pFiltered.GetSize() == 1)
 				{
 					Symbol pSymbol = pFiltered.Get(0);
@@ -216,19 +216,19 @@ namespace NumbatLogic
 						pResolverAST = pSymbol.m_pDeclAST;
 				}
 				else
-#line 200 "../../../Source/Core/AST/FunctionCall.nll"
+#line 200 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 					if (pFiltered.GetSize() > 1)
 					{
-#line 208 "../../../Source/Core/AST/FunctionCall.nll"
+#line 208 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 						Vector<Symbol> pBest = new Vector<Symbol>();
 						int nBestScore = -1;
-#line 211 "../../../Source/Core/AST/FunctionCall.nll"
+#line 211 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 						for (int i = 0; i < pFiltered.GetSize(); i++)
 						{
 							Symbol pSym = pFiltered.Get(i);
 							AST pDeclAST = pSym.m_pDeclAST;
 							FunctionDecl pFD = null;
-#line 217 "../../../Source/Core/AST/FunctionCall.nll"
+#line 217 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 							if (pDeclAST != null)
 							{
 								if (pDeclAST.m_eType == AST.Type.AST_FUNCTION_DECL)
@@ -236,7 +236,7 @@ namespace NumbatLogic
 									pFD = (FunctionDecl)(pDeclAST);
 								}
 								else
-#line 223 "../../../Source/Core/AST/FunctionCall.nll"
+#line 223 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 									if (pDeclAST.m_eType == AST.Type.AST_MEMBER_FUNCTION_DECL)
 									{
 										MemberFunctionDecl pMFD = (MemberFunctionDecl)(pDeclAST);
@@ -244,7 +244,7 @@ namespace NumbatLogic
 											pFD = pMFD.m_pFunctionDecl;
 									}
 									else
-#line 229 "../../../Source/Core/AST/FunctionCall.nll"
+#line 229 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 										if (pDeclAST.m_eType == AST.Type.DELEGATE_DECL)
 										{
 											DelegateDecl pDD = (DelegateDecl)(pDeclAST);
@@ -252,7 +252,7 @@ namespace NumbatLogic
 												pFD = pDD.m_pFunctionDecl;
 										}
 										else
-#line 235 "../../../Source/Core/AST/FunctionCall.nll"
+#line 235 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 											if (pDeclAST.m_eType == AST.Type.AST_MEMBER_VAR_DECL)
 											{
 												MemberVarDecl pMVD = (MemberVarDecl)(pDeclAST);
@@ -264,59 +264,59 @@ namespace NumbatLogic
 												}
 											}
 							}
-#line 252 "../../../Source/Core/AST/FunctionCall.nll"
+#line 252 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 							bool bTypeOk = true;
 							if (pFD != null && pFD.m_pParamDecl != null)
 								bTypeOk = pFD.m_pParamDecl.ValidateParamCall(m_pParamCall, pValidator, true);
-#line 256 "../../../Source/Core/AST/FunctionCall.nll"
+#line 256 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 							if (!bTypeOk)
 								continue;
-#line 262 "../../../Source/Core/AST/FunctionCall.nll"
+#line 262 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 							int nScore = 0;
 							if (pFD != null && pFD.m_pParamDecl != null)
 							{
 								int nIndex = 0;
 								AST pCallChild = m_pParamCall.m_pFirstChild;
 								AST pDeclChild = pFD.m_pParamDecl.m_pFirstChild;
-#line 269 "../../../Source/Core/AST/FunctionCall.nll"
+#line 269 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 								while (true)
 								{
 									if (pCallChild == null || pDeclChild == null)
 										break;
-#line 274 "../../../Source/Core/AST/FunctionCall.nll"
+#line 274 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 									if (pDeclChild.m_eType != AST.Type.AST_VAR_DECL)
 										break;
-#line 277 "../../../Source/Core/AST/FunctionCall.nll"
+#line 277 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 									VarDecl pVarDecl = (VarDecl)(pDeclChild);
 									ValueType pValueType = pVarDecl.m_pTypeRef.CreateValueType(pValidator.m_pResolver);
 									if (pValueType == null || pCallChild.m_pValueType == null)
 									{
-#line 280 "../../../Source/Core/AST/FunctionCall.nll"
+#line 280 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 										break;
 									}
 									ValueType pArgVT = pCallChild.m_pValueType;
-#line 285 "../../../Source/Core/AST/FunctionCall.nll"
+#line 285 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 									if (pArgVT.m_eType == pValueType.m_eType && pArgVT.m_eType != ValueType.Type.CLASS_DECL_VALUE && pArgVT.m_ePointerType == pValueType.m_ePointerType)
 									{
-#line 289 "../../../Source/Core/AST/FunctionCall.nll"
+#line 289 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 										nScore += 2;
 									}
 									else
-#line 291 "../../../Source/Core/AST/FunctionCall.nll"
+#line 291 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 										if (pArgVT.m_eType == ValueType.Type.CLASS_DECL_VALUE && pValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE)
 										{
-#line 294 "../../../Source/Core/AST/FunctionCall.nll"
+#line 294 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 											ClassDecl pFromClass = pArgVT.m_pClassDecl;
 											ClassDecl pToClass = pValueType.m_pClassDecl;
-#line 298 "../../../Source/Core/AST/FunctionCall.nll"
+#line 298 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 											if (pFromClass == pToClass && pArgVT.m_ePointerType == pValueType.m_ePointerType)
 											{
-#line 301 "../../../Source/Core/AST/FunctionCall.nll"
+#line 301 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 												nScore += 3;
 											}
 											else
 											{
-#line 308 "../../../Source/Core/AST/FunctionCall.nll"
+#line 308 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 												int nDistance = -1;
 												int nWalk = 0;
 												ClassDecl pWalk = pFromClass;
@@ -327,25 +327,25 @@ namespace NumbatLogic
 														nDistance = nWalk;
 														break;
 													}
-#line 319 "../../../Source/Core/AST/FunctionCall.nll"
+#line 319 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 													if (pWalk.m_pBaseTypeRef == null)
 														break;
-#line 322 "../../../Source/Core/AST/FunctionCall.nll"
+#line 322 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 													AST pBaseAST = pWalk.m_pBaseTypeRef.m_pFoundType;
 													if (pBaseAST == null || pBaseAST.m_eType != AST.Type.AST_CLASS_DECL)
 														break;
-#line 326 "../../../Source/Core/AST/FunctionCall.nll"
+#line 326 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 													pWalk = (ClassDecl)(pBaseAST);
 													nWalk++;
 												}
-#line 330 "../../../Source/Core/AST/FunctionCall.nll"
+#line 330 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 												if (nDistance >= 0)
 												{
-#line 334 "../../../Source/Core/AST/FunctionCall.nll"
+#line 334 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 													if (nDistance == 0)
 														nScore += 3;
 													else
-#line 336 "../../../Source/Core/AST/FunctionCall.nll"
+#line 336 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 														if (nDistance == 1)
 															nScore += 2;
 														else
@@ -353,13 +353,13 @@ namespace NumbatLogic
 												}
 											}
 										}
-#line 344 "../../../Source/Core/AST/FunctionCall.nll"
+#line 344 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 									nIndex++;
 									pCallChild = pCallChild.m_pNextSibling;
 									pDeclChild = pDeclChild.m_pNextSibling;
 								}
 							}
-#line 350 "../../../Source/Core/AST/FunctionCall.nll"
+#line 350 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 							if (nScore > nBestScore)
 							{
 								pBest.Clear();
@@ -367,13 +367,13 @@ namespace NumbatLogic
 								nBestScore = nScore;
 							}
 							else
-#line 356 "../../../Source/Core/AST/FunctionCall.nll"
+#line 356 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 								if (nScore == nBestScore)
 								{
 									pBest.PushBack(pSym);
 								}
 						}
-#line 362 "../../../Source/Core/AST/FunctionCall.nll"
+#line 362 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 						if (pBest.GetSize() == 1 && nBestScore >= 0)
 						{
 							Symbol pSymbol = pBest.Get(0);
@@ -381,10 +381,10 @@ namespace NumbatLogic
 								pResolverAST = pSymbol.m_pDeclAST;
 						}
 						else
-#line 368 "../../../Source/Core/AST/FunctionCall.nll"
+#line 368 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 							if (pBest.GetSize() > 1 && nBestScore >= 0)
 							{
-#line 372 "../../../Source/Core/AST/FunctionCall.nll"
+#line 372 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 								pCallable.Clear();
 								for (int i = 0; i < pBest.GetSize(); i++)
 								{
@@ -393,7 +393,7 @@ namespace NumbatLogic
 							}
 					}
 			}
-#line 383 "../../../Source/Core/AST/FunctionCall.nll"
+#line 383 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			if (pCallable.GetSize() == 1 && pResolverAST == null)
 			{
 				Symbol pSymbol = pCallable.Get(0);
@@ -401,10 +401,10 @@ namespace NumbatLogic
 					pResolverAST = pSymbol.m_pDeclAST;
 			}
 			else
-#line 389 "../../../Source/Core/AST/FunctionCall.nll"
+#line 389 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 				if (pCallable.GetSize() > 1 && pResolverAST == null)
 					bResolverCallableAmbiguous = true;
-#line 392 "../../../Source/Core/AST/FunctionCall.nll"
+#line 392 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			AST pAST = pResolverAST;
 			if (pAST == null)
 			{
@@ -430,9 +430,9 @@ namespace NumbatLogic
 				}
 				return;
 			}
-#line 418 "../../../Source/Core/AST/FunctionCall.nll"
+#line 418 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			FunctionDecl pFunctionDecl = null;
-#line 421 "../../../Source/Core/AST/FunctionCall.nll"
+#line 421 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			if (pAST.m_eType == AST.Type.AST_VAR_DECL)
 			{
 				VarDecl pVarDecl = (VarDecl)(pAST);
@@ -447,13 +447,13 @@ namespace NumbatLogic
 							pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 							return;
 						}
-#line 436 "../../../Source/Core/AST/FunctionCall.nll"
+#line 436 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 						pFunctionDecl = pValueType.m_pDelegateDecl.m_pFunctionDecl;
 					}
 				}
 			}
 			else
-#line 440 "../../../Source/Core/AST/FunctionCall.nll"
+#line 440 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 				if (pAST.m_eType == AST.Type.AST_MEMBER_VAR_DECL)
 				{
 					MemberVarDecl pMVD = (MemberVarDecl)(pAST);
@@ -472,20 +472,20 @@ namespace NumbatLogic
 						}
 					}
 				}
-#line 459 "../../../Source/Core/AST/FunctionCall.nll"
+#line 459 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			if (pAST.m_eType == AST.Type.AST_FUNCTION_DECL)
 			{
 				pFunctionDecl = (FunctionDecl)(pAST);
 			}
 			else
-#line 463 "../../../Source/Core/AST/FunctionCall.nll"
+#line 463 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 				if (pAST.m_eType == AST.Type.AST_MEMBER_FUNCTION_DECL)
 				{
 					MemberFunctionDecl pMFD = (MemberFunctionDecl)(pAST);
 					if (pMFD.m_pFunctionDecl != null)
 						pFunctionDecl = pMFD.m_pFunctionDecl;
 				}
-#line 470 "../../../Source/Core/AST/FunctionCall.nll"
+#line 470 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			if (pFunctionDecl == null)
 			{
 				InternalString sTemp = new InternalString("Is not a function? ");
@@ -495,13 +495,13 @@ namespace NumbatLogic
 				pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 				return;
 			}
-#line 481 "../../../Source/Core/AST/FunctionCall.nll"
+#line 481 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			if (pParent != null && pParent.m_pLeft != null)
 			{
 				ValueType pLeftValueType = pParent.m_pLeft.m_pValueType;
 				if (pLeftValueType.m_eType == ValueType.Type.CLASS_DECL_VALUE && pLeftValueType.m_pGenericValueTypeVector != null && pLeftValueType.m_pGenericValueTypeVector.GetSize() > 0)
 				{
-#line 487 "../../../Source/Core/AST/FunctionCall.nll"
+#line 487 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 					if (pLeftValueType.m_pGenericValueTypeVector.GetSize() != pLeftValueType.m_pClassDecl.m_pGenericTypeDeclVector.GetSize())
 					{
 						InternalString sTemp2 = new InternalString("Mismatched generics? ");
@@ -515,38 +515,38 @@ namespace NumbatLogic
 						pValidator.AddError(sTemp2.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 						return;
 					}
-#line 501 "../../../Source/Core/AST/FunctionCall.nll"
+#line 501 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 					for (int i = 0; i < pLeftValueType.m_pGenericValueTypeVector.GetSize(); i++)
 					{
 						ValueType pGenericValueType = pLeftValueType.m_pGenericValueTypeVector.Get(i).Clone();
 						GenericTypeDecl pGenericTypeDecl = pLeftValueType.m_pClassDecl.m_pGenericTypeDeclVector.Get(i);
-#line 506 "../../../Source/Core/AST/FunctionCall.nll"
+#line 506 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 						if (ExternalString.Equal(pGenericTypeDecl.m_pFirstToken.GetString(), pFunctionDecl.m_pTypeRef.m_pTypeToken.GetString()))
 						{
 							NumbatLogic.ValueType __2182339513 = pGenericValueType;
-#line 508 "../../../Source/Core/AST/FunctionCall.nll"
+#line 508 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 							pGenericValueType = null;
-#line 508 "../../../Source/Core/AST/FunctionCall.nll"
+#line 508 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 							m_pValueType = __2182339513;
 							m_pValueType.m_ePointerType = pFunctionDecl.m_pTypeRef.m_ePointerType;
 						}
 					}
 				}
 			}
-#line 515 "../../../Source/Core/AST/FunctionCall.nll"
+#line 515 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			if (m_pValueType == null)
 			{
 				m_pValueType = pFunctionDecl.m_pTypeRef.CreateValueType(pValidator.m_pResolver);
 			}
-#line 522 "../../../Source/Core/AST/FunctionCall.nll"
+#line 522 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			if (m_pValueType == null)
 			{
 				InternalString sTemp = new InternalString("could not get valuetype for some reason ");
 				sTemp.Append(pFunctionDecl.m_pTypeRef.m_pTypeToken.GetString());
-#line 529 "../../../Source/Core/AST/FunctionCall.nll"
+#line 529 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 				pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 			}
-#line 534 "../../../Source/Core/AST/FunctionCall.nll"
+#line 534 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 			if (m_pParamCall.m_pFirstChild == null)
 			{
 				if (pFunctionDecl.m_pParamDecl.m_pFirstChild != null)
@@ -559,20 +559,20 @@ namespace NumbatLogic
 			{
 				if (!pFunctionDecl.m_pParamDecl.ValidateParamCall(m_pParamCall, pValidator, true))
 				{
-#line 545 "../../../Source/Core/AST/FunctionCall.nll"
+#line 545 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 					return;
 				}
 			}
 		}
 
-#line 549 "../../../Source/Core/AST/FunctionCall.nll"
+#line 549 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			pOutputBuilder.m_sOut.Append(m_sMangledName);
 			m_pParamCall.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 		}
 
-#line 3 "../../../Source/Core/AST/FunctionCall.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/FunctionCall.nll"
 		public FunctionCall()
 		{
 		}

@@ -68,11 +68,11 @@ namespace NumbatLogic
 	class OutputBuilder;
 	class Util;
 }
-#line 0 "../../../Source/Core/AST/ClassDecl.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/ClassDecl.nll"
-#line 19 "../../../Source/Core/AST/ClassDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
+#line 19 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 	ClassDecl::ClassDecl()
 	{
 		m_pNameToken = 0;
@@ -85,7 +85,7 @@ namespace NumbatLogic
 		m_pTypeToken = 0;
 		m_pConstructorAccessLevelToken = 0;
 		m_pConstructorTypeToken = 0;
-#line 21 "../../../Source/Core/AST/ClassDecl.nll"
+#line 21 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		m_eType = AST::Type::AST_CLASS_DECL;
 		m_bCanDescend = true;
 		m_pGenericTypeDeclVector = new OwnedVector<GenericTypeDecl*>();
@@ -96,24 +96,24 @@ namespace NumbatLogic
 	ClassDecl* ClassDecl::TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, AST* pParent)
 	{
 		OffsetDatum* pTempOffset = OffsetDatum::Create(pOffsetDatum);
-#line 32 "../../../Source/Core/AST/ClassDecl.nll"
+#line 32 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		Token* pClassToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_CLASS);
 		if (pClassToken == 0)
 		{
 			if (pTempOffset) delete pTempOffset;
-#line 34 "../../../Source/Core/AST/ClassDecl.nll"
+#line 34 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			return 0;
 		}
-#line 35 "../../../Source/Core/AST/ClassDecl.nll"
+#line 35 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 37 "../../../Source/Core/AST/ClassDecl.nll"
+#line 37 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		Token* pDisposableToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_KEYWORD_DISPOSABLE);
 		if (pDisposableToken != 0)
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 41 "../../../Source/Core/AST/ClassDecl.nll"
+#line 41 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		ClassDecl* pClassDecl = new ClassDecl();
 		pClassDecl->m_bDisposable = pDisposableToken != 0;
-#line 44 "../../../Source/Core/AST/ClassDecl.nll"
+#line 44 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		Token* pNameToken = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
 		if (pNameToken == 0)
 		{
@@ -122,16 +122,16 @@ namespace NumbatLogic
 			Assert::Plz(false);
 			if (pTempOffset) delete pTempOffset;
 			if (pClassDecl) delete pClassDecl;
-#line 50 "../../../Source/Core/AST/ClassDecl.nll"
+#line 50 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 55 "../../../Source/Core/AST/ClassDecl.nll"
+#line 55 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		Token* pAngleBracketLeft = pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_ANGLE_BRACKET_LEFT);
 		if (pAngleBracketLeft != 0)
 		{
 			pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 60 "../../../Source/Core/AST/ClassDecl.nll"
+#line 60 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			while (true)
 			{
 				if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_ANGLE_BRACKET_RIGHT) != 0)
@@ -139,7 +139,7 @@ namespace NumbatLogic
 					pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 					break;
 				}
-#line 68 "../../../Source/Core/AST/ClassDecl.nll"
+#line 68 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				GenericTypeDecl* pGenericTypeDecl = GenericTypeDecl::TryCreate(pTokenContainer, pTempOffset);
 				if (pGenericTypeDecl == 0)
 				{
@@ -148,13 +148,13 @@ namespace NumbatLogic
 				}
 				NumbatLogic::GenericTypeDecl* __977309417 = pGenericTypeDecl;
 				pGenericTypeDecl = 0;
-#line 75 "../../../Source/Core/AST/ClassDecl.nll"
+#line 75 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pClassDecl->m_pGenericTypeDeclVector->PushBack(__977309417);
-#line 78 "../../../Source/Core/AST/ClassDecl.nll"
+#line 78 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_ANGLE_BRACKET_RIGHT) != 0)
 				{
 					if (pGenericTypeDecl) delete pGenericTypeDecl;
-#line 79 "../../../Source/Core/AST/ClassDecl.nll"
+#line 79 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 					continue;
 				}
 				if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_COMMA) == 0)
@@ -167,7 +167,7 @@ namespace NumbatLogic
 				if (pGenericTypeDecl) delete pGenericTypeDecl;
 			}
 		}
-#line 92 "../../../Source/Core/AST/ClassDecl.nll"
+#line 92 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		TypeRef* pBaseTypeRef = 0;
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_COLON) != 0)
 		{
@@ -181,11 +181,11 @@ namespace NumbatLogic
 				if (pTempOffset) delete pTempOffset;
 				if (pClassDecl) delete pClassDecl;
 				if (pBaseTypeRef) delete pBaseTypeRef;
-#line 102 "../../../Source/Core/AST/ClassDecl.nll"
+#line 102 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				return 0;
 			}
 		}
-#line 106 "../../../Source/Core/AST/ClassDecl.nll"
+#line 106 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_LEFT) == 0)
 		{
 			Console::Log("expected opening curly brace");
@@ -194,23 +194,23 @@ namespace NumbatLogic
 			if (pTempOffset) delete pTempOffset;
 			if (pClassDecl) delete pClassDecl;
 			if (pBaseTypeRef) delete pBaseTypeRef;
-#line 111 "../../../Source/Core/AST/ClassDecl.nll"
+#line 111 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			return 0;
 		}
 		pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
-#line 117 "../../../Source/Core/AST/ClassDecl.nll"
+#line 117 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		pClassDecl->m_pFirstToken = pClassToken;
 		pClassDecl->m_pNameToken = pNameToken;
 		pClassDecl->m_pBaseTypeRef = pBaseTypeRef;
 		if (pBaseTypeRef != 0)
 		{
 			NumbatLogic::TypeRef* __276219192 = pBaseTypeRef;
-#line 121 "../../../Source/Core/AST/ClassDecl.nll"
+#line 121 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			pBaseTypeRef = 0;
-#line 121 "../../../Source/Core/AST/ClassDecl.nll"
+#line 121 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			pClassDecl->AddChild(__276219192);
 		}
-#line 124 "../../../Source/Core/AST/ClassDecl.nll"
+#line 124 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		while (true)
 		{
 			if (pTokenContainer->PeekExpect(pTempOffset, Token::Type::TOKEN_CURLY_BRACE_RIGHT) != 0)
@@ -218,100 +218,100 @@ namespace NumbatLogic
 				pTempOffset->m_nOffset = pTempOffset->m_nOffset + 1;
 				break;
 			}
-#line 132 "../../../Source/Core/AST/ClassDecl.nll"
+#line 132 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			AST* pAST = 0;
-#line 134 "../../../Source/Core/AST/ClassDecl.nll"
+#line 134 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			pAST = MemberVarDecl::TryCreate(pTokenContainer, pTempOffset);
 			if (pAST != 0)
 			{
 				NumbatLogic::AST* __3057670627 = pAST;
-#line 137 "../../../Source/Core/AST/ClassDecl.nll"
+#line 137 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pAST = 0;
-#line 137 "../../../Source/Core/AST/ClassDecl.nll"
+#line 137 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pClassDecl->AddChild(__3057670627);
 				if (pAST) delete pAST;
-#line 138 "../../../Source/Core/AST/ClassDecl.nll"
+#line 138 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				continue;
 			}
-#line 141 "../../../Source/Core/AST/ClassDecl.nll"
+#line 141 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			pAST = MemberFunctionDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 			if (pAST != 0)
 			{
 				NumbatLogic::AST* __3057736223 = pAST;
-#line 144 "../../../Source/Core/AST/ClassDecl.nll"
+#line 144 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pAST = 0;
-#line 144 "../../../Source/Core/AST/ClassDecl.nll"
+#line 144 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pClassDecl->AddChild(__3057736223);
 				if (pAST) delete pAST;
-#line 145 "../../../Source/Core/AST/ClassDecl.nll"
+#line 145 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				continue;
 			}
-#line 148 "../../../Source/Core/AST/ClassDecl.nll"
+#line 148 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			pAST = MemberClassDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 			if (pAST != 0)
 			{
 				NumbatLogic::AST* __3057801819 = pAST;
-#line 151 "../../../Source/Core/AST/ClassDecl.nll"
+#line 151 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pAST = 0;
-#line 151 "../../../Source/Core/AST/ClassDecl.nll"
+#line 151 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pClassDecl->AddChild(__3057801819);
 				if (pAST) delete pAST;
-#line 152 "../../../Source/Core/AST/ClassDecl.nll"
+#line 152 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				continue;
 			}
-#line 155 "../../../Source/Core/AST/ClassDecl.nll"
+#line 155 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			pAST = MemberEnumDecl::TryCreate(pTokenContainer, pTempOffset);
 			if (pAST != 0)
 			{
 				NumbatLogic::AST* __3057801826 = pAST;
-#line 158 "../../../Source/Core/AST/ClassDecl.nll"
+#line 158 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pAST = 0;
-#line 158 "../../../Source/Core/AST/ClassDecl.nll"
+#line 158 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pClassDecl->AddChild(__3057801826);
 				if (pAST) delete pAST;
-#line 159 "../../../Source/Core/AST/ClassDecl.nll"
+#line 159 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				continue;
 			}
-#line 162 "../../../Source/Core/AST/ClassDecl.nll"
+#line 162 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			pAST = TorDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 			if (pAST != 0)
 			{
 				NumbatLogic::AST* __3057867422 = pAST;
-#line 165 "../../../Source/Core/AST/ClassDecl.nll"
+#line 165 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pAST = 0;
-#line 165 "../../../Source/Core/AST/ClassDecl.nll"
+#line 165 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pClassDecl->AddChild(__3057867422);
 				if (pAST) delete pAST;
-#line 166 "../../../Source/Core/AST/ClassDecl.nll"
+#line 166 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				continue;
 			}
-#line 169 "../../../Source/Core/AST/ClassDecl.nll"
+#line 169 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			pAST = DelegateDecl::TryCreate(pTokenContainer, pTempOffset, pClassDecl);
 			if (pAST != 0)
 			{
 				NumbatLogic::AST* __3057933018 = pAST;
-#line 172 "../../../Source/Core/AST/ClassDecl.nll"
+#line 172 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pAST = 0;
-#line 172 "../../../Source/Core/AST/ClassDecl.nll"
+#line 172 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pClassDecl->AddChild(__3057933018);
 				if (pAST) delete pAST;
-#line 173 "../../../Source/Core/AST/ClassDecl.nll"
+#line 173 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				continue;
 			}
-#line 176 "../../../Source/Core/AST/ClassDecl.nll"
+#line 176 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			Console::Log("expected to parse somethting within class...");
 			Console::Log(pTokenContainer->StringifyOffset(pTempOffset));
 			Assert::Plz(false);
 			if (pAST) delete pAST;
 		}
-#line 182 "../../../Source/Core/AST/ClassDecl.nll"
+#line 182 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		pOffsetDatum->Set(pTempOffset);
 		NumbatLogic::ClassDecl* __438903738 = pClassDecl;
-#line 183 "../../../Source/Core/AST/ClassDecl.nll"
+#line 183 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		pClassDecl = 0;
 		if (pTempOffset) delete pTempOffset;
 		if (pBaseTypeRef) delete pBaseTypeRef;
-#line 183 "../../../Source/Core/AST/ClassDecl.nll"
+#line 183 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		return __438903738;
 	}
 
@@ -323,7 +323,7 @@ namespace NumbatLogic
 	void ClassDecl::Validate(Validator* pValidator, OperatorExpr* pParent)
 	{
 		AddClassDeclReference(this, AST::OutputFile::SOURCE, false);
-#line 195 "../../../Source/Core/AST/ClassDecl.nll"
+#line 195 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		if (m_pBaseTypeRef != 0)
 		{
 			ValueType* pBaseValueType = m_pBaseTypeRef->CreateValueType(pValidator->m_pResolver);
@@ -334,10 +334,10 @@ namespace NumbatLogic
 				pValidator->AddError(sTemp->GetExternalString(), m_pBaseTypeRef->m_pFirstToken->m_sFileName, m_pBaseTypeRef->m_pFirstToken->m_nLine, m_pBaseTypeRef->m_pFirstToken->m_nColumn);
 				if (sTemp) delete sTemp;
 				if (pBaseValueType) delete pBaseValueType;
-#line 203 "../../../Source/Core/AST/ClassDecl.nll"
+#line 203 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				return;
 			}
-#line 206 "../../../Source/Core/AST/ClassDecl.nll"
+#line 206 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			if (pBaseValueType->m_eType != ValueType::Type::CLASS_DECL_VALUE)
 			{
 				InternalString* sTemp = new InternalString("Unknown base class is not a class: ");
@@ -350,7 +350,7 @@ namespace NumbatLogic
 			if (pBaseValueType) delete pBaseValueType;
 		}
 		{
-#line 220 "../../../Source/Core/AST/ClassDecl.nll"
+#line 220 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			bool bHasOwnedPointer = false;
 			bool bHasDefaultableVariable = false;
 			bool bHasConstructor = false;
@@ -368,10 +368,10 @@ namespace NumbatLogic
 					}
 					if (pTypeRef->m_ePointerType == TypeRef::PointerType::OWNED && !pMemberVarDecl->m_bStatic)
 						bHasOwnedPointer = true;
-#line 239 "../../../Source/Core/AST/ClassDecl.nll"
+#line 239 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 					bHasDefaultableVariable = true;
 				}
-#line 242 "../../../Source/Core/AST/ClassDecl.nll"
+#line 242 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				if (pChild->m_eType == AST::Type::AST_TOR_DECL)
 				{
 					TorDecl* pTorDecl = (TorDecl*)(pChild);
@@ -384,28 +384,28 @@ namespace NumbatLogic
 							pTorDecl->m_pScope->AddChildFront(new MemberVarsSetDefaultStmt());
 					}
 				}
-#line 255 "../../../Source/Core/AST/ClassDecl.nll"
+#line 255 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pChild = pChild->m_pNextSibling;
 			}
-#line 258 "../../../Source/Core/AST/ClassDecl.nll"
+#line 258 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			if (bHasDefaultableVariable && !bHasConstructor)
 			{
 				m_pConstructorAccessLevelToken = new Token();
 				m_pConstructorAccessLevelToken->m_eType = Token::Type::TOKEN_KEYWORD_PUBLIC;
-#line 263 "../../../Source/Core/AST/ClassDecl.nll"
+#line 263 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				AccessLevel* pAccessLevel = new AccessLevel();
 				pAccessLevel->m_eType = AST::Type::AST_ACCESS_LEVEL;
 				pAccessLevel->m_pFirstToken = m_pConstructorAccessLevelToken;
-#line 267 "../../../Source/Core/AST/ClassDecl.nll"
+#line 267 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				m_pConstructorTypeToken = new Token();
 				m_pConstructorTypeToken->m_eType = Token::Type::TOKEN_KEYWORD_CONSTRUCT;
-#line 270 "../../../Source/Core/AST/ClassDecl.nll"
+#line 270 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				ParamDecl* pParamDecl = new ParamDecl();
 				pParamDecl->m_pFirstToken = m_pFirstToken;
-#line 273 "../../../Source/Core/AST/ClassDecl.nll"
+#line 273 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				Scope* pScope = new Scope();
 				pScope->AddChild(new MemberVarsSetDefaultStmt());
-#line 276 "../../../Source/Core/AST/ClassDecl.nll"
+#line 276 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				TorDecl* pTorDecl = new TorDecl();
 				pTorDecl->m_eType = AST::Type::AST_TOR_DECL;
 				pTorDecl->m_pParent = this;
@@ -418,45 +418,45 @@ namespace NumbatLogic
 				pTorDecl->m_sDisambiguate = "";
 				NumbatLogic::AccessLevel* __866280737 = pAccessLevel;
 				pAccessLevel = 0;
-#line 287 "../../../Source/Core/AST/ClassDecl.nll"
+#line 287 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pTorDecl->AddChild(__866280737);
 				NumbatLogic::ParamDecl* __2030449163 = pParamDecl;
-#line 288 "../../../Source/Core/AST/ClassDecl.nll"
+#line 288 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pParamDecl = 0;
-#line 288 "../../../Source/Core/AST/ClassDecl.nll"
+#line 288 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pTorDecl->AddChild(__2030449163);
 				NumbatLogic::Scope* __3578341519 = pScope;
-#line 289 "../../../Source/Core/AST/ClassDecl.nll"
+#line 289 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pScope = 0;
-#line 289 "../../../Source/Core/AST/ClassDecl.nll"
+#line 289 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pTorDecl->AddChild(__3578341519);
 				NumbatLogic::TorDecl* __3664169497 = pTorDecl;
 				pTorDecl = 0;
-#line 291 "../../../Source/Core/AST/ClassDecl.nll"
+#line 291 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				AddChild(__3664169497);
 				if (pAccessLevel) delete pAccessLevel;
 				if (pParamDecl) delete pParamDecl;
 				if (pScope) delete pScope;
 				if (pTorDecl) delete pTorDecl;
 			}
-#line 294 "../../../Source/Core/AST/ClassDecl.nll"
+#line 294 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			if (bHasOwnedPointer && !bHasDestructor)
 			{
 				m_pAccessLevelToken = new Token();
 				m_pAccessLevelToken->m_eType = Token::Type::TOKEN_KEYWORD_PUBLIC;
-#line 299 "../../../Source/Core/AST/ClassDecl.nll"
+#line 299 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				AccessLevel* pAccessLevel = new AccessLevel();
 				pAccessLevel->m_eType = AST::Type::AST_ACCESS_LEVEL;
 				pAccessLevel->m_pFirstToken = m_pAccessLevelToken;
-#line 303 "../../../Source/Core/AST/ClassDecl.nll"
+#line 303 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				m_pTypeToken = new Token();
 				m_pTypeToken->m_eType = Token::Type::TOKEN_KEYWORD_DESTRUCT;
-#line 306 "../../../Source/Core/AST/ClassDecl.nll"
+#line 306 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				ParamDecl* pParamDecl = new ParamDecl();
 				pParamDecl->m_pFirstToken = m_pFirstToken;
-#line 309 "../../../Source/Core/AST/ClassDecl.nll"
+#line 309 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				Scope* pScope = new Scope();
-#line 311 "../../../Source/Core/AST/ClassDecl.nll"
+#line 311 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				TorDecl* pTorDecl = new TorDecl();
 				pTorDecl->m_eType = AST::Type::AST_TOR_DECL;
 				pTorDecl->m_pParent = this;
@@ -469,21 +469,21 @@ namespace NumbatLogic
 				pTorDecl->m_sDisambiguate = "";
 				NumbatLogic::AccessLevel* __874148643 = pAccessLevel;
 				pAccessLevel = 0;
-#line 322 "../../../Source/Core/AST/ClassDecl.nll"
+#line 322 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pTorDecl->AddChild(__874148643);
 				NumbatLogic::ParamDecl* __2038317069 = pParamDecl;
-#line 323 "../../../Source/Core/AST/ClassDecl.nll"
+#line 323 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pParamDecl = 0;
-#line 323 "../../../Source/Core/AST/ClassDecl.nll"
+#line 323 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pTorDecl->AddChild(__2038317069);
 				NumbatLogic::Scope* __3586209425 = pScope;
-#line 324 "../../../Source/Core/AST/ClassDecl.nll"
+#line 324 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pScope = 0;
-#line 324 "../../../Source/Core/AST/ClassDecl.nll"
+#line 324 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				pTorDecl->AddChild(__3586209425);
 				NumbatLogic::TorDecl* __3671971814 = pTorDecl;
 				pTorDecl = 0;
-#line 326 "../../../Source/Core/AST/ClassDecl.nll"
+#line 326 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				AddChild(__3671971814);
 				if (pAccessLevel) delete pAccessLevel;
 				if (pParamDecl) delete pParamDecl;
@@ -491,11 +491,11 @@ namespace NumbatLogic
 				if (pTorDecl) delete pTorDecl;
 			}
 		}
-#line 330 "../../../Source/Core/AST/ClassDecl.nll"
+#line 330 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		AST::Validate(pValidator, pParent);
 	}
 
-#line 336 "../../../Source/Core/AST/ClassDecl.nll"
+#line 336 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 	ClassDecl* ClassDecl::GetBaseClassDeclForScopeLookup(Resolver* pResolver)
 	{
 		if (m_pBaseClassDecl != 0)
@@ -510,7 +510,7 @@ namespace NumbatLogic
 			m_pBaseClassDecl = pBase;
 			return m_pBaseClassDecl;
 		}
-#line 351 "../../../Source/Core/AST/ClassDecl.nll"
+#line 351 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		if (pResolver == 0 || m_pSymbolScope == 0)
 			return 0;
 		SymbolScope* pParentScope = m_pSymbolScope->m_pParent;
@@ -526,10 +526,10 @@ namespace NumbatLogic
 			{
 				m_pBaseClassDecl = (ClassDecl*)(pSym->m_pDeclAST);
 				if (pCandidates) delete pCandidates;
-#line 365 "../../../Source/Core/AST/ClassDecl.nll"
+#line 365 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				return m_pBaseClassDecl;
 			}
-#line 368 "../../../Source/Core/AST/ClassDecl.nll"
+#line 368 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			if (pSym->m_eKind == Symbol::Kind::NAMESPACE && pSym->m_pScope != 0 && m_pBaseTypeRef->m_pChildTypeRef != 0)
 			{
 				const char* sChildName = m_pBaseTypeRef->m_pChildTypeRef->m_pTypeToken->GetString();
@@ -543,7 +543,7 @@ namespace NumbatLogic
 						m_pBaseClassDecl = (ClassDecl*)(pChildSym->m_pDeclAST);
 						if (pChildCandidates) delete pChildCandidates;
 						if (pCandidates) delete pCandidates;
-#line 379 "../../../Source/Core/AST/ClassDecl.nll"
+#line 379 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 						return m_pBaseClassDecl;
 					}
 				}
@@ -551,7 +551,7 @@ namespace NumbatLogic
 			}
 		}
 		if (pCandidates) delete pCandidates;
-#line 384 "../../../Source/Core/AST/ClassDecl.nll"
+#line 384 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		return 0;
 	}
 
@@ -559,7 +559,7 @@ namespace NumbatLogic
 	{
 		if (m_pBaseClassDecl != 0)
 			return m_pBaseClassDecl;
-#line 392 "../../../Source/Core/AST/ClassDecl.nll"
+#line 392 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		Validator* pV = pValidator;
 		if (pV == 0)
 		{
@@ -574,12 +574,12 @@ namespace NumbatLogic
 			{
 				m_pBaseClassDecl = pBaseValueType->m_pClassDecl;
 				if (pBaseValueType) delete pBaseValueType;
-#line 405 "../../../Source/Core/AST/ClassDecl.nll"
+#line 405 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 				return m_pBaseClassDecl;
 			}
 			if (pBaseValueType) delete pBaseValueType;
 		}
-#line 408 "../../../Source/Core/AST/ClassDecl.nll"
+#line 408 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		return 0;
 	}
 
@@ -592,7 +592,7 @@ namespace NumbatLogic
 			sOut->Append("::");
 		}
 		else
-#line 419 "../../../Source/Core/AST/ClassDecl.nll"
+#line 419 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			if (m_pNamespaceNode != 0 && m_pNamespaceNode->m_sName != 0)
 			{
 				m_pNamespaceNode->AppendFullyQualifiedName(sOut);
@@ -617,7 +617,7 @@ namespace NumbatLogic
 	void ClassDecl::Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder)
 	{
 		pOutputBuilder->UpdateSourceLocation(eLanguage, m_pFirstToken);
-#line 444 "../../../Source/Core/AST/ClassDecl.nll"
+#line 444 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		if (!(eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE))
 		{
 			if (eLanguage == AST::Language::CPP)
@@ -629,11 +629,11 @@ namespace NumbatLogic
 					pOutputBuilder->m_sOut->AppendString("\n");
 				}
 			}
-#line 456 "../../../Source/Core/AST/ClassDecl.nll"
+#line 456 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			Util::Pad(nDepth, pOutputBuilder->m_sOut);
 			pOutputBuilder->m_sOut->Append("class ");
 			m_pNameToken->Stringify(pOutputBuilder->m_sOut);
-#line 460 "../../../Source/Core/AST/ClassDecl.nll"
+#line 460 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			if (eLanguage == AST::Language::CS || eLanguage == AST::Language::NLL_DEF)
 			{
 				if (m_pGenericTypeDeclVector->GetSize() > 0)
@@ -649,7 +649,7 @@ namespace NumbatLogic
 					pOutputBuilder->m_sOut->AppendChar('>');
 				}
 			}
-#line 476 "../../../Source/Core/AST/ClassDecl.nll"
+#line 476 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			if (m_pBaseTypeRef != 0)
 			{
 				pOutputBuilder->m_sOut->Append(" : ");
@@ -657,7 +657,7 @@ namespace NumbatLogic
 					pOutputBuilder->m_sOut->Append("public ");
 				m_pBaseTypeRef->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 			}
-#line 484 "../../../Source/Core/AST/ClassDecl.nll"
+#line 484 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			if (eLanguage == AST::Language::CS && m_bDisposable)
 			{
 				if (m_pBaseTypeRef == 0)
@@ -666,7 +666,7 @@ namespace NumbatLogic
 					pOutputBuilder->m_sOut->Append(", ");
 				pOutputBuilder->m_sOut->Append("System.IDisposable");
 			}
-#line 493 "../../../Source/Core/AST/ClassDecl.nll"
+#line 493 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			if (eLanguage == AST::Language::CS && m_pGenericTypeDeclVector->GetSize() > 0)
 			{
 				for (int i = 0; i < m_pGenericTypeDeclVector->GetSize(); i++)
@@ -680,21 +680,21 @@ namespace NumbatLogic
 						pOutputBuilder->m_sOut->Append("\n");
 						Util::Pad(nDepth + 1, pOutputBuilder->m_sOut);
 					}
-#line 507 "../../../Source/Core/AST/ClassDecl.nll"
+#line 507 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 					pOutputBuilder->m_sOut->Append("where ");
 					GenericTypeDecl* pGenericTypeDecl = m_pGenericTypeDeclVector->Get(i);
 					pGenericTypeDecl->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 					pOutputBuilder->m_sOut->Append(" : class");
 				}
 			}
-#line 514 "../../../Source/Core/AST/ClassDecl.nll"
+#line 514 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			pOutputBuilder->m_sOut->Append("\n");
 			Util::Pad(nDepth, pOutputBuilder->m_sOut);
 			pOutputBuilder->m_sOut->Append("{\n");
-#line 518 "../../../Source/Core/AST/ClassDecl.nll"
+#line 518 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			nDepth++;
 		}
-#line 521 "../../../Source/Core/AST/ClassDecl.nll"
+#line 521 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		AST* pMember = m_pFirstChild;
 		while (pMember != 0)
 		{
@@ -702,11 +702,11 @@ namespace NumbatLogic
 				pMember->Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 			pMember = pMember->m_pNextSibling;
 		}
-#line 529 "../../../Source/Core/AST/ClassDecl.nll"
+#line 529 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 		if (!(eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE))
 		{
 			nDepth--;
-#line 533 "../../../Source/Core/AST/ClassDecl.nll"
+#line 533 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 			Util::Pad(nDepth, pOutputBuilder->m_sOut);
 			if (eLanguage == AST::Language::CPP)
 				pOutputBuilder->m_sOut->Append("};\n");
@@ -715,7 +715,7 @@ namespace NumbatLogic
 		}
 	}
 
-#line 3 "../../../Source/Core/AST/ClassDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/ClassDecl.nll"
 	ClassDecl::~ClassDecl()
 	{
 		if (m_pGenericTypeDeclVector) delete m_pGenericTypeDeclVector;

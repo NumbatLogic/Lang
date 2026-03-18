@@ -1,4 +1,4 @@
-#line 1 "../../../Source/Core/AST/TorDecl.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 namespace NumbatLogic
 {
 	class TorDecl : AST
@@ -10,26 +10,26 @@ namespace NumbatLogic
 		public ParamCall m_pBaseParamCall;
 		public Scope m_pScope;
 		public string m_sDisambiguate;
-#line 13 "../../../Source/Core/AST/TorDecl.nll"
+#line 13 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 		public static TorDecl TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum, ClassDecl pParentClassDecl)
 		{
 			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
-#line 17 "../../../Source/Core/AST/TorDecl.nll"
+#line 17 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			AccessLevel pAccessLevel = AccessLevel.TryCreate(pTokenContainer, pTempOffset);
 			if (pAccessLevel == null)
 			{
-#line 19 "../../../Source/Core/AST/TorDecl.nll"
+#line 19 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 				return null;
 			}
 			Token pTypeToken = pTokenContainer.Peek(pTempOffset);
 			if (pTypeToken == null || pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_CONSTRUCT && pTypeToken.m_eType != Token.Type.TOKEN_KEYWORD_DESTRUCT)
 			{
-#line 23 "../../../Source/Core/AST/TorDecl.nll"
+#line 23 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 				return null;
 			}
-#line 24 "../../../Source/Core/AST/TorDecl.nll"
+#line 24 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 26 "../../../Source/Core/AST/TorDecl.nll"
+#line 26 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			ParamDecl pParamDecl = ParamDecl.TryCreate(pTokenContainer, pTempOffset);
 			if (pParamDecl == null)
 			{
@@ -38,9 +38,9 @@ namespace NumbatLogic
 				Assert.Plz(false);
 				return null;
 			}
-#line 35 "../../../Source/Core/AST/TorDecl.nll"
+#line 35 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			TorDecl pTorDecl = new TorDecl();
-#line 37 "../../../Source/Core/AST/TorDecl.nll"
+#line 37 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			Scope pScope = null;
 			Token pSemicolon = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_SEMICOLON);
 			if (pSemicolon != null)
@@ -51,7 +51,7 @@ namespace NumbatLogic
 				if (pColon != null)
 				{
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 48 "../../../Source/Core/AST/TorDecl.nll"
+#line 48 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 					Token pBase = pTokenContainer.PeekExpect(pTempOffset, Token.Type.TOKEN_KEYWORD_BASE);
 					if (pBase == null)
 					{
@@ -61,7 +61,7 @@ namespace NumbatLogic
 						return null;
 					}
 					pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
-#line 58 "../../../Source/Core/AST/TorDecl.nll"
+#line 58 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 					ParamCall pParamCall = ParamCall.TryCreate(pTokenContainer, pTempOffset);
 					if (pParamCall == null)
 					{
@@ -71,15 +71,15 @@ namespace NumbatLogic
 						Assert.Plz(false);
 						return null;
 					}
-#line 68 "../../../Source/Core/AST/TorDecl.nll"
+#line 68 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 					pTorDecl.m_pBaseParamCall = pParamCall;
 					NumbatLogic.ParamCall __1502913502 = pParamCall;
-#line 69 "../../../Source/Core/AST/TorDecl.nll"
+#line 69 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 					pParamCall = null;
-#line 69 "../../../Source/Core/AST/TorDecl.nll"
+#line 69 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 					pTorDecl.AddChild(__1502913502);
 				}
-#line 72 "../../../Source/Core/AST/TorDecl.nll"
+#line 72 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 				pScope = Scope.TryCreate(pTokenContainer, pTempOffset, false);
 				if (pScope == null)
 				{
@@ -88,7 +88,7 @@ namespace NumbatLogic
 					Assert.Plz(false);
 				}
 			}
-#line 81 "../../../Source/Core/AST/TorDecl.nll"
+#line 81 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			pTorDecl.m_eType = AST.Type.AST_TOR_DECL;
 			pTorDecl.m_pParent = pParentClassDecl;
 			pTorDecl.m_pParentClassDecl = pParentClassDecl;
@@ -100,44 +100,44 @@ namespace NumbatLogic
 			pTorDecl.m_sDisambiguate = "";
 			NumbatLogic.AccessLevel __99271240 = pAccessLevel;
 			pAccessLevel = null;
-#line 91 "../../../Source/Core/AST/TorDecl.nll"
+#line 91 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			pTorDecl.AddChild(__99271240);
 			NumbatLogic.ParamDecl __3703057184 = pParamDecl;
-#line 92 "../../../Source/Core/AST/TorDecl.nll"
+#line 92 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			pParamDecl = null;
-#line 92 "../../../Source/Core/AST/TorDecl.nll"
+#line 92 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			pTorDecl.AddChild(__3703057184);
 			if (pScope != null)
 			{
 				NumbatLogic.Scope __1530946527 = pScope;
-#line 94 "../../../Source/Core/AST/TorDecl.nll"
+#line 94 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 				pScope = null;
-#line 94 "../../../Source/Core/AST/TorDecl.nll"
+#line 94 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 				pTorDecl.AddChild(__1530946527);
 			}
 			pOffsetDatum.Set(pTempOffset);
 			NumbatLogic.TorDecl __3519495631 = pTorDecl;
-#line 97 "../../../Source/Core/AST/TorDecl.nll"
+#line 97 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			pTorDecl = null;
-#line 97 "../../../Source/Core/AST/TorDecl.nll"
+#line 97 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			return __3519495631;
 		}
 
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
 			base.Validate(pValidator, pParent);
-#line 106 "../../../Source/Core/AST/TorDecl.nll"
+#line 106 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			if (m_pParentClassDecl != null && m_pBaseParamCall != null)
 			{
-#line 109 "../../../Source/Core/AST/TorDecl.nll"
+#line 109 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 				ClassDecl pBaseClass = m_pParentClassDecl.GetBaseClassDecl(pValidator);
-#line 111 "../../../Source/Core/AST/TorDecl.nll"
+#line 111 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 				if (pBaseClass == null)
 				{
 					pValidator.AddError("no base class??", m_pBaseParamCall.m_pFirstToken.m_sFileName, m_pBaseParamCall.m_pFirstToken.m_nLine, m_pBaseParamCall.m_pFirstToken.m_nColumn);
 					return;
 				}
-#line 117 "../../../Source/Core/AST/TorDecl.nll"
+#line 117 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 				AST pMember = pBaseClass.m_pFirstChild;
 				while (pMember != null)
 				{
@@ -154,7 +154,7 @@ namespace NumbatLogic
 					}
 					pMember = pMember.m_pNextSibling;
 				}
-#line 134 "../../../Source/Core/AST/TorDecl.nll"
+#line 134 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 				if (pMember == null)
 				{
 					InternalString sTemp = new InternalString("could not find a matching BASE constructor in ");
@@ -168,10 +168,10 @@ namespace NumbatLogic
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			bool bGeneric = m_pParentClassDecl != null && m_pParentClassDecl.m_pGenericTypeDeclVector.GetSize() > 0;
-#line 148 "../../../Source/Core/AST/TorDecl.nll"
+#line 148 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			if (bGeneric && eLanguage == AST.Language.CPP && eOutputFile == AST.OutputFile.SOURCE)
 				return;
-#line 152 "../../../Source/Core/AST/TorDecl.nll"
+#line 152 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			if (eLanguage == AST.Language.CS)
 			{
 				if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_DESTRUCT)
@@ -191,31 +191,31 @@ namespace NumbatLogic
 						Util.Pad(nDepth, pOutputBuilder.m_sOut);
 						pOutputBuilder.m_sOut.Append("}\n");
 						pOutputBuilder.m_sOut.AppendChar('\n');
-#line 172 "../../../Source/Core/AST/TorDecl.nll"
+#line 172 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 						Util.Pad(nDepth, pOutputBuilder.m_sOut);
 						pOutputBuilder.m_sOut.Append("public void Dispose()\n");
 						Util.Pad(nDepth, pOutputBuilder.m_sOut);
 						pOutputBuilder.m_sOut.Append("{\n");
-#line 177 "../../../Source/Core/AST/TorDecl.nll"
+#line 177 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 						nDepth++;
 						m_pScope.Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 						Util.Pad(nDepth, pOutputBuilder.m_sOut);
 						pOutputBuilder.m_sOut.Append("System.GC.SuppressFinalize(this);\n");
-#line 182 "../../../Source/Core/AST/TorDecl.nll"
+#line 182 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 						nDepth--;
-#line 184 "../../../Source/Core/AST/TorDecl.nll"
+#line 184 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 						Util.Pad(nDepth, pOutputBuilder.m_sOut);
 						pOutputBuilder.m_sOut.Append("}\n");
 						pOutputBuilder.m_sOut.AppendChar('\n');
-#line 188 "../../../Source/Core/AST/TorDecl.nll"
+#line 188 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 						return;
 					}
 				}
 			}
-#line 193 "../../../Source/Core/AST/TorDecl.nll"
+#line 193 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
 			Util.Pad(nDepth, pOutputBuilder.m_sOut);
-#line 196 "../../../Source/Core/AST/TorDecl.nll"
+#line 196 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			if (!(eLanguage == AST.Language.CS && m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_DESTRUCT))
 				if (!(eLanguage == AST.Language.CPP && eOutputFile == AST.OutputFile.SOURCE))
 				{
@@ -224,7 +224,7 @@ namespace NumbatLogic
 						pOutputBuilder.m_sOut.AppendChar(':');
 					pOutputBuilder.m_sOut.AppendChar(' ');
 				}
-#line 205 "../../../Source/Core/AST/TorDecl.nll"
+#line 205 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			if (eLanguage == AST.Language.NLL_DEF)
 			{
 				if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_DESTRUCT)
@@ -239,26 +239,26 @@ namespace NumbatLogic
 					m_pParentClassDecl.m_pNameToken.Stringify(pOutputBuilder.m_sOut);
 					pOutputBuilder.m_sOut.Append("::");
 				}
-#line 220 "../../../Source/Core/AST/TorDecl.nll"
+#line 220 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 				if (m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_DESTRUCT)
 				{
 					if (eLanguage == AST.Language.CPP && eOutputFile == AST.OutputFile.HEADER)
 						pOutputBuilder.m_sOut.Append("virtual ");
-#line 225 "../../../Source/Core/AST/TorDecl.nll"
+#line 225 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 					pOutputBuilder.m_sOut.Append("~");
 				}
-#line 228 "../../../Source/Core/AST/TorDecl.nll"
+#line 228 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 				m_pParentClassDecl.m_pNameToken.Stringify(pOutputBuilder.m_sOut);
 			}
 			pOutputBuilder.m_sOut.Append(m_sDisambiguate);
 			m_pParamDecl.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-#line 235 "../../../Source/Core/AST/TorDecl.nll"
+#line 235 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			if ((!bGeneric && eOutputFile == AST.OutputFile.HEADER) || eLanguage == AST.Language.NLL_DEF)
 			{
 				pOutputBuilder.m_sOut.Append(";\n");
 				return;
 			}
-#line 241 "../../../Source/Core/AST/TorDecl.nll"
+#line 241 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 			if (m_pScope == null)
 			{
 				pOutputBuilder.m_sOut.AppendString(";\n");
@@ -280,7 +280,7 @@ namespace NumbatLogic
 			}
 		}
 
-#line 3 "../../../Source/Core/AST/TorDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/TorDecl.nll"
 		public TorDecl()
 		{
 		}

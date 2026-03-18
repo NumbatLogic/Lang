@@ -14,22 +14,22 @@ namespace NumbatLogic
 	class OperatorExpr;
 	class OutputBuilder;
 }
-#line 0 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 	class MemberClassDecl : public AST
 	{
 		public: ClassDecl* m_pParentClassDecl;
 		public: AccessLevel* m_pAccessLevel;
 		public: ClassDecl* m_pClassDecl;
-#line 9 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 9 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 		public: MemberClassDecl();
-#line 15 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 15 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 		public: static MemberClassDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, ClassDecl* pParentClassDecl);
-#line 43 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 43 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 48 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 48 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 	};
 }

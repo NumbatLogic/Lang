@@ -5,10 +5,10 @@ namespace NumbatLogic
 	class InternalString;
 	class Token;
 }
-#line 0 "../../../Source/Core/Token.nll"
+#line 0 "/home/cliffya/git/Lang/Source/Core/Token.nll"
 namespace NumbatLogic
 {
-#line 3 "../../../Source/Core/Token.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/Token.nll"
 	class Token
 	{
 		public: enum Type
@@ -105,21 +105,21 @@ namespace NumbatLogic
 			TOKEN_TILDE,
 		};
 
-#line 98 "../../../Source/Core/Token.nll"
+#line 98 "/home/cliffya/git/Lang/Source/Core/Token.nll"
 		public: Type m_eType;
 		public: InternalString* m_sFileName;
 		public: int m_nLine;
 		public: int m_nColumn;
 		public: InternalString* m_sValue;
-#line 104 "../../../Source/Core/Token.nll"
+#line 104 "/home/cliffya/git/Lang/Source/Core/Token.nll"
 		public: void Stringify(InternalString* sOut);
-#line 109 "../../../Source/Core/Token.nll"
+#line 109 "/home/cliffya/git/Lang/Source/Core/Token.nll"
 		public: const char* GetString();
-#line 204 "../../../Source/Core/Token.nll"
+#line 204 "/home/cliffya/git/Lang/Source/Core/Token.nll"
 		public: Token* Clone();
-#line 3 "../../../Source/Core/Token.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/Token.nll"
 		public: Token();
-#line 3 "../../../Source/Core/Token.nll"
+#line 3 "/home/cliffya/git/Lang/Source/Core/Token.nll"
 		public: virtual ~Token();
 	};
 }

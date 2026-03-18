@@ -1,4 +1,4 @@
-#line 1 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 1 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 namespace NumbatLogic
 {
 	class MemberClassDecl : AST
@@ -6,7 +6,7 @@ namespace NumbatLogic
 		public ClassDecl m_pParentClassDecl;
 		public AccessLevel m_pAccessLevel;
 		public ClassDecl m_pClassDecl;
-#line 9 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 9 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 		public MemberClassDecl()
 		{
 			m_eType = AST.Type.AST_MEMBER_CLASS_DECL;
@@ -16,43 +16,43 @@ namespace NumbatLogic
 		public static MemberClassDecl TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum, ClassDecl pParentClassDecl)
 		{
 			OffsetDatum pTempOffset = OffsetDatum.Create(pOffsetDatum);
-#line 19 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 19 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 			AccessLevel pAccessLevel = AccessLevel.TryCreate(pTokenContainer, pTempOffset);
 			if (pAccessLevel == null)
 			{
-#line 21 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 21 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 				return null;
 			}
 			MemberClassDecl pMemberClassDecl = new MemberClassDecl();
-#line 25 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 25 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 			pMemberClassDecl.m_pParentClassDecl = pParentClassDecl;
 			pMemberClassDecl.m_pAccessLevel = pAccessLevel;
 			pMemberClassDecl.m_pFirstToken = pAccessLevel.m_pFirstToken;
-#line 30 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 30 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 			ClassDecl pClassDecl = ClassDecl.TryCreate(pTokenContainer, pTempOffset, pMemberClassDecl);
 			if (pClassDecl == null)
 			{
-#line 32 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 32 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 				return null;
 			}
 			NumbatLogic.AccessLevel __98877649 = pAccessLevel;
-#line 34 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 34 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 			pAccessLevel = null;
-#line 34 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 34 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 			pMemberClassDecl.AddChild(__98877649);
-#line 36 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 36 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 			pMemberClassDecl.m_pClassDecl = pClassDecl;
 			NumbatLogic.ClassDecl __3174337334 = pClassDecl;
-#line 37 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 37 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 			pClassDecl = null;
-#line 37 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 37 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 			pMemberClassDecl.AddChild(__3174337334);
-#line 39 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 39 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 			pOffsetDatum.Set(pTempOffset);
 			NumbatLogic.MemberClassDecl __578676116 = pMemberClassDecl;
-#line 40 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 40 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 			pMemberClassDecl = null;
-#line 40 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 40 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 			return __578676116;
 		}
 
@@ -63,20 +63,20 @@ namespace NumbatLogic
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
-#line 62 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 62 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 			pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
 			Util.Pad(nDepth, pOutputBuilder.m_sOut);
-#line 65 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 65 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 			if (!(eLanguage == AST.Language.CPP && eOutputFile == AST.OutputFile.SOURCE))
 			{
 				m_pAccessLevel.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-#line 69 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 69 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 				if (eLanguage == AST.Language.CPP)
 					pOutputBuilder.m_sOut.AppendChar(':');
-#line 72 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 72 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 				pOutputBuilder.m_sOut.AppendChar(' ');
 			}
-#line 75 "../../../Source/Core/AST/MemberClassDecl.nll"
+#line 75 "/home/cliffya/git/Lang/Source/Core/AST/MemberClassDecl.nll"
 			m_pClassDecl.Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 		}
 
