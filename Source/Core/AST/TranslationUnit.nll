@@ -100,6 +100,10 @@ namespace NumbatLogic
 		{
 			TranslationUnit* pThis = own new TranslationUnit(sInFile);
 
+			// Normalize to full path so Token.m_sFileName is absolute.
+			InternalString* sFullPath = own File::GetFullPath(pThis.m_sInFile.GetExternalString());
+			pThis.m_sInFile.Set(sFullPath.GetExternalString());
+
 			InternalString* sInput = own File::GetContents(pThis.m_sInFile.GetExternalString());
 
 			
@@ -203,6 +207,8 @@ namespace NumbatLogic
 				return;
 			}
 
+			sPath.Replace("/LangShared/", "/LangShared/Transpiled/");
+			
 			// old logic
 			sPath.Replace("Source", "Transpiled");
 			//sPath.Replace("Shared", "Transpiled"); // for pure nll shared classes
