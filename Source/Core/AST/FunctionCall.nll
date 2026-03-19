@@ -408,7 +408,7 @@ namespace NumbatLogic
 					{
 						ClassDecl pClassDecl = cast ClassDecl(pBase);
 						sTemp.Append(" ");
-						pClassDecl.AppendFullyQualifiedName(sTemp);
+						pClassDecl.AppendFullyQualifiedName(AST::Language::NLL, sTemp);
 					}
 					pValidator.AddError(sTemp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 				}
