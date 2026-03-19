@@ -34,7 +34,7 @@ namespace NumbatLogic
 		public: static DecoratorCall* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
 #line 55 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 78 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
+#line 110 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 #line 3 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
 		public: DecoratorCall();

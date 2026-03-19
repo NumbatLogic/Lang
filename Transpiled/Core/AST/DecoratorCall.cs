@@ -88,8 +88,34 @@ namespace NumbatLogic
 					sError.Append(" must be attached to a function");
 					pValidator.AddError(sError.GetExternalString(), m_pDecoratorNameToken.m_sFileName, m_pDecoratorNameToken.m_nLine, m_pDecoratorNameToken.m_nColumn);
 				}
+				else
+				{
+					FunctionDecl pFunctionDecl = (FunctionDecl)(m_pParent);
+					if (pFunctionDecl.m_pParent == null || pFunctionDecl.m_pParent.m_eType != AST.Type.AST_MEMBER_FUNCTION_DECL || !((MemberFunctionDecl)(pFunctionDecl.m_pParent)).m_bStatic)
+						pValidator.AddError("@EntryPoint must be on a static member function", m_pDecoratorNameToken.m_sFileName, m_pDecoratorNameToken.m_nLine, m_pDecoratorNameToken.m_nColumn);
+#line 79 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
+					if (pFunctionDecl.m_pParamDecl == null || pFunctionDecl.m_pParamDecl.m_pParamVector.GetSize() != 1)
+					{
+						pValidator.AddError("@EntryPoint function must have exactly 1 parameter: Vector<string>", m_pDecoratorNameToken.m_sFileName, m_pDecoratorNameToken.m_nLine, m_pDecoratorNameToken.m_nColumn);
+					}
+					else
+					{
+						VarDecl pParam = pFunctionDecl.m_pParamDecl.m_pParamVector.Get(0);
+						TypeRef pTypeRef = pParam.m_pTypeRef;
+						bool bValidType = pTypeRef != null && pTypeRef.m_pTypeToken != null && pTypeRef.m_pTypeToken.m_eType == Token.Type.TOKEN_IDENTIFIER && ExternalString.Equal("Vector", pTypeRef.m_pTypeToken.GetString()) && pTypeRef.m_pGenericTypeRefVector.GetSize() == 1;
+#line 93 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
+						if (bValidType)
+						{
+							TypeRef pInnerTypeRef = pTypeRef.m_pGenericTypeRefVector.Get(0);
+							bValidType = pInnerTypeRef != null && pInnerTypeRef.m_pTypeToken != null && pInnerTypeRef.m_pTypeToken.m_eType == Token.Type.TOKEN_KEYWORD_STRING;
+						}
+#line 101 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
+						if (!bValidType)
+							pValidator.AddError("@EntryPoint function parameter must be Vector<string>", pParam.m_pFirstToken.m_sFileName, pParam.m_pFirstToken.m_nLine, pParam.m_pFirstToken.m_nColumn);
+					}
+				}
 			}
-#line 75 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
+#line 107 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
 			base.Validate(pValidator, pParent);
 		}
 
@@ -97,10 +123,10 @@ namespace NumbatLogic
 		{
 			if (eLanguage != AST.Language.NLL)
 				return;
-#line 83 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
+#line 115 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
 			if (nDepth > 0 && m_pFirstToken != null)
 				pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
-#line 86 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
+#line 118 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
 			Util.Pad(nDepth, pOutputBuilder.m_sOut);
 			m_pDecoratorNameToken.Stringify(pOutputBuilder.m_sOut);
 			m_pParamCall.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
