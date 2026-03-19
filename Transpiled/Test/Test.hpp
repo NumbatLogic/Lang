@@ -15,7 +15,7 @@ namespace NumbatLogic
 	{
 #line 12 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		public: static void Run();
-#line 73 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 78 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		public: static void FullCheck(const char* sInput, AST::Type eAstType);
 	};
 }

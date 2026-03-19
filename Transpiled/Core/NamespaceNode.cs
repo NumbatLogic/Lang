@@ -47,14 +47,18 @@ namespace NumbatLogic
 			return null;
 		}
 
-		public void AppendFullyQualifiedName(InternalString sOut)
+		public void AppendFullyQualifiedName(AST.Language eLanguage, InternalString sOut)
 		{
+			string sxSeparator = "::";
+			if (eLanguage == AST.Language.CS)
+				sxSeparator = ".";
+#line 51 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 			if (m_pParent != null && m_pParent.m_sName != null)
-				m_pParent.AppendFullyQualifiedName(sOut);
+				m_pParent.AppendFullyQualifiedName(eLanguage, sOut);
 			if (m_sName != null)
 			{
 				if (m_pParent != null && m_pParent.m_sName != null)
-					sOut.Append("::");
+					sOut.Append(sxSeparator);
 				sOut.Append(m_sName.GetExternalString());
 			}
 		}

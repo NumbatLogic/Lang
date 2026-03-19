@@ -2,6 +2,7 @@
 
 #include "AST.hpp"
 #include "../../../../LangShared/Vector/CPP/Vector.hpp"
+#include "DecoratorCall.hpp"
 
 namespace NumbatLogic
 {
@@ -10,6 +11,7 @@ namespace NumbatLogic
 	class AST;
 	template <class T>
 	class Vector;
+	class DecoratorCall;
 	class VarDecl;
 	class TokenContainer;
 	class OffsetDatum;
@@ -31,13 +33,14 @@ namespace NumbatLogic
 		public: Vector<AST*>* m_pArraySizeVector;
 #line 12 "/home/cliffya/git/Lang/Source/Core/AST/VarDecl.nll"
 		public: Token* m_pOwnedNameToken;
-#line 14 "/home/cliffya/git/Lang/Source/Core/AST/VarDecl.nll"
+		public: Vector<DecoratorCall*>* m_pDecoratorCallVector;
+#line 15 "/home/cliffya/git/Lang/Source/Core/AST/VarDecl.nll"
 		public: VarDecl();
-#line 20 "/home/cliffya/git/Lang/Source/Core/AST/VarDecl.nll"
+#line 22 "/home/cliffya/git/Lang/Source/Core/AST/VarDecl.nll"
 		public: static VarDecl* TryCreate(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum, bool bInline);
-#line 109 "/home/cliffya/git/Lang/Source/Core/AST/VarDecl.nll"
+#line 130 "/home/cliffya/git/Lang/Source/Core/AST/VarDecl.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 162 "/home/cliffya/git/Lang/Source/Core/AST/VarDecl.nll"
+#line 183 "/home/cliffya/git/Lang/Source/Core/AST/VarDecl.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 #line 3 "/home/cliffya/git/Lang/Source/Core/AST/VarDecl.nll"
 		public: virtual ~VarDecl();

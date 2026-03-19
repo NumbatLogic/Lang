@@ -341,6 +341,33 @@ namespace NumbatLogic
 			return __1173437911;
 		}
 
+		protected FunctionDecl FindEntryPointFunction(AST pNode)
+		{
+			if (pNode == null)
+				return null;
+#line 307 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+			if (pNode.m_eType == AST.Type.AST_DECORATOR_CALL)
+			{
+				DecoratorCall pDecoratorCall = (DecoratorCall)(pNode);
+				if (pDecoratorCall.m_eDecoratorType == DecoratorCall.DecoratorType.ENTRY_POINT)
+				{
+					if (pDecoratorCall.m_pParent != null && pDecoratorCall.m_pParent.m_eType == AST.Type.AST_FUNCTION_DECL)
+						return (FunctionDecl)(pDecoratorCall.m_pParent);
+				}
+			}
+#line 317 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+			AST pChild = pNode.m_pFirstChild;
+			while (pChild != null)
+			{
+				FunctionDecl pEntryPointFunction = FindEntryPointFunction(pChild);
+				if (pEntryPointFunction != null)
+					return pEntryPointFunction;
+				pChild = pChild.m_pNextSibling;
+			}
+#line 326 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+			return null;
+		}
+
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			if (eLanguage == AST.Language.CPP)
@@ -349,16 +376,16 @@ namespace NumbatLogic
 				{
 					pOutputBuilder.m_sOut.Append("#pragma once\n\n");
 				}
-#line 311 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 338 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 				OwnedVector<InternalString> sPreviousIncludes = new OwnedVector<InternalString>();
 				ReferenceNode pRootReferenceNode = new ReferenceNode("");
-#line 314 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 341 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 				for (int i = 0; i < m_pClassDeclReferenceVector.GetSize(); i++)
 				{
 					ClassDeclReference pClassDeclReference = m_pClassDeclReferenceVector.Get(i);
 					if (eOutputFile == pClassDeclReference.m_eOutputFile)
 					{
-#line 323 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 350 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 						bool bOnlyInclude = !pClassDeclReference.m_bForwardReference;
 						if (bOnlyInclude)
 						{
@@ -378,7 +405,7 @@ namespace NumbatLogic
 								}
 							}
 						}
-#line 343 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 370 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 						if (pClassDeclReference.m_bForwardReference || bOnlyInclude)
 						{
 							Vector<InternalString> sNamespaceVector = new Vector<InternalString>();
@@ -388,17 +415,17 @@ namespace NumbatLogic
 								sNamespaceVector.PushFront(pNamespaceNode.m_sName);
 								pNamespaceNode = pNamespaceNode.m_pParent;
 							}
-#line 354 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 381 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 							ReferenceNode pCurrentNode = pRootReferenceNode;
 							for (int j = 0; j < sNamespaceVector.GetSize(); j++)
 							{
 								InternalString sNamespace = sNamespaceVector.Get(j);
 								pCurrentNode = pCurrentNode.GetOrCreateChildNode(sNamespace.GetExternalString());
 							}
-#line 361 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 388 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 							pCurrentNode.m_pChildClassVector.PushBack(pClassDeclReference);
 						}
-#line 364 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 391 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 						if (!pClassDeclReference.m_bForwardReference)
 						{
 							bool bFound = false;
@@ -414,7 +441,7 @@ namespace NumbatLogic
 							if (bFound)
 								continue;
 							sPreviousIncludes.PushBack(new InternalString(pClassDeclReference.m_pClassDecl.m_pNameToken.m_sFileName.GetExternalString()));
-#line 380 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 407 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 							InternalString sFixedPath = RetargetRelativePath(eLanguage, AST.OutputFile.HEADER, m_pFirstChild.m_pFirstToken.m_sFileName.GetExternalString(), pClassDeclReference.m_pClassDecl.m_pNameToken.m_sFileName.GetExternalString());
 							pOutputBuilder.m_sOut.Append("#include \"");
 							pOutputBuilder.m_sOut.Append(sFixedPath.GetExternalString());
@@ -422,12 +449,12 @@ namespace NumbatLogic
 						}
 					}
 				}
-#line 388 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 415 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 				if (sPreviousIncludes.GetSize() > 0)
 					pOutputBuilder.m_sOut.Append("\n");
 				pRootReferenceNode.Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 			}
-#line 393 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 420 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 			AST pChild = m_pFirstChild;
 			while (pChild != null)
 			{
@@ -437,6 +464,34 @@ namespace NumbatLogic
 					pOutputBuilder.m_sOut.AppendChar('\n');
 				}
 				pChild = pChild.m_pNextSibling;
+			}
+#line 431 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+			FunctionDecl pEntryPointFunction = FindEntryPointFunction(this);
+			if (pEntryPointFunction != null)
+			{
+				if (eLanguage == AST.Language.CPP && eOutputFile == AST.OutputFile.SOURCE)
+				{
+					pOutputBuilder.m_sOut.Append("\nint main(int argc, const char* argv[])\n{\n");
+					pOutputBuilder.m_sOut.Append("\tNumbatLogic::Vector<const char*>* sArgVector = new NumbatLogic::Vector<const char*>();\n");
+					pOutputBuilder.m_sOut.Append("\tfor (int i = 1; i < argc; i++)\n");
+					pOutputBuilder.m_sOut.Append("\t\tsArgVector->PushBack(argv[i]);\n\n\t");
+					pEntryPointFunction.AppendFullyQualifiedName(eLanguage, pOutputBuilder.m_sOut);
+					pOutputBuilder.m_sOut.Append("(sArgVector);\n\n");
+					pOutputBuilder.m_sOut.Append("\tdelete sArgVector;\n");
+					pOutputBuilder.m_sOut.Append("\treturn 0;\n}\n");
+				}
+				else
+#line 445 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+					if (eLanguage == AST.Language.CS)
+					{
+						pOutputBuilder.m_sOut.Append("\nclass Application\n{\n");
+						pOutputBuilder.m_sOut.Append("\tstatic void Main(string[] args)\n\t{\n");
+						pOutputBuilder.m_sOut.Append("\t\tNumbatLogic.Vector<string> pArgVector = new NumbatLogic.Vector<string>();\n");
+						pOutputBuilder.m_sOut.Append("\t\tfor (int i = 0; i < args.Length; i++)\n");
+						pOutputBuilder.m_sOut.Append("\t\t\tpArgVector.PushBack(args[i]);\n\n\t\t");
+						pEntryPointFunction.AppendFullyQualifiedName(eLanguage, pOutputBuilder.m_sOut);
+						pOutputBuilder.m_sOut.Append("(pArgVector);\n\t}\n}\n");
+					}
 			}
 		}
 
