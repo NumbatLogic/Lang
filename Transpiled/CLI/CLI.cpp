@@ -321,3 +321,15 @@ namespace NumbatLogic
 
 }
 
+
+int main(int argc, const char* argv[])
+{
+	NumbatLogic::Vector<const char*>* sArgVector = new NumbatLogic::Vector<const char*>();
+	for (int i = 1; i < argc; i++)
+		sArgVector->PushBack(argv[i]);
+
+	NumbatLogic::CLI::Run(sArgVector);
+
+	delete sArgVector;
+	return 0;
+}

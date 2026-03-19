@@ -1,9 +1,12 @@
 #pragma once
 
+#include "../../../LangShared/Vector/CPP/Vector.hpp"
 #include "../Core/AST/AST.hpp"
 
 namespace NumbatLogic
 {
+	template <class T>
+	class Vector;
 	class AST;
 	class InternalString;
 }
@@ -13,9 +16,8 @@ namespace NumbatLogic
 #line 3 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 	class Test
 	{
-#line 12 "/home/cliffya/git/Lang/Source/Test/Test.nll"
-		public: static void Run();
-#line 78 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+		public: static void Run(Vector<const char*>* sArgVector);
+#line 69 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		public: static void FullCheck(const char* sInput, AST::Type eAstType);
 	};
 }

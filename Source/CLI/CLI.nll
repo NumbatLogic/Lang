@@ -2,7 +2,7 @@ namespace NumbatLogic
 {
 	class CLI
 	{
-		public static void Run(Vector<string> sArgVector)
+		public static void @EntryPoint() Run(Vector<string> sArgVector)
 		{
 			Console::Log("CLI");
 

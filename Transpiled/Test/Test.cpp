@@ -1,7 +1,6 @@
 #include "Test.hpp"
 #include "../../../LangShared/Console/CPP/Console.hpp"
 #include "../Core/AST/AST.hpp"
-#include "PointerTest.hpp"
 #include "../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../Core/TokenContainer.hpp"
@@ -12,7 +11,6 @@ namespace NumbatLogic
 {
 	class Test;
 	class Console;
-	class PointerTest;
 	template <class T>
 	class OwnedVector;
 	class InternalString;
@@ -25,11 +23,11 @@ namespace NumbatLogic
 namespace NumbatLogic
 {
 #line 3 "/home/cliffya/git/Lang/Source/Test/Test.nll"
-#line 12 "/home/cliffya/git/Lang/Source/Test/Test.nll"
-	void Test::Run()
+#line 5 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+	void Test::Run(Vector<const char*>* sArgVector)
 	{
 		Console::Log("Tests!");
-#line 17 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 10 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		FullCheck("return;", AST::Type::AST_RETURN_STMT);
 		FullCheck("'s'", AST::Type::AST_CHAR);
 		FullCheck("return 'b';", AST::Type::AST_RETURN_STMT);
@@ -58,7 +56,7 @@ namespace NumbatLogic
 		FullCheck("ObjectType i = (abc());", AST::Type::AST_VAR_DECL);
 		FullCheck("new Thing()", AST::Type::AST_NEW_EXP);
 		FullCheck("new Thing();", AST::Type::AST_EXPRESSION_STMT);
-#line 46 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 39 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		FullCheck("Thing pThing = new Thing();", AST::Type::AST_VAR_DECL);
 		FullCheck("int function() {return 0;}", AST::Type::AST_FUNCTION_DECL);
 		FullCheck("string func(int a, int b) {}", AST::Type::AST_FUNCTION_DECL);
@@ -72,7 +70,7 @@ namespace NumbatLogic
 		FullCheck("int @Dummy(1, \"x\") function() {return 0;}", AST::Type::AST_FUNCTION_DECL);
 		FullCheck("int @Dummy() i = abc();", AST::Type::AST_VAR_DECL);
 		FullCheck("enum Type {A,B,C,}", AST::Type::AST_ENUM_DECL);
-#line 60 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 53 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		FullCheck("while (true) {}", AST::Type::AST_WHILE_STMT);
 		FullCheck("zero == 0 || abc == '\\\\'", AST::Type::AST_OPERATOR_EXPR);
 		FullCheck("if (zero == 0) {return 0;}", AST::Type::AST_IF_STMT);
@@ -80,27 +78,25 @@ namespace NumbatLogic
 		FullCheck("if (a) {return 0;} else return b;", AST::Type::AST_IF_STMT);
 		FullCheck("wub[43+1]", AST::Type::AST_ARRAY_LOOKUP);
 		FullCheck("for (int i = 0; i < 10; i = i + 1) {return 0;}", AST::Type::AST_FOR_STMT);
-#line 68 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 61 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		FullCheck("sOut = sOut + this.pGenericTypeRefVector.Get(i).Stringify(eLanguage, 0);", AST::Type::AST_EXPRESSION_STMT);
 		FullCheck("Vector<AST> pMemberVector = new Vector<AST>();", AST::Type::AST_VAR_DECL);
 		FullCheck("Token::Type eType = bloop;", AST::Type::AST_VAR_DECL);
-#line 72 "/home/cliffya/git/Lang/Source/Test/Test.nll"
-		PointerTest::Run();
 	}
 
-#line 78 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 69 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 	void Test::FullCheck(const char* sInput, AST::Type eAstType)
 	{
 		OwnedVector<InternalString*>* sDefineVector = new OwnedVector<InternalString*>();
 		TokenContainer* pTokenContainer = new TokenContainer();
 		InternalString* sTest = new InternalString("test.nll");
 		pTokenContainer->Tokenize(sInput, sTest, sDefineVector);
-#line 85 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 76 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		InternalString* sTokenized = new InternalString("");
-#line 87 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 78 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		pTokenContainer->Stringify(sTokenized);
 		const char* sxTokenized = sTokenized->GetExternalString();
-#line 90 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 81 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		if (!sTokenized->IsEqual(sInput))
 		{
 			Console::Log("Initial tokenize failed!\n");
@@ -111,16 +107,16 @@ namespace NumbatLogic
 			if (pTokenContainer) delete pTokenContainer;
 			if (sTest) delete sTest;
 			if (sTokenized) delete sTokenized;
-#line 96 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 87 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			return;
 		}
-#line 99 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 90 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		pTokenContainer->StripWhitespace();
-#line 101 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 92 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		OffsetDatum* pOffsetDatum = OffsetDatum::Create(0);
-#line 103 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 94 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		AST* pAST = AST::CreateFromTokenContainer(pTokenContainer, pOffsetDatum);
-#line 105 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 96 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		if (pAST == 0)
 		{
 			Console::Log("  ** NO AST!");
@@ -130,15 +126,15 @@ namespace NumbatLogic
 			if (sTokenized) delete sTokenized;
 			if (pOffsetDatum) delete pOffsetDatum;
 			if (pAST) delete pAST;
-#line 108 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 99 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			return;
 		}
-#line 111 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 102 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		if (pAST->m_eType != eAstType)
 		{
 			Console::Log("  ** AST TYPE MISMATCH!\n");
 			Console::Log(sxTokenized);
-#line 116 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 107 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			Console::Log(" != ");
 			if (sDefineVector) delete sDefineVector;
 			if (pTokenContainer) delete pTokenContainer;
@@ -146,20 +142,20 @@ namespace NumbatLogic
 			if (sTokenized) delete sTokenized;
 			if (pOffsetDatum) delete pOffsetDatum;
 			if (pAST) delete pAST;
-#line 118 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 109 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			return;
 		}
-#line 121 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 112 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		OutputBuilder* pOutputBuilder = new OutputBuilder();
 		pAST->Stringify(AST::Language::NLL, AST::OutputFile::SOURCE, 0, pOutputBuilder);
 		pOutputBuilder->m_sOut->Replace(" ", "");
 		pOutputBuilder->m_sOut->Replace("\n", "");
 		pOutputBuilder->m_sOut->Replace("\t", "");
-#line 127 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 118 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		sTokenized->Set("");
 		pTokenContainer->Stringify(sTokenized);
 		sxTokenized = sTokenized->GetExternalString();
-#line 131 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 122 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 		if (!pOutputBuilder->m_sOut->IsEqual(sxTokenized))
 		{
 			Console::Log("Stringify failed!\n'");
@@ -174,7 +170,7 @@ namespace NumbatLogic
 			if (pOffsetDatum) delete pOffsetDatum;
 			if (pAST) delete pAST;
 			if (pOutputBuilder) delete pOutputBuilder;
-#line 138 "/home/cliffya/git/Lang/Source/Test/Test.nll"
+#line 129 "/home/cliffya/git/Lang/Source/Test/Test.nll"
 			return;
 		}
 		if (sDefineVector) delete sDefineVector;
@@ -188,3 +184,15 @@ namespace NumbatLogic
 
 }
 
+
+int main(int argc, const char* argv[])
+{
+	NumbatLogic::Vector<const char*>* sArgVector = new NumbatLogic::Vector<const char*>();
+	for (int i = 1; i < argc; i++)
+		sArgVector->PushBack(argv[i]);
+
+	NumbatLogic::Test::Run(sArgVector);
+
+	delete sArgVector;
+	return 0;
+}

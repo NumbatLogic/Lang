@@ -244,3 +244,15 @@ namespace NumbatLogic
 	}
 }
 
+
+class Application
+{
+	static void Main(string[] args)
+	{
+		NumbatLogic.Vector<string> pArgVector = new NumbatLogic.Vector<string>();
+		for (int i = 0; i < args.Length; i++)
+			pArgVector.PushBack(args[i]);
+
+		NumbatLogic.CLI.Run(pArgVector);
+	}
+}
