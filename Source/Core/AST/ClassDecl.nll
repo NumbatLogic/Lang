@@ -6,6 +6,7 @@ namespace NumbatLogic
 		public bool m_bDisposable;
 		public TypeRef m_pBaseTypeRef;
 		public OwnedVector<GenericTypeDecl>* m_pGenericTypeDeclVector;
+		public Vector<DecoratorCall>* m_pDecoratorCallVector;
 		public NamespaceNode m_pNamespaceNode;
 
 		private ClassDecl m_pBaseClassDecl;
@@ -21,6 +22,7 @@ namespace NumbatLogic
 			m_eType = AST::Type::AST_CLASS_DECL;
 			m_bCanDescend = true;
 			m_pGenericTypeDeclVector = own new OwnedVector<GenericTypeDecl>();
+			m_pDecoratorCallVector = own new Vector<DecoratorCall>();
 			m_pNamespaceNode = null;
 			m_pBaseClassDecl = null;
 		}
@@ -40,6 +42,25 @@ namespace NumbatLogic
 
 			ClassDecl* pClassDecl = own new ClassDecl();
 			pClassDecl.m_bDisposable = pDisposableToken != null;
+
+			OwnedVector<DecoratorCall>* pOwnedDecoratorCallVector = own new OwnedVector<DecoratorCall>();
+			while (true)
+			{
+				DecoratorCall* pDecoratorCall = own DecoratorCall::TryCreate(pTokenContainer, pTempOffset);
+				if (pDecoratorCall == null)
+					break;
+
+				pOwnedDecoratorCallVector.PushBack(disown pDecoratorCall);
+			}
+
+			while (pOwnedDecoratorCallVector.GetSize() > 0)
+			{
+				DecoratorCall* pDecoratorCall = own pOwnedDecoratorCallVector.PopFront();
+				pDecoratorCall.m_pParent = pClassDecl;
+				DecoratorCall pTemp = pDecoratorCall;
+				pClassDecl.m_pDecoratorCallVector.PushBack(pTemp);
+				pClassDecl.AddChild(disown pDecoratorCall);
+			}
 
 			Token pNameToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
 			if (pNameToken == null)
@@ -408,18 +429,22 @@ namespace NumbatLogic
 			return null;
 		}
 
-		public void AppendFullyQualifiedName(InternalString sOut)
+		public void AppendFullyQualifiedName(AST::Language eLanguage, InternalString sOut)
 		{
+			string sxSeparator = "::";
+			if (eLanguage == AST::Language::CS)
+				sxSeparator = ".";
+
 			if (m_pParent != null && m_pParent.m_eType == AST::Type::AST_MEMBER_CLASS_DECL)
 			{
 				MemberClassDecl pMember = cast MemberClassDecl(m_pParent);
-				pMember.m_pParentClassDecl.AppendFullyQualifiedName(sOut);
-				sOut.Append("::");
+				pMember.m_pParentClassDecl.AppendFullyQualifiedName(eLanguage, sOut);
+				sOut.Append(sxSeparator);
 			}
 			else if (m_pNamespaceNode != null && m_pNamespaceNode.m_sName != null)
 			{
-				m_pNamespaceNode.AppendFullyQualifiedName(sOut);
-				sOut.Append("::");
+				m_pNamespaceNode.AppendFullyQualifiedName(eLanguage, sOut);
+				sOut.Append(sxSeparator);
 			}
 			sOut.Append(m_pNameToken.GetString());
 		}
@@ -455,6 +480,17 @@ namespace NumbatLogic
 
 				Util::Pad(nDepth, pOutputBuilder.m_sOut);
 				pOutputBuilder.m_sOut.Append("class ");
+
+				if (eLanguage == AST::Language::NLL && m_pDecoratorCallVector != null && m_pDecoratorCallVector.GetSize() > 0)
+				{
+					for (int i = 0; i < m_pDecoratorCallVector.GetSize(); i++)
+					{
+						DecoratorCall pDecoratorCall = m_pDecoratorCallVector.Get(i);
+						pDecoratorCall.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+					}
+					pOutputBuilder.m_sOut.AppendChar(' ');
+				}
+
 				m_pNameToken.Stringify(pOutputBuilder.m_sOut);
 
 				if (eLanguage == AST::Language::CS || eLanguage == AST::Language::NLL_DEF)
@@ -521,7 +557,7 @@ namespace NumbatLogic
 			AST pMember = m_pFirstChild;
 			while (pMember != null)
 			{
-				if (pMember != m_pBaseTypeRef)
+				if (pMember != m_pBaseTypeRef && pMember.m_eType != AST::Type::AST_DECORATOR_CALL)
 					pMember.Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
 				pMember = pMember.m_pNextSibling;
 			}

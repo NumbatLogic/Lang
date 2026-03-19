@@ -1,0 +1,92 @@
+namespace NumbatLogic
+{
+	class DecoratorCall : AST
+	{
+		public enum DecoratorType
+		{
+			UNKNOWN,
+			DUMMY,
+			ENTRY_POINT,
+		}
+
+		public DecoratorType m_eDecoratorType;
+		public Token m_pDecoratorNameToken;
+		public ParamCall m_pParamCall;
+
+		public static DecoratorCall** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum)
+		{
+			OffsetDatum* pTempOffset = own OffsetDatum::Create(pOffsetDatum);
+
+			Token pDecoratorToken = pTokenContainer.Peek(pTempOffset);
+			if (pDecoratorToken == null)
+				return null;
+
+			if (pDecoratorToken.m_eType != Token::Type::TOKEN_IDENTIFIER)
+				return null;
+
+			InternalString* sDecoratorName = own new InternalString(pDecoratorToken.GetString());
+			if (!sDecoratorName.StartsWith("@"))
+				return null;
+			pTempOffset.m_nOffset = pTempOffset.m_nOffset + 1;
+
+			// todo: this probably needs to be different, since decorator params will be different!
+			ParamCall* pParamCall = own ParamCall::TryCreate(pTokenContainer, pTempOffset);
+			if (pParamCall == null)
+				return null;
+
+			DecoratorCall* pDecoratorCall = own new DecoratorCall();
+			pDecoratorCall.m_eType = AST::Type::AST_DECORATOR_CALL;
+			pDecoratorCall.m_pFirstToken = pDecoratorToken;
+			pDecoratorCall.m_pDecoratorNameToken = pDecoratorToken;
+			pDecoratorCall.m_pParamCall = pParamCall;
+
+			pDecoratorCall.m_eDecoratorType = DecoratorType::UNKNOWN;
+			if (sDecoratorName.IsEqual("@Dummy"))
+				pDecoratorCall.m_eDecoratorType = DecoratorType::DUMMY;
+			else if (sDecoratorName.IsEqual("@EntryPoint"))
+				pDecoratorCall.m_eDecoratorType = DecoratorType::ENTRY_POINT;
+
+			pDecoratorCall.AddChild(disown pParamCall);
+
+			pOffsetDatum.Set(pTempOffset);
+			return disown pDecoratorCall;
+		}
+
+		public override void Validate(Validator pValidator, OperatorExpr pParent)
+		{
+			if (m_eDecoratorType == DecoratorType::UNKNOWN)
+			{
+				InternalString* sError = own new InternalString("Unknown decorator: ");
+				sError.Append(m_pDecoratorNameToken.GetString());
+				pValidator.AddError(sError.GetExternalString(), m_pDecoratorNameToken.m_sFileName, m_pDecoratorNameToken.m_nLine, m_pDecoratorNameToken.m_nColumn);
+			}
+
+			if (m_eDecoratorType == DecoratorType::ENTRY_POINT)
+			{
+				if (m_pParent == null || m_pParent.m_eType != AST::Type::AST_FUNCTION_DECL)
+				{
+					InternalString* sError = own new InternalString("Decorator ");
+					sError.Append(m_pDecoratorNameToken.GetString());
+					sError.Append(" must be attached to a function");
+					pValidator.AddError(sError.GetExternalString(), m_pDecoratorNameToken.m_sFileName, m_pDecoratorNameToken.m_nLine, m_pDecoratorNameToken.m_nColumn);
+				}
+			}
+
+			base.Validate(pValidator, pParent);
+		}
+
+		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
+		{
+			if (eLanguage != AST::Language::NLL)
+				return;
+
+			if (nDepth > 0 && m_pFirstToken != null)
+				pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
+
+			Util::Pad(nDepth, pOutputBuilder.m_sOut);
+			m_pDecoratorNameToken.Stringify(pOutputBuilder.m_sOut);
+			m_pParamCall.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+		}
+	}
+}
+

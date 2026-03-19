@@ -299,6 +299,33 @@ namespace NumbatLogic
 			return disown sOut;
 		}
 
+		private FunctionDecl FindEntryPointFunction(AST pNode)
+		{
+			if (pNode == null)
+				return null;
+
+			if (pNode.m_eType == AST::Type::AST_DECORATOR_CALL)
+			{
+				DecoratorCall pDecoratorCall = cast DecoratorCall(pNode);
+				if (pDecoratorCall.m_eDecoratorType == DecoratorCall::DecoratorType::ENTRY_POINT)
+				{
+					if (pDecoratorCall.m_pParent != null && pDecoratorCall.m_pParent.m_eType == AST::Type::AST_FUNCTION_DECL)
+						return cast FunctionDecl(pDecoratorCall.m_pParent);
+				}
+			}
+
+			AST pChild = pNode.m_pFirstChild;
+			while (pChild != null)
+			{
+				FunctionDecl pEntryPointFunction = FindEntryPointFunction(pChild);
+				if (pEntryPointFunction != null)
+					return pEntryPointFunction;
+				pChild = pChild.m_pNextSibling;
+			}
+
+			return null;
+		}
+
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			if (eLanguage == AST::Language::CPP)
@@ -399,6 +426,32 @@ namespace NumbatLogic
 					pOutputBuilder.m_sOut.AppendChar('\n');
 				}
 				pChild = pChild.m_pNextSibling;
+			}
+
+			FunctionDecl pEntryPointFunction = FindEntryPointFunction(this);
+			if (pEntryPointFunction != null)
+			{
+				if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
+				{
+					pOutputBuilder.m_sOut.Append("\nint main(int argc, const char* argv[])\n{\n");
+					pOutputBuilder.m_sOut.Append("\tNumbatLogic::Vector<const char*>* sArgVector = new NumbatLogic::Vector<const char*>();\n");
+					pOutputBuilder.m_sOut.Append("\tfor (int i = 1; i < argc; i++)\n");
+					pOutputBuilder.m_sOut.Append("\t\tsArgVector->PushBack(argv[i]);\n\n\t");
+					pEntryPointFunction.AppendFullyQualifiedName(eLanguage, pOutputBuilder.m_sOut);
+					pOutputBuilder.m_sOut.Append("(sArgVector);\n\n");
+					pOutputBuilder.m_sOut.Append("\tdelete sArgVector;\n");
+					pOutputBuilder.m_sOut.Append("\treturn 0;\n}\n");
+				}
+				else if (eLanguage == AST::Language::CS)
+				{
+					pOutputBuilder.m_sOut.Append("\nclass Application\n{\n");
+					pOutputBuilder.m_sOut.Append("\tstatic void Main(string[] args)\n\t{\n");
+					pOutputBuilder.m_sOut.Append("\t\tNumbatLogic.Vector<string> pArgVector = new NumbatLogic.Vector<string>();\n");
+					pOutputBuilder.m_sOut.Append("\t\tfor (int i = 0; i < args.Length; i++)\n");
+					pOutputBuilder.m_sOut.Append("\t\t\tpArgVector.PushBack(args[i]);\n\n\t\t");
+					pEntryPointFunction.AppendFullyQualifiedName(eLanguage, pOutputBuilder.m_sOut);
+					pOutputBuilder.m_sOut.Append("(pArgVector);\n\t}\n}\n");
+				}
 			}
 		}
 	}

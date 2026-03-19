@@ -47,9 +47,14 @@ namespace NumbatLogic
 			FullCheck("int function() {return 0;}", AST::Type::AST_FUNCTION_DECL);
 			FullCheck("string func(int a, int b) {}", AST::Type::AST_FUNCTION_DECL);
 			FullCheck("class Test {\npublic int thing;\n}", AST::Type::AST_CLASS_DECL);
+			FullCheck("class @Dummy() Test {\npublic int thing;\n}", AST::Type::AST_CLASS_DECL);
+			FullCheck("class @Dummy() Test {\npublic int @Dummy() thing;\n}", AST::Type::AST_CLASS_DECL);
+			FullCheck("class Test {\npublic int @Dummy() thing;\npublic int @Dummy() func() {return 1;}\n}", AST::Type::AST_CLASS_DECL);
 			FullCheck("class Test:Base {\npublic int thing;\n}", AST::Type::AST_CLASS_DECL);
 			FullCheck("class Test {\npublic int func() {return 1;} public int thing;\n}", AST::Type::AST_CLASS_DECL);
 			FullCheck("class Test:Base {\npublic virtual int thing() {}\n}", AST::Type::AST_CLASS_DECL);
+			FullCheck("int @Dummy(1, \"x\") function() {return 0;}", AST::Type::AST_FUNCTION_DECL);
+			FullCheck("int @Dummy() i = abc();", AST::Type::AST_VAR_DECL);
 			FullCheck("enum Type {A,B,C,}", AST::Type::AST_ENUM_DECL);
 			//FullCheck("class Test {\nprivate enum Blorp {A,B,C,}\n}", AST::Type::AST_CLASS_DECL);
 			FullCheck("while (true) {}", AST::Type::AST_WHILE_STMT);

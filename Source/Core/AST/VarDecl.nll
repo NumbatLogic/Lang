@@ -10,11 +10,13 @@ namespace NumbatLogic
 		public Vector<AST>* m_pArraySizeVector;
 
 		public Token* m_pOwnedNameToken;
+		public Vector<DecoratorCall>* m_pDecoratorCallVector;
 
 		public construct()
 		{
 			m_bInline = false;
 			m_eType = AST::Type::AST_VAR_DECL;
+			m_pDecoratorCallVector = own new Vector<DecoratorCall>();
 		}
 		
 		public static VarDecl** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum, bool bInline)
@@ -25,12 +27,31 @@ namespace NumbatLogic
 			if (pTypeRef == null)
 				return null;
 
+			VarDecl* pVarDecl = own new VarDecl();
+
+			OwnedVector<DecoratorCall>* pOwnedDecoratorCallVector = own new OwnedVector<DecoratorCall>();
+			while (true)
+			{
+				DecoratorCall* pDecoratorCall = own DecoratorCall::TryCreate(pTokenContainer, pTempOffset);
+				if (pDecoratorCall == null)
+					break;
+
+				pOwnedDecoratorCallVector.PushBack(disown pDecoratorCall);
+			}
+
+			while (pOwnedDecoratorCallVector.GetSize() > 0)
+			{
+				DecoratorCall* pDecoratorCall = own pOwnedDecoratorCallVector.PopFront();
+				pDecoratorCall.m_pParent = pVarDecl;
+				DecoratorCall pTemp = pDecoratorCall;
+				pVarDecl.m_pDecoratorCallVector.PushBack(pTemp);
+				pVarDecl.AddChild(disown pDecoratorCall);
+			}
+
 			Token pNameToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
 			if (pNameToken == null)
 				return null;
 			pTempOffset.m_nOffset = pTempOffset.m_nOffset+1;
-
-			VarDecl* pVarDecl = own new VarDecl();
 
 			Token pSquareBracketLeftToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_SQUARE_BRACKET_LEFT);
 			while (pSquareBracketLeftToken != null)
@@ -199,7 +220,18 @@ namespace NumbatLogic
 			{
 				m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
 			}
+
 			pOutputBuilder.m_sOut.AppendChar(' ');
+
+			if (eLanguage == AST::Language::NLL && m_pDecoratorCallVector != null && m_pDecoratorCallVector.GetSize() > 0)
+			{
+				for (int i = 0; i < m_pDecoratorCallVector.GetSize(); i++)
+				{
+					DecoratorCall pDecoratorCall = m_pDecoratorCallVector.Get(i);
+					pDecoratorCall.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+				}
+				pOutputBuilder.m_sOut.AppendChar(' ');
+			}
 
 			// if cpp and source and member var decl, we need to fully qualify the name
 			if (m_pParent != null && m_pParent.m_eType == AST::Type::AST_MEMBER_VAR_DECL && eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)

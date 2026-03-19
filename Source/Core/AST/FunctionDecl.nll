@@ -8,6 +8,12 @@ namespace NumbatLogic
 		public ParamDecl m_pParamDecl;
 		public bool m_bConst;
 		public Scope m_pScope;
+		public Vector<DecoratorCall>* m_pDecoratorCallVector;
+		
+		public construct()
+		{
+			m_pDecoratorCallVector = own new Vector<DecoratorCall>();
+		}
 		
 		public static FunctionDecl** TryCreate(TokenContainer pTokenContainer, OffsetDatum pOffsetDatum, AST pParent)
 		{
@@ -16,6 +22,16 @@ namespace NumbatLogic
 			TypeRef* pTypeRef = own TypeRef::TryCreate(pTokenContainer, pTempOffset);
 			if (pTypeRef == null)
 				return null;
+
+			OwnedVector<DecoratorCall>* pOwnedDecoratorCallVector = own new OwnedVector<DecoratorCall>();
+			while (true)
+			{
+				DecoratorCall* pDecoratorCall = own DecoratorCall::TryCreate(pTokenContainer, pTempOffset);
+				if (pDecoratorCall == null)
+					break;
+
+				pOwnedDecoratorCallVector.PushBack(disown pDecoratorCall);
+			}
 
 			Token pNameToken = pTokenContainer.PeekExpect(pTempOffset, Token::Type::TOKEN_IDENTIFIER);
 			if (pNameToken == null)
@@ -57,9 +73,7 @@ namespace NumbatLogic
 				}
 			}
 
-
 			FunctionDecl* pFunctionDecl = own new FunctionDecl();
-
 			pFunctionDecl.m_eType = AST::Type::AST_FUNCTION_DECL;
 			pFunctionDecl.m_pParent = pParent;
 			pFunctionDecl.m_pFirstToken = pTypeRef.m_pFirstToken;
@@ -72,6 +86,15 @@ namespace NumbatLogic
 
 			pFunctionDecl.AddChild(disown pTypeRef);
 			pFunctionDecl.AddChild(disown pParamDecl);
+
+			while (pOwnedDecoratorCallVector.GetSize() > 0)
+			{
+				DecoratorCall* pDecoratorCall = own pOwnedDecoratorCallVector.PopFront();
+				pDecoratorCall.m_pParent = pFunctionDecl;
+				DecoratorCall pTemp = pDecoratorCall;
+				pFunctionDecl.m_pDecoratorCallVector.PushBack(pTemp);
+				pFunctionDecl.AddChild(disown pDecoratorCall);
+			}
 
 			if (pScope != null)
 				pFunctionDecl.AddChild(disown pScope);
@@ -105,6 +128,28 @@ namespace NumbatLogic
 				AddClassDeclReference(pValueType.m_pClassDecl, AST::OutputFile::HEADER, true);
 		}
 
+		public void AppendFullyQualifiedName(Language eLanguage, InternalString sOut)
+		{
+			string sxSeparator = "::";
+			if (eLanguage == AST::Language::CS)
+				sxSeparator = ".";
+
+			AST pParent = m_pParent;
+			while (pParent != null)
+			{
+				if (pParent.m_eType == AST::Type::AST_CLASS_DECL)
+				{
+					ClassDecl pClassDecl = cast ClassDecl(pParent);
+					pClassDecl.AppendFullyQualifiedName(eLanguage, sOut);
+					sOut.Append(sxSeparator);
+					break;
+				}
+				pParent = pParent.m_pParent;
+			}
+
+			sOut.Append(m_sMangledName);
+		}
+
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
 			MemberFunctionDecl pMemberFunctionDecl = null;
@@ -120,33 +165,26 @@ namespace NumbatLogic
 			}
 
 			m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
-
 			pOutputBuilder.m_sOut.AppendChar(' ');
+
+			if (eLanguage == AST::Language::NLL && m_pDecoratorCallVector != null && m_pDecoratorCallVector.GetSize() > 0)
+			{
+				for (int i = 0; i < m_pDecoratorCallVector.GetSize(); i++)
+				{
+					DecoratorCall pDecoratorCall = m_pDecoratorCallVector.Get(i);
+					pDecoratorCall.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+				}
+				pOutputBuilder.m_sOut.AppendChar(' ');
+			}
 
 			if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
 			{
 				if (pMemberFunctionDecl != null)
 				{
-					AST pPrefixParent = pMemberFunctionDecl;
 					InternalString* sPrefix = own new InternalString("");
-					InternalString* sTemp = own new InternalString("");
-
-					while (pPrefixParent.m_pParent != null)// && (m_pParent.m_eType == AST::Type::AST_MEMBER_CLASS_DECL || m_pParent.m_eType == AST::Type::AST_CLASS_DECL))
-					{
-						if (pPrefixParent.m_eType == AST::Type::AST_CLASS_DECL)
-						{
-							sTemp.Set(sPrefix.GetExternalString());
-							sPrefix.Set("");
-							(cast ClassDecl(pPrefixParent)).m_pNameToken.Stringify(sPrefix);
-							sPrefix.Append("::");
-							sPrefix.Append(sTemp.GetExternalString());
-						}
-
-						pPrefixParent = pPrefixParent.m_pParent;
-
-					}
-					
+					pMemberFunctionDecl.m_pParentClassDecl.AppendFullyQualifiedName(eLanguage, sPrefix);
 					pOutputBuilder.m_sOut.Append(sPrefix.GetExternalString());
+					pOutputBuilder.m_sOut.Append("::");
 				}
 			}
 
