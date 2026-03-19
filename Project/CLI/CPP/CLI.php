@@ -7,7 +7,7 @@
 
 			$this->m_xFileArray = array_merge(
 				ProjectGen_ParseDirectory(dirname(__FILE__) . "/../../../Transpiled/CLI", "/\.hpp|\.cpp/"),
-				ProjectGen_ParseDirectory(dirname(__FILE__), "/\.hpp$|\.cpp$/"));
+			);
 		}
 
 		public function GetName() { return "CLI"; }

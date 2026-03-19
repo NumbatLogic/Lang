@@ -2,14 +2,7 @@ namespace NumbatLogic
 {
 	class Test
 	{
-		/*public static ParseDatum Create()
-		{
-			ParseDatum pThis = new ParseDatum();
-			pThis.ClearCurrentRead();
-			return pThis;
-		}*/
-
-		public static void Run()
+		public static void @EntryPoint() Run(Vector<string> sArgVector)
 		{
 			Console::Log("Tests!");
 			// todo: for is pretty hax
@@ -68,8 +61,6 @@ namespace NumbatLogic
 			FullCheck("sOut = sOut + this.pGenericTypeRefVector.Get(i).Stringify(eLanguage, 0);", AST::Type::AST_EXPRESSION_STMT);
 			FullCheck("Vector<AST> pMemberVector = new Vector<AST>();", AST::Type::AST_VAR_DECL);
 			FullCheck("Token::Type eType = bloop;", AST::Type::AST_VAR_DECL);
-
-			PointerTest::Run();
 		}
 
 
