@@ -70,6 +70,38 @@ namespace NumbatLogic
 					sError.Append(" must be attached to a function");
 					pValidator.AddError(sError.GetExternalString(), m_pDecoratorNameToken.m_sFileName, m_pDecoratorNameToken.m_nLine, m_pDecoratorNameToken.m_nColumn);
 				}
+				else
+				{
+					FunctionDecl pFunctionDecl = cast FunctionDecl(m_pParent);
+					if (pFunctionDecl.m_pParent == null || pFunctionDecl.m_pParent.m_eType != AST::Type::AST_MEMBER_FUNCTION_DECL || !(cast MemberFunctionDecl(pFunctionDecl.m_pParent)).m_bStatic)
+						pValidator.AddError("@EntryPoint must be on a static member function", m_pDecoratorNameToken.m_sFileName, m_pDecoratorNameToken.m_nLine, m_pDecoratorNameToken.m_nColumn);
+
+					if (pFunctionDecl.m_pParamDecl == null || pFunctionDecl.m_pParamDecl.m_pParamVector.GetSize() != 1)
+					{
+						pValidator.AddError("@EntryPoint function must have exactly 1 parameter: Vector<string>", m_pDecoratorNameToken.m_sFileName, m_pDecoratorNameToken.m_nLine, m_pDecoratorNameToken.m_nColumn);
+					}
+					else
+					{
+						VarDecl pParam = pFunctionDecl.m_pParamDecl.m_pParamVector.Get(0);
+						TypeRef pTypeRef = pParam.m_pTypeRef;
+						bool bValidType = pTypeRef != null &&
+							pTypeRef.m_pTypeToken != null &&
+							pTypeRef.m_pTypeToken.m_eType == Token::Type::TOKEN_IDENTIFIER &&
+							ExternalString::Equal("Vector", pTypeRef.m_pTypeToken.GetString()) &&
+							pTypeRef.m_pGenericTypeRefVector.GetSize() == 1;
+
+						if (bValidType)
+						{
+							TypeRef pInnerTypeRef = pTypeRef.m_pGenericTypeRefVector.Get(0);
+							bValidType = pInnerTypeRef != null &&
+								pInnerTypeRef.m_pTypeToken != null &&
+								pInnerTypeRef.m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_STRING;
+						}
+
+						if (!bValidType)
+							pValidator.AddError("@EntryPoint function parameter must be Vector<string>", pParam.m_pFirstToken.m_sFileName, pParam.m_pFirstToken.m_nLine, pParam.m_pFirstToken.m_nColumn);
+					}
+				}
 			}
 
 			base.Validate(pValidator, pParent);

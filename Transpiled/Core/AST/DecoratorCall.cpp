@@ -6,6 +6,13 @@
 #include "ParamCall.hpp"
 #include "AST.hpp"
 #include "../Validator.hpp"
+#include "FunctionDecl.hpp"
+#include "MemberFunctionDecl.hpp"
+#include "ParamDecl.hpp"
+#include "../../../../LangShared/Vector/CPP/Vector.hpp"
+#include "VarDecl.hpp"
+#include "TypeRef.hpp"
+#include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
 #include "../OutputBuilder.hpp"
 #include "../Util.hpp"
 
@@ -19,6 +26,14 @@ namespace NumbatLogic
 	class ParamCall;
 	class DecoratorCall;
 	class Validator;
+	class FunctionDecl;
+	class MemberFunctionDecl;
+	class ParamDecl;
+	template <class T>
+	class Vector;
+	class VarDecl;
+	class TypeRef;
+	class ExternalString;
 	class OutputBuilder;
 	class Util;
 }
@@ -112,7 +127,35 @@ namespace NumbatLogic
 				pValidator->AddError(sError->GetExternalString(), m_pDecoratorNameToken->m_sFileName, m_pDecoratorNameToken->m_nLine, m_pDecoratorNameToken->m_nColumn);
 				if (sError) delete sError;
 			}
+			else
+			{
+#line 75 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
+				FunctionDecl* pFunctionDecl = (FunctionDecl*)(m_pParent);
+				if (pFunctionDecl->m_pParent == 0 || pFunctionDecl->m_pParent->m_eType != AST::Type::AST_MEMBER_FUNCTION_DECL || !((MemberFunctionDecl*)(pFunctionDecl->m_pParent))->m_bStatic)
+					pValidator->AddError("@EntryPoint must be on a static member function", m_pDecoratorNameToken->m_sFileName, m_pDecoratorNameToken->m_nLine, m_pDecoratorNameToken->m_nColumn);
+#line 79 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
+				if (pFunctionDecl->m_pParamDecl == 0 || pFunctionDecl->m_pParamDecl->m_pParamVector->GetSize() != 1)
+				{
+					pValidator->AddError("@EntryPoint function must have exactly 1 parameter: Vector<string>", m_pDecoratorNameToken->m_sFileName, m_pDecoratorNameToken->m_nLine, m_pDecoratorNameToken->m_nColumn);
+				}
+				else
+				{
+					VarDecl* pParam = pFunctionDecl->m_pParamDecl->m_pParamVector->Get(0);
+					TypeRef* pTypeRef = pParam->m_pTypeRef;
+					bool bValidType = pTypeRef != 0 && pTypeRef->m_pTypeToken != 0 && pTypeRef->m_pTypeToken->m_eType == Token::Type::TOKEN_IDENTIFIER && ExternalString::Equal("Vector", pTypeRef->m_pTypeToken->GetString()) && pTypeRef->m_pGenericTypeRefVector->GetSize() == 1;
+#line 93 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
+					if (bValidType)
+					{
+						TypeRef* pInnerTypeRef = pTypeRef->m_pGenericTypeRefVector->Get(0);
+						bValidType = pInnerTypeRef != 0 && pInnerTypeRef->m_pTypeToken != 0 && pInnerTypeRef->m_pTypeToken->m_eType == Token::Type::TOKEN_KEYWORD_STRING;
+					}
+#line 101 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
+					if (!bValidType)
+						pValidator->AddError("@EntryPoint function parameter must be Vector<string>", pParam->m_pFirstToken->m_sFileName, pParam->m_pFirstToken->m_nLine, pParam->m_pFirstToken->m_nColumn);
+				}
+			}
 		}
+#line 107 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
 		AST::Validate(pValidator, pParent);
 	}
 
@@ -120,10 +163,10 @@ namespace NumbatLogic
 	{
 		if (eLanguage != AST::Language::NLL)
 			return;
-#line 83 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
+#line 115 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
 		if (nDepth > 0 && m_pFirstToken != 0)
 			pOutputBuilder->UpdateSourceLocation(eLanguage, m_pFirstToken);
-#line 86 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
+#line 118 "/home/cliffya/git/Lang/Source/Core/AST/DecoratorCall.nll"
 		Util::Pad(nDepth, pOutputBuilder->m_sOut);
 		m_pDecoratorNameToken->Stringify(pOutputBuilder->m_sOut);
 		m_pParamCall->Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
