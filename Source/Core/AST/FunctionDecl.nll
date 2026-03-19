@@ -177,14 +177,29 @@ namespace NumbatLogic
 				pOutputBuilder.m_sOut.AppendChar(' ');
 			}
 
+			// we don't want fully qualified name, just the parent classes
 			if (eLanguage == AST::Language::CPP && eOutputFile == AST::OutputFile::SOURCE)
 			{
 				if (pMemberFunctionDecl != null)
 				{
+					AST pPrefixParent = pMemberFunctionDecl;
 					InternalString* sPrefix = own new InternalString("");
-					pMemberFunctionDecl.m_pParentClassDecl.AppendFullyQualifiedName(eLanguage, sPrefix);
+					InternalString* sTemp = own new InternalString("");
+					while (pPrefixParent.m_pParent != null)
+					{
+						if (pPrefixParent.m_eType == AST::Type::AST_CLASS_DECL)
+						{
+							sTemp.Set(sPrefix.GetExternalString());
+							sPrefix.Set("");
+							(cast ClassDecl(pPrefixParent)).m_pNameToken.Stringify(sPrefix);
+							sPrefix.Append("::");
+							sPrefix.Append(sTemp.GetExternalString());
+						}
+
+						pPrefixParent = pPrefixParent.m_pParent;
+					}
+
 					pOutputBuilder.m_sOut.Append(sPrefix.GetExternalString());
-					pOutputBuilder.m_sOut.Append("::");
 				}
 			}
 
