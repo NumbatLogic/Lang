@@ -5,6 +5,7 @@
 #include "Token.hpp"
 #include "../../../LangShared/InternalString/CPP/InternalString.hpp"
 #include "../../../LangShared/ExternalString/CPP/ExternalString.hpp"
+#include "AST/AST.hpp"
 
 namespace NumbatLogic
 {
@@ -17,6 +18,7 @@ namespace NumbatLogic
 	class Token;
 	class InternalString;
 	class ExternalString;
+	class AST;
 }
 #line 0 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 namespace NumbatLogic
@@ -67,14 +69,18 @@ namespace NumbatLogic
 		return 0;
 	}
 
-	void NamespaceNode::AppendFullyQualifiedName(InternalString* sOut)
+	void NamespaceNode::AppendFullyQualifiedName(AST::Language eLanguage, InternalString* sOut)
 	{
+		const char* sxSeparator = "::";
+		if (eLanguage == AST::Language::CS)
+			sxSeparator = ".";
+#line 51 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 		if (m_pParent != 0 && m_pParent->m_sName != 0)
-			m_pParent->AppendFullyQualifiedName(sOut);
+			m_pParent->AppendFullyQualifiedName(eLanguage, sOut);
 		if (m_sName != 0)
 		{
 			if (m_pParent != 0 && m_pParent->m_sName != 0)
-				sOut->Append("::");
+				sOut->Append(sxSeparator);
 			sOut->Append(m_sName->GetExternalString());
 		}
 	}

@@ -219,7 +219,7 @@ namespace NumbatLogic
 					{
 						const char* sName = pMemberClass->m_pClassDecl->m_pNameToken->GetString();
 						InternalString* sTemp = new InternalString("");
-						pMemberClass->m_pClassDecl->AppendFullyQualifiedName(sTemp);
+						pMemberClass->m_pClassDecl->AppendFullyQualifiedName(AST::Language::NLL, sTemp);
 						AddSymbolToScope(pScope, sName, Symbol::Kind::CLASS, pMemberNode, sTemp->GetExternalString());
 						if (sTemp) delete sTemp;
 					}
@@ -278,7 +278,7 @@ namespace NumbatLogic
 				if (pNamespaceDecl->m_pNamespaceNode != 0)
 				{
 					InternalString* sTemp = new InternalString("");
-					pNamespaceDecl->m_pNamespaceNode->AppendFullyQualifiedName(sTemp);
+					pNamespaceDecl->m_pNamespaceNode->AppendFullyQualifiedName(AST::Language::NLL, sTemp);
 					sQual = sTemp->GetExternalString();
 					if (sTemp) delete sTemp;
 				}
@@ -309,7 +309,7 @@ namespace NumbatLogic
 				{
 					const char* sName = pClassDecl->m_pNameToken->GetString();
 					InternalString* sTemp = new InternalString("");
-					pClassDecl->AppendFullyQualifiedName(sTemp);
+					pClassDecl->AppendFullyQualifiedName(AST::Language::NLL, sTemp);
 					AddSymbolToScope(pScope, sName, Symbol::Kind::CLASS, pNode, sTemp->GetExternalString());
 					if (sTemp) delete sTemp;
 				}

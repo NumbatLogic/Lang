@@ -4,6 +4,7 @@
 #include "NamespaceNode.hpp"
 #include "../../../LangShared/Vector/CPP/Vector.hpp"
 #include "AST/NamespaceDecl.hpp"
+#include "AST/AST.hpp"
 
 namespace NumbatLogic
 {
@@ -14,6 +15,7 @@ namespace NumbatLogic
 	template <class T>
 	class Vector;
 	class NamespaceDecl;
+	class AST;
 }
 #line 0 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 namespace NumbatLogic
@@ -32,7 +34,7 @@ namespace NumbatLogic
 #line 34 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 		public: NamespaceNode* GetChild(const char* sxName);
 #line 45 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
-		public: void AppendFullyQualifiedName(InternalString* sOut);
+		public: void AppendFullyQualifiedName(AST::Language eLanguage, InternalString* sOut);
 #line 3 "/home/cliffya/git/Lang/Source/Core/NamespaceNode.nll"
 		public: virtual ~NamespaceNode();
 	};

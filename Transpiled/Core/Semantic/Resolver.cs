@@ -168,7 +168,7 @@ namespace NumbatLogic
 						{
 							string sName = pMemberClass.m_pClassDecl.m_pNameToken.GetString();
 							InternalString sTemp = new InternalString("");
-							pMemberClass.m_pClassDecl.AppendFullyQualifiedName(sTemp);
+							pMemberClass.m_pClassDecl.AppendFullyQualifiedName(AST.Language.NLL, sTemp);
 							AddSymbolToScope(pScope, sName, Symbol.Kind.CLASS, pMemberNode, sTemp.GetExternalString());
 						}
 					}
@@ -226,7 +226,7 @@ namespace NumbatLogic
 					if (pNamespaceDecl.m_pNamespaceNode != null)
 					{
 						InternalString sTemp = new InternalString("");
-						pNamespaceDecl.m_pNamespaceNode.AppendFullyQualifiedName(sTemp);
+						pNamespaceDecl.m_pNamespaceNode.AppendFullyQualifiedName(AST.Language.NLL, sTemp);
 						sQual = sTemp.GetExternalString();
 					}
 					AddSymbolToScope(pScope, sName, Symbol.Kind.NAMESPACE, pNode, sQual);
@@ -255,7 +255,7 @@ namespace NumbatLogic
 					{
 						string sName = pClassDecl.m_pNameToken.GetString();
 						InternalString sTemp = new InternalString("");
-						pClassDecl.AppendFullyQualifiedName(sTemp);
+						pClassDecl.AppendFullyQualifiedName(AST.Language.NLL, sTemp);
 						AddSymbolToScope(pScope, sName, Symbol.Kind.CLASS, pNode, sTemp.GetExternalString());
 					}
 #line 261 "/home/cliffya/git/Lang/Source/Core/Semantic/Resolver.nll"

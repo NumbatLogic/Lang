@@ -28,6 +28,7 @@ namespace NumbatLogic
 			AST_BOOL_EXPR,
 			AST_BREAK_STMT,
 			AST_CAST_EXP,
+			AST_DECORATOR_CALL,
 			AST_CHAR,
 			AST_CLASS_DECL,
 			AST_CONTINUE_STMT,
@@ -76,7 +77,7 @@ namespace NumbatLogic
 			THIS_EXPR,
 		};
 
-#line 59 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 60 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: enum Language
 		{
 			NLL,
@@ -88,67 +89,67 @@ namespace NumbatLogic
 			PHP,
 		};
 
-#line 69 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 70 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: enum OutputFile
 		{
 			SOURCE,
 			HEADER,
 		};
 
-#line 74 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 75 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: Type m_eType;
 		public: Token* m_pFirstToken;
-#line 77 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 78 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: AST* m_pParent;
 		public: AST* m_pFirstChild;
 		public: AST* m_pLastChild;
 		public: AST* m_pPrevSibling;
 		public: AST* m_pNextSibling;
-#line 84 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 85 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: SymbolScope* m_pSymbolScope;
-#line 86 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 87 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: bool m_bCanDescend;
-#line 88 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 89 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: ValueType* m_pValueType;
-#line 90 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 91 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: bool m_bStatement;
-#line 93 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 94 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: bool m_bSkipOutput;
-#line 95 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 96 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: AST();
-#line 101 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 102 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: virtual ~AST();
-#line 105 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 106 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: static AST* CreateFromTokenContainer(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 132 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 133 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: static AST* CreateStatementFromTokenContainer(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 187 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 188 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		protected: static AST* TryCreateInnerExpression(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 270 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 271 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: static AST* TryCreateExpression(TokenContainer* pTokenContainer, OffsetDatum* pOffsetDatum);
-#line 316 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 317 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: virtual void PreValidate(Validator* pValidator, OperatorExpr* pParent);
-#line 328 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 329 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: virtual void Validate(Validator* pValidator, OperatorExpr* pParent);
-#line 340 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 341 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: void AddChild(AST* pAst);
-#line 357 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 358 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: void AddChildFront(AST* pAst);
-#line 371 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 372 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: void AddChildBefore(AST* pAst, AST* pBefore);
-#line 392 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 393 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: AST* RemoveChild(AST* pChild);
-#line 428 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 429 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: virtual void AddClassDeclReference(ClassDecl* pClassDecl, OutputFile eOutputFile, bool bForwardReference);
-#line 435 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 436 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: Project* GetProject();
-#line 443 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 444 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
-#line 448 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 449 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: virtual AST* BaseClone();
-#line 457 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 458 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: AST* GetParentStatement();
-#line 470 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
+#line 471 "/home/cliffya/git/Lang/Source/Core/AST/AST.nll"
 		public: virtual void StringifyType(InternalString* sOut);
 	};
 }

@@ -19,6 +19,7 @@ namespace NumbatLogic
 	class TokenContainer;
 	class TranslationUnit;
 	class AST;
+	class FunctionDecl;
 }
 #line 0 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 namespace NumbatLogic
@@ -64,6 +65,8 @@ namespace NumbatLogic
 #line 243 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: InternalString* RetargetRelativePath(Language eLanguage, OutputFile eOutputFile, const char* sxFrom, const char* sxTo);
 #line 302 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+		protected: FunctionDecl* FindEntryPointFunction(AST* pNode);
+#line 329 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 #line 83 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: virtual ~TranslationUnit();
