@@ -207,12 +207,9 @@ namespace NumbatLogic
 				return;
 			}
 
-			sPath.Replace("/LangShared/", "/LangShared/Transpiled/");
-			
 			// old logic
 			sPath.Replace("Source", "Transpiled");
-			//sPath.Replace("Shared", "Transpiled"); // for pure nll shared classes
-
+			
 			switch (eLanguage)
 			{
 				case AST::Language::CS:

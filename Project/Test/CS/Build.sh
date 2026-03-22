@@ -10,7 +10,7 @@ sLangSharedFiles=()
 for sPackage in "${sPackages[@]}"; do
 	while IFS= read -r -d '' csfile; do
 		sLangSharedFiles+=("$csfile")
-	done < <(find "../../../../LangShared/$sPackage" -type f -name '*.cs' -print0)
+	done < <(find "../../../../LangShared/Source/$sPackage" -type f -name '*.cs' -print0)
 
 	transpiledDirectory="../../../../LangShared/Transpiled/$sPackage"
 	if [ -d "$transpiledDirectory" ]; then

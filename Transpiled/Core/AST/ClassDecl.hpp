@@ -3,7 +3,7 @@
 #include "AST.hpp"
 #include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "GenericTypeDecl.hpp"
-#include "../../../../LangShared/Vector/CPP/Vector.hpp"
+#include "../../../../LangShared/Source/Vector/CPP/Vector.hpp"
 #include "DecoratorCall.hpp"
 
 namespace NumbatLogic

@@ -10,7 +10,7 @@ sLangSharedFiles=()
 for sPackage in "${sPackages[@]}"; do
 	while IFS= read -r -d '' csfile; do
 		sLangSharedFiles+=("$csfile")
-	done < <(find "../../../../LangShared/$sPackage" -type f -name '*.cs' -print0)
+	done < <(find "../../../../LangShared/Source/$sPackage" -type f -name '*.cs' -print0)
 
 	transpiledDirectory="../../../../LangShared/Transpiled/$sPackage"
 	if [ -d "$transpiledDirectory" ]; then
@@ -20,4 +20,4 @@ for sPackage in "${sPackages[@]}"; do
 	fi
 done
 
-${compiler} -debug:full -reference:System.IO.Compression.dll ../../../Transpiled/CLI/*.cs ../../../Transpiled/Core/*.cs ../../../Transpiled/Core/AST/*.cs ../../../Transpiled/Core/Semantic/*.cs ${sLangSharedFiles[@]}
+${compiler} -out:CLI.exe -debug:full -reference:System.IO.Compression.dll ../../../Transpiled/CLI/*.cs ../../../Transpiled/Core/*.cs ../../../Transpiled/Core/AST/*.cs ../../../Transpiled/Core/Semantic/*.cs ${sLangSharedFiles[@]}

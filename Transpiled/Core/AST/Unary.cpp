@@ -3,7 +3,7 @@
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
 #include "AST.hpp"
-#include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
+#include "../../../../LangShared/Source/InternalString/CPP/InternalString.hpp"
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
 #include "../OutputBuilder.hpp"

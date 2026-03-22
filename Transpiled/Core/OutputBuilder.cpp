@@ -1,5 +1,5 @@
 #include "OutputBuilder.hpp"
-#include "../../../LangShared/InternalString/CPP/InternalString.hpp"
+#include "../../../LangShared/Source/InternalString/CPP/InternalString.hpp"
 #include "AST/AST.hpp"
 #include "Token.hpp"
 

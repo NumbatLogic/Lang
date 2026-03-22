@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../LangShared/Vector/CPP/Vector.hpp"
+#include "../../../LangShared/Source/Vector/CPP/Vector.hpp"
 
 namespace NumbatLogic
 {
