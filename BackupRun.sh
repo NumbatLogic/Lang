@@ -11,4 +11,4 @@ for sPackage in "${sPackages[@]}"; do
 	sLangSharedArgs+=("../../../../../LangShared/Source/$sPackage")
 done
 
-mono --debug Main.exe -f ../../../../Source "${sLangSharedArgs[@]}"
+mono --debug CLI.exe -f ../../../../Source "${sLangSharedArgs[@]}"
