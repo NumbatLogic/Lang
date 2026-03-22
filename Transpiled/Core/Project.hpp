@@ -34,15 +34,15 @@ namespace NumbatLogic
 		public: void AddFile(const char* sFile, OwnedVector<InternalString*>* sDefineVector);
 #line 45 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		public: bool AddDirectory(const char* sDirectory, OwnedVector<InternalString*>* sDefineVector);
-#line 66 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 63 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		public: void FullValidate();
-#line 76 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 73 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		protected: void RecurseNamespaces(AST* pInAst, NamespaceDecl* pSecretNamespace, TranslationUnit* pSecretTranslationUnit);
-#line 135 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 132 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		protected: void NamespaceMerge(AST* pParentAST);
-#line 208 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 205 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		public: void Amalgamate(const char* sAmalgamateFileName);
-#line 272 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 269 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		public: void Output(AST::Language eLanguage, OutputFile eOutputFile);
 #line 3 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		public: virtual ~Project();

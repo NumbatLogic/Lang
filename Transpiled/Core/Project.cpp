@@ -93,15 +93,13 @@ namespace NumbatLogic
 		pAllowedSuffixVector->PushBack(new InternalString(".nll.def"));
 #line 51 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		OwnedVector<InternalString*>* sFileVector = File::GetRecursiveFileVector(sDirectory, pAllowedSuffixVector);
-#line 53 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		if (sFileVector == 0)
 		{
 			if (pAllowedSuffixVector) delete pAllowedSuffixVector;
 			if (sFileVector) delete sFileVector;
-#line 55 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 53 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 			return false;
 		}
-#line 58 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		while (sFileVector->GetSize() > 0)
 		{
 			InternalString* sFile = sFileVector->PopBack();
@@ -110,27 +108,27 @@ namespace NumbatLogic
 		}
 		if (pAllowedSuffixVector) delete pAllowedSuffixVector;
 		if (sFileVector) delete sFileVector;
-#line 63 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 60 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		return true;
 	}
 
 	void Project::FullValidate()
 	{
-#line 69 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 66 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		m_pValidator = new Validator(this);
 		if (!m_pValidator->Validate())
 		{
 		}
 	}
 
-#line 76 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 73 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 	void Project::RecurseNamespaces(AST* pInAst, NamespaceDecl* pSecretNamespace, TranslationUnit* pSecretTranslationUnit)
 	{
 		if (pInAst->m_eType == AST::Type::AST_TRANSLATION_UNIT)
 		{
 			Assert::Plz(pSecretNamespace == 0);
 		}
-#line 83 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 80 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		AST* pChild = pInAst->m_pFirstChild;
 		while (pChild != 0)
 		{
@@ -141,58 +139,58 @@ namespace NumbatLogic
 				{
 					AST* pNextChild = pChild;
 					pNextChild = pChild->m_pNextSibling;
-#line 94 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 91 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 					AST* pOwnedChild = 0;
 					pOwnedChild = pInAst->RemoveChild(pChild);
-#line 97 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 94 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 					Assert::Plz(pOwnedChild != 0);
-#line 99 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 96 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 					if (pSecretNamespace == 0)
 					{
-						NumbatLogic::AST* __2227940683 = pOwnedChild;
-#line 101 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+						NumbatLogic::AST* __620588646 = pOwnedChild;
+#line 98 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 						pOwnedChild = 0;
-#line 101 "/home/cliffya/git/Lang/Source/Core/Project.nll"
-						pSecretTranslationUnit->AddChild(__2227940683);
+#line 98 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+						pSecretTranslationUnit->AddChild(__620588646);
 					}
 					else
 					{
-						NumbatLogic::AST* __2227940687 = pOwnedChild;
-#line 105 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+						NumbatLogic::AST* __2227940684 = pOwnedChild;
+#line 102 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 						pOwnedChild = 0;
-#line 105 "/home/cliffya/git/Lang/Source/Core/Project.nll"
-						pSecretNamespace->AddChild(__2227940687);
+#line 102 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+						pSecretNamespace->AddChild(__2227940684);
 					}
-#line 108 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 105 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 					pChild = pNextChild;
 					if (pOwnedChild) delete pOwnedChild;
-#line 109 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 106 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 					continue;
 				}
-#line 113 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 110 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 				NamespaceDecl* pNextSecretNamespace = new NamespaceDecl();
 				pNextSecretNamespace->m_pFirstToken = pNamespaceDecl->m_pFirstToken;
 				pNextSecretNamespace->m_pNameToken = pNamespaceDecl->m_pNameToken;
 				pNextSecretNamespace->m_bSkipOutput = pNamespaceDecl->m_bSkipOutput;
-#line 118 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 115 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 				NamespaceDecl* pTemp = pNextSecretNamespace;
 				if (pSecretNamespace == 0)
 				{
-					NumbatLogic::NamespaceDecl* __4258634952 = pNextSecretNamespace;
-#line 121 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+					NumbatLogic::NamespaceDecl* __4258569360 = pNextSecretNamespace;
+#line 118 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 					pNextSecretNamespace = 0;
-#line 121 "/home/cliffya/git/Lang/Source/Core/Project.nll"
-					pSecretTranslationUnit->AddChild(__4258634952);
+#line 118 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+					pSecretTranslationUnit->AddChild(__4258569360);
 				}
 				else
 				{
-					NumbatLogic::NamespaceDecl* __4258634956 = pNextSecretNamespace;
-#line 125 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+					NumbatLogic::NamespaceDecl* __4258634953 = pNextSecretNamespace;
+#line 122 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 					pNextSecretNamespace = 0;
-#line 125 "/home/cliffya/git/Lang/Source/Core/Project.nll"
-					pSecretNamespace->AddChild(__4258634956);
+#line 122 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+					pSecretNamespace->AddChild(__4258634953);
 				}
-#line 128 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 125 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 				RecurseNamespaces(pNamespaceDecl, pTemp, pSecretTranslationUnit);
 				if (pNextSecretNamespace) delete pNextSecretNamespace;
 			}
@@ -204,7 +202,7 @@ namespace NumbatLogic
 	{
 		AST* pChild = pParentAST->m_pFirstChild;
 		Vector<NamespaceDecl*>* pPreviousNamespaceDecls = new Vector<NamespaceDecl*>();
-#line 140 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 137 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		while (pChild != 0)
 		{
 			if (pChild->m_eType == AST::Type::NAMESPACE_DECL)
@@ -220,52 +218,52 @@ namespace NumbatLogic
 						AST* pNextSibling = pChild->m_pNextSibling;
 						AST* pOwnedChild = 0;
 						pOwnedChild = pParentAST->RemoveChild(pChild);
-#line 156 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 153 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 						AST* pSubChild = 0;
-						NumbatLogic::AST* __2552836161 = pOwnedChild->m_pFirstChild;
-#line 157 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+						NumbatLogic::AST* __2552836158 = pOwnedChild->m_pFirstChild;
+#line 154 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 						pOwnedChild->m_pFirstChild = 0;
-#line 157 "/home/cliffya/git/Lang/Source/Core/Project.nll"
-						pSubChild = __2552836161;
+#line 154 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+						pSubChild = __2552836158;
 						pOwnedChild->m_pLastChild = 0;
-#line 160 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 157 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 						if (pSubChild != 0)
 						{
 							pSubChild->m_pParent = pPreviousNamespace;
 							if (pPreviousNamespace->m_pFirstChild == 0)
 							{
-								NumbatLogic::AST* __2417707012 = pSubChild;
-#line 165 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+								NumbatLogic::AST* __2417707009 = pSubChild;
+#line 162 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 								pSubChild = 0;
-#line 165 "/home/cliffya/git/Lang/Source/Core/Project.nll"
-								pPreviousNamespace->m_pFirstChild = __2417707012;
+#line 162 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+								pPreviousNamespace->m_pFirstChild = __2417707009;
 								pPreviousNamespace->m_pLastChild = pPreviousNamespace->m_pFirstChild;
 							}
 							else
 							{
-								NumbatLogic::AST* __2417772606 = pSubChild;
-#line 170 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+								NumbatLogic::AST* __2417707014 = pSubChild;
+#line 167 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 								pSubChild = 0;
-#line 170 "/home/cliffya/git/Lang/Source/Core/Project.nll"
-								pPreviousNamespace->m_pLastChild->m_pNextSibling = __2417772606;
+#line 167 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+								pPreviousNamespace->m_pLastChild->m_pNextSibling = __2417707014;
 								pPreviousNamespace->m_pLastChild->m_pNextSibling->m_pPrevSibling = pPreviousNamespace->m_pLastChild;
 							}
-#line 174 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 171 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 							while (pPreviousNamespace->m_pLastChild->m_pNextSibling != 0)
 							{
 								pPreviousNamespace->m_pLastChild = pPreviousNamespace->m_pLastChild->m_pNextSibling;
 								pPreviousNamespace->m_pLastChild->m_pParent = pPreviousNamespace;
 							}
 						}
-#line 181 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 178 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 						pChild = pNextSibling;
 						if (pOwnedChild) delete pOwnedChild;
 						if (pSubChild) delete pSubChild;
-#line 182 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 179 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 						break;
 					}
 				}
-#line 186 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 183 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 				if (i == pPreviousNamespaceDecls->GetSize())
 				{
 					pPreviousNamespaceDecls->PushBack(pNamespaceDecl);
@@ -275,11 +273,11 @@ namespace NumbatLogic
 					continue;
 				}
 			}
-#line 196 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 193 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 			pChild = pChild->m_pNextSibling;
 		}
 		{
-#line 200 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 197 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 			for (int i = 0; i < pPreviousNamespaceDecls->GetSize(); i++)
 			{
 				NamespaceDecl* pPreviousNamespace = pPreviousNamespaceDecls->Get(i);
@@ -289,61 +287,61 @@ namespace NumbatLogic
 		if (pPreviousNamespaceDecls) delete pPreviousNamespaceDecls;
 	}
 
-#line 208 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 205 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 	void Project::Amalgamate(const char* sAmalgamateFileName)
 	{
-#line 211 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 208 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		InternalString* sSecretFileName = new InternalString(sAmalgamateFileName);
 		sSecretFileName->Replace(".nll", "Secret.nll");
 		TranslationUnit* pSecretTranslationUnit = new TranslationUnit(sSecretFileName->GetExternalString());
 		TranslationUnit* pPublicTranslationUnit = new TranslationUnit(sAmalgamateFileName);
-#line 216 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 213 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		while (m_pFirstChild != 0)
 		{
 			AST* pAST = 0;
 			pAST = RemoveChild(m_pFirstChild);
-#line 221 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 218 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 			TranslationUnit* pTranslationUnit = (TranslationUnit*)(pAST);
 			bool bSkipOutput = pTranslationUnit->m_sInFile->EndsWith(".nll.def");
-#line 225 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 222 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 			while (pTranslationUnit->m_pTokenContainer->m_pTokenVector->GetSize() > 0)
 			{
 				Token* pToken = pTranslationUnit->m_pTokenContainer->m_pTokenVector->PopFront();
 				pToken->m_sFileName = pPublicTranslationUnit->m_sInFile;
-				NumbatLogic::Token* __3778790288 = pToken;
-#line 229 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+				NumbatLogic::Token* __3778790285 = pToken;
+#line 226 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 				pToken = 0;
-#line 229 "/home/cliffya/git/Lang/Source/Core/Project.nll"
-				pPublicTranslationUnit->m_pTokenContainer->m_pTokenVector->PushBack(__3778790288);
+#line 226 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+				pPublicTranslationUnit->m_pTokenContainer->m_pTokenVector->PushBack(__3778790285);
 				if (pToken) delete pToken;
 			}
 			if (pPublicTranslationUnit->m_pFirstChild == 0)
 			{
-				NumbatLogic::AST* __4061733420 = pAST->m_pFirstChild;
-#line 234 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+				NumbatLogic::AST* __4061733417 = pAST->m_pFirstChild;
+#line 231 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 				pAST->m_pFirstChild = 0;
-#line 234 "/home/cliffya/git/Lang/Source/Core/Project.nll"
-				pPublicTranslationUnit->m_pFirstChild = __4061733420;
+#line 231 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+				pPublicTranslationUnit->m_pFirstChild = __4061733417;
 				pPublicTranslationUnit->m_pLastChild = pPublicTranslationUnit->m_pFirstChild;
 			}
 			else
 			{
-				NumbatLogic::AST* __4061733425 = pAST->m_pFirstChild;
-#line 239 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+				NumbatLogic::AST* __4061733422 = pAST->m_pFirstChild;
+#line 236 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 				pAST->m_pFirstChild = 0;
-#line 239 "/home/cliffya/git/Lang/Source/Core/Project.nll"
-				pPublicTranslationUnit->m_pLastChild->m_pNextSibling = __4061733425;
+#line 236 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+				pPublicTranslationUnit->m_pLastChild->m_pNextSibling = __4061733422;
 				pPublicTranslationUnit->m_pLastChild = pPublicTranslationUnit->m_pLastChild->m_pNextSibling;
 			}
-#line 243 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 240 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 			while (true)
 			{
 				pPublicTranslationUnit->m_pLastChild->m_pParent = pPublicTranslationUnit;
 				pPublicTranslationUnit->m_pLastChild->m_bSkipOutput = bSkipOutput;
-#line 248 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 245 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 				if (pPublicTranslationUnit->m_pLastChild->m_pNextSibling == 0)
 					break;
-#line 251 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 248 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 				pPublicTranslationUnit->m_pLastChild = pPublicTranslationUnit->m_pLastChild->m_pNextSibling;
 			}
 			if (pAST) delete pAST;
@@ -352,52 +350,52 @@ namespace NumbatLogic
 		{
 			m_pTranslationUnitVector->PopBack();
 		}
-#line 260 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 257 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		NamespaceMerge(pPublicTranslationUnit);
-#line 263 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 260 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		RecurseNamespaces(pPublicTranslationUnit, 0, pSecretTranslationUnit);
-#line 265 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 262 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		m_pTranslationUnitVector->PushBack(pSecretTranslationUnit);
-		NumbatLogic::TranslationUnit* __1635193661 = pSecretTranslationUnit;
-#line 266 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+		NumbatLogic::TranslationUnit* __1635193658 = pSecretTranslationUnit;
+#line 263 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		pSecretTranslationUnit = 0;
-#line 266 "/home/cliffya/git/Lang/Source/Core/Project.nll"
-		AddChild(__1635193661);
-#line 268 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 263 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+		AddChild(__1635193658);
+#line 265 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		m_pTranslationUnitVector->PushBack(pPublicTranslationUnit);
-		NumbatLogic::TranslationUnit* __623256121 = pPublicTranslationUnit;
-#line 269 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+		NumbatLogic::TranslationUnit* __623256118 = pPublicTranslationUnit;
+#line 266 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		pPublicTranslationUnit = 0;
-#line 269 "/home/cliffya/git/Lang/Source/Core/Project.nll"
-		AddChild(__623256121);
+#line 266 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+		AddChild(__623256118);
 		if (sSecretFileName) delete sSecretFileName;
 		if (pSecretTranslationUnit) delete pSecretTranslationUnit;
 		if (pPublicTranslationUnit) delete pPublicTranslationUnit;
 	}
 
-#line 272 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 269 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 	void Project::Output(AST::Language eLanguage, OutputFile eOutputFile)
 	{
 		InternalString* sOutFile = new InternalString("");
 		OutputBuilder* pOut = new OutputBuilder();
-#line 278 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 275 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		for (int i = 0; i < m_pTranslationUnitVector->GetSize(); i++)
 		{
 			TranslationUnit* pTranslationUnit = m_pTranslationUnitVector->Get(i);
 			sOutFile->Set(pTranslationUnit->m_sInFile->GetExternalString());
-#line 283 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 280 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 			if (sOutFile->EndsWith(".nll"))
 			{
 				TranslationUnit::ConvertFilePath(eLanguage, eOutputFile, sOutFile);
-#line 287 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 284 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 				const char* sxOutFile = sOutFile->GetExternalString();
-#line 289 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 286 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 				pOut->m_sOut->Set("");
 				pTranslationUnit->Stringify(eLanguage, eOutputFile, 0, pOut);
-#line 292 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 289 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 				InternalString* sDirectory = File::GetFileDirectory(sxOutFile);
 				File::CreateDirectory(sDirectory->GetExternalString());
-#line 296 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 293 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 				InternalString* sTestFile = File::GetContents(sxOutFile);
 				if (sTestFile == 0 || !pOut->m_sOut->IsEqual(sTestFile->GetExternalString()))
 				{
