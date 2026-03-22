@@ -1,10 +1,10 @@
 #include "NamespaceNode.hpp"
 #include "../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "AST/NamespaceDecl.hpp"
-#include "../../../LangShared/Vector/CPP/Vector.hpp"
+#include "../../../LangShared/Source/Vector/CPP/Vector.hpp"
 #include "Token.hpp"
-#include "../../../LangShared/InternalString/CPP/InternalString.hpp"
-#include "../../../LangShared/ExternalString/CPP/ExternalString.hpp"
+#include "../../../LangShared/Source/InternalString/CPP/InternalString.hpp"
+#include "../../../LangShared/Source/ExternalString/CPP/ExternalString.hpp"
 #include "AST/AST.hpp"
 
 namespace NumbatLogic

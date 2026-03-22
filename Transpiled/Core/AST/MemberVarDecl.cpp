@@ -5,7 +5,7 @@
 #include "../Token.hpp"
 #include "VarDecl.hpp"
 #include "AST.hpp"
-#include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
+#include "../../../../LangShared/Source/InternalString/CPP/InternalString.hpp"
 #include "TypeRef.hpp"
 #include "../Validator.hpp"
 #include "../OutputBuilder.hpp"

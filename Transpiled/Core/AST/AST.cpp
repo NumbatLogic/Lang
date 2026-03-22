@@ -40,9 +40,9 @@
 #include "../TokenContainer.hpp"
 #include "TrinaryExpr.hpp"
 #include "OperatorExpr.hpp"
-#include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
-#include "../../../../LangShared/Console/CPP/Console.hpp"
-#include "../../../../LangShared/Assert/CPP/Assert.hpp"
+#include "../../../../LangShared/Source/InternalString/CPP/InternalString.hpp"
+#include "../../../../LangShared/Source/Console/CPP/Console.hpp"
+#include "../../../../LangShared/Source/Assert/CPP/Assert.hpp"
 #include "../OutputBuilder.hpp"
 
 namespace NumbatLogic

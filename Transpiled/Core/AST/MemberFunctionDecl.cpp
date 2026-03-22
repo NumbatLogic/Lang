@@ -9,7 +9,7 @@
 #include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "../OutputBuilder.hpp"
 #include "../Util.hpp"
-#include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
+#include "../../../../LangShared/Source/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
 {

@@ -2,7 +2,7 @@
 
 #include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "SymbolScope.hpp"
-#include "../../../../LangShared/Vector/CPP/Vector.hpp"
+#include "../../../../LangShared/Source/Vector/CPP/Vector.hpp"
 #include "Symbol.hpp"
 
 namespace NumbatLogic

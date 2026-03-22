@@ -1,13 +1,13 @@
 #include "TranslationUnit.hpp"
-#include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
+#include "../../../../LangShared/Source/InternalString/CPP/InternalString.hpp"
 #include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
-#include "../../../../LangShared/Vector/CPP/Vector.hpp"
+#include "../../../../LangShared/Source/Vector/CPP/Vector.hpp"
 #include "../Util.hpp"
 #include "../OutputBuilder.hpp"
 #include "ClassDecl.hpp"
 #include "../Token.hpp"
 #include "../TokenContainer.hpp"
-#include "../../../../LangShared/File/CPP/File.hpp"
+#include "../../../../LangShared/Source/File/CPP/File.hpp"
 #include "../OffsetDatum.hpp"
 #include "AST.hpp"
 #include "DecoratorCall.hpp"
@@ -278,11 +278,9 @@ namespace NumbatLogic
 #line 207 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 			return;
 		}
-#line 210 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
-		sPath->Replace("/LangShared/", "/LangShared/Transpiled/");
-#line 213 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 211 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		sPath->Replace("Source", "Transpiled");
-#line 216 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 213 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		switch (eLanguage)
 		{
 			case AST::Language::CS:
@@ -293,7 +291,7 @@ namespace NumbatLogic
 
 			case AST::Language::CPP:
 			{
-#line 225 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 222 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 				if (eOutputFile == AST::OutputFile::SOURCE)
 					sPath->Replace(".nll", ".cpp");
 				else
@@ -303,13 +301,13 @@ namespace NumbatLogic
 
 			case AST::Language::NLL:
 			{
-#line 233 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 230 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 				break;
 			}
 
 			case AST::Language::NLL_DEF:
 			{
-#line 237 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 234 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 				sPath->Replace(".nll", ".nll.def");
 				break;
 			}
@@ -317,32 +315,32 @@ namespace NumbatLogic
 		}
 	}
 
-#line 243 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 240 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 	InternalString* TranslationUnit::RetargetRelativePath(Language eLanguage, OutputFile eOutputFile, const char* sxFrom, const char* sxTo)
 	{
 		InternalString* sFrom = new InternalString(sxFrom);
 		InternalString* sTo = new InternalString(sxTo);
-#line 248 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 245 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		ConvertFilePath(eLanguage, eOutputFile, sFrom);
 		ConvertFilePath(eLanguage, eOutputFile, sTo);
-#line 251 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 248 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		OwnedVector<InternalString*>* sFromVector = new OwnedVector<InternalString*>();
 		OwnedVector<InternalString*>* sToVector = new OwnedVector<InternalString*>();
-#line 254 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 251 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		while (true)
 		{
 			int nIndex = sFrom->FindChar('/');
 			if (nIndex == -1)
 				break;
-#line 260 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 257 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 			InternalString* sTemp = sFrom->CreateClone();
 			sTemp->SubStr(0, nIndex + 1);
 			sFrom->CropFront(nIndex + 1);
-			NumbatLogic::InternalString* __2785039528 = sTemp;
-#line 263 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+			NumbatLogic::InternalString* __2785039525 = sTemp;
+#line 260 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 			sTemp = 0;
-#line 263 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
-			sFromVector->PushBack(__2785039528);
+#line 260 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+			sFromVector->PushBack(__2785039525);
 			if (sTemp) delete sTemp;
 		}
 		while (true)
@@ -350,54 +348,54 @@ namespace NumbatLogic
 			int nIndex = sTo->FindChar('/');
 			if (nIndex == -1)
 				break;
-#line 272 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 269 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 			InternalString* sTemp = sTo->CreateClone();
 			sTemp->SubStr(0, nIndex + 1);
 			sTo->CropFront(nIndex + 1);
-			NumbatLogic::InternalString* __2785105129 = sTemp;
-#line 275 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+			NumbatLogic::InternalString* __2785105126 = sTemp;
+#line 272 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 			sTemp = 0;
-#line 275 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
-			sToVector->PushBack(__2785105129);
+#line 272 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+			sToVector->PushBack(__2785105126);
 			if (sTemp) delete sTemp;
 		}
-#line 279 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 276 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		while (true)
 		{
 			if (sFromVector->GetSize() == 0 || sToVector->GetSize() == 0)
 				break;
-#line 284 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 281 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 			if (!sFromVector->Get(0)->IsEqual(sToVector->Get(0)->GetExternalString()))
 				break;
-#line 287 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 284 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 			sFromVector->Erase(0);
 			sToVector->Erase(0);
 		}
-#line 291 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 288 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		InternalString* sOut = new InternalString("");
-#line 293 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 290 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		for (int i = 0; i < sFromVector->GetSize(); i++)
 			sOut->Append("../");
 		for (int i = 0; i < sToVector->GetSize(); i++)
 			sOut->Append(sToVector->Get(i)->GetExternalString());
-#line 298 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 295 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		sOut->Append(sTo->GetExternalString());
-		NumbatLogic::InternalString* __1173437911 = sOut;
-#line 299 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+		NumbatLogic::InternalString* __1173437908 = sOut;
+#line 296 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		sOut = 0;
 		if (sFrom) delete sFrom;
 		if (sTo) delete sTo;
 		if (sFromVector) delete sFromVector;
 		if (sToVector) delete sToVector;
-#line 299 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
-		return __1173437911;
+#line 296 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+		return __1173437908;
 	}
 
 	FunctionDecl* TranslationUnit::FindEntryPointFunction(AST* pNode)
 	{
 		if (pNode == 0)
 			return 0;
-#line 307 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 304 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		if (pNode->m_eType == AST::Type::AST_DECORATOR_CALL)
 		{
 			DecoratorCall* pDecoratorCall = (DecoratorCall*)(pNode);
@@ -407,7 +405,7 @@ namespace NumbatLogic
 					return (FunctionDecl*)(pDecoratorCall->m_pParent);
 			}
 		}
-#line 317 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 314 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		AST* pChild = pNode->m_pFirstChild;
 		while (pChild != 0)
 		{
@@ -416,7 +414,7 @@ namespace NumbatLogic
 				return pEntryPointFunction;
 			pChild = pChild->m_pNextSibling;
 		}
-#line 326 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 323 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		return 0;
 	}
 
@@ -428,16 +426,16 @@ namespace NumbatLogic
 			{
 				pOutputBuilder->m_sOut->Append("#pragma once\n\n");
 			}
-#line 338 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 335 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 			OwnedVector<InternalString*>* sPreviousIncludes = new OwnedVector<InternalString*>();
 			ReferenceNode* pRootReferenceNode = new ReferenceNode("");
-#line 341 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 338 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 			for (int i = 0; i < m_pClassDeclReferenceVector->GetSize(); i++)
 			{
 				ClassDeclReference* pClassDeclReference = m_pClassDeclReferenceVector->Get(i);
 				if (eOutputFile == pClassDeclReference->m_eOutputFile)
 				{
-#line 350 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 347 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 					bool bOnlyInclude = !pClassDeclReference->m_bForwardReference;
 					if (bOnlyInclude)
 					{
@@ -457,7 +455,7 @@ namespace NumbatLogic
 							}
 						}
 					}
-#line 370 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 367 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 					if (pClassDeclReference->m_bForwardReference || bOnlyInclude)
 					{
 						Vector<InternalString*>* sNamespaceVector = new Vector<InternalString*>();
@@ -467,14 +465,14 @@ namespace NumbatLogic
 							sNamespaceVector->PushFront(pNamespaceNode->m_sName);
 							pNamespaceNode = pNamespaceNode->m_pParent;
 						}
-#line 381 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 378 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 						ReferenceNode* pCurrentNode = pRootReferenceNode;
 						for (int j = 0; j < sNamespaceVector->GetSize(); j++)
 						{
 							InternalString* sNamespace = sNamespaceVector->Get(j);
 							pCurrentNode = pCurrentNode->GetOrCreateChildNode(sNamespace->GetExternalString());
 						}
-#line 388 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 385 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 						pCurrentNode->m_pChildClassVector->PushBack(pClassDeclReference);
 						if (sNamespaceVector) delete sNamespaceVector;
 					}
@@ -493,7 +491,7 @@ namespace NumbatLogic
 						if (bFound)
 							continue;
 						sPreviousIncludes->PushBack(new InternalString(pClassDeclReference->m_pClassDecl->m_pNameToken->m_sFileName->GetExternalString()));
-#line 407 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 404 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 						InternalString* sFixedPath = RetargetRelativePath(eLanguage, AST::OutputFile::HEADER, m_pFirstChild->m_pFirstToken->m_sFileName->GetExternalString(), pClassDeclReference->m_pClassDecl->m_pNameToken->m_sFileName->GetExternalString());
 						pOutputBuilder->m_sOut->Append("#include \"");
 						pOutputBuilder->m_sOut->Append(sFixedPath->GetExternalString());
@@ -508,7 +506,7 @@ namespace NumbatLogic
 			if (sPreviousIncludes) delete sPreviousIncludes;
 			if (pRootReferenceNode) delete pRootReferenceNode;
 		}
-#line 420 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 417 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		AST* pChild = m_pFirstChild;
 		while (pChild != 0)
 		{
@@ -519,7 +517,7 @@ namespace NumbatLogic
 			}
 			pChild = pChild->m_pNextSibling;
 		}
-#line 431 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 428 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		FunctionDecl* pEntryPointFunction = FindEntryPointFunction(this);
 		if (pEntryPointFunction != 0)
 		{
@@ -535,7 +533,7 @@ namespace NumbatLogic
 				pOutputBuilder->m_sOut->Append("\treturn 0;\n}\n");
 			}
 			else
-#line 445 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 442 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 				if (eLanguage == AST::Language::CS)
 				{
 					pOutputBuilder->m_sOut->Append("\nclass Application\n{\n");

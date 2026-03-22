@@ -3,13 +3,13 @@
 #include "../OffsetDatum.hpp"
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
-#include "../../../../LangShared/Console/CPP/Console.hpp"
-#include "../../../../LangShared/Assert/CPP/Assert.hpp"
+#include "../../../../LangShared/Source/Console/CPP/Console.hpp"
+#include "../../../../LangShared/Source/Assert/CPP/Assert.hpp"
 #include "StringExpr.hpp"
 #include "../ValueType.hpp"
 #include "../OutputBuilder.hpp"
-#include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
-#include "../../../../LangShared/ExternalString/CPP/ExternalString.hpp"
+#include "../../../../LangShared/Source/InternalString/CPP/InternalString.hpp"
+#include "../../../../LangShared/Source/ExternalString/CPP/ExternalString.hpp"
 
 namespace NumbatLogic
 {

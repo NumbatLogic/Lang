@@ -1,14 +1,14 @@
 #include "TrinaryExpr.hpp"
 #include "AST.hpp"
 #include "../OffsetDatum.hpp"
-#include "../../../../LangShared/Console/CPP/Console.hpp"
+#include "../../../../LangShared/Source/Console/CPP/Console.hpp"
 #include "../TokenContainer.hpp"
-#include "../../../../LangShared/Assert/CPP/Assert.hpp"
+#include "../../../../LangShared/Source/Assert/CPP/Assert.hpp"
 #include "../Token.hpp"
 #include "../Validator.hpp"
 #include "../ValueType.hpp"
 #include "../OutputBuilder.hpp"
-#include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
+#include "../../../../LangShared/Source/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
 {

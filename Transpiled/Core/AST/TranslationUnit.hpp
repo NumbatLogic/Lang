@@ -3,7 +3,7 @@
 #include "AST.hpp"
 #include "../../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "TranslationUnit.hpp"
-#include "../../../../LangShared/Vector/CPP/Vector.hpp"
+#include "../../../../LangShared/Source/Vector/CPP/Vector.hpp"
 
 namespace NumbatLogic
 {
@@ -62,11 +62,11 @@ namespace NumbatLogic
 		public: virtual void AddClassDeclReference(ClassDecl* pClassDecl, OutputFile eOutputFile, bool bForwardReference);
 #line 158 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: static void ConvertFilePath(Language eLanguage, OutputFile eOutputFile, InternalString* sPath);
-#line 243 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 240 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: InternalString* RetargetRelativePath(Language eLanguage, OutputFile eOutputFile, const char* sxFrom, const char* sxTo);
-#line 302 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 299 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		protected: FunctionDecl* FindEntryPointFunction(AST* pNode);
-#line 329 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
+#line 326 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: virtual void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder* pOutputBuilder);
 #line 83 "/home/cliffya/git/Lang/Source/Core/AST/TranslationUnit.nll"
 		public: virtual ~TranslationUnit();

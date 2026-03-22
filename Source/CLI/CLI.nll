@@ -45,7 +45,12 @@ namespace NumbatLogic
 					sTemp = own new InternalString("Recurse: ");
 					sTemp.Append(sxArg1);
 					Console::Log(sTemp.GetExternalString());
-					pProject.AddDirectory(sxArg1, sDefineVector);
+					if (!pProject.AddDirectory(sxArg1, sDefineVector))
+					{
+						Console::Log("Error: Directory not found:");
+						Console::Log(sxArg1);
+						return;
+					}
 					continue;
 				}
 

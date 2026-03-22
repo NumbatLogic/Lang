@@ -42,38 +42,27 @@ namespace NumbatLogic
 			AddChild(disown pTranslationUnit);
 		}
 
-		public void AddDirectory(string sDirectory, OwnedVector<InternalString> sDefineVector)
+		public bool AddDirectory(string sDirectory, OwnedVector<InternalString> sDefineVector)
 		{
 			OwnedVector<InternalString>* pAllowedSuffixVector = own new OwnedVector<InternalString>();
 			pAllowedSuffixVector.PushBack(new InternalString(".nll"));
 			pAllowedSuffixVector.PushBack(new InternalString(".nll.def"));
 
 			OwnedVector<InternalString>* sFileVector = own File::GetRecursiveFileVector(sDirectory, pAllowedSuffixVector);
+			if (sFileVector == null)
+				return false;
 
 			while (sFileVector.GetSize() > 0)
 			{
 				InternalString* sFile = own sFileVector.PopBack();
 				AddFile(sFile.GetExternalString(), sDefineVector);
 			}
+			return true;
 		}
 
 		public void FullValidate()
 		{
-			// DO WE NEED THIS ANYMORE??
-			// move pure nll shared code output into transpiled folder
-			for (int i = 0; i < m_pTranslationUnitVector.GetSize(); i++)
-			{
-				TranslationUnit pTranslationUnit = m_pTranslationUnitVector.Get(i);
-				if (pTranslationUnit.m_sInFile.EndsWith(".nll"))
-				{
-					if (pTranslationUnit.m_sInFile.StartsWith("Shared"))
-						pTranslationUnit.m_sInFile.Replace("Shared", "Source/Shared");
-					else
-						pTranslationUnit.m_sInFile.Replace("/Shared", "/Source/Shared");
-				}
-			}
-
-			// Keep validator alive so Stringify/codegen can use it (passed via GetProject().m_pValidator).
+			// TODO: Pass validator instead of using GetProject().m_pValidator?
 			m_pValidator = own new Validator(this);
 			if (!m_pValidator.Validate())
 			{

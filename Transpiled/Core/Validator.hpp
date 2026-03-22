@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../LangShared/Vector/CPP/Vector.hpp"
+#include "../../../LangShared/Source/Vector/CPP/Vector.hpp"
 #include "AST/VarDecl.hpp"
 #include "../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 #include "Validator.hpp"

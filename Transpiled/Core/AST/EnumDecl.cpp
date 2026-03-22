@@ -4,11 +4,11 @@
 #include "../Token.hpp"
 #include "AST.hpp"
 #include "EnumDeclValue.hpp"
-#include "../../../../LangShared/Vector/CPP/Vector.hpp"
-#include "../../../../LangShared/Console/CPP/Console.hpp"
-#include "../../../../LangShared/Assert/CPP/Assert.hpp"
+#include "../../../../LangShared/Source/Vector/CPP/Vector.hpp"
+#include "../../../../LangShared/Source/Console/CPP/Console.hpp"
+#include "../../../../LangShared/Source/Assert/CPP/Assert.hpp"
 #include "../OutputBuilder.hpp"
-#include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
+#include "../../../../LangShared/Source/InternalString/CPP/InternalString.hpp"
 #include "../Util.hpp"
 
 namespace NumbatLogic

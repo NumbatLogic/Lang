@@ -7,7 +7,7 @@
 #include "../Validator.hpp"
 #include "ClassDecl.hpp"
 #include "../OutputBuilder.hpp"
-#include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
+#include "../../../../LangShared/Source/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
 {

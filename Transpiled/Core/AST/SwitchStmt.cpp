@@ -1,15 +1,15 @@
 #include "SwitchStmt.hpp"
 #include "AST.hpp"
-#include "../../../../LangShared/Vector/CPP/Vector.hpp"
+#include "../../../../LangShared/Source/Vector/CPP/Vector.hpp"
 #include "../OffsetDatum.hpp"
 #include "../TokenContainer.hpp"
 #include "../Token.hpp"
-#include "../../../../LangShared/Console/CPP/Console.hpp"
-#include "../../../../LangShared/Assert/CPP/Assert.hpp"
+#include "../../../../LangShared/Source/Console/CPP/Console.hpp"
+#include "../../../../LangShared/Source/Assert/CPP/Assert.hpp"
 #include "Scope.hpp"
 #include "../OutputBuilder.hpp"
 #include "../Util.hpp"
-#include "../../../../LangShared/InternalString/CPP/InternalString.hpp"
+#include "../../../../LangShared/Source/InternalString/CPP/InternalString.hpp"
 
 namespace NumbatLogic
 {

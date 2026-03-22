@@ -1,7 +1,7 @@
 #pragma once
 
 #include "AST/AST.hpp"
-#include "../../../LangShared/Vector/CPP/Vector.hpp"
+#include "../../../LangShared/Source/Vector/CPP/Vector.hpp"
 #include "AST/TranslationUnit.hpp"
 #include "../../../LangShared/Transpiled/Vector/OwnedVector.hpp"
 
@@ -33,16 +33,16 @@ namespace NumbatLogic
 #line 18 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		public: void AddFile(const char* sFile, OwnedVector<InternalString*>* sDefineVector);
 #line 45 "/home/cliffya/git/Lang/Source/Core/Project.nll"
-		public: void AddDirectory(const char* sDirectory, OwnedVector<InternalString*>* sDefineVector);
-#line 60 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+		public: bool AddDirectory(const char* sDirectory, OwnedVector<InternalString*>* sDefineVector);
+#line 66 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		public: void FullValidate();
-#line 84 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 76 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		protected: void RecurseNamespaces(AST* pInAst, NamespaceDecl* pSecretNamespace, TranslationUnit* pSecretTranslationUnit);
-#line 143 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 135 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		protected: void NamespaceMerge(AST* pParentAST);
-#line 216 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 208 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		public: void Amalgamate(const char* sAmalgamateFileName);
-#line 280 "/home/cliffya/git/Lang/Source/Core/Project.nll"
+#line 272 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		public: void Output(AST::Language eLanguage, OutputFile eOutputFile);
 #line 3 "/home/cliffya/git/Lang/Source/Core/Project.nll"
 		public: virtual ~Project();
