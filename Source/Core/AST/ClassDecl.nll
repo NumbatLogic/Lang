@@ -479,6 +479,13 @@ namespace NumbatLogic
 				}
 
 				Util::Pad(nDepth, pOutputBuilder.m_sOut);
+
+				if (eLanguage == AST::Language::CS)
+				{
+					pOutputBuilder.m_sOut.Append("public ");
+				}
+
+				
 				pOutputBuilder.m_sOut.Append("class ");
 
 				if (eLanguage == AST::Language::NLL && m_pDecoratorCallVector != null && m_pDecoratorCallVector.GetSize() > 0)
