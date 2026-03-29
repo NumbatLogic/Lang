@@ -233,6 +233,14 @@ namespace NumbatLogic
 
 				Assert::Plz(pBaseValueType.m_pClassDecl != null);
 				AddClassDeclReference(pBaseValueType.m_pClassDecl, AST::OutputFile::HEADER, false);
+
+				if (pBaseValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE && pBaseValueType.m_pClassDecl.m_bDisposable && !m_bDisposable)
+				{
+					InternalString* sDisp = own new InternalString("Class '");
+					sDisp.Append(m_pNameToken.GetString());
+					sDisp.Append("' must be declared disposable because its base class is disposable.");
+					pValidator.AddError(sDisp.GetExternalString(), m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
+				}
 			}
 
 			// if we have owned member vars, make sure we have a destructor (inject if needed)
