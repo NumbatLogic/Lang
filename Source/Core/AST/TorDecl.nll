@@ -155,6 +155,16 @@ namespace NumbatLogic
 				{
 					if (m_pParentClassDecl.m_bDisposable)
 					{
+						ClassDecl pImmediateBase = null;
+						if (m_pParentClassDecl.m_pBaseTypeRef != null)
+						{
+							TypeRef pBaseRef = m_pParentClassDecl.m_pBaseTypeRef;
+							pImmediateBase = pBaseRef.GetFoundClassDecl();
+							if (pImmediateBase == null && pBaseRef.m_pChildTypeRef != null)
+								pImmediateBase = pBaseRef.m_pChildTypeRef.GetFoundClassDecl();
+						}
+						bool bOverride = pImmediateBase != null && pImmediateBase.m_bDisposable;
+
 						Util::Pad(nDepth, pOutputBuilder.m_sOut);
 						pOutputBuilder.m_sOut.AppendChar('~');
 						m_pParentClassDecl.m_pNameToken.Stringify(pOutputBuilder.m_sOut);
@@ -170,14 +180,25 @@ namespace NumbatLogic
 						pOutputBuilder.m_sOut.AppendChar('\n');
 
 						Util::Pad(nDepth, pOutputBuilder.m_sOut);
-						pOutputBuilder.m_sOut.Append("public void Dispose()\n");
+						if (bOverride)
+							pOutputBuilder.m_sOut.Append("public override void Dispose()\n");
+						else
+							pOutputBuilder.m_sOut.Append("public virtual void Dispose()\n");
 						Util::Pad(nDepth, pOutputBuilder.m_sOut);
 						pOutputBuilder.m_sOut.Append("{\n");
 
 						nDepth++;
 						m_pScope.Stringify(eLanguage, eOutputFile, nDepth, pOutputBuilder);
-						Util::Pad(nDepth, pOutputBuilder.m_sOut);
-						pOutputBuilder.m_sOut.Append("System.GC.SuppressFinalize(this);\n");
+						if (bOverride)
+						{
+							Util::Pad(nDepth, pOutputBuilder.m_sOut);
+							pOutputBuilder.m_sOut.Append("base.Dispose();\n");
+						}
+						else
+						{
+							Util::Pad(nDepth, pOutputBuilder.m_sOut);
+							pOutputBuilder.m_sOut.Append("System.GC.SuppressFinalize(this);\n");
+						}
 
 						nDepth--;
 
