@@ -393,20 +393,39 @@ namespace NumbatLogic
 					m_pBaseClassDecl = cast ClassDecl(pSym.m_pDeclAST);
 					return m_pBaseClassDecl;
 				}
-				// Qualified base (e.g. NetObject::ObjectInfo): first part is namespace, resolve child in its scope.
+				// Qualified base (e.g. NumbatLogic::ORM::RowInfo): walk full
+				// namespace chain and resolve final class segment.
 				if (pSym.m_eKind == Symbol::Kind::NAMESPACE && pSym.m_pScope != null && m_pBaseTypeRef.m_pChildTypeRef != null)
 				{
-					string sChildName = m_pBaseTypeRef.m_pChildTypeRef.m_pTypeToken.GetString();
-					Vector<Symbol>* pChildCandidates = own new Vector<Symbol>();
-					pResolver.ResolveInScopeChainNoBaseClasses(sChildName, pSym.m_pScope, pChildCandidates);
-					if (pChildCandidates.GetSize() == 1)
+					SymbolScope pCurrentScope = pSym.m_pScope;
+					TypeRef pWalkTypeRef = m_pBaseTypeRef.m_pChildTypeRef;
+					while (pWalkTypeRef != null)
 					{
-						Symbol pChildSym = pChildCandidates.Get(0);
-						if (pChildSym.m_eKind == Symbol::Kind::CLASS && pChildSym.m_pDeclAST != null && pChildSym.m_pDeclAST.m_eType == AST::Type::AST_CLASS_DECL)
+						string sPartName = pWalkTypeRef.m_pTypeToken.GetString();
+						Vector<Symbol>* pPartCandidates = own new Vector<Symbol>();
+						pResolver.ResolveInScopeChainNoBaseClasses(sPartName, pCurrentScope, pPartCandidates);
+						if (pPartCandidates.GetSize() != 1)
+							break;
+
+						Symbol pPartSym = pPartCandidates.Get(0);
+						bool bFinalPart = (pWalkTypeRef.m_pChildTypeRef == null);
+						if (bFinalPart)
 						{
-							m_pBaseClassDecl = cast ClassDecl(pChildSym.m_pDeclAST);
-							return m_pBaseClassDecl;
+							if (pPartSym.m_eKind == Symbol::Kind::CLASS &&
+								pPartSym.m_pDeclAST != null &&
+								pPartSym.m_pDeclAST.m_eType == AST::Type::AST_CLASS_DECL)
+							{
+								m_pBaseClassDecl = cast ClassDecl(pPartSym.m_pDeclAST);
+								return m_pBaseClassDecl;
+							}
+							break;
 						}
+
+						if (pPartSym.m_eKind != Symbol::Kind::NAMESPACE || pPartSym.m_pScope == null)
+							break;
+
+						pCurrentScope = pPartSym.m_pScope;
+						pWalkTypeRef = pWalkTypeRef.m_pChildTypeRef;
 					}
 				}
 			}
