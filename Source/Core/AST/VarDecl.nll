@@ -141,6 +141,12 @@ namespace NumbatLogic
 				return;
 			}
 
+			// Since we auto inject delete, we should make sure we have a non forward reference
+			if (pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE &&
+				pValueType.m_ePointerType == TypeRef::PointerType::OWNED &&
+				pValueType.m_pClassDecl != null)
+				AddClassDeclReference(pValueType.m_pClassDecl, AST::OutputFile::SOURCE, false);
+
 			if (m_pAssignment != null)
 			{
 				if (m_pAssignment.m_pValueType == null)
