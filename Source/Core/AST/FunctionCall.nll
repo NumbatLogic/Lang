@@ -251,7 +251,7 @@ namespace NumbatLogic
 						// compatible.
 						bool bTypeOk = true;
 						if (pFD != null && pFD.m_pParamDecl != null)
-							bTypeOk = pFD.m_pParamDecl.ValidateParamCall(m_pParamCall, pValidator, true);
+							bTypeOk = pFD.m_pParamDecl.ValidateParamCall(m_pParamCall, pValidator, false);
 
 						if (!bTypeOk)
 							continue;
