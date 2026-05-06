@@ -478,6 +478,11 @@ namespace NumbatLogic
 						PushToken(Token::Type::TOKEN_KEYWORD_INT32, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
 						return;
 					}
+					if (pParseDatum.m_sCurrentRead.IsEqual("Int64"))
+					{
+						PushToken(Token::Type::TOKEN_KEYWORD_INT64, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);
+						return;
+					}
 					if (pParseDatum.m_sCurrentRead.IsEqual("Uint8"))
 					{
 						PushToken(Token::Type::TOKEN_KEYWORD_UINT8, pParseDatum.m_nCurrentReadLine, pParseDatum.m_nCurrentReadColumn, pParseDatum, false);

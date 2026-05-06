@@ -46,6 +46,7 @@ namespace NumbatLogic
 			TOKEN_KEYWORD_INT,
 			TOKEN_KEYWORD_INT16,
 			TOKEN_KEYWORD_INT32,
+			TOKEN_KEYWORD_INT64,
 			TOKEN_KEYWORD_INT8,
 			TOKEN_KEYWORD_NAMESPACE,
 			TOKEN_KEYWORD_NEW,
@@ -146,6 +147,7 @@ namespace NumbatLogic
 				case Type::TOKEN_KEYWORD_INT: return "int";
 				case Type::TOKEN_KEYWORD_INT16: return "Int16";
 				case Type::TOKEN_KEYWORD_INT32: return "Int32";
+				case Type::TOKEN_KEYWORD_INT64: return "Int64";
 				case Type::TOKEN_KEYWORD_INT8: return "Int8";
 				case Type::TOKEN_KEYWORD_NAMESPACE: return "namespace";
 				case Type::TOKEN_KEYWORD_NEW: return "new";

@@ -64,6 +64,7 @@ namespace NumbatLogic
 				pTypeToken.m_eType != Token::Type::TOKEN_KEYWORD_INT8 &&
 				pTypeToken.m_eType != Token::Type::TOKEN_KEYWORD_INT16 &&
 				pTypeToken.m_eType != Token::Type::TOKEN_KEYWORD_INT32 &&
+				pTypeToken.m_eType != Token::Type::TOKEN_KEYWORD_INT64 &&
 				pTypeToken.m_eType != Token::Type::TOKEN_KEYWORD_DOUBLE &&
 				pTypeToken.m_eType != Token::Type::TOKEN_KEYWORD_FLOAT &&
 				pTypeToken.m_eType != Token::Type::TOKEN_KEYWORD_VOIDPTR &&
@@ -504,6 +505,8 @@ namespace NumbatLogic
 					pOutputBuilder.m_sOut.Append("unsigned long long");
 				else if (m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_INT32)
 					pOutputBuilder.m_sOut.Append("int");
+				else if (m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_INT64)
+					pOutputBuilder.m_sOut.Append("long long");
 				else if (m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_INT16)
 					pOutputBuilder.m_sOut.Append("short");
 				else if (m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_INT8)
@@ -533,7 +536,7 @@ namespace NumbatLogic
 					case Token::Type::TOKEN_KEYWORD_INT8: { pOutputBuilder.m_sOut.Append("sbyte"); break; }
 					case Token::Type::TOKEN_KEYWORD_INT16: { pOutputBuilder.m_sOut.Append("short"); break; }
 					case Token::Type::TOKEN_KEYWORD_INT32: { pOutputBuilder.m_sOut.Append("int"); break; }
-					//case Token::Type::TOKEN_KEYWORD_INT64: { pOutputBuilder.m_sOut.Append("long"); break; }
+					case Token::Type::TOKEN_KEYWORD_INT64: { pOutputBuilder.m_sOut.Append("long"); break; }
 					default:
 					{
 						m_pTypeToken.Stringify(pOutputBuilder.m_sOut);
@@ -813,6 +816,7 @@ namespace NumbatLogic
 				case Token::Type::TOKEN_KEYWORD_INT8:
 				case Token::Type::TOKEN_KEYWORD_INT16:
 				case Token::Type::TOKEN_KEYWORD_INT32:
+				case Token::Type::TOKEN_KEYWORD_INT64:
 				case Token::Type::TOKEN_KEYWORD_DOUBLE:
 				case Token::Type::TOKEN_KEYWORD_FLOAT:
 				{
@@ -876,7 +880,8 @@ namespace NumbatLogic
 				m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_UINT64 ||
 				m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_INT8 ||
 				m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_INT16 ||
-				m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_INT32;
+				m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_INT32 ||
+				m_pTypeToken.m_eType == Token::Type::TOKEN_KEYWORD_INT64;
 		}
 
 		public bool IsBool()
