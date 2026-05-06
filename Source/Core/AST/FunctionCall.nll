@@ -531,9 +531,9 @@ namespace NumbatLogic
 
 
 			// validate params
-			if (m_pParamCall.m_pFirstChild == null)
+			if (pFunctionDecl.m_pParamDecl == null)
 			{
-				if (pFunctionDecl.m_pParamDecl.m_pFirstChild != null)
+				if (m_pParamCall.m_pFirstChild != null)
 				{
 					pValidator.AddError("Params needed for function call?", m_pFirstToken.m_sFileName, m_pFirstToken.m_nLine, m_pFirstToken.m_nColumn);
 					return;
