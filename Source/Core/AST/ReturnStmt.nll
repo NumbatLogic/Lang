@@ -3,6 +3,7 @@ namespace NumbatLogic
 	class ReturnStmt : AST
 	{
 		public AST m_pExpression;
+		public VarDeclDescope m_pVarDeclDescope;
 
 		public construct()
 		{
@@ -45,6 +46,41 @@ namespace NumbatLogic
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)
 		{
+			// If cleanup is attached to this return, evaluate expression first, then cleanup, then return.
+			if (m_pVarDeclDescope != null)
+			{
+				Util::Pad(nDepth, pOutputBuilder.m_sOut);
+				pOutputBuilder.m_sOut.Append("{\n");
+
+				if (m_pExpression != null)
+				{
+					Util::Pad(nDepth+1, pOutputBuilder.m_sOut);
+					AST pWalk = this;
+					while (pWalk != null && pWalk.m_eType != AST::Type::AST_FUNCTION_DECL)
+						pWalk = pWalk.m_pParent;
+					FunctionDecl pFunctionDecl = cast FunctionDecl(pWalk);
+					Assert::Plz(pFunctionDecl != null);
+					Assert::Plz(pFunctionDecl.m_pTypeRef != null);
+					pFunctionDecl.m_pTypeRef.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+					pOutputBuilder.m_sOut.Append(" __nll_return_temp = ");
+					m_pExpression.Stringify(eLanguage, eOutputFile, 0, pOutputBuilder);
+					pOutputBuilder.m_sOut.Append(";\n");
+				}
+
+				m_pVarDeclDescope.Stringify(eLanguage, eOutputFile, nDepth+1, pOutputBuilder);
+
+				pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
+				Util::Pad(nDepth+1, pOutputBuilder.m_sOut);
+				if (m_pExpression != null)
+					pOutputBuilder.m_sOut.Append("return __nll_return_temp;\n");
+				else
+					pOutputBuilder.m_sOut.Append("return;\n");
+
+				Util::Pad(nDepth, pOutputBuilder.m_sOut);
+				pOutputBuilder.m_sOut.Append("}\n");
+				return;
+			}
+
 			pOutputBuilder.UpdateSourceLocation(eLanguage, m_pFirstToken);
 			Util::Pad(nDepth, pOutputBuilder.m_sOut);
 

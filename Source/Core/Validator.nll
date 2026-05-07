@@ -227,8 +227,17 @@ namespace NumbatLogic
 
 			if (pVarDeclDescope.m_pVarDeclVector.GetSize() > 0)
 			{
-				AST pParent = pBreakOrContinueOrReturn.m_pParent;
-				pParent.AddChildBefore(disown pVarDeclDescope, pBreakOrContinueOrReturn);
+				if (pBreakOrContinueOrReturn.m_eType == AST::Type::AST_RETURN_STMT)
+				{
+					ReturnStmt pReturnStmt = cast ReturnStmt(pBreakOrContinueOrReturn);
+					pReturnStmt.m_pVarDeclDescope = pVarDeclDescope;
+					pReturnStmt.AddChild(disown pVarDeclDescope);
+				}
+				else
+				{
+					AST pParent = pBreakOrContinueOrReturn.m_pParent;
+					pParent.AddChildBefore(disown pVarDeclDescope, pBreakOrContinueOrReturn);
+				}
 			}
 		}
 
