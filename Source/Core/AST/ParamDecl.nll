@@ -186,6 +186,49 @@ namespace NumbatLogic
 						}
 						return false;
 					}
+
+					// For class-to-class parameters, require an actual inheritance
+					// relationship so overload resolution can distinguish sibling
+					// class hierarchies.
+					if (pCallChild.m_pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE &&
+						pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE)
+					{
+						ClassDecl pFromClassDecl = pCallChild.m_pValueType.m_pClassDecl;
+						ClassDecl pToClassDecl = pValueType.m_pClassDecl;
+
+						bool bAssignable = false;
+						if (pFromClassDecl != null && pToClassDecl != null)
+						{
+							if (pFromClassDecl == pToClassDecl)
+								bAssignable = true;
+							else
+							{
+								ClassDecl pWalk = pFromClassDecl.GetBaseClassDecl(pValidator);
+								while (pWalk != null)
+								{
+									if (pWalk == pToClassDecl)
+									{
+										bAssignable = true;
+										break;
+									}
+									pWalk = pWalk.GetBaseClassDecl(pValidator);
+								}
+							}
+						}
+
+						if (!bAssignable)
+						{
+							if (bReportErrors && pValidator != null)
+							{
+								InternalString* sTemp = own new InternalString("type mismatch ");
+								pCallChild.m_pValueType.StringifyType(sTemp);
+								sTemp.Append(" is not assignable to ");
+								pValueType.StringifyType(sTemp);
+								pValidator.AddError(sTemp.GetExternalString(), pCallChild.m_pFirstToken.m_sFileName, pCallChild.m_pFirstToken.m_nLine, pCallChild.m_pFirstToken.m_nColumn);
+							}
+							return false;
+						}
+					}
 				}
 
 				// ref validation
