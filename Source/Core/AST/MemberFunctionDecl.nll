@@ -77,6 +77,64 @@ namespace NumbatLogic
 		public override void Validate(Validator pValidator, OperatorExpr pParent)
 		{
 			base.Validate(pValidator, pParent);
+
+			bool bOverridesBaseVirtual = false;
+			if (m_bStatic)
+				return;
+
+			ClassDecl pBase = m_pParentClassDecl.GetBaseClassDecl(pValidator);
+			while (pBase != null)
+			{
+				AST pChild = pBase.m_pFirstChild;
+				while (pChild != null)
+				{
+					if (pChild.m_eType == AST::Type::AST_MEMBER_FUNCTION_DECL)
+					{
+						MemberFunctionDecl pBaseMember = cast MemberFunctionDecl(pChild);
+						if (!pBaseMember.m_bStatic &&
+							(pBaseMember.m_bVirtual || pBaseMember.m_bOverride) &&
+							ExternalString::Equal(
+								pBaseMember.m_pFunctionDecl.m_pNameToken.GetString(),
+								m_pFunctionDecl.m_pNameToken.GetString()) &&
+							m_pFunctionDecl.SignaturesMatch(pBaseMember.m_pFunctionDecl, pValidator))
+						{
+							bOverridesBaseVirtual = true;
+							break;
+						}
+					}
+					pChild = pChild.m_pNextSibling;
+				}
+				if (bOverridesBaseVirtual)
+					break;
+				pBase = pBase.GetBaseClassDecl(pValidator);
+			}
+
+			if (!bOverridesBaseVirtual)
+				return;
+
+			Token pName = m_pFunctionDecl.m_pNameToken;
+			if (m_bVirtual && !m_bOverride)
+			{
+				InternalString* sMsg = own new InternalString("Member `");
+				sMsg.Append(pName.GetString());
+				sMsg.AppendString("` is marked `virtual` but overrides a base virtual method, use `override` instead");
+				pValidator.AddError(
+					sMsg.GetExternalString(),
+					pName.m_sFileName,
+					pName.m_nLine,
+					pName.m_nColumn);
+			}
+			else if (!m_bVirtual && !m_bOverride)
+			{
+				InternalString* sMsg = own new InternalString("Member `");
+				sMsg.Append(pName.GetString());
+				sMsg.AppendString("` overrides a base virtual method but is not marked `override`");
+				pValidator.AddError(
+					sMsg.GetExternalString(),
+					pName.m_sFileName,
+					pName.m_nLine,
+					pName.m_nColumn);
+			}
 		}
 
 		public override void Stringify(Language eLanguage, OutputFile eOutputFile, int nDepth, OutputBuilder pOutputBuilder)

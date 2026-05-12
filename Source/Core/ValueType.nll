@@ -87,6 +87,76 @@ namespace NumbatLogic
 			return disown pValueType;
 		}
 
+		public bool Equal(ValueType pOther)
+		{
+			if (pOther == null)
+				return false;
+			if (m_eType != pOther.m_eType)
+				return false;
+			if (m_bConst != pOther.m_bConst)
+				return false;
+			if (m_ePointerType != pOther.m_ePointerType)
+				return false;
+
+			switch (m_eType)
+			{
+				case Type::VOID:
+				case Type::INT:
+				case Type::STRING:
+				case Type::BOOL:
+				case Type::CHAR:
+				case Type::UNICHAR:
+				case Type::INSTANCE:
+				case Type::VOIDPTR:
+				case Type::NULL_VALUE:
+				case Type::STATIC_ARRAY:
+					return true;
+
+				case Type::CLASS_DECL:
+					return m_pClassDecl == pOther.m_pClassDecl;
+
+				case Type::CLASS_DECL_VALUE:
+				{
+					if (m_pClassDecl != pOther.m_pClassDecl)
+						return false;
+					if (m_pGenericValueTypeVector.GetSize() != pOther.m_pGenericValueTypeVector.GetSize())
+						return false;
+					for (int i = 0; i < m_pGenericValueTypeVector.GetSize(); i++)
+					{
+						if (!m_pGenericValueTypeVector.Get(i).Equal(pOther.m_pGenericValueTypeVector.Get(i)))
+							return false;
+					}
+					return true;
+				}
+
+				case Type::ENUM_DECL:
+					return m_pEnumDecl == pOther.m_pEnumDecl;
+
+				case Type::ENUM_DECL_VALUE:
+				{
+					if (m_pEnumDecl != null && pOther.m_pEnumDecl != null)
+						return m_pEnumDecl == pOther.m_pEnumDecl;
+					if (m_pEnumDeclValue != null && pOther.m_pEnumDeclValue != null)
+						return m_pEnumDeclValue == pOther.m_pEnumDeclValue;
+					return false;
+				}
+
+				case Type::GENERIC_TYPE_DECL_VALUE:
+					return m_pGenericTypeDecl == pOther.m_pGenericTypeDecl;
+
+				case Type::DELEGATE_DECL_VALUE:
+					return m_pDelegateDecl == pOther.m_pDelegateDecl;
+
+				case Type::FUNCTION_DECL:
+					return m_pFunctionDecl == pOther.m_pFunctionDecl;
+
+				case Type::NAMESPACE_NODE:
+					return m_pNamespaceNode == pOther.m_pNamespaceNode;
+			}
+
+			return false;
+		}
+
 		public bool ValidateAssignable(ValueType pTo, Validator pValidator, Token pToken)
 		{
 			if (pTo == null)

@@ -128,6 +128,45 @@ namespace NumbatLogic
 				AddClassDeclReference(pValueType.m_pClassDecl, AST::OutputFile::HEADER, true);
 		}
 
+		public bool SignaturesMatch(FunctionDecl pOther, Validator pValidator)
+		{
+			if (pOther == null || pValidator == null)
+				return false;
+
+			if (m_bConst != pOther.m_bConst)
+				return false;
+
+			ValueType* pRet = own m_pTypeRef.CreateValueType(pValidator.m_pResolver);
+			ValueType* pOtherRet = own pOther.m_pTypeRef.CreateValueType(pValidator.m_pResolver);
+			if (pRet == null || pOtherRet == null)
+				return false;
+
+			if (!pRet.Equal(pOtherRet))
+				return false;
+
+			int nThis = m_pParamDecl.m_pParamVector.GetSize();
+			if (nThis != pOther.m_pParamDecl.m_pParamVector.GetSize())
+				return false;
+
+			for (int i = 0; i < nThis; i = i + 1)
+			{
+				VarDecl pVThis = m_pParamDecl.m_pParamVector.Get(i);
+				VarDecl pVOther = pOther.m_pParamDecl.m_pParamVector.Get(i);
+				if (pVThis.m_pTypeRef.m_bRef != pVOther.m_pTypeRef.m_bRef)
+					return false;
+
+				ValueType* pVT = own pVThis.m_pTypeRef.CreateValueType(pValidator.m_pResolver);
+				ValueType* pVO = own pVOther.m_pTypeRef.CreateValueType(pValidator.m_pResolver);
+				if (pVT == null || pVO == null)
+					return false;
+
+				if (!pVT.Equal(pVO))
+					return false;
+			}
+
+			return true;
+		}
+
 		public void AppendFullyQualifiedName(Language eLanguage, InternalString sOut)
 		{
 			string sxSeparator = "::";
