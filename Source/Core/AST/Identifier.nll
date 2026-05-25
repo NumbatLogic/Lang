@@ -85,6 +85,21 @@ namespace NumbatLogic
 										}
 									}
 								}
+								else if (pOpWalk.GetOperatorType() == OperatorExpr::OperatorType::MEMBER_ACCESS &&
+									pOpWalk.m_pLeft != null && bRightIsArrayLookupOrMulLeft)
+								{
+									if (pOpWalk.m_pLeft.m_pValueType == null)
+										pOpWalk.m_pLeft.Validate(pValidator, pOpWalk);
+									if (pOpWalk.m_pLeft.m_pValueType != null)
+									{
+										if (pOpWalk.m_pLeft.m_pValueType.m_eType == ValueType::Type::CLASS_DECL_VALUE)
+										{
+											AddClassDeclReference(pOpWalk.m_pLeft.m_pValueType.m_pClassDecl, AST::OutputFile::SOURCE, false);
+											pBase = pOpWalk.m_pLeft.m_pValueType.m_pClassDecl;
+											break;
+										}
+									}
+								}
 							}
 							pWalk = pWalk.m_pParent;
 						}
